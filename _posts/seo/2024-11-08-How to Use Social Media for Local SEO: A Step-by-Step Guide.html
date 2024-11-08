@@ -101,3 +101,15 @@ image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgv-hl9n_-fIIL
   ]
 }
 </script>
+
+<br><b id="iska2-title">Related Post</b>
+        <div id="iska2-grid-container">
+    {% for post in site.categories.seo limit: 30 %}
+    <div class="iska2-grid-item">
+        <a href="{{ post.url }}">
+            <img src="{{ post.image }}" alt="{{ post.title }}"/>
+     <h5 class="iska2-title">{{ post.title }}</h5>
+    </a>
+    </div>
+    {% endfor %}
+</div><br />
