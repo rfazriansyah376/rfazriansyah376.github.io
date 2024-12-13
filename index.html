@@ -13,24 +13,6 @@ title: Home
 ================================================== -->
 
 
-<div class="col-12 mb-4">
-       <b> Affiliate Marketing</b>
-        <div class="row">
-               {% for post in site.categories.affiliate-marketing limit: 3 %}
-          <div class="col-md-4 col-sm-6 animate__animated animate__fadeIn">
-            <div class="card">
-           <a href="{{ post.url }}">   <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}">
-           </a>
-              <div class="card-body">
-                <h5 class="card-title" style="max-width:100%;">{{ post.title }}</h5>
-                <a href="{{ post.url }}" class="btn btn-primary">Read More
-                        </a>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
 
 
  
