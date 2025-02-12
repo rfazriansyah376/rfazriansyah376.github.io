@@ -14,7 +14,7 @@ jobs:
 
       - name: Check Blogger Feed Availability
         run: |
-          if curl --head --silent --fail "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=1&alt=json"; then
+          if curl --head --silent --fail "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=1&alt=json"; then
             echo "Feed is available"
           else
             echo "Feed is NOT available"
