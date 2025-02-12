@@ -23,7 +23,7 @@ jobs:
 
       - name: Fetch Blogger Feed
         run: |
-          curl -A "Mozilla/5.0" -s --max-time 60 "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json || wget -O blogger_feed.json "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json"
+          curl -A "Mozilla/5.0" -s --max-time 60 "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json || wget -O blogger_feed.json "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json"
 
       - name: Convert JSON to Jekyll Format
         run: |
