@@ -30,12 +30,13 @@ jobs:
             (.link[] | select(.rel == "alternate") | .href) as $permalink |
             ($title | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase) as $slug |
             "_posts/" + $date + "-" + $slug + ".html" as $filename |
-            "---\nlayout: post\ntitle: \"" + $title + "\"\nauthor: admin\ncategories: [" + $categories + "]\nimage: \"" + $image + "\"\n---\n\n" + $content | 
+            "---\nlayout: post\ntitle: \"" + $title + "\"\nauthor: admin\ncategories: [" + $categories + "]\nimage: \"" + $image + "\"\npermalink: " + $permalink + "\n---\n\n" + $content | 
             { filename: $filename, content: . }' blogger_feed.json > parsed_feed.json
 
           cat parsed_feed.json | jq -c '.[]' | while read -r post; do
             filename=$(echo "$post" | jq -r '.filename')
             content=$(echo "$post" | jq -r '.content')
+            mkdir -p "$(dirname "$filename")"
             echo "$content" > "$filename"
           done
 
