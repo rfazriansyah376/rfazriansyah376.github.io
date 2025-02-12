@@ -1,0 +1,25 @@
+name: Sync Blogger Feed
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Jalankan setiap hari
+  workflow_dispatch: # Bisa dijalankan manual
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch Blogger Feed
+        run: |
+          curl -s "https://blogmu.blogspot.com/feeds/posts/default?alt=json" > blogger_feed.json
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add blogger_feed.json
+          git commit -m "Update Blogger Feed" || exit 0
+          git push
