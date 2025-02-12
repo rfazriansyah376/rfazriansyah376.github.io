@@ -1,4 +1,4 @@
-name: Sync Blogger Feed to Jekyll Format
+name: Sync Blogger Feed to Jekyll
 
 on:
   schedule:
@@ -12,36 +12,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check Blogger Feed Availability
-        run: |
-          if curl --head --silent --fail "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=1&alt=json"; then
-            echo "Feed is available"
-          else
-            echo "Feed is NOT available"
-            exit 1
-          fi
-
       - name: Fetch Blogger Feed
         run: |
-          curl -A "Mozilla/5.0" -s --max-time 60 "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json || wget -O blogger_feed.json "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json"
+          curl -s --max-time 60 "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" -o blogger_feed.json
 
-      - name: Convert JSON to Jekyll Format
+      - name: Convert JSON to Jekyll Posts
         run: |
           mkdir -p _posts
-          jq -r '
-            .feed.entry[] |
+          jq -r '.feed.entry[] | 
             {
-              date: (.published.$t | sub("T.*"; "")),
-              datetime: (.published.$t | sub("Z"; "") | sub("T"; " ")),
+              date: (.published.$t | gsub("T.*"; "")),
               slug: (.title.$t | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase),
               image: (.media$thumbnail.url // "https://via.placeholder.com/600"),
-              permalink: (.link[] | select(.rel=="alternate") | .href // ""),
               title: .title.$t,
               content: .content.$t
-            } |
-            "---\nlayout: post\ntitle: \"" + .title + "\"\nauthor: admin\nimage: \"" + .image + "\"\n---\n\n" + .content |
-            "echo '" + . + "' > _posts/" + .date + "-" + .slug + ".html"
-          ' blogger_feed.json | bash
+            } | 
+            "---\nlayout: post\ntitle: \"" + .title + "\"\nauthor: admin\nimage: \"" + .image + "\"\n---\n\n" + .content' blogger_feed.json | while read -r post; do
+              filename="_posts/$(jq -r '.date + "-" + .slug + ".html"' <<< "$post")"
+              echo "$post" > "$filename"
+            done
 
       - name: Commit and Push Changes
         run: |
