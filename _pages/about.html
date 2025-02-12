@@ -53,4 +53,21 @@ permalink: /About
 
   <p>Thank you for visiting {{ site.name }}. Together, let’s explore the fascinating world of digital marketing and achieve success in the digital age!</p>
 
+<br /><br/>
 
+<script>
+fetch('blogger_feed.json')
+    .then(response => response.json())
+    .then(data => {
+        let output = "<ul>";
+        data.feed.entry.forEach(post => {
+            let title = post.title.$t;
+            let link = post.link.find(l => l.rel === "alternate").href;
+            output += `<li><a href="${link}" target="_blank">${title}</a></li>`;
+        });
+        output += "</ul>";
+        document.getElementById("blogger-feed").innerHTML = output;
+    })
+    .catch(error => console.error("Error loading feed:", error));
+</script>
+<div id="blogger-feed">Loading...</div>
