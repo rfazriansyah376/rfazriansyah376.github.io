@@ -2,8 +2,8 @@ name: Sync Blogger Feed to Jekyll Format
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Jalankan setiap hari pukul 00:00 UTC
-  workflow_dispatch: # Bisa dijalankan secara manual
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   update-feed:
@@ -12,9 +12,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Check Blogger Feed Availability
+        run: |
+          if curl --head --silent --fail "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=1&alt=json"; then
+            echo "Feed is available"
+          else
+            echo "Feed is NOT available"
+            exit 1
+          fi
+
       - name: Fetch Blogger Feed
         run: |
-          curl -k -s --max-time 60 "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
+          curl -A "Mozilla/5.0" -s --max-time 60 "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json || wget -O blogger_feed.json "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json"
 
       - name: Convert JSON to Jekyll Format
         run: |
@@ -22,12 +31,12 @@ jobs:
           jq -r '.feed.entry[] | 
             (.published.$t | sub("T.*";"")) as $date |
             (.published.$t | sub("Z";"") | sub("T";" ")) as $datetime |
-            ($date | split("-") | .[0] + "/" + .[1] + "/" + .[2]) as $path |
             (.title.$t | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase) as $slug |
             ((.category | map(.term)) // ["uncategorized"]) as $categories |
             ((.media$thumbnail.url)? // "https://via.placeholder.com/600") as $image |
-            ("---\nlayout: post\ntitle: \"" + .title.$t + "\"\nauthor: admin\ncategories: " + ($categories | tostring) + "\nimage: \"" + $image + "\"\ndate: " + $datetime + "\npermalink: " + .link[1].href + "\n---\n\n" + .content.$t) as $content |
-            ("mkdir -p _posts/" + $path + " && echo '" + $content + "' > _posts/" + $path + "/" + $date + "-" + $slug + ".html")' blogger_feed.json | bash
+            ((.link[] | select(.rel=="alternate") | .href) // "") as $permalink |
+            ("---\nlayout: post\ntitle: \"" + .title.$t + "\"\nauthor: admin\ncategories: " + ($categories | tostring) + "\nimage: \"" + $image + "\"\n---\n\n" + .content.$t) as $content |
+            ("mkdir -p _posts && echo '" + $content + "' > _posts/" + $date + "-" + $slug + ".html")' blogger_feed.json | bash
 
       - name: Commit and Push Changes
         run: |
