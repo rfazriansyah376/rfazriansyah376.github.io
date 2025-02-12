@@ -14,7 +14,7 @@ jobs:
 
       - name: Fetch Blogger Feed
         run: |
-          curl -s "https://xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
+          curl -s "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
 
       - name: Convert JSON to Jekyll Format
         run: |
