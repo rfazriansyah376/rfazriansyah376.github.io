@@ -14,42 +14,30 @@ jobs:
 
       - name: Fetch Blogger Feed
         run: |
-          curl -s "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
+          curl -s "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
 
       - name: Convert JSON to Jekyll Format
         run: |
           mkdir -p _posts
           jq -r '
-            .feed.entry[]? |
+            .feed.entry[]? | 
             (.title.$t // "Untitled") as $title |
             (.published.$t | sub("T.*";"")) as $date |
+            (.updated.$t | sub("T"; " ") | sub("Z"; "")) as $datetime |
             (.category? | map(.term) | join(", ") // "uncategorized") as $categories |
             (.media$thumbnail?.url // "https://via.placeholder.com/600") as $image |
             (.content.$t // "No content available") as $content |
-            (.link[] | select(.rel == "alternate") | .href) as $post_url |
+            (.link[] | select(.rel == "alternate") | .href) as $permalink |
             ($title | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase) as $slug |
-            "---\nlayout: post\ntitle: \"" + $title + "\"\nauthor: admin\ncategories: [" + $categories + "]\nimage: \"" + $image + "\"\n---\n\n" + $content' blogger_feed.json > temp_posts.txt
+            "_posts/" + $date + "-" + $slug + ".html" as $filename |
+            "---\nlayout: post\ntitle: \"" + $title + "\"\nauthor: admin\ncategories: [" + $categories + "]\nimage: \"" + $image + "\"\n---\n\n" + $content | 
+            { filename: $filename, content: . }' blogger_feed.json > parsed_feed.json
 
-          while IFS= read -r line; do
-            if [[ $line == "---" ]]; then
-              if [[ -n "$post_data" ]]; then
-                post_file="_posts/${post_date}-${post_slug}.html"
-                echo "$post_data" > "$post_file"
-              fi
-              post_data="$line"
-              post_date=""
-              post_slug=""
-            else
-              post_data+=$'\n'"$line"
-              [[ $line == "date: "* ]] && post_date=$(echo $line | cut -d' ' -f2)
-              [[ $line == "title: "* ]] && post_slug=$(echo $line | awk -F '"' '{print $2}' | tr '[:upper:]' '[:lower:]' | tr -s ' ' '-' | tr -dc 'a-z0-9-')
-            fi
-          done < temp_posts.txt
-
-          if [[ -n "$post_data" ]]; then
-            post_file="_posts/${post_date}-${post_slug}.html"
-            echo "$post_data" > "$post_file"
-          fi
+          cat parsed_feed.json | jq -c '.[]' | while read -r post; do
+            filename=$(echo "$post" | jq -r '.filename')
+            content=$(echo "$post" | jq -r '.content')
+            echo "$content" > "$filename"
+          done
 
       - name: Commit and Push Changes
         run: |
