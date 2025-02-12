@@ -1,0 +1,38 @@
+name: Import Blogger Posts to GitHub Pages
+
+on:
+  schedule:
+    # Menjalankan otomatis setiap hari pada pukul 02:00 UTC
+    - cron: '0 2 * * *'
+  push:
+    branches:
+      - main  # atau branch yang sesuai dengan repositori Anda
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Python script to import posts from Blogger
+        run: |
+          python import_blogger.py
+
+      - name: Commit and push the changes
+        run: |
+          git config --global user.email "youremail@example.com"
+          git config --global user.name "Your Name"
+          git add _posts/*
+          git commit -m "Update blog posts from Blogger"
+          git push
