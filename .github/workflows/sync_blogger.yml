@@ -1,49 +1,38 @@
-name: Sync Blogger Feed to Jekyll
+name: Sync Blogger Feed to Jekyll Format
 
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: "0 0 * * *" # Jalankan setiap hari pukul 00:00 UTC
+  workflow_dispatch: # Bisa dijalankan secara manual
 
 jobs:
   update-feed:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Fetch Blogger Feed
         run: |
-          curl -s "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
+          curl -k -s --max-time 60 "https://www.xcelebram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
 
       - name: Convert JSON to Jekyll Format
         run: |
           mkdir -p _posts
-          jq -r '
-            .feed.entry[]? | 
-            (.title.$t // "Untitled") as $title |
+          jq -r '.feed.entry[] | 
             (.published.$t | sub("T.*";"")) as $date |
-            (.updated.$t | sub("T"; " ") | sub("Z"; "")) as $datetime |
-            (.category? | map(.term) | join(", ") // "uncategorized") as $categories |
-            (.media$thumbnail?.url // "https://via.placeholder.com/600") as $image |
-            (.content.$t // "No content available") as $content |
-            (.link[] | select(.rel == "alternate") | .href) as $permalink |
-            ($title | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase) as $slug |
-            "_posts/" + $date + "-" + $slug + ".html" as $filename |
-            "---\nlayout: post\ntitle: \"" + $title + "\"\nauthor: admin\ncategories: [" + $categories + "]\nimage: \"" + $image + "\"\npermalink: " + $permalink + "\n---\n\n" + $content | 
-            { filename: $filename, content: . }' blogger_feed.json > parsed_feed.json
-
-          cat parsed_feed.json | jq -c '.[]' | while read -r post; do
-            filename=$(echo "$post" | jq -r '.filename')
-            content=$(echo "$post" | jq -r '.content')
-            mkdir -p "$(dirname "$filename")"
-            echo "$content" > "$filename"
-          done
+            (.published.$t | sub("Z";"") | sub("T";" ")) as $datetime |
+            ($date | split("-") | .[0] + "/" + .[1] + "/" + .[2]) as $path |
+            (.title.$t | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase) as $slug |
+            ((.category | map(.term)) // ["uncategorized"]) as $categories |
+            ((.media$thumbnail.url)? // "https://via.placeholder.com/600") as $image |
+            ("---\nlayout: post\ntitle: \"" + .title.$t + "\"\nauthor: admin\ncategories: " + ($categories | tostring) + "\nimage: \"" + $image + "\"\ndate: " + $datetime + "\npermalink: " + .link[1].href + "\n---\n\n" + .content.$t) as $content |
+            ("mkdir -p _posts/" + $path + " && echo '" + $content + "' > _posts/" + $path + "/" + $date + "-" + $slug + ".html")' blogger_feed.json | bash
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add _posts/
-          git commit -m "Update Blogger Feed to Jekyll" || exit 0
+          git commit -m "Update Blogger Feed to Jekyll Format" || exit 0
           git push
