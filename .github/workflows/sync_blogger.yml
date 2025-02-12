@@ -34,8 +34,8 @@ jobs:
               date: (.published.$t | sub("T.*"; "")),
               datetime: (.published.$t | sub("Z"; "") | sub("T"; " ")),
               slug: (.title.$t | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase),
-              image: ((.media$thumbnail.url)? // "https://via.placeholder.com/600"),
-              permalink: ((.link[] | select(.rel=="alternate") | .href) // ""),
+              image: (.media$thumbnail.url // "https://via.placeholder.com/600"),
+              permalink: (.link[] | select(.rel=="alternate") | .href // ""),
               title: .title.$t,
               content: .content.$t
             } |
