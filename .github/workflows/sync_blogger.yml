@@ -2,8 +2,8 @@ name: Sync Blogger Feed to Jekyll Format
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # Jalankan setiap hari pukul 00:00 UTC
-  workflow_dispatch:  # Bisa dijalankan secara manual
+    - cron: "0 0 * * *" # Jalankan setiap hari pukul 00:00 UTC
+  workflow_dispatch: # Bisa dijalankan secara manual
 
 jobs:
   update-feed:
@@ -15,20 +15,50 @@ jobs:
       - name: Fetch Blogger Feed
         run: |
           curl -s "https://www.xcelebgram.my.id/feeds/posts/default?start-index=1&max-results=9999&alt=json" > blogger_feed.json
+          cat blogger_feed.json  # Debug: Lihat isi JSON
 
       - name: Convert JSON to Jekyll Format
         run: |
           mkdir -p _posts
-          jq -r '.feed.entry[] | 
-            (.published.$t | sub("T.*";"")) as $date |
-            (.published.$t | sub("Z";"") | sub("T";" ")) as $datetime |
-            ($date | split("-") | .[0] + "/" + .[1] + "/" + .[2]) as $path |
-            (.title.$t | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase) as $slug |
-            ((.category | map(.term)) // ["uncategorized"]) as $categories |
+          jq -r '
+            .feed.entry[]? |
+            (.published.$t // "") as $datetime |
+            (.title.$t // "Untitled") as $title |
+            ($datetime | sub("T.*";"") // "0000-00-00") as $date |
+            ($title | gsub("[^a-zA-Z0-9]+"; "-") | ascii_downcase) as $slug |
+            ((.category | map(.term) | join(", ")) // "uncategorized") as $categories |
             ((.media$thumbnail.url // "https://via.placeholder.com/600") as $image) |
             ((.content.$t // "No content available") as $content) |
-            ("---\nlayout: xp\ntitle: \"" + .title.$t + "\"\nauthor: admin\ncategories: " + ($categories | tostring) + "\nimage: \"" + $image + "\"\ndate: " + $datetime + "\n---\n\n" + $content) as $full_content |
-            ("mkdir -p _posts/" + $path + " && echo '" + $full_content + "' > _posts/" + $path + "/" + $date + "-" + $slug + ".html")' blogger_feed.json | bash
+            "---\nlayout: xp\ntitle: \"" + $title + "\"\nauthor: admin\ncategories: [" + $categories + "]\nimage: \"" + $image + "\"\ndate: " + $datetime + "\n---\n\n" + $content' blogger_feed.json > temp_posts.txt
+
+          # Debug: Tampilkan hasil parsing JSON
+          cat temp_posts.txt
+
+          # Simpan hasil ke file individual
+          while IFS= read -r line; do
+            if [[ $line == "---" ]]; then
+              if [[ -n "$post_data" ]]; then
+                # Simpan post sebelumnya
+                post_file="_posts/${post_date}-${post_slug}.html"
+                echo "$post_data" > "$post_file"
+                echo "Saved: $post_file"
+              fi
+              post_data="$line"
+              post_date=""
+              post_slug=""
+            else
+              post_data+=$'\n'"$line"
+              [[ $line == "date: "* ]] && post_date=$(echo $line | cut -d' ' -f2)
+              [[ $line == "title: "* ]] && post_slug=$(echo $line | awk -F '"' '{print $2}' | tr '[:upper:]' '[:lower:]' | tr -s ' ' '-' | tr -dc 'a-z0-9-')
+            fi
+          done < temp_posts.txt
+
+          # Simpan post terakhir
+          if [[ -n "$post_data" ]]; then
+            post_file="_posts/${post_date}-${post_slug}.html"
+            echo "$post_data" > "$post_file"
+            echo "Saved: $post_file"
+          fi
 
       - name: Commit and Push Changes
         run: |
