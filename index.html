@@ -1,73 +1,64 @@
-<script>
-(async () => {
-  const host = location.hostname.toLowerCase().trim();
-  const parts = host.split(".");
-  let filePath = "";
-
-  // Fungsi ambil nama domain utama
-  function getMainDomain(p) {
-    if (p.length >= 3) return p[p.length - 3];
-    if (p.length === 2) return p[0];
-    return "unknown";
-  }
-
-  const main = getMainDomain(parts);
-
-  // Tentukan path index berdasarkan subdomain
-  if (parts.length > 2) {
-    const sub = parts[0];
-    filePath = (sub === "www")
-      ? `/index/www.${main}.index.html`
-      : `/index/${sub}.index.html`;
-  } else {
-    filePath = `/index/${main}.index.html`;
-  }
-
-  // Fungsi untuk memuat HTML penuh
-  async function loadHTML(path) {
-    const res = await fetch(path, { cache: "no-store" });
-    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-    const html = await res.text();
-    document.open();
-    document.write(html);
-    document.close();
-  }
-
-  // Proses dengan fallback berlapis
-  try {
-    await loadHTML(filePath);
-  } catch (err1) {
-    console.warn(`❌ Gagal: ${filePath}`, err1);
-    try {
-      const fallback = "/index/fallback.index.html";
-      console.warn(`➡️ Mencoba fallback: ${fallback}`);
-      await loadHTML(fallback);
-    } catch (err2) {
-      console.error("❌ Fallback juga gagal:", err2);
-
-      // Jika fallback juga tidak ada, tampilkan HTML darurat penuh
-      const emergencyHTML = `
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Halaman Tidak Ditemukan</title>
+<title>Dynamic Domain Index</title>
 <style>
-  body { font-family: sans-serif; text-align: center; padding: 3rem; background: #fafafa; }
-  h1 { font-size: 2rem; color: #333; }
-  p { color: #666; margin-top: 1rem; }
+  html,body {margin:0;padding:0;height:100%;width:100%;}
+  iframe {border:0;width:100%;height:100%;}
 </style>
 </head>
 <body>
-  <h1>Halaman Tidak Ditemukan</h1>
-  <p>File <code>${filePath}</code> dan <code>/index/fallback.index.html</code> tidak tersedia.</p>
-</body>
-</html>`;
+<script>
+(async () => {
+  const host = location.hostname; // contoh: www.domain.my.id
+  const parts = host.split(".");
+
+  let filePath = "";
+  // === Aturan utama ===
+  if (host.startsWith("www.")) {
+    // contoh: www.domain.my.id --> www.domain.html
+    const domain = parts.slice(-3).join("."); // domain.my.id
+    filePath = `/index/www.${domain.split(".")[0]}.html`;
+  } else if (parts.length >= 3) {
+    // contoh: sub.domain.my.id --> sub.domain.html
+    const sub = parts[0];
+    const domain = parts.slice(-3).join(".");
+    filePath = `/index/${sub}.${domain.split(".")[0]}.html`;
+  } else {
+    // contoh: domain.my.id atau domain.com --> domain.html
+    const domain = parts[0];
+    filePath = `/index/${domain}.html`;
+  }
+
+  try {
+    const res = await fetch(filePath);
+    if (res.ok) {
+      const html = await res.text();
       document.open();
-      document.write(emergencyHTML);
+      document.write(html);
+      document.close();
+    } else {
+      // fallback jika tidak ada file
+      const fallback = await fetch("/index/fallback.index.html");
+      if (fallback.ok) {
+        const html = await fallback.text();
+        document.open();
+        document.write(html);
+        document.close();
+      }
+    }
+  } catch (e) {
+    const fallback = await fetch("/index/fallback.index.html");
+    if (fallback.ok) {
+      const html = await fallback.text();
+      document.open();
+      document.write(html);
       document.close();
     }
   }
 })();
 </script>
+</body>
+</html>
