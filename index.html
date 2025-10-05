@@ -201,13 +201,13 @@ layout: null
   const parts = host.split(".");
   let filePath = "";
 
-  // Fungsi bantu untuk ambil nama domain utama (bukan TLD)
+  // 🔹 Ambil nama domain utama (contoh: domain dari www.domain.my.id)
   function getMainDomain(parts) {
-    if (parts.length >= 3) return parts[parts.length - 3]; // domain.my.id / domain.co.id / domain.com
+    if (parts.length >= 3) return parts[parts.length - 3];
     return parts[0];
   }
 
-  // 🔹 Tentukan file sesuai struktur domain
+  // 🔹 Tentukan path sesuai struktur domain
   if (parts.length > 2) {
     const sub = parts[0];
     const domainMain = getMainDomain(parts);
@@ -222,10 +222,10 @@ layout: null
     filePath = `/index/${domainMain}.index.html`;
   }
 
-  // 🔹 Fungsi load halaman
+  // 🔹 Fungsi untuk memuat halaman penuh
   async function loadPage(path) {
     const res = await fetch(path);
-    if (!res.ok) throw new Error("not found");
+    if (!res.ok) throw new Error(`404 ${path}`);
     const html = await res.text();
     document.open();
     document.write(html);
@@ -235,13 +235,20 @@ layout: null
   // 🔹 Urutan fallback
   try {
     await loadPage(filePath);
-  } catch {
-    console.warn(`❌ Tidak ditemukan: ${filePath}, mencoba /index/fallback.index.html`);
+  } catch (err1) {
+    console.warn(`❌ Tidak ditemukan: ${filePath}`);
     try {
+      console.warn(`➡️ Mencoba fallback: /index/fallback.index.html`);
       await loadPage("/index/fallback.index.html");
-    } catch {
-      console.warn("❌ fallback.index.html juga tidak ditemukan, pakai index.html utama.");
-      document.body.innerHTML = "<div style='padding:2rem;text-align:center;'>Memuat halaman utama...</div>";
+    } catch (err2) {
+      console.error("❌ fallback.index.html juga tidak ditemukan!");
+      // tampilkan pesan minimal agar tidak blank
+      document.body.innerHTML = `
+        <div style="text-align:center;padding:2rem;">
+          Tidak dapat memuat halaman.<br>
+          File yang dicari: <code>${filePath}</code><br>
+          Fallback: <code>/index/fallback.index.html</code> juga tidak ada.
+        </div>`;
     }
   }
 })();
