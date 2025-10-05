@@ -6,7 +6,7 @@
 <title>Mengalihkan...</title>
 <script>
 (async function() {
-  const host = location.hostname.toLowerCase(); // contoh: sub.domain.my.id
+  const host = location.hostname.toLowerCase(); 
   const parts = host.split(".");
   let target = "";
 
@@ -19,22 +19,33 @@
     } else {
       target = `/index/${first}.${second}.html`; // sub.domain.com -> /index/sub.domain.html
     }
+
   } else if (parts.length === 2) {
     target = `/index/${parts[0]}.html`; // domain.com -> /index/domain.html
   } else {
     target = `/index/fallback.html`;
   }
 
-  // Cek apakah file target benar-benar ada
   try {
-    const res = await fetch(target, { method: "HEAD" });
+    const res = await fetch(target);
     if (res.ok) {
-      location.replace(target); // Redirect langsung jika ada
+      // Redirect langsung ke halaman yang valid
+      location.replace(target);
     } else {
-      location.replace("/index/fallback.html"); // Fallback jika tidak ada
+      // Muat isi fallback.html langsung di halaman ini
+      const fb = await fetch("/index/fallback.html");
+      const html = await fb.text();
+      document.open();
+      document.write(html);
+      document.close();
     }
   } catch {
-    location.replace("/index/fallback.html"); // Fallback jika fetch gagal
+    // Jika fetch gagal total (misalnya offline), tampilkan fallback lokal
+    const fb = await fetch("/index/fallback.html");
+    const html = await fb.text();
+    document.open();
+    document.write(html);
+    document.close();
   }
 })();
 </script>
