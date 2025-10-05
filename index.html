@@ -3,60 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dynamic Domain Index</title>
-<style>
-  html,body {margin:0;padding:0;height:100%;width:100%;}
-  iframe {border:0;width:100%;height:100%;}
-</style>
+<title>Dynamic Domain Index Loader</title>
 </head>
 <body>
 <script>
 (async () => {
-  const host = location.hostname; // contoh: www.domain.my.id
+  const host = location.hostname; // contoh: sub.domain.my.id
   const parts = host.split(".");
 
   let filePath = "";
-  // === Aturan utama ===
-  if (host.startsWith("www.")) {
-    // contoh: www.domain.my.id --> www.domain.html
-    const domain = parts.slice(-3).join("."); // domain.my.id
-    filePath = `/index/www.${domain.split(".")[0]}.html`;
-  } else if (parts.length >= 3) {
-    // contoh: sub.domain.my.id --> sub.domain.html
-    const sub = parts[0];
-    const domain = parts.slice(-3).join(".");
-    filePath = `/index/${sub}.${domain.split(".")[0]}.html`;
-  } else {
-    // contoh: domain.my.id atau domain.com --> domain.html
-    const domain = parts[0];
-    filePath = `/index/${domain}.html`;
+  let sub = "";
+  let domainName = "";
+
+  // Jika domain memiliki 3 bagian (contoh: domain.my.id)
+  if (parts.length === 3) {
+    domainName = parts[0]; // domain
+    filePath = `/index/${domainName}.html`;
+
+  // Jika domain memiliki 4 bagian (contoh: sub.domain.my.id atau www.domain.my.id)
+  } else if (parts.length === 4) {
+    if (parts[0] === "www") {
+      // www.domain.my.id --> www.domain.html
+      filePath = `/index/www.${parts[1]}.html`;
+    } else {
+      // sub.domain.my.id --> sub.domain.html
+      filePath = `/index/${parts[0]}.${parts[1]}.html`;
+    }
+
+  // Jika domain memiliki 2 bagian (contoh: domain.com)
+  } else if (parts.length === 2) {
+    // domain.com --> domain.html
+    filePath = `/index/${parts[0]}.html`;
+
+  // Jika domain memiliki 3 bagian (contoh: www.domain.com atau sub.domain.com)
+  } else if (parts.length === 3) {
+    if (parts[0] === "www") {
+      // www.domain.com --> www.domain.html
+      filePath = `/index/www.${parts[1]}.html`;
+    } else {
+      // sub.domain.com --> sub.domain.html
+      filePath = `/index/${parts[0]}.${parts[1]}.html`;
+    }
   }
 
   try {
     const res = await fetch(filePath);
-    if (res.ok) {
-      const html = await res.text();
-      document.open();
-      document.write(html);
-      document.close();
-    } else {
-      // fallback jika tidak ada file
-      const fallback = await fetch("/index/fallback.index.html");
-      if (fallback.ok) {
-        const html = await fallback.text();
-        document.open();
-        document.write(html);
-        document.close();
-      }
-    }
-  } catch (e) {
-    const fallback = await fetch("/index/fallback.index.html");
-    if (fallback.ok) {
-      const html = await fallback.text();
-      document.open();
-      document.write(html);
-      document.close();
-    }
+    if (!res.ok) throw new Error("not found");
+
+    const html = await res.text();
+    document.open();
+    document.write(html);
+    document.close();
+  } catch {
+    // fallback jika file tidak ditemukan
+    const fallback = "/index/fallback.html";
+    const res = await fetch(fallback);
+    const html = await res.text();
+    document.open();
+    document.write(html);
+    document.close();
   }
 })();
 </script>
