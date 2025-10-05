@@ -3,39 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redirecting...</title>
+<title>Mengalihkan...</title>
 <script>
-(function() {
-  const host = location.hostname; // contoh: sub.domain.my.id
+(async function() {
+  const host = location.hostname.toLowerCase(); // contoh: sub.domain.my.id
   const parts = host.split(".");
   let target = "";
 
-  if (parts.length === 4) {
-    // Contoh: sub.domain.my.id atau www.domain.my.id
-    if (parts[0] === "www") {
-      target = `/index/www.${parts[1]}.html`; // www.domain.my.id -> /index/www.domain.html
-    } else {
-      target = `/index/${parts[0]}.${parts[1]}.html`; // sub.domain.my.id -> /index/sub.domain.html
-    }
+  if (parts.length >= 3) {
+    const first = parts[0];      // contoh: sub atau www
+    const second = parts[1];     // contoh: domain
 
-  } else if (parts.length === 3) {
-    // Contoh: domain.my.id atau www.domain.com
-    if (parts[0] === "www") {
-      target = `/index/www.${parts[1]}.html`; // www.domain.com -> /index/www.domain.html
+    if (first === "www") {
+      target = `/index/www.${second}.html`;  // www.domain.com -> /index/www.domain.html
     } else {
-      target = `/index/${parts[0]}.html`; // domain.my.id -> /index/domain.html
+      target = `/index/${first}.${second}.html`; // sub.domain.com -> /index/sub.domain.html
     }
-
   } else if (parts.length === 2) {
-    // Contoh: domain.com
     target = `/index/${parts[0]}.html`; // domain.com -> /index/domain.html
   } else {
-    // fallback jika struktur tidak dikenali
     target = `/index/fallback.html`;
   }
 
-  // Redirect langsung
-  location.replace(target);
+  // Cek apakah file target benar-benar ada
+  try {
+    const res = await fetch(target, { method: "HEAD" });
+    if (res.ok) {
+      location.replace(target); // Redirect langsung jika ada
+    } else {
+      location.replace("/index/fallback.html"); // Fallback jika tidak ada
+    }
+  } catch {
+    location.replace("/index/fallback.html"); // Fallback jika fetch gagal
+  }
 })();
 </script>
 </head>
