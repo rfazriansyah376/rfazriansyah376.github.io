@@ -13,55 +13,55 @@
 
   <script>
   (async () => {
-    const host = window.location.hostname; // contoh: www.domain.my.id
+    const host = window.location.hostname;
     const parts = host.split(".");
     let filePath = "";
 
-    // Cek apakah pakai subdomain
+    // 🔹 Tentukan path file berdasarkan domain/subdomain
     if (parts.length > 2) {
-      // Kasus subdomain biasa
-      const sub = parts[0]; // contoh: www atau subdo3
-      const domainMain = parts.slice(-3, -2)[0]; // contoh: domain dari domain.my.id
-
-      // Kalau subdomain adalah 'www'
+      const sub = parts[0];
+      const domainMain = parts.slice(-3, -2)[0];
       if (sub === "www") {
         filePath = `/index/www.${domainMain}.index.html`;
       } else {
         filePath = `/index/${sub}.index.html`;
       }
     } else {
-      // Kasus domain utama tanpa subdomain
-      const domainMain = parts[0]; // contoh: domain dari domain.my.id
+      const domainMain = parts[0];
       filePath = `/index/${domainMain}.index.html`;
     }
 
-    try {
-      // Coba fetch file yang sesuai
-      const res = await fetch(filePath);
-      if (!res.ok) throw new Error("no match");
-      const html = await res.text();
+    // 🔹 Fungsi aman untuk memuat halaman
+    async function safeLoad(path) {
+      try {
+        const res = await fetch(path);
+        const html = await res.text();
 
-      // Replace seluruh halaman dengan isi file target
-      document.open();
-      document.write(html);
-      document.close();
-    } catch (e) {
-      // Fallback ke index.html utama
-      document.getElementById("app").textContent = "Loading Your Content...";
-      console.warn(`File tidak ditemukan (${filePath}), fallback ke index.html`);
+        // deteksi jika file tidak ada tapi server balas 200 dengan isi error
+        if (!res.ok || html.trim().length < 50 || html.includes("404") && html.includes("<html")) {
+          throw new Error("invalid file or 404 page");
+        }
+
+        document.open();
+        document.write(html);
+        document.close();
+        return true;
+      } catch (err) {
+        console.warn(`❌ Gagal memuat ${path}:`, err.message);
+        return false;
+      }
+    }
+
+    // 🔹 Urutan fallback
+    const ok = await safeLoad(filePath);
+    if (!ok) {
+      const fallbackOk = await safeLoad("/index/fallback.index.html");
+      if (!fallbackOk) {
+        document.getElementById("app").textContent = "Memuat halaman utama...";
+        console.warn("⚠️ Semua fallback gagal, tampilkan index.html utama.");
+      }
     }
   })();
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-  
