@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Domain Index</title>
+<style>
+  body { font-family: sans-serif; margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+  <div id="app">Loading...</div>
+
+  <script>
+  (async () => {
+    const host = window.location.hostname; // contoh: www.domain.my.id
+    const parts = host.split(".");
+    let filePath = "";
+
+    // Cek apakah pakai subdomain
+    if (parts.length > 2) {
+      // Kasus subdomain biasa
+      const sub = parts[0]; // contoh: www atau subdo3
+      const domainMain = parts.slice(-3, -2)[0]; // contoh: domain dari domain.my.id
+
+      // Kalau subdomain adalah 'www'
+      if (sub === "www") {
+        filePath = `/index/www.${domainMain}.index.html`;
+      } else {
+        filePath = `/index/${sub}.index.html`;
+      }
+    } else {
+      // Kasus domain utama tanpa subdomain
+      const domainMain = parts[0]; // contoh: domain dari domain.my.id
+      filePath = `/index/${domainMain}.index.html`;
+    }
+
+    try {
+      // Coba fetch file yang sesuai
+      const res = await fetch(filePath);
+      if (!res.ok) throw new Error("no match");
+      const html = await res.text();
+
+      // Replace seluruh halaman dengan isi file target
+      document.open();
+      document.write(html);
+      document.close();
+    } catch (e) {
+      // Fallback ke index.html utama
+      document.getElementById("app").textContent = "Memuat halaman utama...";
+      console.warn(`File tidak ditemukan (${filePath}), fallback ke index.html`);
+    }
+  })();
+  </script>
+</body>
+</html>
