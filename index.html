@@ -3,67 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dynamic Domain Index Loader</title>
-</head>
-<body>
+<title>Redirecting...</title>
 <script>
-(async () => {
+(function() {
   const host = location.hostname; // contoh: sub.domain.my.id
   const parts = host.split(".");
+  let target = "";
 
-  let filePath = "";
-  let sub = "";
-  let domainName = "";
-
-  // Jika domain memiliki 3 bagian (contoh: domain.my.id)
-  if (parts.length === 3) {
-    domainName = parts[0]; // domain
-    filePath = `/index/${domainName}.html`;
-
-  // Jika domain memiliki 4 bagian (contoh: sub.domain.my.id atau www.domain.my.id)
-  } else if (parts.length === 4) {
+  if (parts.length === 4) {
+    // Contoh: sub.domain.my.id atau www.domain.my.id
     if (parts[0] === "www") {
-      // www.domain.my.id --> www.domain.html
-      filePath = `/index/www.${parts[1]}.html`;
+      target = `/index/www.${parts[1]}.html`; // www.domain.my.id -> /index/www.domain.html
     } else {
-      // sub.domain.my.id --> sub.domain.html
-      filePath = `/index/${parts[0]}.${parts[1]}.html`;
+      target = `/index/${parts[0]}.${parts[1]}.html`; // sub.domain.my.id -> /index/sub.domain.html
     }
 
-  // Jika domain memiliki 2 bagian (contoh: domain.com)
-  } else if (parts.length === 2) {
-    // domain.com --> domain.html
-    filePath = `/index/${parts[0]}.html`;
-
-  // Jika domain memiliki 3 bagian (contoh: www.domain.com atau sub.domain.com)
   } else if (parts.length === 3) {
+    // Contoh: domain.my.id atau www.domain.com
     if (parts[0] === "www") {
-      // www.domain.com --> www.domain.html
-      filePath = `/index/www.${parts[1]}.html`;
+      target = `/index/www.${parts[1]}.html`; // www.domain.com -> /index/www.domain.html
     } else {
-      // sub.domain.com --> sub.domain.html
-      filePath = `/index/${parts[0]}.${parts[1]}.html`;
+      target = `/index/${parts[0]}.html`; // domain.my.id -> /index/domain.html
     }
+
+  } else if (parts.length === 2) {
+    // Contoh: domain.com
+    target = `/index/${parts[0]}.html`; // domain.com -> /index/domain.html
+  } else {
+    // fallback jika struktur tidak dikenali
+    target = `/index/fallback.html`;
   }
 
-  try {
-    const res = await fetch(filePath);
-    if (!res.ok) throw new Error("not found");
-
-    const html = await res.text();
-    document.open();
-    document.write(html);
-    document.close();
-  } catch {
-    // fallback jika file tidak ditemukan
-    const fallback = "/index/fallback.html";
-    const res = await fetch(fallback);
-    const html = await res.text();
-    document.open();
-    document.write(html);
-    document.close();
-  }
+  // Redirect langsung
+  location.replace(target);
 })();
 </script>
+</head>
+<body>
+<p>Mengalihkan ke halaman utama...</p>
 </body>
 </html>
