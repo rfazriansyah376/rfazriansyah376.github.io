@@ -292,9 +292,13 @@ function getCategoryCandidates(hostname) {
   };      
 }      
 
+// 🔹 Baca nomor halaman dari URL (misalnya ?page=2)
+const urlParams = new URLSearchParams(window.location.search);
+const initialPage = parseInt(urlParams.get('page')) || 1;
+
 const { sub: subCategory, domain: domainCategory } = getCategoryCandidates(window.location.hostname);      
 const POSTS_PER_PAGE = 6;      
-let currentPage = 1;      
+let currentPage = initialPage;      
 let filteredPosts = [];      
 
 fetch('/posts.json')      
@@ -380,12 +384,7 @@ function renderPosts() {
     const prevBtn = document.createElement('button');      
     prevBtn.textContent = 'Prev';      
     prevBtn.disabled = currentPage === 1;      
-    prevBtn.onclick = () => {      
-      if (currentPage > 1) {      
-        currentPage--;      
-        renderPosts();      
-      }      
-    };      
+    prevBtn.onclick = () => changePage(currentPage - 1);      
     pagination.appendChild(prevBtn);      
 
     const maxVisible = 5;      
@@ -419,15 +418,19 @@ function renderPosts() {
     const nextBtn = document.createElement('button');      
     nextBtn.textContent = 'Next';      
     nextBtn.disabled = currentPage === totalPages;      
-    nextBtn.onclick = () => {      
-      if (currentPage < totalPages) {      
-        currentPage++;      
-        renderPosts();      
-      }      
-    };      
+    nextBtn.onclick = () => changePage(currentPage + 1);      
     pagination.appendChild(nextBtn);      
   }      
 }      
+
+function changePage(page) {
+  currentPage = page;
+  renderPosts();
+
+  // 🔹 Update URL (SEO-friendly, tanpa reload)
+  const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
+  history.pushState({}, '', newUrl);
+}
 
 function addPageButton(page) {      
   const pagination = document.getElementById('pagination');      
@@ -437,10 +440,7 @@ function addPageButton(page) {
     pageBtn.disabled = true;      
     pageBtn.style.fontWeight = 'bold';      
   }      
-  pageBtn.onclick = () => {      
-    currentPage = page;      
-    renderPosts();      
-  };      
+  pageBtn.onclick = () => changePage(page);      
   pagination.appendChild(pageBtn);      
 }      
 
