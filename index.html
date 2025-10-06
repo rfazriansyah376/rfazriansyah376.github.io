@@ -98,16 +98,6 @@ layout: null
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
 
 <style>
-#recent-posts-container {
-  transition: opacity 0.3s ease;
-}
-.hidden {
-  opacity: 0;
-}
-.post-meta {
-  font-size: 0.9em;
-  color: #666;
-}
 .recent-posts {
   margin: 3rem auto;
   padding: 0 1rem;
@@ -288,8 +278,6 @@ layout: null
 </section>      
 
 <script>
-const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
-
 function getCategoryCandidates(hostname) {      
   const parts = hostname.split('.');      
   if (parts.length < 2) return { sub: null, domain: null };      
@@ -297,6 +285,7 @@ function getCategoryCandidates(hostname) {
   const domain = (maybeDomainIndex >= 0) ? parts[maybeDomainIndex] : parts[0];      
   const subLabels = (maybeDomainIndex > 0) ? parts.slice(0, maybeDomainIndex) : [];      
   const rawSub = subLabels.length ? subLabels.join('.') : null;      
+  const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
   return {      
     sub: rawSub ? normalize(rawSub) : null,      
     domain: domain ? normalize(domain) : null      
@@ -305,7 +294,7 @@ function getCategoryCandidates(hostname) {
 
 const { sub: subCategory, domain: domainCategory } = getCategoryCandidates(window.location.hostname);      
 const POSTS_PER_PAGE = 6;      
-let currentPage = parseInt(new URLSearchParams(location.search).get('page')) || 1;      
+let currentPage = 1;      
 let filteredPosts = [];      
 
 fetch('/posts.json')      
@@ -314,25 +303,28 @@ fetch('/posts.json')
     return res.json();      
   })      
   .then(posts => {      
+    const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
     if (!Array.isArray(posts) || posts.length === 0) {      
       return renderNoPosts();      
     }      
 
-    // filter berdasarkan kategori subdomain
+    // 1️⃣ coba filter berdasarkan subdomain lebih dulu
     if (subCategory) {      
       filteredPosts = posts.filter(p =>      
-        Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategory)      
+        Array.isArray(p.categories) &&      
+        p.categories.some(c => normalize(c) === subCategory)      
       );      
     }      
 
-    // jika kosong, fallback ke domain
+    // 2️⃣ jika kosong, fallback ke kategori domain
     if (filteredPosts.length === 0 && domainCategory) {      
       filteredPosts = posts.filter(p =>      
-        Array.isArray(p.categories) && p.categories.some(c => normalize(c) === domainCategory)      
+        Array.isArray(p.categories) &&      
+        p.categories.some(c => normalize(c) === domainCategory)      
       );      
     }      
 
-    // fallback: semua post
+    // 3️⃣ jika tetap kosong, fallback ke semua postingan
     if (filteredPosts.length === 0) {      
       filteredPosts = posts;      
     }      
@@ -350,103 +342,91 @@ fetch('/posts.json')
 function renderPosts() {      
   const container = document.getElementById('recent-posts-container');      
   const pagination = document.getElementById('pagination');      
-  container.classList.add('hidden');      
-  setTimeout(() => {      
-    container.innerHTML = '';      
-    pagination.innerHTML = '';      
+  container.innerHTML = '';      
+  pagination.innerHTML = '';      
 
-    const start = (currentPage - 1) * POSTS_PER_PAGE;      
-    const end = start + POSTS_PER_PAGE;      
-    const pagePosts = filteredPosts.slice(start, end);      
+  const start = (currentPage - 1) * POSTS_PER_PAGE;      
+  const end = start + POSTS_PER_PAGE;      
+  const pagePosts = filteredPosts.slice(start, end);      
 
-    pagePosts.forEach(post => {      
-      const card = document.createElement('div');      
-      card.className = 'post-card';      
+  pagePosts.forEach(post => {      
+    const card = document.createElement('div');      
+    card.className = 'post-card';      
 
-      const linkImg = document.createElement('a');      
-      linkImg.href = post.url || '#';      
-      const img = document.createElement('img');      
-      img.loading = 'lazy';      
-      img.decoding = 'async';      
-      img.referrerPolicy = 'no-referrer';      
-      img.alt = post.title || 'Thumbnail';      
-      img.style.width = '100%';      
-      img.style.height = 'auto';      
-      img.src = post.image || '/assets/default-thumb.jpg';      
-      linkImg.appendChild(img);      
-      card.appendChild(linkImg);      
+    const linkImg = document.createElement('a');      
+    linkImg.href = post.url || '#';      
+    const img = document.createElement('img');      
+    img.loading = 'lazy';      
+    img.alt = post.title || '';      
+    img.style.width = '100%';      
+    img.style.height = 'auto';      
+    img.src = post.image || '/assets/default-thumb.jpg';      
+    linkImg.appendChild(img);      
+    card.appendChild(linkImg);      
 
-      const h3 = document.createElement('h3');      
-      const linkTitle = document.createElement('a');      
-      linkTitle.href = post.url || '#';      
-      linkTitle.textContent = post.title || '(no title)';      
-      h3.appendChild(linkTitle);      
-      card.appendChild(h3);      
+    const h3 = document.createElement('h3');      
+    const linkTitle = document.createElement('a');      
+    linkTitle.href = post.url || '#';      
+    linkTitle.textContent = post.title || '(no title)';      
+    h3.appendChild(linkTitle);      
+    card.appendChild(h3);      
 
-      // Tambahkan meta info (tanggal dan tag)
-      const meta = document.createElement('p');      
-      meta.className = 'post-meta';      
-      const dateText = new Date(post.date).toLocaleDateString();      
-      const tags = Array.isArray(post.tags) ? post.tags.join(', ') : '';      
-      meta.textContent = `${dateText}${tags ? ' · ' + tags : ''}`;      
-      card.appendChild(meta);      
+    container.appendChild(card);      
+  });      
 
-      container.appendChild(card);      
-    });      
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);      
 
-    const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);      
-
-    if (totalPages > 1) {      
-      const prevBtn = document.createElement('button');      
-      prevBtn.textContent = 'Prev';      
-      prevBtn.disabled = currentPage === 1;      
-      prevBtn.onclick = () => {      
-        if (currentPage > 1) {      
-          currentPage--;      
-          renderPosts();      
-        }      
-      };      
-      pagination.appendChild(prevBtn);      
-
-      const maxVisible = 5;      
-      let startPage = Math.max(1, currentPage - 2);      
-      let endPage = Math.min(totalPages, currentPage + 2);      
-
-      if (currentPage <= 3) {      
-        endPage = Math.min(totalPages, maxVisible);      
-      } else if (currentPage >= totalPages - 2) {      
-        startPage = Math.max(1, totalPages - maxVisible + 1);      
+  if (totalPages > 1) {      
+    const prevBtn = document.createElement('button');      
+    prevBtn.textContent = 'Prev';      
+    prevBtn.disabled = currentPage === 1;      
+    prevBtn.onclick = () => {      
+      if (currentPage > 1) {      
+        currentPage--;      
+        renderPosts();      
       }      
+    };      
+    pagination.appendChild(prevBtn);      
 
-      if (startPage > 1) {      
-        addPageButton(1);      
-        if (startPage > 2) addEllipsis();      
-      }      
+    const maxVisible = 5;      
+    let startPage = Math.max(1, currentPage - 2);      
+    let endPage = Math.min(totalPages, currentPage + 2);      
 
-      for (let i = startPage; i <= endPage; i++) {      
-        addPageButton(i);      
-      }      
-
-      if (endPage < totalPages) {      
-        if (endPage < totalPages - 1) addEllipsis();      
-        addPageButton(totalPages);      
-      }      
-
-      const nextBtn = document.createElement('button');      
-      nextBtn.textContent = 'Next';      
-      nextBtn.disabled = currentPage === totalPages;      
-      nextBtn.onclick = () => {      
-        if (currentPage < totalPages) {      
-          currentPage++;      
-          renderPosts();      
-        }      
-      };      
-      pagination.appendChild(nextBtn);      
+    if (currentPage <= 3) {      
+      endPage = Math.min(totalPages, maxVisible);      
+    } else if (currentPage >= totalPages - 2) {      
+      startPage = Math.max(1, totalPages - maxVisible + 1);      
     }      
 
-    updateURL();      
-    container.classList.remove('hidden');      
-  }, 150);      
+    if (startPage > 1) {      
+      addPageButton(1);      
+      if (startPage > 2) {      
+        addEllipsis();      
+      }      
+    }      
+
+    for (let i = startPage; i <= endPage; i++) {      
+      addPageButton(i);      
+    }      
+
+    if (endPage < totalPages) {      
+      if (endPage < totalPages - 1) {      
+        addEllipsis();      
+      }      
+      addPageButton(totalPages);      
+    }      
+
+    const nextBtn = document.createElement('button');      
+    nextBtn.textContent = 'Next';      
+    nextBtn.disabled = currentPage === totalPages;      
+    nextBtn.onclick = () => {      
+      if (currentPage < totalPages) {      
+        currentPage++;      
+        renderPosts();      
+      }      
+    };      
+    pagination.appendChild(nextBtn);      
+  }      
 }      
 
 function addPageButton(page) {      
@@ -456,7 +436,6 @@ function addPageButton(page) {
   if (page === currentPage) {      
     pageBtn.disabled = true;      
     pageBtn.style.fontWeight = 'bold';      
-    pageBtn.setAttribute('aria-current', 'page');      
   }      
   pageBtn.onclick = () => {      
     currentPage = page;      
@@ -472,12 +451,6 @@ function addEllipsis() {
   pagination.appendChild(span);      
 }      
 
-function updateURL() {      
-  const url = new URL(location);      
-  url.searchParams.set('page', currentPage);      
-  history.replaceState(null, '', url);      
-}      
-
 function renderNoPosts() {      
   const container = document.getElementById('recent-posts-container');      
   const pagination = document.getElementById('pagination');      
@@ -485,8 +458,6 @@ function renderNoPosts() {
   pagination.innerHTML = '';      
 }      
 </script>
-
-
 
 
 <!-- awal include mengambil dari folder /includes/ berdasarkan nama subdomain/domain -->
