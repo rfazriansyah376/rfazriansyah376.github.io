@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peta Situs</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    margin: 2rem;
+    background: #fafafa;
+    color: #222;
+  }
+  details {
+    margin: 0.3rem 0 0.3rem 1rem;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0.2rem 0;
+  }
+  ul {
+    list-style: none;
+    margin: 0.2rem 0 0.2rem 1.5rem;
+    padding: 0;
+  }
+  li {
+    margin: 0.3rem 0;
+  }
+  a {
+    color: #0070f3;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .loading {
+    color: #777;
+    font-style: italic;
+  }
+  h2,h3,h4,h5 { margin: 0.3rem 0; }
+</style>
+</head>
+<body>
+  <h2>Peta Situs</h2>
+  <p class="loading">Memuat daftar halaman...</p>
+  <div id="sitemap"></div>
+
+  <script>
+  async function loadSitemap() {
+    const container = document.getElementById("sitemap");
+    const loading = document.querySelector(".loading");
+
+    // 🔹 Daftar URL atau pola yang ingin dikecualikan
+    const excludePatterns = [
+      "/inijangan/url.html",  // contoh spesifik
+      "/drafts/",             // semua di folder drafts
+      "/private/",            // semua di folder private
+      "/temp/"                // contoh lainnya
+    ];
+
+    try {
+      const res = await fetch(`${location.origin}/sitemap.xml`);
+      if (!res.ok) throw new Error("Gagal mengambil sitemap.xml");
+
+      const text = await res.text();
+      const xml = new DOMParser().parseFromString(text, "application/xml");
+      let locs = [...xml.querySelectorAll("url > loc")].map(n =>
+        n.textContent.trim().replace(/^https?:\/\/[^/]+/i, "")
+      );
+
+      // 🔹 Filter: hapus semua yang cocok dengan daftar excludePatterns
+      locs = locs.filter(url => {
+        return !excludePatterns.some(pattern => url.includes(pattern));
+      });
+
+      loading.remove();
+
+      // 🔹 Bangun struktur pohon folder
+      const tree = {};
+      for (const path of locs) {
+        const cleanPath = path.replace(/^\/|\/$/g, "");
+        const parts = cleanPath.split("/");
+        let node = tree;
+        parts.forEach((p, i) => {
+          if (!node[p]) node[p] = { _isFile: i === parts.length - 1 && p.endsWith(".html") };
+          node = node[p];
+        });
+      }
+
+      // 🔹 Fungsi buat label ramah manusia
+      const toLabel = (name) => name.replace(/[-_]/g, " ").replace(/\.html$/i, "");
+
+      // 🔹 Fungsi rekursif render pohon HTML
+      function renderTree(obj, basePath = "", level = 2) {
+        const ul = document.createElement("ul");
+        for (const key in obj) {
+          if (key === "_isFile") continue;
+          const item = obj[key];
+          const isFile = item._isFile;
+          const label = toLabel(key);
+          const currentPath = `${basePath}/${key}`;
+
+          if (isFile) {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = currentPath;
+            a.textContent = label;
+            li.appendChild(a);
+            ul.appendChild(li);
+          } else {
+            const details = document.createElement("details");
+            const summary = document.createElement("summary");
+            const heading = document.createElement(`h${Math.min(level, 6)}`);
+            heading.textContent = label;
+            summary.appendChild(heading);
+            details.appendChild(summary);
+            const subtree = renderTree(item, currentPath, level + 1);
+            if (subtree.children.length) details.appendChild(subtree);
+            ul.appendChild(details);
+          }
+        }
+        return ul;
+      }
+
+      container.appendChild(renderTree(tree));
+
+    } catch (err) {
+      loading.textContent = "Gagal memuat sitemap.";
+      console.error(err);
+    }
+  }
+
+  loadSitemap();
+  </script>
+</body>
+</html>
