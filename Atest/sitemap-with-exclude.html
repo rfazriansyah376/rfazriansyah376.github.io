@@ -273,84 +273,84 @@ permalink: /sitemap.html
 	
 
 
-<p class="loading">Loading...</p>
-  <div id="sitemap"></div>
+<p class="loading">Memuat daftar halaman...</p>
+  <div id="sitemap-container"></div>
 
   <script>
   async function loadSitemap() {
-    const container = document.getElementById("sitemap");
-    const loading = document.querySelector(".loading");
-
-    // 🔹 Daftar URL atau pola yang ingin dikecualikan
-    const excludePatterns = [
-      "/inijangan/url.html",  // contoh spesifik
-      "/drafts/",
-      "/private/",
-      "/temp/"
-    ];
+    const container = document.getElementById('sitemap-container');
+    const loading = document.querySelector('.loading');
 
     try {
       const res = await fetch(`${location.origin}/sitemap.xml`);
       if (!res.ok) throw new Error("Gagal mengambil sitemap.xml");
 
-      const text = await res.text();
-      const xml = new DOMParser().parseFromString(text, "application/xml");
-      let locs = [...xml.querySelectorAll("url > loc")].map(n =>
-        n.textContent.trim().replace(/^https?:\/\/[^/]+/i, "")
-      );
-
-      // 🔹 Filter: hapus URL yang dikecualikan
-      locs = locs.filter(url => !excludePatterns.some(pattern => url.includes(pattern)));
-
+      const xml = new DOMParser().parseFromString(await res.text(), "application/xml");
+      const urls = xml.querySelectorAll("url > loc");
       loading.remove();
 
-      // 🔹 Bangun struktur pohon folder
+      if (!urls.length) {
+        container.innerHTML = "<p>Tidak ada URL ditemukan.</p>";
+        return;
+      }
+
+      // Daftar filter path yang harus diabaikan
+      const excludePaths = [
+        "/inijangan/",
+        "/contoh-folder-terlarang/",
+        "/draft/"
+      ];
+
+      // Simpan struktur hirarki
       const tree = {};
-      for (const path of locs) {
-        const cleanPath = path.replace(/^\/|\/$/g, "");
-        const parts = cleanPath.split("/");
-        let node = tree;
-        parts.forEach((p, i) => {
-          if (!node[p]) node[p] = { _isFile: i === parts.length - 1 && p.endsWith(".html") };
-          node = node[p];
+
+      urls.forEach(node => {
+        let path = node.textContent.trim().replace(/^https?:\/\/[^/]+/i, '');
+        if (path.endsWith('/') && path !== '/') path = path.slice(0, -1);
+
+        // ❌ Abaikan jika path mengandung salah satu filter
+        if (excludePaths.some(ex => path.includes(ex))) return;
+
+        // Pisahkan berdasarkan folder
+        const parts = path.split('/').filter(Boolean);
+        let current = tree;
+        parts.forEach((part, i) => {
+          const clean = part.replace(/\.html$/, '');
+          if (!current[clean]) current[clean] = { _path: '', _children: {} };
+          if (i === parts.length - 1) current[clean]._path = path; // simpan path untuk link
+          current = current[clean]._children;
         });
-      }
+      });
 
-      // 🔹 Ubah nama file ke teks ramah manusia
-      const toLabel = (name) => name.replace(/[-_]/g, " ").replace(/\.html$/i, "");
+      function buildList(obj, level = 2) {
+        const ul = document.createElement('ul');
+        Object.keys(obj).sort().forEach(key => {
+          const { _path, _children } = obj[key];
+          const li = document.createElement('li');
+          const textReadable = key.replace(/-/g, ' ');
 
-      // 🔹 Render pohon HTML tanpa collapse
-      function renderTree(obj, basePath = "", level = 2) {
-        const frag = document.createDocumentFragment();
-
-        Object.keys(obj).forEach(key => {
-          if (key === "_isFile") return;
-          const item = obj[key];
-          const isFile = item._isFile;
-          const label = toLabel(key);
-          const currentPath = `${basePath}/${key}`;
-
-          if (isFile) {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = currentPath;
-            a.textContent = label;
-            li.appendChild(a);
-            frag.appendChild(li);
-          } else {
+          // Jika punya anak, tambahkan heading sesuai level
+          if (Object.keys(_children).length) {
             const heading = document.createElement(`h${Math.min(level, 6)}`);
-            heading.textContent = label;
-            frag.appendChild(heading);
-            const ul = document.createElement("ul");
-            const subtree = renderTree(item, currentPath, level + 1);
-            if (subtree.childNodes.length) ul.appendChild(subtree);
-            frag.appendChild(ul);
+            heading.textContent = textReadable;
+            li.appendChild(heading);
+            li.appendChild(buildList(_children, level + 1));
+          } else if (_path) {
+            // Item terakhir, buat link
+            const a = document.createElement('a');
+            a.href = _path;
+            a.textContent = textReadable;
+            li.appendChild(a);
           }
+
+          ul.appendChild(li);
         });
-        return frag;
+        return ul;
       }
 
-      container.appendChild(renderTree(tree));
+      const structure = buildList(tree, 2);
+      container.appendChild(structure);
+
     } catch (err) {
       loading.textContent = "Gagal memuat sitemap.";
       console.error(err);
@@ -578,174 +578,3 @@ permalink: /sitemap.html
 </body>
 </html>
 
-      let locs = [...xml.querySelectorAll("url > loc")].map(n =>
-        n.textContent.trim().replace(/^https?:\/\/[^/]+/i, "")
-      );
-
-      // 🔹 Filter: hapus URL yang dikecualikan
-      locs = locs.filter(url => !excludePatterns.some(pattern => url.includes(pattern)));
-
-      loading.remove();
-
-      // 🔹 Bangun struktur pohon folder
-      const tree = {};
-      for (const path of locs) {
-        const cleanPath = path.replace(/^\/|\/$/g, "");
-        const parts = cleanPath.split("/");
-        let node = tree;
-        parts.forEach((p, i) => {
-          if (!node[p]) node[p] = { _isFile: i === parts.length - 1 && p.endsWith(".html") };
-          node = node[p];
-        });
-      }
-
-      // 🔹 Ubah nama file ke teks ramah manusia
-      const toLabel = (name) => name.replace(/[-_]/g, " ").replace(/\.html$/i, "");
-
-      // 🔹 Render pohon HTML tanpa collapse
-      function renderTree(obj, basePath = "", level = 2) {
-        const frag = document.createDocumentFragment();
-
-        Object.keys(obj).forEach(key => {
-          if (key === "_isFile") return;
-          const item = obj[key];
-          const isFile = item._isFile;
-          const label = toLabel(key);
-          const currentPath = `${basePath}/${key}`;
-
-          if (isFile) {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = currentPath;
-            a.textContent = label;
-            li.appendChild(a);
-            frag.appendChild(li);
-          } else {
-            const heading = document.createElement(`h${Math.min(level, 6)}`);
-            heading.textContent = label;
-            frag.appendChild(heading);
-            const ul = document.createElement("ul");
-            const subtree = renderTree(item, currentPath, level + 1);
-            if (subtree.childNodes.length) ul.appendChild(subtree);
-            frag.appendChild(ul);
-          }
-        });
-        return frag;
-      }
-
-      container.appendChild(renderTree(tree));
-    } catch (err) {
-      loading.textContent = "Gagal memuat sitemap.";
-      console.error(err);
-    }
-  }
-
-  loadSitemap();
-  </script>
-</body>
-</html>
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  .loading {
-    color: #777;
-    font-style: italic;
-  }
-  h2,h3,h4,h5 { margin: 0.3rem 0; }
-</style>
-</head>
-<body>
-  <h2>Peta Situs</h2>
-  <p class="loading">Memuat daftar halaman...</p>
-  <div id="sitemap"></div>
-
-  <script>
-  async function loadSitemap() {
-    const container = document.getElementById("sitemap");
-    const loading = document.querySelector(".loading");
-
-    // 🔹 Daftar URL atau pola yang ingin dikecualikan
-    const excludePatterns = [
-      "/inijangan/url.html",  // contoh spesifik
-      "/drafts/",             // semua di folder drafts
-      "/private/",            // semua di folder private
-      "/temp/"                // contoh lainnya
-    ];
-
-    try {
-      const res = await fetch(`${location.origin}/sitemap.xml`);
-      if (!res.ok) throw new Error("Gagal mengambil sitemap.xml");
-
-      const text = await res.text();
-      const xml = new DOMParser().parseFromString(text, "application/xml");
-      let locs = [...xml.querySelectorAll("url > loc")].map(n =>
-        n.textContent.trim().replace(/^https?:\/\/[^/]+/i, "")
-      );
-
-      // 🔹 Filter: hapus semua yang cocok dengan daftar excludePatterns
-      locs = locs.filter(url => {
-        return !excludePatterns.some(pattern => url.includes(pattern));
-      });
-
-      loading.remove();
-
-      // 🔹 Bangun struktur pohon folder
-      const tree = {};
-      for (const path of locs) {
-        const cleanPath = path.replace(/^\/|\/$/g, "");
-        const parts = cleanPath.split("/");
-        let node = tree;
-        parts.forEach((p, i) => {
-          if (!node[p]) node[p] = { _isFile: i === parts.length - 1 && p.endsWith(".html") };
-          node = node[p];
-        });
-      }
-
-      // 🔹 Fungsi buat label ramah manusia
-      const toLabel = (name) => name.replace(/[-_]/g, " ").replace(/\.html$/i, "");
-
-      // 🔹 Fungsi rekursif render pohon HTML
-      function renderTree(obj, basePath = "", level = 2) {
-        const ul = document.createElement("ul");
-        for (const key in obj) {
-          if (key === "_isFile") continue;
-          const item = obj[key];
-          const isFile = item._isFile;
-          const label = toLabel(key);
-          const currentPath = `${basePath}/${key}`;
-
-          if (isFile) {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = currentPath;
-            a.textContent = label;
-            li.appendChild(a);
-            ul.appendChild(li);
-          } else {
-            const details = document.createElement("details");
-            const summary = document.createElement("summary");
-            const heading = document.createElement(`h${Math.min(level, 6)}`);
-            heading.textContent = label;
-            summary.appendChild(heading);
-            details.appendChild(summary);
-            const subtree = renderTree(item, currentPath, level + 1);
-            if (subtree.children.length) details.appendChild(subtree);
-            ul.appendChild(details);
-          }
-        }
-        return ul;
-      }
-
-      container.appendChild(renderTree(tree));
-
-    } catch (err) {
-      loading.textContent = "Gagal memuat sitemap.";
-      console.error(err);
-    }
-  }
-
-  loadSitemap();
-  </script>
-</body>
-</html>
