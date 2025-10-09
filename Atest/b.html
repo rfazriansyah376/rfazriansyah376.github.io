@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daftar Halaman Situs</title>
+<title>Peta Situs</title>
 <style>
-  body { font-family: system-ui, sans-serif; margin: 2rem; background: #fafafa; color: #222; }
-  h2 { font-size: 1.4rem; margin-bottom: 1rem; }
-  ul { list-style: none; padding: 0; }
-  li { margin: 0.4rem 0; }
+  body { font-family: system-ui, sans-serif; margin: 2rem; background: #fff; color: #222; line-height: 1.6; }
+  h2 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: .5rem; text-transform: capitalize; }
+  ul { list-style: disc; margin-left: 1.5rem; padding-left: 0; }
+  li { margin: 0.3rem 0; }
   a { color: #0070f3; text-decoration: none; }
   a:hover { text-decoration: underline; }
   .loading { color: #777; font-style: italic; }
 </style>
 </head>
 <body>
-  <h2>Daftar Halaman di Situs Ini</h2>
+  <h1>Peta Situs</h1>
   <p class="loading">Memuat daftar halaman...</p>
-  <ul id="sitemap-list"></ul>
+  <div id="sitemap-container"></div>
 
   <script>
   async function loadSitemap() {
-    const list = document.getElementById('sitemap-list');
+    const container = document.getElementById('sitemap-container');
     const loading = document.querySelector('.loading');
 
     try {
@@ -37,28 +37,54 @@
       loading.remove();
 
       if (!urls.length) {
-        list.innerHTML = "<li>Tidak ada URL ditemukan.</li>";
+        container.innerHTML = "<p>Tidak ada URL ditemukan.</p>";
         return;
       }
 
+      // Grup folder
+      const groups = {};
+
       urls.forEach(node => {
         let path = node.textContent.trim();
+        path = path.replace(/^https?:\/\/[^/]+/i, ''); // hapus domain
 
-        // Hanya ambil path (tanpa domain)
-        path = path.replace(/^https?:\/\/[^/]+/i, '');
-
-        // Hilangkan trailing slash pada root (kecuali "/")
         if (path.endsWith('/') && path !== '/') path = path.slice(0, -1);
 
-        // Ambil teks tanpa ekstensi .html
-        const text = path.replace(/^\/|\.html$/g, '');
+        // Pisahkan folder dan nama file
+        const parts = path.replace(/^\/|\.html$/g, '').split('/');
+        const folder = parts.length > 1 ? parts[0] : '(root)';
+        const file = parts.length > 1 ? parts[1] : parts[0];
 
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = path;
-        a.textContent = text || 'Halaman utama';
-        li.appendChild(a);
-        list.appendChild(li);
+        if (!groups[folder]) groups[folder] = [];
+        groups[folder].push({ file, path });
+      });
+
+      // Tampilkan hasil
+      const sortedFolders = Object.keys(groups).sort();
+      sortedFolders.forEach(folder => {
+        const section = document.createElement('section');
+
+        // Jika folder bukan root, tampilkan judul H2
+        if (folder !== '(root)') {
+          const h2 = document.createElement('h2');
+          h2.textContent = folder.replace(/-/g, ' ');
+          section.appendChild(h2);
+        }
+
+        const ul = document.createElement('ul');
+        groups[folder]
+          .sort((a, b) => a.file.localeCompare(b.file))
+          .forEach(({ file, path }) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = path;
+            a.textContent = file.replace(/-/g, ' ');
+            li.appendChild(a);
+            ul.appendChild(li);
+          });
+
+        section.appendChild(ul);
+        container.appendChild(section);
       });
 
     } catch (e) {
