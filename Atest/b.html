@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peta Situs</title>
 <style>
-  body { font-family: system-ui, sans-serif; margin: 2rem; background: #fff; color: #222; line-height: 1.6; }
-  h2 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: .5rem; text-transform: capitalize; }
-  ul { list-style: disc; margin-left: 1.5rem; padding-left: 0; }
-  li { margin: 0.3rem 0; }
+  body { font-family: system-ui, sans-serif; margin: 2rem; background: #fafafa; color: #222; }
+  h2, h3, h4, h5, h6 { margin-top: 1.5rem; color: #333; text-transform: capitalize; }
+  ul { list-style: disc; margin-left: 1.5rem; }
+  li { margin: 0.4rem 0; }
   a { color: #0070f3; text-decoration: none; }
   a:hover { text-decoration: underline; }
   .loading { color: #777; font-style: italic; }
 </style>
 </head>
 <body>
-  <h1>Peta Situs</h1>
+  <h2>Peta Situs</h2>
   <p class="loading">Memuat daftar halaman...</p>
   <div id="sitemap-container"></div>
 
@@ -25,14 +25,10 @@
     const loading = document.querySelector('.loading');
 
     try {
-      const sitemapURL = `${location.origin}/sitemap.xml`;
-      const res = await fetch(sitemapURL);
+      const res = await fetch(`${location.origin}/sitemap.xml`);
       if (!res.ok) throw new Error("Gagal mengambil sitemap.xml");
 
-      const xmlText = await res.text();
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(xmlText, "application/xml");
-
+      const xml = new DOMParser().parseFromString(await res.text(), "application/xml");
       const urls = xml.querySelectorAll("url > loc");
       loading.remove();
 
@@ -41,55 +37,56 @@
         return;
       }
 
-      // Grup folder
-      const groups = {};
+      // Simpan struktur hirarki
+      const tree = {};
 
       urls.forEach(node => {
-        let path = node.textContent.trim();
-        path = path.replace(/^https?:\/\/[^/]+/i, ''); // hapus domain
-
+        let path = node.textContent.trim().replace(/^https?:\/\/[^/]+/i, '');
         if (path.endsWith('/') && path !== '/') path = path.slice(0, -1);
 
-        // Pisahkan folder dan nama file
-        const parts = path.replace(/^\/|\.html$/g, '').split('/');
-        const folder = parts.length > 1 ? parts[0] : '(root)';
-        const file = parts.length > 1 ? parts[1] : parts[0];
-
-        if (!groups[folder]) groups[folder] = [];
-        groups[folder].push({ file, path });
+        // Pisahkan berdasarkan folder
+        const parts = path.split('/').filter(Boolean);
+        let current = tree;
+        parts.forEach((part, i) => {
+          const clean = part.replace(/\.html$/, '');
+          if (!current[clean]) current[clean] = { _path: '', _children: {} };
+          if (i === parts.length - 1) current[clean]._path = path; // simpan path untuk link
+          current = current[clean]._children;
+        });
       });
 
-      // Tampilkan hasil
-      const sortedFolders = Object.keys(groups).sort();
-      sortedFolders.forEach(folder => {
-        const section = document.createElement('section');
-
-        // Jika folder bukan root, tampilkan judul H2
-        if (folder !== '(root)') {
-          const h2 = document.createElement('h2');
-          h2.textContent = folder.replace(/-/g, ' ');
-          section.appendChild(h2);
-        }
-
+      function buildList(obj, level = 2) {
         const ul = document.createElement('ul');
-        groups[folder]
-          .sort((a, b) => a.file.localeCompare(b.file))
-          .forEach(({ file, path }) => {
-            const li = document.createElement('li');
+        Object.keys(obj).sort().forEach(key => {
+          const { _path, _children } = obj[key];
+          const li = document.createElement('li');
+          const textReadable = key.replace(/-/g, ' ');
+
+          // Jika punya anak, tambahkan heading sesuai level
+          if (Object.keys(_children).length) {
+            const heading = document.createElement(`h${Math.min(level, 6)}`);
+            heading.textContent = textReadable;
+            li.appendChild(heading);
+            li.appendChild(buildList(_children, level + 1));
+          } else if (_path) {
+            // Item terakhir, buat link
             const a = document.createElement('a');
-            a.href = path;
-            a.textContent = file.replace(/-/g, ' ');
+            a.href = _path;
+            a.textContent = textReadable;
             li.appendChild(a);
-            ul.appendChild(li);
-          });
+          }
 
-        section.appendChild(ul);
-        container.appendChild(section);
-      });
+          ul.appendChild(li);
+        });
+        return ul;
+      }
 
-    } catch (e) {
+      const structure = buildList(tree, 2);
+      container.appendChild(structure);
+
+    } catch (err) {
       loading.textContent = "Gagal memuat sitemap.";
-      console.error(e);
+      console.error(err);
     }
   }
 
