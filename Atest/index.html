@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Video Player dengan Iklan VAST</title>
+
+<!-- Fluid Player -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fluid-player@3.2.4/dist/fluidplayer.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/fluid-player@3.2.4/dist/fluidplayer.min.js"></script>
+
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    background: #fafafa;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 9 / 16; /* rasio video Twitter */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+    background: #000;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 0.5rem; }
+    .video-container { border-radius: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="video-container">
+  <video id="my-video" controls preload="auto" poster="https://example.com/thumb.jpg" playsinline>
+    <source src="https://video.twimg.com/ext_tw_video/1978147954004217856/pu/vid/avc1/480x854/EvLMYTvzT4UCa5lt.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const player = fluidPlayer('my-video', {
+    layoutControls: {
+      fillToContainer: true,
+      primaryColor: '#007bff',
+      playButtonShowing: true,
+      autoPlay: false, // 🔴 autoplay dimatikan
+      mute: false,
+      loop: false,
+      controlBar: {
+        autoHideTimeout: 3,
+        animated: true
+      }
+    },
+    vastOptions: {
+      adList: [
+        {
+          roll: 'preRoll',
+          vastTag: 'https://fearless-discipline.com/dwm.F/zVdWGRNVv/ZFGGUp/Melmx9kuPZ/UalokXPRTFYf2/NZz/Y/3SM/DvAct_Nxj/Yt3LN/jocswfM/QF'
+        }
+      ],
+      adCTAText: 'Kunjungi sponsor',
+      adCTATextPosition: 'bottom right',
+      skipButtonCaption: 'Lewati iklan',
+      adText: 'Menayangkan iklan...',
+      adTextPosition: 'top left'
+    }
+  });
+});
+</script>
+
+</body>
+</html>
