@@ -1,88 +1,70 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Video Player dengan Iklan VAST</title>
-
-<!-- Fluid Player -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fluid-player@3.2.4/dist/fluidplayer.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/fluid-player@3.2.4/dist/fluidplayer.min.js"></script>
+<section id="random-posts" class="post-grid">
+  Memuat...
+</section>
 
 <style>
-  body {
-    font-family: system-ui, sans-serif;
-    background: #fafafa;
-    margin: 0;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
 
-  .video-container {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    aspect-ratio: 9 / 16; /* rasio video Twitter */
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 3px 15px rgba(0,0,0,0.2);
-    background: #000;
+@media (min-width: 600px) {
+  .post-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
+}
 
-  video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+@media (min-width: 1000px) {
+  .post-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  @media (max-width: 480px) {
-    body { padding: 0.5rem; }
-    .video-container { border-radius: 10px; }
-  }
+.post-grid a {
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f8f8f8;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.post-grid a:hover {
+  transform: scale(1.03);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+.post-grid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
 </style>
-</head>
-<body>
-
-<div class="video-container">
-  <video id="my-video" controls preload="auto" poster="https://example.com/thumb.jpg" playsinline>
-    <source src="https://video.twimg.com/ext_tw_video/1978147954004217856/pu/vid/avc1/480x854/EvLMYTvzT4UCa5lt.mp4" type="video/mp4">
-  </video>
-</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const player = fluidPlayer('my-video', {
-    layoutControls: {
-      fillToContainer: true,
-      primaryColor: '#007bff',
-      playButtonShowing: true,
-      autoPlay: false, // 🔴 autoplay dimatikan
-      mute: false,
-      loop: false,
-      controlBar: {
-        autoHideTimeout: 3,
-        animated: true
-      }
-    },
-    vastOptions: {
-      adList: [
-        {
-          roll: 'preRoll',
-          vastTag: 'https://fearless-discipline.com/dwm.F/zVdWGRNVv/ZFGGUp/Melmx9kuPZ/UalokXPRTFYf2/NZz/Y/3SM/DvAct_Nxj/Yt3LN/jocswfM/QF'
-        }
-      ],
-      adCTAText: 'Kunjungi sponsor',
-      adCTATextPosition: 'bottom right',
-      skipButtonCaption: 'Lewati iklan',
-      adText: 'Menayangkan iklan...',
-      adTextPosition: 'top left'
-    }
-  });
-});
-</script>
+fetch('/posts.json')
+  .then(res => res.json())
+  .then(data => {
+    // Acak urutan postingan
+    data.sort(() => Math.random() - 0.5);
 
-</body>
-</html>
+    // Batasi jumlah postingan (misal 12)
+    const count = 12;
+    const randomPosts = data.slice(0, count);
+
+    // Buat elemen gambar dengan lazy loading
+    const html = randomPosts.map(post => `
+      <a href="${post.url}">
+        <img src="${post.image}" alt="${post.title}" loading="lazy">
+      </a>
+    `).join('');
+
+    document.getElementById('random-posts').innerHTML = html;
+  })
+  .catch(err => {
+    console.error('Gagal memuat posts.json:', err);
+    document.getElementById('random-posts').innerText = 'Gagal memuat data postingan.';
+  });
+</script>
