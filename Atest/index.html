@@ -2,6 +2,19 @@
   Memuat...
 </section>
 
+<div style="text-align:center; margin:20px;">
+  <button id="load-more" style="
+    background:#222;
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+    transition:background 0.3s ease;
+  ">Load More Posts</button>
+</div>
+
 <style>
 .post-grid {
   display: grid;
@@ -40,31 +53,69 @@
   height: auto;
   display: block;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.post-grid img.loaded {
+  opacity: 1;
+}
+
+#load-more:hover {
+  background:#444;
 }
 </style>
 
 <script>
+let allPosts = [];
+let currentIndex = 0;
+const batchSize = 12; // jumlah posting per klik
+const container = document.getElementById('random-posts');
+const button = document.getElementById('load-more');
+
 fetch('/posts.json')
   .then(res => res.json())
   .then(data => {
     // Acak urutan postingan
-    data.sort(() => Math.random() - 0.5);
-
-    // Batasi jumlah postingan (misal 12)
-    const count = 12;
-    const randomPosts = data.slice(0, count);
-
-    // Buat elemen gambar dengan lazy loading
-    const html = randomPosts.map(post => `
-      <a href="${post.url}">
-        <img src="${post.image}" alt="${post.title}" loading="lazy">
-      </a>
-    `).join('');
-
-    document.getElementById('random-posts').innerHTML = html;
+    allPosts = data.sort(() => Math.random() - 0.5);
+    // Tampilkan batch pertama
+    renderPosts();
   })
   .catch(err => {
     console.error('Gagal memuat posts.json:', err);
-    document.getElementById('random-posts').innerText = 'Gagal memuat data postingan.';
+    container.innerText = 'Gagal memuat data postingan.';
   });
+
+function renderPosts() {
+  const nextBatch = allPosts.slice(currentIndex, currentIndex + batchSize);
+
+  const html = nextBatch.map(post => `
+    <a href="${post.url}">
+      <img src="${post.image}" alt="${post.title}" loading="lazy">
+    </a>
+  `).join('');
+
+  container.insertAdjacentHTML('beforeend', html);
+  fadeInImages();
+
+  currentIndex += batchSize;
+
+  // Sembunyikan tombol jika sudah habis
+  if (currentIndex >= allPosts.length) {
+    button.style.display = 'none';
+  }
+}
+
+function fadeInImages() {
+  const imgs = container.querySelectorAll('img:not(.loaded)');
+  imgs.forEach(img => {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', () => img.classList.add('loaded'));
+    }
+  });
+}
+
+button.addEventListener('click', renderPosts);
 </script>
