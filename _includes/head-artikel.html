@@ -8,173 +8,141 @@
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#317EFB" />
 
-<!-- awal Seo Otomatis khusus untuk Homepage -->
+<!-- Google tag (gtag.js) - multiple accounts -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WT93W2845E"></script>
 <script>
-(function () {
-  const hostname = location.hostname;
-  const pathname = location.pathname;
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
 
-  let subdomainRaw = hostname.split('.')[0];
-  if (subdomainRaw.toLowerCase() === 'www') subdomainRaw = hostname.split('.')[1] || '';
-
-  const formatText = str => str
-    .replace(/[-_]/g, ' ')
-    .replace(/\+/g, ' ')         // tambahan: ganti + jadi spasi
-    .replace(/\b\w/g, c => c.toUpperCase());
-
-  const subdomain = formatText(subdomainRaw.trim());
-  const cleanPath = pathname.replace(/^\/+|\/+$/g, '');
-  const isHome = !cleanPath || /^index\.(html?|php)$/i.test(cleanPath);
-
-  let rawPageName = cleanPath.split('/').pop() || '';
-  rawPageName = rawPageName.replace(/\.[^.]+$/, '').trim(); // hilangkan ekstensi
-  rawPageName = decodeURIComponent(rawPageName);
-
-  let titleText = isHome
-    ? subdomain
-    : `${formatText(rawPageName)} - ${subdomain}`;
-
-  // Title
-  let titleTag = document.querySelector('title') || document.createElement('title');
-  titleTag.textContent = titleText;
-  if (!titleTag.parentNode) document.head.appendChild(titleTag);
-
-  // Meta author
-  let metaAuthor = document.querySelector('meta[name="author"]') || document.createElement('meta');
-  metaAuthor.name = 'author';
-  metaAuthor.content = `${subdomain} team`;
-  if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
-
-  // OG image
-  let firstImage = document.querySelector('img');
-  let ogImageUrl = firstImage
-    ? (firstImage.src.startsWith('http') ? firstImage.src : location.origin + '/' + firstImage.src)
-    : location.origin + '/photo/fallback.png';
-
-  const setMeta = (attr, key, value) => {
-    let meta = document.querySelector(`${attr === 'property' ? 'meta[property' : 'meta[name'}="${key}"]`) || document.createElement('meta');
-    meta.setAttribute(attr, key);
-    meta.setAttribute('content', value);
-    if (!meta.parentNode) document.head.appendChild(meta);
-  };
-
-  setMeta('property', 'og:title', titleText);
-  setMeta('property', 'og:image', '/photo/fallback.png');
-  setMeta('property', 'og:url', location.href);
-  setMeta('property', 'og:type', 'website');
-
-  // Schema.org WebSite tanpa potentialAction (hilangkan sitelink search)
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": subdomain,
-    "url": location.origin
-  };
-  let schemaScript = document.createElement('script');
-  schemaScript.type = 'application/ld+json';
-  schemaScript.textContent = JSON.stringify(schemaData);
-  document.head.appendChild(schemaScript);
-
-  // Canonical otomatis sesuai halaman saat ini
-  let canonical = document.querySelector('link[rel="canonical"]') || document.createElement('link');
-  canonical.setAttribute('rel', 'canonical');
-  canonical.setAttribute('href', location.href);
-  if (!canonical.parentNode) document.head.appendChild(canonical);
-
-})();
+  // Konfigurasi semua akun Google Analytics
+  gtag('config', 'G-WT93W2845E'); // goblog google
+  gtag('config', 'G-XHCGVT06EJ'); // raisfazriansyah722@gmail.com
+  gtag('config', 'G-L239NSVMTN'); // indrianitresna42@gmail.com
+  gtag('config', 'G-XK27E9HEDZ'); // r.fazriansyah@gmail.com
+  gtag('config', 'G-LJ7MJ4Q2VW'); // raisfazriansyah01@gmail.com
+  gtag('config', 'G-W9876DR1JZ'); //asri38770@gmail.com
+  gtag('config', 'G-YFK8DZ3FHK'); //raisfazriansyah4@gmail.com
+  gtag('config', 'G-5RHX9ESPY6'); //simerah9250@gmail.com
+  gtag('config', 'G-59F9MSH3TZ'); //nyolspa1@gmail.com
+  gtag('config', 'G-F373NVXTWS'); //boktem78@gmail.com
+  gtag('config', 'G-137DJLDD8M'); //jsamsu226@gmail.com
+  gtag('config', 'G-ZT95SW0ZHJ'); //ninggrai@gmail.com
 </script>
-<!-- akhir Seo Otomatis khusus untuk homepage -->
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+
+<!-- Google Tag Manager - ninggrai@gmail.com -->
+<script>
+(function(w,d,s,l,i){
+  w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+  var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+  j.async=true;
+  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+  f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NWD665DQ');
+</script>
 
 <style>
-.recent-posts {
-  margin: 3rem auto;
-  padding: 0 1rem;
-  max-width: 1200px;
-}
-.recent-posts h2 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.recent-posts .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-.post-card {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
-}
-.post-card:hover {
-  transform: translateY(-5px);
-}
-.post-card img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.post-card h3 {
-  font-size: 1.2rem;
-  margin: 1rem;
-}
-.post-card h3 a {
-  text-decoration: none;
-  color: #222;
-}
-.post-card p {
-  font-size: 0.95rem;
-  margin: 0 1rem 1rem;
-  color: #555;
-}
+  .blf01_blogArticle {
+    margin: 2rem 0;
+    padding: 0.5rem;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
 
-/* Pagination */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-  gap: 1rem;
-}
-.pagination button {
-  background: var(--dynamic-color);
-  color: #000;
-  border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s ease;
-}
-.pagination button:hover:not(:disabled) {
-  background: var(--dynamic-color);
-}
-.pagination button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-.pagination span {
-  font-size: 0.95rem;
-  color: #333;
-}
+  .blf01_articleContent {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  /* META WRAPPER */
+  .blf01_metaLayout {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    background: var(--dynamic-color);
+    border: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* AUTHOR AREA */
+  .blf01_metaAuthor {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .blf01_writerLabel {
+    display: none; /* biar clean, bisa dipakai kalau mau tampilkan label "Writer:" */
+  }
+
+  .blf01_authorLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .blf01_authorLink:hover {
+    transform: translateY(-2px);
+    color: #0073aa;
+  }
+
+  .blf01_authorImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .blf01_authorName {
+    font-size: 0.95rem;
+  }
+
+  /* DATES + LABELS */
+  .blf01_metaRight {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: #555;
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .blf01_metaDates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .blf01_metaDates div {
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #fff;
+    font-size: 0.82rem;
+    color: var(--dynamic-color);
+  }
+
+  .blf01_labels {
+    font-size: 0.82rem;
+    color: #666;
+  }
+
+  .blf01_labels strong {
+    color: #222;
+    margin-right: 0.25rem;
+  }
 </style>
-
-
-
-
-
-<link rel="sitemap" type="application/xml" href="" id="sitemap-main">
-<link rel="alternate" type="application/rss+xml" href="" id="sitemap-feed">
-
-<script>
-(function() {
-  var origin = window.location.origin;
-  document.getElementById("sitemap-main").href = origin + "/sitemap.xml";
-  document.getElementById("sitemap-feed").href = origin + "/feed.xml";
-})();
-</script>	
-
-
