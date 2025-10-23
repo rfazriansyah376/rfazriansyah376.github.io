@@ -20,10 +20,9 @@
   </form>
 </div>
 <!-- akhir search -->
-
-    <br /><br />
-
-<center><pre>ads by Adsterra to keep my blog alive</pre><hr />
+	
+	
+	<center><pre>ads by Adsterra to keep my blog alive</pre><hr />
 <!--Adsterra by - download-def.blogspot.com - Downloads -->
 <script type="text/javascript">
 	atOptions = {
@@ -116,7 +115,9 @@
 
 
 
-
+    
+ 
+ 
 <!--FOOTER-->
 <footer style="text-align: center; padding: 30px 20px; font-size: 16px; color: #666;">
   <small>
@@ -152,6 +153,44 @@
   </script>
 </footer>
 	
-
-
 	
+	
+
+
+
+
+	<!-- Prism.js dark theme -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre code').forEach(function (block) {
+    // Tambah class Prism jika belum ada
+    if (!block.className.match(/language-/)) {
+      block.classList.add('language-html');
+    }
+
+    const pre = block.parentNode;
+
+    // Tambah tombol copy
+    if (!pre.querySelector('.copy-btn')) {
+      const button = document.createElement('button');
+      button.className = 'copy-btn';
+      button.textContent = 'Copy';
+      pre.appendChild(button);
+
+      button.addEventListener('click', function () {
+        navigator.clipboard.writeText(block.innerText).then(function () {
+          button.textContent = 'Copied!';
+          setTimeout(() => button.textContent = 'Copy', 2000);
+        });
+      });
+    }
+  });
+
+  if (window.Prism) Prism.highlightAll();
+});
+</script>
