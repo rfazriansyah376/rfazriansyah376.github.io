@@ -1,0 +1,74 @@
+<header style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--dynamic-color);">
+  <h1 id="mainTitle" style="
+      margin:0;
+      font-size:16px;
+      color:#fff;
+      flex:1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;"></h1>
+  <div class="nav-actions" style="margin-left:10px;flex-shrink:0;">
+    <button class="nav-button" id="menuToggle" title="Menu" aria-label="Menu" 
+            style="background:none;border:none;cursor:pointer;">
+      <!-- Hamburger Icon -->
+      <svg id="iconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
+           style="width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+      <!-- Close Icon -->
+      <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
+           style="display:none;width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;">
+        <path d="M6 6l12 12M6 18l12-12"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+(function(){
+  const host = window.location.hostname.split(".");
+
+  let sub = "";
+
+  if (host[0] === "www") {
+    // www.domain.my.id → ambil host[1]
+    sub = host[1];
+  } else if (host.length === 3) {
+    // domain.my.id → ambil host[0]
+    sub = host[0];
+  } else if (host.length === 4) {
+    // sub01.domain.my.id → ambil host[0]
+    sub = host[0];
+  } else {
+    // fallback, ambil bagian pertama
+    sub = host[0];
+  }
+
+  const clean = sub.replace(/-/g, " "); // ganti strip jadi spasi
+  const title = clean.replace(/\b\w/g, c => c.toUpperCase()); // kapital awal kata
+  document.getElementById("mainTitle").textContent = title;
+})();
+</script>
+
+<div id="menuPanel" style="display:none;background:#333;padding:10px;">
+  <ul style="list-style:none;margin:0;padding:0;">
+    <li><a href="/" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Home</a></li>
+    <li><a href="/contact.html" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Contact</a></li>
+    <li><a href="/privacy-policy.html" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Privacy Policy</a></li>
+    <li><a href="/terms-and-conditions.html" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Terms & Conditions</a></li>
+  </ul>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('menuToggle');
+  const menuPanel = document.getElementById('menuPanel');
+  const iconMenu = document.getElementById('iconMenu');
+  const iconClose = document.getElementById('iconClose');
+
+  toggleBtn.addEventListener('click', () => {
+    const isVisible = menuPanel.style.display === 'block';
+    menuPanel.style.display = isVisible ? 'none' : 'block';
+    iconMenu.style.display = isVisible ? 'inline' : 'none';
+    iconClose.style.display = isVisible ? 'none' : 'inline';
+  });
+</script>
