@@ -1,0 +1,178 @@
+---
+title: "How Does the Jekyll Files and Folders Structure Shape Your GitHub Pages Project"
+categories: [jekyll-structure,github-pages,static-website,beginner-guide,jekyll,static-sites,fazri,configurations,explore,]
+tags: [jekyll-structure,github-pages,static-website,beginner-guide,jekyll,static-sites,configurations,explore]
+description: "A complete beginner-friendly exploration of how Jekyll files and folders work inside GitHub Pages projects."
+image: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNvHkJQvGHR6jDzConcB0Y1WMWu0kj_qEmMUxtbfwNzw6XXjCuFaB-vLnh7N1FfnM5ZUEQzurcX1wAQ7Yuwm2CB6NcCAQ4Bc5gTcMnjP-AMvqPLHB88bvGgsLZdclk49fGPTRVIyvWj3faVunoP4Kly7eX9MQhBSo-pnymyhUufAo8k1ZXBNXtwCHDB7hX/s1600/20251023_120009.jpg
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% include head.html %}
+	{% include head-artikel.html %}
+  </head>
+<body>
+{% include awal-body.html %}
+<main>
+{% include /indri/indri01.html %}
+<div id="blf01_blogFeed"></div>
+</main>
+
+<script>
+  function blf01_getQueryParam(name) {  
+    const urlParams = new URLSearchParams(location.search);  
+    return urlParams.get(name);  
+  }  
+
+  function blf01_loadFeed(startIndex = 1, maxResults = 1) {  
+    const labelName = "fazri01";
+
+    let feedURL;  
+    if (labelName) {  
+      feedURL = `https://www.blogger.com/feeds/6298105943168307485/posts/default/-/${encodeURIComponent(labelName)}?start-index=${startIndex}&max-results=${maxResults}&alt=json-in-script&callback=blf01_showFeed`;  
+    } 
+    document.getElementById('blf01_feedScript')?.remove();  
+    const s = document.createElement('script');  
+    s.id = 'blf01_feedScript';  
+    s.src = feedURL;  
+    document.body.appendChild(s);  
+  }  
+
+  function blf01_cleanSnippetText(text, maxLength = 160) {  
+    let snippet = text  
+      .replace(/<pre.*?>[\s\S]*?<\/pre>/gi, '')  
+      .replace(/<code.*?>[\s\S]*?<\/code>/gi, '')  
+      .replace(/<[^>]+>/g, '')  
+      .replace(/\s+/g, ' ')  
+      .trim();  
+
+    if (snippet.length <= maxLength) return snippet;  
+    let cut = snippet.substring(0, maxLength);  
+    let lastSpace = cut.lastIndexOf(' ');  
+    if (lastSpace > 0) cut = cut.substring(0, lastSpace);  
+    return cut;  
+  }  
+
+  let blf01_mainPostLink = "";  
+
+  function blf01_showFeed(data) {  
+    const container = document.getElementById('blf01_blogFeed');  
+    const entries = data.feed.entry || [];  
+
+    if (!entries.length) {  
+      container.innerHTML = '<p>No posts found.</p>';  
+      return;  
+    }  
+
+    const first = entries[0];  
+    blf01_mainPostLink = first.link?.find(l => l.rel === 'alternate')?.href || '#';  
+
+    let subdomainRaw = location.hostname.split('.')[0];  
+    if (subdomainRaw.toLowerCase() === 'www') {  
+      subdomainRaw = location.hostname.split('.')[1] || '';  
+    }  
+    const postTitle = first.title?.$t || document.title;  
+    document.title = postTitle + ' - ' + location.hostname;  
+
+    const headerH1 = document.getElementById('blf01_mainTitle');  
+    if (headerH1) {  
+      let hostParts = location.hostname.split('.');  
+      let domainRaw = hostParts.slice(-2).join('.');  
+
+      headerH1.innerHTML =  
+        `<a href="${blf01_mainPostLink}" style="color:#fff;text-decoration:none;">  
+           ${postTitle.charAt(0).toUpperCase() + postTitle.slice(1)} -   
+           ${domainRaw.charAt(0).toUpperCase() + domainRaw.slice(1)}  
+         </a>`;  
+    }
+
+    // ✅ Ambil isi <p> pertama tanpa tag <p>
+    let rawContent = first.content?.$t || '';
+    let firstPMatch = rawContent.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+    let firstPText = firstPMatch ? firstPMatch[1].replace(/\s+/g, ' ').trim() : '';
+
+    const metaDesc = document.querySelector('meta[name="description"]')   
+        || document.head.appendChild(Object.assign(document.createElement('meta'), { name: 'description' }));  
+    metaDesc.content = firstPText || postTitle;  
+
+    const metaRobots = document.querySelector('meta[name="robots"]')   
+        || document.head.appendChild(Object.assign(document.createElement('meta'), { name: 'robots' }));  
+    metaRobots.content = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";  
+
+    const authorName = first.author?.[0]?.name?.$t || 'Anonymous';  
+    const metaAuthor = document.querySelector('meta[name="author"]')   
+        || document.head.appendChild(Object.assign(document.createElement('meta'), { name: 'author' }));  
+    metaAuthor.content = authorName;  
+
+    let linkCanonical = document.querySelector('link[rel="canonical"]');  
+    if (!linkCanonical) {  
+      linkCanonical = document.createElement('link');  
+      linkCanonical.setAttribute('rel', 'canonical');  
+      document.head.appendChild(linkCanonical);  
+    }  
+    linkCanonical.setAttribute('href', location.href);  
+
+    let html = '';  
+
+    entries.forEach(e => {  
+      let content = e.content?.$t || '(no content)';  
+      content = content.replace(/<img\b[^>]*>/gi, img =>  
+        img.includes('style=')   
+          ? img.replace(/style="[^"]*"/, 'style="max-width:100%;height:auto;"')   
+          : img.replace(/<img/, '<img style="max-width:100%;height:auto;"')  
+      );  
+
+      const authorName = e.author?.[0]?.name?.$t || 'Anonymous';  
+      const authorLink = e.author?.[0]?.uri?.$t || null;  
+      const authorImage = e.author?.[0]?.gd$image?.src || null;  
+      const authorOutput = authorLink   
+        ? `<a href="${authorLink}" target="_blank" class="blf01_authorLink">  
+             ${authorImage ? `<img src="${authorImage}" alt="${authorName}" class="blf01_authorImg">` : ''}  
+             <span class="blf01_authorName">${authorName}</span>  
+           </a>`  
+        : authorName;  
+
+      const published = new Date(e.published.$t).toISOString();  
+      const updated = new Date(e.updated.$t).toISOString();  
+
+      const keywords = e.category?.map(cat => cat.term).join(', ') || '';  
+      const labelsOutput = keywords  
+        ? `<div class="blf01_labels"><strong>Labels:</strong> ${keywords}</div>`  
+        : '';  
+
+      const metaLayout = `  
+        <div class="blf01_metaLayout">  
+          <div class="blf01_metaAuthor">  
+            <span class="blf01_writerLabel">Writer:</span> ${authorOutput}  
+          </div>  
+          <div class="blf01_metaDates">  
+            <div><strong>First Published:</strong> ${new Date(published).toLocaleDateString()}</div>  
+            <div><strong>Last Updated:</strong> ${new Date(updated).toLocaleDateString()}</div>  
+          </div>  
+        </div>  
+  <div class="spo">${labelsOutput}</div> 
+      `;  
+
+      html += `  
+        <article class="blf01_blogArticle">  
+          <div class="blf01_articleContent">${content}</div>  
+          ${metaLayout}  
+        </article>  
+      `;  
+    });  
+
+    container.innerHTML = html;  
+  }  
+
+  document.addEventListener("DOMContentLoaded", () => blf01_loadFeed());  
+</script>
+
+<br /><br />
+{% include disqus.html %}
+{% include related-post.html %}
+{% include file01.html %}
+{% include footer.html %}
+<br /><br /><br />
+</body>
+</html>
