@@ -352,7 +352,7 @@ function renderPosts() {
     card.appendChild(h3);      
 
     const desc = document.createElement('p');      
-    desc.textContent = post.description || 'No description available.';      
+    desc.textContent = post.excerpt || '(no excerpt available)';      
     card.appendChild(desc);      
 
     container.appendChild(card);      
