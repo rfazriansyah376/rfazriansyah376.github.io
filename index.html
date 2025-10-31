@@ -99,81 +99,6 @@ layout: null
 <!-- akhir Seo Otomatis khusus untuk homepage -->
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
 
-<style>
-.recent-posts {
-  margin: 3rem auto;
-  padding: 0 1rem;
-  max-width: 1200px;
-}
-.recent-posts h2 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.recent-posts .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-.post-card {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
-}
-.post-card:hover {
-  transform: translateY(-5px);
-}
-.post-card img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.post-card h3 {
-  font-size: 1.2rem;
-  margin: 1rem;
-}
-.post-card h3 a {
-  text-decoration: none;
-  color: #222;
-}
-.post-card p {
-  font-size: 0.95rem;
-  margin: 0 1rem 1rem;
-  color: #555;
-}
-
-/* Pagination */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-  gap: 1rem;
-}
-.pagination button {
-  background: var(--dynamic-color);
-  color: #000;
-  border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s ease;
-}
-.pagination button:hover:not(:disabled) {
-  background: var(--dynamic-color);
-}
-.pagination button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-.pagination span {
-  font-size: 0.95rem;
-  color: #333;
-}
-</style>
 
 
 
@@ -273,6 +198,86 @@ layout: null
 <main>
 	
 
+<style>
+.recent-posts {
+  margin: 3rem auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+}
+.recent-posts h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.recent-posts .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.post-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.post-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+.post-card h3 a {
+  text-decoration: none;
+  color: #222;
+  transition: color 0.2s ease;
+}
+.post-card h3 a:hover {
+  color: var(--dynamic-color, #0078ff);
+}
+.post-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+.pagination button {
+  background: var(--dynamic-color);
+  color: #000;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+.pagination button:hover:not(:disabled) {
+  background: var(--dynamic-color);
+}
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.pagination span {
+  font-size: 0.95rem;
+  color: #333;
+}
+</style>
 
 <section class="recent-posts">      
   <div id="recent-posts-container" class="grid"></div>      
@@ -288,16 +293,11 @@ function getCategoryCandidates(hostname) {
   const subLabels = (maybeDomainIndex > 0) ? parts.slice(0, maybeDomainIndex) : [];      
   const rawSub = subLabels.length ? subLabels.join('.') : null;      
   const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
-  return {      
-    sub: rawSub ? normalize(rawSub) : null,      
-    domain: domain ? normalize(domain) : null      
-  };      
+  return { sub: rawSub ? normalize(rawSub) : null, domain: domain ? normalize(domain) : null };      
 }      
 
-// 🔹 Baca nomor halaman dari URL (misalnya ?page=2)
 const urlParams = new URLSearchParams(window.location.search);
 const initialPage = parseInt(urlParams.get('page')) || 1;
-
 const { sub: subCategory, domain: domainCategory } = getCategoryCandidates(window.location.hostname);      
 const POSTS_PER_PAGE = 6;      
 let currentPage = initialPage;      
@@ -310,34 +310,19 @@ fetch('/posts.json')
   })      
   .then(posts => {      
     const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
-    if (!Array.isArray(posts) || posts.length === 0) {      
-      return renderNoPosts();      
-    }      
+    if (!Array.isArray(posts) || posts.length === 0) return renderNoPosts();      
 
-    // 1️⃣ coba filter berdasarkan subdomain lebih dulu
     if (subCategory) {      
-      filteredPosts = posts.filter(p =>      
-        Array.isArray(p.categories) &&      
-        p.categories.some(c => normalize(c) === subCategory)      
-      );      
+      filteredPosts = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategory));      
     }      
 
-    // 2️⃣ jika kosong, fallback ke kategori domain
     if (filteredPosts.length === 0 && domainCategory) {      
-      filteredPosts = posts.filter(p =>      
-        Array.isArray(p.categories) &&      
-        p.categories.some(c => normalize(c) === domainCategory)      
-      );      
+      filteredPosts = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === domainCategory));      
     }      
 
-    // 3️⃣ jika tetap kosong, fallback ke semua postingan
-    if (filteredPosts.length === 0) {      
-      filteredPosts = posts;      
-    }      
+    if (filteredPosts.length === 0) filteredPosts = posts;      
 
-    // urutkan berdasarkan tanggal terbaru
     filteredPosts.sort((a, b) => new Date(b.date) - new Date(a.date));      
-
     renderPosts();      
   })      
   .catch(err => {      
@@ -359,17 +344,6 @@ function renderPosts() {
     const card = document.createElement('div');      
     card.className = 'post-card';      
 
-    const linkImg = document.createElement('a');      
-    linkImg.href = post.url || '#';      
-    const img = document.createElement('img');      
-    img.loading = 'lazy';      
-    img.alt = post.title || '';      
-    img.style.width = '100%';      
-    img.style.height = 'auto';      
-    img.src = post.image || '/assets/default-thumb.jpg';      
-    linkImg.appendChild(img);      
-    card.appendChild(linkImg);      
-
     const h3 = document.createElement('h3');      
     const linkTitle = document.createElement('a');      
     linkTitle.href = post.url || '#';      
@@ -377,11 +351,14 @@ function renderPosts() {
     h3.appendChild(linkTitle);      
     card.appendChild(h3);      
 
+    const desc = document.createElement('p');      
+    desc.textContent = post.description || 'No description available.';      
+    card.appendChild(desc);      
+
     container.appendChild(card);      
   });      
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);      
-
   if (totalPages > 1) {      
     const prevBtn = document.createElement('button');      
     prevBtn.textContent = 'Prev';      
@@ -393,29 +370,12 @@ function renderPosts() {
     let startPage = Math.max(1, currentPage - 2);      
     let endPage = Math.min(totalPages, currentPage + 2);      
 
-    if (currentPage <= 3) {      
-      endPage = Math.min(totalPages, maxVisible);      
-    } else if (currentPage >= totalPages - 2) {      
-      startPage = Math.max(1, totalPages - maxVisible + 1);      
-    }      
+    if (currentPage <= 3) endPage = Math.min(totalPages, maxVisible);      
+    else if (currentPage >= totalPages - 2) startPage = Math.max(1, totalPages - maxVisible + 1);      
 
-    if (startPage > 1) {      
-      addPageButton(1);      
-      if (startPage > 2) {      
-        addEllipsis();      
-      }      
-    }      
-
-    for (let i = startPage; i <= endPage; i++) {      
-      addPageButton(i);      
-    }      
-
-    if (endPage < totalPages) {      
-      if (endPage < totalPages - 1) {      
-        addEllipsis();      
-      }      
-      addPageButton(totalPages);      
-    }      
+    if (startPage > 1) { addPageButton(1); if (startPage > 2) addEllipsis(); }      
+    for (let i = startPage; i <= endPage; i++) addPageButton(i);      
+    if (endPage < totalPages) { if (endPage < totalPages - 1) addEllipsis(); addPageButton(totalPages); }      
 
     const nextBtn = document.createElement('button');      
     nextBtn.textContent = 'Next';      
@@ -428,8 +388,6 @@ function renderPosts() {
 function changePage(page) {
   currentPage = page;
   renderPosts();
-
-  // 🔹 Update URL (SEO-friendly, tanpa reload)
   const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
   history.pushState({}, '', newUrl);
 }
@@ -460,6 +418,7 @@ function renderNoPosts() {
   pagination.innerHTML = '';      
 }      
 </script>
+
 
 
 <!-- awal include mengambil dari folder /includes/ berdasarkan nama subdomain/domain -->
