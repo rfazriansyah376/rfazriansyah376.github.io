@@ -247,36 +247,66 @@ layout: null
   color: #555;
   margin: 0;
 }
-
-/* Pagination */
+/* Pagination - Improved for Responsive & Compact Design */
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 0.4rem;
   margin-top: 2rem;
-  gap: 1rem;
-   width: 100%;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+.pagination button,
+.pagination span {
+  flex-shrink: 0;
+}
+
 .pagination button {
-  background: var(--dynamic-color);
-  color: #000;
+  background: var(--dynamic-color, #0078ff);
+  color: #fff;
   border: none;
-  padding: 0.5rem 1.2rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s ease;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  min-width: 36px;
 }
+
 .pagination button:hover:not(:disabled) {
-  background: var(--dynamic-color);
+  background: #005ec7;
+  transform: translateY(-1px);
 }
+
 .pagination button:disabled {
   background: #ccc;
+  color: #555;
   cursor: not-allowed;
 }
+
 .pagination span {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #333;
+  user-select: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .pagination {
+    gap: 0.3rem;
+  }
+  .pagination button {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 5px;
+  }
+  .pagination span {
+    font-size: 0.8rem;
+  }
 }
 </style>
 
