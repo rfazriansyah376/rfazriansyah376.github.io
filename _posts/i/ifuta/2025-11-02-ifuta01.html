@@ -1,0 +1,130 @@
+---
+layout: post
+title: "How to Display Related Posts by Tags in GitHub Pages"
+categories: [jekyll, github-pages, content,ifuta]
+tags: [related-posts, tags, jekyll-blog, content-navigation]
+description: "Learn how to automatically show related posts by shared tags in your Jekyll blog on GitHub Pages to improve user engagement and SEO."
+---
+
+<p>When readers finish reading one of your articles, their attention is at its peak. If your blog doesn’t guide them to another relevant post, you risk losing them forever. Showing related posts at the end of each article helps keep visitors engaged, reduces bounce rate, and strengthens internal linking — all of which are great for SEO. In this tutorial, you’ll learn how to add an automated ‘Related Posts by Tags’ section to your Jekyll blog hosted on GitHub Pages, step by step.</p>
+
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ul>
+    <li><a href="#why-related-posts-matter">Why Related Posts Matter</a></li>
+    <li><a href="#how-jekyll-handles-tags">How Jekyll Handles Tags</a></li>
+    <li><a href="#creating-the-related-posts-loop">Creating the Related Posts Loop</a></li>
+    <li><a href="#limiting-the-number-of-results">Limiting the Number of Results</a></li>
+    <li><a href="#styling-the-related-posts-section">Styling the Related Posts Section</a></li>
+    <li><a href="#testing-and-troubleshooting">Testing and Troubleshooting</a></li>
+    <li><a href="#real-world-usage-example">Real-World Usage Example</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+<h2 id="why-related-posts-matter">Why Related Posts Matter</h2>
+<p>Internal linking is a cornerstone of content SEO. When you link to other relevant articles, search engines can understand your site structure better, and users spend more time exploring your content. By using tags as a connection mechanism, you can dynamically group related posts based on shared topics without manually linking them each time.</p>
+
+<p>This approach works perfectly for GitHub Pages because it doesn’t rely on databases or JavaScript libraries — just simple Liquid logic and Jekyll’s built-in metadata.</p>
+
+<h2 id="how-jekyll-handles-tags">How Jekyll Handles Tags</h2>
+<p>Each post in Jekyll can include a <code>tags</code> array in its front matter. For example:</p>
+
+<pre><code>---
+title: "Optimizing Images for Faster Jekyll Builds"
+tags: [jekyll, performance, images]
+---
+</code></pre>
+
+<p>When Jekyll builds your site, it keeps a record of which tags belong to which posts. You can access this information in templates or post layouts using the <code>site.tags</code> object, which returns all tags and their associated posts.</p>
+
+<h2 id="creating-the-related-posts-loop">Creating the Related Posts Loop</h2>
+<p>Let’s add the related posts feature to the bottom of your article layout (usually <code>_layouts/post.html</code>). The idea is to loop through all posts and select only those that share at least one tag with the current post, excluding the post itself.</p>
+
+<p>Here’s the Liquid code snippet you can insert:</p>
+
+<pre><code>{% assign related_posts = "" | split: "" %}
+{% for tag in page.tags %}
+  {% assign tagged_posts = site.tags[tag] %}
+  {% for post in tagged_posts %}
+    {% if post.url != page.url %}
+      {% assign related_posts = related_posts | push: post %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% assign related_posts = related_posts | uniq | slice: 0, 4 %}
+
+{% if related_posts.size > 0 %}
+  &lt;div class="related-posts"&gt;
+    &lt;h3&gt;Related Posts&lt;/h3&gt;
+    &lt;ul&gt;
+      {% for post in related_posts %}
+        &lt;li&gt;
+          &lt;a href="{{ post.url | relative_url }}"&gt;{{ post.title }}&lt;/a&gt;
+        &lt;/li&gt;
+      {% endfor %}
+    &lt;/ul&gt;
+  &lt;/div&gt;
+{% endif %}
+</code></pre>
+
+<p>This code first collects all posts that share a tag with the current page, removes duplicates, limits the results to four, and displays them as a simple list.</p>
+
+<h2 id="limiting-the-number-of-results">Limiting the Number of Results</h2>
+<p>You might not want to display too many related posts, especially if your blog has dozens of articles sharing similar tags. That’s where the <code>slice: 0, 4</code> filter helps — it limits output to the first four matches.</p>
+
+<p>You can adjust this number based on your design or reading flow. For example, showing only three highly relevant posts can often feel cleaner and more focused than a long list.</p>
+
+<h2 id="styling-the-related-posts-section">Styling the Related Posts Section</h2>
+<p>Once the logic works, it’s time to make it visually appealing. Add a simple CSS style in your <code>/assets/css/style.css</code> or theme stylesheet:</p>
+
+<pre><code>.related-posts {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+.related-posts h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.related-posts ul {
+  list-style: none;
+  padding-left: 0;
+}
+.related-posts li {
+  margin-bottom: 0.5rem;
+}
+.related-posts a {
+  text-decoration: none;
+  color: #007acc;
+}
+.related-posts a:hover {
+  text-decoration: underline;
+}
+</code></pre>
+
+<p>These rules give a clean separation from the main article and highlight the related posts as a helpful next step for readers. You can further enhance it with thumbnails or publication dates if desired.</p>
+
+<h2 id="testing-and-troubleshooting">Testing and Troubleshooting</h2>
+<p>After implementing the code, build your site locally using:</p>
+
+<pre><code>bundle exec jekyll serve</code></pre>
+
+<p>Then open any post and scroll to the bottom. You should see the related posts appear based on shared tags. If nothing shows up, make sure each post has at least one tag, and check that your Liquid loops are inside the correct layout file (<code>_layouts/post.html</code> or <code>_includes/related.html</code>).</p>
+
+<p>For debugging, you can temporarily display the tag data with:</p>
+
+<pre><code>{{ page.tags | inspect }}</code></pre>
+
+<p>This helps verify that your front matter tags are properly recognized by Jekyll during the build process.</p>
+
+<h2 id="real-world-usage-example">Real-World Usage Example</h2>
+<p>Imagine a blog about GitHub Pages tutorials. A post about “Optimizing Site Speed” shares tags like <code>jekyll</code>, <code>github-pages</code>, and <code>performance</code>. Another post about “Securing HTTPS on Custom Domains” uses <code>github-pages</code> and <code>security</code>. When a user finishes reading the first article, the related posts section automatically suggests the second article because they share the <code>github-pages</code> tag.</p>
+
+<p>This kind of interlinking keeps readers within your content ecosystem, guiding them through a natural learning path instead of leaving them at a dead end.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Adding a “Related Posts by Tags” feature to your GitHub Pages blog is one of the simplest ways to improve engagement, dwell time, and SEO without extra plugins or databases. It uses native Jekyll functionality and a few lines of Liquid code to make your blog feel more dynamic and interconnected.</p>
+
+<p>Once implemented, you can continue refining it — for example, sorting related posts by date or displaying featured images alongside titles. Small touches like this can dramatically enhance user experience and make your static site behave more like a smart, content-aware platform.</p>
