@@ -1,0 +1,265 @@
+---
+layout: post
+title: "How to Display Thumbnails in Related Posts on GitHub Pages"
+categories: [jekyll,github-pages,content-enhancement,jumpleakbuzz]
+tags: [related-posts,jekyll-thumbnails,liquid,content-structure]
+description: "Learn how to show thumbnails in related posts on Jekyll GitHub Pages using Liquid templates for a better visual layout."
+---
+
+<p>
+Displaying <strong>thumbnails in related posts</strong> is a simple yet powerful way to make your GitHub Pages blog look more professional and engaging. When readers finish one article, showing them related posts with small images can visually invite them to explore more content — significantly increasing the time they spend on your site.
+</p>
+
+<h2>Why Visual Related Posts Matter</h2>
+<p>
+People process images faster than text. By adding thumbnails beside your related posts, you help visitors identify which topics might interest them instantly. It also breaks up text-heavy sections, giving your post layout a more balanced look.
+</p>
+<p>
+On Jekyll-powered GitHub Pages, this feature isn’t built-in, but you can easily implement it using <strong>Liquid templates</strong> and a little HTML structure. Once set up, every new post will automatically display related posts complete with thumbnails.
+</p>
+
+<h2>Preparing Your Posts with Image Metadata</h2>
+<p>
+Before you start coding, you need to ensure every post has an image defined in its YAML front matter. This image will serve as the thumbnail for that post.
+</p>
+
+<pre><code>
+---
+layout: post
+title: "Building an SEO-Friendly Blog on GitHub Pages"
+tags: [jekyll,seo,github-pages]
+image: /assets/images/github-seo-cover.png
+---
+</code></pre>
+
+<p>
+The <code>image</code> key can point to any image stored in your repository (for example, inside the <code>/assets/images/</code> folder). Once defined, Jekyll can access it through <code>{{ post.image }}</code>.
+</p>
+
+<h2>Creating the Related Posts with Thumbnails</h2>
+<p>
+Now that your posts have images, let’s update the related posts code to include them. The logic is the same as the tag-based related system, but we’ll add a thumbnail preview.
+</p>
+
+<h3>Step 1 Update Your Related Posts Include File</h3>
+<p>
+Open or create a file named <code>_includes/related-posts.html</code> and add the following code:
+</p>
+
+<pre><code>
+{% raw %}
+{% assign related_posts = site.posts | where_exp: "item", "item.url != page.url" %}
+<h3>Related Articles You Might Like</h3>
+<ul class="related-thumbs">
+  {% for post in related_posts %}
+    {% assign common_tags = post.tags | intersection: page.tags %}
+    {% if common_tags != empty %}
+      <li>
+        <a href="{{ post.url | relative_url }}">
+          {% if post.image %}
+            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+          {% endif %}
+          <span class="title">{{ post.title }}</span>
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endraw %}
+</code></pre>
+
+<p>
+This template loops through your posts, finds those sharing at least one tag with the current page, and displays each with its thumbnail and title.  
+The <code>loading="lazy"</code> attribute ensures faster page performance by deferring image loading until they appear in view.
+</p>
+
+<h3>Step 2 Style the Layout</h3>
+<p>
+Let’s add some CSS to make it visually appealing. You can include it in your site’s main stylesheet or directly in your post layout for quick testing.
+</p>
+
+<pre><code>
+.related-thumbs {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.related-thumbs li {
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.related-thumbs li:hover {
+  transform: translateY(-4px);
+}
+
+.related-thumbs img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+
+.related-thumbs .title {
+  display: block;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  color: #333;
+  text-decoration: none;
+  text-align: center;
+}
+</code></pre>
+
+<p>
+This layout automatically adapts to different screen sizes, ensuring a responsive grid of related posts. Each thumbnail includes a smooth hover animation to enhance interactivity.
+</p>
+
+<h2>Alternative Design Layouts</h2>
+<p>
+Depending on your blog’s visual theme, you may want to change how thumbnails are displayed. Here are a few alternatives:
+</p>
+<ul>
+  <li><strong>Inline Thumbnails:</strong> Display smaller images beside post titles, ideal for minimalist layouts.</li>
+  <li><strong>Card Layout:</strong> Use larger images with short descriptions beneath each post title.</li>
+  <li><strong>Carousel Style:</strong> Use a JavaScript slider (like Swiper or Glide.js) to rotate related posts visually.</li>
+</ul>
+
+<h3>Example: Inline Thumbnail Layout</h3>
+
+<pre><code>
+{% raw %}
+<ul class="related-inline">
+  {% for post in site.posts %}
+    {% assign same_tags = post.tags | intersection: page.tags %}
+    {% if same_tags != empty %}
+      <li>
+        <a href="{{ post.url | relative_url }}">
+          <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}">
+          {{ post.title }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endraw %}
+</code></pre>
+
+<pre><code>
+.related-inline li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.related-inline img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 0.75rem;
+  border-radius: 6px;
+}
+</code></pre>
+
+<p>
+This format is ideal if you prefer a simple text-first list while still benefiting from visual cues.
+</p>
+
+<h2>Improving SEO and Accessibility</h2>
+<p>
+To make your related posts section accessible and SEO-friendly:
+</p>
+<ul>
+  <li>Always include <code>alt</code> text describing the thumbnail.</li>
+  <li>Ensure thumbnails use optimized, compressed images (e.g., WebP format).</li>
+  <li>Use descriptive filenames, such as <code>seo-guide-cover.webp</code> instead of <code>image1.png</code>.</li>
+  <li>Consider adding <code>structured data</code> (ItemList schema) for advanced SEO context.</li>
+</ul>
+
+<p>
+Adding schema helps search engines understand your content relationships and sometimes display richer snippets in search results.
+</p>
+
+<h2>Integrating with Your Blog Layout</h2>
+<p>
+After testing, you can include the <code>_includes/related-posts.html</code> file at the end of your post layout so every blog post automatically displays thumbnails:
+</p>
+
+<pre><code>
+{% raw %}
+<div class="post-body">
+  {{ content }}
+</div>
+
+{% include related-posts.html %}
+{% endraw %}
+</code></pre>
+
+<p>
+This ensures consistency across all posts and eliminates the need for manual insertion.
+</p>
+
+<h2>Practical Use Case</h2>
+<p>
+Let’s say you run a digital marketing blog with articles like:
+</p>
+
+<table>
+<tr><th>Post Title</th><th>Tags</th><th>Image</th></tr>
+<tr><td>Understanding SEO Basics</td><td>seo,optimization</td><td>seo-basics.webp</td></tr>
+<tr><td>Content Optimization Tips</td><td>seo,content</td><td>content-tips.webp</td></tr>
+<tr><td>Link Building Strategies</td><td>backlinks,seo</td><td>link-building.webp</td></tr>
+</table>
+
+<p>
+When a reader views the “Understanding SEO Basics” article, your related section will automatically show the other two posts because they share the <code>seo</code> tag, along with their thumbnails. This visually reinforces topic relevance and encourages exploration.
+</p>
+
+<h2>Performance Considerations</h2>
+<p>
+Since GitHub Pages serves static files, you don’t need to worry about backend load. However, you should:
+</p>
+<ul>
+  <li>Compress your thumbnails to under 100KB each.</li>
+  <li>Use <code>loading="lazy"</code> for all images.</li>
+  <li>Prefer modern formats (WebP or AVIF) for faster loading.</li>
+  <li>Cache images using GitHub’s CDN (default static asset caching).</li>
+</ul>
+
+<p>
+Following these practices keeps your site fast even with multiple related images.
+</p>
+
+<h2>Advanced Enhancement: Dynamic Fallback Image</h2>
+<p>
+If some posts don’t have an image, you can set a default fallback thumbnail. Add this code inside your <code>_includes/related-posts.html</code>:
+</p>
+
+<pre><code>
+{% raw %}
+{% assign default_image = "/assets/images/fallback.webp" %}
+<img src="{{ post.image | default: default_image | relative_url }}" alt="{{ post.title }}">
+{% endraw %}
+</code></pre>
+
+<p>
+This ensures your layout remains uniform, avoiding broken image icons or empty spaces.
+</p>
+
+<h2>Final Thoughts</h2>
+<p>
+Adding thumbnails to related posts on your Jekyll blog hosted on GitHub Pages is a small enhancement with big visual impact. It not only boosts engagement but also improves navigation, aesthetics, and perceived professionalism. 
+</p>
+<p>
+Once you master this approach, you can go further by building a fully card-based recommendation grid or even mixing tag and category signals for more precise post matching.
+</p>
+
+<h3>Next Step</h3>
+<p>
+In the next part, we’ll explore how to <strong>combine tags and categories</strong> to generate even more accurate related post suggestions — perfect for blogs with broad topics or overlapping themes.
+</p>
