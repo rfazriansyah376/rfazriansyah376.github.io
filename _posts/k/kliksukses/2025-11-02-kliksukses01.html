@@ -1,0 +1,132 @@
+---
+layout: post
+title: "Using Jekyll Picture Tag for Responsive Thumbnails on GitHub Pages"
+categories: [jekyll,github-pages,image-optimization,kliksukses]
+tags: [picture-tag,responsive-images,jekyll-blog,related-posts]
+description: "Learn how to use Jekyll Picture Tag or static alternatives for responsive thumbnails on GitHub Pages without slowing down your blog."
+---
+
+<p>Responsive thumbnails can dramatically enhance your blog’s visual consistency and loading speed. If you’re using GitHub Pages to host your Jekyll site, displaying optimized images across devices is essential to maintaining performance and accessibility. In this guide, you’ll learn how to use <b>Jekyll Picture Tag</b> and alternative methods to create responsive thumbnails for related posts and article previews.</p>
+
+<h2>Responsive Image Strategy for GitHub Pages</h2>
+<ul>
+  <li><a href="#why-responsive-images-matter">Why Responsive Images Matter</a></li>
+  <li><a href="#jekyll-picture-tag-overview">Overview of Jekyll Picture Tag Plugin</a></li>
+  <li><a href="#limitations-on-github-pages">Limitations of Using Plugins on GitHub Pages</a></li>
+  <li><a href="#static-responsive-image-approach">Static Responsive Image Approach (No Plugin)</a></li>
+  <li><a href="#example-implementation-in-related-posts">Example Implementation in Related Posts</a></li>
+  <li><a href="#optimizing-image-performance">Optimizing Image Performance and SEO</a></li>
+  <li><a href="#final-thoughts-on-integration">Final Thoughts on Integration</a></li>
+</ul>
+
+<h2 id="why-responsive-images-matter">Why Responsive Images Matter</h2>
+<p>When building a blog on GitHub Pages, each image loads directly from your repository. Without optimization, this can lead to slower page loads, especially on mobile networks. Responsive images allow browsers to choose the most appropriate size for each device, saving bandwidth and improving Core Web Vitals.</p>
+
+<p>For related post thumbnails, responsive images make your layout cleaner and faster. Each user sees an image perfectly fitted to their device width without wasting data on oversized files. Search engines also prefer websites that use modern responsive markup, improving both accessibility and SEO.</p>
+
+<h2 id="jekyll-picture-tag-overview">Overview of Jekyll Picture Tag Plugin</h2>
+<p>The <code>jekyll-picture-tag</code> plugin simplifies responsive image generation by automatically creating multiple image sizes and inserting them into a <code>&lt;picture&gt;</code> element. It helps automate what would otherwise require manual resizing and coding.</p>
+
+<p>Here’s a simple usage example inside a Jekyll post:</p>
+
+<pre><code>{% raw %}
+{% picture blog-image /assets/images/sample.jpg alt="Example responsive thumbnail" %}
+{% endraw %}
+</code></pre>
+
+<p>This single tag can generate several versions of <code>sample.jpg</code> (e.g., 480px, 720px, 1080px) and create the following HTML structure:</p>
+
+<pre><code>&lt;picture&gt;
+  &lt;source srcset="/assets/images/sample-480.jpg" media="(max-width:480px)"&gt;
+  &lt;source srcset="/assets/images/sample-1080.jpg" media="(min-width:481px)"&gt;
+  &lt;img src="/assets/images/sample.jpg" alt="Example responsive thumbnail" loading="lazy"&gt;
+&lt;/picture&gt;
+</code></pre>
+
+<p>The browser automatically selects the right image depending on the user’s screen size. This ensures each related post thumbnail looks crisp on any device, without manual editing.</p>
+
+<h2 id="limitations-on-github-pages">Limitations of Using Plugins on GitHub Pages</h2>
+<p>GitHub Pages has a strict whitelist of supported plugins. Unfortunately, <code>jekyll-picture-tag</code> is not among them. If you try to build with this plugin directly on GitHub Pages, your site will fail to compile.</p>
+
+<p>There are two ways to bypass this limitation:</p>
+
+<ul>
+  <li><b>Option 1: Build locally or on GitHub Actions.</b>  
+  You can run Jekyll on your local machine or through GitHub Actions, then push only the compiled <code>_site</code> directory to the repository’s <code>gh-pages</code> branch. This way, the plugin runs during build time.</li>
+
+  <li><b>Option 2: Use a static responsive strategy (no plugin).</b>  
+  If you want to keep GitHub Pages’ default automatic build system, you can manually define responsive markup using <code>&lt;picture&gt;</code> or <code>srcset</code> tags inside Liquid loops.</li>
+</ul>
+
+<h2 id="static-responsive-image-approach">Static Responsive Image Approach (No Plugin)</h2>
+<p>Even without the <code>jekyll-picture-tag</code> plugin, you can still serve responsive images by writing standard HTML and Liquid conditionals. Here’s an example snippet to integrate into your related post section:</p>
+
+<pre><code>{% raw %}
+{% assign related = site.posts | where_exp: "post", "post.tags contains page.tags[0]" | limit:4 %}
+&lt;div class="related-posts"&gt;
+  {% for post in related %}
+    &lt;div class="related-item"&gt;
+      &lt;a href="{{ post.url | relative_url }}"&gt;
+        {% if post.thumbnail %}
+          &lt;picture&gt;
+            &lt;source srcset="{{ post.thumbnail | replace: '.jpg', '-small.jpg' }}" media="(max-width: 600px)"&gt;
+            &lt;source srcset="{{ post.thumbnail | replace: '.jpg', '-medium.jpg' }}" media="(max-width: 1000px)"&gt;
+            &lt;img src="{{ post.thumbnail }}" alt="{{ post.title | escape }}" loading="lazy"&gt;
+          &lt;/picture&gt;
+        {% endif %}
+        &lt;p&gt;{{ post.title }}&lt;/p&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  {% endfor %}
+&lt;/div&gt;
+{% endraw %}
+</code></pre>
+
+<p>This approach assumes you have pre-generated image versions (e.g., <code>-small</code> and <code>-medium</code>) manually or with a local image processor. It’s simple, works natively on GitHub Pages, and doesn’t require any external dependency.</p>
+
+<h2 id="example-implementation-in-related-posts">Example Implementation in Related Posts</h2>
+<p>Let’s integrate this responsive image system with the related posts layout we built earlier. Here’s how the final section might look:</p>
+
+<pre><code>&lt;style&gt;
+.related-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.related-item img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+&lt;/style&gt;
+</code></pre>
+
+<p>Then, call your snippet in <code>_layouts/post.html</code> or directly below each article:</p>
+
+<pre><code>{% raw %}
+{% include related-responsive.html %}
+{% endraw %}
+</code></pre>
+
+<p>This creates a grid of related posts, each with a properly sized responsive thumbnail and title, maintaining a professional look on desktop and mobile alike.</p>
+
+<h2 id="optimizing-image-performance">Optimizing Image Performance and SEO</h2>
+<p>Optimizing your responsive images goes beyond visual adaptation. You should also ensure minimal load times and proper metadata for accessibility and search indexing. Follow these practices:</p>
+
+<ul>
+  <li>Compress images before upload using tools like <b>Squoosh</b> or <b>TinyPNG</b>.</li>
+  <li>Use descriptive filenames containing keywords (e.g., <code>github-pages-tutorial-thumb.jpg</code>).</li>
+  <li>Always include meaningful <code>alt</code> text in every <code>&lt;img&gt;</code> tag.</li>
+  <li>Enable <code>loading="lazy"</code> to defer image loading below the fold.</li>
+  <li>Keep image dimensions consistent for all thumbnails (e.g., 16:9 ratio).</li>
+</ul>
+
+<p>Additionally, store images in a central directory such as <code>/assets/images/thumbnails/</code> to maintain an organized structure and simplify updates. When properly implemented, thumbnails will load quickly and look consistent across your entire blog.</p>
+
+<h2 id="final-thoughts-on-integration">Final Thoughts on Integration</h2>
+<p>Using responsive thumbnails through Jekyll Picture Tag or manual <code>picture</code> markup helps balance aesthetics and performance. While GitHub Pages doesn’t support external plugins natively, creative static approaches can achieve similar results with minimal setup.</p>
+
+<p>If you’re running a local build pipeline or using GitHub Actions, enabling <code>jekyll-picture-tag</code> automates everything. However, for most users, the static HTML approach offers an ideal balance between simplicity and control — ensuring that your related post thumbnails are both responsive and SEO-friendly without breaking GitHub Pages’ build restrictions.</p>
+
+<p>Once you master responsive images, your Jekyll blog will not only look great but also perform optimally for every visitor — from mobile readers to desktop developers.</p>
