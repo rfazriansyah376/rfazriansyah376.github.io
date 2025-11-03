@@ -1,0 +1,121 @@
+---
+layout: post
+title: "How to Enhance Site Speed and Security on GitHub Pages"
+categories: [github-pages, performance, security]
+tags: [jekyll, optimization, site-speed, https, github-security]
+description: "Learn how to optimize your GitHub Pages blog for faster loading speed and stronger security with simple, practical steps."
+---
+
+<p>One of the biggest advantages of GitHub Pages is that it’s already fast and secure by default. Since your site is served as static HTML, there’s no database or server-side scripting to slow it down or create vulnerabilities. However, even static sites can become sluggish or exposed to risks if not maintained properly. In this guide, you’ll learn how to make your GitHub Pages blog load faster, stay secure, and maintain high performance over time — without advanced technical knowledge.</p>
+
+<nav class="toc">
+  <h2>Best Practices to Improve Speed and Security on GitHub Pages</h2>
+  <ul>
+    <li><a href="#why-speed-and-security-matter">Why Speed and Security Matter</a></li>
+    <li><a href="#optimize-image-size-and-format">Optimize Image Size and Format</a></li>
+    <li><a href="#minify-css-and-js">Minify CSS and JavaScript</a></li>
+    <li><a href="#use-a-content-delivery-network-cdn">Use a Content Delivery Network (CDN)</a></li>
+    <li><a href="#leverage-browser-caching">Leverage Browser Caching</a></li>
+    <li><a href="#enable-https-correctly">Enable HTTPS Correctly</a></li>
+    <li><a href="#protect-your-repository-and-data">Protect Your Repository and Data</a></li>
+    <li><a href="#monitor-performance-and-errors">Monitor Performance and Errors</a></li>
+    <li><a href="#secure-third-party-scripts">Secure Third-Party Scripts and Integrations</a></li>
+    <li><a href="#ongoing-maintenance">Ongoing Maintenance and Final Thoughts</a></li>
+  </ul>
+</nav>
+
+<h2 id="why-speed-and-security-matter">Why Speed and Security Matter</h2>
+<p>Website speed and security play a major role in how users and search engines perceive your site. A slow or insecure website can drive visitors away, hurt your rankings, and reduce engagement. Google’s algorithm now uses site speed and HTTPS as ranking factors, meaning that a faster, safer site directly improves your SEO.</p>
+
+<p>Even though GitHub Pages provides free SSL certificates and uses a global CDN, your content and configurations still influence performance. Optimizing images, reducing code size, and ensuring your repository is secure are essential steps to keep your site reliable in the long term.</p>
+
+<h2 id="optimize-image-size-and-format">Optimize Image Size and Format</h2>
+<p>Images are often the largest elements on any web page. Oversized or uncompressed images can drastically slow down your load time. To fix this, compress and resize your images before uploading them to your repository. Tools like TinyPNG, ImageOptim, or Squoosh can reduce file sizes without losing noticeable quality.</p>
+
+<p>Use modern formats like <strong>WebP</strong> or <strong>AVIF</strong> for better compression and quality balance. You can serve images in multiple formats for better compatibility:</p>
+
+<pre><code>&lt;picture&gt;
+  &lt;source srcset="/assets/images/sample.webp" type="image/webp"&gt;
+  &lt;img src="/assets/images/sample.jpg" alt="Example image"&gt;
+&lt;/picture&gt;
+</code></pre>
+
+<p>Always include descriptive <code>alt</code> text for accessibility and SEO. Additionally, store your images under <code>/assets/images/</code> and use relative links to ensure they load correctly after deployment.</p>
+
+<h2 id="minify-css-and-js">Minify CSS and JavaScript</h2>
+<p>Every byte counts when it comes to site speed. By removing unnecessary spaces, comments, and line breaks, you can reduce file size and improve load time. Jekyll supports built-in plugins or scripts for minification. You can use <code>jekyll-minifier</code> or perform manual compression before pushing your files.</p>
+
+<pre><code>gem install jekyll-minifier
+</code></pre>
+
+<p>Alternatively, you can use online tools or build scripts that automatically minify assets during deployment. If your theme includes external CSS or JavaScript, consider combining smaller files into one to reduce HTTP requests.</p>
+
+<p>Also, load non-critical scripts asynchronously using the <code>async</code> or <code>defer</code> attributes:</p>
+
+<pre><code>&lt;script src="/assets/js/analytics.js" async&gt;&lt;/script&gt;</code></pre>
+
+<h2 id="use-a-content-delivery-network-cdn">Use a Content Delivery Network (CDN)</h2>
+<p>GitHub Pages automatically uses Fastly’s CDN to serve content worldwide. However, if you have custom assets or large media files, you can further enhance performance by using your own CDN like Cloudflare or jsDelivr. A CDN stores copies of your content in multiple locations, allowing users to download files from the nearest server.</p>
+
+<p>For GitHub repositories, jsDelivr provides free CDN access without configuration. For example:</p>
+
+<pre><code>https://cdn.jsdelivr.net/gh/username/repository@version/file.js</code></pre>
+
+<p>This allows you to serve optimized files directly from GitHub through a global CDN network, improving both speed and reliability.</p>
+
+<h2 id="leverage-browser-caching">Leverage Browser Caching</h2>
+<p>Browser caching lets returning visitors load your site faster by storing static resources locally. While GitHub Pages doesn’t let you change HTTP headers directly, you can still benefit from cache-friendly URLs by including version numbers in your filenames or directories.</p>
+
+<p>For example:</p>
+
+<pre><code>/assets/css/style-v2.css</code></pre>
+
+<p>Whenever you make changes, update the version number so browsers fetch the latest file. This technique is simple but effective for ensuring users always get the latest version without unnecessary reloads.</p>
+
+<h2 id="enable-https-correctly">Enable HTTPS Correctly</h2>
+<p>GitHub Pages provides free HTTPS via Let’s Encrypt, but you must enable it manually in your repository settings. Go to <em>Settings → Pages → Enforce HTTPS</em> and check the box. This ensures all traffic to your site is encrypted, protecting visitors’ data and improving SEO rankings.</p>
+
+<p>If you’re using a custom domain, make sure your DNS settings include the right <code>A</code> and <code>CNAME</code> records pointing to GitHub’s IPs:</p>
+
+<pre><code>185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+</code></pre>
+
+<p>Once the DNS propagates, GitHub will automatically generate a certificate and enforce HTTPS across your site.</p>
+
+<h2 id="protect-your-repository-and-data">Protect Your Repository and Data</h2>
+<p>Your site’s security also depends on how you manage your GitHub repository. Keep your repository private during testing and only make it public when you’re ready. Avoid committing sensitive data such as API keys, passwords, or analytics tokens. Use environment variables or Jekyll configuration files stored outside version control.</p>
+
+<p>To add extra protection, enable two-factor authentication (2FA) on your GitHub account. This prevents unauthorized access even if someone gets your password. Regularly review collaborator permissions and remove inactive users.</p>
+
+<h2 id="monitor-performance-and-errors">Monitor Performance and Errors</h2>
+<p>Static sites are low maintenance, but monitoring performance is still important. Use free tools like <a href="https://pagespeed.web.dev/">Google PageSpeed Insights</a>, <a href="https://gtmetrix.com/">GTmetrix</a>, or <a href="https://uptimerobot.com/">UptimeRobot</a> to track site speed and uptime.</p>
+
+<p>Additionally, you can integrate simple analytics tools such as Plausible, Fathom, or Google Analytics to monitor user activity. These tools help identify which pages load slowly or where users drop off. Make data-driven improvements regularly to keep your site smooth and responsive.</p>
+
+<h2 id="secure-third-party-scripts">Secure Third-Party Scripts and Integrations</h2>
+<p>Adding widgets or third-party scripts can enhance your site but also introduce risks if the sources are not trustworthy. Always load scripts from official or verified CDNs and avoid hotlinking random files. Use Subresource Integrity (SRI) to ensure the script hasn’t been tampered with:</p>
+
+<pre><code>&lt;script src="https://cdn.example.com/script.js"
+  integrity="sha384-abc123xyz"
+  crossorigin="anonymous"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>This hash verifies that the file content is exactly what you expect. If the file changes, the browser will block it automatically.</p>
+
+<h2 id="ongoing-maintenance">Ongoing Maintenance and Final Thoughts</h2>
+<p>Site optimization is not a one-time task. To keep your GitHub Pages site fast and secure, regularly check your repository for outdated dependencies, large media files, and unnecessary assets. Rebuild your site occasionally to ensure all Jekyll plugins are up to date.</p>
+
+<p>Here’s a quick checklist for ongoing maintenance:</p>
+
+<ul>
+  <li>Run <code>bundle update</code> periodically to update dependencies</li>
+  <li>Compress new images before upload</li>
+  <li>Review DNS and HTTPS settings every few months</li>
+  <li>Remove unused scripts and CSS</li>
+  <li>Back up your repository locally</li>
+</ul>
+
+<p>By following these practices, you’ll ensure your GitHub Pages blog stays fast, secure, and reliable — giving your readers a seamless experience while maintaining your peace of mind as a creator.</p>
