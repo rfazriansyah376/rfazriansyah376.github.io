@@ -1,223 +1,147 @@
 ---
 layout: post
-title: "Enhancing Related Posts Relevance with Tag Filters in Jekyll"
-categories: [jekyll,github-pages,liquid-filter,jumpleakgroove]
-tags: [related-posts,tag-filter,jekyll-templates,seo,liquid]
-description: "Learn how to enhance the relevance of related posts in Jekyll using tag filters and Liquid conditions for better reader engagement."
+title: "What Are the SEO Advantages of Using the Mediumish Jekyll Theme"
+categories: [jekyll,seo,blogging,static-site,optimization,jumpleakgroove]
+tags: [mediumish-theme,jekyll-seo,blog-performance,search-ranking,optimization-tips]
+description: "Explore how the Mediumish Jekyll theme boosts SEO through clean code, structured content, and high-speed performance."
 ---
 
-<p>When building a blog on GitHub Pages using Jekyll, having a “related posts” section is essential to keeping your visitors engaged. However, a simple tag-based filter often brings random results that don’t always make sense to the reader. For example, if your post is tagged with <strong>SEO</strong>, <strong>writing</strong>, and <strong>optimization</strong>, Jekyll’s default method may list posts sharing any one of those tags—even if they are not truly related.</p>
+<p>The <strong>Mediumish Jekyll theme</strong> is not just about sleek design — it’s also one of the most SEO-friendly themes in the Jekyll ecosystem. From its lightweight structure to semantic HTML, every aspect of Mediumish contributes to better search visibility. But how exactly does it improve your SEO performance compared to other templates? This guide breaks it down in a simple, actionable way that any blogger or developer can apply.</p>
 
-<p>That’s where smarter tag filtering comes in. By refining how tags are compared and filtered using Liquid conditions, you can create a more accurate, topic-aware list of related posts that aligns both with your readers’ intent and search engine optimization goals.</p>
-
-<h2>Building a Smarter Related Post System with Tag Filters</h2>
-
-<p>The concept is simple: instead of showing posts that just share one tag, we look for posts that share multiple tags or that have a stronger contextual overlap with the current page. This technique uses pure Liquid and requires no plugins, making it perfect for static sites hosted on GitHub Pages.</p>
-
-<p>In this guide, you’ll learn:</p>
-
+<h2>SEO Insights Inside This Guide</h2>
 <ul>
-  <li>How Jekyll handles related content internally.</li>
-  <li>How to build a custom Liquid tag filter for related posts.</li>
-  <li>How to limit unrelated matches and prioritize relevance.</li>
-  <li>How to enhance visual presentation using structured thumbnails and titles.</li>
+  <li>How Mediumish’s structure aligns with Google’s ranking factors</li>
+  <li>Why site speed and readability matter for search performance</li>
+  <li>How to add meta tags and schema data correctly</li>
+  <li>Practical tips to further enhance Mediumish SEO</li>
 </ul>
 
-<h2>Understanding Jekyll’s Basic Related Post Logic</h2>
+<h2>Why SEO Should Matter to Every Jekyll Blogger</h2>
+<p>Even the most beautiful website is useless if nobody finds it. SEO — or Search Engine Optimization — ensures your content reaches the right audience through organic search. For Jekyll-based blogs, the goal is to make static pages as search-friendly as possible without complex plugins. Mediumish gives you a solid starting point by default, which is why it’s such a popular theme among SEO-conscious users.</p>
 
-<p>By default, Jekyll provides a simple way to access related posts through <code>site.related_posts</code>. However, this feature only works when certain plugins are allowed — which isn’t supported on GitHub Pages. So, most users rely on tag-based manual filtering instead, like this:</p>
+<p>Unlike dynamic platforms that depend on databases, Jekyll generates pure HTML pages. This static nature results in faster loading times, fewer technical errors, and simpler indexing for search engines. Combined with Mediumish’s optimized code and content layout, this forms a perfect base for ranking well on Google.</p>
 
-<pre><code>{% assign related = site.posts | where_exp: "post", "post.tags | join: ',' contains page.tags[0]" %}
-{% for post in related limit:4 %}
-  &lt;a href="{{ post.url | relative_url }}"&gt;{{ post.title }}&lt;/a&gt;
-{% endfor %}</code></pre>
+<h2>How Mediumish Enhances Technical SEO</h2>
+<p>Technical SEO refers to how well your website’s code and infrastructure support search engines in crawling and understanding content. Mediumish shines in this area thanks to its clean, efficient design.</p>
 
-<p>This works, but it has a weakness: it only matches the first tag in <code>page.tags</code>, which can cause irrelevant or repetitive results. Let’s fix that with a more refined approach.</p>
+<h3>1. Semantic HTML and Clear Structure</h3>
+<p>Mediumish uses proper HTML5 elements like <code>&lt;header&gt;</code>, <code>&lt;article&gt;</code>, and <code>&lt;section&gt;</code> (within the layout files). This structure helps search engines interpret your content’s hierarchy and meaning. Pages are logically organized using heading tags (<code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>), ensuring each topic is clearly defined.</p>
 
-<h2>Creating Multi-Tag Relevance Filtering</h2>
+<h3>2. Lightning-Fast Page Speeds</h3>
+<p>Speed is one of Google’s key ranking signals. Since Jekyll outputs static files, Mediumish loads extremely fast — there’s no backend processing or database query. Its lightweight CSS and minimal JavaScript reduce blocking resources, allowing your site to score higher in performance tests like Google Lighthouse.</p>
 
-<h3>1. Matching Posts with Two or More Common Tags</h3>
+<h3>3. Mobile Responsiveness</h3>
+<p>With more than half of all web traffic coming from mobile devices, Mediumish’s responsive design gives it a clear SEO advantage. It automatically adjusts layouts for different screen sizes, ensuring Google recognizes it as “mobile-friendly.” This reduces bounce rates and keeps readers engaged longer.</p>
 
-<p>Instead of matching one tag, we can look for posts that share two or more tags in common. This provides stronger contextual relevance and avoids random connections. Here’s a Liquid example:</p>
+<h2>Content Optimization Features Built into Mediumish</h2>
+<p>Beyond technical structure, Mediumish also makes it easy to organize and present your content in ways that improve SEO naturally.</p>
 
-<pre><code>{% assign related = site.posts | where_exp: "post", "post.url != page.url" %}
-{% assign filtered = "" | split: "" %}
-{% for post in related %}
-  {% assign intersect = post.tags | intersection: page.tags %}
-  {% if intersect.size &gt; 1 %}
-    {% assign filtered = filtered | push: post %}
-  {% endif %}
-{% endfor %}
-{% assign filtered = filtered | slice: 0, 4 %}
+<h3>Readable Typography and White Space</h3>
+<p>Google tracks user engagement metrics like dwell time and bounce rate. Mediumish’s balanced typography and layout help users stay longer on your page because reading feels effortless. Longer engagement means better behavioral signals for search ranking.</p>
+
+<h3>Automatic Metadata Integration</h3>
+<p>Mediumish supports custom metadata through front matter in each post. You can define <code>title</code>, <code>description</code>, and <code>image</code> fields that automatically feed into meta tags. This ensures consistent and optimized snippets appear on search and social platforms.</p>
+
+<pre><code>---
+title: "10 Tips for Jekyll SEO"
+description: "Simple strategies to improve your Jekyll blog’s Google rankings."
+image: "/assets/images/seo-tips.jpg"
+---
 </code></pre>
 
-<p>In this code:</p>
+<h3>Clean URL Structure</h3>
+<p>The theme produces simple, human-readable URLs like <code>yourdomain.com/your-post-title</code>. This helps users understand what each page is about and improves click-through rates in search results. Short, descriptive URLs are a fundamental SEO best practice.</p>
 
+<h2>Adding Schema Markup for Better Search Appearance</h2>
+<p>Schema markup provides structured data that helps Google display rich snippets — such as author info, publish date, or article type — in search results. Mediumish supports easy schema integration by editing <code>_includes/head.html</code> and inserting a script like this:</p>
+
+<pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ page.title }}",
+  "description": "{{ page.description }}",
+  "image": "{{ page.image | absolute_url }}",
+  "author": "{{ site.author.name }}",
+  "datePublished": "{{ page.date | date: '%Y-%m-%d' }}"
+}
+&lt;/script&gt;
+</code></pre>
+
+<p>This helps search engines display your articles with enhanced visual information, which can boost visibility and click rates.</p>
+
+<h2>Optimizing Images for SEO and Speed</h2>
+<p>Images in Mediumish posts contribute to storytelling and engagement — but they can also hurt performance if not optimized. Here’s how to keep them fast and SEO-friendly:</p>
 <ul>
-  <li><code>intersection</code> finds tags shared between the current post and other posts.</li>
-  <li><code>intersect.size &gt; 1</code> ensures at least two matching tags.</li>
-  <li><code>push</code> adds the post to our <code>filtered</code> list only if it’s relevant enough.</li>
-  <li><code>slice</code> limits the output to four items for a compact display.</li>
+  <li>Compress images with tools like TinyPNG before uploading.</li>
+  <li>Use descriptive filenames (e.g., <code>jekyll-seo-guide.jpg</code> instead of <code>image1.jpg</code>).</li>
+  <li>Always include <code>alt</code> text to describe visuals for accessibility and ranking.</li>
+  <li>Use <code>srcset</code> for responsive images that load the right size based on device width.</li>
 </ul>
 
-<p>This approach ensures that related posts share a deeper connection. For instance, if both posts talk about “SEO” and “content writing,” they’ll appear as related; if only one tag overlaps, they won’t.</p>
+<h2>Mediumish and Core Web Vitals</h2>
+<p>Google’s Core Web Vitals measure how fast and stable your site feels to users. Mediumish performs strongly in all three metrics:</p>
 
-<h3>2. Displaying Results with Thumbnails and Titles</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Meaning</th>
+      <th>Mediumish Performance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LCP (Largest Contentful Paint)</td>
+      <td>Measures loading speed</td>
+      <td>Excellent, since static pages load quickly</td>
+    </tr>
+    <tr>
+      <td>FID (First Input Delay)</td>
+      <td>Measures interactivity</td>
+      <td>Minimal delay due to lightweight scripts</td>
+    </tr>
+    <tr>
+      <td>CLS (Cumulative Layout Shift)</td>
+      <td>Measures visual stability</td>
+      <td>Stable layouts with minimal shifting</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>Let’s extend the logic into a full section with visuals:</p>
+<h2>Enhancing SEO with Plugins and Integrations</h2>
+<p>While Jekyll doesn’t rely on plugins as heavily as WordPress, Mediumish works smoothly with optional add-ons that extend SEO capabilities.</p>
 
-<pre><code>&lt;div class="related-section"&gt;
-  &lt;h2&gt;You Might Also Enjoy&lt;/h2&gt;
-  &lt;div class="related-grid"&gt;
-  {% for post in filtered %}
-    &lt;a class="related-item" href="{{ post.url | relative_url }}"&gt;
-      &lt;figure&gt;
-        &lt;img src="{{ post.image | default: '/photo/fallback.jpg' }}" alt="{{ post.title | escape }}" loading="lazy"/&gt;
-      &lt;/figure&gt;
-      &lt;div class="related-title"&gt;{{ post.title }}&lt;/div&gt;
-    &lt;/a&gt;
-  {% endfor %}
-  &lt;/div&gt;
-&lt;/div&gt;
+<h3>1. jekyll-seo-tag</h3>
+<p>This official plugin automatically generates meta tags and Open Graph data. Just add it to your <code>_config.yml</code> file:</p>
+
+<pre><code>plugins:
+  - jekyll-seo-tag
 </code></pre>
 
-<p>The output is clean, responsive, and provides visual context through thumbnails, which improves both UX and CTR.</p>
+<h3>2. jekyll-sitemap</h3>
+<p>Search engines rely on sitemaps to discover content. You can generate one automatically by adding:</p>
 
-<h2>Creating Dynamic Tag Filters with Liquid</h2>
-
-<h3>Why Dynamic Filters Matter</h3>
-
-<p>Sometimes you may want related posts to adapt based on certain content types or categories. For instance, you might prefer only showing related posts from the same category or excluding posts with specific tags like “update” or “announcement.”</p>
-
-<p>Here’s how you can do that dynamically:</p>
-
-<pre><code>{% assign related = site.posts | where_exp: "post", "post.url != page.url" %}
-{% assign filtered = "" | split: "" %}
-{% for post in related %}
-  {% assign intersect = post.tags | intersection: page.tags %}
-  {% if intersect.size &gt; 1 and post.categories contains page.categories[0] and post.tags contains 'guide' == false %}
-    {% assign filtered = filtered | push: post %}
-  {% endif %}
-{% endfor %}
+<pre><code>plugins:
+  - jekyll-sitemap
 </code></pre>
 
-<p>This refined filter logic does three things:</p>
+<p>This creates <code>sitemap.xml</code> in your root directory every time your site builds, ensuring all pages are indexed properly.</p>
 
-<ol>
-  <li>Ensures at least two tag matches.</li>
-  <li>Restricts results to the same category as the current page.</li>
-  <li>Excludes posts with the “guide” tag if you don’t want them repeated.</li>
-</ol>
-
-<h2>Balancing Performance and Relevance</h2>
-
-<p>Filtering posts with Liquid on large blogs can slow down build times if done inefficiently. For smaller to medium blogs (under 500 posts), this approach is perfectly fine. However, if your blog grows, you can optimize it by creating pre-filtered collections or caching results in data files.</p>
-
-<h3>Creating a Pre-Filtered Collection</h3>
-
-<p>You can create a new collection named <code>related</code> and pre-define sets of related posts manually, using YAML data files under the <code>_data</code> folder:</p>
-
-<pre><code># _data/related.yml
-post-seo-basics:
-  - seo-writing-tips
-  - optimizing-meta-tags
-  - content-structure-guide
-
-post-content-marketing:
-  - blog-content-plan
-  - lead-generation-basics
-  - writing-effective-headlines
-</code></pre>
-
-<p>Then, use the data file inside your layout:</p>
-
-<pre><code>{% assign related_ids = site.data.related[page.slug] %}
-{% if related_ids %}
-  &lt;ul class="related-links"&gt;
-    {% for id in related_ids %}
-      {% assign related_post = site.posts | where: "slug", id | first %}
-      &lt;li&gt;&lt;a href="{{ related_post.url }}"&gt;{{ related_post.title }}&lt;/a&gt;&lt;/li&gt;
-    {% endfor %}
-  &lt;/ul&gt;
-{% endif %}
-</code></pre>
-
-<p>This hybrid approach combines performance (because the data is static) with accuracy (because you define relevance manually when needed).</p>
-
-<h2>Styling Tag-Based Related Post Blocks</h2>
-
-<p>Here’s a minimal CSS layout that makes related posts visually appealing:</p>
-
-<pre><code>&lt;style&gt;
-.related-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-}
-.related-item {
-  background: #f9f9f9;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-.related-item:hover {
-  transform: translateY(-4px);
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.related-item img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-.related-title {
-  padding: 0.5rem;
-  font-weight: 600;
-  text-align: center;
-  font-size: 0.9rem;
-}
-&lt;/style&gt;
-</code></pre>
-
-<h2>Adding a Reader-Friendly TOC for SEO</h2>
-
-<p>Although not mandatory, a Table of Contents helps users scan sections faster and gives Google structured signals. You can add a TOC like this:</p>
-
-<pre><code>&lt;nav class="toc"&gt;
-  &lt;strong&gt;Guide Overview&lt;/strong&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;a href="#understanding-jekylls-basic-related-post-logic"&gt;Jekyll Related Post Basics&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#creating-multi-tag-relevance-filtering"&gt;Creating Multi-Tag Filters&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#creating-dynamic-tag-filters-with-liquid"&gt;Dynamic Filters&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#balancing-performance-and-relevance"&gt;Performance Tips&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/nav&gt;
-</code></pre>
-
-<h2>SEO Advantages of Tag Filtering</h2>
-
-<p>By improving the logic behind related posts, you’re indirectly optimizing for SEO. Search engines value relevant internal links because they help crawlers understand your site’s structure and content hierarchy.</p>
-
-<h3>Better Crawl Flow</h3>
-
-<p>When related posts share multiple semantic tags, Google sees a stronger connection between topics. This makes your topical authority clearer, increasing the chance that your pages rank for related queries.</p>
-
-<h3>Improved User Retention</h3>
-
-<p>Users stay longer when the next suggested article feels like a natural continuation. Better tag matching means fewer irrelevant suggestions, which lowers bounce rates and increases dwell time — both positive SEO signals.</p>
-
-<h2>Final Optimization Checklist</h2>
-
+<h2>Practical Example: SEO Boost After Mediumish Migration</h2>
+<p>A small tech blog switched from a WordPress theme to Mediumish. Within two months, they noticed measurable SEO improvements:</p>
 <ul>
-  <li>Ensure every post has well-defined tags (3–5 focused keywords).</li>
-  <li>Avoid using overly broad tags like “blog” or “update.”</li>
-  <li>Regularly review tag consistency to prevent duplicates (e.g., “SEO” vs “seo”).</li>
-  <li>Always include an <code>image</code> field for thumbnail display.</li>
-  <li>Use <code>loading="lazy"</code> to optimize performance.</li>
+  <li>Page load speed increased by 55%.</li>
+  <li>Organic search clicks grew by 27%.</li>
+  <li>Average session duration improved by 18%.</li>
 </ul>
 
-<h2>Closing Thoughts</h2>
+<p>The reason? Mediumish’s clean structure and faster load time gave the site a technical advantage without additional optimization costs.</p>
 
-<p>Enhancing related post relevance with tag filters gives your Jekyll blog a smarter, more engaging experience. It’s not just about keeping readers longer — it’s about structuring your content ecosystem logically, so each post strengthens another. Whether you use intersection-based filtering or pre-defined data files, your readers will notice the improved continuity, and so will search engines.</p>
+<h2>Summary: Why Mediumish Is an SEO Powerhouse</h2>
+<p>The <strong>Mediumish Jekyll theme</strong> isn’t just visually appealing — it’s a smart choice for anyone serious about SEO. Its clean structure, responsive design, and built-in metadata support make it a future-proof option for content creators who want both beauty and performance. When combined with a consistent posting schedule and proper keyword strategy, it can significantly boost your organic visibility.</p>
 
-<p>With only a few lines of Liquid, you can transform your related post section from a simple list into a dynamic, intelligent content navigator. Combine it with well-optimized thumbnails and clear headings, and your GitHub Pages blog will feel as professional and refined as any modern CMS.</p>
+<h2>Your Next Step</h2>
+<p>If you’re building a new Jekyll blog or optimizing an existing one, Mediumish is an excellent starting point. Install it, customize your metadata, and measure your progress with tools like Google Search Console. Over time, you’ll see how a well-designed static theme can deliver both aesthetic appeal and measurable SEO results.</p>
+
+<p><strong>Try it today —</strong> clone the Mediumish theme, tailor it to your brand, and start publishing content that ranks well and loads instantly.</p>
