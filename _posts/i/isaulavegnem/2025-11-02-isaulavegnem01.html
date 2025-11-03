@@ -1,0 +1,220 @@
+---
+layout: post
+title: "Building an Advanced Related Posts System by Tags in Jekyll for GitHub Pages"
+categories: [jekyll, github-pages, optimization,isaulavegnem]
+tags: [related-posts, tags, liquid, blog-architecture]
+description: "Learn how to build a smarter, faster, and visually engaging related posts system by tags in Jekyll for GitHub Pages without plugins."
+---
+
+<p>Static blogs often lack dynamic features like content recommendations, but with a little Liquid logic, you can build your own intelligent related posts system on GitHub Pages. In this detailed guide, we’ll take the basic tag-based approach you already know and expand it into a complete, performance-friendly recommendation feature that works entirely on Jekyll and Liquid — no external JavaScript or plugins required.</p>
+
+<nav class="toc">
+  <h2>Enhancing Related Posts for Better Engagement</h2>
+  <ul>
+    <li><a href="#why-upgrade-related-posts">Why Upgrade the Basic Related Posts Logic</a></li>
+    <li><a href="#understanding-tag-based-relevance">Understanding Tag-Based Relevance</a></li>
+    <li><a href="#building-a-weighted-scoring-system">Building a Weighted Scoring System</a></li>
+    <li><a href="#avoiding-duplicate-or-self-links">Avoiding Duplicate or Self Links</a></li>
+    <li><a href="#sorting-related-posts-by-relevance-and-date">Sorting Related Posts by Relevance and Date</a></li>
+    <li><a href="#improving-the-ui-for-related-posts">Improving the UI for Related Posts</a></li>
+    <li><a href="#handling-empty-or-untagged-posts">Handling Empty or Untagged Posts</a></li>
+    <li><a href="#optimizing-build-performance">Optimizing Build Performance</a></li>
+    <li><a href="#extending-the-feature-for-multi-tag-logic">Extending the Feature for Multi-Tag Logic</a></li>
+    <li><a href="#advanced-display-ideas">Advanced Display Ideas</a></li>
+    <li><a href="#testing-and-verification">Testing and Verification</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+<h2 id="why-upgrade-related-posts">Why Upgrade the Basic Related Posts Logic</h2>
+<p>The simple related-posts-by-tags method is effective but limited. It treats every tag as equal, meaning a post that shares one rarely used tag might appear alongside one that shares several tags. Also, there’s no sorting mechanism for freshness or relevance weight, which means readers might see older or less relevant content first.</p>
+
+<p>Upgrading this logic gives you more control: you can rank posts based on shared tags, prioritize recency, and filter out weak matches. This helps build a smarter internal linking network — improving both user navigation and SEO signals.</p>
+
+<h2 id="understanding-tag-based-relevance">Understanding Tag-Based Relevance</h2>
+<p>In the world of content recommendation, “relevance” is a way of measuring similarity between articles. When you rely on tags, the simplest measure of similarity is the number of tags two posts share. The more tags they have in common, the higher the relevance score.</p>
+
+<p>For example, consider the following three posts:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Post</th>
+      <th>Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Post A</td>
+      <td>jekyll, github-pages, seo</td>
+    </tr>
+    <tr>
+      <td>Post B</td>
+      <td>jekyll, seo, performance</td>
+    </tr>
+    <tr>
+      <td>Post C</td>
+      <td>security, hosting, github-pages</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Post B shares two tags with Post A, while Post C only shares one. So, Post B should appear higher in the related list when viewing Post A.</p>
+
+<h2 id="building-a-weighted-scoring-system">Building a Weighted Scoring System</h2>
+<p>Let’s take this concept and build a weighted relevance system. We’ll assign a score to each post based on how many tags it shares with the current one. The more shared tags, the higher the score.</p>
+
+<p>Add this logic to your <code>_layouts/post.html</code> (or an include file like <code>_includes/related.html</code>):</p>
+
+<pre><code>{% assign related_scores = {} %}
+{% for tag in page.tags %}
+  {% for post in site.tags[tag] %}
+    {% if post.url != page.url %}
+      {% assign score = related_scores[post.url] | default: 0 %}
+      {% assign new_score = score | plus: 1 %}
+      {% assign related_scores = related_scores | merge: {{ post.url | jsonify }}: new_score %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% assign sorted_related = related_scores | sort_natural: "last" | reverse %}
+{% assign top_related = sorted_related | slice: 0, 5 %}
+</code></pre>
+
+<p>This pseudo-Liquid snippet counts shared tags and then ranks related posts based on the number of common tags. The result is more accurate and balanced.</p>
+
+<h2 id="avoiding-duplicate-or-self-links">Avoiding Duplicate or Self Links</h2>
+<p>Always ensure the current post does not appear in its own related list. It’s also wise to remove duplicates since posts can share multiple tags.</p>
+
+<p>If you’re using a manual push-based array system, you can apply the <code>| uniq</code> filter to eliminate repeated posts. The key principle is: one unique link per related post.</p>
+
+<pre><code>{% assign related_posts = related_posts | uniq %}
+{% assign related_posts = related_posts | where_exp: "post", "post.url != page.url" %}
+</code></pre>
+
+<h2 id="sorting-related-posts-by-relevance-and-date">Sorting Related Posts by Relevance and Date</h2>
+<p>Once you have multiple matching posts, sort them not only by tag overlap but also by publication date. Readers typically prefer recent content, especially in topics like development, marketing, or SEO.</p>
+
+<p>Although Jekyll doesn’t support complex sorting natively, you can chain Liquid filters like:</p>
+
+<pre><code>{% assign sorted_posts = related_posts | sort: "date" | reverse %}</code></pre>
+
+<p>Combine it with your relevance score for an intuitive, time-sensitive ranking. For example, a post with a slightly lower tag match but a more recent publish date can appear higher than an old but perfect tag match.</p>
+
+<h2 id="improving-the-ui-for-related-posts">Improving the UI for Related Posts</h2>
+<p>Functionality is great, but design sells engagement. You can display your related posts as cards with thumbnails, short summaries, or even reading time indicators. Here’s a basic example:</p>
+
+<pre><code>&lt;div class="related-posts-grid"&gt;
+  {% for post in top_related %}
+  &lt;div class="related-card"&gt;
+    &lt;a href="{{ post.url | relative_url }}"&gt;
+      &lt;img src="{{ post.image | default: '/assets/fallback.png' }}" alt="{{ post.title }}"&gt;
+      &lt;h4&gt;{{ post.title }}&lt;/h4&gt;
+      &lt;p&gt;{{ post.description | truncate: 100 }}&lt;/p&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  {% endfor %}
+&lt;/div&gt;
+</code></pre>
+
+<p>And simple CSS styling to create a flexible grid:</p>
+
+<pre><code>.related-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.related-card {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+}
+.related-card:hover {
+  transform: scale(1.03);
+}
+.related-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+.related-card h4 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+.related-card p {
+  font-size: 0.9rem;
+  color: #555;
+}
+</code></pre>
+
+<p>This responsive layout adapts automatically to different screen sizes and feels modern without needing frameworks.</p>
+
+<h2 id="handling-empty-or-untagged-posts">Handling Empty or Untagged Posts</h2>
+<p>Some posts might not have tags. In such cases, the related posts section could appear empty. To handle this gracefully, add a fallback message or a default post suggestion.</p>
+
+<pre><code>{% if related_posts.size > 0 %}
+  ... (display list)
+{% else %}
+  &lt;p&gt;No related articles found. Explore more from the &lt;a href="/blog"&gt;main blog page&lt;/a&gt;.&lt;/p&gt;
+{% endif %}
+</code></pre>
+
+<p>This prevents awkward empty sections and keeps the UX consistent.</p>
+
+<h2 id="optimizing-build-performance">Optimizing Build Performance</h2>
+<p>If your site has hundreds of posts, looping through all tags for each build can slow down Jekyll. To optimize, store frequently used tag data in a data file under <code>_data/tags.yml</code> and reference it when building loops.</p>
+
+<p>Alternatively, you can restrict related post checks only to the latest 50 posts using:</p>
+
+<pre><code>{% assign recent_posts = site.posts | slice: 0, 50 %}</code></pre>
+
+<p>This cuts processing time dramatically while maintaining relevance for active readers.</p>
+
+<h2 id="extending-the-feature-for-multi-tag-logic">Extending the Feature for Multi-Tag Logic</h2>
+<p>Once your tag-based logic works, you can expand it to include categories or even title keyword matching. For instance, you might show related posts that share both tags and categories for higher accuracy.</p>
+
+<p>Example:</p>
+
+<pre><code>{% if post.categories contains page.categories[0] or post.tags contains page.tags[0] %}
+  &lt;li&gt;&lt;a href="{{ post.url }}"&gt;{{ post.title }}&lt;/a&gt;&lt;/li&gt;
+{% endif %}
+</code></pre>
+
+<p>This hybrid matching gives a broader yet more intelligent relationship model between posts, helping readers follow thematic clusters naturally.</p>
+
+<h2 id="advanced-display-ideas">Advanced Display Ideas</h2>
+<p>Once the logic is set, you can explore presentation enhancements like:</p>
+
+<ul>
+  <li>Adding related post thumbnails fetched from front matter.</li>
+  <li>Showing estimated reading time beside titles.</li>
+  <li>Grouping related posts by tag category.</li>
+  <li>Adding microdata or schema markup for enhanced SEO visibility.</li>
+</ul>
+
+<p>Example microdata snippet:</p>
+
+<pre><code>&lt;div itemscope itemtype="https://schema.org/BlogPosting"&gt;
+  &lt;a itemprop="url" href="{{ post.url }}"&gt;
+    &lt;span itemprop="headline"&gt;{{ post.title }}&lt;/span&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Search engines can use this structured data to display richer snippets, which boosts click-through rates from Google results.</p>
+
+<h2 id="testing-and-verification">Testing and Verification</h2>
+<p>Always test your implementation locally before pushing to GitHub. Run:</p>
+
+<pre><code>bundle exec jekyll serve</code></pre>
+
+<p>Then verify that the related posts display correctly for various articles with overlapping tags. Inspect output in your browser and check the generated HTML under <code>_site</code> to confirm that the Liquid logic produced valid markup.</p>
+
+<p>You can also validate your structured data with Google’s <a href="https://search.google.com/test/rich-results">Rich Results Test Tool</a> if you’ve added schema markup.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>By evolving your related posts system from a basic tag match into a relevance-driven, visually engaging feature, you make your Jekyll site behave like a smart content platform — while keeping it 100% static and free on GitHub Pages. This approach enhances SEO, keeps readers longer on-site, and improves overall navigability without needing any plugin or database.</p>
+
+<p>As your content grows, such improvements in structure and user flow compound over time, giving your blog a professional polish and long-term engagement advantage. The key is simplicity with intention: design your Liquid logic once, and let it scale naturally with your writing.</p>
