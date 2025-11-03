@@ -1,0 +1,249 @@
+---
+layout: post
+title: "How to Combine Tags and Categories for Smarter Related Posts in Jekyll"
+categories: [jekyll,github-pages,content-automation,jumpleakedclip]
+tags: [related-posts,liquid,jekyll-categories,jekyll-tags]
+description: "Learn how to create smarter related posts in Jekyll GitHub Pages by combining tags and categories for deeper content relevance."
+---
+
+<p>
+If you’ve already implemented <strong>related posts by tags</strong> in your GitHub Pages blog, you’ve taken a great first step toward improving content discovery. But tags alone sometimes miss context — for example, two posts might share the same tag but belong to entirely different topic branches. To fix that, you can <strong>combine tags and categories</strong> into a single scoring system to create smarter, more accurate related post suggestions.
+</p>
+
+<h2>Why Combine Tags and Categories</h2>
+<p>
+In Jekyll, both <code>tags</code> and <code>categories</code> are used to describe content, but in slightly different ways:
+</p>
+
+<ul>
+  <li><strong>Categories</strong> describe the main topic or section of the post (like <em>SEO</em> or <em>Development</em>).</li>
+  <li><strong>Tags</strong> describe the details or subtopics (like <em>on-page</em>, <em>liquid</em>, <em>optimization</em>).</li>
+</ul>
+
+<p>
+By combining both, your related posts logic becomes far more contextual. It can prioritize posts that share both a category and tags over those that only share tags, giving you layered relevance.
+</p>
+
+<h2>Building the Smart Matching Logic</h2>
+<p>
+Let’s start by creating a Liquid loop that gives each post a “match score” based on overlapping categories and tags. A post sharing both gets a higher score.
+</p>
+
+<h3>Step 1 Define Your Scoring Formula</h3>
+<p>
+In this approach, we’ll assign:
+</p>
+
+<ul>
+  <li><strong>+2 points</strong> for each matching category.</li>
+  <li><strong>+1 point</strong> for each matching tag.</li>
+</ul>
+
+<p>
+This way, Jekyll can rank related posts by how similar they are to the current one.
+</p>
+
+<pre><code>
+{% raw %}
+{% assign related_posts = site.posts | where_exp: "item", "item.url != page.url" %}
+{% assign scored = "" %}
+
+{% for post in related_posts %}
+  {% assign cat_match = post.categories | intersection: page.categories | size %}
+  {% assign tag_match = post.tags | intersection: page.tags | size %}
+  {% assign score = cat_match | times: 2 | plus: tag_match %}
+  {% if score > 0 %}
+    {% capture item %}
+      {{ post.url }}::{{ post.title }}::{{ score }}::{{ post.image }}
+    {% endcapture %}
+    {% assign scored = scored | append: item | append: "|" %}
+  {% endif %}
+{% endfor %}
+{% endraw %}
+</code></pre>
+
+<p>
+This snippet calculates a weighted relevance score for every post that shares at least one tag or category.
+</p>
+
+<h3>Step 2 Sort and Display by Score</h3>
+<p>
+Liquid doesn’t directly sort by custom numeric values, but you can achieve it by converting the string into an array and reordering it manually.  
+To keep things simple, we’ll display only the top few posts based on score.
+</p>
+
+<pre><code>
+{% raw %}
+<h3>Recommended for You</h3>
+<ul class="related-hybrid">
+  {% assign sorted = scored | split: "|" %}
+  {% for item in sorted %}
+    {% assign parts = item | split: "::" %}
+    {% assign url = parts[0] %}
+    {% assign title = parts[1] %}
+    {% assign score = parts[2] %}
+    {% assign image = parts[3] %}
+    {% if score and score > 0 %}
+      <li>
+        <a href="{{ url | relative_url }}">
+          {% if image %}
+            <img src="{{ image | relative_url }}" alt="{{ title }}">
+          {% endif %}
+          <span>{{ title }}</span>
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endraw %}
+</code></pre>
+
+<p>
+Each related post now comes with its thumbnail, title, and an implicit relevance score based on shared categories and tags.
+</p>
+
+<h2>Styling the Related Section</h2>
+<p>
+You can reuse the same CSS grid used in the previous “related posts with thumbnails” article, or make this version slightly more compact for emphasis on content relationship:
+</p>
+
+<pre><code>
+.related-hybrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.related-hybrid li {
+  background: #f7f7f7;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.related-hybrid li:hover {
+  transform: translateY(-3px);
+}
+
+.related-hybrid img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.related-hybrid span {
+  display: block;
+  padding: 0.75rem;
+  text-align: center;
+  color: #333;
+  font-size: 0.95rem;
+}
+</code></pre>
+
+<h2>Adding Weight Control for SEO Context</h2>
+<p>
+You can tweak the scoring weights if your blog emphasizes certain relationships.  
+For example:
+</p>
+
+<ul>
+  <li>If your site has broad categories, give <strong>tags higher weight</strong> since they reflect finer topical depth.</li>
+  <li>If categories define strong topic boundaries (e.g., “Photography” vs. “Programming”), give <strong>categories higher weight</strong>.</li>
+</ul>
+
+<p>
+Simply adjust the Liquid logic:
+</p>
+
+<pre><code>
+{% raw %}
+{% assign score = cat_match | times: 3 | plus: tag_match %}
+{% endraw %}
+</code></pre>
+
+<p>
+This makes categories three times more influential than tags when calculating relevance.
+</p>
+
+<h2>Practical Example</h2>
+<p>
+Let’s say you have three posts:
+</p>
+
+<table>
+<tr><th>Title</th><th>Categories</th><th>Tags</th></tr>
+<tr><td>Mastering Jekyll SEO</td><td>jekyll,seo</td><td>optimization,metadata</td></tr>
+<tr><td>Improving Metadata for SEO</td><td>seo</td><td>metadata,on-page</td></tr>
+<tr><td>Building Fast Jekyll Themes</td><td>jekyll</td><td>performance,speed</td></tr>
+</table>
+
+<p>
+When viewing “Mastering Jekyll SEO,” the second post shares the <em>seo</em> category and <em>metadata</em> tag, scoring higher than the third post, which only shares the <em>jekyll</em> category.  
+As a result, it appears first in the related section — reflecting better topical relevance.
+</p>
+
+<h2>Handling Posts Without Tags or Categories</h2>
+<p>
+If a post doesn’t have any tags or categories, the related section might render empty. To handle that gracefully, add a fallback message:
+</p>
+
+<pre><code>
+{% raw %}
+{% if scored == "" %}
+  <p>No related articles found. Explore our latest posts instead:</p>
+  <ul>
+    {% for post in site.posts limit: 3 %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endraw %}
+</code></pre>
+
+<p>
+This ensures your layout stays consistent and always offers navigation options to readers.
+</p>
+
+<h2>Combining Smart Matching with Thumbnails</h2>
+<p>
+You can enhance this further by mixing the smart scoring logic with the thumbnail display method from the previous tutorial. Add the <code>image</code> variable for each post and include fallback support.
+</p>
+
+<pre><code>
+{% raw %}
+{% assign default_image = "/assets/images/fallback.webp" %}
+<img src="{{ image | default: default_image | relative_url }}" alt="{{ title }}">
+{% endraw %}
+</code></pre>
+
+<p>
+This ensures every related post displays a consistent thumbnail, even if the post doesn’t define one.
+</p>
+
+<h2>Performance and Build Efficiency</h2>
+<p>
+Since this method uses simple Liquid loops, it doesn’t affect GitHub Pages build times significantly. However, you should:
+</p>
+<ul>
+  <li>Use <code>limit: 5</code> in your loops to prevent long lists.</li>
+  <li>Optimize images for web (WebP preferred).</li>
+  <li>Minify CSS and enable lazy loading for thumbnails.</li>
+</ul>
+
+<p>
+The final result is a visually engaging, SEO-friendly, and contextually accurate related post system that updates automatically with every new article.
+</p>
+
+<h2>Final Thoughts</h2>
+<p>
+By combining tags and categories, you’ve built a <strong>smart hybrid related post system</strong> that mimics the intelligence of dynamic CMS platforms — entirely within the static simplicity of Jekyll and GitHub Pages.  
+It enhances user experience, internal linking, and SEO authority — all while keeping your blog lightweight and fully static.
+</p>
+
+<h3>Next Step</h3>
+<p>
+In the next continuation, we’ll explore how to <strong>add JSON-based structured data</strong> to your related post section so that Google better understands post relationships and can display enhanced results in SERPs.
+</p>
