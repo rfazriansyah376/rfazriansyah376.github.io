@@ -1,1 +1,160 @@
+---
+layout: post
+title: "How to Migrate from WordPress to GitHub Pages Easily"
+categories: [github-pages, wordpress, migration]
+tags: [wordpress-to-jekyll, static-site, blog-migration, github]
+description: "Step-by-step guide to migrate your WordPress blog to GitHub Pages using Jekyll for a faster and maintenance-free site."
+---
 
+<p>Moving your blog from WordPress to GitHub Pages may sound complicated at first, but it’s actually simpler than most people think. Many creators are now switching to static site platforms like GitHub Pages because they want faster load times, lower costs, and complete control over their content. If you’re tired of constant plugin updates or server issues on WordPress, this guide will walk you through a smooth migration process to GitHub Pages using Jekyll — without losing your valuable posts, images, or SEO.</p>
+
+<nav class="toc">
+  <h2>Essential Steps for Migrating from WordPress to GitHub Pages</h2>
+  <ul>
+    <li><a href="#why-migrate-to-github-pages">Why Migrate to GitHub Pages</a></li>
+    <li><a href="#exporting-wordpress-content">Exporting Your WordPress Content</a></li>
+    <li><a href="#converting-xml-to-jekyll">Converting WordPress XML to Jekyll Format</a></li>
+    <li><a href="#setting-up-your-jekyll-site">Setting Up Your Jekyll Site on GitHub Pages</a></li>
+    <li><a href="#organizing-images-and-assets">Organizing Images and Assets</a></li>
+    <li><a href="#preserving-seo-urls-and-redirects">Preserving SEO URLs and Redirects</a></li>
+    <li><a href="#customizing-theme-and-layout">Customizing Your Theme and Layout</a></li>
+    <li><a href="#testing-and-deploying">Testing and Deploying Your Site</a></li>
+    <li><a href="#final-checklist">Final Checklist for a Successful Migration</a></li>
+  </ul>
+</nav>
+
+<h2 id="why-migrate-to-github-pages">Why Migrate to GitHub Pages</h2>
+<p>WordPress is powerful, but it can become heavy over time — especially for personal or small blogs. Themes and plugins often slow down performance, while hosting costs continue to rise. GitHub Pages, on the other hand, offers a completely free, fast, and secure hosting environment for static sites. It’s perfect for bloggers who want simplicity without compromising professionalism.</p>
+
+<p>When you migrate to GitHub Pages, you eliminate the need for:</p>
+<ul>
+  <li>Database management (since Jekyll converts everything to static HTML)</li>
+  <li>Plugin and theme updates</li>
+  <li>Server or downtime issues</li>
+</ul>
+
+<p>In return, you get faster loading speeds, better security, and total version control of your content — all backed by GitHub’s global CDN.</p>
+
+<h2 id="exporting-wordpress-content">Exporting Your WordPress Content</h2>
+<p>The first step is to export your entire WordPress site. You can do this directly from the WordPress dashboard. Go to <em>Tools → Export</em> and select “All Content.” This will generate an XML file containing all your posts, pages, categories, tags, and metadata.</p>
+
+<p>Download the XML file to your computer. This file will be the foundation for converting your WordPress posts into Jekyll-friendly Markdown files later.</p>
+
+<pre><code>WordPress → Tools → Export → All Content → Download Export File</code></pre>
+
+<p>It’s also a good idea to back up your <code>wp-content/uploads</code> folder so that you can migrate your images later.</p>
+
+<h2 id="converting-xml-to-jekyll">Converting WordPress XML to Jekyll Format</h2>
+<p>Next, you’ll need to convert your WordPress XML export into Markdown files that Jekyll can understand. The easiest way is to use a conversion tool such as <strong>WordPress to Jekyll Exporter</strong> plugin or the command-line tool <code>jekyll-import</code>.</p>
+
+<p>To use <code>jekyll-import</code>, install it via RubyGems:</p>
+
+<pre><code>gem install jekyll-import
+ruby -rubygems -e 'require "jekyll-import";
+    JekyllImport::Importers::WordPressDotCom.run({
+      "source" => "wordpress.xml",
+      "no_fetch_images" => false
+    })'
+</code></pre>
+
+<p>This command will convert all your posts into Markdown files inside a <code>_posts</code> folder, automatically adding YAML front matter for each file.</p>
+
+<p>Alternatively, if you want a simpler approach, use the official <a href="https://wordpress.org/plugins/jekyll-exporter/">Jekyll Exporter plugin</a> directly from your WordPress admin panel. It generates a zip file that already contains Jekyll-formatted posts and assets, ready for upload.</p>
+
+<h2 id="setting-up-your-jekyll-site">Setting Up Your Jekyll Site on GitHub Pages</h2>
+<p>Now that your content is ready, create a new repository on GitHub. If this is your personal blog, name it <code>username.github.io</code>. If it’s a project site, you can use any name. Clone the repository locally using Git:</p>
+
+<pre><code>git clone https://github.com/username/username.github.io
+cd username.github.io
+</code></pre>
+
+<p>Then, initialize a new Jekyll site:</p>
+
+<pre><code>jekyll new .
+</code></pre>
+
+<p>Replace the default <code>_posts</code> folder with your converted content and copy your uploaded images into the <code>assets</code> directory. Commit and push your changes:</p>
+
+<pre><code>git add .
+git commit -m "Initial Jekyll migration from WordPress"
+git push origin main
+</code></pre>
+
+<h2 id="organizing-images-and-assets">Organizing Images and Assets</h2>
+<p>One common issue after migration is broken images. To prevent this, check all paths in your Markdown files. WordPress often stores images in directories like <code>/wp-content/uploads/2024/01/</code>. You’ll need to update these URLs to match your new structure in GitHub Pages.</p>
+
+<p>Store all images inside <code>/assets/images/</code> and use relative paths in your Markdown content, like:</p>
+
+<pre><code>![Alt text](/assets/images/photo.jpg)</code></pre>
+
+<p>This ensures your images load correctly whether viewed locally or online.</p>
+
+<h2 id="preserving-seo-urls-and-redirects">Preserving SEO URLs and Redirects</h2>
+<p>Maintaining your existing SEO rankings is crucial when migrating. To do this, you can preserve your old WordPress URLs or set up redirects. Add permalink structures to your <code>_config.yml</code> to match your old URLs:</p>
+
+<pre><code>permalink: /:categories/:year/:month/:day/:title/</code></pre>
+
+<p>If some URLs change, create a <code>redirect_from</code> entry in each page’s front matter using the Jekyll Redirect From plugin:</p>
+
+<pre><code>redirect_from:
+  - /old-post-url/
+</code></pre>
+
+<p>This ensures users (and Google) who visit old links are automatically redirected to the new URLs.</p>
+
+<h2 id="customizing-theme-and-layout">Customizing Your Theme and Layout</h2>
+<p>Once your content is in place, it’s time to make your blog look great. You can choose from thousands of free Jekyll themes available online. Most themes are designed to work seamlessly with GitHub Pages.</p>
+
+<p>To install a theme, simply edit your <code>_config.yml</code> file:</p>
+
+<pre><code>theme: minima</code></pre>
+
+<p>Or manually copy theme files into your repository for more control. Customize your <code>_layouts</code> and <code>_includes</code> folders to adjust your design, header, and footer. Because Jekyll uses the Liquid templating language, you can easily add dynamic elements like post loops, navigation menus, and SEO metadata.</p>
+
+<h2 id="testing-and-deploying">Testing and Deploying Your Site</h2>
+<p>Before going live, test your site locally. Run the following command:</p>
+
+<pre><code>bundle exec jekyll serve</code></pre>
+
+<p>Visit <code>http://localhost:4000</code> to preview your site. Check for missing links, broken images, and layout issues. Once you’re satisfied, commit and push again — GitHub Pages will automatically build and deploy your site.</p>
+
+<p>After deployment, verify your site at <code>https://username.github.io</code> or your custom domain if configured.</p>
+
+<h2 id="final-checklist">Final Checklist for a Successful Migration</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Export WordPress XML</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Convert posts to Jekyll Markdown</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Set up new Jekyll repository</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Optimize images and assets</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Preserve permalinks and redirects</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Customize theme and metadata</td>
+      <td>✅</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>By following this process, you’ll have a clean, lightweight, and fast-loading blog hosted for free on GitHub Pages. The transition might take a day or two, but once complete, you’ll never have to worry about hosting fees or maintenance updates again. With full control over your content and code, GitHub Pages lets you focus on what truly matters — writing and sharing your ideas.</p>
