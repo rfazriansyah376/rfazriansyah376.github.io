@@ -58,9 +58,9 @@ description: "Learn advanced Liquid logic techniques to make Jekyll sites dynami
 <p>Using <code>_data</code> files, you can loop through structured data to build components dynamically, such as team pages, pricing tables, or portfolios.</p>
 <pre><code>{% for member in site.data.team %}
   &lt;div class="member"&gt;
-    &lt;h4&gt;{{ member.name }}&lt;/h4&gt;
-    &lt;p&gt;{{ member.role }}&lt;/p&gt;
-  &lt;/div&gt;
+    &lt;h4&gt;{{ member.name }}/h4&gt;&lt;
+    &lt;p&gt;{{ member.role }}/p&gt;&lt;
+  &lt;/div&lt;
 {% endfor %}</code></pre>
 
 <p>Every time you update the <code>_data/team.yml</code> file, the output automatically updates on rebuild, creating the effect of dynamic content synchronization.</p>
