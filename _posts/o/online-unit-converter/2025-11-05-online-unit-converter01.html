@@ -1,159 +1,184 @@
 ---
 layout: post02
-title: "How to Build Dynamic Jekyll Sites Using Advanced Liquid Logic"
-categories: [jekyll,liquid,jamstack,github-pages,static-site,automation,template-engine,web-performance,online-unit-converter]
-tags: [jekyll,liquid,github,jamstack,template,logic]
-description: "Learn advanced Liquid logic techniques to make Jekyll sites dynamic, modular, and more powerful without leaving the JAMstack architecture."
+title: "Automating Jekyll Content Updates with GitHub Actions and Liquid Data"
+categories: [jekyll,github-pages,liquid,automation,workflow,jamstack,static-site,ci-cd,content-management,online-unit-converter]
+tags: [jekyll,github,liquid,automation,workflow,actions]
+description: "Discover how to automate Jekyll content updates using GitHub Actions and Liquid data files for a smarter, maintenance-free static site workflow."
 ---
 
-<p>Most people think static sites are limited — that they cannot behave dynamically like CMS-driven platforms. However, with advanced Liquid logic, you can add intelligent content rendering, conditional layouts, and dynamic navigation without using JavaScript or databases. This guide will show you how to make your Jekyll site smarter and more flexible using the full power of Liquid templates.</p>
+<p>As your static site grows, managing and updating content manually becomes time-consuming. Whether you run a blog, documentation hub, or resource library built with Jekyll, small repetitive tasks like updating metadata, syncing data files, or refreshing pages can drain productivity. Fortunately, GitHub Actions combined with Liquid data structures can automate much of this process — allowing your Jekyll site to stay current with minimal effort.</p>
 
-<h2>How Liquid Logic Makes Static Sites Feel Dynamic</h2>
-<p>Liquid is the templating language that powers Jekyll. It allows you to use variables, filters, loops, and conditions directly in your templates. By combining these features strategically, you can simulate CMS-like behaviors such as dynamic content display, category filtering, and personalized layouts — all while remaining fully static and deployable on GitHub Pages.</p>
-
-<h3>Core Dynamic Concepts in Liquid</h3>
-<p>To understand dynamic Jekyll architecture, you first need to master three Liquid capabilities:</p>
+<h2>Why Automate Jekyll Content Updates</h2>
+<p>Automation is one of the greatest strengths of the JAMstack. Since Jekyll sites are tightly integrated with GitHub, you can use continuous integration (CI) to perform actions automatically whenever content changes. This means that instead of manually building and deploying, you can have your site:</p>
 <ul>
-  <li><strong>Conditional Logic:</strong> Control how and when content appears.</li>
-  <li><strong>Loops:</strong> Automatically iterate over posts, data, or pages.</li>
-  <li><strong>Filters:</strong> Transform values dynamically (e.g., format dates, modify strings).</li>
+  <li>Rebuild and deploy automatically on every commit.</li>
+  <li>Sync or generate data-driven pages from structured files.</li>
+  <li>Fetch and update external data on a schedule.</li>
+  <li>Manage content contributions from multiple collaborators safely.</li>
 </ul>
-<p>When used together, these techniques allow you to produce dynamic results — such as related post listings, flexible menus, or adaptive layouts — without any database queries.</p>
+<p>By combining GitHub Actions with Liquid data, your Jekyll workflow becomes both dynamic and self-updating — a key advantage for long-term maintenance.</p>
 
-<h2>Using Conditional Logic to Control Content Flow</h2>
-<p>Liquid offers simple conditional statements using <code>if</code>, <code>elsif</code>, and <code>else</code>. They let you control visibility and structure in templates. For example, you can show different layouts depending on a page’s tag or category:</p>
-<pre><code>{% if page.category == "tutorial" %}
-  &lt;h3&gt;Learning Section&lt;/h3&gt;
-{% elsif page.category == "case-study" %}
-  &lt;h3&gt;Case Study Spotlight&lt;/h3&gt;
-{% else %}
-  &lt;h3&gt;General Content&lt;/h3&gt;
-{% endif %}</code></pre>
+<h2>Understanding the Role of Liquid Data Files</h2>
+<p>Liquid data files in Jekyll (located inside the <code>_data</code> directory) act as small databases that feed your site’s content dynamically. They can store structured data such as lists of team members, product catalogs, or event schedules. Instead of hardcoding content directly in markdown or HTML files, you can manage data in YAML, JSON, or CSV formats and render them dynamically using Liquid loops and filters.</p>
 
-<p>This approach allows you to customize sections without manually editing each page. As your site scales, conditional blocks help you adapt structure and design automatically.</p>
+<h3>Basic Data File Example</h3>
+<p>Suppose you have a data file <code>_data/resources.yml</code> containing:</p>
+<pre><code>- title: JAMstack Guide
+  url: https://jamstack.org
+  category: documentation
+- title: Liquid Template Reference
+  url: https://shopify.github.io/liquid/
+  category: reference</code></pre>
 
-<h3>Conditionally Loading Blocks</h3>
-<p>Sometimes you might want to show or hide content blocks based on front matter flags. For example, to show “Updated” labels only for posts with a modified date:</p>
-<pre><code>{% if page.last_modified_at %}
-  &lt;p&gt;&lt;em&gt;Updated on {{ page.last_modified_at | date_to_long_string }}&lt;/em&gt;&lt;/p&gt;
-{% endif %}</code></pre>
-<p>This makes your content feel alive — visitors see real-time relevance without extra maintenance.</p>
-
-<h2>Building Loops for Automated Content Display</h2>
-<p>Loops are one of the most powerful tools in Liquid. They allow you to automate repetitive structures like article lists, project galleries, or navigation menus.</p>
-
-<h3>Looping Through Posts</h3>
-<p>A common use case is automatically listing all posts from a specific category:</p>
-<pre><code>{% assign tutorials = site.posts | where: "category", "tutorial" %}
-{% for post in tutorials %}
-  &lt;article&gt;
-    &lt;h3&gt;&lt;a href="{{ post.url }}"&gt;{{ post.title }}&lt;/a&gt;&lt;/h3&gt;
-    &lt;p&gt;{{ post.excerpt | strip_html | truncatewords: 20 }}&lt;/p&gt;
-  &lt;/article&gt;
+<p>You can loop through this data in your layout or page using Liquid:</p>
+<pre><code>{% for item in site.data.resources %}
+  &lt;li&gt;&lt;a href="{{ item.url }}"&gt;{{ item.title }}&lt;/a&gt; - {{ item.category }}&lt;/li&gt;
 {% endfor %}</code></pre>
 
-<p>This turns a static site into a dynamic content hub, where new posts appear automatically based on metadata — no manual linking required.</p>
+<p>Now imagine this data file updating automatically — new entries fetched from an external source, new tags added, and the page rebuilt — all without editing any markdown file manually. That’s the goal of automation.</p>
 
-<h3>Looping Through Data Files</h3>
-<p>Using <code>_data</code> files, you can loop through structured data to build components dynamically, such as team pages, pricing tables, or portfolios.</p>
-<pre><code>{% for member in site.data.team %}
-  &lt;div class="member"&gt;
-    &lt;h4&gt;{{ member.name }}/h4&gt;&lt;
-    &lt;p&gt;{{ member.role }}/p&gt;&lt;
-  &lt;/div&lt;
+<h2>How GitHub Actions Fits into the Workflow</h2>
+<p>GitHub Actions provides a flexible automation layer for any GitHub repository. It lets you trigger workflows when specific events occur (like commits or pull requests) or at scheduled intervals (e.g., daily). Combined with Jekyll, you can automate tasks such as:</p>
+<ul>
+  <li>Fetching data from external APIs and updating <code>_data</code> files.</li>
+  <li>Rebuilding the Jekyll site and deploying to GitHub Pages automatically.</li>
+  <li>Generating new posts or pages based on templates.</li>
+</ul>
+
+<h3>Basic Automation Workflow Example</h3>
+<p>Here’s a sample GitHub Actions configuration to rebuild your site daily and deploy it automatically:</p>
+<pre><code>name: Scheduled Jekyll Build
+on:
+  schedule:
+    - cron: '0 3 * * *' # Run every day at 3AM UTC
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+      - name: Install dependencies
+        run: bundle install
+      - name: Build site
+        run: bundle exec jekyll build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site</code></pre>
+
+<p>This ensures your Jekyll site automatically refreshes, even if no manual edits occur — great for sites pulling external data or using automated content feeds.</p>
+
+<h2>Dynamic Data Updating via GitHub Actions</h2>
+<p>One powerful use of automation is fetching external data and writing it into Jekyll’s <code>_data</code> folder. This allows your site to stay up-to-date with third-party content, API responses, or public data sources.</p>
+
+<h3>Fetching External API Data</h3>
+<p>Let’s say you want to pull the latest GitHub repositories from your organization into a <code>_data/repos.json</code> file. You can use a small script and a GitHub Action to automate this:</p>
+
+<pre><code>name: Fetch GitHub Repositories
+on:
+  schedule:
+    - cron: '0 4 * * *'
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Fetch GitHub Repos
+        run: |
+          curl https://api.github.com/orgs/your-org/repos?per_page=10 &gt; _data/repos.json
+      - name: Commit and push data changes
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add _data/repos.json
+          git commit -m "Auto-update repository data"
+          git push</code></pre>
+
+<p>Each day, this Action will update your <code>_data/repos.json</code> file automatically. When the site rebuilds, Liquid loops render fresh repository data — providing real-time updates on a static website.</p>
+
+<h2>Using Liquid to Render Updated Data</h2>
+<p>Once the updated data is committed, Jekyll automatically includes it during the next build. You can display it in any layout or page using Liquid loops, just like static data. For example:</p>
+<pre><code>{% for repo in site.data.repos %}
+  &lt;div class="repo"&gt;
+    &lt;h3&gt;&lt;a href="{{ repo.html_url }}"&gt;{{ repo.name }}&lt;/a&gt;&lt;/h3&gt;
+    &lt;p&gt;{{ repo.description | default: "No description available." }}&lt;/p&gt;
+  &lt;/div&gt;
 {% endfor %}</code></pre>
+<p>This transforms your static Jekyll site into a living portal that stays synchronized with external services automatically.</p>
 
-<p>Every time you update the <code>_data/team.yml</code> file, the output automatically updates on rebuild, creating the effect of dynamic content synchronization.</p>
+<h2>Combining Scheduled Automation with Manual Triggers</h2>
+<p>Sometimes you want a mix of automation and control. GitHub Actions supports both. You can run workflows on a schedule and also trigger them manually from the GitHub web interface using the <code>workflow_dispatch</code> event:</p>
+<pre><code>on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'</code></pre>
+<p>This gives you the flexibility to trigger an update whenever you push new data or want to refresh content manually.</p>
 
-<h2>Combining Loops and Conditions for Dynamic Filtering</h2>
-<p>You can also combine both techniques to create intelligent filtering or grouping logic directly inside your templates. For example, showing only recent posts within the last 90 days:</p>
-<pre><code>{% assign recent_posts = site.posts | where_exp: "post", "post.date > site.time | minus: 7776000" %}
-{% for post in recent_posts %}
-  &lt;h4&gt;&lt;a href="{{ post.url }}"&gt;{{ post.title }}&lt;/a&gt;&lt;/h4&gt;
-{% endfor %}</code></pre>
-<p>With this setup, your homepage or sidebar automatically updates to show only fresh articles, making your static site feel more dynamic and timely.</p>
+<h2>Organizing Your Repository for Automation</h2>
+<p>To make automation efficient and clean, structure your repository properly:</p>
+<ul>
+  <li><strong>_data/</strong> – for structured YAML, JSON, or CSV files.</li>
+  <li><strong>_scripts/</strong> – for custom fetch or update scripts (optional).</li>
+  <li><strong>.github/workflows/</strong> – for all GitHub Action files.</li>
+</ul>
+<p>Keeping each function isolated ensures that your automation scales well as your site grows.</p>
 
-<h2>Smart Navigation and Menus with Liquid Logic</h2>
-<p>Another practical use of Liquid is for dynamic navigation menus. Instead of manually coding links, you can store your menu structure in <code>_data/navigation.yml</code> and render it automatically:</p>
-<pre><code>_data/navigation.yml
-- title: Home
-  url: /
-- title: Blog
-  url: /blog/
-- title: About
-  url: /about/</code></pre>
+<h2>Example Workflow Comparison</h2>
+<p>The following table compares a manual Jekyll content update process with an automated GitHub Action workflow.</p>
 
-<p>Then loop through it in your layout:</p>
-<pre><code>&lt;nav&gt;
-  &lt;ul&gt;
-  {% for item in site.data.navigation %}
-    &lt;li&gt;&lt;a href="{{ item.url }}"&gt;{{ item.title }}&lt;/a&gt;&lt;/li&gt;
-  {% endfor %}
-  &lt;/ul&gt;
-&lt;/nav&gt;</code></pre>
-
-<p>This makes your menus globally editable and automatically synchronized across all pages. You can even add conditional highlights for the current page:</p>
-<pre><code>&lt;li class="{% if page.url == item.url %}active{% endif %}"&gt;&lt;a href="{{ item.url }}"&gt;{{ item.title }}&lt;/a&gt;&lt;/li&gt;</code></pre>
-
-<h2>Reusable and Modular Template Architecture</h2>
-<p>When building large Jekyll sites, maintainability is key. Instead of repeating logic in multiple layouts, use includes and template inheritance to create modular designs.</p>
-
-<h3>Using Includes with Parameters</h3>
-<p>Includes are reusable components that accept parameters. For example, you can build a testimonial block that changes content dynamically:</p>
-<pre><code>&lt;!-- _includes/testimonial.html --&gt;
-&lt;blockquote&gt;
-  “{{ include.text }}”
-  &lt;cite&gt;— {{ include.author }}&lt;/cite&gt;
-&lt;/blockquote&gt;
-</code></pre>
-<p>Then reuse it anywhere:</p>
-<pre><code>{% include testimonial.html text="Liquid makes templates smarter." author="Jekyll Team" %}</code></pre>
-
-<h3>Using Layouts Inside Layouts</h3>
-<p>Liquid allows layout chaining, where a layout can inherit another. This helps maintain consistent design layers. For example, you can have a <code>default.html</code> layout that wraps a <code>post.html</code> layout:</p>
-<pre><code>layout: default</code></pre>
-<p>This creates a clear hierarchy and lets you manage global or page-level logic independently.</p>
-
-<h2>Practical Example Table</h2>
-<p>The following table summarizes some common use cases where Liquid logic enhances Jekyll’s flexibility.</p>
 <table>
   <thead>
     <tr>
-      <th>Goal</th>
-      <th>Liquid Technique</th>
-      <th>Example Result</th>
+      <th>Task</th>
+      <th>Manual Process</th>
+      <th>Automated Process</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Show different layouts per category</td>
-      <td>Conditional logic</td>
-      <td>Category-based section titles</td>
+      <td>Updating data files</td>
+      <td>Edit YAML or JSON manually</td>
+      <td>Auto-fetch via GitHub API</td>
     </tr>
     <tr>
-      <td>Display a dynamic team list</td>
-      <td>Loop through data files</td>
-      <td>Automatic member cards</td>
+      <td>Rebuilding site</td>
+      <td>Run build locally</td>
+      <td>Triggered automatically on schedule</td>
     </tr>
     <tr>
-      <td>Update navigation globally</td>
-      <td>Loop with includes</td>
-      <td>Dynamic menu with active states</td>
+      <td>Deploying updates</td>
+      <td>Push manually to Pages branch</td>
+      <td>Deploy automatically via CI/CD</td>
     </tr>
   </tbody>
 </table>
 
-<h2>Long-Term Benefits of Using Advanced Liquid Logic</h2>
-<p>When applied well, Liquid turns Jekyll into a full-fledged content management engine for static sites. Here’s what you gain:</p>
+<h2>Practical Use Cases</h2>
+<p>Here are a few real-world applications for Jekyll automation workflows:</p>
 <ul>
-  <li><strong>Consistency:</strong> Every part of your site uses the same data sources and structures.</li>
-  <li><strong>Scalability:</strong> Adding new content or pages becomes easier and less error-prone.</li>
-  <li><strong>Automation:</strong> Layouts adapt to content without manual updates.</li>
-  <li><strong>Performance:</strong> All logic is compiled at build time — zero runtime cost for visitors.</li>
+  <li><strong>News aggregator:</strong> Fetch daily headlines via API and update <code>_data/news.json</code>.</li>
+  <li><strong>Community site:</strong> Sync GitHub issues or discussions as blog entries.</li>
+  <li><strong>Documentation portal:</strong> Pull and publish updates from multiple repositories.</li>
+  <li><strong>Pricing or product pages:</strong> Sync product listings from a JSON API feed.</li>
 </ul>
 
-<h2>Final Takeaway</h2>
-<p>Mastering Liquid’s conditional logic, loops, and data-driven structures allows you to build dynamic experiences entirely within a static architecture. You can manage complex layouts, conditional components, and synchronized menus — all without relying on JavaScript frameworks or databases. The result: faster, smarter, and more maintainable Jekyll sites.</p>
+<h2>Benefits of Automated Jekyll Content Workflows</h2>
+<p>By combining Liquid’s rendering flexibility with GitHub Actions’ automation power, you gain several long-term benefits:</p>
+<ul>
+  <li><strong>Reduced maintenance:</strong> No need to manually edit files for small content changes.</li>
+  <li><strong>Data freshness:</strong> Automated updates ensure your site never shows outdated content.</li>
+  <li><strong>Version control:</strong> Every update is tracked, auditable, and reversible.</li>
+  <li><strong>Scalability:</strong> The more your site grows, the less manual work required.</li>
+</ul>
 
-<h2>Next Step for You</h2>
-<p>Start small: add one data-driven feature, such as a dynamic team page or auto-updating navigation. Once you’re comfortable, expand to content filtering or category-based layouts. Every improvement you make with Liquid logic moves you closer to a professional-grade static site that feels dynamic, performs fast, and scales beautifully with time.</p>
+<h2>Final Thoughts</h2>
+<p>Automation is the key to maintaining an efficient JAMstack workflow. With GitHub Actions handling updates and Liquid data files powering dynamic rendering, your Jekyll site can stay fresh, fast, and accurate — even without human intervention. By setting up smart automation workflows, you transform your static site into an intelligent system that updates itself, saving hours of manual effort while ensuring consistent performance and accuracy.</p>
+
+<h2>Next Steps</h2>
+<p>Start by identifying which parts of your Jekyll site rely on manual updates — such as blog indexes, API data, or navigation lists. Then, automate one of them using GitHub Actions. Once that works, expand your automation to handle content synchronization, build triggers, and deployment. Over time, you’ll have a fully autonomous static site that operates like a dynamic CMS — but with the simplicity, speed, and reliability of Jekyll and GitHub Pages.</p>
