@@ -97,7 +97,7 @@ h2 {
 
 <div class="all-categories">
   <h2>All Categories</h2>
-  <ul class="category-grid">
+  <ul class="category-grid" id="category-list">
     {% assign all_categories = "" | split: "" %}
     {% for post in site.posts %}
       {% if post.categories %}
@@ -111,11 +111,7 @@ h2 {
     {% assign sorted_categories = all_categories | sort %}
     
     {% for category in sorted_categories %}
-      <li>
-        <a href="/All-categories.html?category={{ category | slugify }}" class="category-link">
-          {{ category | capitalize }}
-        </a>
-      </li>
+      <li data-category="{{ category | slugify }}">{{ category | capitalize }}</li>
     {% endfor %}
   </ul>
 </div>
@@ -129,12 +125,22 @@ h2 {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const params = new URLSearchParams(window.location.search);
-  const selectedCategory = params.get("category");
-  const postList = document.getElementById("post-list");
-  const heading = document.getElementById("posts-heading");
-  const backLink = document.getElementById("back-link");
-  const catLinks = document.querySelectorAll(".category-link");
+  const hostname = window.location.hostname; // domain aktif
+  const catList = document.getElementById("category-list");
+
+  // Buat ulang isi <ul> kategori menjadi link domain dinamis
+  catList.querySelectorAll("li[data-category]").forEach(li => {
+    const cat = li.getAttribute("data-category");
+    const name = li.textContent.trim();
+    const domainUrl = `https://${cat}.${hostname}`; // hasil akhir misal seo.domain.my.id
+
+    const a = document.createElement("a");
+    a.href = domainUrl;
+    a.className = "category-link";
+    a.textContent = name;
+    li.innerHTML = "";
+    li.appendChild(a);
+  });
 
   // --- Data posts di-generate oleh Liquid ---
   const posts = [
@@ -149,19 +155,24 @@ document.addEventListener("DOMContentLoaded", function() {
     {% endfor %}
   ];
 
-  // --- Filter category jika ada ---
+  // --- Filter category (jika pakai query lama) ---
+  const params = new URLSearchParams(window.location.search);
+  const selectedCategory = params.get("category");
+  const postList = document.getElementById("post-list");
+  const heading = document.getElementById("posts-heading");
+  const backLink = document.getElementById("back-link");
+  const catLinks = document.querySelectorAll(".category-link");
+
   if (selectedCategory) {
     const filtered = posts.filter(p => p.categories.includes(selectedCategory));
     const capitalized = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
     heading.textContent = "Posts in: " + capitalized;
     backLink.style.display = "block";
 
-    // Highlight active category
     catLinks.forEach(link => {
-      if (link.href.includes("?category=" + selectedCategory)) link.classList.add("active");
+      if (link.href.includes(selectedCategory + ".")) link.classList.add("active");
     });
 
-    // SEO dinamis
     document.title = capitalized + " | " + "{{ site.title | default: 'My Jekyll Site' }}";
 
     let metaDesc = document.querySelector('meta[name="description"]');
@@ -172,7 +183,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     metaDesc.content = "Browse posts under category " + capitalized + ".";
 
-    // Tampilkan hasil
     if (filtered.length === 0) {
       postList.innerHTML = "<p>No posts found in this category.</p>";
     } else {
