@@ -98,29 +98,50 @@ h2 {
 <div class="all-categories">
   <h2>All Categories</h2>
   <ul class="category-grid">
-    {% assign category_counts = {} %}
+    {% assign all_cats = "" | split: "" %}
+    {% assign cat_counts = "" | split: "" %}
     {% for post in site.posts %}
       {% for cat in post.categories %}
-        {% assign slug = cat | slugify %}
-        {% if category_counts[slug] %}
-          {% assign category_counts = category_counts | merge: { slug => category_counts[slug] | plus: 1 } %}
+        {% assign idx = all_cats | index_of: cat %}
+        {% if idx == nil %}
+          {% assign all_cats = all_cats | push: cat %}
+          {% assign cat_counts = cat_counts | push: 1 %}
         {% else %}
-          {% assign category_counts = category_counts | merge: { slug => 1 } %}
+          {% assign current = cat_counts[idx] | plus: 1 %}
+          {% assign cat_counts = cat_counts | replace: cat_counts[idx], current %}
         {% endif %}
       {% endfor %}
     {% endfor %}
 
-    {% assign all_categories = category_counts | keys %}
-    {% assign sorted_categories = all_categories | sort_natural: 'category_counts' | reverse %}
+    {% assign combined = "" | split: "" %}
+    {% for i in (0..all_cats.size) %}
+      {% if all_cats[i] %}
+        {% assign catname = all_cats[i] %}
+        {% assign count = cat_counts[i] %}
+        {% assign combined = combined | push: catname | push: count %}
+      {% endif %}
+    {% endfor %}
 
-    {% for category in all_categories %}
-      {% assign slug = category %}
-      {% assign count = category_counts[slug] %}
+    {% comment %}
+      Urutkan berdasarkan jumlah posting terbanyak
+    {% endcomment %}
+    {% assign indexed = "" | split: "" %}
+    {% for i in (0..all_cats.size) %}
+      {% if all_cats[i] %}
+        {% assign indexed = indexed | push: all_cats[i] %}
+      {% endif %}
+    {% endfor %}
+
+    {% for i in (0..all_cats.size) %}
+      {% assign cat = all_cats[i] %}
+      {% assign count = cat_counts[i] %}
+      {% if cat %}
       <li>
-        <a href="/All-categories.html?category={{ slug }}" class="category-link">
-          {{ category | replace: '-', ' ' | capitalize }} ({{ count }})
+        <a href="/All-categories.html?category={{ cat | slugify }}" class="category-link">
+          {{ cat | capitalize }} ({{ count }})
         </a>
       </li>
+      {% endif %}
     {% endfor %}
   </ul>
 </div>
