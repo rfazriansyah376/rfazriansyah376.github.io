@@ -1,3 +1,9 @@
+---
+layout: null
+title: All Categories
+permalink: /All-categories.html
+---
+
 <div class="all-categories" style="margin:2rem 0;">
   <h2>All Categories</h2>
   <ul style="list-style:none; padding:0;">
@@ -12,9 +18,10 @@
       {% endif %}
     {% endfor %}
     {% assign sorted_categories = all_categories | sort %}
+    
     {% for category in sorted_categories %}
-      <li style="margin:0.3rem 0;">
-        <a href="/?category={{ category | slugify }}" class="category-link" style="text-decoration:none;">
+      <li style="margin:0.4rem 0;">
+        <a href="/All-categories.html?category={{ category | slugify }}" class="category-link" style="text-decoration:none; color:#0366d6;">
           {{ category | capitalize }}
         </a>
       </li>
@@ -26,3 +33,69 @@
   <h2>Posts</h2>
   <ul id="post-list" style="list-style:none; padding:0;"></ul>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const params = new URLSearchParams(window.location.search);
+  const selectedCategory = params.get("category");
+  const postList = document.getElementById("post-list");
+
+  // --- Data post di-generate via Liquid saat build time ---
+  const posts = [
+    {% for post in site.posts %}
+      {
+        title: "{{ post.title | escape }}",
+        url: "{{ post.url | absolute_url }}",
+        date: "{{ post.date | date: '%B %d, %Y' }}",
+        categories: [{% for cat in post.categories %}"{{ cat | slugify }}"{% unless forloop.last %}, {% endunless %}{% endfor %}],
+        excerpt: "{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}"
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+
+  if (selectedCategory) {
+    const filtered = posts.filter(p => p.categories.includes(selectedCategory));
+    const capitalized = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
+
+    // --- SEO Dinamis ---
+    document.title = capitalized + " | " + "{{ site.title | default: 'My Jekyll Site' }}";
+
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement("meta");
+      metaDesc.name = "description";
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute("content", "Browse all posts under category " + capitalized + ".");
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", window.location.href);
+
+    // --- Tampilkan hasil ---
+    let html = `<h2>Posts in: ${capitalized}</h2>`;
+    if (filtered.length === 0) {
+      html += "<p>No posts found in this category.</p>";
+    } else {
+      html += "<ul>";
+      filtered.forEach(p => {
+        html += `
+          <li style="margin-bottom:1rem;">
+            <a href="${p.url}" style="font-weight:bold; text-decoration:none;">${p.title}</a><br>
+            <small>${p.date}</small><br>
+            <p style="margin-top:0.4rem;">${p.excerpt}</p>
+          </li>
+        `;
+      });
+      html += "</ul>";
+    }
+    postList.innerHTML = html;
+  } else {
+    postList.innerHTML = "<p>Select a category above to view related posts.</p>";
+  }
+});
+</script>
