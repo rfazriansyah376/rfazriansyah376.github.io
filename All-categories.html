@@ -49,154 +49,59 @@ h2 {
   font-weight: 500;
   transition: all .2s ease;
 }
-.category-link:hover, .category-link.active {
+.category-link:hover {
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
-}
-#post-list {
-  list-style: none;
-  padding: 0;
-}
-.post-item {
-  border-bottom: 1px solid var(--border);
-  padding: 1rem 0;
-}
-.post-item:last-child {
-  border: none;
-}
-.post-item a {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--primary);
-  text-decoration: none;
-}
-.post-item a:hover {
-  text-decoration: underline;
-}
-.post-date {
-  color: var(--muted);
-  font-size: .9rem;
-}
-.excerpt {
-  margin-top: .3rem;
-  color: var(--muted);
-}
-#back-link {
-  display: none;
-  margin-top: 2rem;
-}
-#back-link a {
-  color: var(--muted);
-  text-decoration: none;
-}
-#back-link a:hover {
-  text-decoration: underline;
 }
 </style>
 
 <div class="all-categories">
   <h2>All Categories</h2>
   <ul class="category-grid" id="category-list">
-    {% assign all_categories = "" | split: "" %}
+    {% assign category_counts = {} %}
     {% for post in site.posts %}
-      {% if post.categories %}
-        {% for cat in post.categories %}
-          {% unless all_categories contains cat %}
-            {% assign all_categories = all_categories | push: cat %}
-          {% endunless %}
-        {% endfor %}
-      {% endif %}
+      {% for cat in post.categories %}
+        {% assign slug = cat | slugify %}
+        {% if category_counts[slug] %}
+          {% assign category_counts = category_counts | merge: {{ slug }}: {{ category_counts[slug] | plus: 1 }} %}
+        {% else %}
+          {% assign category_counts = category_counts | merge: {{ slug }}: 1 %}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
-    {% assign sorted_categories = all_categories | sort %}
     
-    {% for category in sorted_categories %}
-      <li data-category="{{ category | slugify }}">{{ category | capitalize }}</li>
+    {% assign all_categories = category_counts | keys | sort %}
+    {% for cat in all_categories %}
+      <li data-category="{{ cat }}" data-count="{{ category_counts[cat] }}">
+        {{ cat | capitalize }}
+      </li>
     {% endfor %}
   </ul>
 </div>
 
-<div id="category-posts">
-  <h2 id="posts-heading">Posts</h2>
-  <ul id="post-list"></ul>
-</div>
-
-<div id="back-link"><a href="/All-categories.html">← Back to all categories</a></div>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const hostname = window.location.hostname; // domain aktif
-  const catList = document.getElementById("category-list");
+  const hostname = window.location.hostname; // misal: domain.my.id
+  const baseDomain = hostname.split('.').slice(-2).join('.'); // ambil domain utama: my.id
+  const categoryList = document.getElementById("category-list");
 
-  // Buat ulang isi <ul> kategori menjadi link domain dinamis
-  catList.querySelectorAll("li[data-category]").forEach(li => {
+  categoryList.querySelectorAll("li[data-category]").forEach(li => {
     const cat = li.getAttribute("data-category");
+    const count = li.getAttribute("data-count");
     const name = li.textContent.trim();
-    const domainUrl = `https://${cat}.${hostname}`; // hasil akhir misal seo.domain.my.id
+    const categoryDomain = `${cat}.${baseDomain}`;
+    const categoryUrl = `https://${categoryDomain}`;
 
-    const a = document.createElement("a");
-    a.href = domainUrl;
-    a.className = "category-link";
-    a.textContent = name;
-    li.innerHTML = "";
-    li.appendChild(a);
+    const link = document.createElement("a");
+    link.className = "category-link";
+    link.textContent = `${name} (${count})`;
+
+    // fallback ke homepage jika domain belum aktif
+    link.href = (hostname === categoryDomain) ? `https://${hostname}` : categoryUrl;
+
+    li.textContent = "";
+    li.appendChild(link);
   });
-
-  // --- Data posts di-generate oleh Liquid ---
-  const posts = [
-    {% for post in site.posts %}
-      {
-        title: "{{ post.title | escape }}",
-        url: "{{ post.url | absolute_url }}",
-        date: "{{ post.date | date: '%b %d, %Y' }}",
-        categories: [{% for cat in post.categories %}"{{ cat | slugify }}"{% unless forloop.last %}, {% endunless %}{% endfor %}],
-        excerpt: "{{ post.excerpt | strip_html | strip_newlines | truncate: 140 }}"
-      }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
-
-  // --- Filter category (jika pakai query lama) ---
-  const params = new URLSearchParams(window.location.search);
-  const selectedCategory = params.get("category");
-  const postList = document.getElementById("post-list");
-  const heading = document.getElementById("posts-heading");
-  const backLink = document.getElementById("back-link");
-  const catLinks = document.querySelectorAll(".category-link");
-
-  if (selectedCategory) {
-    const filtered = posts.filter(p => p.categories.includes(selectedCategory));
-    const capitalized = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
-    heading.textContent = "Posts in: " + capitalized;
-    backLink.style.display = "block";
-
-    catLinks.forEach(link => {
-      if (link.href.includes(selectedCategory + ".")) link.classList.add("active");
-    });
-
-    document.title = capitalized + " | " + "{{ site.title | default: 'My Jekyll Site' }}";
-
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement("meta");
-      metaDesc.name = "description";
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.content = "Browse posts under category " + capitalized + ".";
-
-    if (filtered.length === 0) {
-      postList.innerHTML = "<p>No posts found in this category.</p>";
-    } else {
-      postList.innerHTML = filtered.map(p => `
-        <li class="post-item">
-          <a href="${p.url}">${p.title}</a>
-          <div class="post-date">${p.date}</div>
-          <div class="excerpt">${p.excerpt}</div>
-        </li>
-      `).join("");
-    }
-  } else {
-    heading.textContent = "Select a category to view posts";
-    postList.innerHTML = "<p style='color:var(--muted);'>Choose a category above to explore related posts.</p>";
-  }
 });
 </script>
