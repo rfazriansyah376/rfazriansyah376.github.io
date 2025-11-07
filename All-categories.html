@@ -1,0 +1,28 @@
+<div class="all-categories" style="margin:2rem 0;">
+  <h2>All Categories</h2>
+  <ul style="list-style:none; padding:0;">
+    {% assign all_categories = "" | split: "" %}
+    {% for post in site.posts %}
+      {% if post.categories %}
+        {% for cat in post.categories %}
+          {% unless all_categories contains cat %}
+            {% assign all_categories = all_categories | push: cat %}
+          {% endunless %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+    {% assign sorted_categories = all_categories | sort %}
+    {% for category in sorted_categories %}
+      <li style="margin:0.3rem 0;">
+        <a href="/?category={{ category | slugify }}" class="category-link" style="text-decoration:none;">
+          {{ category | capitalize }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div id="category-posts" style="margin-top:2rem;">
+  <h2>Posts</h2>
+  <ul id="post-list" style="list-style:none; padding:0;"></ul>
+</div>
