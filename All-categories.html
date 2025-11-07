@@ -3,7 +3,6 @@ layout: null
 permalink: /All-categories.html
 ---
 
-
 <style>
 :root {
   --primary: #0366d6;
@@ -99,50 +98,24 @@ h2 {
 <div class="all-categories">
   <h2>All Categories</h2>
   <ul class="category-grid">
-    {% assign all_cats = "" | split: "" %}
-    {% assign cat_counts = "" | split: "" %}
+    {% assign all_categories = "" | split: "" %}
     {% for post in site.posts %}
-      {% for cat in post.categories %}
-        {% assign idx = all_cats | index_of: cat %}
-        {% if idx == nil %}
-          {% assign all_cats = all_cats | push: cat %}
-          {% assign cat_counts = cat_counts | push: 1 %}
-        {% else %}
-          {% assign current = cat_counts[idx] | plus: 1 %}
-          {% assign cat_counts = cat_counts | replace: cat_counts[idx], current %}
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
-
-    {% assign combined = "" | split: "" %}
-    {% for i in (0..all_cats.size) %}
-      {% if all_cats[i] %}
-        {% assign catname = all_cats[i] %}
-        {% assign count = cat_counts[i] %}
-        {% assign combined = combined | push: catname | push: count %}
+      {% if post.categories %}
+        {% for cat in post.categories %}
+          {% unless all_categories contains cat %}
+            {% assign all_categories = all_categories | push: cat %}
+          {% endunless %}
+        {% endfor %}
       {% endif %}
     {% endfor %}
-
-    {% comment %}
-      Urutkan berdasarkan jumlah posting terbanyak
-    {% endcomment %}
-    {% assign indexed = "" | split: "" %}
-    {% for i in (0..all_cats.size) %}
-      {% if all_cats[i] %}
-        {% assign indexed = indexed | push: all_cats[i] %}
-      {% endif %}
-    {% endfor %}
-
-    {% for i in (0..all_cats.size) %}
-      {% assign cat = all_cats[i] %}
-      {% assign count = cat_counts[i] %}
-      {% if cat %}
+    {% assign sorted_categories = all_categories | sort %}
+    
+    {% for category in sorted_categories %}
       <li>
-        <a href="/All-categories.html?category={{ cat | slugify }}" class="category-link">
-          {{ cat | capitalize }} ({{ count }})
+        <a href="/All-categories.html?category={{ category | slugify }}" class="category-link">
+          {{ category | capitalize }}
         </a>
       </li>
-      {% endif %}
     {% endfor %}
   </ul>
 </div>
@@ -163,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const backLink = document.getElementById("back-link");
   const catLinks = document.querySelectorAll(".category-link");
 
+  // --- Data posts di-generate oleh Liquid ---
   const posts = [
     {% for post in site.posts %}
       {
@@ -175,16 +149,19 @@ document.addEventListener("DOMContentLoaded", function() {
     {% endfor %}
   ];
 
+  // --- Filter category jika ada ---
   if (selectedCategory) {
     const filtered = posts.filter(p => p.categories.includes(selectedCategory));
     const capitalized = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
     heading.textContent = "Posts in: " + capitalized;
     backLink.style.display = "block";
 
+    // Highlight active category
     catLinks.forEach(link => {
       if (link.href.includes("?category=" + selectedCategory)) link.classList.add("active");
     });
 
+    // SEO dinamis
     document.title = capitalized + " | " + "{{ site.title | default: 'My Jekyll Site' }}";
 
     let metaDesc = document.querySelector('meta[name="description"]');
@@ -195,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     metaDesc.content = "Browse posts under category " + capitalized + ".";
 
+    // Tampilkan hasil
     if (filtered.length === 0) {
       postList.innerHTML = "<p>No posts found in this category.</p>";
     } else {
