@@ -3,104 +3,52 @@ layout: null
 permalink: /All-categories.html
 ---
 
-<style>
-:root {
-  --primary: #0366d6;
-  --text: #222;
-  --muted: #555;
-  --border: #e5e5e5;
-  --bg: #f9f9f9;
-}
-body {
-  font-family: system-ui, sans-serif;
-  color: var(--text);
-  background: #fff;
-  line-height: 1.6;
-  margin: 0;
-  padding: 2rem 1rem;
-  max-width: 800px;
-  margin-inline: auto;
-}
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-.all-categories {
-  margin-bottom: 2.5rem;
-}
-.category-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .6rem;
-  padding: 0;
-  list-style: none;
-}
-.category-grid li {
-  margin: 0;
-}
-.category-link {
-  display: inline-block;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: .4rem .9rem;
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all .2s ease;
-}
-.category-link:hover {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-</style>
-
-<div class="all-categories">
+<div class="all-categories" style="margin:2rem 0;">
   <h2>All Categories</h2>
-  <ul class="category-grid" id="category-list">
-    {% assign all_categories = "" | split: "" %}
-    {% for post in site.posts %}
-      {% if post.categories %}
-        {% for cat in post.categories %}
-          {% assign all_categories = all_categories | push: cat %}
-        {% endfor %}
-      {% endif %}
-    {% endfor %}
-    {% assign unique_categories = all_categories | uniq | sort %}
+  <ul style="list-style:none; padding:0;">
 
-    {% for category in unique_categories %}
-      {% assign posts_in_cat = site.posts | where_exp: "p", "p.categories contains category" %}
-      {% assign count = posts_in_cat | size %}
-      <li data-category="{{ category | slugify }}" data-count="{{ count }}">
-        {{ category | capitalize }}
-      </li>
+    {% assign category_counts = {} %}
+
+    {% for post in site.posts %}
+      {% for category in post.categories %}
+        {% assign slug = category | slugify %}
+        {% if category_counts[slug] %}
+          {% assign count = category_counts[slug] | plus: 1 %}
+          {% assign category_counts = category_counts | merge: hash %}
+        {% else %}
+          {% assign category_counts = category_counts | merge: hash %}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
+
+    {% assign categories = "" | split: "" %}
+    {% for post in site.posts %}
+      {% for category in post.categories %}
+        {% assign categories = categories | push: category %}
+      {% endfor %}
+    {% endfor %}
+    {% assign unique_categories = categories | uniq %}
+
+    {% assign sorted = unique_categories | sort_natural: "count" | reverse %}
+
+    {% if unique_categories.size > 0 %}
+      {% for cat in unique_categories %}
+        {% assign slug = cat | slugify %}
+        {% assign count = 0 %}
+        {% for post in site.posts %}
+          {% if post.categories contains cat %}
+            {% assign count = count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+        <li style="margin:.5rem 0;">
+          <a href="/?{{ slug }}" style="text-decoration:none; color:var(--primary);">
+            {{ cat }}
+          </a> ({{ count }})
+        </li>
+      {% endfor %}
+    {% else %}
+      <p>Tidak ada kategori ditemukan. <a href="/">Kembali ke homepage</a>.</p>
+    {% endif %}
+
   </ul>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const hostname = window.location.hostname; // misal: domain.my.id
-  const baseDomain = hostname.split('.').slice(-2).join('.'); // ambil domain utama: my.id
-  const categoryList = document.getElementById("category-list");
-
-  categoryList.querySelectorAll("li[data-category]").forEach(li => {
-    const cat = li.getAttribute("data-category");
-    const count = li.getAttribute("data-count");
-    const name = li.textContent.trim();
-    const categoryDomain = `${cat}.${baseDomain}`;
-    const categoryUrl = `https://${categoryDomain}`;
-
-    const link = document.createElement("a");
-    link.className = "category-link";
-    link.textContent = `${name} (${count})`;
-
-    // fallback ke homepage jika subdomain sama dengan domain utama
-    link.href = (hostname === categoryDomain) ? `https://${hostname}` : categoryUrl;
-
-    li.textContent = "";
-    li.appendChild(link);
-  });
-});
-</script>
