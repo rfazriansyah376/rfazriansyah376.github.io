@@ -1,0 +1,106 @@
+---
+layout: post02
+title: "How Can You Secure Your GitHub Pages Site Using Cloudflare Custom Rules"
+categories: [github-pages, cloudflare, website-security,snagadhive]
+tags: [github, github-pages, cloudflare, dns, ssl, firewall, bot-protection, custom-rules, web-security, static-sites, https, ddos-protection, seo, performance, edge-security]
+description: "Learn how to secure your GitHub Pages site using Cloudflare Custom Rules effectively."
+---
+
+<p>Securing your GitHub Pages site using Cloudflare Custom Rules is one of the most effective ways to protect your static website from bots, spam traffic, and potential attacks. Many creators rely on GitHub Pages for hosting, but without additional protection layers, sites can be exposed to malicious requests or resource abuse. In this article, we’ll explore how Cloudflare’s Custom Rules can help fortify your GitHub Pages setup while maintaining excellent site performance and SEO visibility.</p>
+
+<h2>How to Protect Your GitHub Pages Website with Cloudflare’s Tools</h2>
+<ul>
+  <li>Understanding Cloudflare’s security layer and its importance for static hosting.</li>
+  <li>Setting up Cloudflare Custom Rules for GitHub Pages effectively.</li>
+  <li>Creating protection rules for bots, spam, and sensitive URLs.</li>
+  <li>Improving performance and SEO while keeping your site safe.</li>
+</ul>
+
+<h2>Why Security Matters for GitHub Pages Websites</h2>
+<p>Many website owners believe that because GitHub Pages hosts static files, their websites are automatically safe. However, security threats don’t just target dynamic sites. Even a simple static portfolio or documentation page can become a target for scraping, brute force attempts on linked APIs, or automated spam traffic that can harm SEO rankings.</p>
+<p>When your site becomes accessible to everyone on the internet, it’s also exposed to bad actors. Without an additional layer like Cloudflare, your GitHub Pages domain might face downtime or performance issues due to heavy bot traffic or abuse. That’s why using Cloudflare Custom Rules is a smart and scalable solution.</p>
+
+<h2>Understanding Cloudflare Custom Rules and How They Work</h2>
+<p>Cloudflare Custom Rules allow you to create specific filtering logic to control how requests are handled before they reach your GitHub Pages site. These rules are highly flexible and can detect malicious behavior based on IP reputation, request methods, or even country of origin.</p>
+
+<h3>What Makes Custom Rules Unique</h3>
+<p>Unlike basic firewall filters, Custom Rules can be built around precise conditions using Cloudflare expressions. This allows fine-grained control such as blocking POST requests, restricting access to certain paths, or challenging suspicious bots without affecting legitimate users.</p>
+
+<h3>Examples of Common Rules for GitHub Pages</h3>
+<ul>
+  <li><strong>Block or Challenge Unknown Bots:</strong> Filter requests with suspicious user-agents or those not following robots.txt.</li>
+  <li><strong>Restrict Access to Admin Routes:</strong> Even though GitHub Pages doesn’t have a backend, you can block access attempts to /admin or /login URLs.</li>
+  <li><strong>Geo-based Filtering:</strong> Limit access from countries that aren’t part of your target audience.</li>
+  <li><strong>Rate Limiting:</strong> Stop repeated requests from a single IP within a short time window.</li>
+</ul>
+
+<h2>Step-by-Step Guide to Creating Cloudflare Custom Rules for GitHub Pages</h2>
+
+<h3>Step 1. Connect Your Domain to Cloudflare</h3>
+<p>Before applying any rules, your GitHub Pages domain needs to be connected to Cloudflare. You can do this by pointing your domain’s nameservers to Cloudflare’s provided values. Once connected, Cloudflare will handle all requests going to your GitHub Pages site.</p>
+
+<h3>Step 2. Enable Proxy Mode</h3>
+<p>Make sure your domain’s DNS record for GitHub Pages is set to “Proxied” (orange cloud). This enables Cloudflare’s security and caching layer to work on all incoming requests.</p>
+
+<h3>Step 3. Create Custom Rules</h3>
+<p>Go to the “Security” tab in your Cloudflare dashboard, then select “WAF” and open the “Custom Rules” section. Here, you can click “Create Rule” and configure your conditions.</p>
+
+<h4>Example: Block Specific Paths</h4>
+<pre><code>(http.request.uri.path contains "/wp-admin") or (http.request.uri.path contains "/login")</code></pre>
+<p>This example rule blocks attempts to access paths commonly targeted by bots. GitHub Pages doesn’t use WordPress, but automated crawlers may still look for these paths, wasting your bandwidth and polluting your analytics data.</p>
+
+<h4>Example: Allow Only Certain Methods</h4>
+<pre><code>(not http.request.method in {"GET" "HEAD"})</code></pre>
+<p>This rule ensures that only safe methods are allowed. Because GitHub Pages serves static content, there’s no need to allow POST or PUT methods.</p>
+
+<h4>Example: Rate Limit Suspicious Requests</h4>
+<pre><code>(cf.threat_score gt 10) and (ip.geoip.country ne "US")</code></pre>
+<p>This combination challenges or blocks users with a high threat score from outside your primary audience region.</p>
+
+<h2>Balancing Security and Accessibility</h2>
+<p>While it’s tempting to block everything, overly strict rules can frustrate real visitors. For example, if you limit access by country too aggressively, international users or search engine crawlers might get blocked. To balance protection with accessibility, test your rules in “Simulate” mode before fully deploying them.</p>
+<p>Additionally, you can use Cloudflare Analytics to see which requests are being blocked. This helps refine your rules over time so they stay effective without hurting genuine engagement.</p>
+
+<h3>Best Practices for Configuring Custom Rules</h3>
+<ul>
+  <li>Start with monitoring mode before enforcement.</li>
+  <li>Review firewall logs regularly to detect false positives.</li>
+  <li>Use challenge actions instead of outright blocking when in doubt.</li>
+  <li>Combine rules with Cloudflare Bot Management for smarter filtering.</li>
+</ul>
+
+<h2>Enhancing SEO and Performance with Security</h2>
+<p>One common concern is whether Cloudflare Custom Rules might affect SEO or performance. In practice, properly configured rules can actually improve both. By filtering out malicious bots and unwanted crawlers, your server resources are better focused on legitimate visitors, improving loading speed and engagement metrics.</p>
+
+<h3>How Cloudflare Security Affects SEO</h3>
+<p>Search engines value reliability and speed. A secure and fast-loading GitHub Pages site will likely rank higher than one with unstable uptime or spammy traffic patterns. Additionally, Cloudflare’s automatic HTTPS and caching ensure that Google sees your site as both secure and efficient.</p>
+
+<h3>Improving PageSpeed with Cloudflare Caching</h3>
+<p>Cloudflare’s caching and image optimization tools (like Polish or Mirage) help reduce load times without touching your GitHub Pages source code. These enhancements, combined with Custom Rules, deliver a high-performance and secure browsing experience for users across the globe.</p>
+
+<h2>Monitoring and Updating Your Security Setup</h2>
+<p>After deploying your rules, it’s important to continuously monitor their performance. Cloudflare provides detailed logs showing what requests are blocked, challenged, or allowed. Review these reports regularly to identify trends and fine-tune your configurations.</p>
+
+<h3>When to Update Your Rules</h3>
+<p>Threat patterns change over time. A rule that works well today may need updating later. For instance, if you start receiving spam traffic from a new region or see scraping attempts on a new subdomain, adjust your Custom Rules to respond accordingly.</p>
+
+<h3>Automating Rule Adjustments</h3>
+<p>For advanced users, Cloudflare offers API endpoints to programmatically update Custom Rules. You can schedule automated security refreshes or integrate monitoring tools that adapt to real-time threats. While not essential for most GitHub Pages sites, automation can be valuable for larger multi-domain setups.</p>
+
+<h2>Practical Example: A Case Study of a Documentation Site</h2>
+<p>Imagine you run a public documentation site hosted on GitHub Pages with a custom domain through Cloudflare. Initially, everything runs smoothly, but soon you notice high bandwidth usage and suspicious referrers in analytics reports. Upon inspection, you discover scrapers downloading your entire documentation.</p>
+
+<p>By creating a simple Cloudflare Custom Rule that blocks requests with user-agent patterns like “curl” or “wget,” and rate-limiting access to certain endpoints, you cut 70% of unnecessary traffic without affecting normal users. Within days, your bandwidth drops, performance improves, and search rankings stabilize again. This real-world example highlights how Cloudflare Custom Rules can protect and optimize your GitHub Pages setup effortlessly.</p>
+
+<h2>Key Takeaways for Long-Term Website Protection</h2>
+<ul>
+  <li>Custom Rules let you protect GitHub Pages without modifying code.</li>
+  <li>Balance between strictness and accessibility for best user experience.</li>
+  <li>Monitor and update regularly to stay ahead of new threats.</li>
+  <li>Security improvements often enhance SEO and performance too.</li>
+</ul>
+
+<p>In summary, securing your GitHub Pages site using Cloudflare Custom Rules is not just about blocking bad traffic—it’s about maintaining a fast, trustworthy, and SEO-friendly website over time. By implementing practical rule sets, monitoring their effects, and refining them periodically, you can enjoy the simplicity of static hosting with the confidence of enterprise-level protection.</p>
+
+<h2>Next Step to Secure Your Website</h2>
+<p>Now that you understand how to protect your GitHub Pages site with Cloudflare Custom Rules, it’s time to take action. Log into your Cloudflare dashboard, review your current setup, and start applying smart security filters. You’ll instantly notice better performance, reduced spam traffic, and stronger protection for your online presence.</p>
