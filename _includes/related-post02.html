@@ -1,0 +1,248 @@
+
+<style>
+  /* layout grid */
+  #galleryContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    #galleryContainer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #galleryContainer {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* snippet (paragraf pertama) */
+  #galleryContainer .post-snippet {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.7;
+    margin-top: 10px;
+  }
+  #galleryContainer .post-snippet p {
+    margin: 0;
+  }
+
+  /* label/tag */
+  #galleryContainer .indri {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #555;
+  }
+  #galleryContainer .indri a {
+    display: inline-block;
+    background: #f9f9f9;
+    padding: 5px 10px;
+    margin: 3px 4px 0 0;
+    border-radius: 20px;
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+  }
+  #galleryContainer .indri a:hover {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+  }
+
+  /* card tiap item */
+  #galleryContainer > div {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  #galleryContainer > div:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  }
+
+  /* judul postingan */
+  #galleryContainer .post-title {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+  #galleryContainer .post-title a {
+    color: #222;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  #galleryContainer .post-title a:hover {
+    color: #0077cc;
+  }
+
+  /* efek hover gambar */
+  #galleryContainer img {
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: transform 0.35s ease, filter 0.35s ease;
+    width: 100%;
+    height: auto;
+  }
+  #galleryContainer img:hover {
+    transform: scale(1.04);
+    filter: brightness(1.08);
+  }
+
+  /* navigasi tombol */
+  #galleryNav button {
+    background: var(--dynamic-color);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    margin: 0 6px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  #galleryNav button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  #galleryNav button:hover:not(:disabled) {
+    background: #005fa3;
+  }
+</style>
+
+<h2>Related Posts From My Blogs</h2>
+<div id="galleryContainer"></div>
+<div id="galleryNav"><br /><center>
+  <button id="prevBtn" disabled>Prev</button>
+  <button id="nextBtn">Next</button></center><br /><hr />
+</div>
+<script>
+(function(){
+  const blogIds = ["3878198361264397837", "6519813201877455483", "2518978342274940385",  "6298105943168307485", "9148581686795103299", "6356911602229545033", "1400031344750959946", "129917453826659385", "2109345921300850083", "8602943951544152759", "7201895562314409755", "2048832942578984151", "5995074279736401487", "1401851771010929030"]; // daftar blog
+  const label = "beatleakedflow";
+  const maxResults = 150;
+  const container = document.getElementById("galleryContainer");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  let startIndex = 1; // halaman pertama
+  let loaded = 0;
+
+  function clearGallery() {
+    container.innerHTML = "";
+    loaded = 0;
+  }
+
+  function extractImageFromContent(content) {
+    let div = document.createElement("div");
+    div.innerHTML = content;
+    let imgTag = div.querySelector("img");
+    if (imgTag) {
+      return imgTag.src.replace(/=s72-c/, "=s1600");
+    }
+    return null;
+  }
+
+  function extractSnippet(content) {
+    let div = document.createElement("div");
+    div.innerHTML = content;
+    let pTag = div.querySelector("p");
+    if (pTag) {
+      return pTag.outerHTML; // ambil <p> pertama utuh dengan HTML
+    }
+    return "";
+  }
+
+  function handleReindrinse(blogId, data) {
+    if (data && data.feed && data.feed.entry) {
+      data.feed.entry.forEach(entry => {
+        let title = entry.title.$t;
+        let link = entry.link.find(l => l.rel === "alternate").href;
+
+        // ambil domain blog dari link utama
+        let blogDomain = "";
+        try {
+          let urlObj = new URL(link);
+          blogDomain = urlObj.origin;
+        } catch(e) {}
+
+        // ambil label postingan
+        let labels = [];
+        if (entry.category && blogDomain) {
+          labels = entry.category.map(cat => {
+            return `<a href="${blogDomain}/search/label/${encodeURIComponent(cat.term)}" target="_blank">${cat.term}</a>`;
+          });
+        }
+
+        // ambil gambar dari konten
+        let thumb = entry.content ? extractImageFromContent(entry.content.$t) : null;
+
+        // fallback ke thumbnail standar
+        if (!thumb && entry.media$thumbnail) {
+          thumb = entry.media$thumbnail.url.replace(/=s72-c/, "=s1600");
+        }
+
+        // fallback terakhir: placeholder
+        if (!thumb) {
+          thumb = "https://via.placeholder.com/1280x720?text=No+Image";
+        }
+
+        // ambil snippet (paragraf pertama utuh)
+        let snippet = entry.content ? extractSnippet(entry.content.$t) : "";
+
+        let item = document.createElement("div");
+        item.innerHTML = `
+          <h3 class="post-title" itemprop="name">
+            <a href="${link}" target="_blank" itemprop="url">${title}</a>
+          </h3>
+          ${snippet ? `<div class="post-snippet">${snippet}</div>` : ""}
+          ${labels.length > 0 ? `<p class="spo">${labels.join(", ")}</p>` : ""}
+        `;
+        container.appendChild(item);
+      });
+    }
+    loaded++;
+    if (loaded === blogIds.length && container.innerHTML === "") {
+      container.innerHTML = "<p>No More Post</p>";
+    }
+  }
+
+  function loadPosts() {
+    clearGallery();
+    blogIds.forEach(blogId => {
+      let script = document.createElement("script");
+      script.src = `https://www.blogger.com/feeds/${blogId}/posts/default/-/${encodeURIComponent(label)}?alt=json-in-script&max-results=${maxResults}&start-index=${startIndex}&callback=handle${blogId}`;
+      window["handle"+blogId] = (data) => handleReindrinse(blogId, data);
+      document.body.appendChild(script);
+    });
+  }
+
+  // tombol next prev
+  nextBtn.addEventListener("click", function(){
+    startIndex += maxResults;
+    prevBtn.disabled = false;
+    loadPosts();
+  });
+
+  prevBtn.addEventListener("click", function(){
+    if (startIndex > 1) {
+      startIndex -= maxResults;
+      if (startIndex <= 1) {
+        prevBtn.disabled = true;
+      }
+      loadPosts();
+    }
+  });
+
+  // load pertama kali
+  loadPosts();
+
+})();
+</script>
+
+  
