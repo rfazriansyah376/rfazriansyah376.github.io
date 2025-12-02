@@ -332,4 +332,5 @@ function optimizeQueryPlan(searchTerms, shardMetadata) {
 }
 </code></pre>
 
+
 <p>This distributed search architecture enables Jekyll sites to handle millions of documents with sub-100ms query response times. The system scales horizontally by adding more R2 buckets and shards, while the Worker-based processing ensures consistent performance regardless of query complexity. The implementation provides Google-grade search capabilities while maintaining the cost efficiency and simplicity of static site generation.</p>
