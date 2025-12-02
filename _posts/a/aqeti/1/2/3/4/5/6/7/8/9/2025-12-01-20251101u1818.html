@@ -1,0 +1,773 @@
+---
+layout: post107
+title: "Advanced Ruby Metaprogramming for Jekyll Plugins and Custom Generators"
+categories: [bounceleakclips,jekyll, ruby, advanced-programming]
+tags: [ruby metaprogramming, jekyll plugins, custom generators, dynamic methods, ruby reflection, module injection, plugin architecture, jekyll extensions]
+description: "Master Ruby metaprogramming techniques to create powerful Jekyll plugins with dynamic method generation and runtime class modification"
+---
+
+Jekyll's plugin system provides powerful extension points, but truly advanced functionality requires leveraging Ruby's metaprogramming capabilities. By using dynamic method definition, module injection, and runtime class modification, you can create Jekyll plugins that adapt to content, generate complex structures, and provide elegant APIs for content authors. This technical guide explores advanced Ruby metaprogramming patterns specifically tailored for Jekyll, enabling you to build plugins that transform static site generation into a dynamic, intelligent process while maintaining Ruby's elegance and Jekyll's simplicity.
+
+<h2>In This Guide</h2>
+<ul>
+  <li><a href="#metaprogrammingFundamentals">Ruby Metaprogramming Fundamentals for Jekyll</a></li>
+  <li><a href="#dynamicGenerators">Dynamic Generator Creation with define_method</a></li>
+  <li><a href="#moduleInjection">Runtime Module Injection and Method Overriding</a></li>
+  <li><a href="#dslCreation">Domain-Specific Language (DSL) Creation for Content Authors</a></li>
+  <li><a href="#reflectionTechniques">Advanced Reflection and Runtime Configuration</a></li>
+  <li><a href="#performanceMetaprogramming">Performance Optimization in Metaprogramming</a></li>
+</ul>
+
+<h2 id="metaprogrammingFundamentals">Ruby Metaprogramming Fundamentals for Jekyll</h2>
+
+<p>Ruby metaprogramming enables code that writes code, providing dynamic capabilities that are particularly valuable in Jekyll's build-time environment. Understanding core concepts like the eigenclass, method missing, and const missing is essential for creating advanced plugins.</p>
+
+<p>The eigenclass (singleton class) allows adding methods to individual objects rather than entire classes. This is perfect for Jekyll sites where you need to extend specific documents or pages with custom behavior. Method missing provides graceful handling of undefined method calls, enabling dynamic API creation. Const missing intercepts constant references, allowing dynamic module and class resolution. These fundamentals form the foundation for building plugins that can adapt to different content structures and site configurations.</p>
+
+<pre><code>
+# Core metaprogramming concepts in Jekyll context
+module Jekyll
+  class MetaProgrammingPlugin < Generator
+    def generate(site)
+      # Eigenclass example - adding methods to individual documents
+      site.documents.each do |doc|
+        doc.define_singleton_method(:custom_method) do
+          "Processed: #{self.data['title']}"
+        end
+      end
+      
+      # Method missing for dynamic API
+      site.define_singleton_method(:method_missing) do |method_name, *args|
+        if method_name.to_s.start_with?('find_by_')
+          field = method_name.to_s.gsub('find_by_', '')
+          find_documents_by_field(field, args.first)
+        else
+          super
+        end
+      end
+    end
+  end
+end
+
+# Const missing for dynamic module loading
+class Object
+  def self.const_missing(name)
+    if name.to_s =~ /Jekyll(.+)/
+      load_dynamic_module($1)
+    else
+      super
+    end
+  end
+end
+</code></pre>
+
+<h2 id="dynamicGenerators">Dynamic Generator Creation with define_method</h2>
+
+<p>Dynamic method creation using define_method enables generators that adapt to site structure and content. This technique is particularly powerful for creating data-driven generators that produce content based on configuration or external data sources.</p>
+
+<p>Here's an advanced implementation of dynamic generators that create methods based on data files and configuration:</p>
+
+<pre><code>
+module Jekyll
+  class DynamicGenerator < Generator
+    safe true
+    priority :low
+
+    def generate(site)
+      @site = site
+      
+      # Read generator configuration
+      config = site.config['dynamic_generators'] || {}
+      
+      # Create generators dynamically based on configuration
+      config.each do |generator_name, generator_config|
+        create_dynamic_generator(generator_name, generator_config)
+      end
+      
+      # Create generators from data files
+      create_data_driven_generators
+    end
+
+    private
+
+    def create_dynamic_generator(name, config)
+      generator_class = Class.new(Generator) do
+        define_method(:generate) do |site|
+          instance_exec(site, &build_generator_logic(config))
+        end
+      end
+
+      # Register the dynamic generator
+      const_name = "Dynamic#{name.to_s.camelize}Generator"
+      Jekyll::Generator.const_set(const_name, generator_class)
+      @site.generators << generator_class.new
+    end
+
+    def build_generator_logic(config)
+      Proc.new do |site|
+        collection_name = config['collection']
+        template = config['template']
+        output_dir = config['output_dir'] || collection_name
+        
+        site.collections[collection_name]&.docs&.each do |doc|
+          # Dynamic page creation based on template
+          page = DynamicPage.new(
+            site, 
+            site.source, 
+            output_dir, 
+            doc.basename, 
+            template, 
+            doc.data
+          )
+          site.pages << page
+        end
+      end
+    end
+
+    def create_data_driven_generators
+      # Create generators from _data/generators.yml
+      generators_data = @site.data['generators'] || {}
+      
+      generators_data.each do |generator_spec|
+        create_generator_from_spec(generator_spec)
+      end
+    end
+
+    def create_generator_from_spec(spec)
+      generator_class = Class.new(Generator) do
+        spec['actions'].each do |action|
+          define_method("generate_#{action['name']}") do |site|
+            action['logic'].each do |step|
+              process_generation_step(site, step)
+            end
+          end
+        end
+
+        def generate(site)
+          self.class.instance_methods(false).each do |method|
+            send(method, site) if method.to_s.start_with?('generate_')
+          end
+        end
+
+        private
+
+        def process_generation_step(site, step)
+          case step['type']
+          when 'collection_map'
+            process_collection_mapping(site, step)
+          when 'data_transform'
+            process_data_transformation(site, step)
+          when 'page_generation'
+            generate_pages_from_data(site, step)
+          end
+        end
+      end
+
+      # Register the data-driven generator
+      generator_name = spec['name'].to_s.camelize
+      Jekyll::Generator.const_set("#{generator_name}Generator", generator_class)
+    end
+  end
+
+  # Dynamic page class for generated content
+  class DynamicPage < Page
+    def initialize(site, base, dir, name, template, data)
+      @site = site
+      @base = base
+      @dir = dir
+      @name = name
+      
+      self.process(@name)
+      self.data = data.merge('layout' => template)
+      self.content = generate_content(template, data)
+    end
+
+    def generate_content(template, data)
+      # Use Liquid rendering or direct template processing
+      template_file = File.read(File.join(@base, '_layouts', "#{template}.html"))
+      render_template(template_file, data)
+    end
+  end
+end
+</code></pre>
+
+<h2 id="moduleInjection">Runtime Module Injection and Method Overriding</h2>
+
+<p>Module injection allows extending Jekyll's core classes with new functionality without modifying the source code. This technique is essential for creating non-intrusive plugins that enhance existing behavior.</p>
+
+<p>Here's how to use module injection to extend Jekyll's Document and Site classes:</p>
+
+<pre><code>
+module Jekyll
+  # Extension module for Document class
+  module DocumentExtensions
+    def self.included(base)
+      base.extend(ClassMethods)
+      base.prepend(InstanceMethods)
+    end
+
+    module ClassMethods
+      def find_by_flexible_criteria(criteria)
+        # Class method added to all documents
+        all.select { |doc| doc.matches_criteria?(criteria) }
+      end
+    end
+
+    module InstanceMethods
+      def initialize(*args)
+        # Override initialization to add custom behavior
+        super
+        enhance_document_data
+      end
+
+      def to_liquid
+        # Enhance liquid representation
+        super.merge('enhanced_data' => calculate_enhanced_data)
+      end
+
+      def matches_criteria?(criteria)
+        criteria.all? { |key, value| self.data[key.to_s] == value }
+      end
+
+      private
+
+      def enhance_document_data
+        # Add computed fields to document data
+        self.data['word_count'] = content.split(/\s+/).size
+        self.data['reading_time'] = (self.data['word_count'] / 200.0).ceil
+        self.data['html_content'] = generate_html_content
+      end
+    end
+  end
+
+  # Extension module for Site class
+  module SiteExtensions
+    def initialize(*args)
+      # Store original initialize method
+      original_initialize = method(:initialize)
+      
+      define_singleton_method(:initialize) do |*init_args|
+        original_initialize.call(*init_args)
+        enhance_site_structure
+      end
+    end
+
+    def enhance_site_structure
+      # Add custom collections and data structures
+      add_dynamic_collections
+      precompute_site_relationships
+      generate_auxiliary_data
+    end
+
+    def find_documents_by_field(field, value)
+      documents.select { |doc| doc.data[field.to_s] == value }
+    end
+
+    # Dynamic method definition based on configuration
+    def create_query_methods
+      config['custom_queries']&.each do |query_name, query_spec|
+        define_singleton_method("find_#{query_name}") do |*args|
+          execute_custom_query(query_spec, args)
+        end
+      end
+    end
+  end
+
+  # Plugin to inject extensions
+  class ExtensionInjector
+    def initialize(site)
+      @site = site
+    end
+
+    def inject!
+      # Inject into Document class
+      Jekyll::Document.include(DocumentExtensions)
+      
+      # Inject into Site instance
+      @site.extend(SiteExtensions)
+      @site.create_query_methods
+      
+      # Inject into specific collections
+      inject_collection_extensions
+    end
+
+    private
+
+    def inject_collection_extensions
+      @site.collections.each do |name, collection|
+        collection.define_singleton_method(:find_by) do |criteria|
+          docs.select { |doc| doc.matches_criteria?(criteria) }
+        end
+        
+        collection.define_singleton_method(:group_by_field) do |field|
+          docs.group_by { |doc| doc.data[field] }
+        end
+      end
+    end
+  end
+
+  # Generator that applies extensions
+  class ExtensionGenerator < Generator
+    def generate(site)
+      ExtensionInjector.new(site).inject!
+    end
+  end
+end
+</code></pre>
+
+<h2 id="dslCreation">Domain-Specific Language (DSL) Creation for Content Authors</h2>
+
+<p>Creating a DSL allows content authors to use natural, domain-specific syntax in their content while maintaining the full power of Ruby execution. This is particularly valuable for technical documentation, tutorials, and complex content structures.</p>
+
+<p>Here's how to build a DSL for content authors:</p>
+
+<pre><code>
+module Jekyll
+  module ContentDSL
+    class DSLContext
+      def initialize(site, document)
+        @site = site
+        @document = document
+        @blocks = []
+      end
+      
+      # DSL methods for content authors
+      def code_block(language, &block)
+        code = capture_block(&block)
+        @blocks << { type: :code, language: language, content: code }
+      end
+      
+      def warning(message, &block)
+        content = block_given? ? capture_block(&block) : message
+        @blocks << { type: :warning, content: content }
+      end
+      
+      def tip(message, &block)
+        content = block_given? ? capture_block(&block) : message
+        @blocks << { type: :tip, content: content }
+      end
+      
+      def steps(&block)
+        @blocks << { type: :steps, steps: [] }
+        instance_eval(&block)
+      end
+      
+      def step(description, &block)
+        current_steps = @blocks.last[:steps]
+        step_content = block_given? ? capture_block(&block) : nil
+        current_steps << { description: description, content: step_content }
+      end
+      
+      def api_endpoint(method, path, &block)
+        endpoint_data = { method: method, path: path }
+        endpoint_data.merge!(capture_block(&block)) if block_given?
+        @blocks << { type: :api_endpoint, data: endpoint_data }
+      end
+      
+      def render
+        @blocks.map { |block| render_block(block) }.join("\n")
+      end
+      
+      private
+      
+      def capture_block(&block)
+        original_output = @output
+        @output = StringIO.new
+        instance_eval(&block)
+        result = @output.string
+        @output = original_output
+        result
+      end
+      
+      def render_block(block)
+        case block[:type]
+        when :code
+          render_code_block(block)
+        when :warning, :tip
+          render_admonition(block)
+        when :steps
+          render_steps(block)
+        when :api_endpoint
+          render_api_endpoint(block)
+        end
+      end
+      
+      def render_code_block(block)
+        <<~HTML
+          <div class="code-block #{block[:language]}">
+            <pre><code class="language-#{block[:language]}">#{escape_html(block[:content])}</code></pre>
+          </div>
+        HTML
+      end
+      
+      def render_admonition(block)
+        <<~HTML
+          <div class="admonition #{block[:type]}">
+            <p class="admonition-title">#{block[:type].capitalize}</p>
+            <p>#{block[:content]}</p>
+          </div>
+        HTML
+      end
+    end
+    
+    # Liquid tag for DSL content
+    class DSLLiquidTag < Liquid::Block
+      def initialize(tag_name, markup, tokens)
+        super
+        @dsl_type = markup.strip
+      end
+      
+      def render(context)
+        site = context.registers[:site]
+        document = context.registers[:page]
+        
+        dsl_context = DSLContext.new(site, document)
+        dsl_content = super
+        
+        # Evaluate DSL content in context
+        dsl_context.instance_eval(dsl_content)
+        dsl_context.render
+      end
+    end
+  end
+end
+
+# Register DSL liquid tags
+Liquid::Template.register_tag('code_block', Jekyll::ContentDSL::DSLLiquidTag)
+Liquid::Template.register_tag('api_endpoint', Jekyll::ContentDSL::DSLLiquidTag)
+
+# Usage in content files:
+{% code_block ruby %}
+def hello_world
+  puts "Hello, World!"
+end
+{% endcode_block %}
+
+{% api_endpoint GET /users %}
+description: "Retrieve user list"
+parameters:
+  - name: limit
+    type: integer
+    description: "Number of users to return"
+{% endapi_endpoint %}
+</code></pre>
+
+<h2 id="reflectionTechniques">Advanced Reflection and Runtime Configuration</h2>
+
+<p>Ruby's reflection capabilities enable plugins to inspect and modify Jekyll's runtime state, creating adaptive systems that respond to site structure and content patterns.</p>
+
+<p>Here's an implementation using advanced reflection for runtime configuration and adaptation:</p>
+
+<pre><code>
+module Jekyll
+  class ReflectivePlugin < Generator
+    def generate(site)
+      @site = site
+      
+      # Reflect on site structure
+      analyze_site_structure
+      
+      # Dynamically configure based on analysis
+      configure_adaptively
+      
+      # Generate content based on reflections
+      generate_reflective_content
+    end
+    
+    private
+    
+    def analyze_site_structure
+      @analysis = {
+        collections: analyze_collections,
+        layouts: analyze_layouts,
+        data_files: analyze_data_files,
+        content_patterns: analyze_content_patterns
+      }
+    end
+    
+    def analyze_collections
+      {}.tap do |analysis|
+        @site.collections.each do |name, collection|
+          analysis[name] = {
+            size: collection.docs.size,
+            fields: extract_common_fields(collection.docs),
+            relationships: detect_relationships(collection.docs),
+            content_types: classify_content_types(collection.docs)
+          }
+        end
+      end
+    end
+    
+    def analyze_content_patterns
+      patterns = {}
+      
+      @site.documents.each do |doc|
+        content = doc.content
+        patterns[doc.collection.label] ||= {}
+        
+        # Analyze code patterns
+        code_blocks = content.scan(/```(\w+)\n(.*?)```/m)
+        code_blocks.each do |lang, code|
+          patterns[doc.collection.label][:languages] ||= Hash.new(0)
+          patterns[doc.collection.label][:languages][lang] += 1
+        end
+        
+        # Analyze structural patterns
+        headings = content.scan(/^#+\s+(.+)/)
+        patterns[doc.collection.label][:heading_structure] ||= []
+        patterns[doc.collection.label][:heading_structure] += headings.flatten
+      end
+      
+      patterns
+    end
+    
+    def configure_adaptively
+      # Dynamically create generators based on analysis
+      create_missing_generators
+      optimize_existing_generators
+      configure_intelligent_routing
+    end
+    
+    def create_missing_generators
+      @analysis[:collections].each do |collection_name, analysis|
+        if analysis[:size] > 10 && !has_generator_for?(collection_name)
+          create_collection_generator(collection_name, analysis)
+        end
+      end
+    end
+    
+    def create_collection_generator(collection_name, analysis)
+      generator_class = Class.new(Generator) do
+        define_method(:generate) do |site|
+          collection = site.collections[collection_name]
+          generate_collection_pages(site, collection, analysis)
+        end
+        
+        define_method(:generate_collection_pages) do |site, collection, analysis|
+          # Generate index pages, category pages, etc.
+          if analysis[:fields].include?('category')
+            generate_category_pages(site, collection)
+          end
+          
+          if analysis[:relationships].any?
+            generate_relationship_pages(site, collection, analysis[:relationships])
+          end
+        end
+      end
+      
+      # Inject the new generator
+      generator_name = "#{collection_name.to_s.camelize}Generator"
+      Jekyll::Generator.const_set(generator_name, generator_class)
+      @site.generators << generator_class.new
+    end
+    
+    def optimize_existing_generators
+      # Use reflection to find and optimize generators
+      @site.generators.each do |generator|
+        optimize_generator_performance(generator)
+        enhance_generator_functionality(generator)
+      end
+    end
+    
+    def optimize_generator_performance(generator)
+      # Analyze generator methods and optimize slow ones
+      methods = generator.methods - Object.methods
+      
+      methods.each do |method_name|
+        method = generator.method(method_name)
+        
+        # Add caching to expensive methods
+        if method.parameters.any? && !method_name.to_s.end_with?('_cached')
+          create_cached_version(generator, method_name, method)
+        end
+      end
+    end
+    
+    def create_cached_version(generator, method_name, original_method)
+      cached_method_name = "#{method_name}_cached"
+      
+      generator.define_singleton_method(cached_method_name) do |*args|
+        cache_key = "#{method_name}_#{args.hash}"
+        
+        if @generator_cache && @generator_cache[cache_key]
+          @generator_cache[cache_key]
+        else
+          result = original_method.call(*args)
+          @generator_cache ||= {}
+          @generator_cache[cache_key] = result
+          result
+        end
+      end
+      
+      # Replace original method with cached version
+      generator.define_singleton_method(method_name) do |*args|
+        send(cached_method_name, *args)
+      end
+    end
+  end
+end
+</code></pre>
+
+<h2 id="performanceMetaprogramming">Performance Optimization in Metaprogramming</h2>
+
+<p>Metaprogramming can impact performance if not implemented carefully. These techniques ensure that dynamic code generation doesn't compromise Jekyll's build performance.</p>
+
+<pre><code>
+module Jekyll
+  module PerformanceOptimization
+    # Lazy evaluation for expensive metaprogramming operations
+    class LazyEvaluator
+      def initialize(&evaluation_block)
+        @evaluation_block = evaluation_block
+        @evaluated = false
+        @result = nil
+      end
+      
+      def result
+        unless @evaluated
+          @result = @evaluation_block.call
+          @evaluated = true
+        end
+        @result
+      end
+    end
+    
+    # Method cache for dynamic method definitions
+    class MethodCache
+      def initialize
+        @cache = {}
+        @method_definitions = {}
+      end
+      
+      def cached_method(object, method_name, &definition)
+        cache_key = "#{object.object_id}_#{method_name}"
+        
+        unless @cache[cache_key]
+          @method_definitions[cache_key] = definition
+          define_cached_method(object, method_name, cache_key)
+        end
+        
+        object.send(method_name)
+      end
+      
+      private
+      
+      def define_cached_method(object, method_name, cache_key)
+        object.define_singleton_method(method_name) do
+          @method_cache ||= {}
+          @method_cache[method_name] ||= instance_eval(&@method_definitions[cache_key])
+        end
+      end
+    end
+    
+    # Optimized dynamic dispatch
+    class OptimizedDispatcher
+      def initialize
+        @dispatch_table = {}
+        @method_cache = {}
+      end
+      
+      def register_dispatch_pattern(pattern, &handler)
+        @dispatch_table[pattern] = handler
+      end
+      
+      def method_missing(method_name, *args)
+        # Check cache first
+        if @method_cache[method_name]
+          return @method_cache[method_name].call(*args)
+        end
+        
+        # Find matching pattern
+        @dispatch_table.each do |pattern, handler|
+          if method_name.to_s =~ pattern
+            cached_handler = handler.curry
+            @method_cache[method_name] = cached_handler
+            return cached_handler.call(*args)
+          end
+        end
+        
+        super
+      end
+      
+      def respond_to_missing?(method_name, include_private = false)
+        @dispatch_table.keys.any? { |pattern| method_name.to_s =~ pattern } || super
+      end
+    end
+  end
+
+  # Performance-optimized metaprogramming plugin
+  class OptimizedMetaprogrammingPlugin < Generator
+    def generate(site)
+      @site = site
+      @method_cache = PerformanceOptimization::MethodCache.new
+      @dispatcher = PerformanceOptimization::OptimizedDispatcher.new
+      
+      setup_optimized_extensions
+      generate_optimized_content
+    end
+    
+    private
+    
+    def setup_optimized_extensions
+      # Lazy evaluation for expensive operations
+      site_extensions = PerformanceOptimization::LazyEvaluator.new do
+        load_site_extensions
+      end
+      
+      # Apply extensions only when needed
+      @site.define_singleton_method(:enhanced_method) do
+        site_extensions.result.enhanced_method(self)
+      end
+      
+      # Optimized dynamic method dispatch
+      setup_dynamic_dispatch
+    end
+    
+    def setup_dynamic_dispatch
+      @dispatcher.register_dispatch_pattern(/^find_(.+)_by_(.+)$/) do |collection, field|
+        Proc.new do |value|
+          @site.collections[collection]&.docs&.find { |doc| doc.data[field] == value }
+        end
+      end
+      
+      @dispatcher.register_dispatch_pattern(/^generate_(.+)_pages$/) do |template|
+        Proc.new do |data|
+          generate_template_pages(template, data)
+        end
+      end
+      
+      # Inject dispatcher into site
+      @site.define_singleton_method(:method_missing) do |method_name, *args|
+        if @dispatcher.respond_to?(method_name)
+          @dispatcher.send(method_name, *args)
+        else
+          super
+        end
+      end
+    end
+    
+    def generate_optimized_content
+      # Use cached method definitions for repetitive operations
+      @site.collections.each do |name, collection|
+        collection.docs.each do |doc|
+          # Cache expensive computations
+          @method_cache.cached_method(doc, :enhanced_data) do
+            compute_enhanced_data(doc)
+          end
+        end
+      end
+    end
+    
+    def compute_enhanced_data(doc)
+      # Expensive computation that we want to cache
+      {
+        related_content: find_related_content(doc),
+        content_analysis: analyze_content_complexity(doc.content),
+        semantic_data: extract_semantic_data(doc)
+      }
+    end
+  end
+end
+</code></pre>
+
+<p>These advanced Ruby metaprogramming techniques transform Jekyll from a simple static site generator into a powerful, adaptive content platform. By leveraging dynamic method creation, module injection, and runtime reflection, you can build plugins that intelligently respond to content patterns, provide elegant authoring experiences, and optimize build performance. The key is balancing metaprogramming power with maintainability and performance considerations.</p>
