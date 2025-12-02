@@ -6,6 +6,7 @@ tags: [isr, incremental static regeneration, cloudflare workers, kv storage, edg
 description: "Technical deep dive into implementing ISR patterns for Jekyll sites using Cloudflare Workers and KV for dynamic static generation"
 ---
 
+
 Incremental Static Regeneration (ISR) represents the next evolution of static sites, blending the performance of pre-built content with the dynamism of runtime generation. While Jekyll excels at build-time static generation, it traditionally lacks ISR capabilities. However, by leveraging Cloudflare Workers and KV storage, we can implement sophisticated ISR patterns that serve stale content while revalidating in the background. This technical guide explores the architecture and implementation of a custom ISR system for Jekyll that provides sub-millisecond cache hits while ensuring content freshness through intelligent background regeneration.
 
 <h2>In This Guide</h2>
@@ -260,5 +261,6 @@ async function generateCacheReport(env) {
   };
 }
 </code></pre>
+
 
 <p>By implementing this ISR system, Jekyll sites gain dynamic regeneration capabilities while maintaining sub-100ms response times. The architecture provides 99%+ cache hit rates for popular content while ensuring freshness through intelligent background revalidation. This technical implementation bridges the gap between static generation and dynamic content, providing the best of both worlds for high-traffic Jekyll sites.</p>
