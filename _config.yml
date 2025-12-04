@@ -67,6 +67,26 @@ adsense-data-ad-client: "ca-pub-3412143450191416"
 adsense-data-ad-slot: "1363087678"
 
 # Lazy Images ("enabled" or "disabled")
-lazyimages: "disabled"
+lazyimages: "enabled"
 
 exclude: [changelog.md, LICENSE.txt, README.md, Gemfile, Gemfile.lock]
+
+# Tag Configuration
+tag_page_layout: tag
+tag_index_layout: tag-index
+tags_dir: tag
+permalink: /:categories/:year/:month/:day/:title/
+
+# Untuk membuat halaman tag otomatis
+collections:
+  tags:
+    output: true
+    permalink: /tag/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "tags"
+    values:
+      layout: "tag"
+
