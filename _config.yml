@@ -38,6 +38,8 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-archives
+  - _plugins/tag_pages.rb
+
     
 # Archives
 jekyll-archives:
@@ -72,21 +74,18 @@ lazyimages: "enabled"
 exclude: [changelog.md, LICENSE.txt, README.md, Gemfile, Gemfile.lock]
 
 # Tag Configuration
-tag_page_layout: tag
-tag_index_layout: tag-index
-tags_dir: tag
+tag_page_layout: tag_page
 permalink: /:categories/:year/:month/:day/:title/
 
-# Untuk membuat halaman tag otomatis
+# Collections
 collections:
   tags:
     output: true
     permalink: /tag/:name/
 
+# Defaults untuk halaman tag
 defaults:
   - scope:
-      path: ""
-      type: "tags"
+      path: "tag/**/*.html"
     values:
-      layout: "tag"
-
+      layout: "tag_page"
