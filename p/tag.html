@@ -1,0 +1,22 @@
+<!-- Tag List dengan jumlah postingan dan sorting -->
+{% assign tag_counts = site.tags %}
+
+<!-- Opsi Sort: "alpha" untuk A-Z, "count" untuk jumlah postingan -->
+{% assign sort_option = "alpha" %} <!-- ubah menjadi "count" jika ingin sorting by jumlah -->
+
+{% if sort_option == "alpha" %}
+  {% assign sorted_tags = tag_counts | sort %}
+{% elsif sort_option == "count" %}
+  {% assign sorted_tags = tag_counts | sort_natural: "last" %}
+{% endif %}
+
+<ul>
+  {% for tag in tag_counts %}
+    {% assign tag_name = tag[0] %}
+    {% assign posts = tag[1] %}
+    <li>
+      <a href="{{ site.baseurl }}/tag/{{ tag_name | slugify }}/">{{ tag_name }}</a>
+      ({{ posts | size }})
+    </li>
+  {% endfor %}
+</ul>
