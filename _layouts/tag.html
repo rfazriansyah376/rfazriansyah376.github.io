@@ -1,136 +1,132 @@
 ---
 layout: default
-title: Daftar Tag
-permalink: /tag/
 ---
 
 <div class="tag-page">
-    <h1 class="page-title">Daftar Tag</h1>
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb">
+        <a href="{{ site.baseurl }}/">Home</a> &raquo;
+        <a href="{{ site.baseurl }}/tag/">Tag</a> &raquo;
+        <span>{{ page.tag }}</span>
+    </nav>
     
-    <p class="tag-description">
-        Total ada <strong>{{ site.tags.size }}</strong> tag di blog ini
-    </p>
+    <!-- Header Tag -->
+    <header class="tag-header">
+        <h1 class="tag-title">
+            <i class="fas fa-tag"></i> Tag: {{ page.tag }}
+        </h1>
+        <p class="tag-count">
+            <span class="badge">{{ page.posts | size }}</span> postingan ditemukan
+        </p>
+    </header>
     
     <!-- Kontrol Sortir -->
-    <div class="tag-controls">
-        <div class="sort-options">
-            <span>Urutkan:</span>
-            {% assign current_sort = page.sort | default: 'name-asc' %}
+    <div class="tag-sort-controls">
+        <span>Urutkan:</span>
+        <select id="post-sort" onchange="sortPosts()">
+            <option value="date-desc">Terbaru → Terlama</option>
+            <option value="date-asc">Terlama → Terbaru</option>
+            <option value="title-asc">Judul (A-Z)</option>
+            <option value="title-desc">Judul (Z-A)</option>
+        </select>
+    </div>
+    
+    <!-- Daftar Postingan -->
+    <div id="posts-container">
+        {% for post in page.posts %}
+        <article class="post-card" data-date="{{ post.date | date: '%s' }}" data-title="{{ post.title | downcase }}">
+            <div class="post-card-header">
+                <h2 class="post-title">
+                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                </h2>
+                <div class="post-meta">
+                    <time datetime="{{ post.date | date_to_xmlschema }}">
+                        <i class="fas fa-calendar"></i> {{ post.date | date: "%d %B %Y" }}
+                    </time>
+                    {% if post.categories.size > 0 %}
+                    <span class="post-category">
+                        <i class="fas fa-folder"></i> 
+                        {{ post.categories | join: ', ' }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
             
-            <a href="?sort=name-asc" class="sort-btn {% if current_sort == 'name-asc' %}active{% endif %}">
-                Nama (A-Z)
-            </a>
-            <a href="?sort=name-desc" class="sort-btn {% if current_sort == 'name-desc' %}active{% endif %}">
-                Nama (Z-A)
-            </a>
-            <a href="?sort=count-asc" class="sort-btn {% if current_sort == 'count-asc' %}active{% endif %}">
-                Jumlah (↑)
-            </a>
-            <a href="?sort=count-desc" class="sort-btn {% if current_sort == 'count-desc' %}active{% endif %}">
-                Jumlah (↓)
-            </a>
+            {% if post.excerpt %}
+            <div class="post-excerpt">
+                {{ post.excerpt | strip_html | truncatewords: 30 }}
+            </div>
+            {% endif %}
+            
+            <div class="post-footer">
+                <a href="{{ post.url | relative_url }}" class="read-more">
+                    Baca selengkapnya &raquo;
+                </a>
+                <div class="post-tags">
+                    {% for tag in post.tags %}
+                    {% if tag != page.tag %}
+                    <a href="{{ '/tag/' | append: tag | slugify | relative_url }}" class="tag-badge">
+                        {{ tag }}
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    
+    <!-- Statistik -->
+    <div class="tag-statistics">
+        <h3><i class="fas fa-chart-bar"></i> Statistik Tag</h3>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">{{ page.posts | size }}</div>
+                <div class="stat-label">Total Postingan</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">
+                    {% assign earliest_date = page.posts.last.date %}
+                    {{ earliest_date | date: "%Y" }}
+                </div>
+                <div class="stat-label">Tahun Mulai</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">
+                    {% assign latest_date = page.posts.first.date %}
+                    {{ latest_date | date: "%Y" }}
+                </div>
+                <div class="stat-label">Tahun Terbaru</div>
+            </div>
         </div>
     </div>
     
-    <!-- Daftar Tag -->
-    <div class="tag-cloud">
-        {% comment %} Proses sorting tag berdasarkan parameter URL {% endcomment %}
-        {% assign sort_param = page.sort | default: 'name-asc' %}
-        {% assign all_tag = site.tags %}
-        
-        {% if sort_param == 'name-asc' %}
-            {% assign sorted_tag = all_tag | sort %}
-        {% elsif sort_param == 'name-desc' %}
-            {% assign sorted_tag = all_tag | sort | reverse %}
-        {% elsif sort_param == 'count-asc' or sort_param == 'count-desc' %}
-            {% comment %} Buat array untuk sorting berdasarkan jumlah postingan {% endcomment %}
-            {% assign tag_with_count = '' | split: '' %}
-            {% for tag_item in all_tag %}
-                {% assign tag_info = tag_item[0] | append: '|' | append: tag_item[1].size %}
-                {% assign tag_with_count = tag_with_count | push: tag_info %}
-            {% endfor %}
-            
-            {% if sort_param == 'count-asc' %}
-                {% assign tag_with_count = tag_with_count | sort %}
-            {% else %}
-                {% assign tag_with_count = tag_with_count | sort | reverse %}
-            {% endif %}
-            
-            {% assign sorted_tag = '' | split: '' %}
-            {% for tag_info in tag_with_count %}
-                {% assign parts = tag_info | split: '|' %}
-                {% assign tag_name = parts[0] %}
-                {% for tag_item in all_tag %}
-                    {% if tag_item[0] == tag_name %}
-                        {% assign sorted_tag = sorted_tag | push: tag_item %}
-                        {% break %}
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
-        
-        {% comment %} Tampilkan tag yang sudah di-sort {% endcomment %}
-        <ul class="tag-list">
-        {% for tag_item in sorted_tag %}
-            {% assign tag_name = tag_item[0] %}
-            {% assign tag_posts = tag_item[1] %}
-            {% assign tag_size = tag_posts.size %}
-            
-            <li class="tag-list-item">
-                <a href="{{ '/tag/' | append: tag_name | slugify | append: '/' | relative_url }}" 
-                   class="tag-link">
-                    <span class="tag-name">{{ tag_name }}</span>
-                    <span class="tag-count">{{ tag_size }}</span>
+    <!-- Link ke Tag Lain -->
+    <div class="related-tags">
+        <h3><i class="fas fa-tags"></i> Tag Terkait</h3>
+        <div class="tag-cloud">
+            {% assign all_tags = site.tags | sort %}
+            {% for tag_item in all_tags %}
+                {% if tag_item[0] != page.tag %}
+                {% assign tag_name = tag_item[0] %}
+                {% assign tag_size = tag_item[1].size %}
+                {% assign font_size = tag_size | times: 2 | plus: 12 %}
+                <a href="{{ '/tag/' | append: tag_name | slugify | relative_url }}" 
+                   class="tag-link" 
+                   style="font-size: {{ font_size }}px;"
+                   title="{{ tag_size }} postingan">
+                    {{ tag_name }} <span class="tag-count-small">({{ tag_size }})</span>
                 </a>
-                
-                {% comment %} Tampilkan beberapa postingan terbaru {% endcomment %}
-                {% if tag_size > 0 %}
-                <div class="recent-posts">
-                    <small>Postingan terbaru:</small>
-                    <ul class="post-preview">
-                        {% for post in tag_posts limit: 3 %}
-                        <li>
-                            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-                            <small>{{ post.date | date: "%d/%m/%Y" }}</small>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% if tag_size > 3 %}
-                    <small>dan {{ tag_size | minus: 3 }} postingan lainnya...</small>
-                    {% endif %}
-                </div>
                 {% endif %}
-            </li>
-        {% endfor %}
-        </ul>
+            {% endfor %}
+        </div>
     </div>
     
-    <!-- Informasi Statistik -->
-    <div class="tag-stats">
-        <h3>Statistik Tag</h3>
-        <ul>
-            <li>Total tag: <strong>{{ site.tags.size }}</strong></li>
-            <li>Tag dengan postingan terbanyak: 
-                {% assign max_tag = '' %}
-                {% assign max_count = 0 %}
-                {% for tag_item in site.tags %}
-                    {% if tag_item[1].size > max_count %}
-                        {% assign max_tag = tag_item[0] %}
-                        {% assign max_count = tag_item[1].size %}
-                    {% endif %}
-                {% endfor %}
-                <strong>{{ max_tag }}</strong> ({{ max_count }} postingan)
-            </li>
-            <li>Rata-rata postingan per tag: 
-                <strong>
-                    {% assign total_posts = 0 %}
-                    {% for tag_item in site.tags %}
-                        {% assign total_posts = total_posts | plus: tag_item[1].size %}
-                    {% endfor %}
-                    {{ total_posts | divided_by: site.tags.size | round: 1 }}
-                </strong>
-            </li>
-        </ul>
+    <!-- Back to All Tags -->
+    <div class="back-to-all-tags">
+        <a href="{{ '/tag/' | relative_url }}" class="btn">
+            <i class="fas fa-arrow-left"></i> Kembali ke Semua Tag
+        </a>
     </div>
 </div>
 
@@ -141,130 +137,273 @@ permalink: /tag/
     padding: 20px;
 }
 
-.tag-controls {
-    background: #f5f5f5;
-    padding: 15px;
-    border-radius: 5px;
+.breadcrumb {
+    font-size: 0.9em;
+    color: #666;
     margin-bottom: 20px;
 }
 
-.sort-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
-
-.sort-btn {
-    padding: 5px 15px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    text-decoration: none;
-    color: #333;
-}
-
-.sort-btn.active {
-    background: #3498db;
-    color: white;
-    border-color: #3498db;
-}
-
-.tag-list {
-    list-style: none;
-    padding: 0;
-}
-
-.tag-list-item {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px;
-    transition: box-shadow 0.3s;
-}
-
-.tag-list-item:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.tag-link {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.tag-name {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.tag-count {
-    background: #3498db;
-    color: white;
-    padding: 2px 10px;
-    border-radius: 10px;
-    font-size: 0.9em;
-}
-
-.recent-posts {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-}
-
-.post-preview {
-    list-style: none;
-    padding-left: 0;
-    margin: 5px 0;
-}
-
-.post-preview li {
-    margin-bottom: 5px;
-    padding: 5px;
-    background: #f9f9f9;
-    border-radius: 3px;
-}
-
-.post-preview a {
-    color: #2c3e50;
-    text-decoration: none;
-}
-
-.post-preview a:hover {
+.breadcrumb a {
     color: #3498db;
+    text-decoration: none;
 }
 
-.post-preview small {
-    color: #666;
-    margin-left: 10px;
+.breadcrumb span {
+    color: #333;
+    font-weight: bold;
 }
 
-.tag-stats {
+.tag-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.tag-title {
+    margin: 0;
+    font-size: 2em;
+}
+
+.tag-count .badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.tag-sort-controls {
     background: #f8f9fa;
     padding: 15px;
     border-radius: 5px;
-    margin-top: 30px;
-    border-left: 4px solid #3498db;
+    margin-bottom: 20px;
+    text-align: right;
 }
 
-.tag-stats h3 {
+.tag-sort-controls select {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    margin-left: 10px;
+}
+
+.post-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.post-card-header {
+    margin-bottom: 15px;
+}
+
+.post-title {
+    margin: 0 0 10px 0;
+    font-size: 1.4em;
+}
+
+.post-title a {
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.post-title a:hover {
+    color: #3498db;
+}
+
+.post-meta {
+    font-size: 0.9em;
+    color: #666;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.post-meta i {
+    margin-right: 5px;
+}
+
+.post-excerpt {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.read-more {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.tag-badge {
+    display: inline-block;
+    background: #e8f4fc;
+    color: #3498db;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    margin-left: 5px;
+    text-decoration: none;
+}
+
+.tag-badge:hover {
+    background: #3498db;
+    color: white;
+}
+
+.tag-statistics {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.tag-statistics h3 {
     margin-top: 0;
     color: #2c3e50;
 }
 
-.tag-stats ul {
-    list-style: none;
-    padding-left: 0;
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
 }
 
-.tag-stats li {
-    margin-bottom: 8px;
-    padding: 5px 0;
-    border-bottom: 1px dashed #ddd;
+.stat-item {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.related-tags {
+    margin: 30px 0;
+}
+
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.tag-link {
+    background: #f1f8ff;
+    color: #0366d6;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.tag-link:hover {
+    background: #0366d6;
+    color: white;
+    transform: scale(1.05);
+}
+
+.tag-count-small {
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.back-to-all-tags {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.btn {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #2980b9;
 }
 </style>
+
+<script>
+function sortPosts() {
+    const sortBy = document.getElementById('post-sort').value;
+    const container = document.getElementById('posts-container');
+    const posts = Array.from(container.getElementsByClassName('post-card'));
+    
+    posts.sort((a, b) => {
+        const aDate = parseInt(a.dataset.date);
+        const bDate = parseInt(b.dataset.date);
+        const aTitle = a.dataset.title;
+        const bTitle = b.dataset.title;
+        
+        switch(sortBy) {
+            case 'date-desc':
+                return bDate - aDate;
+            case 'date-asc':
+                return aDate - bDate;
+            case 'title-asc':
+                return aTitle.localeCompare(bTitle);
+            case 'title-desc':
+                return bTitle.localeCompare(aTitle);
+            default:
+                return bDate - aDate;
+        }
+    });
+    
+    // Clear container
+    container.innerHTML = '';
+    
+    // Append sorted posts
+    posts.forEach(post => {
+        container.appendChild(post);
+    });
+}
+
+// Initialize with latest first
+document.addEventListener('DOMContentLoaded', function() {
+    sortPosts();
+});
+</script>
