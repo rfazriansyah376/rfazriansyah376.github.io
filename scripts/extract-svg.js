@@ -7,14 +7,17 @@ const sharp = require("sharp");
 const baseDir = "./";
 const outputDir = "./foto/hasil-svg/";
 
+// Pastikan folder hasil ada
 fse.ensureDirSync(outputDir);
 
+// Scan semua file HTML, termasuk di _posts/
 function scanHtmlFiles(directory) {
   let results = [];
   for (const file of fs.readdirSync(directory)) {
     const fullPath = path.join(directory, file);
     const stat = fs.statSync(fullPath);
 
+    // Skip folder yang tidak relevan
     if (
       stat.isDirectory() &&
       !fullPath.includes("node_modules") &&
@@ -22,13 +25,16 @@ function scanHtmlFiles(directory) {
       !fullPath.includes("foto")
     ) {
       results = results.concat(scanHtmlFiles(fullPath));
-    } else if (file.endsWith(".html")) {
+    } 
+    // Ambil semua file .html termasuk di _posts/
+    else if (file.endsWith(".html")) {
       results.push(fullPath);
     }
   }
   return results;
 }
 
+// Proses tiap file HTML
 async function processHtml(filePath) {
   const html = fs.readFileSync(filePath, "utf8");
   const dom = new JSDOM(html);
@@ -52,19 +58,21 @@ async function processHtml(filePath) {
     const pngPath = path.join(outputDir, pngFile);
     const webpPath = path.join(outputDir, webpFile);
 
+    // Simpan file SVG
     fs.writeFileSync(svgPath, svgContent);
 
-    // wait conversion finish
+    // Convert ke PNG dan WebP
     await sharp(Buffer.from(svgContent)).png().toFile(pngPath);
     await sharp(Buffer.from(svgContent)).webp().toFile(webpPath);
 
+    // Replace inline SVG dengan <picture>
     const pictureWrapper = document.createElement("picture");
     pictureWrapper.innerHTML = `
       <source srcset="/foto/hasil-svg/${webpFile}" type="image/webp">
       <img src="/foto/hasil-svg/${pngFile}" alt="Illustration">
     `;
-
     svgNode.replaceWith(pictureWrapper);
+
     counter++;
     changed = true;
   }
@@ -75,9 +83,10 @@ async function processHtml(filePath) {
   }
 }
 
+// Main async
 (async () => {
-  const htmlList = scanHtmlFiles(baseDir);
-  for (const file of htmlList) {
+  const htmlFiles = scanHtmlFiles(baseDir);
+  for (const file of htmlFiles) {
     await processHtml(file);
   }
 })();
