@@ -1,1 +1,1 @@
-foto/hasil-svg/
+biarin aja
