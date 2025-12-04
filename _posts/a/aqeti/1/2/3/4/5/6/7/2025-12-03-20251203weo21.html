@@ -1,336 +1,84 @@
 ---
 layout: post159
-title: "Creating Custom Jekyll Plugins with Ruby for Enhanced Cloudflare Integration"
-categories: [convexseo,jekyll, ruby, plugin-development]
-tags: [jekyll plugins, ruby development, cloudflare integration, custom filters, generators, tags, api integration, static site enhancement, automation, github pages]
-description: "Learn to build custom Jekyll plugins in Ruby that deeply integrate Cloudflare Analytics and performance features directly into your static site generation workflow."
+title: Cloudflare Workers KV Intelligent Recommendation Storage For GitHub Pages
+categories: [convexseo,cloudflare,githubpages,static-sites]
+tags: [ruby,cloudflare,workers,kv,static,analytics,predictive,recommendation,edge,ai,optimization,cdn,performance]
+description: How to use Cloudflare Workers KV to store and deliver recommendation data for GitHub Pages predictively and efficiently
 ---
-<p>You've hit the limits of what standard Jekyll can do with Cloudflare. You're copying analytics data manually, writing repetitive Liquid code, and wishing for smarter automation. The native Jekyll-Cloudflare integration is minimal, forcing you into workarounds. This inefficiency slows down your content strategy and prevents you from building truly intelligent, data-aware features. What you need are custom Jekyll plugins that bridge this gap seamlessly.</p>
 
-<div class="toc">
-    <h2>In This Article</h2>
-    <ul>
-        <li><a href="#understanding-jekyll-plugin-architecture">Understanding Jekyll Plugin Architecture</a></li>
-        <li><a href="#building-cloudflare-data-plugin">Building a Cloudflare Data Fetcher Plugin</a></li>
-        <li><a href="#creating-custom-liquid-filters">Creating Custom Liquid Filters for Analytics</a></li>
-        <li><a href="#advanced-generator-plugins">Advanced Generator Plugins for Automated Reporting</a></li>
-        <li><a href="#optimizing-plugin-performance">Optimizing Plugin Performance for Fast Builds</a></li>
-        <li><a href="#deployment-github-pages">Deployment Strategies for GitHub Pages</a></li>
-    </ul>
-</div>
+<p>One of the most powerful ways to improve user experience is through intelligent content recommendations that respond dynamically to visitor behavior. Many developers assume recommendations are only possible with complex backend databases or real time machine learning servers. However, by using Cloudflare Workers KV as a distributed key value storage solution, it becomes possible to build intelligent recommendation systems that work with GitHub Pages even though it is a static hosting platform without a traditional server. This guide will show how Workers KV enables efficient storage, retrieval, and delivery of predictive recommendation data processed through Ruby automation or edge scripts.</p>
 
-<h2 id="understanding-jekyll-plugin-architecture">Understanding Jekyll Plugin Architecture</h2>
-<p>Jekyll plugins are Ruby classes that extend Jekyll's functionality. They come in several types, each serving different purposes. <strong>Generators</strong> create new content or pages during the build process. <strong>Converters</strong> transform content from one format to another. <strong>Commands</strong> add new CLI commands. <strong>Tags</strong> and <strong>Filters</strong> extend the Liquid templating language. For Cloudflare integration, Generators and Filters are most useful.</p>
-<p>Plugins live in the `_plugins` directory in your Jekyll project. GitHub Pages has a whitelist of allowed plugins for security reasons, but you can still use custom plugins by building locally and pushing the generated `_site` folder, or by using GitHub Actions. Understanding this architecture lets you choose the right approach: a Generator to fetch and process Cloudflare data at build time, or Filters to transform and display that data in templates.</p>
+<h2>Useful Navigation Guide</h2>
+<ul>
+  <li><a href="#why-use-workers-kv">Why Cloudflare Workers KV Is Ideal For Recommendation Systems</a></li>
+  <li><a href="#how-kv-works">How Workers KV Stores And Delivers Recommendation Data</a></li>
+  <li><a href="#data-structure">Structuring Recommendation Data For Maximum Efficiency</a></li>
+  <li><a href="#ruby-pipeline">Building A Data Pipeline Using Ruby Automation</a></li>
+  <li><a href="#worker-script">Cloudflare Worker Script Example For Real Recommendations</a></li>
+  <li><a href="#connecting-to-github-pages">Connecting Recommendation Output To GitHub Pages</a></li>
+  <li><a href="#real-use-case">Real Use Case Example For Blogs And Knowledge Bases</a></li>
+  <li><a href="#faq">Frequently Asked Questions Related To Workers KV</a></li>
+  <li><a href="#closing">Final Insights And Practical Recommendations</a></li>
+</ul>
 
-<h3 id="plugin-types-overview">Jekyll Plugin Types for Cloudflare Integration</h3>
-<table>
-<thead>
-<tr>
-<th>Plugin Type</th>
-<th>Best For</th>
-<th>Cloudflare Use Case</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Generator</strong></td>
-<td>Creating new pages/files</td>
-<td>Generating analytics report pages</td>
-</tr>
-<tr>
-<td><strong>Filter</strong></td>
-<td>Transforming data in templates</td>
-<td>Formatting pageview counts, calculating trends</td>
-</tr>
-<tr>
-<td><strong>Tag</strong></td>
-<td>Adding new Liquid tags</td>
-<td>`{% cloudflare_stats %}` to embed live(ish) data</td>
-</tr>
-<tr>
-<td><strong>Command</strong></td>
-<td>Adding CLI commands</td>
-<td>`jekyll cloudflare-sync` to sync data</td>
-</tr>
-</tbody>
-</table>
+<h2 id="why-use-workers-kv">Why Cloudflare Workers KV Is Ideal For Recommendation Systems</h2>
+<p>Cloudflare Workers KV is a global distributed key value storage system built to be extremely fast and highly scalable. Because data is stored at the edge, close to users, retrieving values takes only milliseconds. This makes KV ideal for prediction and recommendation delivery where speed and relevance matter. Instead of querying a central database, the visitor receives personalized or behavior based recommendations instantly.</p>
+<p>Workers KV also simplifies architecture by removing the need to manage a database server, authentication model, or scaling policies. All logic and storage remain inside Cloudflare’s infrastructure, enabling developers to focus on analytics and user experience. When paired with Ruby automation scripts that generate prediction data, KV becomes the bridge connecting analytical intelligence and real time delivery.</p>
 
-<h2 id="building-cloudflare-data-plugin">Building a Cloudflare Data Fetcher Plugin</h2>
-<p>Let's create a Generator plugin that fetches Cloudflare analytics data and makes it available throughout your site. Create `_plugins/cloudflare_generator.rb`:</p>
+<h2 id="how-kv-works">How Workers KV Stores And Delivers Recommendation Data</h2>
+<p>Workers KV stores information as key value pairs, meaning each dataset has an identifier and the associated content. For example, keys can represent categories, tags, user segments, device types, or interaction patterns. Values may include JSON objects containing recommended items or prediction scores. The Worker script retrieves the appropriate key based on logic, and returns data directly to the client or website script.</p>
+<p>The beauty of KV is its ability to store small predictive datasets that update periodically. Instead of recalculating recommendations on every page view, predictions are preprocessed using Ruby or other tools, then uploaded into KV storage for fast reuse. GitHub Pages only needs to load JSON from an API endpoint to update recommendations dynamically without editing HTML content.</p>
 
+<h2 id="data-structure">Structuring Recommendation Data For Maximum Efficiency</h2>
+<p>Designing an efficient data structure ensures higher performance and easier model management. The goal is to store minimal JSON that precisely maps user behavior patterns to relevant recommendations. For example, if your site predicts what article a visitor wants to read next, the dataset could map categories to top recommended posts. Advanced systems may map real time interest profiles to multi layered prediction outputs.</p>
+<p>When designing predictive key structures, consistency matters. Every key should represent a repeatable state such as topic preference, navigation flow paths, device segments, search queries, or reading history patterns. Using classification structures simplifies retrieval and analysis, making recommendations both cleaner and more computationally efficient.</p>
+
+<h2 id="ruby-pipeline">Building A Data Pipeline Using Ruby Automation</h2>
+<p>Ruby scripts are powerful for collecting analytics logs, processing datasets, and generating structured prediction files. Data pipelines using GitHub Actions and Ruby automate the full lifecycle of predictive models. They extract logs or event streams from Cloudflare Workers, clean and group behavioral datasets, and calculate probabilities with statistical techniques. Ruby then exports structured recommendation JSON ready for publishing to KV storage.</p>
+<p>After processing, GitHub Actions can automatically push the updated dataset to Cloudflare Workers KV using REST API calls. Once the dataset is uploaded, Workers begin serving updated predictions instantly. This ensures your recommendation system continuously learns and responds without requiring direct website modifications.</p>
+
+<h3>Example Ruby Export Command</h3>
 <pre><code>
-# _plugins/cloudflare_generator.rb
-require 'net/http'
-require 'json'
-require 'yaml'
-
-module Jekyll
-  class CloudflareGenerator < Generator
-    safe true
-    priority :high
-    
-    def generate(site)
-      # Only run in production or when flag is set
-      return unless ENV['JEKYLL_ENV'] == 'production' || site.config['fetch_cloudflare']
-      
-      puts "Fetching Cloudflare analytics data..."
-      
-      # Your Cloudflare API credentials (use environment variables)
-      api_token = ENV['CLOUDFLARE_API_TOKEN']
-      zone_id = ENV['CLOUDFLARE_ZONE_ID']
-      
-      return unless api_token && zone_id
-      
-      # Fetch top pages data
-      top_pages = fetch_top_pages(api_token, zone_id)
-      
-      # Make data available to templates
-      site.data['cloudflare'] ||= {}
-      site.data['cloudflare']['top_pages'] = top_pages
-      site.data['cloudflare']['fetched_at'] = Time.now.utc.iso8601
-      
-      puts "✅ Cloudflare data fetched successfully"
-    end
-    
-    private
-    
-    def fetch_top_pages(api_token, zone_id)
-      uri = URI("https://api.cloudflare.com/client/v4/zones/#{zone_id}/analytics/events/top")
-      
-      request = Net::HTTP::Post.new(uri)
-      request['Authorization'] = "Bearer #{api_token}"
-      request['Content-Type'] = 'application/json'
-      
-      # Last 7 days
-      end_time = Time.now.utc
-      start_time = end_time - (7 * 24 * 60 * 60)
-      
-      request.body = {
-        'start' => start_time.iso8601,
-        'end' => end_time.iso8601,
-        'metrics' => ['pageViews', 'visits'],
-        'dimensions' => ['page'],
-        'limit' => 20
-      }.to_json
-      
-      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-        http.request(request)
-      end
-      
-      if response.code == '200'
-        data = JSON.parse(response.body)
-        return data['result'].map do |item|
-          {
-            'page' => item['dimensions'][0],
-            'pageViews' => item['metrics'][0],
-            'visits' => item['metrics'][1]
-          }
-        end
-      else
-        puts "⚠️  Failed to fetch Cloudflare data: #{response.code}"
-        return []
-      end
-    end
-  end
-end
-</code></pre>
-<p>This plugin runs during every build, fetches fresh data from Cloudflare API, and stores it in `site.data['cloudflare']`, making it accessible in your Liquid templates as `site.cloudflare.top_pages`.</p>
-
-<h2 id="creating-custom-liquid-filters">Creating Custom Liquid Filters for Analytics</h2>
-<p>Filters transform data within Liquid templates. Create useful filters for working with Cloudflare data. Add to `_plugins/cloudflare_filters.rb`:</p>
-
-<pre><code>
-# _plugins/cloudflare_filters.rb
-module Jekyll
-  module CloudflareFilters
-    # Format large numbers: 1234567 -> "1.2M"
-    def format_count(input)
-      return '0' if input.nil? || input.zero?
-      
-      case input
-      when 1_000_000..Float::INFINITY
-        format('%.1fM', input / 1_000_000.0)
-      when 1_000..999_999
-        format('%.1fK', input / 1_000.0)
-      else
-        input.to_s
-      end
-    end
-    
-    # Calculate percentage change between two values
-    def percent_change(old_val, new_val)
-      return '0%' if old_val.nil? || new_val.nil? || old_val.zero?
-      
-      change = ((new_val - old_val).to_f / old_val) * 100
-      format('%+.1f%%', change)
-    end
-    
-    # Get pageviews for a specific URL from Cloudflare data
-    def pageviews_for_url(url, cloudflare_data)
-      return 0 unless cloudflare_data && url
-      
-      entry = cloudflare_data.find { |item| item['page'] == url }
-      entry ? entry['pageViews'] : 0
-    end
-    
-    # Check if a page is trending (top 10% of traffic)
-    def is_trending?(url, cloudflare_data)
-      return false unless cloudflare_data && cloudflare_data.any?
-      
-      pageviews = pageviews_for_url(url, cloudflare_data)
-      return false if pageviews.zero?
-      
-      max_pageviews = cloudflare_data.map { |item| item['pageViews'] }.max
-      pageviews >= (max_pageviews * 0.1)  # Top 10%
-    end
-  end
-end
-
-Liquid::Template.register_filter(Jekyll::CloudflareFilters)
-</code></pre>
-<p>Now in your templates, you can use:</p>
-<pre><code>
-{% raw %}{{ site.cloudflare.top_pages | first | format_count }}
-{{ 1000 | format_count }}  <!-- Outputs: "1.0K" -->
-{{ page.url | pageviews_for_url: site.cloudflare.top_pages }}
-{{ page.url | is_trending?: site.cloudflare.top_pages }}{% endraw %}
+ruby preprocess.rb
+ruby predict.rb
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/xxx/storage/kv/namespaces/yyy/values/recommend" \
+-H "Authorization: Bearer ${CF_API_TOKEN}" \
+--data-binary @recommend.json
 </code></pre>
 
-<h2 id="advanced-generator-plugins">Advanced Generator Plugins for Automated Reporting</h2>
-<p>Create a plugin that generates actual HTML report pages from Cloudflare data. This creates a private analytics dashboard within your Jekyll site itself:</p>
+<p>This workflow demonstrates how Ruby automates the creation and deployment of predictive recommendation models. With GitHub Actions, the process becomes fully scheduled and maintenance free, enabling hands-free intelligence updates.</p>
 
-<pre><code>
-# _plugins/cloudflare_reporter.rb
-module Jekyll
-  class CloudflareReporter < Generator
-    safe true
-    
-    def generate(site)
-      return unless site.config['generate_cloudflare_reports']
-      
-      # Create a data page for the report
-      report_data = {
-        'layout' => 'report',
-        'title' => 'Cloudflare Analytics Report',
-        'permalink' => '/internal/cloudflare-report/',
-        'sitemap' => false  # Don't include in sitemap
-      }
-      
-      # Create the page
-      page = PageWithoutAFile.new(site, site.source, '', 'cloudflare-report.md')
-      page.content = generate_report_content(site)
-      page.data = report_data
-      
-      site.pages   page
-    end
-    
-    private
-    
-    def generate_report_content(site)
-      cloudflare_data = site.data['cloudflare']
-      return "# No Cloudflare data available" unless cloudflare_data
-      
-      content =  ~REPORT
-        # Cloudflare Analytics Report
-        *Generated: #{cloudflare_data['fetched_at']}*
-        
-        ## Top 10 Pages (Last 7 Days)
-        
-        | Page | Page Views | Unique Visits |
-        |------|------------|---------------|
-        #{generate_table_rows(cloudflare_data['top_pages'])}
-        
-        ## Summary
-        - **Total pages tracked:** #{cloudflare_data['top_pages'].size}
-        - **Most popular page:** #{cloudflare_data['top_pages'].first['page']}
-        - **Total pageviews:** #{cloudflare_data['top_pages'].sum { |p| p['pageViews'] }}
-      REPORT
-      
-      content
-    end
-    
-    def generate_table_rows(pages)
-      pages.first(10).map do |page|
-        "| #{page['page']} | #{page['pageViews']} | #{page['visits']} |"
-      end.join("\n")
-    end
-  end
-  
-  # A custom Page class that doesn't require a file
-  class PageWithoutAFile < Page
-    def read_yaml(*)
-      @data ||= {}
-    end
-  end
-end
-</code></pre>
-<p>This creates a private page at `/internal/cloudflare-report/` with a formatted analytics dashboard, updated every time you build your site.</p>
+<h2 id="worker-script">Cloudflare Worker Script Example For Real Recommendations</h2>
+<p>Workers enable real time logic that responds to user behavior signals or URL context. A typical worker retrieves KV JSON, adjusts responses using computed rules, then returns structured data to GitHub Pages scripts. Even minimal serverless logic greatly enhances personalization with low cost and high performance.</p>
 
-<h2 id="optimizing-plugin-performance">Optimizing Plugin Performance for Fast Builds</h2>
-<p>Plugins can slow down builds if not optimized. Implement these strategies:</p>
-<ol>
-<li><strong>Conditional Execution:</strong> Use environment variables or site config to disable plugins in development: `return unless ENV['JEKYLL_ENV'] == 'production'`</li>
-<li><strong>Caching:</strong> Cache API responses locally. Save fetched data to `_data/cloudflare_cache.yml` and only refresh every 24 hours.</li>
-<li><strong>Lazy Loading:</strong> Only fetch data when needed. Use the `:low` priority for non-essential data fetchers.</li>
-<li><strong>Background Processing:</strong> For very large sites, consider fetching data in a separate process before the Jekyll build starts.</li>
-</ol>
-<p>Add caching to your Cloudflare generator:</p>
+<h3>Sample Worker Script</h3>
 <pre><code>
-def generate(site)
-  cache_file = '_data/cloudflare_cache.yml'
-  cache_data = File.exist?(cache_file) ? YAML.load_file(cache_file) : {}
-  
-  # Only fetch if cache is older than 24 hours
-  if cache_data['fetched_at'].nil? || Time.parse(cache_data['fetched_at']) < (Time.now - 24*60*60)
-    puts "Fetching fresh Cloudflare data..."
-    fresh_data = fetch_from_cloudflare()
-    File.write(cache_file, fresh_data.to_yaml)
-    site.data['cloudflare'] = fresh_data
-  else
-    puts "Using cached Cloudflare data..."
-    site.data['cloudflare'] = cache_data
-  end
-end
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url)
+    const category = url.searchParams.get("topic") || "default"
+    const data = await env.RECOMMENDATIONS.get(category, "json")
+    return new Response(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json" }
+    })
+  }
+}
 </code></pre>
 
-<h2 id="deployment-github-pages">Deployment Strategies for GitHub Pages</h2>
-<p>Since GitHub Pages restricts custom plugins, you have several deployment options:</p>
+<p>This script retrieves recommendations based on a selected topic or reading category. For example, if someone is reading about Ruby automation, the Worker returns related predictive suggestions that highlight trending posts or newly updated technical guides.</p>
 
-<h3>Option 1: Local Build with Generated Site</h3>
-<p>Build your site locally with plugins enabled, then push only the `_site` folder to a separate branch (e.g., `gh-pages`) or repository. Use a `.nojekyll` file in the root to disable GitHub Pages' build process.</p>
+<h2 id="connecting-to-github-pages">Connecting Recommendation Output To GitHub Pages</h2>
+<p>GitHub Pages can fetch recommendations from Workers using asynchronous JavaScript, allowing UI components to update dynamically. Static websites become intelligent without backend servers. Recommendations may appear as sidebars, inline suggestion cards, custom navigation paths, or learning progress indicators.</p>
+<p>Developers often create reusable component templates via HTML includes in Jekyll, then feed Worker responses into the template. This approach minimizes code duplication and makes predictive features scalable across large content publications.</p>
 
-<h3>Option 2: GitHub Actions with Custom Plugins</h3>
-<p>Create a GitHub Actions workflow that installs Ruby, runs your custom build with plugins, and deploys the result:</p>
-<pre><code>
-# .github/workflows/deploy.yml
-name: Deploy with Custom Plugins
-on:
-  push:
-    branches: [ main ]
+<h2 id="real-use-case">Real Use Case Example For Blogs And Knowledge Bases</h2>
+<p>Imagine a knowledge base hosted on GitHub Pages with hundreds of technical tutorials. Without recommendations, users must manually navigate content or search manually. Predictive recommendations based on interactions dramatically enhance learning efficiency. If a visitor frequently reads optimization articles, the model recommends edge computing, performance tuning, and caching resources. Engagement increases and bounce rates decline.</p>
+<p>Recommendations can also prioritize new posts or trending content clusters, guiding readers toward popular discoveries. With Cloudflare Workers KV, these predictions are delivered instantly and globally, without needing expensive infrastructure, heavy backend databases, or complex systems administration.</p>
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.0'
-      - run: bundle install
-      - name: Build with custom plugins
-        env:
-          JEKYLL_ENV: production
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: bundle exec jekyll build
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-</code></pre>
+<h2 id="faq">Frequently Asked Questions Related To Workers KV</h2>
+<p><strong>Is Workers KV fast enough for real time recommendations?</strong> Yes, because data is retrieved from distributed edge networks rather than centralized servers.</p>
+<p><strong>Can Workers KV scale for high traffic websites?</strong> Absolutely. Workers KV is designed for millions of requests with low latency and no maintenance requirements.</p>
 
-<h3>Option 3: Plugin-Only Features with Fallbacks</h3>
-<p>Design your plugins to have graceful fallbacks. If Cloudflare data isn't available (like on GitHub Pages build), use sample data or skip the feature entirely. This way, your site still builds everywhere.</p>
-
-<p>Stop struggling with manual integrations. Start by creating the basic Cloudflare generator plugin and one custom filter. Test it locally, then implement the GitHub Actions deployment. This foundation will allow you to build increasingly sophisticated data integrations that make your Jekyll site smarter and more responsive to actual audience behavior.</p>
+<h2 id="closing">Final Insights And Practical Recommendations</h2>
+<p>Cloudflare Workers KV offers an affordable, scalable, and highly flexible toolset that transforms static GitHub Pages into intelligent and predictive websites. By combining Ruby automation pipelines with Workers KV storage, developers create personalized experiences that behave like full dynamic platforms. This architecture supports growth, improves UX, and aligns with modern performance and privacy standards.</p>
+<p>If you are building a project that must anticipate user behavior or improve content discovery automatically, start implementing Workers KV for recommendation storage. Combine it with event tracking, progressive model updates, and reusable UI components to fully unlock predictive optimization. Intelligent user experience is no longer limited to large enterprise systems. With Cloudflare and GitHub Pages, it is available to everyone.</p>
