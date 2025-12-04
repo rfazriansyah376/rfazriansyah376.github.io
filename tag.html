@@ -227,6 +227,13 @@ permalink: /tag/
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -278,7 +285,9 @@ permalink: /tag/
     
     <!-- Tags Container -->
     <div id="tagsContainer" class="tags-grid">
-        <!-- Tags akan di-load oleh JavaScript -->
+        <div class="loading">
+            <p>Memuat data tag...</p>
+        </div>
     </div>
     
     <!-- Footer -->
@@ -286,28 +295,37 @@ permalink: /tag/
         <p>© {{ site.time | date: '%Y' }} {{ site.title }}</p>
     </div>
     
-    <!-- SCRIPT UTAMA YANG SUDAH DIPERBAIKI -->
+    <!-- SCRIPT YANG SUDAH DIPERBAIKI -->
     <script>
         // ===========================================
-        // 1. DATA DARI JEKYLL
+        // 1. CEK DATA DARI JEKYLL - FIXED!
         // ===========================================
-        const allTags = [
-            {% for tag in site.tags %}
-            {
-                name: "{{ tag[0] | escape }}",
-                posts: [
-                    {% for post in tag[1] %}
-                    {
-                        title: "{{ post.title | escape }}",
-                        url: "{{ post.url | relative_url }}",
-                        date: "{{ post.date | date: '%d/%m/%Y' }}",
-                        excerpt: "{{ post.excerpt | strip_html | truncatewords: 15 | escape }}"
-                    }{% unless forloop.last %},{% endunless %}
-                    {% endfor %}
-                ]
-            }{% unless forloop.last %},{% endunless %}
-            {% endfor %}
-        ];
+        console.log('Jekyll tags data:', {{ site.tags | jsonify }});
+        
+        // Data tags dari Jekyll - PAKAI site.tags (BUKAN site.tag)
+        const jekyllTags = {{ site.tags | jsonify }};
+        
+        // Convert Jekyll tags format ke format yang kita butuhkan
+        const allTags = [];
+        
+        // Loop melalui site.tags
+        {% for tag in site.tags %}
+        allTags.push({
+            name: "{{ tag[0] | escape }}",
+            posts: [
+                {% for post in tag[1] %}
+                {
+                    title: "{{ post.title | escape }}",
+                    url: "{{ post.url | relative_url }}",
+                    date: "{{ post.date | date: '%d/%m/%Y' }}",
+                    excerpt: "{{ post.excerpt | strip_html | truncatewords: 15 | escape }}"
+                }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            ]
+        });
+        {% endfor %}
+        
+        console.log('Processed tags:', allTags);
         
         // ===========================================
         // 2. FUNGSI UTILITY
@@ -315,19 +333,21 @@ permalink: /tag/
         
         // Fungsi untuk membuat slug URL-friendly
         function createSlug(text) {
-            return text.toLowerCase()
-                      .replace(/[^\w\s-]/g, '')
-                      .replace(/\s+/g, '-')
-                      .replace(/--+/g, '-')
-                      .trim();
+            if (!text) return '';
+            return text.toString().toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/--+/g, '-')
+                .trim();
         }
         
         // Format nama tag untuk display
         function formatTagName(name) {
+            if (!name) return '';
             // Jika format "tag-01", "tag-02", ubah ke lebih readable
             if (name.match(/^tag-\d+$/i)) {
                 const num = name.replace(/tag-/i, '');
-                return `Topik ${parseInt(num)}`;
+                return `Topik ${parseInt(num) || num}`;
             }
             
             // Jika format biasa, capitalize saja
@@ -337,115 +357,7 @@ permalink: /tag/
         }
         
         // ===========================================
-        // 3. FUNGSI UNTUK HALAMAN TAG
-        // ===========================================
-        
-        // Fungsi untuk membuat halaman tag
-        function createTagPage(tagName, posts) {
-            return `
-            <!DOCTYPE html>
-            <html lang="id">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Tag: ${tagName} - {{ site.title }}</title>
-                <meta name="description" content="Halaman tag ${tagName}. Total ${posts.length} postingan.">
-                <style>
-                    body {
-                        font-family: -apple-system, sans-serif;
-                        max-width: 800px;
-                        margin: 0 auto;
-                        padding: 20px;
-                        background: #f5f5f5;
-                    }
-                    .tag-header {
-                        background: linear-gradient(135deg, #2c3e50, #3498db);
-                        color: white;
-                        padding: 30px;
-                        border-radius: 10px;
-                        margin-bottom: 30px;
-                        text-align: center;
-                    }
-                    .post-list {
-                        display: grid;
-                        gap: 20px;
-                    }
-                    .post-item {
-                        background: white;
-                        padding: 20px;
-                        border-radius: 8px;
-                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                    }
-                    .post-title a {
-                        color: #2c3e50;
-                        text-decoration: none;
-                        font-size: 1.2em;
-                    }
-                    .post-title a:hover {
-                        color: #3498db;
-                    }
-                    .back-link {
-                        display: inline-block;
-                        margin-top: 30px;
-                        padding: 10px 20px;
-                        background: #3498db;
-                        color: white;
-                        text-decoration: none;
-                        border-radius: 5px;
-                    }
-                    .back-link:hover {
-                        background: #2980b9;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="tag-header">
-                    <h1>Tag: ${formatTagName(tagName)}</h1>
-                    <p>${posts.length} postingan ditemukan</p>
-                </div>
-                
-                <div class="post-list">
-                    ${posts.map(post => `
-                    <article class="post-item">
-                        <h2 class="post-title">
-                            <a href="${post.url}">${post.title}</a>
-                        </h2>
-                        <div style="color: #666; margin-top: 5px;">${post.date}</div>
-                        ${post.excerpt ? `<div style="margin-top: 10px; color: #555;">${post.excerpt}...</div>` : ''}
-                    </article>
-                    `).join('')}
-                </div>
-                
-                <a href="/tag/" class="back-link">← Kembali ke Semua Tag</a>
-                
-                <script>
-                    // Simpan data di localStorage
-                    localStorage.setItem('lastTagPage', '${tagName}');
-                </script>
-            </body>
-            </html>
-            `;
-        }
-        
-        // Fungsi untuk membuka halaman tag
-        function openTagPage(tagName, posts) {
-            const slug = createSlug(tagName);
-            const tagUrl = `/tag/${slug}/`;
-            
-            if (window.history && window.history.pushState) {
-                const state = { tag: tagName, posts: posts };
-                window.history.pushState(state, `Tag: ${tagName}`, tagUrl);
-                document.documentElement.innerHTML = createTagPage(tagName, posts);
-                document.title = `Tag: ${tagName} - {{ site.title }}`;
-            } else {
-                const newWindow = window.open('', '_blank');
-                newWindow.document.write(createTagPage(tagName, posts));
-                newWindow.document.close();
-            }
-        }
-        
-        // ===========================================
-        // 4. FUNGSI UNTUK HALAMAN UTAMA
+        // 3. FUNGSI UNTUK RENDER HALAMAN UTAMA
         // ===========================================
         
         // Fungsi untuk render tags
@@ -455,17 +367,20 @@ permalink: /tag/
             
             // Sort tags
             const sortedTags = [...tags].sort((a, b) => {
+                const aName = a.name || '';
+                const bName = b.name || '';
+                
                 switch(sortBy) {
                     case 'name-asc':
-                        return a.name.localeCompare(b.name);
+                        return aName.localeCompare(bName);
                     case 'name-desc':
-                        return b.name.localeCompare(a.name);
+                        return bName.localeCompare(aName);
                     case 'count-asc':
-                        return a.posts.length - b.posts.length;
+                        return (a.posts?.length || 0) - (b.posts?.length || 0);
                     case 'count-desc':
-                        return b.posts.length - a.posts.length;
+                        return (b.posts?.length || 0) - (a.posts?.length || 0);
                     default:
-                        return a.name.localeCompare(b.name);
+                        return aName.localeCompare(bName);
                 }
             });
             
@@ -473,7 +388,7 @@ permalink: /tag/
                 container.innerHTML = `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
                         <h3>Tidak ada tag yang ditemukan</h3>
-                        <p>Coba gunakan kata kunci pencarian yang berbeda</p>
+                        <p>Belum ada postingan dengan tag, atau coba kata kunci pencarian yang berbeda</p>
                     </div>
                 `;
                 return;
@@ -481,24 +396,28 @@ permalink: /tag/
             
             // Render setiap tag
             container.innerHTML = sortedTags.map(tag => {
-                // Escape single quotes untuk JSON
-                const escapedName = tag.name.replace(/'/g, "\\'");
-                const postsJson = JSON.stringify(tag.posts).replace(/'/g, "\\'");
+                const tagName = tag.name || 'Untitled';
+                const posts = tag.posts || [];
+                const postCount = posts.length;
+                
+                // Escape untuk JavaScript
+                const safeTagName = tagName.replace(/'/g, "\\'").replace(/"/g, '\\"');
+                const postsJson = JSON.stringify(posts).replace(/'/g, "\\'").replace(/"/g, '\\"');
                 
                 return `
-                <div class="tag-card" data-name="${tag.name.toLowerCase()}" data-count="${tag.posts.length}">
+                <div class="tag-card" data-name="${tagName.toLowerCase()}" data-count="${postCount}">
                     <div class="tag-header">
-                        <div class="tag-title">${formatTagName(tag.name)}</div>
-                        <div class="tag-count">${tag.posts.length}</div>
+                        <div class="tag-title">${formatTagName(tagName)}</div>
+                        <div class="tag-count">${postCount}</div>
                     </div>
                     
                     <div class="tag-body">
-                        ${tag.posts.length > 0 ? `
+                        ${postCount > 0 ? `
                             <strong style="display: block; margin-bottom: 10px; color: #666;">Postingan terbaru:</strong>
                             <ul class="post-list">
-                                ${tag.posts.slice(0, 3).map(post => `
+                                ${posts.slice(0, 3).map(post => `
                                     <li>
-                                        <a href="#" onclick="event.preventDefault(); openTagPage('${escapedName}', ${postsJson})">
+                                        <a href="${post.url}" title="${post.title}">
                                             ${post.title}
                                         </a>
                                         <div class="post-date">${post.date}</div>
@@ -510,11 +429,11 @@ permalink: /tag/
                         `}
                     </div>
                     
-                    ${tag.posts.length > 0 ? `
+                    ${postCount > 0 ? `
                         <div class="tag-footer">
                             <a href="#" class="view-all" 
-                               onclick="event.preventDefault(); openTagPage('${escapedName}', ${postsJson})">
-                                Lihat semua ${tag.posts.length} postingan →
+                               onclick="showTagPosts('${safeTagName}', ${postsJson}); return false;">
+                                Lihat semua ${postCount} postingan →
                             </a>
                         </div>
                     ` : ''}
@@ -523,16 +442,110 @@ permalink: /tag/
             }).join('');
         }
         
+        // Fungsi untuk menampilkan postingan tag (simplified version)
+        function showTagPosts(tagName, posts) {
+            // Buat modal sederhana
+            const modalHtml = `
+                <div id="tagModal" style="
+                    position: fixed;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    z-index: 1000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div style="
+                        background: white;
+                        padding: 30px;
+                        border-radius: 10px;
+                        max-width: 800px;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                        width: 90%;
+                    ">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="margin: 0;">Tag: ${formatTagName(tagName)}</h2>
+                            <button onclick="closeTagModal()" style="
+                                background: #e74c3c;
+                                color: white;
+                                border: none;
+                                padding: 8px 15px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                            ">Tutup</button>
+                        </div>
+                        
+                        <p><strong>${posts.length} postingan ditemukan:</strong></p>
+                        
+                        <div style="margin-top: 20px;">
+                            ${posts.map(post => `
+                                <div style="
+                                    padding: 15px;
+                                    margin-bottom: 10px;
+                                    background: #f9f9f9;
+                                    border-left: 4px solid #3498db;
+                                    border-radius: 4px;
+                                ">
+                                    <h3 style="margin-top: 0;">
+                                        <a href="${post.url}" style="color: #2c3e50; text-decoration: none;">
+                                            ${post.title}
+                                        </a>
+                                    </h3>
+                                    <div style="color: #666; font-size: 0.9em;">
+                                        ${post.date}
+                                    </div>
+                                    ${post.excerpt ? `
+                                        <div style="margin-top: 10px; color: #555;">
+                                            ${post.excerpt}...
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button onclick="closeTagModal()" style="
+                                background: #3498db;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                            ">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Tambahkan modal ke body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Blok scroll body
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Fungsi untuk menutup modal
+        function closeTagModal() {
+            const modal = document.getElementById('tagModal');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
         // Fungsi untuk update statistics
         function updateStatistics() {
             const totalTags = allTags.length;
-            const totalPosts = allTags.reduce((sum, tag) => sum + tag.posts.length, 0);
+            const totalPosts = allTags.reduce((sum, tag) => sum + (tag.posts?.length || 0), 0);
             const avgPosts = totalTags > 0 ? (totalPosts / totalTags).toFixed(1) : 0;
             
             let maxPosts = 0;
             allTags.forEach(tag => {
-                if (tag.posts.length > maxPosts) {
-                    maxPosts = tag.posts.length;
+                const count = tag.posts?.length || 0;
+                if (count > maxPosts) {
+                    maxPosts = count;
                 }
             });
             
@@ -551,21 +564,31 @@ permalink: /tag/
                 return;
             }
             
-            const filteredTags = allTags.filter(tag => 
-                tag.name.toLowerCase().includes(searchTerm) ||
-                tag.posts.some(post => 
-                    post.title.toLowerCase().includes(searchTerm) ||
-                    (post.excerpt && post.excerpt.toLowerCase().includes(searchTerm))
-                )
-            );
+            const filteredTags = allTags.filter(tag => {
+                const tagName = (tag.name || '').toLowerCase();
+                const posts = tag.posts || [];
+                
+                // Cek nama tag
+                if (tagName.includes(searchTerm)) return true;
+                
+                // Cek judul postingan
+                for (const post of posts) {
+                    if (post.title && post.title.toLowerCase().includes(searchTerm)) return true;
+                    if (post.excerpt && post.excerpt.toLowerCase().includes(searchTerm)) return true;
+                }
+                
+                return false;
+            });
             
             renderTags(filteredTags);
         }
         
         // ===========================================
-        // 5. INITIALIZATION
+        // 4. INITIALIZATION
         // ===========================================
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Tags loaded:', allTags);
+            
             // Update statistics
             updateStatistics();
             
@@ -573,66 +596,87 @@ permalink: /tag/
             renderTags();
             
             // Setup event listeners
-            document.getElementById('searchInput').addEventListener('input', function() {
-                clearTimeout(this.searchTimeout);
-                this.searchTimeout = setTimeout(searchTags, 300);
+            const searchInput = document.getElementById('searchInput');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(searchTags, 300);
             });
             
             document.getElementById('sortSelect').addEventListener('change', renderTags);
             
-            // Handle browser back button
-            window.addEventListener('popstate', function(event) {
-                if (event.state && event.state.tag) {
-                    document.documentElement.innerHTML = createTagPage(event.state.tag, event.state.posts);
-                } else {
-                    location.reload();
+            // Close modal dengan ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeTagModal();
                 }
             });
             
-            // Check jika ada halaman tag di localStorage
-            const lastTagPage = localStorage.getItem('lastTagPage');
-            if (lastTagPage && window.location.pathname.includes('/tag/')) {
-                const tag = allTags.find(t => t.name === lastTagPage);
-                if (tag) {
-                    document.documentElement.innerHTML = createTagPage(tag.name, tag.posts);
+            // Close modal klik di luar
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'tagModal') {
+                    closeTagModal();
                 }
-            }
+            });
+        });
+        
+        // ===========================================
+        // 5. FALLBACK: Jika tidak ada data tags
+        // ===========================================
+        // Cek jika allTags kosong
+        if (allTags.length === 0) {
+            console.warn('No tags found in site.tags');
             
-            // Handle direct access to tag pages
-            if (window.location.pathname.startsWith('/tag/') && 
-                window.location.pathname !== '/tag/') {
-                
-                const pathSegments = window.location.pathname.split('/');
-                const tagSlug = pathSegments[2];
-                
-                const tag = allTags.find(t => createSlug(t.name) === tagSlug);
-                
-                if (tag) {
-                    document.documentElement.innerHTML = createTagPage(tag.name, tag.posts);
-                } else {
-                    window.location.href = '/tag/';
+            // Coba ambil dari semua postingan
+            const postsData = [
+                {% for post in site.posts %}
+                {
+                    title: "{{ post.title | escape }}",
+                    url: "{{ post.url | relative_url }}",
+                    date: "{{ post.date | date: '%d/%m/%Y' }}",
+                    tags: {{ post.tags | jsonify }},
+                    excerpt: "{{ post.excerpt | strip_html | truncatewords: 15 | escape }}"
+                }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            ];
+            
+            // Buat map tags dari posts
+            const tagsMap = {};
+            postsData.forEach(post => {
+                if (post.tags && Array.isArray(post.tags)) {
+                    post.tags.forEach(tagName => {
+                        if (!tagsMap[tagName]) {
+                            tagsMap[tagName] = [];
+                        }
+                        tagsMap[tagName].push({
+                            title: post.title,
+                            url: post.url,
+                            date: post.date,
+                            excerpt: post.excerpt
+                        });
+                    });
                 }
+            });
+            
+            // Convert ke array
+            const tagsFromPosts = Object.keys(tagsMap).map(tagName => ({
+                name: tagName,
+                posts: tagsMap[tagName]
+            }));
+            
+            // Jika dapat data dari posts, ganti allTags
+            if (tagsFromPosts.length > 0) {
+                console.log('Found tags from posts:', tagsFromPosts);
+                // Note: Karena allTags const, kita perlu reload atau handle differently
+                // Untuk sekarang, kita tambahkan langsung ke array
+                tagsFromPosts.forEach(tag => {
+                    if (!allTags.find(t => t.name === tag.name)) {
+                        allTags.push(tag);
+                    }
+                });
             }
-        });
-        
-        // ===========================================
-        // 6. SEO FALLBACK
-        // ===========================================
-        // Buat hidden links untuk SEO
-        const seoLinks = document.createElement('div');
-        seoLinks.style.display = 'none';
-        seoLinks.ariaHidden = 'true';
-        
-        allTags.forEach(tag => {
-            const slug = createSlug(tag.name);
-            const link = document.createElement('a');
-            link.href = `/tag/${slug}/`;
-            link.textContent = `Tag: ${tag.name}`;
-            link.setAttribute('data-no-index', 'true');
-            seoLinks.appendChild(link);
-        });
-        
-        document.body.appendChild(seoLinks);
+        }
     </script>
 </body>
 </html>
