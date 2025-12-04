@@ -12,7 +12,6 @@ permalink: /tag/
     <title>Daftar Semua Tag - {{ site.title }}</title>
     <meta name="description" content="Daftar semua tag yang digunakan di blog ini">
     <style>
-        /* CSS tetap sama seperti sebelumnya */
         :root {
             --primary: #3498db;
             --secondary: #2c3e50;
@@ -287,11 +286,11 @@ permalink: /tag/
         <p>© {{ site.time | date: '%Y' }} {{ site.title }}</p>
     </div>
     
-    <!-- SCRIPT UTAMA - OTOMATIS GENERATE HALAMAN TAG -->
+    <!-- SCRIPT UTAMA YANG SUDAH DIPERBAIKI -->
     <script>
-        // ============================
+        // ===========================================
         // 1. DATA DARI JEKYLL
-        // ============================
+        // ===========================================
         const allTags = [
             {% for tag in site.tags %}
             {
@@ -310,9 +309,9 @@ permalink: /tag/
             {% endfor %}
         ];
         
-        // ============================
-        // 2. FUNGSI UTAMA
-        // ============================
+        // ===========================================
+        // 2. FUNGSI UTILITY
+        // ===========================================
         
         // Fungsi untuk membuat slug URL-friendly
         function createSlug(text) {
@@ -323,9 +322,26 @@ permalink: /tag/
                       .trim();
         }
         
-        // Fungsi untuk membuat halaman tag dinamis
+        // Format nama tag untuk display
+        function formatTagName(name) {
+            // Jika format "tag-01", "tag-02", ubah ke lebih readable
+            if (name.match(/^tag-\d+$/i)) {
+                const num = name.replace(/tag-/i, '');
+                return `Topik ${parseInt(num)}`;
+            }
+            
+            // Jika format biasa, capitalize saja
+            return name
+                .replace(/-/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase());
+        }
+        
+        // ===========================================
+        // 3. FUNGSI UNTUK HALAMAN TAG
+        // ===========================================
+        
+        // Fungsi untuk membuat halaman tag
         function createTagPage(tagName, posts) {
-            // Buat HTML untuk halaman tag
             return `
             <!DOCTYPE html>
             <html lang="id">
@@ -365,6 +381,9 @@ permalink: /tag/
                         text-decoration: none;
                         font-size: 1.2em;
                     }
+                    .post-title a:hover {
+                        color: #3498db;
+                    }
                     .back-link {
                         display: inline-block;
                         margin-top: 30px;
@@ -374,11 +393,14 @@ permalink: /tag/
                         text-decoration: none;
                         border-radius: 5px;
                     }
+                    .back-link:hover {
+                        background: #2980b9;
+                    }
                 </style>
             </head>
             <body>
                 <div class="tag-header">
-                    <h1>Tag: ${tagName}</h1>
+                    <h1>Tag: ${formatTagName(tagName)}</h1>
                     <p>${posts.length} postingan ditemukan</p>
                 </div>
                 
@@ -397,7 +419,7 @@ permalink: /tag/
                 <a href="/tag/" class="back-link">← Kembali ke Semua Tag</a>
                 
                 <script>
-                    // Simpan data di localStorage agar bisa kembali
+                    // Simpan data di localStorage
                     localStorage.setItem('lastTagPage', '${tagName}');
                 </script>
             </body>
@@ -407,34 +429,26 @@ permalink: /tag/
         
         // Fungsi untuk membuka halaman tag
         function openTagPage(tagName, posts) {
-            // Buat slug untuk URL
             const slug = createSlug(tagName);
-            
-            // Buat URL untuk halaman tag
             const tagUrl = `/tag/${slug}/`;
             
-            // Cek jika browser mendukung History API
             if (window.history && window.history.pushState) {
-                // Buat state baru
                 const state = { tag: tagName, posts: posts };
-                
-                // Push state baru ke history
                 window.history.pushState(state, `Tag: ${tagName}`, tagUrl);
-                
-                // Update konten halaman
                 document.documentElement.innerHTML = createTagPage(tagName, posts);
-                
-                // Update title
                 document.title = `Tag: ${tagName} - {{ site.title }}`;
             } else {
-                // Fallback: buka di tab baru
                 const newWindow = window.open('', '_blank');
                 newWindow.document.write(createTagPage(tagName, posts));
                 newWindow.document.close();
             }
         }
         
-        // Fungsi untuk render tags di halaman utama
+        // ===========================================
+        // 4. FUNGSI UNTUK HALAMAN UTAMA
+        // ===========================================
+        
+        // Fungsi untuk render tags
         function renderTags(tags = allTags) {
             const container = document.getElementById('tagsContainer');
             const sortBy = document.getElementById('sortSelect').value;
@@ -466,10 +480,15 @@ permalink: /tag/
             }
             
             // Render setiap tag
-            container.innerHTML = sortedTags.map(tag => `
+            container.innerHTML = sortedTags.map(tag => {
+                // Escape single quotes untuk JSON
+                const escapedName = tag.name.replace(/'/g, "\\'");
+                const postsJson = JSON.stringify(tag.posts).replace(/'/g, "\\'");
+                
+                return `
                 <div class="tag-card" data-name="${tag.name.toLowerCase()}" data-count="${tag.posts.length}">
                     <div class="tag-header">
-                        <div class="tag-title">${tag.name}</div>
+                        <div class="tag-title">${formatTagName(tag.name)}</div>
                         <div class="tag-count">${tag.posts.length}</div>
                     </div>
                     
@@ -479,7 +498,7 @@ permalink: /tag/
                             <ul class="post-list">
                                 ${tag.posts.slice(0, 3).map(post => `
                                     <li>
-                                        <a href="${post.url}" onclick="event.preventDefault(); openTagPage('${tag.name.replace(/'/g, "\\'")}', ${JSON.stringify(tag.posts)})">
+                                        <a href="#" onclick="event.preventDefault(); openTagPage('${escapedName}', ${postsJson})">
                                             ${post.title}
                                         </a>
                                         <div class="post-date">${post.date}</div>
@@ -494,13 +513,14 @@ permalink: /tag/
                     ${tag.posts.length > 0 ? `
                         <div class="tag-footer">
                             <a href="#" class="view-all" 
-                               onclick="event.preventDefault(); openTagPage('${tag.name.replace(/'/g, "\\'")}', ${JSON.stringify(tag.posts)})">
+                               onclick="event.preventDefault(); openTagPage('${escapedName}', ${postsJson})">
                                 Lihat semua ${tag.posts.length} postingan →
                             </a>
                         </div>
                     ` : ''}
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
         
         // Fungsi untuk update statistics
@@ -509,7 +529,6 @@ permalink: /tag/
             const totalPosts = allTags.reduce((sum, tag) => sum + tag.posts.length, 0);
             const avgPosts = totalTags > 0 ? (totalPosts / totalTags).toFixed(1) : 0;
             
-            // Cari tag dengan postingan terbanyak
             let maxPosts = 0;
             allTags.forEach(tag => {
                 if (tag.posts.length > maxPosts) {
@@ -536,16 +555,16 @@ permalink: /tag/
                 tag.name.toLowerCase().includes(searchTerm) ||
                 tag.posts.some(post => 
                     post.title.toLowerCase().includes(searchTerm) ||
-                    post.excerpt.toLowerCase().includes(searchTerm)
+                    (post.excerpt && post.excerpt.toLowerCase().includes(searchTerm))
                 )
             );
             
             renderTags(filteredTags);
         }
         
-        // ============================
-        // 3. INITIALIZATION
-        // ============================
+        // ===========================================
+        // 5. INITIALIZATION
+        // ===========================================
         document.addEventListener('DOMContentLoaded', function() {
             // Update statistics
             updateStatistics();
@@ -555,7 +574,6 @@ permalink: /tag/
             
             // Setup event listeners
             document.getElementById('searchInput').addEventListener('input', function() {
-                // Debounce search
                 clearTimeout(this.searchTimeout);
                 this.searchTimeout = setTimeout(searchTags, 300);
             });
@@ -565,15 +583,13 @@ permalink: /tag/
             // Handle browser back button
             window.addEventListener('popstate', function(event) {
                 if (event.state && event.state.tag) {
-                    // User kembali dari halaman tag
                     document.documentElement.innerHTML = createTagPage(event.state.tag, event.state.posts);
                 } else {
-                    // User kembali ke halaman utama
                     location.reload();
                 }
             });
             
-            // Check jika ada halaman tag di localStorage (untuk refresh)
+            // Check jika ada halaman tag di localStorage
             const lastTagPage = localStorage.getItem('lastTagPage');
             if (lastTagPage && window.location.pathname.includes('/tag/')) {
                 const tag = allTags.find(t => t.name === lastTagPage);
@@ -581,12 +597,28 @@ permalink: /tag/
                     document.documentElement.innerHTML = createTagPage(tag.name, tag.posts);
                 }
             }
+            
+            // Handle direct access to tag pages
+            if (window.location.pathname.startsWith('/tag/') && 
+                window.location.pathname !== '/tag/') {
+                
+                const pathSegments = window.location.pathname.split('/');
+                const tagSlug = pathSegments[2];
+                
+                const tag = allTags.find(t => createSlug(t.name) === tagSlug);
+                
+                if (tag) {
+                    document.documentElement.innerHTML = createTagPage(tag.name, tag.posts);
+                } else {
+                    window.location.href = '/tag/';
+                }
+            }
         });
         
-        // ============================
-        // 4. FALLBACK UNTUK SEARCH ENGINE
-        // ============================
-        // Buat link untuk SEO (akan di-index oleh Google)
+        // ===========================================
+        // 6. SEO FALLBACK
+        // ===========================================
+        // Buat hidden links untuk SEO
         const seoLinks = document.createElement('div');
         seoLinks.style.display = 'none';
         seoLinks.ariaHidden = 'true';
