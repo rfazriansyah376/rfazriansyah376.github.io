@@ -9,25 +9,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # 1. Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      # 2. Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
+      # 3. Install dependencies
+      - name: Install Node dependencies
         run: |
           npm init -y
           npm install jsdom sharp fs-extra
 
+      # 4. Run SVG conversion script
       - name: Run conversion script
         run: node scripts/extract-svg.js
         shell: bash
 
-      - name: Commit and Push changes
+      # 5. Commit hasil convert otomatis
+      - name: Commit and push converted images
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto convert inline SVG to PNG/WebP & inject <picture>"
-          
