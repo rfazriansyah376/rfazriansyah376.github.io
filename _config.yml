@@ -89,3 +89,4 @@ defaults:
       path: "tag/**/*.html"
     values:
       layout: "tag_page"
+      
