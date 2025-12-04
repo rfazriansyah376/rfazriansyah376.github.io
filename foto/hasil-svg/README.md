@@ -1,1 +1,0 @@
-biarin aja
