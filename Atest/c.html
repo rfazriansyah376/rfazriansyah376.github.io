@@ -1,34 +1,39 @@
-<ul id="tagList" class="tags-container">
-  {% assign sorted_tags = site.tags | sort: 'last' | reverse %}
-  {% for tag in sorted_tags %}
-    {% assign tagname = tag[0] | downcase %}
-    {% assign displayname = tagname | replace: "-", " " %}
-    {% assign slug = displayname | replace: " ", "-" %}
-    <li class="tag-item{% if forloop.index > 20 %} hidden-tag{% endif %}" data-slug="{{ slug }}" data-name="{{ displayname }}">
-      <a href="#" onclick="gotoTag(this)">{{ displayname }} ({{ tag[1].size }})</a>
-    </li>
-  {% endfor %}
-</ul>
+<div id="tags-box" style="display:none;">
+{% assign sorted_tags = site.tags | sort: 'last' | reverse %}
+{% for tag in sorted_tags %}
+  {% assign tagname = tag[0] %}
+  {% assign displayname = tagname | replace:"-"," " | downcase %}
+  {% assign slug = displayname | replace:" ","-" %}
+  {% assign size = tag[1].size %}
 
-<button id="showMoreBtn" onclick="showAllTags()">Show More</button>
+  <a class="taglink" data-slug="{{ slug }}" style="display:block; margin:6px 0;">
+    {{ displayname }} ({{ size }})
+  </a>
+{% endfor %}
+</div>
+
+<button onclick="toggleTags()" style="margin-top:10px;">Show Tags</button>
 
 <script>
-function gotoTag(el) {
-  const item = el.parentElement;
-  const slug = item.dataset.slug;
-  const domain = location.hostname; // domain aktif
-  const target = `https://${slug}.${domain}`; // redirect
-  window.location.href = target;
+function toggleTags() {
+  var box = document.getElementById("tags-box");
+  var btn = event.target;
+  if (box.style.display === "none") {
+    box.style.display = "block";
+    btn.innerText = "Hide Tags";
+  } else {
+    box.style.display = "none";
+    btn.innerText = "Show Tags";
+  }
 }
 
-function showAllTags() {
-  document.querySelectorAll('.hidden-tag').forEach(el => el.classList.remove('hidden-tag'));
-  document.getElementById('showMoreBtn').style.display = 'none';
-}
+// Assign dynamic domain-based URL to tag links
+document.addEventListener("DOMContentLoaded", function () {
+  var domain = window.location.host; 
+  document.querySelectorAll(".taglink").forEach(function(tag) {
+    var slug = tag.getAttribute("data-slug");
+    tag.href = "https://" + slug + "." + domain;
+  });
+});
 </script>
 
-<style>
-.tags-container { list-style:none; padding-left:0; }
-.tags-container li { margin: 4px 0; }
-.hidden-tag { display:none; }
-</style>
