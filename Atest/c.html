@@ -1,48 +1,54 @@
 ---
 ---
 
-<div id="tag-container">
+<style>
+.tag-container { margin: 15px 0; }
+.tag-item { list-style: none; margin: 4px 0; }
+.tag-item a { text-decoration: none; }
+#toggle-tags { cursor: pointer; margin-top: 8px; display: inline-block; }
+</style>
 
-  {% assign tag_list = '' | split: '' %}
-
-  {% for tag in site.tags %}
-    {% assign tag_name = tag[0] %}
-    {% assign post_count = tag[1].size %}
-    {% assign item = post_count | append: '|' | append: tag_name %}
-    {% assign tag_list = tag_list | push: item %}
-  {% endfor %}
-
-  {% assign sorted = tag_list | sort | reverse %}
-
-  <ul id="tag-list">
-    {% for item in sorted %}
-      {% assign parts = item | split: '|' %}
-      {% assign count = parts[0] %}
-      {% assign tag = parts[1] %}
-      <li class="tag-item" {% if forloop.index > 10 %}style="display:none"{% endif %}>
-        <a href="/tag/{{ tag | slugify }}/">{{ tag }} ({{ count }})</a>
+<div class="tag-container">
+  <ul id="tagList">
+    {% assign sorted_tags = site.tags | sort: "last" | reverse %}
+    {% for tag in sorted_tags %}
+      {% assign count = tag[1].size %}
+      <li class="tag-item">
+        <a class="dyn-tag"
+           data-tag="{{ tag[0] | slugify | downcase }}">
+          {{ tag[0] | downcase | replace: "-", " " }} ({{ count }})
+        </a>
       </li>
     {% endfor %}
   </ul>
 
-  <button id="toggle-tags">Show More</button>
+  <span id="toggle-tags">Show More</span>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const button = document.getElementById("toggle-tags");
   const items = document.querySelectorAll(".tag-item");
+  const button = document.getElementById("toggle-tags");
   let expanded = false;
+
+  // show only 10 default
+  items.forEach((li, index) => {
+    if (index >= 10) li.style.display = "none";
+  });
 
   button.addEventListener("click", function () {
     expanded = !expanded;
     items.forEach((li, index) => {
-      if (index >= 10) {
-        li.style.display = expanded ? "list-item" : "none";
-      }
+      if (index >= 10) li.style.display = expanded ? "list-item" : "none";
     });
     button.textContent = expanded ? "Show Less" : "Show More";
   });
+
+  // automatic TAG SUBDOMAIN
+  const currentDomain = window.location.hostname;
+  document.querySelectorAll(".dyn-tag").forEach(function(a) {
+    const tagSlug = a.getAttribute("data-tag");
+    a.href = `https://${tagSlug}.${currentDomain}`;
+  });
 });
 </script>
-
