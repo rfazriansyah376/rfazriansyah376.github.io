@@ -1,3 +1,4 @@
+
 <style>
 .recent-posts-horizontal {
   margin: 3rem auto;
@@ -6,12 +7,37 @@
   position: relative;
 }
 
+/* Header dengan gradient */
+.recent-posts-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.recent-posts-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.recent-posts-subtitle {
+  color: #666;
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
 /* Horizontal scroll container dengan 2 kolom */
 .horizontal-posts-scroll {
   display: flex;
   overflow-x: auto;
   gap: 1.5rem;
-  padding: 1rem 0.5rem;
+  padding: 1.5rem 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: #ccc transparent;
   -webkit-overflow-scrolling: touch;
@@ -20,151 +46,298 @@
 
 /* Tampilkan 2 kolom dalam viewport */
 .horizontal-posts-scroll .post-card-horizontal {
-  width: calc(50% - 0.75rem); /* 2 kolom dengan gap */
-  min-width: calc(50% - 0.75rem); /* Tetap 2 kolom meski discroll */
+  width: calc(50% - 0.75rem);
+  min-width: calc(50% - 0.75rem);
   max-width: calc(50% - 0.75rem);
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient border effect */
+.post-card-horizontal::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+  background-size: 400% 400%;
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: gradient-border 3s ease infinite;
+}
+
+.post-card-horizontal:hover::before {
+  opacity: 1;
+}
+
+@keyframes gradient-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Hide scrollbar styling */
 .horizontal-posts-scroll::-webkit-scrollbar {
-  height: 6px;
+  height: 8px;
 }
 .horizontal-posts-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: linear-gradient(90deg, #f0f0f0, #e0e0e0, #f0f0f0);
   border-radius: 10px;
 }
 .horizontal-posts-scroll::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 10px;
 }
 .horizontal-posts-scroll::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
 }
 
 /* Post card styles untuk tampilan horizontal */
 .post-card-horizontal {
-  background: #fff;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  padding: 1.5rem 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 1;
 }
+
 .post-card-horizontal:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
+
+.post-card-date {
+  font-size: 0.85rem;
+  color: #667eea;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.post-card-date::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+}
+
 .post-card-horizontal h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background: linear-gradient(135deg, #333 0%, #666 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
 }
+
 .post-card-horizontal h3 a {
   text-decoration: none;
-  color: #222;
-  transition: color 0.2s ease;
+  color: inherit;
+  transition: all 0.3s ease;
 }
+
 .post-card-horizontal h3 a:hover {
-  color: var(--dynamic-color, #0078ff);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
 .post-card-horizontal p {
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #555;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  position: relative;
+  padding-left: 1rem;
 }
 
-/* Instagram Style Pagination dengan icon */
+.post-card-horizontal p::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 3px;
+  background: linear-gradient(to bottom, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+/* Categories tags */
+.post-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+.category-tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.category-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Instagram Style Pagination dengan SVG */
 .pagination-horizontal-instagram {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
-  padding: 0.5rem;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 1rem;
   width: 100%;
   box-sizing: border-box;
 }
 
 .pagination-horizontal-instagram button {
-  background: var(--dynamic-color, #0078ff);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.pagination-horizontal-instagram button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
 }
 
 .pagination-horizontal-instagram button:hover:not(:disabled) {
-  background: #005ec7;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+}
+
+.pagination-horizontal-instagram button:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 .pagination-horizontal-instagram button:disabled {
-  background: #e0e0e0;
-  color: #999;
+  background: linear-gradient(135deg, #cccccc 0%, #aaaaaa 100%);
+  color: #888;
   cursor: not-allowed;
   transform: none;
-  box-shadow: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Navigation buttons - Instagram style */
-.nav-btn-prev::before {
-  content: "〈";
+.pagination-horizontal-instagram svg {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.nav-btn-next::before {
-  content: "〉";
-}
-
-/* Page indicator dots - Instagram story style */
+/* Page indicator dots - Modern style */
 .page-indicators {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.8rem;
   align-items: center;
   justify-content: center;
+  padding: 0 1rem;
 }
 
 .page-dot {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background-color: #ddd;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #e0e0e0 0%, #cccccc 100%);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.page-dot.active {
-  background-color: var(--dynamic-color, #0078ff);
-  width: 24px;
-  border-radius: 4px;
+.page-dot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.page-dot.active::before {
+  transform: scale(1);
 }
 
 .page-dot:hover {
-  background-color: #bbb;
+  transform: scale(1.2);
+}
+
+.page-dot.active {
+  transform: scale(1.3);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Floating animation untuk cards */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.post-card-horizontal:nth-child(odd) {
+  animation: float 6s ease-in-out infinite;
+}
+
+.post-card-horizontal:nth-child(even) {
+  animation: float 6s ease-in-out infinite 1s;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  /* Pada tablet kecil, tetap 2 kolom */
   .horizontal-posts-scroll .post-card-horizontal {
     width: calc(50% - 0.75rem);
     min-width: calc(50% - 0.75rem);
@@ -172,45 +345,84 @@
   }
   
   .pagination-horizontal-instagram button {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
+    width: 48px;
+    height: 48px;
+  }
+  
+  .pagination-horizontal-instagram svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
 @media (max-width: 600px) {
+  .recent-posts-title {
+    font-size: 1.8rem;
+  }
+  
   .pagination-horizontal-instagram {
-    gap: 0.8rem;
+    gap: 1.5rem;
   }
   
   .pagination-horizontal-instagram button {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
+    width: 44px;
+    height: 44px;
   }
   
-  /* Pada mobile kecil, 1 kolom saja */
+  .page-dot {
+    width: 10px;
+    height: 10px;
+  }
+  
   .horizontal-posts-scroll .post-card-horizontal {
     width: calc(100% - 0.75rem);
     min-width: calc(100% - 0.75rem);
     max-width: calc(100% - 0.75rem);
+    padding: 1.5rem 1.2rem;
   }
   
-  .page-dot {
-    width: 6px;
-    height: 6px;
+  .post-card-horizontal {
+    animation: none !important;
   }
-  
-  .page-dot.active {
-    width: 20px;
-  }
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
 }
 </style>
 
-<section class="recent-posts-horizontal">      
-  <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll"></div>      
-  <div id="pagination-horizontal-instagram" class="pagination-horizontal-instagram"></div>      
-</section>      
+<section class="recent-posts-horizontal">
+  <div class="recent-posts-header">
+    <h2 class="recent-posts-title">Latest Stories</h2>
+    <p class="recent-posts-subtitle">Discover our latest articles and updates in a beautiful horizontal layout</p>
+  </div>
+  
+  <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll">
+    <!-- Posts will be loaded here -->
+  </div>
+  
+  <div id="pagination-horizontal-instagram" class="pagination-horizontal-instagram">
+    <!-- Pagination will be loaded here -->
+  </div>
+</section>
+
+<!-- SVG Icons -->
+<svg style="display: none;">
+  <symbol id="chevron-left" viewBox="0 0 24 24">
+    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
+  </symbol>
+  <symbol id="chevron-right" viewBox="0 0 24 24">
+    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/>
+  </symbol>
+</svg>
 
 <script>
 // Fungsi dengan nama unik untuk menghindari konflik
@@ -232,7 +444,32 @@ const POSTS_PER_PAGE_HORIZONTAL = 6;
 let currentPageHorizontal = initialPageHorizontal;      
 let filteredPostsHorizontal = [];      
 
+// Show loading shimmer
+function showLoading() {
+  const container = document.getElementById('recent-posts-container-horizontal');
+  container.innerHTML = '';
+  
+  for (let i = 0; i < POSTS_PER_PAGE_HORIZONTAL; i++) {
+    const loadingCard = document.createElement('div');
+    loadingCard.className = 'post-card-horizontal loading-shimmer';
+    loadingCard.style.minHeight = '200px';
+    container.appendChild(loadingCard);
+  }
+}
+
+// Format date
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
 // Gunakan fetch dengan error handling yang lebih baik
+showLoading();
+
 fetch('/posts.json')      
   .then(res => {      
     if (!res.ok) throw new Error('Failed to load posts.json');      
@@ -270,10 +507,18 @@ function renderPostsHorizontal() {
   const end = start + POSTS_PER_PAGE_HORIZONTAL;      
   const pagePosts = filteredPostsHorizontal.slice(start, end);      
 
-  pagePosts.forEach(post => {      
+  pagePosts.forEach((post, index) => {      
     const card = document.createElement('div');      
     card.className = 'post-card-horizontal';      
+    card.style.animationDelay = `${index * 0.2}s`;
 
+    // Date
+    const dateDiv = document.createElement('div');
+    dateDiv.className = 'post-card-date';
+    dateDiv.textContent = formatDate(post.date || new Date());
+    card.appendChild(dateDiv);
+
+    // Title
     const h3 = document.createElement('h3');      
     const linkTitle = document.createElement('a');      
     linkTitle.href = post.url || '#';      
@@ -281,21 +526,44 @@ function renderPostsHorizontal() {
     h3.appendChild(linkTitle);      
     card.appendChild(h3);      
 
+    // Excerpt
     const desc = document.createElement('p');      
     desc.textContent = post.excerpt || '(no excerpt available)';      
-    card.appendChild(desc);      
+    card.appendChild(desc);
+
+    // Categories
+    if (post.categories && post.categories.length > 0) {
+      const categoriesDiv = document.createElement('div');
+      categoriesDiv.className = 'post-categories';
+      
+      post.categories.slice(0, 3).forEach(category => {
+        const tag = document.createElement('a');
+        tag.className = 'category-tag';
+        tag.href = '#';
+        tag.textContent = category;
+        categoriesDiv.appendChild(tag);
+      });
+      
+      card.appendChild(categoriesDiv);
+    }
 
     container.appendChild(card);      
   });      
 
   const totalPages = Math.ceil(filteredPostsHorizontal.length / POSTS_PER_PAGE_HORIZONTAL);      
   if (totalPages > 1) {      
-    // Tombol Previous
+    // Tombol Previous dengan SVG
     const prevBtn = document.createElement('button');      
-    prevBtn.className = 'nav-btn-prev';      
     prevBtn.title = 'Previous page';      
     prevBtn.disabled = currentPageHorizontal === 1;      
     prevBtn.onclick = () => changePageHorizontal(currentPageHorizontal - 1);      
+    
+    const prevSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const prevUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    prevUse.setAttribute('href', '#chevron-left');
+    prevSvg.appendChild(prevUse);
+    prevBtn.appendChild(prevSvg);
+    
     pagination.appendChild(prevBtn);      
 
     // Dots indicator (Instagram style)
@@ -312,12 +580,18 @@ function renderPostsHorizontal() {
     
     pagination.appendChild(dotsContainer);      
 
-    // Tombol Next
+    // Tombol Next dengan SVG
     const nextBtn = document.createElement('button');      
-    nextBtn.className = 'nav-btn-next';      
     nextBtn.title = 'Next page';      
     nextBtn.disabled = currentPageHorizontal === totalPages;      
     nextBtn.onclick = () => changePageHorizontal(currentPageHorizontal + 1);      
+    
+    const nextSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const nextUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    nextUse.setAttribute('href', '#chevron-right');
+    nextSvg.appendChild(nextUse);
+    nextBtn.appendChild(nextSvg);
+    
     pagination.appendChild(nextBtn);      
   } else {
     // Jika hanya 1 halaman, sembunyikan pagination
@@ -333,7 +607,7 @@ function changePageHorizontal(page) {
   const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
   history.pushState({}, '', newUrl);
   
-  // Scroll ke atas kontainer
+  // Scroll ke atas kontainer dengan animasi
   const container = document.getElementById('recent-posts-container-horizontal');
   if (container) {
     container.scrollTo({ left: 0, behavior: 'smooth' });
@@ -343,7 +617,29 @@ function changePageHorizontal(page) {
 function renderNoPostsHorizontal() {      
   const container = document.getElementById('recent-posts-container-horizontal');      
   const pagination = document.getElementById('pagination-horizontal-instagram');      
-  container.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">No posts found.</p>';      
+  
+  const noPostsDiv = document.createElement('div');
+  noPostsDiv.style.textAlign = 'center';
+  noPostsDiv.style.padding = '4rem 2rem';
+  noPostsDiv.style.background = 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)';
+  noPostsDiv.style.borderRadius = '16px';
+  noPostsDiv.style.margin = '2rem 0';
+  
+  const icon = document.createElement('div');
+  icon.style.fontSize = '3rem';
+  icon.style.marginBottom = '1rem';
+  icon.style.color = '#667eea';
+  icon.innerHTML = '📝';
+  
+  const message = document.createElement('p');
+  message.style.color = '#666';
+  message.style.fontSize = '1.1rem';
+  message.style.lineHeight = '1.6';
+  message.textContent = 'No posts found. Check back soon for new content!';
+  
+  noPostsDiv.appendChild(icon);
+  noPostsDiv.appendChild(message);
+  container.appendChild(noPostsDiv);      
   pagination.style.display = 'none';      
 }      
 </script>
