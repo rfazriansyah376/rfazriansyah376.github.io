@@ -3,229 +3,55 @@
 .recent-posts-horizontal {
   margin: 3rem auto;
   padding: 0 1rem;
-  max-width: 1200px;
+  max-width: 1400px;
   position: relative;
+  overflow: hidden;
 }
 
 /* Header dengan gradient */
 .recent-posts-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   position: relative;
 }
 
 .recent-posts-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
 .recent-posts-subtitle {
   color: #666;
-  font-size: 1rem;
+  font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+  font-weight: 300;
 }
 
-/* Horizontal scroll container dengan 2 kolom */
-.horizontal-posts-scroll {
-  display: flex;
-  overflow-x: auto;
-  gap: 1.5rem;
-  padding: 1.5rem 0.5rem;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-/* Tampilkan 2 kolom dalam viewport */
-.horizontal-posts-scroll .post-card-horizontal {
-  width: calc(50% - 0.75rem);
-  min-width: calc(50% - 0.75rem);
-  max-width: calc(50% - 0.75rem);
-  flex-shrink: 0;
+/* Main container dengan navigation buttons di samping */
+.stories-container-wrapper {
   position: relative;
-  overflow: hidden;
-}
-
-/* Gradient border effect */
-.post-card-horizontal::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
-  background-size: 400% 400%;
-  border-radius: 14px;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  animation: gradient-border 3s ease infinite;
-}
-
-.post-card-horizontal:hover::before {
-  opacity: 1;
-}
-
-@keyframes gradient-border {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Hide scrollbar styling */
-.horizontal-posts-scroll::-webkit-scrollbar {
-  height: 8px;
-}
-.horizontal-posts-scroll::-webkit-scrollbar-track {
-  background: linear-gradient(90deg, #f0f0f0, #e0e0e0, #f0f0f0);
-  border-radius: 10px;
-}
-.horizontal-posts-scroll::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 10px;
-}
-.horizontal-posts-scroll::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-}
-
-/* Post card styles untuk tampilan horizontal */
-.post-card-horizontal {
-  background: linear-gradient(145deg, #ffffff, #f8f9fa);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  position: relative;
-  z-index: 1;
-}
-
-.post-card-horizontal:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.post-card-date {
-  font-size: 0.85rem;
-  color: #667eea;
-  margin-bottom: 0.8rem;
-  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 20px;
+  padding: 20px 0;
 }
 
-.post-card-date::before {
-  content: '';
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 50%;
-}
-
-.post-card-horizontal h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: linear-gradient(135deg, #333 0%, #666 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-}
-
-.post-card-horizontal h3 a {
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-}
-
-.post-card-horizontal h3 a:hover {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.post-card-horizontal p {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: #555;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  position: relative;
-  padding-left: 1rem;
-}
-
-.post-card-horizontal p::before {
-  content: '';
+/* Navigation buttons di samping */
+.nav-btn-side {
   position: absolute;
-  left: 0;
-  top: 0.3rem;
-  bottom: 0.3rem;
-  width: 3px;
-  background: linear-gradient(to bottom, #667eea, #764ba2);
-  border-radius: 2px;
-}
-
-/* Categories tags */
-.post-categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.2rem;
-}
-
-.category-tag {
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.category-tag:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-/* Instagram Style Pagination dengan SVG */
-.pagination-horizontal-instagram {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  margin-top: 3rem;
-  padding: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.pagination-horizontal-instagram button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
   border: none;
   border-radius: 50%;
   width: 56px;
@@ -237,151 +63,394 @@
   font-size: 1.5rem;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-  position: relative;
-  overflow: hidden;
+  opacity: 0.9;
 }
 
-.pagination-horizontal-instagram button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.7s ease;
-}
-
-.pagination-horizontal-instagram button:hover:not(:disabled) {
-  transform: translateY(-5px) scale(1.1);
+.nav-btn-side:hover:not(:disabled) {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
   box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
 }
 
-.pagination-horizontal-instagram button:hover:not(:disabled)::before {
-  left: 100%;
-}
-
-.pagination-horizontal-instagram button:disabled {
+.nav-btn-side:disabled {
   background: linear-gradient(135deg, #cccccc 0%, #aaaaaa 100%);
   color: #888;
   cursor: not-allowed;
-  transform: none;
+  transform: translateY(-50%);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  opacity: 0.5;
 }
 
-.pagination-horizontal-instagram svg {
-  width: 24px;
-  height: 24px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+.nav-btn-side.left {
+  left: -28px;
 }
 
-/* Page indicator dots - Modern style */
-.page-indicators {
+.nav-btn-side.right {
+  right: -28px;
+}
+
+/* Container utama untuk stories */
+.stories-main-container {
+  flex: 1;
+  position: relative;
+  overflow: visible;
+}
+
+/* Horizontal scroll container dengan 2 kolom */
+.horizontal-posts-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 2rem;
+  padding: 2rem 1.5rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scroll-padding: 0 1.5rem;
+}
+
+/* Hide scrollbar */
+.horizontal-posts-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tampilkan 2 kolom dalam viewport - Lebih besar untuk story feel */
+.horizontal-posts-scroll .story-card {
+  width: calc(50% - 1rem);
+  min-width: calc(50% - 1rem);
+  max-width: calc(50% - 1rem);
+  flex-shrink: 0;
+  position: relative;
+  overflow: visible;
+}
+
+/* Story card dengan gradient border seperti Instagram */
+.story-card {
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  border: 2px solid transparent;
+  position: relative;
+  min-height: 380px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Gradient border untuk story card */
+.story-card::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, 
+    #f093fb 0%, #f5576c 25%, 
+    #4ecdc4 50%, #45b7d1 75%, 
+    #96ceb4 100%);
+  border-radius: 22px;
+  z-index: -1;
+  opacity: 0.7;
+  transition: opacity 0.5s ease;
+}
+
+.story-card:hover::before {
+  opacity: 1;
+}
+
+/* Story profile circle (seperti di Instagram) */
+.story-profile {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border: 4px solid white;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.story-card:hover .story-profile {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.story-profile-icon {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Story content */
+.story-content {
+  margin-top: 2rem;
+  flex: 1;
+}
+
+.story-date {
+  font-size: 0.9rem;
+  color: #f5576c;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.story-date::before {
+  content: '📅';
+  font-size: 1rem;
+}
+
+.story-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #333 0%, #666 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  line-height: 1.4;
+  min-height: 3.5rem;
+}
+
+.story-card h3 a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.story-card h3 a:hover {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.story-card p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+  margin: 0 0 1.5rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Story categories tags */
+.story-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.story-tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.story-tag:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  border-color: white;
+}
+
+/* Read more button */
+.story-read-more {
+  display: inline-block;
+  margin: 1.5rem auto 0;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: 2px solid transparent;
+  max-width: 200px;
+}
+
+.story-read-more:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(240, 147, 251, 0.4);
+  border-color: white;
+}
+
+/* Page indicator dots - Instagram story style */
+.page-indicators-stories {
   display: flex;
   gap: 0.8rem;
   align-items: center;
   justify-content: center;
+  margin-top: 2.5rem;
   padding: 0 1rem;
 }
 
-.page-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #e0e0e0 0%, #cccccc 100%);
+.page-dot-story {
+  width: 40px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.1);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
-.page-dot::before {
+.page-dot-story::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 50%;
-  transform: scale(0);
-  transition: transform 0.3s ease;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 3px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
 }
 
-.page-dot.active::before {
-  transform: scale(1);
+.page-dot-story.active::before {
+  transform: scaleX(1);
 }
 
-.page-dot:hover {
-  transform: scale(1.2);
+.page-dot-story:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
-.page-dot.active {
-  transform: scale(1.3);
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
-}
-
-/* Floating animation untuk cards */
-@keyframes float {
+/* Floating animation untuk story cards */
+@keyframes storyFloat {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  50% { transform: translateY(-15px); }
   100% { transform: translateY(0px); }
 }
 
-.post-card-horizontal:nth-child(odd) {
-  animation: float 6s ease-in-out infinite;
+.story-card:nth-child(odd) {
+  animation: storyFloat 6s ease-in-out infinite;
 }
 
-.post-card-horizontal:nth-child(even) {
-  animation: float 6s ease-in-out infinite 1s;
+.story-card:nth-child(even) {
+  animation: storyFloat 6s ease-in-out infinite 1.5s;
+}
+
+/* Progress bar animation (Instagram story progress) */
+@keyframes progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .horizontal-posts-scroll .post-card-horizontal {
-    width: calc(50% - 0.75rem);
-    min-width: calc(50% - 0.75rem);
-    max-width: calc(50% - 0.75rem);
+@media (max-width: 1200px) {
+  .stories-container-wrapper {
+    padding: 20px 40px;
   }
   
-  .pagination-horizontal-instagram button {
-    width: 48px;
-    height: 48px;
+  .nav-btn-side {
+    position: relative;
+    top: auto;
+    transform: none;
   }
   
-  .pagination-horizontal-instagram svg {
-    width: 20px;
-    height: 20px;
+  .nav-btn-side.left {
+    left: 0;
+  }
+  
+  .nav-btn-side.right {
+    right: 0;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .recent-posts-title {
+    font-size: 2rem;
+  }
+  
+  .stories-container-wrapper {
+    padding: 20px;
+  }
+  
+  .horizontal-posts-scroll .story-card {
+    width: calc(100% - 1rem);
+    min-width: calc(100% - 1rem);
+    max-width: calc(100% - 1rem);
+  }
+  
+  .story-card {
+    min-height: 350px;
+    padding: 2rem 1.5rem;
+  }
+  
+  .nav-btn-side {
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
+  }
+  
+  .story-profile {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+  }
+  
+  .page-dot-story {
+    width: 30px;
+    height: 5px;
+  }
+}
+
+@media (max-width: 480px) {
   .recent-posts-title {
     font-size: 1.8rem;
   }
   
-  .pagination-horizontal-instagram {
-    gap: 1.5rem;
+  .stories-container-wrapper {
+    padding: 10px;
+    gap: 10px;
   }
   
-  .pagination-horizontal-instagram button {
-    width: 44px;
-    height: 44px;
+  .story-card {
+    min-height: 320px;
+    padding: 1.8rem 1.2rem;
   }
   
-  .page-dot {
-    width: 10px;
-    height: 10px;
+  .story-card h3 {
+    font-size: 1.2rem;
   }
   
-  .horizontal-posts-scroll .post-card-horizontal {
-    width: calc(100% - 0.75rem);
-    min-width: calc(100% - 0.75rem);
-    max-width: calc(100% - 0.75rem);
-    padding: 1.5rem 1.2rem;
+  .nav-btn-side {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
   }
   
-  .post-card-horizontal {
+  .story-card {
     animation: none !important;
   }
 }
@@ -397,36 +466,53 @@
   background-size: 1000px 100%;
   animation: shimmer 2s infinite linear;
 }
+
+/* SVG Icons */
+.svg-icon {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
 </style>
 
 <section class="recent-posts-horizontal">
   <div class="recent-posts-header">
-    <h2 class="recent-posts-title">Latest Stories</h2>
-    <p class="recent-posts-subtitle">Discover our latest articles and updates in a beautiful horizontal layout</p>
+    <h2 class="recent-posts-title">Instagram Stories Style</h2>
+    <p class="recent-posts-subtitle">Scroll through our latest stories with Instagram-like navigation</p>
   </div>
   
-  <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll">
-    <!-- Posts will be loaded here -->
+  <div class="stories-container-wrapper">
+    <!-- Left Navigation Button -->
+    <button id="nav-prev-stories" class="nav-btn-side left" disabled>
+      <svg class="svg-icon" viewBox="0 0 24 24">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
+      </svg>
+    </button>
+    
+    <!-- Main Stories Container -->
+    <div class="stories-main-container">
+      <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll">
+        <!-- Posts will be loaded here -->
+      </div>
+    </div>
+    
+    <!-- Right Navigation Button -->
+    <button id="nav-next-stories" class="nav-btn-side right">
+      <svg class="svg-icon" viewBox="0 0 24 24">
+        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/>
+      </svg>
+    </button>
   </div>
   
-  <div id="pagination-horizontal-instagram" class="pagination-horizontal-instagram">
-    <!-- Pagination will be loaded here -->
+  <!-- Page Indicators -->
+  <div id="page-indicators-stories" class="page-indicators-stories">
+    <!-- Dots will be generated here -->
   </div>
 </section>
 
-<!-- SVG Icons -->
-<svg style="display: none;">
-  <symbol id="chevron-left" viewBox="0 0 24 24">
-    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
-  </symbol>
-  <symbol id="chevron-right" viewBox="0 0 24 24">
-    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/>
-  </symbol>
-</svg>
-
 <script>
 // Fungsi dengan nama unik untuk menghindari konflik
-function getCategoryCandidatesHorizontal(hostname) {      
+function getCategoryCandidatesStories(hostname) {      
   const parts = hostname.split('.');      
   if (parts.length < 2) return { sub: null, domain: null };      
   const maybeDomainIndex = parts.length - 3;      
@@ -437,38 +523,117 @@ function getCategoryCandidatesHorizontal(hostname) {
   return { sub: rawSub ? normalize(rawSub) : null, domain: domain ? normalize(domain) : null };      
 }      
 
-const urlParamsHorizontal = new URLSearchParams(window.location.search);
-const initialPageHorizontal = parseInt(urlParamsHorizontal.get('page')) || 1;
-const { sub: subCategoryHorizontal, domain: domainCategoryHorizontal } = getCategoryCandidatesHorizontal(window.location.hostname);      
-const POSTS_PER_PAGE_HORIZONTAL = 6;      
-let currentPageHorizontal = initialPageHorizontal;      
-let filteredPostsHorizontal = [];      
+const urlParamsStories = new URLSearchParams(window.location.search);
+const initialPageStories = parseInt(urlParamsStories.get('page')) || 1;
+const { sub: subCategoryStories, domain: domainCategoryStories } = getCategoryCandidatesStories(window.location.hostname);      
+const POSTS_PER_PAGE_STORIES = 6;      
+let currentPageStories = initialPageStories;      
+let filteredPostsStories = [];      
+let autoScrollInterval = null;
 
-// Show loading shimmer
-function showLoading() {
-  const container = document.getElementById('recent-posts-container-horizontal');
-  container.innerHTML = '';
-  
-  for (let i = 0; i < POSTS_PER_PAGE_HORIZONTAL; i++) {
-    const loadingCard = document.createElement('div');
-    loadingCard.className = 'post-card-horizontal loading-shimmer';
-    loadingCard.style.minHeight = '200px';
-    container.appendChild(loadingCard);
-  }
+// Get initials from title
+function getInitials(title) {
+  if (!title) return 'A';
+  const words = title.split(' ');
+  if (words.length === 1) return words[0].charAt(0).toUpperCase();
+  return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
 }
 
 // Format date
 function formatDate(dateString) {
   const date = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now - date);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 7) return `${diffDays} days ago`;
+  
   return date.toLocaleDateString('en-US', {
-    year: 'numeric',
     month: 'short',
     day: 'numeric'
   });
 }
 
-// Gunakan fetch dengan error handling yang lebih baik
-showLoading();
+// Show loading shimmer
+function showLoadingStories() {
+  const container = document.getElementById('recent-posts-container-horizontal');
+  container.innerHTML = '';
+  
+  for (let i = 0; i < POSTS_PER_PAGE_STORIES; i++) {
+    const loadingCard = document.createElement('div');
+    loadingCard.className = 'story-card loading-shimmer';
+    loadingCard.style.minHeight = '380px';
+    container.appendChild(loadingCard);
+  }
+}
+
+// Setup navigation buttons
+function setupNavigation() {
+  const prevBtn = document.getElementById('nav-prev-stories');
+  const nextBtn = document.getElementById('nav-next-stories');
+  const container = document.getElementById('recent-posts-container-horizontal');
+  const totalPages = Math.ceil(filteredPostsStories.length / POSTS_PER_PAGE_STORIES);
+  
+  // Update button states
+  prevBtn.disabled = currentPageStories === 1;
+  nextBtn.disabled = currentPageStories === totalPages;
+  
+  // Add click handlers
+  prevBtn.onclick = () => {
+    if (currentPageStories > 1) {
+      changePageStories(currentPageStories - 1);
+    }
+  };
+  
+  nextBtn.onclick = () => {
+    if (currentPageStories < totalPages) {
+      changePageStories(currentPageStories + 1);
+    }
+  };
+  
+  // Add keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
+      prevBtn.click();
+    } else if (e.key === 'ArrowRight' && !nextBtn.disabled) {
+      nextBtn.click();
+    }
+  });
+  
+  // Add scroll event for auto-hide/show buttons
+  container.addEventListener('scroll', () => {
+    const scrollLeft = container.scrollLeft;
+    const scrollWidth = container.scrollWidth;
+    const clientWidth = container.clientWidth;
+    
+    prevBtn.disabled = scrollLeft === 0;
+    nextBtn.disabled = scrollLeft + clientWidth >= scrollWidth - 10;
+  });
+}
+
+// Setup scroll indicators
+function setupScrollIndicators() {
+  const container = document.getElementById('recent-posts-container-horizontal');
+  const indicatorsContainer = document.getElementById('page-indicators-stories');
+  const totalPages = Math.ceil(filteredPostsStories.length / POSTS_PER_PAGE_STORIES);
+  
+  indicatorsContainer.innerHTML = '';
+  
+  for (let i = 1; i <= totalPages; i++) {
+    const indicator = document.createElement('div');
+    indicator.className = `page-dot-story ${i === currentPageStories ? 'active' : ''}`;
+    indicator.onclick = () => changePageStories(i);
+    indicatorsContainer.appendChild(indicator);
+  }
+  
+  // Auto scroll to current page position
+  const scrollPosition = (currentPageStories - 1) * (container.scrollWidth / totalPages);
+  container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+}
+
+// Load posts
+showLoadingStories();
 
 fetch('/posts.json')      
   .then(res => {      
@@ -477,46 +642,57 @@ fetch('/posts.json')
   })      
   .then(posts => {      
     const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
-    if (!Array.isArray(posts) || posts.length === 0) return renderNoPostsHorizontal();      
+    if (!Array.isArray(posts) || posts.length === 0) return renderNoPostsStories();      
 
-    if (subCategoryHorizontal) {      
-      filteredPostsHorizontal = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategoryHorizontal));      
+    if (subCategoryStories) {      
+      filteredPostsStories = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategoryStories));      
     }      
 
-    if (filteredPostsHorizontal.length === 0 && domainCategoryHorizontal) {      
-      filteredPostsHorizontal = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === domainCategoryHorizontal));      
+    if (filteredPostsStories.length === 0 && domainCategoryStories) {      
+      filteredPostsStories = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === domainCategoryStories));      
     }      
 
-    if (filteredPostsHorizontal.length === 0) filteredPostsHorizontal = posts;      
+    if (filteredPostsStories.length === 0) filteredPostsStories = posts;      
 
-    filteredPostsHorizontal.sort((a, b) => new Date(b.date) - new Date(a.date));      
-    renderPostsHorizontal();      
+    filteredPostsStories.sort((a, b) => new Date(b.date) - new Date(a.date));      
+    renderPostsStories();      
   })      
   .catch(err => {      
-    console.error('Error loading posts for horizontal view:', err);      
-    renderNoPostsHorizontal();      
+    console.error('Error loading posts for stories view:', err);      
+    renderNoPostsStories();      
   });      
 
-function renderPostsHorizontal() {      
+function renderPostsStories() {      
   const container = document.getElementById('recent-posts-container-horizontal');      
-  const pagination = document.getElementById('pagination-horizontal-instagram');      
   container.innerHTML = '';      
-  pagination.innerHTML = '';      
 
-  const start = (currentPageHorizontal - 1) * POSTS_PER_PAGE_HORIZONTAL;      
-  const end = start + POSTS_PER_PAGE_HORIZONTAL;      
-  const pagePosts = filteredPostsHorizontal.slice(start, end);      
+  const start = (currentPageStories - 1) * POSTS_PER_PAGE_STORIES;      
+  const end = start + POSTS_PER_PAGE_STORIES;      
+  const pagePosts = filteredPostsStories.slice(start, end);      
 
   pagePosts.forEach((post, index) => {      
-    const card = document.createElement('div');      
-    card.className = 'post-card-horizontal';      
-    card.style.animationDelay = `${index * 0.2}s`;
+    const storyCard = document.createElement('div');      
+    storyCard.className = 'story-card';      
+    storyCard.style.animationDelay = `${index * 0.2}s`;
+
+    // Story profile circle (like Instagram)
+    const profileDiv = document.createElement('div');
+    profileDiv.className = 'story-profile';
+    const profileIcon = document.createElement('div');
+    profileIcon.className = 'story-profile-icon';
+    profileIcon.textContent = getInitials(post.title);
+    profileDiv.appendChild(profileIcon);
+    storyCard.appendChild(profileDiv);
+
+    // Story content container
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'story-content';
 
     // Date
     const dateDiv = document.createElement('div');
-    dateDiv.className = 'post-card-date';
+    dateDiv.className = 'story-date';
     dateDiv.textContent = formatDate(post.date || new Date());
-    card.appendChild(dateDiv);
+    contentDiv.appendChild(dateDiv);
 
     // Title
     const h3 = document.createElement('h3');      
@@ -524,122 +700,86 @@ function renderPostsHorizontal() {
     linkTitle.href = post.url || '#';      
     linkTitle.textContent = post.title || '(no title)';      
     h3.appendChild(linkTitle);      
-    card.appendChild(h3);      
+    contentDiv.appendChild(h3);      
 
     // Excerpt
     const desc = document.createElement('p');      
-    desc.textContent = post.excerpt || '(no excerpt available)';      
-    card.appendChild(desc);
+    desc.textContent = post.excerpt || 'Click to read this story...';      
+    contentDiv.appendChild(desc);
 
     // Categories
     if (post.categories && post.categories.length > 0) {
       const categoriesDiv = document.createElement('div');
-      categoriesDiv.className = 'post-categories';
+      categoriesDiv.className = 'story-categories';
       
-      post.categories.slice(0, 3).forEach(category => {
+      post.categories.slice(0, 2).forEach(category => {
         const tag = document.createElement('a');
-        tag.className = 'category-tag';
+        tag.className = 'story-tag';
         tag.href = '#';
-        tag.textContent = category;
+        tag.textContent = `#${category}`;
         categoriesDiv.appendChild(tag);
       });
       
-      card.appendChild(categoriesDiv);
+      contentDiv.appendChild(categoriesDiv);
     }
 
-    container.appendChild(card);      
+    // Read more button
+    const readMoreLink = document.createElement('a');
+    readMoreLink.className = 'story-read-more';
+    readMoreLink.href = post.url || '#';
+    readMoreLink.textContent = 'Read Story →';
+    contentDiv.appendChild(readMoreLink);
+
+    storyCard.appendChild(contentDiv);
+    container.appendChild(storyCard);      
   });      
 
-  const totalPages = Math.ceil(filteredPostsHorizontal.length / POSTS_PER_PAGE_HORIZONTAL);      
-  if (totalPages > 1) {      
-    // Tombol Previous dengan SVG
-    const prevBtn = document.createElement('button');      
-    prevBtn.title = 'Previous page';      
-    prevBtn.disabled = currentPageHorizontal === 1;      
-    prevBtn.onclick = () => changePageHorizontal(currentPageHorizontal - 1);      
-    
-    const prevSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const prevUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    prevUse.setAttribute('href', '#chevron-left');
-    prevSvg.appendChild(prevUse);
-    prevBtn.appendChild(prevSvg);
-    
-    pagination.appendChild(prevBtn);      
-
-    // Dots indicator (Instagram style)
-    const dotsContainer = document.createElement('div');      
-    dotsContainer.className = 'page-indicators';      
-    
-    for (let i = 1; i <= totalPages; i++) {
-      const dot = document.createElement('div');      
-      dot.className = `page-dot ${i === currentPageHorizontal ? 'active' : ''}`;      
-      dot.title = `Page ${i}`;      
-      dot.onclick = () => changePageHorizontal(i);      
-      dotsContainer.appendChild(dot);      
-    }
-    
-    pagination.appendChild(dotsContainer);      
-
-    // Tombol Next dengan SVG
-    const nextBtn = document.createElement('button');      
-    nextBtn.title = 'Next page';      
-    nextBtn.disabled = currentPageHorizontal === totalPages;      
-    nextBtn.onclick = () => changePageHorizontal(currentPageHorizontal + 1);      
-    
-    const nextSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const nextUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    nextUse.setAttribute('href', '#chevron-right');
-    nextSvg.appendChild(nextUse);
-    nextBtn.appendChild(nextSvg);
-    
-    pagination.appendChild(nextBtn);      
-  } else {
-    // Jika hanya 1 halaman, sembunyikan pagination
-    pagination.style.display = 'none';
-  }
+  setupNavigation();
+  setupScrollIndicators();
 }      
 
-function changePageHorizontal(page) {
-  currentPageHorizontal = page;
-  renderPostsHorizontal();
+function changePageStories(page) {
+  currentPageStories = page;
+  renderPostsStories();
   
   // Update URL tanpa reload
   const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
   history.pushState({}, '', newUrl);
-  
-  // Scroll ke atas kontainer dengan animasi
-  const container = document.getElementById('recent-posts-container-horizontal');
-  if (container) {
-    container.scrollTo({ left: 0, behavior: 'smooth' });
-  }
 }
 
-function renderNoPostsHorizontal() {      
+function renderNoPostsStories() {      
   const container = document.getElementById('recent-posts-container-horizontal');      
-  const pagination = document.getElementById('pagination-horizontal-instagram');      
+  const navPrev = document.getElementById('nav-prev-stories');      
+  const navNext = document.getElementById('nav-next-stories');      
+  const indicators = document.getElementById('page-indicators-stories');      
   
-  const noPostsDiv = document.createElement('div');
-  noPostsDiv.style.textAlign = 'center';
-  noPostsDiv.style.padding = '4rem 2rem';
-  noPostsDiv.style.background = 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)';
-  noPostsDiv.style.borderRadius = '16px';
-  noPostsDiv.style.margin = '2rem 0';
+  const noStoriesDiv = document.createElement('div');
+  noStoriesDiv.className = 'story-card';
+  noStoriesDiv.style.textAlign = 'center';
+  noStoriesDiv.style.padding = '3rem 2rem';
+  noStoriesDiv.style.minHeight = '380px';
+  noStoriesDiv.style.display = 'flex';
+  noStoriesDiv.style.flexDirection = 'column';
+  noStoriesDiv.style.justifyContent = 'center';
+  noStoriesDiv.style.alignItems = 'center';
   
-  const icon = document.createElement('div');
-  icon.style.fontSize = '3rem';
-  icon.style.marginBottom = '1rem';
-  icon.style.color = '#667eea';
-  icon.innerHTML = '📝';
+  const profileDiv = document.createElement('div');
+  profileDiv.className = 'story-profile';
+  profileDiv.innerHTML = '📝';
   
-  const message = document.createElement('p');
+  const message = document.createElement('h3');
   message.style.color = '#666';
-  message.style.fontSize = '1.1rem';
+  message.style.fontSize = '1.2rem';
   message.style.lineHeight = '1.6';
-  message.textContent = 'No posts found. Check back soon for new content!';
+  message.style.marginTop = '2rem';
+  message.textContent = 'No stories yet. Be the first to share!';
   
-  noPostsDiv.appendChild(icon);
-  noPostsDiv.appendChild(message);
-  container.appendChild(noPostsDiv);      
-  pagination.style.display = 'none';      
+  noStoriesDiv.appendChild(profileDiv);
+  noStoriesDiv.appendChild(message);
+  container.appendChild(noStoriesDiv);      
+  
+  navPrev.style.display = 'none';
+  navNext.style.display = 'none';
+  indicators.style.display = 'none';
 }      
 </script>
