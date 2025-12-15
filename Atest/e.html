@@ -1,0 +1,305 @@
+<style>
+.recent-posts-horizontal {
+  margin: 3rem auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+}
+
+/* Horizontal scroll container dengan 2 kolom */
+.horizontal-posts-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 1rem 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Tampilkan 2 kolom dalam viewport */
+.horizontal-posts-scroll .post-card-horizontal {
+  width: calc(50% - 0.75rem); /* 2 kolom dengan gap */
+  min-width: calc(50% - 0.75rem); /* Tetap 2 kolom meski discroll */
+  max-width: calc(50% - 0.75rem);
+  flex-shrink: 0;
+}
+
+/* Hide scrollbar styling */
+.horizontal-posts-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.horizontal-posts-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.horizontal-posts-scroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+.horizontal-posts-scroll::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* Post card styles untuk tampilan horizontal */
+.post-card-horizontal {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.post-card-horizontal:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.post-card-horizontal h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.post-card-horizontal h3 a {
+  text-decoration: none;
+  color: #222;
+  transition: color 0.2s ease;
+}
+.post-card-horizontal h3 a:hover {
+  color: var(--dynamic-color, #0078ff);
+}
+.post-card-horizontal p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Pagination dengan nama unik */
+.pagination-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pagination-horizontal button,
+.pagination-horizontal span {
+  flex-shrink: 0;
+}
+
+.pagination-horizontal button {
+  background: var(--dynamic-color, #0078ff);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  min-width: 36px;
+}
+
+.pagination-horizontal button:hover:not(:disabled) {
+  background: #005ec7;
+  transform: translateY(-1px);
+}
+
+.pagination-horizontal button:disabled {
+  background: #ccc;
+  color: #555;
+  cursor: not-allowed;
+}
+
+.pagination-horizontal span {
+  font-size: 0.9rem;
+  color: #333;
+  user-select: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Pada tablet kecil, tetap 2 kolom */
+  .horizontal-posts-scroll .post-card-horizontal {
+    width: calc(50% - 0.75rem);
+    min-width: calc(50% - 0.75rem);
+    max-width: calc(50% - 0.75rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .pagination-horizontal {
+    gap: 0.3rem;
+  }
+  .pagination-horizontal button {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 5px;
+  }
+  .pagination-horizontal span {
+    font-size: 0.8rem;
+  }
+  
+  /* Pada mobile kecil, 1 kolom saja */
+  .horizontal-posts-scroll .post-card-horizontal {
+    width: calc(100% - 0.75rem);
+    min-width: calc(100% - 0.75rem);
+    max-width: calc(100% - 0.75rem);
+  }
+}
+</style>
+
+<section class="recent-posts-horizontal">      
+  <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll"></div>      
+  <div id="pagination-horizontal" class="pagination-horizontal"></div>      
+</section>      
+
+<script>
+// Fungsi dengan nama unik untuk menghindari konflik
+function getCategoryCandidatesHorizontal(hostname) {      
+  const parts = hostname.split('.');      
+  if (parts.length < 2) return { sub: null, domain: null };      
+  const maybeDomainIndex = parts.length - 3;      
+  const domain = (maybeDomainIndex >= 0) ? parts[maybeDomainIndex] : parts[0];      
+  const subLabels = (maybeDomainIndex > 0) ? parts.slice(0, maybeDomainIndex) : [];      
+  const rawSub = subLabels.length ? subLabels.join('.') : null;      
+  const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
+  return { sub: rawSub ? normalize(rawSub) : null, domain: domain ? normalize(domain) : null };      
+}      
+
+const urlParamsHorizontal = new URLSearchParams(window.location.search);
+const initialPageHorizontal = parseInt(urlParamsHorizontal.get('page')) || 1;
+const { sub: subCategoryHorizontal, domain: domainCategoryHorizontal } = getCategoryCandidatesHorizontal(window.location.hostname);      
+const POSTS_PER_PAGE_HORIZONTAL = 6;      
+let currentPageHorizontal = initialPageHorizontal;      
+let filteredPostsHorizontal = [];      
+
+// Gunakan fetch dengan error handling yang lebih baik
+fetch('/posts.json')      
+  .then(res => {      
+    if (!res.ok) throw new Error('Failed to load posts.json');      
+    return res.json();      
+  })      
+  .then(posts => {      
+    const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
+    if (!Array.isArray(posts) || posts.length === 0) return renderNoPostsHorizontal();      
+
+    if (subCategoryHorizontal) {      
+      filteredPostsHorizontal = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategoryHorizontal));      
+    }      
+
+    if (filteredPostsHorizontal.length === 0 && domainCategoryHorizontal) {      
+      filteredPostsHorizontal = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === domainCategoryHorizontal));      
+    }      
+
+    if (filteredPostsHorizontal.length === 0) filteredPostsHorizontal = posts;      
+
+    filteredPostsHorizontal.sort((a, b) => new Date(b.date) - new Date(a.date));      
+    renderPostsHorizontal();      
+  })      
+  .catch(err => {      
+    console.error('Error loading posts for horizontal view:', err);      
+    renderNoPostsHorizontal();      
+  });      
+
+function renderPostsHorizontal() {      
+  const container = document.getElementById('recent-posts-container-horizontal');      
+  const pagination = document.getElementById('pagination-horizontal');      
+  container.innerHTML = '';      
+  pagination.innerHTML = '';      
+
+  const start = (currentPageHorizontal - 1) * POSTS_PER_PAGE_HORIZONTAL;      
+  const end = start + POSTS_PER_PAGE_HORIZONTAL;      
+  const pagePosts = filteredPostsHorizontal.slice(start, end);      
+
+  pagePosts.forEach(post => {      
+    const card = document.createElement('div');      
+    card.className = 'post-card-horizontal';      
+
+    const h3 = document.createElement('h3');      
+    const linkTitle = document.createElement('a');      
+    linkTitle.href = post.url || '#';      
+    linkTitle.textContent = post.title || '(no title)';      
+    h3.appendChild(linkTitle);      
+    card.appendChild(h3);      
+
+    const desc = document.createElement('p');      
+    desc.textContent = post.excerpt || '(no excerpt available)';      
+    card.appendChild(desc);      
+
+    container.appendChild(card);      
+  });      
+
+  const totalPages = Math.ceil(filteredPostsHorizontal.length / POSTS_PER_PAGE_HORIZONTAL);      
+  if (totalPages > 1) {      
+    const prevBtn = document.createElement('button');      
+    prevBtn.textContent = 'Prev';      
+    prevBtn.disabled = currentPageHorizontal === 1;      
+    prevBtn.onclick = () => changePageHorizontal(currentPageHorizontal - 1);      
+    pagination.appendChild(prevBtn);      
+
+    const maxVisible = 5;      
+    let startPage = Math.max(1, currentPageHorizontal - 2);      
+    let endPage = Math.min(totalPages, currentPageHorizontal + 2);      
+
+    if (currentPageHorizontal <= 3) endPage = Math.min(totalPages, maxVisible);      
+    else if (currentPageHorizontal >= totalPages - 2) startPage = Math.max(1, totalPages - maxVisible + 1);      
+
+    if (startPage > 1) { addPageButtonHorizontal(1); if (startPage > 2) addEllipsisHorizontal(); }      
+    for (let i = startPage; i <= endPage; i++) addPageButtonHorizontal(i);      
+    if (endPage < totalPages) { if (endPage < totalPages - 1) addEllipsisHorizontal(); addPageButtonHorizontal(totalPages); }      
+
+    const nextBtn = document.createElement('button');      
+    nextBtn.textContent = 'Next';      
+    nextBtn.disabled = currentPageHorizontal === totalPages;      
+    nextBtn.onclick = () => changePageHorizontal(currentPageHorizontal + 1);      
+    pagination.appendChild(nextBtn);      
+  }      
+}      
+
+function changePageHorizontal(page) {
+  currentPageHorizontal = page;
+  renderPostsHorizontal();
+  const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
+  history.pushState({}, '', newUrl);
+}
+
+function addPageButtonHorizontal(page) {      
+  const pagination = document.getElementById('pagination-horizontal');      
+  const pageBtn = document.createElement('button');      
+  pageBtn.textContent = page;      
+  if (page === currentPageHorizontal) {      
+    pageBtn.disabled = true;      
+    pageBtn.style.fontWeight = 'bold';      
+  }      
+  pageBtn.onclick = () => changePageHorizontal(page);      
+  pagination.appendChild(pageBtn);      
+}      
+
+function addEllipsisHorizontal() {      
+  const pagination = document.getElementById('pagination-horizontal');      
+  const span = document.createElement('span');      
+  span.textContent = '…';      
+  pagination.appendChild(span);      
+}      
+
+function renderNoPostsHorizontal() {      
+  const container = document.getElementById('recent-posts-container-horizontal');      
+  const pagination = document.getElementById('pagination-horizontal');      
+  container.innerHTML = '<p>No posts found.</p>';      
+  pagination.innerHTML = '';      
+}      
+</script>
+
