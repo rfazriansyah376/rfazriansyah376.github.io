@@ -1,4 +1,3 @@
-
 <style>
 .recent-posts-horizontal {
   margin: 3rem auto;
@@ -35,65 +34,34 @@
   font-weight: 300;
 }
 
-/* Main container dengan navigation buttons di samping */
-.stories-container-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 20px 0;
-}
-
-/* Navigation buttons di samping */
-.nav-btn-side {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 100;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
+/* Touch instruction */
+.touch-instruction {
+  text-align: center;
+  color: #888;
+  font-size: 0.9rem;
+  margin: 1rem 0 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  font-size: 1.5rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-  opacity: 0.9;
+  gap: 0.5rem;
+  opacity: 0.7;
 }
 
-.nav-btn-side:hover:not(:disabled) {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-}
-
-.nav-btn-side:disabled {
-  background: linear-gradient(135deg, #cccccc 0%, #aaaaaa 100%);
-  color: #888;
-  cursor: not-allowed;
-  transform: translateY(-50%);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  opacity: 0.5;
-}
-
-.nav-btn-side.left {
-  left: -28px;
-}
-
-.nav-btn-side.right {
-  right: -28px;
+.touch-instruction::before {
+  content: '👆';
+  font-size: 1rem;
 }
 
 /* Container utama untuk stories */
 .stories-main-container {
-  flex: 1;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+  padding: 1.5rem;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* Horizontal scroll container dengan 2 kolom */
@@ -106,11 +74,19 @@
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   scroll-padding: 0 1.5rem;
+  cursor: grab;
+  user-select: none;
 }
 
 /* Hide scrollbar */
 .horizontal-posts-scroll::-webkit-scrollbar {
   display: none;
+}
+
+/* Dragging state */
+.horizontal-posts-scroll.grabbing {
+  cursor: grabbing;
+  scroll-behavior: auto;
 }
 
 /* Tampilkan 2 kolom dalam viewport - Lebih besar untuk story feel */
@@ -121,6 +97,7 @@
   flex-shrink: 0;
   position: relative;
   overflow: visible;
+  touch-action: pan-y;
 }
 
 /* Story card dengan gradient border seperti Instagram */
@@ -302,53 +279,77 @@
   border-color: white;
 }
 
-/* Page indicator dots - Instagram story style */
-.page-indicators-stories {
+/* Progress indicators - Instagram story style */
+.progress-container {
   display: flex;
-  gap: 0.8rem;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
   margin-top: 2.5rem;
   padding: 0 1rem;
-}
-
-.page-dot-story {
-  width: 40px;
-  height: 6px;
-  border-radius: 3px;
-  background: rgba(0, 0, 0, 0.1);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  cursor: pointer;
   position: relative;
-  overflow: hidden;
 }
 
-.page-dot-story::before {
-  content: '';
+.progress-track {
+  width: 60px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.progress-bar {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  border-radius: 3px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
 
-.page-dot-story.active::before {
-  transform: scaleX(1);
+.progress-track.active .progress-bar {
+  width: 100%;
 }
 
-.page-dot-story:hover {
-  background: rgba(0, 0, 0, 0.2);
+.progress-track:hover {
+  transform: scaleY(1.5);
+}
+
+/* Swipe instruction */
+.swipe-hint {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #888;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  animation: swipeHint 2s ease-in-out infinite;
+}
+
+.swipe-hint::before {
+  content: '← →';
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@keyframes swipeHint {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
 }
 
 /* Floating animation untuk story cards */
 @keyframes storyFloat {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-10px); }
   100% { transform: translateY(0px); }
 }
 
@@ -360,40 +361,33 @@
   animation: storyFloat 6s ease-in-out infinite 1.5s;
 }
 
-/* Progress bar animation (Instagram story progress) */
-@keyframes progress {
-  0% { width: 0%; }
-  100% { width: 100%; }
+/* Momentum scrolling */
+@keyframes momentumScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
 /* Responsive adjustments */
-@media (max-width: 1200px) {
-  .stories-container-wrapper {
-    padding: 20px 40px;
+@media (max-width: 1024px) {
+  .stories-main-container {
+    padding: 1rem;
   }
   
-  .nav-btn-side {
-    position: relative;
-    top: auto;
-    transform: none;
+  .horizontal-posts-scroll {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
   }
   
-  .nav-btn-side.left {
-    left: 0;
-  }
-  
-  .nav-btn-side.right {
-    right: 0;
+  .horizontal-posts-scroll .story-card {
+    width: calc(50% - 0.75rem);
+    min-width: calc(50% - 0.75rem);
+    max-width: calc(50% - 0.75rem);
   }
 }
 
 @media (max-width: 768px) {
   .recent-posts-title {
     font-size: 2rem;
-  }
-  
-  .stories-container-wrapper {
-    padding: 20px;
   }
   
   .horizontal-posts-scroll .story-card {
@@ -407,21 +401,14 @@
     padding: 2rem 1.5rem;
   }
   
-  .nav-btn-side {
-    width: 48px;
-    height: 48px;
-    font-size: 1.3rem;
-  }
-  
   .story-profile {
     width: 50px;
     height: 50px;
     top: -25px;
   }
   
-  .page-dot-story {
-    width: 30px;
-    height: 5px;
+  .progress-track {
+    width: 40px;
   }
 }
 
@@ -430,24 +417,38 @@
     font-size: 1.8rem;
   }
   
-  .stories-container-wrapper {
-    padding: 10px;
-    gap: 10px;
+  .stories-main-container {
+    padding: 0.5rem;
+    border-radius: 15px;
+  }
+  
+  .horizontal-posts-scroll {
+    padding: 1rem 0.5rem;
+    gap: 1rem;
   }
   
   .story-card {
     min-height: 320px;
     padding: 1.8rem 1.2rem;
+    border-radius: 15px;
   }
   
   .story-card h3 {
     font-size: 1.2rem;
   }
   
-  .nav-btn-side {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
+  .touch-instruction {
+    font-size: 0.8rem;
+    margin: 0.5rem 0 1.5rem;
+  }
+  
+  .progress-container {
+    margin-top: 2rem;
+  }
+  
+  .progress-track {
+    width: 30px;
+    height: 3px;
   }
   
   .story-card {
@@ -467,46 +468,33 @@
   animation: shimmer 2s infinite linear;
 }
 
-/* SVG Icons */
-.svg-icon {
-  width: 24px;
-  height: 24px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+/* Scroll momentum */
+.momentum-scroll {
+  animation: momentumScroll 0.5s ease-out;
 }
 </style>
 
 <section class="recent-posts-horizontal">
   <div class="recent-posts-header">
     <h2 class="recent-posts-title">Instagram Stories Style</h2>
-    <p class="recent-posts-subtitle">Scroll through our latest stories with Instagram-like navigation</p>
+    <p class="recent-posts-subtitle">Swipe left or right to browse through stories</p>
   </div>
   
-  <div class="stories-container-wrapper">
-    <!-- Left Navigation Button -->
-    <button id="nav-prev-stories" class="nav-btn-side left" disabled>
-      <svg class="svg-icon" viewBox="0 0 24 24">
-        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
-      </svg>
-    </button>
-    
-    <!-- Main Stories Container -->
-    <div class="stories-main-container">
-      <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll">
-        <!-- Posts will be loaded here -->
-      </div>
+  <div class="touch-instruction">
+    Swipe to navigate • Tap story to read
+  </div>
+  
+  <div class="stories-main-container">
+    <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll">
+      <!-- Posts will be loaded here -->
     </div>
     
-    <!-- Right Navigation Button -->
-    <button id="nav-next-stories" class="nav-btn-side right">
-      <svg class="svg-icon" viewBox="0 0 24 24">
-        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/>
-      </svg>
-    </button>
+    <div class="swipe-hint">Swipe</div>
   </div>
   
-  <!-- Page Indicators -->
-  <div id="page-indicators-stories" class="page-indicators-stories">
-    <!-- Dots will be generated here -->
+  <!-- Progress Indicators -->
+  <div id="progress-container" class="progress-container">
+    <!-- Progress bars will be generated here -->
   </div>
 </section>
 
@@ -523,13 +511,12 @@ function getCategoryCandidatesStories(hostname) {
   return { sub: rawSub ? normalize(rawSub) : null, domain: domain ? normalize(domain) : null };      
 }      
 
-const urlParamsStories = new URLSearchParams(window.location.search);
-const initialPageStories = parseInt(urlParamsStories.get('page')) || 1;
-const { sub: subCategoryStories, domain: domainCategoryStories } = getCategoryCandidatesStories(window.location.hostname);      
-const POSTS_PER_PAGE_STORIES = 6;      
-let currentPageStories = initialPageStories;      
 let filteredPostsStories = [];      
-let autoScrollInterval = null;
+let currentStoryIndex = 0;
+let storiesPerView = 2; // Jumlah story yang terlihat sekaligus
+let isDragging = false;
+let startX = 0;
+let scrollLeft = 0;
 
 // Get initials from title
 function getInitials(title) {
@@ -555,12 +542,17 @@ function formatDate(dateString) {
   });
 }
 
+// Calculate total pages
+function getTotalPages() {
+  return Math.ceil(filteredPostsStories.length / storiesPerView);
+}
+
 // Show loading shimmer
 function showLoadingStories() {
   const container = document.getElementById('recent-posts-container-horizontal');
   container.innerHTML = '';
   
-  for (let i = 0; i < POSTS_PER_PAGE_STORIES; i++) {
+  for (let i = 0; i < storiesPerView; i++) {
     const loadingCard = document.createElement('div');
     loadingCard.className = 'story-card loading-shimmer';
     loadingCard.style.minHeight = '380px';
@@ -568,68 +560,143 @@ function showLoadingStories() {
   }
 }
 
-// Setup navigation buttons
-function setupNavigation() {
-  const prevBtn = document.getElementById('nav-prev-stories');
-  const nextBtn = document.getElementById('nav-next-stories');
+// Setup touch/swipe navigation
+function setupTouchNavigation() {
   const container = document.getElementById('recent-posts-container-horizontal');
-  const totalPages = Math.ceil(filteredPostsStories.length / POSTS_PER_PAGE_STORIES);
   
-  // Update button states
-  prevBtn.disabled = currentPageStories === 1;
-  nextBtn.disabled = currentPageStories === totalPages;
-  
-  // Add click handlers
-  prevBtn.onclick = () => {
-    if (currentPageStories > 1) {
-      changePageStories(currentPageStories - 1);
-    }
-  };
-  
-  nextBtn.onclick = () => {
-    if (currentPageStories < totalPages) {
-      changePageStories(currentPageStories + 1);
-    }
-  };
-  
-  // Add keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
-      prevBtn.click();
-    } else if (e.key === 'ArrowRight' && !nextBtn.disabled) {
-      nextBtn.click();
-    }
+  // Mouse events for desktop
+  container.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    container.classList.add('grabbing');
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
   });
   
-  // Add scroll event for auto-hide/show buttons
+  container.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed
+    container.scrollLeft = scrollLeft - walk;
+  });
+  
+  container.addEventListener('mouseup', () => {
+    isDragging = false;
+    container.classList.remove('grabbing');
+  });
+  
+  container.addEventListener('mouseleave', () => {
+    isDragging = false;
+    container.classList.remove('grabbing');
+  });
+  
+  // Touch events for mobile
+  container.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startX = e.touches[0].pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+  
+  container.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const x = e.touches[0].pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    container.scrollLeft = scrollLeft - walk;
+  });
+  
+  container.addEventListener('touchend', () => {
+    isDragging = false;
+    updateCurrentStory();
+  });
+  
+  // Scroll event untuk update progress
   container.addEventListener('scroll', () => {
-    const scrollLeft = container.scrollLeft;
-    const scrollWidth = container.scrollWidth;
-    const clientWidth = container.clientWidth;
-    
-    prevBtn.disabled = scrollLeft === 0;
-    nextBtn.disabled = scrollLeft + clientWidth >= scrollWidth - 10;
+    updateCurrentStory();
   });
 }
 
-// Setup scroll indicators
-function setupScrollIndicators() {
+// Update current story based on scroll position
+function updateCurrentStory() {
   const container = document.getElementById('recent-posts-container-horizontal');
-  const indicatorsContainer = document.getElementById('page-indicators-stories');
-  const totalPages = Math.ceil(filteredPostsStories.length / POSTS_PER_PAGE_STORIES);
+  const scrollPosition = container.scrollLeft;
+  const storyWidth = container.children[0]?.offsetWidth || 380;
+  const gap = 32; // Gap between stories
   
-  indicatorsContainer.innerHTML = '';
+  const newIndex = Math.round(scrollPosition / (storyWidth + gap));
   
-  for (let i = 1; i <= totalPages; i++) {
-    const indicator = document.createElement('div');
-    indicator.className = `page-dot-story ${i === currentPageStories ? 'active' : ''}`;
-    indicator.onclick = () => changePageStories(i);
-    indicatorsContainer.appendChild(indicator);
+  if (newIndex !== currentStoryIndex && newIndex >= 0 && newIndex < getTotalPages()) {
+    currentStoryIndex = newIndex;
+    updateProgressIndicators();
   }
+}
+
+// Setup progress indicators
+function setupProgressIndicators() {
+  const container = document.getElementById('progress-container');
+  const totalPages = getTotalPages();
   
-  // Auto scroll to current page position
-  const scrollPosition = (currentPageStories - 1) * (container.scrollWidth / totalPages);
-  container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+  container.innerHTML = '';
+  
+  for (let i = 0; i < totalPages; i++) {
+    const track = document.createElement('div');
+    track.className = `progress-track ${i === currentStoryIndex ? 'active' : ''}`;
+    track.onclick = () => goToStory(i);
+    
+    const bar = document.createElement('div');
+    bar.className = 'progress-bar';
+    
+    // Animate progress bar if active
+    if (i === currentStoryIndex) {
+      setTimeout(() => {
+        bar.style.width = '100%';
+      }, 100);
+    }
+    
+    track.appendChild(bar);
+    container.appendChild(track);
+  }
+}
+
+// Update progress indicators
+function updateProgressIndicators() {
+  const tracks = document.querySelectorAll('.progress-track');
+  tracks.forEach((track, index) => {
+    track.classList.toggle('active', index === currentStoryIndex);
+    const bar = track.querySelector('.progress-bar');
+    if (index === currentStoryIndex) {
+      bar.style.width = '100%';
+    } else {
+      bar.style.width = '0%';
+    }
+  });
+}
+
+// Navigate to specific story
+function goToStory(index) {
+  const container = document.getElementById('recent-posts-container-horizontal');
+  const storyWidth = container.children[0]?.offsetWidth || 380;
+  const gap = 32;
+  
+  currentStoryIndex = index;
+  const scrollPosition = index * (storyWidth + gap);
+  
+  container.scrollTo({
+    left: scrollPosition,
+    behavior: 'smooth'
+  });
+  
+  updateProgressIndicators();
+}
+
+// Auto-advance stories
+function startAutoAdvance() {
+  setInterval(() => {
+    const totalPages = getTotalPages();
+    if (totalPages > 1) {
+      const nextIndex = (currentStoryIndex + 1) % totalPages;
+      goToStory(nextIndex);
+    }
+  }, 8000); // Change story every 8 seconds
 }
 
 // Load posts
@@ -644,6 +711,11 @@ fetch('/posts.json')
     const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
     if (!Array.isArray(posts) || posts.length === 0) return renderNoPostsStories();      
 
+    filteredPostsStories = posts;
+
+    // Apply category filtering if needed
+    const { sub: subCategoryStories, domain: domainCategoryStories } = getCategoryCandidatesStories(window.location.hostname);
+    
     if (subCategoryStories) {      
       filteredPostsStories = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategoryStories));      
     }      
@@ -666,11 +738,8 @@ function renderPostsStories() {
   const container = document.getElementById('recent-posts-container-horizontal');      
   container.innerHTML = '';      
 
-  const start = (currentPageStories - 1) * POSTS_PER_PAGE_STORIES;      
-  const end = start + POSTS_PER_PAGE_STORIES;      
-  const pagePosts = filteredPostsStories.slice(start, end);      
-
-  pagePosts.forEach((post, index) => {      
+  // Tampilkan semua posts (tidak perlu pagination)
+  filteredPostsStories.forEach((post, index) => {      
     const storyCard = document.createElement('div');      
     storyCard.className = 'story-card';      
     storyCard.style.animationDelay = `${index * 0.2}s`;
@@ -704,7 +773,7 @@ function renderPostsStories() {
 
     // Excerpt
     const desc = document.createElement('p');      
-    desc.textContent = post.excerpt || 'Click to read this story...';      
+    desc.textContent = post.excerpt || 'Swipe to read this story...';      
     contentDiv.appendChild(desc);
 
     // Categories
@@ -734,24 +803,14 @@ function renderPostsStories() {
     container.appendChild(storyCard);      
   });      
 
-  setupNavigation();
-  setupScrollIndicators();
+  setupTouchNavigation();
+  setupProgressIndicators();
+  startAutoAdvance();
 }      
-
-function changePageStories(page) {
-  currentPageStories = page;
-  renderPostsStories();
-  
-  // Update URL tanpa reload
-  const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
-  history.pushState({}, '', newUrl);
-}
 
 function renderNoPostsStories() {      
   const container = document.getElementById('recent-posts-container-horizontal');      
-  const navPrev = document.getElementById('nav-prev-stories');      
-  const navNext = document.getElementById('nav-next-stories');      
-  const indicators = document.getElementById('page-indicators-stories');      
+  const progressContainer = document.getElementById('progress-container');      
   
   const noStoriesDiv = document.createElement('div');
   noStoriesDiv.className = 'story-card';
@@ -762,6 +821,9 @@ function renderNoPostsStories() {
   noStoriesDiv.style.flexDirection = 'column';
   noStoriesDiv.style.justifyContent = 'center';
   noStoriesDiv.style.alignItems = 'center';
+  noStoriesDiv.style.width = '100%';
+  noStoriesDiv.style.minWidth = '100%';
+  noStoriesDiv.style.maxWidth = '100%';
   
   const profileDiv = document.createElement('div');
   profileDiv.className = 'story-profile';
@@ -778,8 +840,6 @@ function renderNoPostsStories() {
   noStoriesDiv.appendChild(message);
   container.appendChild(noStoriesDiv);      
   
-  navPrev.style.display = 'none';
-  navNext.style.display = 'none';
-  indicators.style.display = 'none';
+  progressContainer.style.display = 'none';
 }      
 </script>
