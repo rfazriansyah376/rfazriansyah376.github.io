@@ -3,6 +3,7 @@
   margin: 3rem auto;
   padding: 0 1rem;
   max-width: 1200px;
+  position: relative;
 }
 
 /* Horizontal scroll container dengan 2 kolom */
@@ -14,6 +15,7 @@
   scrollbar-width: thin;
   scrollbar-color: #ccc transparent;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 /* Tampilkan 2 kolom dalam viewport */
@@ -82,51 +84,82 @@
   overflow: hidden;
 }
 
-/* Pagination dengan nama unik */
-.pagination-horizontal {
+/* Instagram Style Pagination dengan icon */
+.pagination-horizontal-instagram {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 0.4rem;
+  gap: 1rem;
   margin-top: 2rem;
   padding: 0.5rem;
   width: 100%;
   box-sizing: border-box;
 }
 
-.pagination-horizontal button,
-.pagination-horizontal span {
-  flex-shrink: 0;
-}
-
-.pagination-horizontal button {
+.pagination-horizontal-instagram button {
   background: var(--dynamic-color, #0078ff);
   color: #fff;
   border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
-  min-width: 36px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.pagination-horizontal button:hover:not(:disabled) {
+.pagination-horizontal-instagram button:hover:not(:disabled) {
   background: #005ec7;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.pagination-horizontal button:disabled {
-  background: #ccc;
-  color: #555;
+.pagination-horizontal-instagram button:disabled {
+  background: #e0e0e0;
+  color: #999;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-.pagination-horizontal span {
-  font-size: 0.9rem;
-  color: #333;
-  user-select: none;
+/* Navigation buttons - Instagram style */
+.nav-btn-prev::before {
+  content: "〈";
+}
+
+.nav-btn-next::before {
+  content: "〉";
+}
+
+/* Page indicator dots - Instagram story style */
+.page-indicators {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ddd;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.page-dot.active {
+  background-color: var(--dynamic-color, #0078ff);
+  width: 24px;
+  border-radius: 4px;
+}
+
+.page-dot:hover {
+  background-color: #bbb;
 }
 
 /* Responsive adjustments */
@@ -137,19 +170,23 @@
     min-width: calc(50% - 0.75rem);
     max-width: calc(50% - 0.75rem);
   }
+  
+  .pagination-horizontal-instagram button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
 }
 
 @media (max-width: 600px) {
-  .pagination-horizontal {
-    gap: 0.3rem;
+  .pagination-horizontal-instagram {
+    gap: 0.8rem;
   }
-  .pagination-horizontal button {
-    font-size: 0.8rem;
-    padding: 0.35rem 0.7rem;
-    border-radius: 5px;
-  }
-  .pagination-horizontal span {
-    font-size: 0.8rem;
+  
+  .pagination-horizontal-instagram button {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
   }
   
   /* Pada mobile kecil, 1 kolom saja */
@@ -158,12 +195,21 @@
     min-width: calc(100% - 0.75rem);
     max-width: calc(100% - 0.75rem);
   }
+  
+  .page-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .page-dot.active {
+    width: 20px;
+  }
 }
 </style>
 
 <section class="recent-posts-horizontal">      
   <div id="recent-posts-container-horizontal" class="horizontal-posts-scroll"></div>      
-  <div id="pagination-horizontal" class="pagination-horizontal"></div>      
+  <div id="pagination-horizontal-instagram" class="pagination-horizontal-instagram"></div>      
 </section>      
 
 <script>
@@ -216,7 +262,7 @@ fetch('/posts.json')
 
 function renderPostsHorizontal() {      
   const container = document.getElementById('recent-posts-container-horizontal');      
-  const pagination = document.getElementById('pagination-horizontal');      
+  const pagination = document.getElementById('pagination-horizontal-instagram');      
   container.innerHTML = '';      
   pagination.innerHTML = '';      
 
@@ -244,62 +290,60 @@ function renderPostsHorizontal() {
 
   const totalPages = Math.ceil(filteredPostsHorizontal.length / POSTS_PER_PAGE_HORIZONTAL);      
   if (totalPages > 1) {      
+    // Tombol Previous
     const prevBtn = document.createElement('button');      
-    prevBtn.textContent = 'Prev';      
+    prevBtn.className = 'nav-btn-prev';      
+    prevBtn.title = 'Previous page';      
     prevBtn.disabled = currentPageHorizontal === 1;      
     prevBtn.onclick = () => changePageHorizontal(currentPageHorizontal - 1);      
     pagination.appendChild(prevBtn);      
 
-    const maxVisible = 5;      
-    let startPage = Math.max(1, currentPageHorizontal - 2);      
-    let endPage = Math.min(totalPages, currentPageHorizontal + 2);      
+    // Dots indicator (Instagram style)
+    const dotsContainer = document.createElement('div');      
+    dotsContainer.className = 'page-indicators';      
+    
+    for (let i = 1; i <= totalPages; i++) {
+      const dot = document.createElement('div');      
+      dot.className = `page-dot ${i === currentPageHorizontal ? 'active' : ''}`;      
+      dot.title = `Page ${i}`;      
+      dot.onclick = () => changePageHorizontal(i);      
+      dotsContainer.appendChild(dot);      
+    }
+    
+    pagination.appendChild(dotsContainer);      
 
-    if (currentPageHorizontal <= 3) endPage = Math.min(totalPages, maxVisible);      
-    else if (currentPageHorizontal >= totalPages - 2) startPage = Math.max(1, totalPages - maxVisible + 1);      
-
-    if (startPage > 1) { addPageButtonHorizontal(1); if (startPage > 2) addEllipsisHorizontal(); }      
-    for (let i = startPage; i <= endPage; i++) addPageButtonHorizontal(i);      
-    if (endPage < totalPages) { if (endPage < totalPages - 1) addEllipsisHorizontal(); addPageButtonHorizontal(totalPages); }      
-
+    // Tombol Next
     const nextBtn = document.createElement('button');      
-    nextBtn.textContent = 'Next';      
+    nextBtn.className = 'nav-btn-next';      
+    nextBtn.title = 'Next page';      
     nextBtn.disabled = currentPageHorizontal === totalPages;      
     nextBtn.onclick = () => changePageHorizontal(currentPageHorizontal + 1);      
     pagination.appendChild(nextBtn);      
-  }      
+  } else {
+    // Jika hanya 1 halaman, sembunyikan pagination
+    pagination.style.display = 'none';
+  }
 }      
 
 function changePageHorizontal(page) {
   currentPageHorizontal = page;
   renderPostsHorizontal();
+  
+  // Update URL tanpa reload
   const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
   history.pushState({}, '', newUrl);
+  
+  // Scroll ke atas kontainer
+  const container = document.getElementById('recent-posts-container-horizontal');
+  if (container) {
+    container.scrollTo({ left: 0, behavior: 'smooth' });
+  }
 }
-
-function addPageButtonHorizontal(page) {      
-  const pagination = document.getElementById('pagination-horizontal');      
-  const pageBtn = document.createElement('button');      
-  pageBtn.textContent = page;      
-  if (page === currentPageHorizontal) {      
-    pageBtn.disabled = true;      
-    pageBtn.style.fontWeight = 'bold';      
-  }      
-  pageBtn.onclick = () => changePageHorizontal(page);      
-  pagination.appendChild(pageBtn);      
-}      
-
-function addEllipsisHorizontal() {      
-  const pagination = document.getElementById('pagination-horizontal');      
-  const span = document.createElement('span');      
-  span.textContent = '…';      
-  pagination.appendChild(span);      
-}      
 
 function renderNoPostsHorizontal() {      
   const container = document.getElementById('recent-posts-container-horizontal');      
-  const pagination = document.getElementById('pagination-horizontal');      
-  container.innerHTML = '<p>No posts found.</p>';      
-  pagination.innerHTML = '';      
+  const pagination = document.getElementById('pagination-horizontal-instagram');      
+  container.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">No posts found.</p>';      
+  pagination.style.display = 'none';      
 }      
 </script>
-
