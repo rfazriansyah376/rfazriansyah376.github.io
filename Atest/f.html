@@ -1,0 +1,83 @@
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-01.png">
+  <source src="/video/leaked-01.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-02.png">
+  <source src="/video/leaked-02.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-03.png">
+  <source src="/video/leaked-03.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-04.png">
+  <source src="/video/leaked-04.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-05.png">
+  <source src="/video/leaked-05.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-06.png">
+  <source src="/video/leaked-06.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-07.png">
+  <source src="/video/leaked-07.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-08.png">
+  <source src="/video/leaked-08.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-09.png">
+  <source src="/video/leaked-09.mp4" type="video/mp4">
+</video>
+
+<video class="seo-video" controls preload="metadata" width="1280" height="720" poster="/photo/fallback-10.png">
+  <source src="/video/leaked-10.mp4" type="video/mp4">
+</video>
+
+<script>
+(function () {
+  const origin = window.location.origin;
+  const videos = document.querySelectorAll("video.seo-video");
+
+  if (!videos.length) return;
+
+  videos.forEach((video, index) => {
+    const source = video.querySelector("source");
+    if (!source || !source.src) return;
+
+    const videoUrl = source.src.startsWith("http")
+      ? source.src
+      : origin + source.getAttribute("src");
+
+    const posterUrl = video.getAttribute("poster")
+      ? (video.getAttribute("poster").startsWith("http")
+          ? video.getAttribute("poster")
+          : origin + video.getAttribute("poster"))
+      : "";
+
+    const title = document.title + " - Video " + (index + 1);
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": title,
+      "description": title,
+      "thumbnailUrl": posterUrl,
+      "uploadDate": new Date().toISOString(),
+      "contentUrl": videoUrl,
+      "embedUrl": videoUrl
+    };
+
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+  });
+})();
+</script>
+
