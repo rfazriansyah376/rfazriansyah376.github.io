@@ -3,6 +3,7 @@ name: "Mediumish"
 title: "Mediumish"
 description: "Jekyll template, Medium styled, free for bloggers."
 baseurl: /
+permalink: /:title/
 
 # Plugins STANDARD saja (tanpa custom)
 plugins:
@@ -32,6 +33,3 @@ kramdown:
 
 # Exclude
 exclude: [changelog.md, LICENSE.txt, README.md, Gemfile, Gemfile.lock]
-
-# JANGAN tambahkan konfigurasi tag lainnya!
-# Sistem akan bekerja OTOMATIS dengan JavaScript
