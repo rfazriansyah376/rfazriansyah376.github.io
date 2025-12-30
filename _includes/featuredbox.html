@@ -1,59 +1,155 @@
-<!-- begin post -->
-{% assign author = site.authors[post.author] %}
-<div class="col-md-6 mb-30px">
-    <div class="listfeaturedtag h-100">
-        <div class="row h-100">
-            <div class="col-12 col-md-12 col-lg-5 pr-lg-0">
-                <div class="h-100">
-                    <div class="wrapthumbnail">
-                        <a href="{{ site.baseurl }}{{ post.url }}">
-                            {% if site.lazyimages == "enabled" %}
-                            <img class="featured-box-img-cover lazyimg"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAQAAAA3fa6RAAAADklEQVR42mNkAANGCAUAACMAA2w/AMgAAAAASUVORK5CYII=" data-src="{% if post.image contains "://" %}{{ post.image }}{% else %}{{ site.baseurl }}/{{ post.image }}{% endif %}">
-                            {% else %}
-                            <img class="featured-box-img-cover" src="{% if post.image contains "://" %}{{ post.image }}{% else %}{{ site.baseurl }}/{{ post.image }}{% endif %}">
-                            {% endif %}
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-7">
-                <div class="h-100 card-group">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">
-                                <a class="text-dark" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-                                {% if post.rating %}
-                                <div class="mb-2 mt-2 font-weight-normal">
-                                {% include star_rating_postbox.html %}
-                                </div>
-                                {% endif %}
-                            </h2>
+<style>
+.recent-posts {
+  margin: 2rem auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+}
 
-                            <h4 class="card-text">{{ post.excerpt | strip_html | truncatewords:25 }}</h4>
-                        </div>
-                        <div class="card-footer b-0 bg-white mt-auto">
-                            <div class="wrapfooter">
-                                {% if post.author %}
-                                <span class="meta-footer-thumb">
-                                {% if author.avatar %}
-                                <img class="author-thumb" src="{{site.baseurl}}/{{ author.avatar }}" alt="{{ author.display_name }}">
-                                {% else %}
-                                <img class="author-thumb" src="https://www.gravatar.com/avatar/{{ author.gravatar }}?s=250&d=mm&r=x" alt="{{ author.display_name }}">
-                                {% endif %}
-                                </span>
-                                <span class="author-meta">
-                                <span class="post-name"><a target="_blank" href="{{ author.web }}">{{ author.display_name }}</a></span><br/>
-                                {% endif %}
-                                <span class="post-date">{{ post.date | date_to_string }}</span>
-                                </span>
-                                <span class="post-read-more"><a href="{{ site.baseurl }}/{{ post.url }}" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end post -->
+.recent-posts h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Horizontal scroll container */
+.horizontal-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.horizontal-scroll-container::-webkit-scrollbar {
+  height: 4px;
+}
+.horizontal-scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 2px;
+}
+
+/* Post card styles untuk tampilan horizontal */
+.post-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  max-width: 280px;
+  flex-shrink: 0;
+  border: 1px solid #eee;
+}
+.post-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.post-card h3 a {
+  text-decoration: none;
+  color: #222;
+}
+.post-card h3 a:hover {
+  color: #0078ff;
+}
+.post-card p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #555;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .horizontal-scroll-container {
+    gap: 0.8rem;
+  }
+  .post-card {
+    min-width: 250px;
+    max-width: 250px;
+    padding: 1rem;
+  }
+}
+</style>
+
+<section class="recent-posts">      
+  <div id="recent-posts-container" class="horizontal-scroll-container"></div>      
+</section>      
+
+<script>
+function getCategoryCandidates(hostname) {      
+  const parts = hostname.split('.');      
+  if (parts.length < 2) return { sub: null, domain: null };      
+  const maybeDomainIndex = parts.length - 3;      
+  const domain = (maybeDomainIndex >= 0) ? parts[maybeDomainIndex] : parts[0];      
+  const subLabels = (maybeDomainIndex > 0) ? parts.slice(0, maybeDomainIndex) : [];      
+  const rawSub = subLabels.length ? subLabels.join('.') : null;      
+  const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
+  return { sub: rawSub ? normalize(rawSub) : null, domain: domain ? normalize(domain) : null };      
+}      
+
+const { sub: subCategory, domain: domainCategory } = getCategoryCandidates(window.location.hostname);      
+let filteredPosts = [];      
+
+fetch('/posts.json')      
+  .then(res => {      
+    if (!res.ok) throw new Error('Failed to load posts.json');      
+    return res.json();      
+  })      
+  .then(posts => {      
+    const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
+    if (!Array.isArray(posts) || posts.length === 0) return renderNoPosts();      
+
+    if (subCategory) {      
+      filteredPosts = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategory));      
+    }      
+
+    if (filteredPosts.length === 0 && domainCategory) {      
+      filteredPosts = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === domainCategory));      
+    }      
+
+    if (filteredPosts.length === 0) filteredPosts = posts;      
+
+    filteredPosts.sort((a, b) => new Date(b.date) - new Date(a.date));      
+    renderPosts();      
+  })      
+  .catch(err => {      
+    console.error('Error loading posts:', err);      
+    renderNoPosts();      
+  });      
+
+function renderPosts() {      
+  const container = document.getElementById('recent-posts-container');      
+  container.innerHTML = '';      
+
+  filteredPosts.forEach(post => {      
+    const card = document.createElement('div');      
+    card.className = 'post-card';      
+
+    const h3 = document.createElement('h3');      
+    const linkTitle = document.createElement('a');      
+    linkTitle.href = post.url || '#';      
+    linkTitle.textContent = post.title || '(no title)';      
+    h3.appendChild(linkTitle);      
+    card.appendChild(h3);      
+
+    const desc = document.createElement('p');      
+    desc.textContent = post.excerpt || '(no excerpt available)';      
+    card.appendChild(desc);      
+
+    container.appendChild(card);      
+  });      
+}      
+
+function renderNoPosts() {      
+  const container = document.getElementById('recent-posts-container');      
+  container.innerHTML = '<p>No posts found.</p>';      
+}      
+</script>
