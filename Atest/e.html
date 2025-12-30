@@ -67,36 +67,6 @@
   margin: 0;
 }
 
-/* Pagination minimal */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-  padding: 0.5rem;
-}
-
-.pagination button {
-  background: #0078ff;
-  color: #fff;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
-.pagination button:hover:not(:disabled) {
-  background: #005ec7;
-}
-
-.pagination button:disabled {
-  background: #ccc;
-  color: #555;
-  cursor: not-allowed;
-}
-
 @media (max-width: 600px) {
   .horizontal-scroll-container {
     gap: 0.8rem;
@@ -111,7 +81,6 @@
 
 <section class="recent-posts">      
   <div id="recent-posts-container" class="horizontal-scroll-container"></div>      
-  <div id="pagination" class="pagination"></div>      
 </section>      
 
 <script>
@@ -126,11 +95,7 @@ function getCategoryCandidates(hostname) {
   return { sub: rawSub ? normalize(rawSub) : null, domain: domain ? normalize(domain) : null };      
 }      
 
-const urlParams = new URLSearchParams(window.location.search);
-const initialPage = parseInt(urlParams.get('page')) || 1;
 const { sub: subCategory, domain: domainCategory } = getCategoryCandidates(window.location.hostname);      
-const POSTS_PER_PAGE = 6;      
-let currentPage = initialPage;      
 let filteredPosts = [];      
 
 fetch('/posts.json')      
@@ -162,15 +127,9 @@ fetch('/posts.json')
 
 function renderPosts() {      
   const container = document.getElementById('recent-posts-container');      
-  const pagination = document.getElementById('pagination');      
   container.innerHTML = '';      
-  pagination.innerHTML = '';      
 
-  const start = (currentPage - 1) * POSTS_PER_PAGE;      
-  const end = start + POSTS_PER_PAGE;      
-  const pagePosts = filteredPosts.slice(start, end);      
-
-  pagePosts.forEach(post => {      
+  filteredPosts.forEach(post => {      
     const card = document.createElement('div');      
     card.className = 'post-card';      
 
@@ -187,65 +146,10 @@ function renderPosts() {
 
     container.appendChild(card);      
   });      
-
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);      
-  if (totalPages > 1) {      
-    const prevBtn = document.createElement('button');      
-    prevBtn.textContent = 'Prev';      
-    prevBtn.disabled = currentPage === 1;      
-    prevBtn.onclick = () => changePage(currentPage - 1);      
-    pagination.appendChild(prevBtn);      
-
-    const maxVisible = 5;      
-    let startPage = Math.max(1, currentPage - 2);      
-    let endPage = Math.min(totalPages, currentPage + 2);      
-
-    if (currentPage <= 3) endPage = Math.min(totalPages, maxVisible);      
-    else if (currentPage >= totalPages - 2) startPage = Math.max(1, totalPages - maxVisible + 1);      
-
-    if (startPage > 1) { addPageButton(1); if (startPage > 2) addEllipsis(); }      
-    for (let i = startPage; i <= endPage; i++) addPageButton(i);      
-    if (endPage < totalPages) { if (endPage < totalPages - 1) addEllipsis(); addPageButton(totalPages); }      
-
-    const nextBtn = document.createElement('button');      
-    nextBtn.textContent = 'Next';      
-    nextBtn.disabled = currentPage === totalPages;      
-    nextBtn.onclick = () => changePage(currentPage + 1);      
-    pagination.appendChild(nextBtn);      
-  }      
-}      
-
-function changePage(page) {
-  currentPage = page;
-  renderPosts();
-  const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
-  history.pushState({}, '', newUrl);
-}
-
-function addPageButton(page) {      
-  const pagination = document.getElementById('pagination');      
-  const pageBtn = document.createElement('button');      
-  pageBtn.textContent = page;      
-  if (page === currentPage) {      
-    pageBtn.disabled = true;      
-    pageBtn.style.fontWeight = 'bold';      
-  }      
-  pageBtn.onclick = () => changePage(page);      
-  pagination.appendChild(pageBtn);      
-}      
-
-function addEllipsis() {      
-  const pagination = document.getElementById('pagination');      
-  const span = document.createElement('span');      
-  span.textContent = '…';      
-  pagination.appendChild(span);      
 }      
 
 function renderNoPosts() {      
   const container = document.getElementById('recent-posts-container');      
-  const pagination = document.getElementById('pagination');      
   container.innerHTML = '<p>No posts found.</p>';      
-  pagination.innerHTML = '';      
 }      
 </script>
-
