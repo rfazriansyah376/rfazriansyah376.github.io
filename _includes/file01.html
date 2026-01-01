@@ -34,7 +34,7 @@
 <section class="related-posts">
   <h3>Related Posts</h3>
   <ul>
-    {% for item in related_sorted limit:5 %}
+    {% for item in related_sorted limit:50 %}
       {% assign p = item | split: '::' %}
       <li><a href="{{ p[1] }}">{{ p[2] }}</a></li>
     {% endfor %}
