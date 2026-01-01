@@ -1,10 +1,11 @@
+<!-- start related post -->
 <style>
 .related-posts {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid #e5e5e5;
 }
-.related-posts h3 {
+.related-posts b {
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
@@ -63,17 +64,17 @@
 
 {% if related_sorted.size > 0 %}
 <section class="related-posts">
-  <h3>Related Posts</h3>
+  <b>Related Posts</b>
   <ul>
-    {% for item in related_sorted limit:5 %}
+    {% for item in related_sorted limit:50 %}
       {% assign p = item | split: '::' %}
       {% assign post_obj = site.posts | where: "url", p[1] | first %}
       <li class="related-item">
         <a href="{{ p[1] }}">{{ p[2] }}</a>
         {% if post_obj.description %}
-          <p class="related-desc">{{ post_obj.description }}</p>
+          <p class="related-desc">{{ post_obj.description }}</p><hr />
         {% elsif post_obj.excerpt %}
-          <p class="related-desc">{{ post_obj.excerpt | strip_html | truncate: 140 }}</p>
+          <p class="related-desc">{{ post_obj.excerpt | strip_html | truncate: 140 }}</p><hr />
         {% endif %}
       </li>
     {% endfor %}
@@ -81,9 +82,9 @@
 </section>
 {% else %}
 <section class="related-posts">
-  <h3>Recent Posts</h3>
+  <b>Recent Posts</b>
   <ul>
-    {% for post in site.posts limit:5 %}
+    {% for post in site.posts limit:15 %}
       {% if post.url != page.url %}
         <li class="related-item">
           <a href="{{ post.url }}">{{ post.title }}</a>
@@ -94,63 +95,7 @@
 </section>
 {% endif %}
 
-
-<!--related post--
-
-{% assign current_cats = "" | split: "" %}
-{% if page.categories %}
-  {% for cat in page.categories %}
-    {% assign c = cat | strip | downcase | replace: ' ', '-' %}
-    {% unless current_cats contains c %}
-      {% assign current_cats = current_cats | push: c %}
-    {% endunless %}
-  {% endfor %}
-{% endif %}
-
-{% assign related_raw = "" | split: "" %}
-
-{% for post in site.posts %}
-  {% if post.url != page.url and post.categories %}
-    {% assign score = 0 %}
-    {% for cat in post.categories %}
-      {% assign pcat = cat | strip | downcase | replace: ' ', '-' %}
-      {% if current_cats contains pcat %}
-        {% assign score = score | plus: 1 %}
-      {% endif %}
-    {% endfor %}
-    {% if score > 0 %}
-      {% capture item %}{{ score | prepend: '00' | slice: -2, 2 }}::{{ post.url }}::{{ post.title }}{% endcapture %}
-      {% assign related_raw = related_raw | push: item %}
-    {% endif %}
-  {% endif %}
-{% endfor %}
-
-{% assign related_sorted = related_raw | sort | reverse %}
-
-{% if related_sorted.size > 0 %}
-<section class="related-posts">
-  <h3>Related Posts</h3>
-  <ul>
-    {% for item in related_sorted limit:50 %}
-      {% assign p = item | split: '::' %}
-      <li><a href="{{ p[1] }}">{{ p[2] }}</a></li>
-    {% endfor %}
-  </ul>
-</section>
-{% else %}
-<section class="related-posts">
-  <h3>Recent Posts</h3>
-  <ul>
-    {% for post in site.posts limit:5 %}
-      {% if post.url != page.url %}
-        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-      {% endif %}
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
---related post-->
-
+<!-- end related post -->
 
 
 <div class="spo">
