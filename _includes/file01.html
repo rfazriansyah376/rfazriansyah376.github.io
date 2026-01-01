@@ -1,12 +1,62 @@
+<!--related post-->
+
+{% assign current_cats = "" | split: "" %}
+{% if page.categories %}
+  {% for cat in page.categories %}
+    {% assign c = cat | strip | downcase | replace: ' ', '-' %}
+    {% unless current_cats contains c %}
+      {% assign current_cats = current_cats | push: c %}
+    {% endunless %}
+  {% endfor %}
+{% endif %}
+
+{% assign related_raw = "" | split: "" %}
+
+{% for post in site.posts %}
+  {% if post.url != page.url and post.categories %}
+    {% assign score = 0 %}
+    {% for cat in post.categories %}
+      {% assign pcat = cat | strip | downcase | replace: ' ', '-' %}
+      {% if current_cats contains pcat %}
+        {% assign score = score | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    {% if score > 0 %}
+      {% capture item %}{{ score | prepend: '00' | slice: -2, 2 }}::{{ post.url }}::{{ post.title }}{% endcapture %}
+      {% assign related_raw = related_raw | push: item %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% assign related_sorted = related_raw | sort | reverse %}
+
+{% if related_sorted.size > 0 %}
+<section class="related-posts">
+  <h3>Related Posts</h3>
+  <ul>
+    {% for item in related_sorted limit:5 %}
+      {% assign p = item | split: '::' %}
+      <li><a href="{{ p[1] }}">{{ p[2] }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% else %}
+<section class="related-posts">
+  <h3>Recent Posts</h3>
+  <ul>
+    {% for post in site.posts limit:5 %}
+      {% if post.url != page.url %}
+        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+<!--related post-->
+
+
 
 <div class="spo">
-
-
-
-
-
-
-
 <!-- 10 Video HTML nyata -->
 <video class="seo-video" controls preload="metadata" poster="/photo/fallback-01.png">
   <source src="/video/leaked-01.mp4" type="video/mp4">
