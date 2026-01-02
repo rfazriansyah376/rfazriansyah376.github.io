@@ -269,7 +269,7 @@ class SocialMediaChatbot {
         const { platform, userId, text, context } = message;
         
         // Get or create conversation state
-        const conversationId = `${platform}:${userId}`;
+        const conversationId = `{platform}:{userId}`;
         let state = this.conversationStates.get(conversationId) || this.initializeState(platform, userId);
         
         // Process message with NLU
@@ -406,7 +406,7 @@ const supportDialogs = [
             if (product) {
                 const productInfo = await getProductInfo(product.value);
                 return {
-                    text: `Here's information about ${product.value}: ${productInfo.description}`,
+                    text: `Here's information about {product.value}: {productInfo.description}`,
                     quickReplies: [
                         { title: 'Pricing', payload: 'PRICING' },
                         { title: 'Availability', payload: 'AVAILABILITY' },
@@ -430,7 +430,7 @@ const supportDialogs = [
             const pricing = await getPricing(product);
             
             return {
-                text: `The price for ${product} is ${pricing}. Would you like to be contacted by our sales team?`,
+                text: `The price for {product} is {pricing}. Would you like to be contacted by our sales team?`,
                 quickReplies: [
                     { title: 'Yes, contact me', payload: 'CONTACT_ME' },
                     { title: 'No thanks', payload: 'NO_THANKS' }
@@ -446,11 +446,11 @@ class FacebookMessengerIntegration {
     constructor(pageAccessToken) {
         this.pageAccessToken = pageAccessToken;
         this.apiVersion = 'v17.0';
-        this.baseUrl = `https://graph.facebook.com/${this.apiVersion}`;
+        this.baseUrl = `https://graph.facebook.com/{this.apiVersion}`;
     }
     
     async sendMessage(recipientId, message) {
-        const url = `${this.baseUrl}/me/messages`;
+        const url = `{this.baseUrl}/me/messages`;
         
         const payload = {
             recipient: { id: recipientId },
@@ -461,7 +461,7 @@ class FacebookMessengerIntegration {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.pageAccessToken}`
+                'Authorization': `Bearer {this.pageAccessToken}`
             },
             body: JSON.stringify(payload)
         });
@@ -487,7 +487,7 @@ class FacebookMessengerIntegration {
     async setupWebhook(verifyToken, webhookUrl) {
         // Implement webhook setup for receiving messages
         const appId = process.env.FACEBOOK_APP_ID;
-        const url = `${this.baseUrl}/${appId}/subscriptions`;
+        const url = `{this.baseUrl}/{appId}/subscriptions`;
         
         const payload = {
             object: 'page',
@@ -624,18 +624,18 @@ class ReportAutomationSystem {
                 cron.schedule('0 10 1 * *', () => this.generateReport(reportType, recipients, deliveryMethod));
                 break;
             default:
-                console.warn(`Unsupported frequency: ${frequency}`);
+                console.warn(`Unsupported frequency: {frequency}`);
         }
     }
     
     async generateReport(reportType, recipients, deliveryMethod) {
         try {
-            console.log(`Generating ${reportType} report...`);
+            console.log(`Generating {reportType} report...`);
             
             // Get report template
             const template = this.templates[reportType];
             if (!template) {
-                throw new Error(`Template not found for report type: ${reportType}`);
+                throw new Error(`Template not found for report type: {reportType}`);
             }
             
             // Collect data from all sources
@@ -656,10 +656,10 @@ class ReportAutomationSystem {
             // Cache report
             this.cacheReport(reportType, report);
             
-            console.log(`Successfully generated and delivered ${reportType} report`);
+            console.log(`Successfully generated and delivered {reportType} report`);
             
         } catch (error) {
-            console.error(`Failed to generate report: ${error.message}`);
+            console.error(`Failed to generate report: {error.message}`);
             await this.sendErrorNotification(error, recipients);
         }
     }
@@ -672,7 +672,7 @@ class ReportAutomationSystem {
             
             const dataSource = this.dataSources[source];
             if (!dataSource) {
-                throw new Error(`Data source not found: ${source}`);
+                throw new Error(`Data source not found: {source}`);
             }
             
             data[source] = await dataSource.fetchData({
@@ -693,7 +693,7 @@ class ReportAutomationSystem {
             
             const vizData = data[dataSource];
             if (!vizData) {
-                console.warn(`Data source not found for visualization: ${dataSource}`);
+                console.warn(`Data source not found for visualization: {dataSource}`);
                 continue;
             }
             
@@ -711,7 +711,7 @@ class ReportAutomationSystem {
                     visualizations[config.id] = await this.createDataTable(vizData, options);
                     break;
                 default:
-                    console.warn(`Unsupported visualization type: ${type}`);
+                    console.warn(`Unsupported visualization type: {type}`);
             }
         }
         
@@ -758,7 +758,7 @@ class ReportAutomationSystem {
                 await this.sendPDFReport(report, recipients);
                 break;
             default:
-                console.warn(`Unsupported delivery method: ${method}`);
+                console.warn(`Unsupported delivery method: {method}`);
         }
     }
     
@@ -767,11 +767,11 @@ class ReportAutomationSystem {
         
         const emailPayload = {
             to: recipients,
-            subject: `${report.type} Report - ${formatDate(report.generatedAt)}`,
+            subject: `{report.type} Report - {formatDate(report.generatedAt)}`,
             html: emailContent,
             attachments: [
                 {
-                    filename: `report_${report.id}.pdf`,
+                    filename: `report_{report.id}.pdf`,
                     content: await this.generatePDF(report)
                 }
             ]
@@ -787,7 +787,7 @@ class ReportAutomationSystem {
             await slackClient.chat.postMessage({
                 channel: channelId,
                 blocks: blocks,
-                text: `${report.type} Report for ${formatDate(report.generatedAt)}`
+                text: `{report.type} Report for {formatDate(report.generatedAt)}`
             });
         }
     }
@@ -858,7 +858,7 @@ class SocialPlatformDataSource {
                 });
                 data[platform] = platformData;
             } catch (error) {
-                console.error(`Failed to fetch data from ${platform}:`, error);
+                console.error(`Failed to fetch data from {platform}:`, error);
                 data[platform] = null;
             }
         }
@@ -895,7 +895,7 @@ class ContentTemplateSystem {
         // Get template
         const template = this.templates[templateId];
         if (!template) {
-            throw new Error(`Template not found: ${templateId}`);
+            throw new Error(`Template not found: {templateId}`);
         }
         
         // Validate context
@@ -917,7 +917,7 @@ class ContentTemplateSystem {
                 content = await this.renderVideo(template, resolvedVariables, options);
                 break;
             default:
-                throw new Error(`Unsupported template type: ${template.type}`);
+                throw new Error(`Unsupported template type: {template.type}`);
         }
         
         // Apply post-processing
@@ -940,7 +940,7 @@ class ContentTemplateSystem {
             case 'custom':
                 return await this.renderCustomGraphic(template, variables, options);
             default:
-                throw new Error(`Unsupported design tool: ${designTool}`);
+                throw new Error(`Unsupported design tool: {designTool}`);
         }
     }
     
@@ -974,7 +974,7 @@ class ContentTemplateSystem {
         
         // Replace variables
         for (const [key, value] of Object.entries(variables)) {
-            const placeholder = `{{${key}}}`;
+            const placeholder = `{{{key}}}`;
             copy = copy.replace(new RegExp(placeholder, 'g'), value);
         }
         
@@ -996,9 +996,9 @@ class ContentTemplateSystem {
     async optimizeCopy(copy, platform, objective) {
         // Use AI to optimize copy
         const optimizationPrompt = `
-        Optimize this social media copy for ${platform} with the objective of ${objective}:
+        Optimize this social media copy for {platform} with the objective of {objective}:
         
-        Original copy: ${copy}
+        Original copy: {copy}
         
         Please provide:
         1. An optimized version
@@ -1198,9 +1198,9 @@ class AIContentAssistant {
     
     async optimizeExisting(content, platform, objective) {
         const prompt = `
-        Optimize this content for ${platform} with the objective of ${objective}:
+        Optimize this content for {platform} with the objective of {objective}:
         
-        Content: ${content}
+        Content: {content}
         
         Provide the optimized version with explanations of key changes.
         `;
@@ -1210,9 +1210,9 @@ class AIContentAssistant {
     
     async generateVariations(content, count = 3) {
         const prompt = `
-        Generate ${count} variations of this social media content:
+        Generate {count} variations of this social media content:
         
-        Original: ${content}
+        Original: {content}
         
         Each variation should have a different angle or approach but maintain the core message.
         `;
@@ -1242,7 +1242,7 @@ class WorkflowOrchestrator {
     async triggerWorkflow(workflowId, input, context = {}) {
         const workflow = this.workflows[workflowId];
         if (!workflow) {
-            throw new Error(`Workflow not found: ${workflowId}`);
+            throw new Error(`Workflow not found: {workflowId}`);
         }
         
         const executionId = generateUUID();
@@ -1367,7 +1367,7 @@ class WorkflowOrchestrator {
                             
                         } catch (retryError) {
                             if (retryCount === maxRetries) {
-                                throw new Error(`Step failed after ${maxRetries} retries: ${retryError.message}`);
+                                throw new Error(`Step failed after {maxRetries} retries: {retryError.message}`);
                             }
                         }
                     }
@@ -1386,7 +1386,7 @@ class WorkflowOrchestrator {
     async executeStep(step, state, execution) {
         const taskRunner = this.taskRunners[step.runner];
         if (!taskRunner) {
-            throw new Error(`Task runner not found: ${step.runner}`);
+            throw new Error(`Task runner not found: {step.runner}`);
         }
         
         // Prepare step input
@@ -1411,7 +1411,7 @@ class WorkflowOrchestrator {
         if (typeof inputConfig === 'object' && inputConfig !== null) {
             const result = {};
             for (const [key, value] of Object.entries(inputConfig)) {
-                if (typeof value === 'string' && value.startsWith('$.')) {
+                if (typeof value === 'string' && value.startsWith('.')) {
                     // Extract value from state using path
                     const path = value.substring(2);
                     result[key] = this.getValueByPath(state, path);
@@ -1440,9 +1440,9 @@ const socialMediaWorkflows = {
                 runner: 'content_system',
                 task: 'create_content',
                 input: {
-                    type: '$.content_type',
-                    topic: '$.topic',
-                    platform: '$.platform'
+                    type: '.content_type',
+                    topic: '.topic',
+                    platform: '.platform'
                 },
                 onFailure: 'retry',
                 retryConfig: {
@@ -1456,13 +1456,13 @@ const socialMediaWorkflows = {
                 runner: 'ai_assistant',
                 task: 'quality_check',
                 input: {
-                    content: '$.content_creation.result.content',
-                    platform: '$.platform',
-                    brandGuidelines: '$.brand_guidelines'
+                    content: '.content_creation.result.content',
+                    platform: '.platform',
+                    brandGuidelines: '.brand_guidelines'
                 },
                 conditions: [
                     {
-                        condition: '$.content_creation.result.requires_approval === false',
+                        condition: '.content_creation.result.requires_approval === false',
                         action: 'skip_remaining'
                     }
                 ]
@@ -1473,11 +1473,11 @@ const socialMediaWorkflows = {
                 runner: 'approval_system',
                 task: 'request_approval',
                 input: {
-                    content: '$.content_creation.result.content',
-                    approvers: '$.approvers',
+                    content: '.content_creation.result.content',
+                    approvers: '.approvers',
                     metadata: {
-                        platform: '$.platform',
-                        campaign: '$.campaign'
+                        platform: '.platform',
+                        campaign: '.campaign'
                     }
                 },
                 onFailure: 'continue'
@@ -1488,17 +1488,17 @@ const socialMediaWorkflows = {
                 runner: 'scheduling_system',
                 task: 'schedule_post',
                 input: {
-                    content: '$.content_creation.result.content',
-                    platform: '$.platform',
+                    content: '.content_creation.result.content',
+                    platform: '.platform',
                     optimalTime: {
-                        $function: 'calculate_optimal_time',
-                        platform: '$.platform',
-                        contentType: '$.content_type'
+                        function: 'calculate_optimal_time',
+                        platform: '.platform',
+                        contentType: '.content_type'
                     }
                 },
                 conditions: [
                     {
-                        condition: '$.approval.result.status !== "approved"',
+                        condition: '.approval.result.status !== "approved"',
                         action: 'skip_remaining'
                     }
                 ]
@@ -1509,7 +1509,7 @@ const socialMediaWorkflows = {
                 runner: 'publishing_system',
                 task: 'publish_content',
                 input: {
-                    scheduledPostId: '$.schedule.result.post_id'
+                    scheduledPostId: '.schedule.result.post_id'
                 }
             },
             {
@@ -1518,9 +1518,9 @@ const socialMediaWorkflows = {
                 runner: 'analytics_system',
                 task: 'setup_tracking',
                 input: {
-                    postId: '$.publish.result.post_id',
-                    platform: '$.platform',
-                    campaign: '$.campaign'
+                    postId: '.publish.result.post_id',
+                    platform: '.platform',
+                    campaign: '.campaign'
                 }
             }
         ],
@@ -1541,8 +1541,8 @@ const socialMediaWorkflows = {
                 runner: 'content_system',
                 task: 'create_campaign_assets',
                 input: {
-                    campaignBrief: '$.campaign_brief',
-                    assets: '$.required_assets'
+                    campaignBrief: '.campaign_brief',
+                    assets: '.required_assets'
                 }
             },
             {
@@ -1551,8 +1551,8 @@ const socialMediaWorkflows = {
                 runner: 'audience_system',
                 task: 'segment_audience',
                 input: {
-                    campaignObjectives: '$.campaign_brief.objectives',
-                    historicalData: '$.historical_performance'
+                    campaignObjectives: '.campaign_brief.objectives',
+                    historicalData: '.historical_performance'
                 }
             },
             {
@@ -1561,10 +1561,10 @@ const socialMediaWorkflows = {
                 runner: 'ad_system',
                 task: 'setup_campaign',
                 input: {
-                    assets: '$.asset_creation.result.assets',
-                    audiences: '$.audience_segmentation.result.segments',
-                    budget: '$.campaign_brief.budget',
-                    objectives: '$.campaign_brief.objectives'
+                    assets: '.asset_creation.result.assets',
+                    audiences: '.audience_segmentation.result.segments',
+                    budget: '.campaign_brief.budget',
+                    objectives: '.campaign_brief.objectives'
                 }
             },
             {
@@ -1573,8 +1573,8 @@ const socialMediaWorkflows = {
                 runner: 'scheduling_system',
                 task: 'schedule_campaign_content',
                 input: {
-                    content: '$.asset_creation.result.content',
-                    timeline: '$.campaign_brief.timeline'
+                    content: '.asset_creation.result.content',
+                    timeline: '.campaign_brief.timeline'
                 }
             },
             {
@@ -1583,9 +1583,9 @@ const socialMediaWorkflows = {
                 runner: 'notification_system',
                 task: 'notify_team',
                 input: {
-                    campaign: '$.campaign_brief.name',
-                    launchDate: '$.campaign_brief.launch_date',
-                    team: '$.campaign_team'
+                    campaign: '.campaign_brief.name',
+                    launchDate: '.campaign_brief.launch_date',
+                    team: '.campaign_team'
                 }
             },
             {
@@ -1594,9 +1594,9 @@ const socialMediaWorkflows = {
                 runner: 'monitoring_system',
                 task: 'setup_campaign_monitoring',
                 input: {
-                    campaignId: '$.ad_setup.result.campaign_id',
-                    keywords: '$.campaign_brief.keywords',
-                    competitors: '$.campaign_brief.competitors'
+                    campaignId: '.ad_setup.result.campaign_id',
+                    keywords: '.campaign_brief.keywords',
+                    competitors: '.campaign_brief.competitors'
                 }
             }
         ]
@@ -1617,7 +1617,7 @@ class ContentSystemTaskRunner {
             case 'create_campaign_assets':
                 return await this.createCampaignAssets(input, context);
             default:
-                throw new Error(`Unknown task: ${task}`);
+                throw new Error(`Unknown task: {task}`);
         }
     }
     
@@ -1625,7 +1625,7 @@ class ContentSystemTaskRunner {
         const { type, topic, platform } = input;
         
         // Select template based on type and platform
-        const templateId = `${platform}_${type}`;
+        const templateId = `{platform}_{type}`;
         
         // Generate content using template
         const content = await this.templateSystem.renderTemplate(templateId, {
@@ -1651,7 +1651,7 @@ class ContentSystemTaskRunner {
             const { type, specifications } = asset;
             
             const assetContent = await this.templateSystem.renderTemplate(
-                `campaign_${type}`,
+                `campaign_{type}`,
                 {
                     campaign: campaignBrief,
                     specifications
@@ -1678,13 +1678,13 @@ class WorkflowMonitor {
     workflowStarted(execution) {
         this.dashboardSystem.updateExecution(execution);
         
-        console.log(`Workflow ${execution.workflowId} started: ${execution.id}`);
+        console.log(`Workflow {execution.workflowId} started: {execution.id}`);
     }
     
     workflowCompleted(execution) {
         this.dashboardSystem.updateExecution(execution);
         
-        console.log(`Workflow ${execution.workflowId} completed: ${execution.id}`);
+        console.log(`Workflow {execution.workflowId} completed: {execution.id}`);
         
         // Send completion notification
         this.alertSystem.sendNotification({
@@ -1699,7 +1699,7 @@ class WorkflowMonitor {
     workflowFailed(execution, error) {
         this.dashboardSystem.updateExecution(execution);
         
-        console.error(`Workflow ${execution.workflowId} failed: ${execution.id}`, error);
+        console.error(`Workflow {execution.workflowId} failed: {execution.id}`, error);
         
         // Send failure alert
         this.alertSystem.sendAlert({
@@ -1723,7 +1723,7 @@ class WorkflowMonitor {
         this.dashboardSystem.updateStep(executionId, step);
         
         // Log step failure
-        console.warn(`Step ${step.stepName} failed in execution ${executionId}:`, error);
+        console.warn(`Step {step.stepName} failed in execution {executionId}:`, error);
     }
 }
 </code></pre>
@@ -1750,7 +1750,7 @@ class AutomationGovernanceSystem {
         const validationResult = await this.policyEngine.validate(automation, metadata);
         
         if (!validationResult.valid) {
-            throw new Error(`Automation validation failed: ${validationResult.errors.join(', ')}`);
+            throw new Error(`Automation validation failed: {validationResult.errors.join(', ')}`);
         }
         
         // Generate unique ID
@@ -1790,11 +1790,11 @@ class AutomationGovernanceSystem {
         const automation = await this.registry.get(automationId);
         
         if (!automation) {
-            throw new Error(`Automation not found: ${automationId}`);
+            throw new Error(`Automation not found: {automationId}`);
         }
         
         if (automation.status !== 'approved') {
-            throw new Error(`Automation ${automationId} is not approved for execution`);
+            throw new Error(`Automation {automationId} is not approved for execution`);
         }
         
         // Check execution policies
@@ -1811,7 +1811,7 @@ class AutomationGovernanceSystem {
                 user: context.user
             });
             
-            throw new Error(`Execution denied: ${executionCheck.reason}`);
+            throw new Error(`Execution denied: {executionCheck.reason}`);
         }
         
         // Log execution start
@@ -1885,7 +1885,7 @@ class AutomationGovernanceSystem {
         const current = await this.registry.get(automationId);
         
         if (!current) {
-            throw new Error(`Automation not found: ${automationId}`);
+            throw new Error(`Automation not found: {automationId}`);
         }
         
         // Check update permissions
@@ -1912,7 +1912,7 @@ class AutomationGovernanceSystem {
         });
         
         if (!validationResult.valid) {
-            throw new Error(`Update validation failed: ${validationResult.errors.join(', ')}`);
+            throw new Error(`Update validation failed: {validationResult.errors.join(', ')}`);
         }
         
         // Store update
@@ -1937,7 +1937,7 @@ class AutomationGovernanceSystem {
             try {
                 await monitor.check();
             } catch (error) {
-                console.error(`Monitor ${monitor.name} failed:`, error);
+                console.error(`Monitor {monitor.name} failed:`, error);
             }
         }
     }
@@ -2097,7 +2097,7 @@ class AutomationRegistry {
     async update(id, updates) {
         return this.database.collection(this.collection).updateOne(
             { id },
-            { $set: updates }
+            { set: updates }
         );
     }
     
@@ -2111,7 +2111,7 @@ class AutomationRegistry {
         return this.database.collection(metricsCollection)
             .find({
                 automationId,
-                timestamp: { $gte: this.getTimeframeStart(timeframe) }
+                timestamp: { gte: this.getTimeframeStart(timeframe) }
             })
             .toArray();
     }
@@ -2268,5 +2268,6 @@ class AutomationMonitor {
 }
 </code></pre>
 </details>
+
 
 <p>Social media automation, when implemented correctly, transforms manual, repetitive tasks into efficient, scalable processes. By systematically automating content scheduling, engagement, monitoring, reporting, creation, and workflow orchestration—all governed by robust quality controls—you free your team to focus on strategy, creativity, and relationship building. Remember: Automation should enhance human capabilities, not replace human judgment. The most effective automation systems combine technical sophistication with strategic oversight, ensuring your social media operations are both efficient and effective.</p>
