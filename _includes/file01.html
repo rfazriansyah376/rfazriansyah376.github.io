@@ -66,7 +66,7 @@
 <section class="related-posts">
   <b>Related Posts</b>
   <ul>
-    {% for item in related_sorted limit:50 %}
+    {% for item in related_sorted limit:5 %}
       {% assign p = item | split: '::' %}
       {% assign post_obj = site.posts | where: "url", p[1] | first %}
       <li class="related-item">
