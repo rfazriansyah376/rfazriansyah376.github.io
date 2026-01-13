@@ -11,55 +11,62 @@ permalink: /All-categories.html
   --muted: #777;
   --border: #e5e5e5;
 }
+
 .all-categories {
   max-width: 800px;
   margin: 3rem auto;
   padding: 1rem;
-  text-align: center;
 }
+
 .all-categories h2 {
+  text-align: center;
   color: var(--primary);
   font-size: 1.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
-#category-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+
+/* LIST STYLE */
+#category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
+
+#category-list li {
+  border-bottom: 1px solid var(--border);
+}
+
 .category-item {
-  display: inline-block;
-  padding: 1rem 1rem;
-  border-radius: 20px;
-  background: var(--bg);
-  color: var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
   text-decoration: none;
-  border: 1px solid var(--border);
-  transition: all 0.25s ease;
-  font-weight: 500;
-  line-height: 1.2;
+  color: #000;            /* link normal hitam */
+  transition: background 0.2s ease;
 }
+
+/* link yang SUDAH diklik */
+.category-item:visited {
+  color: red;
+}
+
+/* hover tetap netral */
 .category-item:hover {
-  background: var(--primary);
-  color: #fff;
-  transform: scale(1.05);
+  background: #f5f8fa;
+  color: #000;
 }
-.category-item small {
-  color: var(--muted);
-  font-size: 0.8em;
-  margin-left: 4px;
+
+/* supaya angka ikut berubah */
+.category-item:visited .category-count {
+  color: red;
 }
-@media (max-width: 600px) {
-  .category-item {
-    font-size: 0.9rem !important;
-  }
-}
+
 </style>
 
 <div class="all-categories">
   <h2>All Categories</h2>
-  <div id="category-cloud"></div>
+  <ul id="category-list"></ul>
 </div>
 
 <script>
@@ -80,38 +87,35 @@ posts.forEach(post => {
   });
 });
 
-// Sort berdasarkan jumlah posting terbanyak
+// Urutkan dari terbanyak
 const sortedCategories = Object.entries(categoryCounts)
-  .sort((a,b) => b[1] - a[1]);
+  .sort((a, b) => b[1] - a[1]);
 
-// Deteksi domain aktif
 const currentDomain = window.location.hostname;
-
-// Tampilkan kategori dalam bentuk cloud
-const cloud = document.getElementById('category-cloud');
+const list = document.getElementById('category-list');
 
 if (sortedCategories.length > 0) {
-  const counts = sortedCategories.map(c => c[1]);
-  const max = Math.max(...counts);
-  const min = Math.min(...counts);
-
   sortedCategories.forEach(([cat, count]) => {
+    const li = document.createElement('li');
+
     const a = document.createElement('a');
-    a.textContent = cat;
-    a.href = `https://${cat}.${currentDomain}`;
-    a.onerror = () => { a.href = `/`; }; // fallback ke homepage
     a.className = 'category-item';
-    const small = document.createElement('small');
-    small.textContent = count;
-    a.appendChild(small);
+    a.href = `https://${cat}.${currentDomain}`;
+    a.onerror = () => { a.href = `/`; };
 
-    // Hitung ukuran font berdasarkan popularitas
-    const size = 0.9 + (count - min) / (max - min || 1) * 0.8;
-    a.style.fontSize = `${size}rem`;
+    const name = document.createElement('span');
+    name.textContent = cat;
 
-    cloud.appendChild(a);
+    const badge = document.createElement('span');
+    badge.className = 'category-count';
+    badge.textContent = count;
+
+    a.appendChild(name);
+    a.appendChild(badge);
+    li.appendChild(a);
+    list.appendChild(li);
   });
 } else {
-  cloud.innerHTML = "<p>Tidak ada kategori ditemukan.</p>";
+  list.innerHTML = "<li>Tidak ada kategori ditemukan.</li>";
 }
 </script>
