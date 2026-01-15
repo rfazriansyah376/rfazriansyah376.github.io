@@ -60,7 +60,7 @@ permalink: /search
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
       
-      titleText = `"${formattedQuery}"`;
+      titleText = `${formattedQuery}`;
       pageTitle = formattedQuery;
       h1Title = formattedQuery;
     } else {
@@ -571,8 +571,7 @@ permalink: /search
           // Tampilkan pesan no results DAN load random posts
           container.innerHTML = `
             <div class="no-results">
-              <p>😔 No results found for "<strong>${escapeHtml(formattedQuery)}</strong>"</p>
-              <p class="suggestion">Try different keywords, check spelling, or browse random posts below:</p>
+              <p>Results for "<strong>${escapeHtml(formattedQuery)}</strong>"</p>
             </div>
           `;
           await loadRandomPosts(container);
@@ -682,16 +681,14 @@ permalink: /search
         fallbackContainer.className = 'random-posts-fallback';
         fallbackContainer.innerHTML = `
           <div class="fallback-header">
-            <h3>📚 Random Posts You Might Like</h3>
-            <p>Discover something new from our collection</p>
+            
+            
           </div>
           <div class="random-posts-grid">
             ${randomPostsHTML}
           </div>
           <div class="fallback-footer">
-            <button class="refresh-btn">
-              🔄 Refresh Random Posts
-            </button>
+            
             <a href="/" class="browse-all">Browse All Posts →</a>
           </div>
         `;
