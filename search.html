@@ -63,9 +63,9 @@ permalink: /search
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
       
-      titleText = `${formattedQuery} - Search Results | ${subdomain}`;
+      titleText = `${formattedQuery}`;
       pageTitle = formattedQuery;
-      h1Title = `Search Results for: ${formattedQuery}`;
+      h1Title = `${formattedQuery}`;
     } else {
       titleText = isHome
         ? subdomain
@@ -85,7 +85,7 @@ permalink: /search
       const headingH1 = document.querySelector('main h1');
       
       if (mainTitle && isSearchPage) {
-        mainTitle.textContent = `Search: ${pageTitle}`;
+        mainTitle.textContent = `${pageTitle}`;
       }
       
       if (headingH1 && isSearchPage) {
@@ -313,11 +313,6 @@ permalink: /search
   </script>
 
   <main>
-    <!-- Hidden SEO elements -->
-    <div id="searchMeta" style="display: none;">
-      <h1 id="searchPageTitle"></h1>
-      <meta itemprop="query" content="" id="metaQuery">
-    </div>
     
     <div id="searchResults">
       <div style="text-align: center; padding: 3rem;">
