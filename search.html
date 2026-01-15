@@ -9,10 +9,7 @@ permalink: /search
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <!-- CSS Loading Optimization -->
-  <link rel="preload" href="https://adabunalima5.github.io/file/css/css008080.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://adabunalima5.github.io/file/css/css008080.css"/></noscript>
+  <link rel="stylesheet" href="https://adabunalima5.github.io/file/css/css008080.css"/> 
   
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -57,15 +54,15 @@ permalink: /search
     
     if (isSearchPage) {
       // Format query untuk title
-      const cleanQuery = searchQuery.replace(/\+/g, ' ');
-      const formattedQuery = cleanQuery
+      const formattedQuery = searchQuery
+        .replace(/\+/g, ' ')
         .split(' ')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
       
-      titleText = `${formattedQuery}`;
+      titleText = `"${formattedQuery}"`;
       pageTitle = formattedQuery;
-      h1Title = `${formattedQuery}`;
+      h1Title = formattedQuery;
     } else {
       titleText = isHome
         ? subdomain
@@ -82,21 +79,21 @@ permalink: /search
     // Update h1 di header jika ada
     setTimeout(() => {
       const mainTitle = document.getElementById('mainTitle');
-      const headingH1 = document.querySelector('main h1');
+      const headingH1 = document.querySelector('main h2');
       
       if (mainTitle && isSearchPage) {
-        mainTitle.textContent = `${pageTitle}`;
+        mainTitle.textContent = `${h1Title}`;
       }
       
       if (headingH1 && isSearchPage) {
-        headingH1.textContent = h1Title;
+        headingH1.textContent = `${h1Title}`;
       }
     }, 100);
 
     // Meta author
     let metaAuthor = document.querySelector('meta[name="author"]') || document.createElement('meta');
     metaAuthor.name = 'author';
-    metaAuthor.content = `${subdomain}`;
+    metaAuthor.content = `${h1Title}`;
     if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
 
     // OG properties
@@ -114,22 +111,16 @@ permalink: /search
     
     // Meta description khusus search
     if (isSearchPage) {
-      const cleanQuery = searchQuery.replace(/\+/g, ' ');
-      setMeta('name', 'description', 
-        `Search results for "${cleanQuery}" on ${subdomain}. Find articles, guides, tutorials about ${cleanQuery}. Relevant content for your search.`);
-      setMeta('property', 'og:description', 
-        `Search results for "${cleanQuery}" - Find relevant content on ${subdomain}`);
-      setMeta('name', 'keywords', `${cleanQuery}, search results, ${subdomain}`);
+      setMeta('name', 'description', `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}. Find relevant articles, guides, and content.`);
+      setMeta('property', 'og:description', `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}`);
     }
 
     // Schema.org SearchResultsPage untuk halaman pencarian
     if (isSearchPage) {
-      const cleanQuery = searchQuery.replace(/\+/g, ' ');
       const searchSchema = {
         "@context": "https://schema.org",
         "@type": "SearchResultsPage",
-        "name": `Search Results for "${cleanQuery}"`,
-        "description": `Search results page for "${cleanQuery}" on ${subdomain}`,
+        "name": `"${searchQuery.replace(/\+/g, ' ')}"`,
         "url": location.href,
         "mainEntity": {
           "@type": "WebSite",
@@ -140,10 +131,6 @@ permalink: /search
             "target": `${location.origin}/search?q={search_term_string}`,
             "query-input": "required name=search_term_string"
           }
-        },
-        "about": {
-          "@type": "Thing",
-          "name": cleanQuery
         }
       };
       
@@ -165,10 +152,6 @@ permalink: /search
 
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
 
-  <!-- Prefetch critical resources -->
-  <link rel="prefetch" href="/search.json" as="fetch">
-  <link rel="prefetch" href="/posts-acak.json" as="fetch">
-
   <link rel="sitemap" type="application/xml" href="" id="sitemap-main">
   <link rel="alternate" type="application/rss+xml" href="" id="sitemap-feed">
 
@@ -180,52 +163,7 @@ permalink: /search
   })();
   </script>	
 
-  <!-- Defer non-critical JS -->
-  <script src="https://unpkg.com/elasticlunr/elasticlunr.js" defer></script>
-  
-  <!-- Inline critical CSS untuk above-the-fold content -->
-  <style>
-    /* Critical CSS only */
-    #searchResults {
-      min-height: 300px;
-      margin: 2rem 0;
-    }
-    
-    .search-result {
-      margin-bottom: 2.5rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid #eaeaea;
-    }
-    
-    .search-result h3 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.4rem;
-    }
-    
-    .search-result h3 a {
-      color: #2c3e50;
-      text-decoration: none;
-    }
-    
-    .search-result h3 a:hover {
-      color: #3498db;
-    }
-    
-    .loading-spinner {
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #3498db;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+  <script src="https://unpkg.com/elasticlunr/elasticlunr.js"></script>
 </head>
 <body>
   
@@ -313,105 +251,235 @@ permalink: /search
   </script>
 
   <main>
+    <style>
+    /* Search Container */
+    #searchResults {
+      min-height: 300px;
+      margin: 2rem 0;
+    }
+
+    /* Highlight for matches */
+    .highlight {
+      background-color: #fff3cd;
+      padding: 0 2px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    /* Search Results */
+    .search-result {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .search-result h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.4rem;
+    }
+
+    .search-result h3 a {
+      color: #2c3e50;
+      text-decoration: none;
+    }
+
+    .search-result h3 a:hover {
+      color: #3498db;
+    }
+
+    .snippet {
+      color: #555;
+      line-height: 1.6;
+      margin: 0.5rem 0 1rem 0;
+    }
+
+    /* No Results & Empty States */
+    .search-empty,
+    .no-results,
+    .search-error,
+    .results-found {
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .search-empty {
+      background: #f8f9fa;
+      text-align: center;
+    }
+
+    .no-results {
+      background: #fff3e0;
+      border-left: 4px solid #ff9800;
+    }
+
+    .search-error {
+      background: #ffebee;
+      border-left: 4px solid #f44336;
+    }
+
+    .results-count {
+      font-size: 1.1rem;
+      color: #2c3e50;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #3498db;
+    }
+
+    .suggestion {
+      color: #666;
+      font-style: italic;
+    }
+
+    /* Random Posts Fallback */
+    .random-posts-fallback {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px dashed #ddd;
+    }
+
+    .fallback-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .fallback-header h3 {
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+
+    .fallback-header p {
+      color: #7f8c8d;
+    }
+
+    .random-posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .random-post {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .random-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      border-color: #3498db;
+    }
+
+    .random-post-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .random-post h4 {
+      margin: 0 0 0.8rem 0;
+      color: #2c3e50;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .random-post .excerpt {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .fallback-footer {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .browse-all {
+      display: inline-block;
+      background: #3498db;
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .browse-all:hover {
+      background: #2980b9;
+    }
+
+    .fallback-error {
+      text-align: center;
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .random-posts-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-result {
+        padding: 1rem 0;
+      }
+      
+      #searchResults {
+        padding: 0 1rem;
+      }
+    }
+
+    /* Loading Animation */
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    #searchResults:empty::after {
+      content: "Loading...";
+      display: block;
+      text-align: center;
+      padding: 2rem;
+      color: #7f8c8d;
+      animation: pulse 1.5s infinite;
+    }
     
-    <div id="searchResults">
-      <div style="text-align: center; padding: 3rem;">
-        <div class="loading-spinner"></div>
-        <p>Loading search results...</p>
-      </div>
-    </div>
+    /* Dynamic heading for search page */
+    .search-page-heading {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #3498db;
+    }
+    
+    .search-page-heading h2 {
+      margin: 0;
+      color: #2c3e50;
+      font-size: 1.8rem;
+    }
+    
+    .search-query-display {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    </style>
+    
+    <div id="searchResults">Loading search results...</div>
 
     <script>
-    // Cache untuk performa
-    const cache = {
-      searchData: null,
-      randomPosts: null,
-      lastFetch: null
-    };
-    
-    // Fetch dengan cache
-    async function fetchWithCache(url, cacheKey, maxAge = 300000) {
-      const now = Date.now();
-      
-      if (cache[cacheKey] && cache.lastFetch && (now - cache.lastFetch) < maxAge) {
-        return cache[cacheKey];
-      }
-      
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        
-        cache[cacheKey] = data;
-        cache.lastFetch = now;
-        
-        return data;
-      } catch (error) {
-        if (cache[cacheKey]) {
-          console.log(`Using stale cache for ${url}`);
-          return cache[cacheKey];
-        }
-        throw error;
-      }
-    }
-    
-    // Fungsi untuk mengacak array
-    function shuffleArray(array) {
-      const shuffled = [...array];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    }
-    
-    // Helper: Escape HTML
-    function escapeHtml(text) {
-      if (!text) return '';
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-    
-    // Update SEO meta
-    function updateSearchMeta(query) {
-      const formattedQuery = query
-        .replace(/\+/g, ' ')
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-      
-      document.getElementById('searchPageTitle').textContent = `Search Results for: ${formattedQuery}`;
-      document.getElementById('metaQuery').content = query.replace(/\+/g, ' ');
-      
-      const searchMeta = document.getElementById('searchMeta');
-      searchMeta.style.display = 'block';
-      searchMeta.setAttribute('aria-label', `Search results for ${formattedQuery}`);
-    }
-    
     // Fungsi utama pencarian
     async function runSearch() {
       const params = new URLSearchParams(window.location.search);
       const query = (params.get("q") || "").toLowerCase().trim();
       const container = document.getElementById("searchResults");
-
-      // Update SEO meta
-      if (query) {
-        updateSearchMeta(query);
-      }
-
-      // Jika tidak ada query
-      if (!query) {
-        container.innerHTML = `
-          <div class="search-empty">
-            <h2>Search Content</h2>
-            <p>Enter search terms in the URL like: <code>?q=your+keywords</code></p>
-            <p>Or explore random posts below:</p>
-          </div>
-        `;
-        await loadRandomPosts(container, true); // Lazy load
-        return;
-      }
+      const heading = document.getElementById("searchHeading");
 
       // Format query untuk display
       const formattedQuery = query
@@ -420,19 +488,33 @@ permalink: /search
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 
-      // Tampilkan loading state yang lebih cepat
-      container.innerHTML = `
-        <div style="text-align: center; padding: 2rem;">
-          <div class="loading-spinner"></div>
-          <p>Searching for "${escapeHtml(formattedQuery)}"...</p>
-        </div>
-      `;
+      // Update heading dengan query
+      if (query && heading) {
+        heading.innerHTML = `Search Results for: <span class="search-query-display">"${escapeHtml(formattedQuery)}"</span>`;
+      }
+
+      // Jika tidak ada query
+      if (!query) {
+        container.innerHTML = `
+          <div class="search-empty">
+            <p>🔍 Enter a search term in the URL like: <code>?q=your+keywords</code></p>
+            <p>Or check out these random posts:</p>
+          </div>
+        `;
+        await loadRandomPosts(container);
+        return;
+      }
+
+      // Tampilkan loading state
+      container.innerHTML = `<p>Searching for "<strong>${escapeHtml(formattedQuery)}</strong>"...</p>`;
 
       try {
-        // Fetch data dengan cache
-        const allPosts = await fetchWithCache("/search.json", "searchData");
-        
-        // Filter hasil pencarian
+        // 1. Fetch data pencarian
+        const response = await fetch("/search.json");
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const allPosts = await response.json();
+
+        // 2. Filter hasil pencarian
         const results = allPosts.filter(post => {
           const searchText = `
             ${post.title || ''}
@@ -442,52 +524,40 @@ permalink: /search
           return searchText.includes(query);
         });
 
-        // Tampilkan hasil atau fallback
+        // 3. Tampilkan hasil atau fallback
         if (results.length > 0) {
           displaySearchResults(results, query, formattedQuery, container);
         } else {
           displayNoResults(formattedQuery, container);
-          // Lazy load random posts
-          setTimeout(() => loadRandomPosts(container, true), 100);
+          await loadRandomPosts(container);
         }
 
       } catch (error) {
         console.error("Search error:", error);
         container.innerHTML = `
           <div class="search-error">
-            <h2>Search Unavailable</h2>
+            <p>⚠️ Search temporarily unavailable.</p>
             <p>Showing random posts instead:</p>
           </div>
         `;
-        await loadRandomPosts(container, false); // Load langsung jika error
+        await loadRandomPosts(container);
       }
     }
-    
-    // Tampilkan hasil pencarian
+
+    // Fungsi: Tampilkan hasil pencarian
     function displaySearchResults(results, query, formattedQuery, container) {
+      // Escape query untuk regex
       const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const highlightRegex = new RegExp(`(${escapedQuery})`, 'gi');
-      
-      const fragment = document.createDocumentFragment();
-      
-      // Results count
-      const resultsCount = document.createElement('div');
-      resultsCount.className = 'results-count';
-      resultsCount.innerHTML = `<h2>Found ${results.length} result${results.length !== 1 ? 's' : ''} for "${escapeHtml(formattedQuery)}"</h2>`;
-      fragment.appendChild(resultsCount);
-      
-      // Results list
-      results.forEach(post => {
-        const article = document.createElement('article');
-        article.className = 'search-result';
-        
+
+      const html = results.map(post => {
         // Highlight di title
         const highlightedTitle = post.title.replace(
           highlightRegex, 
           '<mark class="highlight">$1</mark>'
         );
 
-        // Snippet
+        // Cari snippet dengan keyword
         let snippet = post.excerpt || post.content.substring(0, 200);
         const contentLower = (post.content || '').toLowerCase();
         const queryIndex = contentLower.indexOf(query);
@@ -500,91 +570,55 @@ permalink: /search
           snippet = (start > 0 ? '...' : '') + snippet + (end < post.content.length ? '...' : '');
         }
 
-        // Format URL
+        // Format URL dengan domain saat ini
         let postUrl = post.url;
         if (postUrl && !postUrl.startsWith('http')) {
-          postUrl = window.location.origin + (postUrl.startsWith('/') ? postUrl : '/' + postUrl);
+          // Jika URL relatif, tambahkan domain saat ini
+          const currentDomain = window.location.origin;
+          postUrl = currentDomain + (postUrl.startsWith('/') ? postUrl : '/' + postUrl);
         }
 
-        article.innerHTML = `
-          <h3><a href="${postUrl}">${highlightedTitle}</a></h3>
-          <p class="snippet">${snippet}</p>
+        return `
+          <article class="search-result">
+            <h3><a href="${postUrl}">${highlightedTitle}</a></h3>
+            <p class="snippet">${snippet}</p>
+          </article>
         `;
-        
-        fragment.appendChild(article);
-      });
-      
-      // Clear dan render
-      container.innerHTML = '';
-      container.appendChild(fragment);
-    }
-    
-    // Tampilkan no results
-    function displayNoResults(formattedQuery, container) {
+      }).join('');
+
       container.innerHTML = `
-        <div class="no-results">
-          <h2>No Results Found</h2>
-          <p>No results found for "<strong>${escapeHtml(formattedQuery)}</strong>"</p>
-          <p class="suggestion">Try different keywords or check spelling.</p>
+        <div class="results-found">
+          <p class="results-count">Found ${results.length} result${results.length !== 1 ? 's' : ''} for "${escapeHtml(formattedQuery)}"</p>
+          ${html}
         </div>
       `;
     }
+
     
-    // Load random posts dengan lazy loading option
-    async function loadRandomPosts(container, lazy = true) {
-      if (lazy && 'IntersectionObserver' in window) {
-        // Lazy loading dengan Intersection Observer
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              loadRandomPostsContent(container);
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1 });
-        
-        const placeholder = document.createElement('div');
-        placeholder.className = 'random-posts-placeholder';
-        placeholder.style.minHeight = '200px';
-        placeholder.innerHTML = `
-          <div style="text-align: center; padding: 2rem;">
-            <div class="loading-spinner"></div>
-            <p>Loading random posts...</p>
-          </div>
-        `;
-        
-        container.appendChild(placeholder);
-        observer.observe(placeholder);
-        return;
-      }
-      
-      // Load langsung
-      await loadRandomPostsContent(container);
-    }
-    
-    // Konten random posts
-    async function loadRandomPostsContent(container) {
+
+    // Fungsi: Load random posts untuk fallback
+    async function loadRandomPosts(container) {
       try {
-        const allPosts = await fetchWithCache("/posts-acak.json", "randomPosts", 600000); // 10 minutes cache
+        const randomResponse = await fetch("/posts-acak.json");
+        if (!randomResponse.ok) throw new Error("Failed to load random posts");
         
-        if (!Array.isArray(allPosts) || allPosts.length === 0) {
-          throw new Error("No random posts available");
-        }
+        const randomPosts = await randomResponse.json();
         
-        // Acak dan ambil 6
-        const shuffledPosts = shuffleArray(allPosts);
-        const selectedPosts = shuffledPosts.slice(0, 6);
+        // Ambil 6 post acak dari daftar yang sudah diacak
+        const selectedPosts = randomPosts.slice(0, 10);
         
         const randomPostsHTML = selectedPosts.map(post => {
+          // Format URL dengan domain saat ini
           let postUrl = post.url;
           if (postUrl && !postUrl.startsWith('http')) {
-            postUrl = window.location.origin + (postUrl.startsWith('/') ? postUrl : '/' + postUrl);
+            const currentDomain = window.location.origin;
+            postUrl = currentDomain + (postUrl.startsWith('/') ? postUrl : '/' + postUrl);
           }
           
           return `
             <article class="random-post">
               <a href="${postUrl}" class="random-post-link">
-                <h4>${post.title || 'Untitled Post'}</h4>
+                <h4>${post.title}</h4>
                 ${post.excerpt ? `<p class="excerpt">${post.excerpt}</p>` : ''}
               </a>
             </article>
@@ -594,52 +628,41 @@ permalink: /search
         const fallbackContainer = document.createElement('div');
         fallbackContainer.className = 'random-posts-fallback';
         fallbackContainer.innerHTML = `
-          <div class="fallback-header">
-            <h3>📚 Random Posts You Might Like</h3>
-            <p>Discover something new from our collection</p>
-          </div>
           <div class="random-posts-grid">
             ${randomPostsHTML}
           </div>
           <div class="fallback-footer">
-            <button class="refresh-btn">🔄 Refresh Random Posts</button>
             <a href="/" class="browse-all">Browse All Posts →</a>
           </div>
         `;
         
-        // Hapus yang lama jika ada
-        const existing = container.querySelector('.random-posts-fallback');
-        if (existing) existing.remove();
-        
         container.appendChild(fallbackContainer);
-        
-        // Event listener untuk refresh
-        const refreshBtn = fallbackContainer.querySelector('.refresh-btn');
-        refreshBtn.addEventListener('click', () => {
-          const fallbackSection = container.querySelector('.random-posts-fallback');
-          if (fallbackSection) {
-            fallbackSection.remove();
-            loadRandomPostsContent(container);
-          }
-        });
         
       } catch (error) {
         console.error("Failed to load random posts:", error);
+        container.innerHTML += `
+          <div class="fallback-error">
+            <p>Unable to load random posts. <a href="/">Return to homepage</a></p>
+          </div>
+        `;
       }
     }
-    
-    // Jalankan saat DOM siap
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', runSearch);
-    } else {
-      runSearch();
+
+    // Helper: Escape HTML untuk keamanan
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
+
+    // Jalankan pencarian saat halaman siap
+    document.addEventListener('DOMContentLoaded', runSearch);
     </script>
   </main>
 
   <br /><br />
   
-  <!-- Search form -->
+  <!-- awal search -->
   <div class="widget-search" role="search">
     <form id="customSearchForm" method="get" action="/search/">
       <a href="/" id="homeLink" class="home-btn" aria-label="Home">
@@ -653,8 +676,7 @@ permalink: /search
         name="q"
         placeholder="Search..."
         autocomplete="on"
-        value=""
-        aria-label="Search input"/>
+        value=""/>
       <button type="submit" class="search-btn" aria-label="Search">
         <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="22" height="22" fill="currentColor">
           <path d="M21 20l-5.8-5.8a7 7 0 10-1.4 1.4L20 21l1-1zM4 10a6 6 0 1112 0 6 6 0 01-12 0z"/>
@@ -662,6 +684,7 @@ permalink: /search
       </button>
     </form>
   </div>
+  <!-- akhir search -->
 
   <!--FOOTER-->
   <footer style="text-align: center; padding: 30px 20px; font-size: 16px; color: #666;">
@@ -676,14 +699,20 @@ permalink: /search
         const parts = domain.split(".");
         let brand = "Blog";
         let rootDomain = domain;
+        // Khusus untuk .my.id
         if (domain.endsWith(".my.id") && parts.length > 2) {
-          const baseName = parts[parts.length - 3];
+          // Ambil nama domain utama (2 bagian sebelum .my.id)
+          const baseName = parts[parts.length - 3]; // contoh: domain / do-main
           rootDomain = "www." + baseName + ".my.id";
+
+          // Ubah jadi Title Case dengan spasi jika ada tanda minus
           brand = baseName
             .split("-")
             .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
             .join(" ");
         }
+
+        // Update elemen
         document.getElementById("current-year").textContent = new Date().getFullYear();
         const headingEl = document.getElementById("main-heading2");
         headingEl.textContent = brand;
@@ -692,36 +721,20 @@ permalink: /search
     </script>
   </footer>
   
-  <!-- Load non-critical CSS async -->
+  <br /><br /><br />
+  
   <script>
-    // Load remaining CSS
-    function loadCSS(href) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      document.head.appendChild(link);
-    }
-    
-    // Load setelah halaman siap
-    if (document.readyState === 'complete') {
-      loadCSS('https://adabunalima5.github.io/file/css/css008080.css');
-    } else {
-      window.addEventListener('load', function() {
-        loadCSS('https://adabunalima5.github.io/file/css/css008080.css');
-      });
-    }
-    
-    // Isi search input
-    document.addEventListener('DOMContentLoaded', function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const currentQuery = urlParams.get('q');
-      if (currentQuery) {
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-          searchInput.value = currentQuery.replace(/\+/g, ' ');
-        }
+  // Isi search input dengan query saat ini
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentQuery = urlParams.get('q');
+    if (currentQuery) {
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.value = currentQuery.replace(/\+/g, ' ');
       }
-    });
+    }
+  });
   </script>
 </body>
 </html>
