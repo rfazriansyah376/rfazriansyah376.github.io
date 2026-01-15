@@ -716,6 +716,17 @@ permalink: /search
           }
         });
         
+      } catch (error) {
+        console.error("Failed to load random posts:", error);
+        
+        // Jika error, tampilkan pesan error yang jelas
+        const errorContainer = document.createElement('div');
+        errorContainer.className = 'fallback-error';
+        errorContainer.innerHTML = `
+          
+        `;
+        
+        container.appendChild(errorContainer);
       }
     }
 
@@ -783,6 +794,7 @@ permalink: /search
             .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
             .join(" ");
         }
+
         // Update elemen
         document.getElementById("current-year").textContent = new Date().getFullYear();
         const headingEl = document.getElementById("main-heading2");
