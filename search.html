@@ -716,19 +716,6 @@ permalink: /search
           }
         });
         
-      } catch (error) {
-        console.error("Failed to load random posts:", error);
-        
-        // Jika error, tampilkan pesan error yang jelas
-        const errorContainer = document.createElement('div');
-        errorContainer.className = 'fallback-error';
-        errorContainer.innerHTML = `
-          <p>Unable to load random posts. Error: ${escapeHtml(error.message)}</p>
-          <p>Check if <code>/posts-acak.json</code> exists and contains valid JSON data.</p>
-          <p><a href="/">Return to homepage</a></p>
-        `;
-        
-        container.appendChild(errorContainer);
       }
     }
 
