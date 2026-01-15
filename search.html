@@ -414,6 +414,29 @@ permalink: /search
       background: #2980b9;
     }
 
+    .refresh-btn {
+      background: #2ecc71;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-right: 1rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .refresh-btn:hover {
+      background: #27ae60;
+      transform: scale(1.05);
+    }
+
+    .refresh-btn:active {
+      transform: scale(0.95);
+    }
+
     .fallback-error {
       text-align: center;
       padding: 2rem;
@@ -433,6 +456,19 @@ permalink: /search
       
       #searchResults {
         padding: 0 1rem;
+      }
+      
+      .fallback-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+      
+      .refresh-btn, .browse-all {
+        margin: 0;
+        width: 100%;
+        max-width: 250px;
       }
     }
 
@@ -474,12 +510,21 @@ permalink: /search
     <div id="searchResults">Loading search results...</div>
 
     <script>
+    // Fungsi untuk mengacak array (Fisher-Yates shuffle)
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
     // Fungsi utama pencarian
     async function runSearch() {
       const params = new URLSearchParams(window.location.search);
       const query = (params.get("q") || "").toLowerCase().trim();
       const container = document.getElementById("searchResults");
-      const heading = document.getElementById("searchHeading");
 
       // Format query untuk display
       const formattedQuery = query
@@ -487,11 +532,6 @@ permalink: /search
         .split(' ')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
-
-      // Update heading dengan query
-      if (query && heading) {
-        heading.innerHTML = `Search Results for: <span class="search-query-display">"${escapeHtml(formattedQuery)}"</span>`;
-      }
 
       // Jika tidak ada query
       if (!query) {
@@ -579,7 +619,6 @@ permalink: /search
         // Format URL dengan domain saat ini
         let postUrl = post.url;
         if (postUrl && !postUrl.startsWith('http')) {
-          // Jika URL relatif, tambahkan domain saat ini
           const currentDomain = window.location.origin;
           postUrl = currentDomain + (postUrl.startsWith('/') ? postUrl : '/' + postUrl);
         }
@@ -603,19 +642,20 @@ permalink: /search
     // Fungsi: Load random posts untuk fallback
     async function loadRandomPosts(container) {
       try {
-        console.log('Loading random posts from /posts-acak.json');
         const randomResponse = await fetch("/posts-acak.json");
         if (!randomResponse.ok) throw new Error(`Failed to load random posts: HTTP ${randomResponse.status}`);
         
-        const randomPosts = await randomResponse.json();
-        console.log('Random posts loaded:', randomPosts);
+        const allPosts = await randomResponse.json();
         
-        if (!Array.isArray(randomPosts) || randomPosts.length === 0) {
+        if (!Array.isArray(allPosts) || allPosts.length === 0) {
           throw new Error("Random posts data is empty or invalid");
         }
         
-        // Ambil 6 post acak dari daftar yang sudah diacak
-        const selectedPosts = randomPosts.slice(0, 6);
+        // Acak postingan setiap kali fungsi dipanggil
+        const shuffledPosts = shuffleArray(allPosts);
+        
+        // Ambil 6 post pertama dari array yang sudah diacak
+        const selectedPosts = shuffledPosts.slice(0, 6);
         
         const randomPostsHTML = selectedPosts.map(post => {
           // Format URL dengan domain saat ini
@@ -626,11 +666,12 @@ permalink: /search
           }
           
           const excerpt = post.excerpt || '';
+          const title = post.title || 'Untitled Post';
           
           return `
             <article class="random-post">
               <a href="${postUrl}" class="random-post-link">
-                <h4>${post.title || 'Untitled Post'}</h4>
+                <h4>${title}</h4>
                 ${excerpt ? `<p class="excerpt">${excerpt}</p>` : ''}
               </a>
             </article>
@@ -648,11 +689,35 @@ permalink: /search
             ${randomPostsHTML}
           </div>
           <div class="fallback-footer">
+            <button class="refresh-btn">
+              🔄 Refresh Random Posts
+            </button>
             <a href="/" class="browse-all">Browse All Posts →</a>
           </div>
         `;
         
+        // Jika sudah ada fallback container sebelumnya, hapus dulu
+        const existingFallback = container.querySelector('.random-posts-fallback');
+        if (existingFallback) {
+          existingFallback.remove();
+        }
+        
         container.appendChild(fallbackContainer);
+        
+        // Tambahkan event listener untuk tombol refresh
+        const refreshBtn = fallbackContainer.querySelector('.refresh-btn');
+        refreshBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Dapatkan container dari DOM
+          const container = document.getElementById('searchResults');
+          const fallbackSection = container.querySelector('.random-posts-fallback');
+          if (fallbackSection) {
+            // Hapus fallback section yang ada
+            fallbackSection.remove();
+            // Load random posts baru
+            loadRandomPosts(container);
+          }
+        });
         
       } catch (error) {
         console.error("Failed to load random posts:", error);
