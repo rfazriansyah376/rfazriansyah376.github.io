@@ -594,15 +594,7 @@ permalink: /search
       `;
     }
 
-    // Fungsi: Tampilkan "no results" message
-    function displayNoResults(formattedQuery, container) {
-      container.innerHTML = `
-        <div class="no-results">
-          <p>😔 No results found for "<strong>${escapeHtml(formattedQuery)}</strong>"</p>
-          <p class="suggestion">Try different keywords, check spelling, or browse random posts below:</p>
-        </div>
-      `;
-    }
+    
 
     // Fungsi: Load random posts untuk fallback
     async function loadRandomPosts(container) {
@@ -613,7 +605,7 @@ permalink: /search
         const randomPosts = await randomResponse.json();
         
         // Ambil 6 post acak dari daftar yang sudah diacak
-        const selectedPosts = randomPosts.slice(0, 6);
+        const selectedPosts = randomPosts.slice(0, 10);
         
         const randomPostsHTML = selectedPosts.map(post => {
           // Format URL dengan domain saat ini
@@ -636,10 +628,6 @@ permalink: /search
         const fallbackContainer = document.createElement('div');
         fallbackContainer.className = 'random-posts-fallback';
         fallbackContainer.innerHTML = `
-          <div class="fallback-header">
-            <h3>📚 Random Posts You Might Like</h3>
-            <p>Discover something new from our collection</p>
-          </div>
           <div class="random-posts-grid">
             ${randomPostsHTML}
           </div>
