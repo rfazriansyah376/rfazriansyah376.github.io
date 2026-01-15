@@ -546,7 +546,7 @@ permalink: /search
       }
 
       // Tampilkan loading state
-      container.innerHTML = `<p>Searching for "<strong>${escapeHtml(formattedQuery)}</strong>"...</p>`;
+      container.innerHTML = ``;
 
       try {
         // 1. Fetch data pencarian
@@ -654,7 +654,7 @@ permalink: /search
         const shuffledPosts = shuffleArray(allPosts);
         
         // Ambil 6 post pertama dari array yang sudah diacak
-        const selectedPosts = shuffledPosts.slice(0, 6);
+        const selectedPosts = shuffledPosts.slice(0, 9);
         
         const randomPostsHTML = selectedPosts.map(post => {
           // Format URL dengan domain saat ini
