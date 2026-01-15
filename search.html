@@ -111,7 +111,7 @@ permalink: /search
     
     // Meta description khusus search
     if (isSearchPage) {
-      setMeta('name', 'description', `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}. Find relevant articles, guides, and content.`);
+      setMeta('name', 'description', `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}. Find Leaked Photo, Video, and Content.`);
       setMeta('property', 'og:description', `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}`);
     }
 
@@ -623,10 +623,10 @@ permalink: /search
         }
 
         return `
-          <article class="search-result">
+          <div class="search-result">
             <h3><a href="${postUrl}">${highlightedTitle}</a></h3>
             <p class="snippet">${snippet}</p>
-          </article>
+          </div>
         `;
       }).join('');
 
@@ -668,12 +668,12 @@ permalink: /search
           const title = post.title || 'Untitled Post';
           
           return `
-            <article class="random-post">
+            <div class="random-post">
               <a href="${postUrl}" class="random-post-link">
-                <h4>${title}</h4>
+        
                 ${excerpt ? `<p class="excerpt">${excerpt}</p>` : ''}
               </a>
-            </article>
+            </div>
           `;
         }).join('');
         
