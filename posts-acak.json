@@ -3,14 +3,14 @@ layout: null
 permalink: /posts-acak.json
 ---
 [
-  {% for post in site.posts limit: 100 %}
+  {% for post in site.posts %}
     {
       "title": {{ post.title | jsonify }},
       "url": {{ post.url | jsonify }},
       "excerpt": {% if post.excerpt and post.excerpt != "" %}
         {{ post.excerpt | strip_html | truncatewords: 20 | jsonify }}
       {% else %}
-        {{ post.content | strip_html | truncatewords: 20 | jsonify }}
+        {{ post.content | strip_html | truncatewords: 200 | jsonify }}
       {% endif %}
     }
     {% unless forloop.last %},{% endunless %}
