@@ -528,7 +528,13 @@ permalink: /search
         if (results.length > 0) {
           displaySearchResults(results, query, formattedQuery, container);
         } else {
-          displayNoResults(formattedQuery, container);
+          // Tampilkan pesan no results DAN load random posts
+          container.innerHTML = `
+            <div class="no-results">
+              <p>😔 No results found for "<strong>${escapeHtml(formattedQuery)}</strong>"</p>
+              <p class="suggestion">Try different keywords, check spelling, or browse random posts below:</p>
+            </div>
+          `;
           await loadRandomPosts(container);
         }
 
@@ -594,23 +600,19 @@ permalink: /search
       `;
     }
 
-    // Fungsi: Tampilkan "no results" message
-    function displayNoResults(formattedQuery, container) {
-      container.innerHTML = `
-        <div class="no-results">
-          <p>😔 No results found for "<strong>${escapeHtml(formattedQuery)}</strong>"</p>
-          <p class="suggestion">Try different keywords, check spelling, or browse random posts below:</p>
-        </div>
-      `;
-    }
-
     // Fungsi: Load random posts untuk fallback
     async function loadRandomPosts(container) {
       try {
+        console.log('Loading random posts from /posts-acak.json');
         const randomResponse = await fetch("/posts-acak.json");
-        if (!randomResponse.ok) throw new Error("Failed to load random posts");
+        if (!randomResponse.ok) throw new Error(`Failed to load random posts: HTTP ${randomResponse.status}`);
         
         const randomPosts = await randomResponse.json();
+        console.log('Random posts loaded:', randomPosts);
+        
+        if (!Array.isArray(randomPosts) || randomPosts.length === 0) {
+          throw new Error("Random posts data is empty or invalid");
+        }
         
         // Ambil 6 post acak dari daftar yang sudah diacak
         const selectedPosts = randomPosts.slice(0, 6);
@@ -623,11 +625,13 @@ permalink: /search
             postUrl = currentDomain + (postUrl.startsWith('/') ? postUrl : '/' + postUrl);
           }
           
+          const excerpt = post.excerpt || '';
+          
           return `
             <article class="random-post">
               <a href="${postUrl}" class="random-post-link">
-                <h4>${post.title}</h4>
-                ${post.excerpt ? `<p class="excerpt">${post.excerpt}</p>` : ''}
+                <h4>${post.title || 'Untitled Post'}</h4>
+                ${excerpt ? `<p class="excerpt">${excerpt}</p>` : ''}
               </a>
             </article>
           `;
@@ -652,16 +656,23 @@ permalink: /search
         
       } catch (error) {
         console.error("Failed to load random posts:", error);
-        container.innerHTML += `
-          <div class="fallback-error">
-            <p>Unable to load random posts. <a href="/">Return to homepage</a></p>
-          </div>
+        
+        // Jika error, tampilkan pesan error yang jelas
+        const errorContainer = document.createElement('div');
+        errorContainer.className = 'fallback-error';
+        errorContainer.innerHTML = `
+          <p>Unable to load random posts. Error: ${escapeHtml(error.message)}</p>
+          <p>Check if <code>/posts-acak.json</code> exists and contains valid JSON data.</p>
+          <p><a href="/">Return to homepage</a></p>
         `;
+        
+        container.appendChild(errorContainer);
       }
     }
 
     // Helper: Escape HTML untuk keamanan
     function escapeHtml(text) {
+      if (!text) return '';
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
