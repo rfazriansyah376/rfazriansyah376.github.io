@@ -96,23 +96,12 @@ permalink: /search
     metaAuthor.content = `${h1Title}`;
     if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
 
-    // OG properties
-    const setMeta = (attr, key, value) => {
-      let meta = document.querySelector(`${attr === 'property' ? 'meta[property' : 'meta[name'}="${key}"]`) || document.createElement('meta');
-      meta.setAttribute(attr, key);
-      meta.setAttribute('content', value);
-      if (!meta.parentNode) document.head.appendChild(meta);
-    };
-
-    setMeta('property', 'og:title', titleText);
-    setMeta('property', 'og:image', '/photo/fallback.png');
-    setMeta('property', 'og:url', location.href);
-    setMeta('property', 'og:type', 'website');
-    
     // Meta description khusus search
     if (isSearchPage) {
-      setMeta('name', 'description', `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}. Find Leaked Photo, Video, and Content.`);
-      setMeta('property', 'og:description', `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}`);
+      let metaDesc = document.querySelector('meta[name="description"]') || document.createElement('meta');
+      metaDesc.name = 'description';
+      metaDesc.content = `${searchQuery.replace(/\+/g, ' ')} on ${subdomain}. Find Leaked Photo, Video, and Content.`;
+      if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
     }
 
     // Schema.org SearchResultsPage untuk halaman pencarian
