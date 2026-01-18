@@ -3,8 +3,8 @@ layout: null
 ---
  
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" loading="lazy">
+<head loading="lazy">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
  <link rel="stylesheet" href="https://adabunalima5.github.io/file/css/01/01.css"/> 
@@ -118,9 +118,9 @@ layout: null
 
 	
   </head>
-<body>
+<body loading="lazy">
 
-<header style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--dynamic-color);">
+<header loading="lazy" style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--dynamic-color);">
   <h1 id="mainTitle" style="
       margin:0;
       font-size:16px;
@@ -195,7 +195,7 @@ layout: null
   });
 </script>
 
-<main>
+<main loading="lazy">
 	
 
 <style>
@@ -310,7 +310,7 @@ layout: null
 }
 </style>
 
-<section class="recent-posts">      
+<section class="recent-posts" loading="lazy">      
   <div id="recent-posts-container" class="grid"></div>      
   <div id="pagination" class="pagination"></div>      
 </section>      
@@ -453,7 +453,7 @@ function renderNoPosts() {
 
 
 <!-- awal include mengambil dari folder /includes/ berdasarkan nama subdomain/domain -->
-  <div class="spo" id="spo-dynamic-include"></div>
+  <div class="spo" id="spo-dynamic-include" loading="lazy"></div>
 <script>
 (function() {
   const spoHost = window.location.hostname.toLowerCase();
@@ -498,7 +498,7 @@ function renderNoPosts() {
 
 
 <!-- awal search -->
-<div class="widget-search" role="search">
+<div class="widget-search" role="search" loading="lazy">
   <form id="customSearchForm" method="get" action="/search/">
     <a href="/" id="homeLink" class="home-btn" aria-label="Home">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 24 24" width="22" height="22">
@@ -522,17 +522,14 @@ function renderNoPosts() {
 
     <br /><br />
 
-
+<div loading="lazy">
 {% include /ads/gobloggugel/sosmed.html %}
-	
-
-
 {% include file01.html %}
-
+</div>
 	
 	
 <!--FOOTER-->
-<footer style="text-align: center; padding: 30px 20px; font-size: 16px; color: #666;">
+<footer style="text-align: center; padding: 30px 20px; font-size: 16px; color: #666;" loading="lazy">
   <small>
     &copy; </small>
 <span id="current-year"></span> 
