@@ -5,8 +5,8 @@ permalink: /search
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" loading="lazy">
+<head loading="lazy">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://adabunalima5.github.io/file/css/01/01.css"/> 
@@ -104,31 +104,6 @@ permalink: /search
       if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
     }
 
-    // Schema.org SearchResultsPage untuk halaman pencarian
-    if (isSearchPage) {
-      const searchSchema = {
-        "@context": "https://schema.org",
-        "@type": "SearchResultsPage",
-        "name": `"${searchQuery.replace(/\+/g, ' ')}"`,
-        "url": location.href,
-        "mainEntity": {
-          "@type": "WebSite",
-          "name": subdomain,
-          "url": location.origin,
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": `${location.origin}/search?q={search_term_string}`,
-            "query-input": "required name=search_term_string"
-          }
-        }
-      };
-      
-      let searchSchemaScript = document.createElement('script');
-      searchSchemaScript.type = 'application/ld+json';
-      searchSchemaScript.textContent = JSON.stringify(searchSchema);
-      document.head.appendChild(searchSchemaScript);
-    }
-
     // Canonical
     let canonical = document.querySelector('link[rel="canonical"]') || document.createElement('link');
     canonical.setAttribute('rel', 'canonical');
@@ -154,7 +129,7 @@ permalink: /search
 
   <script src="https://unpkg.com/elasticlunr/elasticlunr.js"></script>
 </head>
-<body>
+<body loading="lazy">
   
   <header style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--dynamic-color);">
     <h1 id="mainTitle" style="
@@ -239,14 +214,10 @@ permalink: /search
     });
   </script>
 
-  <main>
+  <main loading="lazy">
 
 {% include /ads/gobloggugel/sosmed.html %}
 	
-
-
-
-    
     <style>
     /* Search Container */
     #searchResults {
@@ -503,7 +474,7 @@ permalink: /search
     }
     </style>
     
-    <div id="searchResults">Loading search results...</div>
+    <div id="searchResults" loading="lazy">Loading search results...</div>
 
     <script>
     // Fungsi untuk mengacak array (Fisher-Yates shuffle)
