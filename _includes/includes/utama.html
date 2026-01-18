@@ -1,0 +1,42 @@
+<!-- awal include mengambil dari folder /includes/ berdasarkan nama subdomain/domain -->
+  <div class="spo" id="spo-dynamic-include" loading="lazy"></div>
+<script>
+(function() {
+  const spoHost = window.location.hostname.toLowerCase();
+  const spoParts = spoHost.split(".");
+  const spoContainer = document.getElementById("spo-dynamic-include");
+
+  // Nama subdomain dan domain utama
+  let spoSub = spoParts.length > 2 ? spoParts[0].replace(/[^a-z0-9\-]/g, "") : null;
+  let spoDom = spoParts.length > 2 ? spoParts[1].replace(/[^a-z0-9\-]/g, "") : spoParts[0].replace(/[^a-z0-9\-]/g, "");
+
+  // Kandidat file sesuai aturan
+  let spoSubFile = spoSub ? spoSub + ".html" : null;
+  let spoDomFile = spoDom + ".html";
+  let spoFallback = "fallback.html";
+
+  // Fungsi loader dengan nama unik
+  function spoLoadFile(list) {
+    if (list.length === 0) return;
+
+    const file = list.shift();
+    fetch("/includes/" + file)
+      .then(r => {
+        if (!r.ok) throw new Error("not found");
+        return r.text();
+      })
+      .then(html => spoContainer.innerHTML = html)
+      .catch(() => spoLoadFile(list)); // coba berikutnya
+  }
+
+  // Susun urutan fallback
+  const spoFiles = [];
+  if (spoSubFile) spoFiles.push(spoSubFile);
+  spoFiles.push(spoDomFile);
+  spoFiles.push(spoFallback);
+
+  // Jalankan loader
+  spoLoadFile(spoFiles);
+})();
+</script>
+<!-- akhir include -->
