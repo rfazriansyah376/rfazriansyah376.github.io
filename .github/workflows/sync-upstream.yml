@@ -12,8 +12,8 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Sync fork with upstream
-        uses: tj-actions/sync-fork@v3
+      - name: Sync fork from upstream
+        uses: tj-actions/sync-fork@v2
         with:
           upstream_repo: nengmaya538/nengmaya538.github.io
           upstream_branch: master
