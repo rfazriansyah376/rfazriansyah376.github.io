@@ -1,0 +1,24 @@
+name: Sync From Upstream
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"   # 2x sehari
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+
+      - name: Sync upstream
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3
+        with:
+          upstream_repository: nengmaya538/nengmaya538.github.io
+          upstream_branch: master
+          target_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
