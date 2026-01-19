@@ -12,15 +12,10 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout fork
-        uses: actions/checkout@v4
+      - name: Sync fork with upstream
+        uses: tj-actions/sync-fork@v3
         with:
-          ref: master
-
-      - name: Sync upstream
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3
-        with:
-          upstream_repository: nengmaya538/nengmaya538.github.io
+          upstream_repo: nengmaya538/nengmaya538.github.io
           upstream_branch: master
           target_branch: master
           github_token: ${{ secrets.GITHUB_TOKEN }}
