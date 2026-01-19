@@ -18,3 +18,4 @@ permalink: /posts.json
   }{% unless forloop.last %},{% endunless %}
   {% endfor %}
 ]
+ 
