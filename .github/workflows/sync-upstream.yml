@@ -2,7 +2,7 @@ name: Sync From Upstream
 
 on:
   schedule:
-    - cron: "0 */12 * * *"   # 2x sehari
+    - cron: "0 * * * *"   # tiap 1 jam
   workflow_dispatch:
 
 permissions:
@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout fork
         uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Sync upstream
         uses: aormsby/Fork-Sync-With-Upstream-action@v3
