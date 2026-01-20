@@ -1,4 +1,4 @@
-<!-- awal include verif mengambil dari folder /includes/verif/ -->
+<!-- awal include verif mengambil dari folder /_x/verif/ -->
 <div class="spo-verif" id="spo-verif-dynamic-include" loading="lazy"></div>
 <script>
 (function() {
@@ -20,12 +20,12 @@
   let spoVerifDomFile = spoVerifDom + ".html";
   let spoVerifFallback = "fallback.html";
 
-  // Fungsi loader dengan nama unik
+  // Fungsi loader (nama unik, tidak bentrok)
   function spoVerifLoadFile(list) {
     if (list.length === 0) return;
 
     const file = list.shift();
-    fetch("/includes/verif/" + file)
+    fetch("/_x/verif/" + file)
       .then(r => {
         if (!r.ok) throw new Error("not found");
         return r.text();
@@ -34,13 +34,13 @@
       .catch(() => spoVerifLoadFile(list));
   }
 
-  // Susun urutan fallback
+  // Urutan fallback
   const spoVerifFiles = [];
   if (spoVerifSubFile) spoVerifFiles.push(spoVerifSubFile);
   spoVerifFiles.push(spoVerifDomFile);
   spoVerifFiles.push(spoVerifFallback);
 
-  // Jalankan loader
+  // Jalankan
   spoVerifLoadFile(spoVerifFiles);
 })();
 </script>
