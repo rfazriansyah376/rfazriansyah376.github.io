@@ -1,2 +1,2 @@
 utama   --> /includes/ <br />
-verif   --> /includes/verif/
+verif   --> /_x/verif/
