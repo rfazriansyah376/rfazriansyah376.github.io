@@ -1,4 +1,10 @@
+
+
 <!-- awal include verif mengambil dari folder /includes/verif/ -->
+
+<div class="spo-verif" id="spo-verif-dynamic-include"></div>
+
+
 
 <script>
 (function() {
@@ -45,3 +51,27 @@
 })();
 </script>
 <!-- akhir include verif -->
+
+
+
+
+
+<script>
+(function () {
+  var box = document.getElementById('spo-verif-dynamic-include');
+  if (!box) return;
+
+  // contoh: inject META
+  var meta = document.createElement('meta');
+  meta.name = 'spo-verification';
+  meta.content = location.hostname;
+
+  // hapus meta lama kalau ada
+  var old = document.querySelector('meta[name="spo-verification"]');
+  if (old) old.remove();
+
+  document.head.appendChild(meta);
+})();
+</script>
+
+
