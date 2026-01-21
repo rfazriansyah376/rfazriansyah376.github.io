@@ -1,51 +1,67 @@
-<!-- spo dynamic include verif (universal & powerfull) -->
-<div class="spo-verif" id="spo-verif-dynamic-include" loading="lazy"></div>
+<!-- spo universal verif include -->
 <script>
 (function() {
-  const host = window.location.hostname.toLowerCase();
-  const parts = host.split(".");
-  const container = document.getElementById("spo-verif-dynamic-include");
-  if (!container) return;
+  /* ===== RUN SAFE (HEAD / BODY) ===== */
+  function run() {
+    const host = window.location.hostname.toLowerCase();
+    const parts = host.split(".");
+    const clean = v => v.replace(/[^a-z0-9\-]/g, "");
 
-  const clean = v => v.replace(/[^a-z0-9\-]/g, "");
-  const fallbackFile = "fallback.html";
-  const files = [];
+    /* ===== CONTAINER (AUTO CREATE) ===== */
+    let container = document.getElementById("spo-verif-dynamic-include");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "spo-verif-dynamic-include";
+      container.className = "spo-verif";
+      container.setAttribute("loading", "lazy");
+      document.body.appendChild(container);
+    }
 
-  /* ===== PLATFORM PRIORITY (GLOBAL) ===== */
-  if (host.endsWith("github.io")) {
-    files.push("github.html");
-  } else if (host.endsWith("pages.dev")) {
-    files.push("pages.html");
+    const files = [];
+    const fallbackFile = "fallback.html";
+
+    /* ===== PLATFORM PRIORITY ===== */
+    if (host.endsWith("github.io")) {
+      files.push("github.html");
+    } else if (host.endsWith("pages.dev")) {
+      files.push("pages.html");
+    } else {
+      const sub = parts.length > 2 ? clean(parts[0]) : null;
+      const dom = parts.length > 1
+        ? clean(parts[parts.length - 2])
+        : clean(parts[0]);
+
+      if (sub) files.push(sub + ".html");
+      files.push(dom + ".html");
+    }
+
+    files.push(fallbackFile);
+
+    /* ===== LOADER ===== */
+    function load(list) {
+      if (!list.length) return;
+
+      const file = list.shift();
+      fetch("/_x/verif/" + file)
+        .then(r => {
+          if (!r.ok) throw new Error("skip");
+          return r.text();
+        })
+        .then(html => {
+          container.innerHTML = html;
+        })
+        .catch(() => load(list));
+    }
+
+    load(files);
+  }
+
+  /* ===== DOM READY GUARD ===== */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
   } else {
-    /* ===== DOMAIN NORMAL ===== */
-    const sub = parts.length > 2 ? clean(parts[0]) : null;
-    const dom = parts.length > 1
-      ? clean(parts[parts.length - 2])
-      : clean(parts[0]);
-
-    if (sub) files.push(sub + ".html");
-    files.push(dom + ".html");
+    run();
   }
-
-  files.push(fallbackFile);
-
-  /* ===== LOADER (STABLE & SAFE) ===== */
-  function load(list) {
-    if (!list.length) return;
-
-    const file = list.shift();
-    fetch("/_x/verif/" + file)
-      .then(r => {
-        if (!r.ok) throw new Error("skip");
-        return r.text();
-      })
-      .then(html => {
-        container.innerHTML = html;
-      })
-      .catch(() => load(list));
-  }
-
-  load(files);
 })();
 </script>
-<!-- end spo dynamic include -->
+<!-- end spo universal verif -->
