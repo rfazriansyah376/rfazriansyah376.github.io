@@ -1,35 +1,29 @@
-<!-- spo universal verif include (HEAD SAFE) -->
+<!-- spo universal verif include (body load, head inject) -->
 <script>
 (function() {
-  function whenBodyReady(cb) {
-    if (document.body) {
-      cb();
-    } else {
-      setTimeout(function() {
-        whenBodyReady(cb);
-      }, 20);
-    }
-  }
-
   function run() {
     const host = window.location.hostname.toLowerCase();
     const parts = host.split(".");
     const clean = v => v.replace(/[^a-z0-9\-]/g, "");
 
-    let container = document.getElementById("spo-verif-dynamic-include");
+    /* ===== TARGET INJECT ===== */
+    const target = document.head || document.getElementsByTagName("head")[0];
+    if (!target) return;
 
+    /* ===== CONTAINER KHUSUS HEAD ===== */
+    const id = "spo-verif-head-include";
+    let container = document.getElementById(id);
     if (!container) {
       container = document.createElement("div");
-      container.id = "spo-verif-dynamic-include";
-      container.className = "spo-verif";
-      container.setAttribute("loading", "lazy");
-      document.body.appendChild(container);
+      container.id = id;
+      container.style.display = "none";
+      target.appendChild(container);
     }
 
     const files = [];
-    const fallback = "/verif/fallback.html";
+    const fallback = "fallback.html";
 
-    /* ===== PLATFORM PRIORITY ===== */
+    /* ===== PRIORITAS PLATFORM ===== */
     if (host.endsWith("github.io")) {
       files.push("github.html");
     } else if (host.endsWith("pages.dev")) {
@@ -46,8 +40,10 @@
 
     files.push(fallback);
 
+    /* ===== LOADER ===== */
     function load(list) {
       if (!list.length) return;
+
       const file = list.shift();
       fetch("/verif/" + file)
         .then(r => {
@@ -63,12 +59,11 @@
     load(files);
   }
 
+  /* ===== BODY SAFE ===== */
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function() {
-      whenBodyReady(run);
-    });
+    document.addEventListener("DOMContentLoaded", run);
   } else {
-    whenBodyReady(run);
+    run();
   }
 })();
 </script>
