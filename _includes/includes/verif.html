@@ -1,47 +1,51 @@
-<!-- awal include verif mengambil dari folder /_x/verif/ -->
+<!-- spo dynamic include verif (universal & powerfull) -->
 <div class="spo-verif" id="spo-verif-dynamic-include" loading="lazy"></div>
 <script>
 (function() {
-  const spoVerifHost = window.location.hostname.toLowerCase();
-  const spoVerifParts = spoVerifHost.split(".");
-  const spoVerifContainer = document.getElementById("spo-verif-dynamic-include");
+  const host = window.location.hostname.toLowerCase();
+  const parts = host.split(".");
+  const container = document.getElementById("spo-verif-dynamic-include");
+  if (!container) return;
 
-  // Nama subdomain dan domain utama
-  let spoVerifSub = spoVerifParts.length > 2
-    ? spoVerifParts[0].replace(/[^a-z0-9\-]/g, "")
-    : null;
+  const clean = v => v.replace(/[^a-z0-9\-]/g, "");
+  const fallbackFile = "fallback.html";
+  const files = [];
 
-  let spoVerifDom = spoVerifParts.length > 2
-    ? spoVerifParts[1].replace(/[^a-z0-9\-]/g, "")
-    : spoVerifParts[0].replace(/[^a-z0-9\-]/g, "");
+  /* ===== PLATFORM PRIORITY (GLOBAL) ===== */
+  if (host.endsWith("github.io")) {
+    files.push("github.html");
+  } else if (host.endsWith("pages.dev")) {
+    files.push("pages.html");
+  } else {
+    /* ===== DOMAIN NORMAL ===== */
+    const sub = parts.length > 2 ? clean(parts[0]) : null;
+    const dom = parts.length > 1
+      ? clean(parts[parts.length - 2])
+      : clean(parts[0]);
 
-  // Kandidat file sesuai aturan
-  let spoVerifSubFile = spoVerifSub ? spoVerifSub + ".html" : null;
-  let spoVerifDomFile = spoVerifDom + ".html";
-  let spoVerifFallback = "fallback.html";
+    if (sub) files.push(sub + ".html");
+    files.push(dom + ".html");
+  }
 
-  // Fungsi loader (nama unik, tidak bentrok)
-  function spoVerifLoadFile(list) {
-    if (list.length === 0) return;
+  files.push(fallbackFile);
+
+  /* ===== LOADER (STABLE & SAFE) ===== */
+  function load(list) {
+    if (!list.length) return;
 
     const file = list.shift();
     fetch("/_x/verif/" + file)
       .then(r => {
-        if (!r.ok) throw new Error("not found");
+        if (!r.ok) throw new Error("skip");
         return r.text();
       })
-      .then(html => spoVerifContainer.innerHTML = html)
-      .catch(() => spoVerifLoadFile(list));
+      .then(html => {
+        container.innerHTML = html;
+      })
+      .catch(() => load(list));
   }
 
-  // Urutan fallback
-  const spoVerifFiles = [];
-  if (spoVerifSubFile) spoVerifFiles.push(spoVerifSubFile);
-  spoVerifFiles.push(spoVerifDomFile);
-  spoVerifFiles.push(spoVerifFallback);
-
-  // Jalankan
-  spoVerifLoadFile(spoVerifFiles);
+  load(files);
 })();
 </script>
-<!-- akhir include verif -->
+<!-- end spo dynamic include -->
