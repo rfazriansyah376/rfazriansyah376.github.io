@@ -1,14 +1,23 @@
-<!-- spo universal verif include -->
+<!-- spo universal verif include (HEAD SAFE) -->
 <script>
 (function() {
-  /* ===== RUN SAFE (HEAD / BODY) ===== */
+  function whenBodyReady(cb) {
+    if (document.body) {
+      cb();
+    } else {
+      setTimeout(function() {
+        whenBodyReady(cb);
+      }, 20);
+    }
+  }
+
   function run() {
     const host = window.location.hostname.toLowerCase();
     const parts = host.split(".");
     const clean = v => v.replace(/[^a-z0-9\-]/g, "");
 
-    /* ===== CONTAINER (AUTO CREATE) ===== */
     let container = document.getElementById("spo-verif-dynamic-include");
+
     if (!container) {
       container = document.createElement("div");
       container.id = "spo-verif-dynamic-include";
@@ -18,7 +27,7 @@
     }
 
     const files = [];
-    const fallbackFile = "fallback.html";
+    const fallback = "fallback.html";
 
     /* ===== PLATFORM PRIORITY ===== */
     if (host.endsWith("github.io")) {
@@ -35,14 +44,12 @@
       files.push(dom + ".html");
     }
 
-    files.push(fallbackFile);
+    files.push(fallback);
 
-    /* ===== LOADER ===== */
     function load(list) {
       if (!list.length) return;
-
       const file = list.shift();
-      fetch("/verif/" + file)
+      fetch("/_x/verif/" + file)
         .then(r => {
           if (!r.ok) throw new Error("skip");
           return r.text();
@@ -56,11 +63,12 @@
     load(files);
   }
 
-  /* ===== DOM READY GUARD ===== */
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", run);
+    document.addEventListener("DOMContentLoaded", function() {
+      whenBodyReady(run);
+    });
   } else {
-    run();
+    whenBodyReady(run);
   }
 })();
 </script>
