@@ -1,70 +1,47 @@
-<!-- spo universal verif include (body load, head inject) -->
+<!-- awal include verif mengambil dari folder /includes/verif/ -->
+
 <script>
 (function() {
-  function run() {
-    const host = window.location.hostname.toLowerCase();
-    const parts = host.split(".");
-    const clean = v => v.replace(/[^a-z0-9\-]/g, "");
+  const spoVerifHost = window.location.hostname.toLowerCase();
+  const spoVerifParts = spoVerifHost.split(".");
+  const spoVerifContainer = document.getElementById("spo-verif-dynamic-include");
 
-    /* ===== TARGET INJECT ===== */
-    const target = document.head || document.getElementsByTagName("head")[0];
-    if (!target) return;
+  // Nama subdomain dan domain utama
+  let spoVerifSub = spoVerifParts.length > 2
+    ? spoVerifParts[0].replace(/[^a-z0-9\-]/g, "")
+    : null;
 
-    /* ===== CONTAINER KHUSUS HEAD ===== */
-    const id = "spo-verif-head-include";
-    let container = document.getElementById(id);
-    if (!container) {
-      container = document.createElement("div");
-      container.id = id;
-      container.style.display = "none";
-      target.appendChild(container);
-    }
+  let spoVerifDom = spoVerifParts.length > 2
+    ? spoVerifParts[1].replace(/[^a-z0-9\-]/g, "")
+    : spoVerifParts[0].replace(/[^a-z0-9\-]/g, "");
 
-    const files = [];
-    const fallback = "fallback.html";
+  // Kandidat file sesuai aturan
+  let spoVerifSubFile = spoVerifSub ? spoVerifSub + ".html" : null;
+  let spoVerifDomFile = spoVerifDom + ".html";
+  let spoVerifFallback = "fallback.html";
 
-    /* ===== PRIORITAS PLATFORM ===== */
-    if (host.endsWith("github.io")) {
-      files.push("github.html");
-    } else if (host.endsWith("pages.dev")) {
-      files.push("pages.html");
-    } else {
-      const sub = parts.length > 2 ? clean(parts[0]) : null;
-      const dom = parts.length > 1
-        ? clean(parts[parts.length - 2])
-        : clean(parts[0]);
+  // Fungsi loader dengan nama unik
+  function spoVerifLoadFile(list) {
+    if (list.length === 0) return;
 
-      if (sub) files.push(sub + ".html");
-      files.push(dom + ".html");
-    }
-
-    files.push(fallback);
-
-    /* ===== LOADER ===== */
-    function load(list) {
-      if (!list.length) return;
-
-      const file = list.shift();
-      fetch("/verif/" + file)
-        .then(r => {
-          if (!r.ok) throw new Error("skip");
-          return r.text();
-        })
-        .then(html => {
-          container.innerHTML = html;
-        })
-        .catch(() => load(list));
-    }
-
-    load(files);
+    const file = list.shift();
+    fetch("/verif/" + file)
+      .then(r => {
+        if (!r.ok) throw new Error("not found");
+        return r.text();
+      })
+      .then(html => spoVerifContainer.innerHTML = html)
+      .catch(() => spoVerifLoadFile(list));
   }
 
-  /* ===== BODY SAFE ===== */
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", run);
-  } else {
-    run();
-  }
+  // Susun urutan fallback
+  const spoVerifFiles = [];
+  if (spoVerifSubFile) spoVerifFiles.push(spoVerifSubFile);
+  spoVerifFiles.push(spoVerifDomFile);
+  spoVerifFiles.push(spoVerifFallback);
+
+  // Jalankan loader
+  spoVerifLoadFile(spoVerifFiles);
 })();
 </script>
-<!-- end spo universal verif -->
+<!-- akhir include verif -->
