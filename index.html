@@ -4,8 +4,7 @@ layout: null
  
 <!DOCTYPE html>
 <html lang="en" loading="lazy">
-<head loading="lazy"
-class="spo-verif" id="spo-verif-dynamic-include">
+<head loading="lazy">
 	
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -117,12 +116,12 @@ class="spo-verif" id="spo-verif-dynamic-include">
 </script>	
 
 
-	
+	{% include verif.html %}
   </head>
 	
 <body loading="lazy">
 	
-{% include /includes/verif.html %}
+
 
 <header loading="lazy" style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--dynamic-color);">
   <h1 id="mainTitle" style="
