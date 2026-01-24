@@ -104,6 +104,14 @@ permalink: /search
       if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
     }
 
+    // Meta keywords khusus search
+    if (isSearchPage) {
+      let metaKeywords = document.querySelector('meta[name="keywords"]') || document.createElement('meta');
+      metaKeywords.name = 'keywords';
+      metaKeywords.content = `${searchQuery.replace(/\+/g, ', ')}`;
+      if (!metaKeywords.parentNode) document.head.appendChild(metaKeywords);
+    }
+
     // Canonical
     let canonical = document.querySelector('link[rel="canonical"]') || document.createElement('link');
     canonical.setAttribute('rel', 'canonical');
@@ -115,7 +123,7 @@ permalink: /search
   <!-- akhir Seo Otomatis -->
 
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
-<meta name="keywords" content="${h1Title}"/>
+
   <link rel="sitemap" type="application/xml" href="" id="sitemap-main">
   <link rel="alternate" type="application/rss+xml" href="" id="sitemap-feed">
 
@@ -570,7 +578,7 @@ permalink: /search
         );
 
         // Cari snippet dengan keyword
-        let snippet = post.excerpt || post.content.substring(0, 200);
+        let snippet = post.excerpt || post.content.substring(0, 50);
         const contentLower = (post.content || '').toLowerCase();
         const queryIndex = contentLower.indexOf(query);
         
