@@ -1,0 +1,1093 @@
+---
+layout: null
+---
+ 
+<!DOCTYPE html>
+<html lang="en" loading="lazy">
+<head loading="lazy">
+	
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="https://adabunalima5.github.io/file/css/01/01.css"/> 
+  
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#317EFB" />
+
+
+	
+{% include head.html %}	
+
+
+<!-- awal Seo Otomatis khusus untuk Homepage -->
+<script>
+(function () {
+  const hostname = location.hostname;
+  const pathname = location.pathname;
+
+  let subdomainRaw = hostname.split('.')[0];
+  if (subdomainRaw.toLowerCase() === 'www') subdomainRaw = hostname.split('.')[1] || '';
+
+  const formatText = str => str
+    .replace(/[-_]/g, ' ')
+    .replace(/\+/g, ' ')         // tambahan: ganti + jadi spasi
+    .replace(/\b\w/g, c => c.toUpperCase());
+
+  const subdomain = formatText(subdomainRaw.trim());
+  const cleanPath = pathname.replace(/^\/+|\/+$/g, '');
+  const isHome = !cleanPath || /^index\.(html?|php)$/i.test(cleanPath);
+
+  let rawPageName = cleanPath.split('/').pop() || '';
+  rawPageName = rawPageName.replace(/\.[^.]+$/, '').trim(); // hilangkan ekstensi
+  rawPageName = decodeURIComponent(rawPageName);
+
+  let titleText = isHome
+    ? subdomain
+    : `${formatText(rawPageName)} - ${subdomain}`;
+
+  // Title
+  let titleTag = document.querySelector('title') || document.createElement('title');
+  titleTag.textContent = titleText;
+  if (!titleTag.parentNode) document.head.appendChild(titleTag);
+
+  // Meta author
+  let metaAuthor = document.querySelector('meta[name="author"]') || document.createElement('meta');
+  metaAuthor.name = 'author';
+  metaAuthor.content = `${subdomain}`;
+  if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
+
+  // Schema.org WebSite tanpa potentialAction (hilangkan sitelink search)
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": subdomain,
+    "url": location.origin
+  };
+  let schemaScript = document.createElement('script');
+  schemaScript.type = 'application/ld+json';
+  schemaScript.textContent = JSON.stringify(schemaData);
+  document.head.appendChild(schemaScript);
+
+  // Canonical otomatis sesuai halaman saat ini
+  let canonical = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+  canonical.setAttribute('rel', 'canonical');
+  canonical.setAttribute('href', location.href);
+  if (!canonical.parentNode) document.head.appendChild(canonical);
+
+})();
+</script>
+<!-- akhir Seo Otomatis khusus untuk homepage -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+
+
+
+
+
+
+<link rel="sitemap" type="application/xml" href="" id="sitemap-main">
+<link rel="alternate" type="application/rss+xml" href="" id="sitemap-feed">
+
+<script>
+(function() {
+  var origin = window.location.origin;
+  document.getElementById("sitemap-main").href = origin + "/sitemap.xml";
+  document.getElementById("sitemap-feed").href = origin + "/feed.xml";
+})();
+</script>	
+
+
+	{% include verif.html %}
+  </head>
+	
+<body loading="lazy">
+	
+
+
+<!-- Header blog dengan ID dan Class yang unik -->
+<header class="blog-header-main floating-header-main" loading="lazy">
+  <div class="header-content-main">
+    <h1 id="blogMainTitle" class="blog-title-main"></h1>
+    <div class="nav-actions-main">
+      <button class="nav-button-main menu-btn-main" id="blogMenuToggle" title="Menu" aria-label="Menu">
+        <!-- Hamburger Icon -->
+        <svg id="blogIconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+        <!-- Close Icon -->
+        <svg id="blogIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main" style="display:none;">
+          <path d="M6 6l12 12M6 18l12-12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+/* Header blog melayang dengan class unik */
+.blog-header-main.floating-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  border-bottom: none;
+}
+
+.header-content-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+/* Judul blog yang lebih besar dengan class unik */
+.blog-title-main {
+  margin: 0;
+  font-size: 20px;
+  color: #000;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.nav-actions-main {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* Tombol menu - HITAM TANPA BACKGROUND dengan class unik */
+.menu-btn-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  color: #000;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 0;
+  transition: opacity 0.2s ease;
+}
+
+.menu-btn-main:hover {
+  opacity: 0.6;
+  background: transparent;
+}
+
+.menu-btn-main:active {
+  opacity: 0.4;
+}
+
+.menu-icon-main {
+  width: 24px;
+  height: 24px;
+  stroke: #000000;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Menu panel dropdown dengan ID unik */
+#blogMenuPanel {
+  display: none;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+}
+
+#blogMenuPanel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#blogMenuPanel li {
+  margin: 0;
+  padding: 0;
+}
+
+#blogMenuPanel a {
+  color: #000;
+  text-decoration: none;
+  display: block;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+#blogMenuPanel a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* DESKTOP - Menu dengan layout yang bagus untuk layar besar */
+@media (min-width: 1025px) {
+  .blog-header-main.floating-header-main {
+    padding: 12px 24px;
+  }
+  
+  .header-content-main {
+    max-width: 1400px;
+  }
+  
+  .blog-title-main {
+    font-size: 22px;
+  }
+  
+  .menu-btn-main {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .menu-icon-main {
+    width: 26px;
+    height: 26px;
+  }
+  
+  /* Menu untuk DESKTOP */
+  #blogMenuPanel {
+    top: 65px;
+    right: 24px;
+    padding: 20px;
+    min-width: 220px;
+    max-width: 250px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 12px 16px;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* TABLET - Antara desktop dan mobile */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .blog-header-main.floating-header-main {
+    padding: 10px 16px;
+  }
+  
+  .header-content-main {
+    gap: 14px;
+  }
+  
+  .blog-title-main {
+    font-size: 18px;
+  }
+  
+  .menu-btn-main {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .menu-icon-main {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.5;
+  }
+  
+  /* Menu untuk TABLET */
+  #blogMenuPanel {
+    top: 58px;
+    right: 16px;
+    padding: 16px;
+    min-width: 200px;
+    max-width: 220px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* MOBILE - Optimal untuk layar kecil */
+@media (max-width: 768px) {
+  .blog-header-main.floating-header-main {
+    padding: 8px 12px;
+  }
+  
+  .blog-title-main {
+    font-size: 17px;
+  }
+  
+  .menu-btn-main {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .menu-icon-main {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+  }
+  
+  /* Menu untuk MOBILE */
+  #blogMenuPanel {
+    top: 56px;
+    right: 12px;
+    padding: 14px;
+    min-width: 180px;
+    max-width: 200px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 9px 12px;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* MOBILE KECIL - Sangat compact */
+@media (max-width: 480px) {
+  .blog-header-main.floating-header-main {
+    padding: 8px 10px;
+  }
+  
+  .header-content-main {
+    gap: 12px;
+  }
+  
+  .blog-title-main {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .menu-btn-main {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .menu-icon-main {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
+  }
+  
+  /* Menu untuk MOBILE KECIL */
+  #blogMenuPanel {
+    top: 54px;
+    right: 10px;
+    padding: 12px;
+    min-width: 160px;
+    max-width: 180px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 8px 10px;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* Tambah padding body untuk header fixed */
+body {
+  padding-top: 60px !important;
+}
+
+/* Pastikan konten tidak tertutup header */
+main, .content {
+  margin-top: 20px !important;
+}
+</style>
+
+<!-- Menu Panel dengan ID unik -->
+<div id="blogMenuPanel">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/contact/">Contact</a></li>
+    <li><a href="/privacy-policy/">Privacy Policy</a></li>
+    <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+  </ul>
+</div>
+
+<script>
+// Fungsi untuk menampilkan judul blog dari domain dengan ID unik
+(function(){
+  const host = window.location.hostname.split(".");
+
+  let sub = "";
+
+  if (host[0] === "www") {
+    // www.domain.my.id → ambil host[1]
+    sub = host[1];
+  } else if (host.length === 3) {
+    // domain.my.id → ambil host[0]
+    sub = host[0];
+  } else if (host.length === 4) {
+    // sub01.domain.my.id → ambil host[0]
+    sub = host[0];
+  } else {
+    // fallback, ambil bagian pertama
+    sub = host[0];
+  }
+
+  const clean = sub.replace(/-/g, " "); // ganti strip jadi spasi
+  const title = clean.replace(/\b\w/g, c => c.toUpperCase()); // kapital awal kata
+  document.getElementById("blogMainTitle").textContent = title;
+})();
+
+// Fungsi untuk toggle menu dengan ID unik
+const toggleBtnBlog = document.getElementById('blogMenuToggle');
+const menuPanelBlog = document.getElementById('blogMenuPanel');
+const iconMenuBlog = document.getElementById('blogIconMenu');
+const iconCloseBlog = document.getElementById('blogIconClose');
+
+toggleBtnBlog.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isVisible = menuPanelBlog.style.display === 'block';
+  
+  // Toggle display
+  menuPanelBlog.style.display = isVisible ? 'none' : 'block';
+  iconMenuBlog.style.display = isVisible ? 'inline' : 'none';
+  iconCloseBlog.style.display = isVisible ? 'none' : 'inline';
+  
+  // Posisikan menu panel di bawah tombol
+  if (!isVisible) {
+    const btnRect = toggleBtnBlog.getBoundingClientRect();
+    menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
+    menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
+  }
+});
+
+// Tutup menu ketika klik di luar
+document.addEventListener('click', (e) => {
+  if (!menuPanelBlog.contains(e.target) && !toggleBtnBlog.contains(e.target) && menuPanelBlog.style.display === 'block') {
+    menuPanelBlog.style.display = 'none';
+    iconMenuBlog.style.display = 'inline';
+    iconCloseBlog.style.display = 'none';
+  }
+});
+
+// Tutup menu dengan ESC key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuPanelBlog.style.display === 'block') {
+    menuPanelBlog.style.display = 'none';
+    iconMenuBlog.style.display = 'inline';
+    iconCloseBlog.style.display = 'none';
+  }
+});
+
+// Update posisi menu saat scroll atau resize
+function updateBlogMenuPosition() {
+  if (menuPanelBlog.style.display === 'block') {
+    const btnRect = toggleBtnBlog.getBoundingClientRect();
+    menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
+    menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
+  }
+}
+
+// Event listeners untuk update posisi
+window.addEventListener('resize', updateBlogMenuPosition);
+window.addEventListener('scroll', updateBlogMenuPosition);
+
+// Inisialisasi posisi awal
+window.addEventListener('load', updateBlogMenuPosition);
+</script>
+<main loading="lazy">
+	
+	{% include /includes/utama.html %}
+
+<style>
+.recent-posts {
+  margin: 3rem auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+}
+.recent-posts h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.recent-posts .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.post-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.post-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+.post-card h3 a {
+  text-decoration: none;
+  color: #222;
+  transition: color 0.2s ease;
+}
+.post-card h3 a:hover {
+  color: var(--dynamic-color, #0078ff);
+}
+.post-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+/* Pagination - Improved for Responsive & Compact Design */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pagination button,
+.pagination span {
+  flex-shrink: 0;
+}
+
+.pagination button {
+  background: var(--dynamic-color, #0078ff);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  min-width: 36px;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #005ec7;
+  transform: translateY(-1px);
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  color: #555;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 0.9rem;
+  color: #333;
+  user-select: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .pagination {
+    gap: 0.3rem;
+  }
+  .pagination button {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 5px;
+  }
+  .pagination span {
+    font-size: 0.8rem;
+  }
+}
+</style>
+
+<section class="recent-posts" loading="lazy">      
+  <div id="recent-posts-container" class="grid"></div>      
+  <div id="pagination" class="pagination"></div>      
+</section>      
+
+<script>
+function getCategoryCandidates(hostname) {      
+  const parts = hostname.split('.');      
+  if (parts.length < 2) return { sub: null, domain: null };      
+  const maybeDomainIndex = parts.length - 3;      
+  const domain = (maybeDomainIndex >= 0) ? parts[maybeDomainIndex] : parts[0];      
+  const subLabels = (maybeDomainIndex > 0) ? parts.slice(0, maybeDomainIndex) : [];      
+  const rawSub = subLabels.length ? subLabels.join('.') : null;      
+  const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
+  return { sub: rawSub ? normalize(rawSub) : null, domain: domain ? normalize(domain) : null };      
+}      
+
+const urlParams = new URLSearchParams(window.location.search);
+const initialPage = parseInt(urlParams.get('page')) || 1;
+const { sub: subCategory, domain: domainCategory } = getCategoryCandidates(window.location.hostname);      
+const POSTS_PER_PAGE = 6;      
+let currentPage = initialPage;      
+let filteredPosts = [];      
+
+fetch('/posts.json')      
+  .then(res => {      
+    if (!res.ok) throw new Error('Failed to load posts.json');      
+    return res.json();      
+  })      
+  .then(posts => {      
+    const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();      
+    if (!Array.isArray(posts) || posts.length === 0) return renderNoPosts();      
+
+    if (subCategory) {      
+      filteredPosts = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === subCategory));      
+    }      
+
+    if (filteredPosts.length === 0 && domainCategory) {      
+      filteredPosts = posts.filter(p => Array.isArray(p.categories) && p.categories.some(c => normalize(c) === domainCategory));      
+    }      
+
+    if (filteredPosts.length === 0) filteredPosts = posts;      
+
+    filteredPosts.sort((a, b) => new Date(b.date) - new Date(a.date));      
+    renderPosts();      
+  })      
+  .catch(err => {      
+    console.error('Error loading posts:', err);      
+    renderNoPosts();      
+  });      
+
+function renderPosts() {      
+  const container = document.getElementById('recent-posts-container');      
+  const pagination = document.getElementById('pagination');      
+  container.innerHTML = '';      
+  pagination.innerHTML = '';      
+
+  const start = (currentPage - 1) * POSTS_PER_PAGE;      
+  const end = start + POSTS_PER_PAGE;      
+  const pagePosts = filteredPosts.slice(start, end);      
+
+  pagePosts.forEach(post => {      
+    const card = document.createElement('div');      
+    card.className = 'post-card';      
+
+    const h3 = document.createElement('h3');      
+    const linkTitle = document.createElement('a');      
+    linkTitle.href = post.url || '#';      
+    linkTitle.textContent = post.title || '(no title)';      
+    h3.appendChild(linkTitle);      
+    card.appendChild(h3);      
+
+    const desc = document.createElement('p');      
+    desc.textContent = post.excerpt || '(no excerpt available)';      
+    card.appendChild(desc);      
+
+    container.appendChild(card);      
+  });      
+
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);      
+  if (totalPages > 1) {      
+    const prevBtn = document.createElement('button');      
+    prevBtn.textContent = 'Prev';      
+    prevBtn.disabled = currentPage === 1;      
+    prevBtn.onclick = () => changePage(currentPage - 1);      
+    pagination.appendChild(prevBtn);      
+
+    const maxVisible = 5;      
+    let startPage = Math.max(1, currentPage - 2);      
+    let endPage = Math.min(totalPages, currentPage + 2);      
+
+    if (currentPage <= 3) endPage = Math.min(totalPages, maxVisible);      
+    else if (currentPage >= totalPages - 2) startPage = Math.max(1, totalPages - maxVisible + 1);      
+
+    if (startPage > 1) { addPageButton(1); if (startPage > 2) addEllipsis(); }      
+    for (let i = startPage; i <= endPage; i++) addPageButton(i);      
+    if (endPage < totalPages) { if (endPage < totalPages - 1) addEllipsis(); addPageButton(totalPages); }      
+
+    const nextBtn = document.createElement('button');      
+    nextBtn.textContent = 'Next';      
+    nextBtn.disabled = currentPage === totalPages;      
+    nextBtn.onclick = () => changePage(currentPage + 1);      
+    pagination.appendChild(nextBtn);      
+  }      
+}      
+
+function changePage(page) {
+  currentPage = page;
+  renderPosts();
+  const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
+  history.pushState({}, '', newUrl);
+}
+
+function addPageButton(page) {      
+  const pagination = document.getElementById('pagination');      
+  const pageBtn = document.createElement('button');      
+  pageBtn.textContent = page;      
+  if (page === currentPage) {      
+    pageBtn.disabled = true;      
+    pageBtn.style.fontWeight = 'bold';      
+  }      
+  pageBtn.onclick = () => changePage(page);      
+  pagination.appendChild(pageBtn);      
+}      
+
+function addEllipsis() {      
+  const pagination = document.getElementById('pagination');      
+  const span = document.createElement('span');      
+  span.textContent = '…';      
+  pagination.appendChild(span);      
+}      
+
+function renderNoPosts() {      
+  const container = document.getElementById('recent-posts-container');      
+  const pagination = document.getElementById('pagination');      
+  container.innerHTML = '<p>No posts found.</p>';      
+  pagination.innerHTML = '';      
+}      
+</script>
+
+
+
+
+</main>
+
+
+<!-- awal search -->
+<div class="custom-search-footer-container">
+  <div class="custom-search-footer" role="search">
+    <form id="customSearchWidgetForm" method="get" action="/search/">
+      <!-- Tombol Home - tetap sama (bagus) -->
+      <a href="/" id="customHomeLink" class="custom-home-btn" aria-label="Home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="custom-home-icon">
+          <path d="M12 3L3 12h3v8h5v-6h2v6h5v-8h3L12 3z"/>
+        </svg>
+      </a>
+      
+      <!-- Input Pencarian -->
+      <div class="custom-search-input-wrapper">
+        <input 
+          id="customSearchInput"
+          type="text"
+          name="q"
+          placeholder="Search..."
+          autocomplete="on"
+          aria-label="Search input"
+          class="custom-search-field"/>
+      </div>
+      
+      <!-- Tombol Search - DIUBAH agar bagus seperti tombol home -->
+      <button type="submit" class="custom-search-submit-btn" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="custom-search-icon">
+          <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+.custom-search-footer-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #e0e0e0;
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.custom-search-footer {
+  background-color: transparent;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+}
+
+#customSearchWidgetForm {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  height: 64px;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Tombol Home - (tetap bagus) */
+.custom-home-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: #000;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.custom-home-btn:hover {
+  opacity: 0.8;
+}
+
+.custom-home-btn:active {
+  opacity: 0.6;
+}
+
+.custom-home-icon {
+  fill: #000;
+}
+
+/* Container Input */
+.custom-search-input-wrapper {
+  flex: 1;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* Input Pencarian */
+.custom-search-field {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 14px;
+  color: #000;
+  outline: none;
+  padding: 0 16px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.custom-search-field::placeholder {
+  color: #999;
+}
+
+.custom-search-field:focus {
+  border-color: #000;
+}
+
+/* Tombol Search - DIUBAH agar sama seperti tombol home */
+.custom-search-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-search-submit-btn:hover {
+  opacity: 0.8;
+}
+
+.custom-search-submit-btn:active {
+  opacity: 0.6;
+}
+
+.custom-search-icon {
+  fill: #000;
+}
+
+/* Responsif untuk tablet */
+@media (max-width: 1024px) {
+  #customSearchWidgetForm {
+    padding: 12px;
+    gap: 12px;
+    height: 60px;
+  }
+  
+  .custom-home-btn,
+  .custom-search-submit-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .custom-search-input-wrapper {
+    height: 44px;
+  }
+  
+  .custom-search-field {
+    font-size: 13px;
+    padding: 0 14px;
+  }
+}
+
+/* Responsif untuk mobile */
+@media (max-width: 768px) {
+  #customSearchWidgetForm {
+    padding: 10px 12px;
+    height: 56px;
+    gap: 10px;
+  }
+  
+  .custom-home-btn,
+  .custom-search-submit-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .custom-search-input-wrapper {
+    height: 40px;
+  }
+  
+  .custom-search-field {
+    font-size: 13px;
+    padding: 0 12px;
+  }
+}
+
+/* Responsif untuk mobile kecil */
+@media (max-width: 480px) {
+  #customSearchWidgetForm {
+    padding: 8px 10px;
+    height: 52px;
+    gap: 8px;
+  }
+  
+  .custom-home-btn,
+  .custom-search-submit-btn {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .custom-home-icon,
+  .custom-search-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .custom-search-input-wrapper {
+    height: 36px;
+  }
+  
+  .custom-search-field {
+    font-size: 12px;
+    padding: 0 10px;
+  }
+}
+
+/* Tambahan untuk mencegah overlap dengan konten */
+body {
+  padding-bottom: 70px !important;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('customSearchInput');
+  const form = document.getElementById('customSearchWidgetForm');
+  
+  // Focus input ketika halaman dimuat
+  searchInput.focus();
+  
+  // Submit form dengan Enter
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      form.submit();
+    }
+  });
+});
+</script>
+<!-- akhir search -->
+
+    <br /><br />
+
+<div loading="lazy">
+{% include /ads/gobloggugel/sosmed.html %}
+{% include file01.html %}
+</div>
+	
+	
+<!--FOOTER-->
+<footer style="text-align: center; padding: 30px 20px; font-size: 16px; color: #666;" loading="lazy">
+  <small>
+    &copy; </small>
+<span id="current-year"></span> 
+ -  <a id="main-heading2" href="/" style="color: inherit; text-decoration: none;"></a>.
+  <span>   All rights reserved.</span> 
+  <script>
+    (function () {
+      const domain = window.location.hostname || "";
+      const parts = domain.split(".");
+      let brand = "Blog";
+      let rootDomain = domain;
+      // Khusus untuk .my.id
+      if (domain.endsWith(".my.id") && parts.length > 2) {
+        // Ambil nama domain utama (2 bagian sebelum .my.id)
+        const baseName = parts[parts.length - 3]; // contoh: domain / do-main
+        rootDomain = "www." + baseName + ".my.id";
+
+        // Ubah jadi Title Case dengan spasi jika ada tanda minus
+        brand = baseName
+          .split("-")
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+          .join(" ");
+      }
+
+      // Update elemen
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+      const headingEl = document.getElementById("main-heading2");
+      headingEl.textContent = brand;
+      headingEl.href = "https://" + rootDomain;
+    })();
+  </script>
+</footer>
+	
+	
+
+<br /><br /><br />
+
+
+	
+
+</body>
+</html>
