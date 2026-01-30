@@ -1,25 +1,5 @@
-<!-- awal search -->
-<div class="widget-search" role="search">
-  <form id="customSearchForm" method="get" action="/search/">
-    <a href="/" id="homeLink" class="home-btn" aria-label="Home">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 24 24" width="22" height="22">
-        <path d="M3 10.5l9-7 9 7V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z"/>
-      </svg>
-    </a>
-    <input 
-      id="searchInput"
-      type="text"
-      name="q"
-      placeholder="Search..."
-      autocomplete="on"/>
-    <button type="submit" class="search-btn" aria-label="Search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="22" height="22" fill="currentColor">
-        <path d="M21 20l-5.8-5.8a7 7 0 10-1.4 1.4L20 21l1-1zM4 10a6 6 0 1112 0 6 6 0 01-12 0z"/>
-      </svg>
-    </button>
-  </form>
-</div>
-<!-- akhir search -->
+{% include awal-search.html %}
+
 	
 
 <!--FOOTER-->
