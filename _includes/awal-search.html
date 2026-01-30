@@ -1,0 +1,251 @@
+<div class="custom-search-footer-container">
+  <div class="custom-search-footer" role="search">
+    <form id="customSearchWidgetForm" method="get" action="/search/">
+      <!-- Tombol Home - tetap sama (bagus) -->
+      <a href="/" id="customHomeLink" class="custom-home-btn" aria-label="Home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="custom-home-icon">
+          <path d="M12 3L3 12h3v8h5v-6h2v6h5v-8h3L12 3z"/>
+        </svg>
+      </a>
+      
+      <!-- Input Pencarian -->
+      <div class="custom-search-input-wrapper">
+        <input 
+          id="customSearchInput"
+          type="text"
+          name="q"
+          placeholder="Search..."
+          autocomplete="on"
+          aria-label="Search input"
+          class="custom-search-field"/>
+      </div>
+      
+      <!-- Tombol Search - DIUBAH agar bagus seperti tombol home -->
+      <button type="submit" class="custom-search-submit-btn" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="custom-search-icon">
+          <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+.custom-search-footer-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #e0e0e0;
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.custom-search-footer {
+  background-color: transparent;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+}
+
+#customSearchWidgetForm {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  height: 64px;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Tombol Home - (tetap bagus) */
+.custom-home-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: #000;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.custom-home-btn:hover {
+  opacity: 0.8;
+}
+
+.custom-home-btn:active {
+  opacity: 0.6;
+}
+
+.custom-home-icon {
+  fill: #000;
+}
+
+/* Container Input */
+.custom-search-input-wrapper {
+  flex: 1;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* Input Pencarian */
+.custom-search-field {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 14px;
+  color: #000;
+  outline: none;
+  padding: 0 16px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.custom-search-field::placeholder {
+  color: #999;
+}
+
+.custom-search-field:focus {
+  border-color: #000;
+}
+
+/* Tombol Search - DIUBAH agar sama seperti tombol home */
+.custom-search-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-search-submit-btn:hover {
+  opacity: 0.8;
+}
+
+.custom-search-submit-btn:active {
+  opacity: 0.6;
+}
+
+.custom-search-icon {
+  fill: #000;
+}
+
+/* Responsif untuk tablet */
+@media (max-width: 1024px) {
+  #customSearchWidgetForm {
+    padding: 12px;
+    gap: 12px;
+    height: 60px;
+  }
+  
+  .custom-home-btn,
+  .custom-search-submit-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .custom-search-input-wrapper {
+    height: 44px;
+  }
+  
+  .custom-search-field {
+    font-size: 13px;
+    padding: 0 14px;
+  }
+}
+
+/* Responsif untuk mobile */
+@media (max-width: 768px) {
+  #customSearchWidgetForm {
+    padding: 10px 12px;
+    height: 56px;
+    gap: 10px;
+  }
+  
+  .custom-home-btn,
+  .custom-search-submit-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .custom-search-input-wrapper {
+    height: 40px;
+  }
+  
+  .custom-search-field {
+    font-size: 13px;
+    padding: 0 12px;
+  }
+}
+
+/* Responsif untuk mobile kecil */
+@media (max-width: 480px) {
+  #customSearchWidgetForm {
+    padding: 8px 10px;
+    height: 52px;
+    gap: 8px;
+  }
+  
+  .custom-home-btn,
+  .custom-search-submit-btn {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .custom-home-icon,
+  .custom-search-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .custom-search-input-wrapper {
+    height: 36px;
+  }
+  
+  .custom-search-field {
+    font-size: 12px;
+    padding: 0 10px;
+  }
+}
+
+/* Tambahan untuk mencegah overlap dengan konten */
+body {
+  padding-bottom: 70px !important;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('customSearchInput');
+  const form = document.getElementById('customSearchWidgetForm');
+  
+  // Focus input ketika halaman dimuat
+  searchInput.focus();
+  
+  // Submit form dengan Enter
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      form.submit();
+    }
+  });
+});
+</script>
