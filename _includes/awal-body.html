@@ -1,52 +1,421 @@
-<header style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--dynamic-color);">
-  <h1 id="blf01_mainTitle" style="
-      margin:0;
-      font-size:16px;
-      color:#fff;
-      flex:1;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;">{{ page.title }}</h1>
-  <div class="nav-actions" style="margin-left:10px;flex-shrink:0;">
-    <button class="nav-button" id="menuToggle" title="Menu" aria-label="Menu" 
-            style="background:none;border:none;cursor:pointer;">
-      <!-- Hamburger Icon -->
-      <svg id="iconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
-           style="width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;">
-        <path d="M3 6h18M3 12h18M3 18h18"/>
-      </svg>
-      <!-- Close Icon -->
-      <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
-           style="display:none;width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;">
-        <path d="M6 6l12 12M6 18l12-12"/>
-      </svg>
-    </button>
+
+<!-- Header blog dengan ID dan Class yang unik -->
+<header class="blog-header-main floating-header-main" loading="lazy">
+  <div class="header-content-main">
+    <h1 id="blogMainTitle" class="blog-title-main">{{ page.title }}</h1>
+    <div class="nav-actions-main">
+      <button class="nav-button-main menu-btn-main" id="blogMenuToggle" title="Menu" aria-label="Menu">
+        <!-- Hamburger Icon -->
+        <svg id="blogIconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+        <!-- Close Icon -->
+        <svg id="blogIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main" style="display:none;">
+          <path d="M6 6l12 12M6 18l12-12"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </header>
 
-<div id="menuPanel" style="display:none;background:var(--dynamic-color);padding:10px;">
-  <ul style="list-style:none;margin:0;padding:0;">
-    <li><a href="/" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Home</a></li>
-    <li><a href="/contact/" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Contact</a></li>
-    <li><a href="/privacy-policy/" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Privacy Policy</a></li>
-    <li><a href="/terms-and-conditions/" style="color:#fff;text-decoration:none;display:block;padding:5px 0;">Terms & Conditions</a></li>
+<style>
+/* Header blog melayang dengan class unik */
+.blog-header-main.floating-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  border-bottom: none;
+}
+
+.header-content-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+/* Judul blog yang lebih besar dengan class unik */
+.blog-title-main {
+  margin: 0;
+  font-size: 20px;
+  color: #000;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.nav-actions-main {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* Tombol menu - HITAM TANPA BACKGROUND dengan class unik */
+.menu-btn-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  color: #000;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 0;
+  transition: opacity 0.2s ease;
+}
+
+.menu-btn-main:hover {
+  opacity: 0.6;
+  background: transparent;
+}
+
+.menu-btn-main:active {
+  opacity: 0.4;
+}
+
+.menu-icon-main {
+  width: 24px;
+  height: 24px;
+  stroke: #000000;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Menu panel dropdown dengan ID unik */
+#blogMenuPanel {
+  display: none;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+}
+
+#blogMenuPanel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#blogMenuPanel li {
+  margin: 0;
+  padding: 0;
+}
+
+#blogMenuPanel a {
+  color: #000;
+  text-decoration: none;
+  display: block;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+#blogMenuPanel a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* DESKTOP - Menu dengan layout yang bagus untuk layar besar */
+@media (min-width: 1025px) {
+  .blog-header-main.floating-header-main {
+    padding: 12px 24px;
+  }
+  
+  .header-content-main {
+    max-width: 1400px;
+  }
+  
+  .blog-title-main {
+    font-size: 22px;
+  }
+  
+  .menu-btn-main {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .menu-icon-main {
+    width: 26px;
+    height: 26px;
+  }
+  
+  /* Menu untuk DESKTOP */
+  #blogMenuPanel {
+    top: 65px;
+    right: 24px;
+    padding: 20px;
+    min-width: 220px;
+    max-width: 250px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 12px 16px;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* TABLET - Antara desktop dan mobile */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .blog-header-main.floating-header-main {
+    padding: 10px 16px;
+  }
+  
+  .header-content-main {
+    gap: 14px;
+  }
+  
+  .blog-title-main {
+    font-size: 18px;
+  }
+  
+  .menu-btn-main {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .menu-icon-main {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.5;
+  }
+  
+  /* Menu untuk TABLET */
+  #blogMenuPanel {
+    top: 58px;
+    right: 16px;
+    padding: 16px;
+    min-width: 200px;
+    max-width: 220px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* MOBILE - Optimal untuk layar kecil */
+@media (max-width: 768px) {
+  .blog-header-main.floating-header-main {
+    padding: 8px 12px;
+  }
+  
+  .blog-title-main {
+    font-size: 17px;
+  }
+  
+  .menu-btn-main {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .menu-icon-main {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+  }
+  
+  /* Menu untuk MOBILE */
+  #blogMenuPanel {
+    top: 56px;
+    right: 12px;
+    padding: 14px;
+    min-width: 180px;
+    max-width: 200px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 9px 12px;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* MOBILE KECIL - Sangat compact */
+@media (max-width: 480px) {
+  .blog-header-main.floating-header-main {
+    padding: 8px 10px;
+  }
+  
+  .header-content-main {
+    gap: 12px;
+  }
+  
+  .blog-title-main {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .menu-btn-main {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .menu-icon-main {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
+  }
+  
+  /* Menu untuk MOBILE KECIL */
+  #blogMenuPanel {
+    top: 54px;
+    right: 10px;
+    padding: 12px;
+    min-width: 160px;
+    max-width: 180px;
+  }
+  
+  #blogMenuPanel a {
+    padding: 8px 10px;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  
+  #blogMenuPanel li:not(:last-child) a {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* Tambah padding body untuk header fixed */
+body {
+  padding-top: 60px !important;
+}
+
+/* Pastikan konten tidak tertutup header */
+main, .content {
+  margin-top: 20px !important;
+}
+</style>
+
+<!-- Menu Panel dengan ID unik -->
+<div id="blogMenuPanel">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/contact/">Contact</a></li>
+    <li><a href="/privacy-policy/">Privacy Policy</a></li>
+    <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
   </ul>
 </div>
 
 <script>
-  const toggleBtn = document.getElementById('menuToggle');
-  const menuPanel = document.getElementById('menuPanel');
-  const iconMenu = document.getElementById('iconMenu');
-  const iconClose = document.getElementById('iconClose');
+// Fungsi untuk menampilkan judul blog dari domain dengan ID unik
+(function(){
+  const host = window.location.hostname.split(".");
 
-  toggleBtn.addEventListener('click', () => {
-    const isVisible = menuPanel.style.display === 'block';
-    menuPanel.style.display = isVisible ? 'none' : 'block';
-    iconMenu.style.display = isVisible ? 'inline' : 'none';
-    iconClose.style.display = isVisible ? 'none' : 'inline';
-  });
+  let sub = "";
+
+  if (host[0] === "www") {
+    // www.domain.my.id → ambil host[1]
+    sub = host[1];
+  } else if (host.length === 3) {
+    // domain.my.id → ambil host[0]
+    sub = host[0];
+  } else if (host.length === 4) {
+    // sub01.domain.my.id → ambil host[0]
+    sub = host[0];
+  } else {
+    // fallback, ambil bagian pertama
+    sub = host[0];
+  }
+
+  const clean = sub.replace(/-/g, " "); // ganti strip jadi spasi
+  const title = clean.replace(/\b\w/g, c => c.toUpperCase()); // kapital awal kata
+  document.getElementById("blogMainTitlee").textContent = title;
+})();
+
+// Fungsi untuk toggle menu dengan ID unik
+const toggleBtnBlog = document.getElementById('blogMenuToggle');
+const menuPanelBlog = document.getElementById('blogMenuPanel');
+const iconMenuBlog = document.getElementById('blogIconMenu');
+const iconCloseBlog = document.getElementById('blogIconClose');
+
+toggleBtnBlog.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isVisible = menuPanelBlog.style.display === 'block';
+  
+  // Toggle display
+  menuPanelBlog.style.display = isVisible ? 'none' : 'block';
+  iconMenuBlog.style.display = isVisible ? 'inline' : 'none';
+  iconCloseBlog.style.display = isVisible ? 'none' : 'inline';
+  
+  // Posisikan menu panel di bawah tombol
+  if (!isVisible) {
+    const btnRect = toggleBtnBlog.getBoundingClientRect();
+    menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
+    menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
+  }
+});
+
+// Tutup menu ketika klik di luar
+document.addEventListener('click', (e) => {
+  if (!menuPanelBlog.contains(e.target) && !toggleBtnBlog.contains(e.target) && menuPanelBlog.style.display === 'block') {
+    menuPanelBlog.style.display = 'none';
+    iconMenuBlog.style.display = 'inline';
+    iconCloseBlog.style.display = 'none';
+  }
+});
+
+// Tutup menu dengan ESC key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuPanelBlog.style.display === 'block') {
+    menuPanelBlog.style.display = 'none';
+    iconMenuBlog.style.display = 'inline';
+    iconCloseBlog.style.display = 'none';
+  }
+});
+
+// Update posisi menu saat scroll atau resize
+function updateBlogMenuPosition() {
+  if (menuPanelBlog.style.display === 'block') {
+    const btnRect = toggleBtnBlog.getBoundingClientRect();
+    menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
+    menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
+  }
+}
+
+// Event listeners untuk update posisi
+window.addEventListener('resize', updateBlogMenuPosition);
+window.addEventListener('scroll', updateBlogMenuPosition);
+
+// Inisialisasi posisi awal
+window.addEventListener('load', updateBlogMenuPosition);
 </script>
-
-
 
 {% include featuredbox.html %}
