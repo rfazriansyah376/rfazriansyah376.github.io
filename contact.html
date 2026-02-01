@@ -1,56 +1,9 @@
 ---
-layout: null
+layout: b
+title: contact
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
- 
-  <title>Contact</title>
-  <meta name="description" content="Contact Us." />
-  <meta name="author" content="Only Me" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
-<meta name="theme-color" content="#317EFB" />
 
 
-
-
-<style>
-  a {
-    text-decoration: none; color:#000;
-  }
-    body, html {
-  font-family: sans-serif;
-  padding: 5px;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 960px;
-  overflow-x: hidden;
-  box-sizing: border-box;
-}
-    h3, h2, h4 {
-      margin-top: 0;
-    }
-    .spo
-    {
-    	height:1px; overflow:auto;
-    }
-    </style>
-
-
-  </head>
-<body>
-<main>
-<article>
-<br />
-<center>
-<h1>Contact</h1></center>
-<br />
     <div style="margin:15px 0;display:flex;justify-content:center;gap:30px;align-items:center;flex-wrap:wrap;">
       <!-- Email -->
       <a href="mailto:r.fazriansyah@gmail.com" style="color:#333;text-decoration:none;display:flex;align-items:center;gap:8px;">
@@ -68,7 +21,7 @@ layout: null
         WhatsApp
       </a>
     </div>
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    
 
 <div class="spo">
 	<a href="https://ninggrai01.pages.dev/">	giovana campomar playboy	</a>
@@ -223,82 +176,5 @@ layout: null
 	
 	</div>
 	
-	</article>
-</main>
 
-	<!-- awal home-->
-  <center>
-    <a href="#" id="homeLink">
-      Home
-    </a>
-  </center>
-<script>
-(function(){
-  var currentHost = window.location.hostname; 
-  var parts = currentHost.split(".");
-  var longTLDs = ["co.uk", "my.id", "ac.id"];
-  var rootDomain;
-  var lastTwo = parts.slice(-2).join(".");
-  var lastThree = parts.slice(-3).join(".");
-  if(longTLDs.indexOf(lastTwo) !== -1){
-    rootDomain = lastThree;
-  } else {
-    rootDomain = lastTwo;
-  }
-  var mainDomain = "www." + rootDomain;
-
-  
-  var form = document.getElementById("customSearchForm");
-  if(form){
-    form.action = "https://" + mainDomain + "/search";
-  }
-
- 
-  var homeLink = document.getElementById("homeLink");
-  if(homeLink){
-    homeLink.href = "https://" + mainDomain;
-  }
-})();
-</script>
-<!-- akhir home-->
 	
-{% include /ads/gobloggugel/nanouturfs.html %}
-
-<br />
-
-<!--FOOTER-->
-<footer style="text-align: center; padding: 30px 20px; font-size: 16px; color: #666;">
-  <small>
-    &copy; </small>
-<span id="current-year"></span> - <span>   All rights reserved.</span> 
-  <script>
-    (function () {
-      const domain = window.location.hostname || "";
-      const parts = domain.split(".");
-      let brand = "Blog";
-      let rootDomain = domain;
-      // Khusus untuk .my.id
-      if (domain.endsWith(".my.id") && parts.length > 2) {
-        // Ambil nama domain utama (2 bagian sebelum .my.id)
-        const baseName = parts[parts.length - 3]; // contoh: domain / do-main
-        rootDomain = "www." + baseName + ".my.id";
-
-        // Ubah jadi Title Case dengan spasi jika ada tanda minus
-        brand = baseName
-          .split("-")
-          .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-          .join(" ");
-      }
-
-      // Update elemen
-      document.getElementById("current-year").textContent = new Date().getFullYear();
-      const headingEl = document.getElementById("main-heading2");
-      headingEl.textContent = brand;
-      headingEl.href = "https://" + rootDomain;
-    })();
-  </script>
-</footer>
-
-
-</body>
-</html>
