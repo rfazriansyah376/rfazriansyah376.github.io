@@ -139,7 +139,6 @@ permalink: /search
 </head>
 <body loading="lazy">
   
-  
 <!-- Header blog dengan ID dan Class yang unik -->
 <header class="blog-header-main floating-header-main" loading="lazy">
   <div class="header-content-main">
@@ -465,44 +464,6 @@ main, .content {
 }
 </style>
 
-  <script>
-  (function(){
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('q');
-    
-    // Jika ada query pencarian, tampilkan di title
-    if (searchQuery) {
-      const formattedQuery = searchQuery
-        .replace(/\+/g, ' ')
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-      document.getElementById("mainTitle").textContent = `${formattedQuery}`;
-      return;
-    }
-    
-    // Jika tidak ada query, gunakan domain seperti biasa
-    const host = window.location.hostname.split(".");
-    let sub = "";
-
-    if (host[0] === "www") {
-      sub = host[1];
-    } else if (host.length === 3) {
-      sub = host[0];
-    } else if (host.length === 4) {
-      sub = host[0];
-    } else {
-      sub = host[0];
-    }
-
-    const clean = sub.replace(/-/g, " ");
-    const title = clean.replace(/\b\w/g, c => c.toUpperCase());
-    document.getElementById("mainTitle").textContent = title;
-  })();
-  </script>
-
-
-
 <!-- Menu Panel dengan ID unik -->
 <div id="blogMenuPanel">
   <ul>
@@ -516,62 +477,102 @@ main, .content {
 <script>
 // Fungsi untuk menampilkan judul blog dari domain dengan ID unik
 (function(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get('q');
+  
+  // Jika ada query pencarian, tampilkan di title
+  if (searchQuery) {
+    const formattedQuery = searchQuery
+      .replace(/\+/g, ' ')
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    document.getElementById("mainTitle").textContent = `${formattedQuery}`;
+    return;
+  }
+  
+  // Jika tidak ada query, gunakan domain seperti biasa
+  const host = window.location.hostname.split(".");
+  let sub = "";
+
+  if (host[0] === "www") {
+    sub = host[1];
+  } else if (host.length === 3) {
+    sub = host[0];
+  } else if (host.length === 4) {
+    sub = host[0];
+  } else {
+    sub = host[0];
+  }
+
+  const clean = sub.replace(/-/g, " ");
+  const title = clean.replace(/\b\w/g, c => c.toUpperCase());
+  document.getElementById("mainTitle").textContent = title;
+})();
+
 // Fungsi untuk toggle menu dengan ID unik
-const toggleBtnBlog = document.getElementById('blogMenuToggle');
-const menuPanelBlog = document.getElementById('blogMenuPanel');
-const iconMenuBlog = document.getElementById('blogIconMenu');
-const iconCloseBlog = document.getElementById('blogIconClose');
+(function(){
+  const toggleBtnBlog = document.getElementById('blogMenuToggle');
+  const menuPanelBlog = document.getElementById('blogMenuPanel');
+  const iconMenuBlog = document.getElementById('blogIconMenu');
+  const iconCloseBlog = document.getElementById('blogIconClose');
 
-toggleBtnBlog.addEventListener('click', (e) => {
-  e.stopPropagation();
-  const isVisible = menuPanelBlog.style.display === 'block';
-  
-  // Toggle display
-  menuPanelBlog.style.display = isVisible ? 'none' : 'block';
-  iconMenuBlog.style.display = isVisible ? 'inline' : 'none';
-  iconCloseBlog.style.display = isVisible ? 'none' : 'inline';
-  
-  // Posisikan menu panel di bawah tombol
-  if (!isVisible) {
-    const btnRect = toggleBtnBlog.getBoundingClientRect();
-    menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
-    menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
+  // Pastikan elemen ada sebelum menambahkan event listener
+  if (toggleBtnBlog && menuPanelBlog) {
+    toggleBtnBlog.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isVisible = menuPanelBlog.style.display === 'block';
+      
+      // Toggle display
+      menuPanelBlog.style.display = isVisible ? 'none' : 'block';
+      if (iconMenuBlog) iconMenuBlog.style.display = isVisible ? 'inline' : 'none';
+      if (iconCloseBlog) iconCloseBlog.style.display = isVisible ? 'none' : 'inline';
+      
+      // Posisikan menu panel di bawah tombol
+      if (!isVisible) {
+        const btnRect = toggleBtnBlog.getBoundingClientRect();
+        menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
+        menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
+      }
+    });
+
+    // Tutup menu ketika klik di luar
+    document.addEventListener('click', (e) => {
+      if (menuPanelBlog.style.display === 'block' && 
+          !menuPanelBlog.contains(e.target) && 
+          !toggleBtnBlog.contains(e.target)) {
+        menuPanelBlog.style.display = 'none';
+        if (iconMenuBlog) iconMenuBlog.style.display = 'inline';
+        if (iconCloseBlog) iconCloseBlog.style.display = 'none';
+      }
+    });
+
+    // Tutup menu dengan ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuPanelBlog.style.display === 'block') {
+        menuPanelBlog.style.display = 'none';
+        if (iconMenuBlog) iconMenuBlog.style.display = 'inline';
+        if (iconCloseBlog) iconCloseBlog.style.display = 'none';
+      }
+    });
+
+    // Update posisi menu saat scroll atau resize
+    function updateBlogMenuPosition() {
+      if (menuPanelBlog.style.display === 'block') {
+        const btnRect = toggleBtnBlog.getBoundingClientRect();
+        menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
+        menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
+      }
+    }
+
+    // Event listeners untuk update posisi
+    window.addEventListener('resize', updateBlogMenuPosition);
+    window.addEventListener('scroll', updateBlogMenuPosition);
+
+    // Inisialisasi posisi awal
+    window.addEventListener('load', updateBlogMenuPosition);
   }
-});
-
-// Tutup menu ketika klik di luar
-document.addEventListener('click', (e) => {
-  if (!menuPanelBlog.contains(e.target) && !toggleBtnBlog.contains(e.target) && menuPanelBlog.style.display === 'block') {
-    menuPanelBlog.style.display = 'none';
-    iconMenuBlog.style.display = 'inline';
-    iconCloseBlog.style.display = 'none';
-  }
-});
-
-// Tutup menu dengan ESC key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && menuPanelBlog.style.display === 'block') {
-    menuPanelBlog.style.display = 'none';
-    iconMenuBlog.style.display = 'inline';
-    iconCloseBlog.style.display = 'none';
-  }
-});
-
-// Update posisi menu saat scroll atau resize
-function updateBlogMenuPosition() {
-  if (menuPanelBlog.style.display === 'block') {
-    const btnRect = toggleBtnBlog.getBoundingClientRect();
-    menuPanelBlog.style.top = (btnRect.bottom + 5) + 'px';
-    menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + 'px';
-  }
-}
-
-// Event listeners untuk update posisi
-window.addEventListener('resize', updateBlogMenuPosition);
-window.addEventListener('scroll', updateBlogMenuPosition);
-
-// Inisialisasi posisi awal
-window.addEventListener('load', updateBlogMenuPosition);
+})();
 </script>
 
 
@@ -1141,6 +1142,7 @@ document.addEventListener('DOMContentLoaded', runSearch);
   </script>
 </body>
 </html>
+
 
 
 
