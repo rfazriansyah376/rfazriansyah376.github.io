@@ -953,7 +953,7 @@ window.addEventListener('load', updateBlogMenuPosition);
         return `
           <div class="search-result">
             <a href="${postUrl}"><h3>${highlightedTitle}</h3>
-            <img 
+            <img style="max-width:100%; height:auto;" 
     src="https://nengmaya538.github.io/photo/fallback.png"
     alt="${formattedQuery}"
     loading="lazy"
@@ -1003,13 +1003,13 @@ window.addEventListener('load', updateBlogMenuPosition);
           return `
             <div class="random-post">
               <a href="${postUrl}" class="random-post-link">
-        <img 
+        <img style="max-width:100%; height:auto;" 
     src="https://nengmaya538.github.io/photo/fallback.png"
     alt="${formattedQuery}"
     loading="lazy"
-  ></a>
+  >
                 ${excerpt ? `<p class="excerpt">${excerpt}</p>` : ''}
-              
+              </a>
             </div>
             
           `;
