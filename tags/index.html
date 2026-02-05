@@ -57,12 +57,12 @@ permalink: /tags/
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
       
-      titleText = `${formattedTag} | ${subdomain}`;
+      titleText = `${formattedTag}`;
       pageTitle = formattedTag;
       h1Title = formattedTag;
     } else {
       // Halaman semua tags
-      titleText = `Tags - ${subdomain}`;
+      titleText = `Tags`;
       pageTitle = 'Tags';
       h1Title = 'Tags';
     }
@@ -85,7 +85,7 @@ permalink: /tags/
     metaDesc.name = 'description';
     
     if (hasKeyword) {
-      metaDesc.content = `Browse posts containing "${tagName}". Find related content and articles.`;
+      metaDesc.content = `"${tagName}". Find leaked photo and video.`;
     } else {
       metaDesc.content = `Browse posts by keywords. Find content containing specific words.`;
     }
@@ -96,7 +96,7 @@ permalink: /tags/
     if (hasKeyword) {
       let metaKeywords = document.querySelector('meta[name="keywords"]') || document.createElement('meta');
       metaKeywords.name = 'keywords';
-      metaKeywords.content = `${tagName}, posts containing ${tagName}`;
+      metaKeywords.content = `${tagName}`;
       if (!metaKeywords.parentNode) document.head.appendChild(metaKeywords);
     }
 
@@ -118,8 +118,8 @@ permalink: /tags/
     let structuredData = {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": hasKeyword ? `Posts containing "${tagName}"` : "Keywords",
-      "description": hasKeyword ? `Collection of posts containing "${tagName}"` : "Browse posts by keywords",
+      "name": hasKeyword ? `"${tagName}"` : "Keywords",
+      "description": hasKeyword ? `Collection of posts "${tagName}"` : "Browse posts by keywords",
       "url": location.href,
       "publisher": {
         "@type": "Organization",
@@ -132,7 +132,7 @@ permalink: /tags/
       structuredData.mainEntity = {
         "@type": "Thing",
         "name": tagName,
-        "description": `Posts containing "${tagName}"`
+        "description": `"${tagName}"`
       };
     }
     
@@ -848,8 +848,6 @@ async function runTags() {
     // Tambah keyword display
     container.innerHTML = `
       <div class="keyword-display">
-        <h2>Posts containing "${formattedKeyword}"</h2>
-        <p>Searching in post content only</p>
       </div>
     `;
   } else {
@@ -890,8 +888,6 @@ async function runTags() {
       // Tampilkan random posts jika tidak ada hasil
       container.innerHTML += `
         <div class="no-tags">
-          <h3>No posts found containing "${formatKeywordForDisplay(keyword)}" in content</h3>
-          <p>Try these random posts instead:</p>
         </div>
       `;
       await loadRandomPosts(container, 9);
@@ -931,8 +927,8 @@ function displayTagResults(results, keyword, container) {
     
     if (keywordIndex !== -1) {
       // Ambil konteks sekitar keyword
-      const start = Math.max(0, keywordIndex - 150);
-      const end = Math.min(content.length, keywordIndex + lowerKeyword.length + 150);
+      const start = Math.max(0, keywordIndex - 350);
+      const end = Math.min(content.length, keywordIndex + lowerKeyword.length + 350);
       snippet = content.substring(start, end);
       snippet = (start > 0 ? '...' : '') + snippet + (end < content.length ? '...' : '');
       
