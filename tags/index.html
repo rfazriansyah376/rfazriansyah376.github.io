@@ -944,7 +944,7 @@ function displayTagResults(results, keyword, container) {
         <div style="margin-bottom: 10px;">
           <a href="${postURL}">
             <img src="/photo/fallback.png" 
-                 alt="${escapeHtml(title)}" 
+                 alt="${formattedKeyword}" 
                  loading="lazy" 
                  style="max-width:100%; height:auto; border-radius: 5px;">
           </a>
@@ -994,12 +994,12 @@ async function loadRandomPosts(container, count = 9) {
           <div style="margin-bottom: 10px;">
             <a href="${postURL}">
               <img src="/photo/fallback.png" 
-                   alt="${escapeHtml(title)}" 
+                   alt="${formattedKeyword}" 
                    loading="lazy" 
                    style="max-width:100%; height:auto; border-radius: 5px;">
             </a>
           </div>
-          <h4><a href="${postURL}" style="color: inherit; text-decoration: none;">${escapeHtml(title)}</a></h4>
+          <h4><a href="${postURL}" style="color: inherit; text-decoration: none;">${formattedKeyword} - ${escapeHtml(title)}</a></h4>
           ${excerpt ? `<p class="excerpt">${escapeHtml(excerpt)}...</p>` : ''}
         </div>
       `;
@@ -1009,14 +1009,13 @@ async function loadRandomPosts(container, count = 9) {
     fallbackContainer.className = 'random-posts-fallback';
     fallbackContainer.innerHTML = `
       <div class="fallback-header">
-        <h3>Random Posts</h3>
-        <p>Check out these random posts</p>
+        
       </div>
       <div class="random-posts-grid">
         ${randomPostsHTML}
       </div>
       <div class="fallback-footer">
-        <a href="/" class="browse-all">Go to Homepage →</a>
+        <a href="/" class="browse-all">More Content →</a>
       </div>
     `;
     
