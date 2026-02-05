@@ -17,6 +17,10 @@ permalink: /tags/
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#317EFB" />
 
+  <!-- Preload untuk optimasi kecepatan -->
+  <link rel="preload" href="/search.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="/photo/fallback.png" as="image">
+
   <!-- SEO Tags Dinamis -->
   <script>
   (function () {
@@ -26,12 +30,14 @@ permalink: /tags/
     // Ambil tag dari query parameter
     const urlParams = new URLSearchParams(window.location.search);
     let tagName = urlParams.get('q') || '';
+    const pageNum = parseInt(urlParams.get('page') || '1');
     
-    // Clean tag name
+    // Clean tag name - lowercase semua
     if (tagName) {
       tagName = decodeURIComponent(tagName)
         .replace(/\+/g, ' ')
-        .trim();
+        .trim()
+        .toLowerCase();
     }
     
     let subdomainRaw = hostname.split('.')[0];
@@ -51,20 +57,15 @@ permalink: /tags/
     let h1Title;
     
     if (hasKeyword) {
-      // Format tag untuk title - pertahankan spasi antar kata
-      const formattedTag = tagName
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-      
-      titleText = `${formattedTag}`;
-      pageTitle = formattedTag;
-      h1Title = formattedTag;
+      // HANYA keyword lowercase
+      titleText = tagName;
+      pageTitle = tagName;
+      h1Title = tagName;
     } else {
       // Halaman semua tags
-      titleText = `Tags`;
-      pageTitle = 'Tags';
-      h1Title = 'Tags';
+      titleText = `tags`;
+      pageTitle = 'tags';
+      h1Title = 'tags';
     }
 
     // Title di head
@@ -85,9 +86,9 @@ permalink: /tags/
     metaDesc.name = 'description';
     
     if (hasKeyword) {
-      metaDesc.content = `"${tagName}". Find leaked photo and video.`;
+      metaDesc.content = tagName + ' - photo, video, and contents';
     } else {
-      metaDesc.content = `Browse posts by keywords. Find content containing specific words.`;
+      metaDesc.content = 'browse posts by keywords - photo, video, and contents';
     }
     
     if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
@@ -96,7 +97,16 @@ permalink: /tags/
     if (hasKeyword) {
       let metaKeywords = document.querySelector('meta[name="keywords"]') || document.createElement('meta');
       metaKeywords.name = 'keywords';
-      metaKeywords.content = `${tagName}`;
+      // Generate variations
+      const variations = [
+        tagName,
+        tagName + ' content',
+        tagName + ' posts',
+        tagName + ' articles',
+        tagName + ' photos',
+        tagName + ' videos'
+      ];
+      metaKeywords.content = variations.join(', ');
       if (!metaKeywords.parentNode) document.head.appendChild(metaKeywords);
     }
 
@@ -105,7 +115,6 @@ permalink: /tags/
     canonical.setAttribute('rel', 'canonical');
     
     if (hasKeyword) {
-      // Format URL canonical dengan query parameter
       const cleanQuery = encodeURIComponent(tagName.replace(/\s+/g, '+'));
       canonical.setAttribute('href', location.origin + '/tags/?q=' + cleanQuery);
     } else {
@@ -114,38 +123,57 @@ permalink: /tags/
     
     if (!canonical.parentNode) document.head.appendChild(canonical);
 
-    // Structured Data
-    let structuredData = {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": hasKeyword ? `"${tagName}"` : "Keywords",
-      "description": hasKeyword ? `Collection of posts "${tagName}"` : "Browse posts by keywords",
-      "url": location.href,
-      "publisher": {
-        "@type": "Organization",
-        "name": subdomain,
-        "url": location.origin
-      }
-    };
-    
+    // Social Meta Tags
     if (hasKeyword) {
-      structuredData.mainEntity = {
-        "@type": "Thing",
-        "name": tagName,
-        "description": `"${tagName}"`
-      };
+      // Open Graph
+      const ogTags = [
+        { property: 'og:title', content: tagName },
+        { property: 'og:description', content: tagName + ' - photo, video, and contents' },
+        { property: 'og:url', content: location.href },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: location.origin + '/photo/fallback.png' },
+        { property: 'og:site_name', content: subdomain },
+        { property: 'article:tag', content: tagName }
+      ];
+      
+      ogTags.forEach(tag => {
+        const meta = document.createElement('meta');
+        meta.setAttribute('property', tag.property);
+        meta.content = tag.content;
+        document.head.appendChild(meta);
+      });
+      
+      // Twitter Cards
+      const twitterTags = [
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: tagName },
+        { name: 'twitter:description', content: tagName + ' - photo, video, and contents' },
+        { name: 'twitter:image', content: location.origin + '/photo/fallback.png' }
+      ];
+      
+      twitterTags.forEach(tag => {
+        const meta = document.createElement('meta');
+        meta.name = tag.name;
+        meta.content = tag.content;
+        document.head.appendChild(meta);
+      });
     }
-    
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(structuredData);
-    document.head.appendChild(script);
+
+    // Robots meta
+    const metaRobots = document.createElement('meta');
+    metaRobots.name = 'robots';
+    metaRobots.content = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+    document.head.appendChild(metaRobots);
+
+    // Googlebot meta
+    const metaGooglebot = document.createElement('meta');
+    metaGooglebot.name = 'googlebot';
+    metaGooglebot.content = 'index, follow, max-snippet:50, max-image-preview:large';
+    document.head.appendChild(metaGooglebot);
 
   })();
   </script>
   <!-- akhir Seo Otomatis -->
-
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
 
   <link rel="sitemap" type="application/xml" href="" id="sitemap-main">
   <link rel="alternate" type="application/rss+xml" href="" id="sitemap-feed">
@@ -165,7 +193,7 @@ permalink: /tags/
 <!-- Header blog -->
 <header class="blog-header-main floating-header-main" loading="lazy">
   <div class="header-content-main">
-    <h1 id="mainTitle" class="blog-title-main">Tags</h1>
+    <h1 id="mainTitle" class="blog-title-main">tags</h1>
     <div class="nav-actions-main">
       <button class="nav-button-main menu-btn-main" id="blogMenuToggle" title="Menu" aria-label="Menu">
         <svg id="blogIconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main">
@@ -391,13 +419,12 @@ main, .content { margin-top: 20px !important; }
   if (keyword) {
     const formattedKeyword = decodeURIComponent(keyword)
       .replace(/\+/g, ' ')
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+      .trim()
+      .toLowerCase();
     
     document.getElementById("mainTitle").textContent = formattedKeyword;
   } else {
-    document.getElementById("mainTitle").textContent = "Tags";
+    document.getElementById("mainTitle").textContent = "tags";
   }
 })();
 
@@ -639,39 +666,39 @@ main, .content { margin-top: 20px !important; }
       margin: 0 5px;
     }
 
-    /* Search Form */
-    .tag-search-form {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 20px;
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+
+    .page-link {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #3498db;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    .page-link:hover {
       background: #f8f9fa;
-      border-radius: 10px;
-      text-align: center;
     }
 
-    .tag-search-input {
-      width: 100%;
-      padding: 12px 15px;
-      font-size: 16px;
-      border: 2px solid #ddd;
-      border-radius: 25px;
-      margin-bottom: 10px;
-      box-sizing: border-box;
-    }
-
-    .tag-search-button {
+    .page-link.active {
       background: #3498db;
       color: white;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 25px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s;
+      border-color: #3498db;
     }
 
-    .tag-search-button:hover {
-      background: #2980b9;
+    .page-link.disabled {
+      color: #ccc;
+      cursor: not-allowed;
     }
 
     /* Responsive */
@@ -700,6 +727,15 @@ main, .content { margin-top: 20px !important; }
         width: 100%;
         max-width: 250px;
       }
+      
+      .pagination {
+        gap: 5px;
+      }
+      
+      .page-link {
+        padding: 6px 12px;
+        font-size: 13px;
+      }
     }
 
     /* Loading Animation */
@@ -718,25 +754,15 @@ main, .content { margin-top: 20px !important; }
       animation: pulse 1.5s infinite;
     }
 
-    /* Keyword display */
-    .keyword-display {
-      background: #f8f9fa;
-      padding: 15px 20px;
-      border-radius: 8px;
-      margin-bottom: 25px;
-      text-align: center;
-      border-left: 4px solid #3498db;
-    }
-
-    .keyword-display h2 {
-      margin: 0;
-      color: #2c3e50;
-      font-size: 1.8rem;
-    }
-
-    .keyword-display p {
-      margin: 5px 0 0 0;
-      color: #7f8c8d;
+    /* Hidden SEO Section */
+    .seo-hidden {
+      display: none;
+      visibility: hidden;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+      position: absolute;
+      left: -9999px;
     }
     </style>
     
@@ -746,23 +772,8 @@ main, .content { margin-top: 20px !important; }
       <span id="breadcrumbText"></span>
     </div>
 
-    <!-- Search Form for Tags Page -->
-    <div class="tag-search-form" id="tagSearchForm" style="display: none;">
-      <h3>Search Posts by Keyword</h3>
-      <form id="keywordSearchForm">
-        <input type="text" 
-               class="tag-search-input" 
-               placeholder="Enter keyword to search in post content..."
-               id="keywordInput"
-               required>
-        <button type="submit" class="tag-search-button">Search Posts</button>
-      </form>
-      <p style="margin-top: 10px; font-size: 14px; color: #666;">
-        Example: <a href="/tags/?q=viral">viral</a>, 
-        <a href="/tags/?q=latest">latest</a>, 
-        <a href="/tags/?q=tips">tips</a>
-      </p>
-    </div>
+    <!-- Hidden SEO Section untuk Google Bot -->
+    <div class="seo-hidden" id="seoHiddenContent"></div>
 
     <div id="tagsResults"></div>
 
@@ -783,25 +794,29 @@ function shuffleArray(array) {
 function getKeywordFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   const keywordParam = urlParams.get('q');
+  const pageNum = parseInt(urlParams.get('page') || '1');
   
-  if (keywordParam) {
-    return decodeURIComponent(keywordParam)
+  return {
+    keyword: keywordParam ? decodeURIComponent(keywordParam)
       .replace(/\+/g, ' ')
       .replace(/\s+/g, ' ')    // Multiple spaces jadi satu
-      .trim();                 // HILANGKAN spasi sebelum/sesudah
-  }
-  
-  return '';
+      .trim()
+      .toLowerCase() : '',
+    page: pageNum
+  };
 }
 
 // Fungsi untuk membuat URL tag dengan query parameter
-function createTagURL(keyword) {
+function createTagURL(keyword, page = 1) {
   // Trim spasi sebelum/sesudah
   const cleanKeyword = keyword.trim();
   
   // Encode untuk URL (spasi jadi +)
   const encodedKeyword = encodeURIComponent(cleanKeyword.replace(/\s+/g, '+'));
   
+  if (page > 1) {
+    return `/tags/?q=${encodedKeyword}&page=${page}`;
+  }
   return `/tags/?q=${encodedKeyword}`;
 }
 
@@ -816,40 +831,102 @@ function searchPostsByKeyword(posts, keyword) {
   });
 }
 
-// Format keyword untuk display (pertahankan spasi antar kata)
-function formatKeywordForDisplay(keyword) {
-  return keyword
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+// Format judul dengan keyword di awal
+function formatTitleWithKeyword(originalTitle, keyword) {
+  if (!keyword) return originalTitle;
+  return keyword + ' - ' + originalTitle;
+}
+
+// Generate related keywords untuk SEO
+function generateRelatedKeywords(keyword) {
+  const suffixes = ['content', 'posts', 'articles', 'photos', 'videos', 'tutorial', 'guide', 'tips', 'review'];
+  return suffixes.map(suffix => keyword + ' ' + suffix);
+}
+
+// Fungsi untuk membuat Structured Data
+function createStructuredData(keyword, results, currentPage, totalPages) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": keyword || "Tags",
+    "description": keyword ? keyword + " - photo, video, and contents" : "Browse posts by keywords",
+    "url": window.location.href,
+    "mainEntity": keyword ? {
+      "@type": "Thing",
+      "name": keyword,
+      "description": "Posts containing " + keyword
+    } : null
+  };
+
+  // BreadcrumbList
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": window.location.origin + "/"
+      }
+    ]
+  };
+
+  if (keyword) {
+    breadcrumbData.itemListElement.push({
+      "@type": "ListItem",
+      "position": 2,
+      "name": keyword,
+      "item": window.location.href
+    });
+  } else {
+    breadcrumbData.itemListElement.push({
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tags",
+      "item": window.location.origin + "/tags/"
+    });
+  }
+
+  // Article schemas untuk setiap hasil
+  const articleSchemas = results.slice(0, 10).map((post, index) => ({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": formatTitleWithKeyword(post.title || 'Untitled', keyword),
+    "description": post.excerpt || post.content?.substring(0, 200) || '',
+    "url": post.url || window.location.origin + '/',
+    "keywords": keyword ? generateRelatedKeywords(keyword).join(', ') : '',
+    "about": keyword ? {
+      "@type": "Thing",
+      "name": keyword
+    } : null,
+    "position": index + 1
+  }));
+
+  return {
+    collectionPage: data,
+    breadcrumb: breadcrumbData,
+    articles: articleSchemas
+  };
 }
 
 // Fungsi utama untuk tags
 async function runTags() {
-  const keyword = getKeywordFromURL();
+  const { keyword, page } = getKeywordFromURL();
   const container = document.getElementById("tagsResults");
   const breadcrumb = document.getElementById("tagsBreadcrumb");
-  const searchForm = document.getElementById("tagSearchForm");
-
-  // Show/hide search form
-  if (searchForm) {
-    searchForm.style.display = keyword ? 'none' : 'block';
-  }
+  const seoHidden = document.getElementById("seoHiddenContent");
 
   // Update breadcrumb - HANYA Home › Keyword (jika ada keyword)
   if (keyword) {
-    const formattedKeyword = formatKeywordForDisplay(keyword);
     breadcrumb.innerHTML = `
       <a href="/">Home</a>
       <span class="breadcrumb-separator">›</span>
-      <span style="color: #e74c3c; font-weight: bold;">${formattedKeyword}</span>
+      <span style="color: #e74c3c; font-weight: bold;">${escapeHtml(keyword)}</span>
     `;
     
-    // Tambah keyword display
-    container.innerHTML = `
-      <div class="keyword-display">
-      </div>
-    `;
+    // Kosongkan container untuk langsung tampilkan hasil
+    container.innerHTML = '';
   } else {
     // Halaman tags tanpa keyword
     breadcrumb.innerHTML = `
@@ -861,12 +938,7 @@ async function runTags() {
     container.innerHTML = `
       <div class="tags-empty">
         <h1>Search Posts by Keyword</h1>
-        <p>Enter a keyword above to search in post content</p>
-        <p>Or try these examples: 
-          <a href="/tags/?q=viral">viral</a>, 
-          <a href="/tags/?q=latest">latest</a>, 
-          <a href="/tags/?q=news">news</a>
-        </p>
+        <p>Enter a keyword in the URL like: <code>/tags/?q=keyword</code></p>
       </div>
     `;
     return;
@@ -879,36 +951,69 @@ async function runTags() {
     const allPosts = await response.json();
 
     // 2. Cari post yang mengandung keyword (HANYA di content)
-    const results = searchPostsByKeyword(allPosts, keyword);
+    const allResults = searchPostsByKeyword(allPosts, keyword);
+    
+    // 3. Pagination
+    const postsPerPage = 10;
+    const totalResults = allResults.length;
+    const totalPages = Math.ceil(totalResults / postsPerPage);
+    const startIndex = (page - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const currentResults = allResults.slice(startIndex, endIndex);
 
-    // 3. Tampilkan hasil
-    if (results.length > 0) {
-      displayTagResults(results, keyword, container);
-    } else {
-      // Tampilkan random posts jika tidak ada hasil
-      container.innerHTML += `
-        <div class="no-tags">
-        </div>
+    // 4. Create Structured Data
+    const structuredData = createStructuredData(keyword, currentResults, page, totalPages);
+    
+    // Add structured data to page
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(structuredData.collectionPage);
+    document.head.appendChild(script);
+    
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.textContent = JSON.stringify(structuredData.breadcrumb);
+    document.head.appendChild(breadcrumbScript);
+    
+    // Add article schemas
+    structuredData.articles.forEach(article => {
+      const articleScript = document.createElement('script');
+      articleScript.type = 'application/ld+json';
+      articleScript.textContent = JSON.stringify(article);
+      document.head.appendChild(articleScript);
+    });
+
+    // 5. Add hidden SEO content untuk keyword density
+    if (seoHidden && keyword) {
+      const relatedKeywords = generateRelatedKeywords(keyword);
+      seoHidden.innerHTML = `
+        <h2>Posts about ${escapeHtml(keyword)}</h2>
+        <p>Find the best ${escapeHtml(keyword)} content, ${escapeHtml(keyword)} articles, and ${escapeHtml(keyword)} resources.</p>
+        <p>Browse ${escapeHtml(keyword)} posts, ${escapeHtml(keyword)} photos, and ${escapeHtml(keyword)} videos.</p>
+        <ul>
+          ${relatedKeywords.map(kw => `<li>${escapeHtml(kw)}</li>`).join('')}
+        </ul>
+        <p>Updated regularly with new ${escapeHtml(keyword)} content.</p>
       `;
-      await loadRandomPosts(container, 9);
+    }
+
+    // 6. Tampilkan hasil
+    if (currentResults.length > 0) {
+      displayTagResults(currentResults, keyword, container, page, totalPages, totalResults);
+    } else {
+      // Langsung tampilkan random posts jika tidak ada hasil
+      await loadRandomPosts(container, 9, keyword);
     }
 
   } catch (error) {
     console.error("Tags error:", error);
-    container.innerHTML += `
-      <div class="tags-error">
-        <h3>⚠️ Unable to load content</h3>
-        <p>Showing random posts instead:</p>
-      </div>
-    `;
-    await loadRandomPosts(container, 9);
+    // Langsung tampilkan random posts jika error
+    await loadRandomPosts(container, 9, keyword);
   }
 }
 
 // Fungsi: Tampilkan hasil pencarian berdasarkan keyword
-function displayTagResults(results, keyword, container) {
-  const tagURL = createTagURL(keyword);
-  const formattedKeyword = formatKeywordForDisplay(keyword);
+function displayTagResults(results, keyword, container, currentPage, totalPages, totalResults) {
   const lowerKeyword = keyword.toLowerCase();
   
   // Buat regex untuk highlight
@@ -916,8 +1021,9 @@ function displayTagResults(results, keyword, container) {
   const keywordRegex = new RegExp(`(${escapedKeyword})`, 'gi');
   
   const html = results.map(post => {
-    // Title
-    const title = post.title || 'Untitled Post';
+    // Format judul dengan keyword di awal
+    const originalTitle = post.title || 'Untitled Post';
+    const formattedTitle = formatTitleWithKeyword(originalTitle, keyword);
     const postURL = post.url || '#';
     
     // Buat snippet dari content dengan keyword highlighted
@@ -927,8 +1033,8 @@ function displayTagResults(results, keyword, container) {
     
     if (keywordIndex !== -1) {
       // Ambil konteks sekitar keyword
-      const start = Math.max(0, keywordIndex - 350);
-      const end = Math.min(content.length, keywordIndex + lowerKeyword.length + 350);
+      const start = Math.max(0, keywordIndex - 150);
+      const end = Math.min(content.length, keywordIndex + lowerKeyword.length + 150);
       snippet = content.substring(start, end);
       snippet = (start > 0 ? '...' : '') + snippet + (end < content.length ? '...' : '');
       
@@ -938,38 +1044,49 @@ function displayTagResults(results, keyword, container) {
       snippet = content.substring(0, 200) + '...';
     }
     
+    // ALT IMG: HANYA keyword saja
+    const altText = escapeHtml(keyword);
+    
     return `
       <div class="tags-result">
-        <h3><a href="${postURL}">${escapeHtml(title)}</a></h3>
+        <h3><a href="${postURL}">${escapeHtml(formattedTitle)}</a></h3>
         <div style="margin-bottom: 10px;">
           <a href="${postURL}">
             <img src="/photo/fallback.png" 
-                 alt="${formattedKeyword}" 
+                 alt="${altText}"
+                 title="${escapeHtml(keyword)} content"
                  loading="lazy" 
                  style="max-width:100%; height:auto; border-radius: 5px;">
           </a>
         </div>
         <p class="snippet">${snippet}</p>
-        <p><small>Keyword: <a href="${tagURL}">${formattedKeyword}</a></small></p>
       </div>
     `;
   }).join('');
 
-  container.innerHTML += `
-    <div class="tags-found">
-      <div class="tags-count">
-        <p>Found ${results.length} post${results.length !== 1 ? 's' : ''} containing "${escapeHtml(formattedKeyword)}" in content</p>
+  // Pagination HTML
+  let paginationHTML = '';
+  if (totalPages > 1) {
+    paginationHTML = `
+      <div class="pagination">
+        ${currentPage > 1 ? 
+          `<a href="${createTagURL(keyword, currentPage - 1)}" class="page-link" rel="prev">← Previous</a>` : 
+          `<span class="page-link disabled">← Previous</span>`}
+        
+        <span class="page-link active">Page ${currentPage} of ${totalPages}</span>
+        
+        ${currentPage < totalPages ? 
+          `<a href="${createTagURL(keyword, currentPage + 1)}" class="page-link" rel="next">Next →</a>` : 
+          `<span class="page-link disabled">Next →</span>`}
       </div>
-      ${html}
-      <div class="fallback-footer">
-        <a href="/tags/" class="browse-all">← Search Another Keyword</a>
-      </div>
-    </div>
-  `;
+    `;
+  }
+
+  container.innerHTML = html + paginationHTML;
 }
 
 // Fungsi: Load random posts
-async function loadRandomPosts(container, count = 9) {
+async function loadRandomPosts(container, count = 9, keyword = '') {
   try {
     const response = await fetch("/posts-acak.json");
     if (!response.ok) throw new Error(`Failed to load random posts`);
@@ -986,20 +1103,25 @@ async function loadRandomPosts(container, count = 9) {
     
     const randomPostsHTML = randomPosts.map(post => {
       const postURL = post.url || '#';
-      const title = post.title || 'Untitled Post';
+      const originalTitle = post.title || 'Untitled Post';
+      const formattedTitle = keyword ? formatTitleWithKeyword(originalTitle, keyword) : originalTitle;
       const excerpt = post.excerpt || post.content?.substring(0, 150) || '';
+      
+      // ALT IMG: HANYA keyword atau default
+      const altText = keyword ? escapeHtml(keyword) : "random posts";
       
       return `
         <div class="random-post">
           <div style="margin-bottom: 10px;">
             <a href="${postURL}">
               <img src="/photo/fallback.png" 
-                   alt="${formattedKeyword}" 
+                   alt="${altText}"
+                   title="${keyword ? escapeHtml(keyword) + ' content' : 'random posts'}"
                    loading="lazy" 
                    style="max-width:100%; height:auto; border-radius: 5px;">
             </a>
           </div>
-          <h4><a href="${postURL}" style="color: inherit; text-decoration: none;">${formattedKeyword} - ${escapeHtml(title)}</a></h4>
+          <h4><a href="${postURL}" style="color: inherit; text-decoration: none;">${escapeHtml(formattedTitle)}</a></h4>
           ${excerpt ? `<p class="excerpt">${escapeHtml(excerpt)}...</p>` : ''}
         </div>
       `;
@@ -1008,14 +1130,11 @@ async function loadRandomPosts(container, count = 9) {
     const fallbackContainer = document.createElement('div');
     fallbackContainer.className = 'random-posts-fallback';
     fallbackContainer.innerHTML = `
-      <div class="fallback-header">
-        
-      </div>
       <div class="random-posts-grid">
         ${randomPostsHTML}
       </div>
       <div class="fallback-footer">
-        <a href="/" class="browse-all">More Content →</a>
+        <a href="/" class="browse-all">Go to Homepage →</a>
       </div>
     `;
     
@@ -1028,9 +1147,6 @@ async function loadRandomPosts(container, count = 9) {
     const fallbackContainer = document.createElement('div');
     fallbackContainer.className = 'random-posts-fallback';
     fallbackContainer.innerHTML = `
-      <div class="fallback-header">
-        <h3>Browse Posts</h3>
-      </div>
       <div class="fallback-footer">
         <a href="/" class="browse-all">Go to Homepage →</a>
       </div>
@@ -1051,27 +1167,6 @@ function escapeHtml(text) {
 // ==================== INISIALISASI ====================
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Setup search form
-  const searchForm = document.getElementById('keywordSearchForm');
-  if (searchForm) {
-    searchForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const input = document.getElementById('keywordInput');
-      if (input && input.value.trim()) {
-        const keyword = input.value.trim();
-        const tagURL = createTagURL(keyword);
-        window.location.href = tagURL;
-      }
-    });
-  }
-
-  // Prefill search input jika ada keyword di URL
-  const keyword = getKeywordFromURL();
-  const keywordInput = document.getElementById('keywordInput');
-  if (keywordInput && keyword) {
-    keywordInput.value = keyword;
-  }
-
   // Jalankan tags
   runTags();
 
@@ -1086,7 +1181,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (match && match[1]) {
           const keywordFromHref = decodeURIComponent(match[1])
             .replace(/-/g, ' ')
-            .trim();
+            .trim()
+            .toLowerCase();
           
           const newURL = createTagURL(keywordFromHref);
           link.setAttribute('href', newURL);
@@ -1099,14 +1195,16 @@ document.addEventListener('DOMContentLoaded', function() {
 // Fungsi untuk redirect dari format lama ke format baru
 function redirectOldTagURLs() {
   const currentPath = window.location.pathname;
+  const urlParams = new URLSearchParams(window.location.search);
   
   // Jika mengakses /tags/keyword (format lama), redirect ke /tags/?q=keyword
   if (currentPath.startsWith('/tags/') && !currentPath.endsWith('/tags/')) {
     const parts = currentPath.split('/').filter(p => p);
-    if (parts[0] === 'tags' && parts[1] && !window.location.search.includes('q=')) {
+    if (parts[0] === 'tags' && parts[1] && !urlParams.has('q')) {
       const keyword = decodeURIComponent(parts[1])
         .replace(/-/g, ' ')
-        .trim();
+        .trim()
+        .toLowerCase();
       
       const newURL = createTagURL(keyword);
       if (window.location.href !== newURL) {
