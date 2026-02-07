@@ -1,9 +1,6 @@
-name: Auto Generate Includes List
+name: Generate Includes List (Manual)
 
 on:
-  push:
-    paths:
-      - "includes/**"
   workflow_dispatch:
 
 jobs:
@@ -24,5 +21,5 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add _data/includes.yml
-          git diff --cached --quiet || git commit -m "auto: update includes list"
+          git diff --cached --quiet || git commit -m "manual: update includes list"
           git push
