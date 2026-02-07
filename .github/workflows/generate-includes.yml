@@ -1,0 +1,28 @@
+name: Auto Generate Includes List
+
+on:
+  push:
+    paths:
+      - "includes/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate includes list
+        run: |
+          mkdir -p _data
+          echo "---" > _data/includes.yml
+          ls includes/*.html 2>/dev/null | sed 's|includes/||' >> _data/includes.yml
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add _data/includes.yml
+          git diff --cached --quiet || git commit -m "auto: update includes list"
+          git push
