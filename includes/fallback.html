@@ -4,9 +4,24 @@ permalink: /includes/fallback.html
 ---
 
 
+<div id="random-include"></div>
 
-{% include /ads/gobloggugel/wwwsalmonandseatroutphotos.html %}
+<script>
+const files = [
+{% for f in site.data.includes %}
+  "{{ f }}"{% unless forloop.last %},{% endunless %}
+{% endfor %}
+];
 
+if (files.length) {
+  const file = files[Math.floor(Math.random() * files.length)];
+  fetch(`/includes/${file}`)
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById("random-include").innerHTML = html;
+    });
+}
+</script>
 
 
 <div class="spo" loading="lazy">
