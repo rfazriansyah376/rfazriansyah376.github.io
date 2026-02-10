@@ -16,7 +16,7 @@ permalink: /posts2.json
     "categories": {{ post.categories | jsonify }},
     "tags": {% if post.tags %}{{ post.tags | jsonify }}{% else %}[]{% endif %},
     "labels": {% if post.labels %}{{ post.labels | jsonify }}{% else %}[]{% endif %},
-    "date": "{{ post.date | date: '%Y-%m-%d' }}"  <!-- Keep it, ignore if not needed -->
+    "date": "{{ post.date | date: '%Y-%m-%d' }}"
   }{% unless forloop.last %},{% endunless %}
   {% endfor %}
 ]
