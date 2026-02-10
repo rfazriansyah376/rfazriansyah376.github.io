@@ -1,0 +1,634 @@
+<style>
+/* STYLE UTAMA */
+.recent-posts {
+  margin: 3rem auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+}
+.recent-posts h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.recent-posts .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Post Card Enhanced */
+.post-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eee;
+  min-height: 280px;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  border-color: var(--dynamic-color, #0078ff);
+}
+
+/* Tanggal */
+.post-date {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.8rem;
+  font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.post-date::before {
+  content: "📅";
+  font-size: 0.7rem;
+}
+
+/* Categories */
+.post-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.category-link {
+  display: inline-block;
+  background: #f0f5ff;
+  color: #0078ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  border: 1px solid #e1eeff;
+}
+.category-link:hover {
+  background: #0078ff;
+  color: white;
+  border-color: #0078ff;
+}
+
+/* Judul */
+.post-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+.post-card h3 a {
+  text-decoration: none;
+  color: #222;
+  transition: color 0.2s ease;
+}
+.post-card h3 a:hover {
+  color: var(--dynamic-color, #0078ff);
+}
+
+/* Excerpt */
+.post-excerpt {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 1rem 0;
+  flex-grow: 1;
+}
+
+/* Footer (Tags & Labels) */
+.post-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+  gap: 0.5rem;
+}
+
+/* Tags */
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.tag-link {
+  color: #666;
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-family: 'SF Mono', Monaco, monospace;
+  transition: color 0.2s ease;
+  background: #f8f9fa;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+.tag-link:hover {
+  color: var(--dynamic-color, #0078ff);
+  background: #f0f5ff;
+}
+
+/* Labels */
+.post-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.label-link {
+  color: #888;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  background: #f9f9f9;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  border-left: 3px solid #ccc;
+}
+.label-link:hover {
+  color: var(--dynamic-color, #0078ff);
+  border-left-color: var(--dynamic-color, #0078ff);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.pagination button,
+.pagination span {
+  flex-shrink: 0;
+}
+.pagination button {
+  background: var(--dynamic-color, #0078ff);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  min-width: 36px;
+}
+.pagination button:hover:not(:disabled) {
+  background: #005ec7;
+  transform: translateY(-1px);
+}
+.pagination button:disabled {
+  background: #ccc;
+  color: #555;
+  cursor: not-allowed;
+}
+.pagination span {
+  font-size: 0.9rem;
+  color: #333;
+  user-select: none;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  grid-column: 1 / -1;
+  color: #666;
+}
+.loading::after {
+  content: "...";
+  animation: dots 1.5s steps(4, end) infinite;
+}
+@keyframes dots {
+  0%, 20% { content: ""; }
+  40% { content: "."; }
+  60% { content: ".."; }
+  80%, 100% { content: "..."; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .recent-posts .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .post-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+}
+@media (max-width: 600px) {
+  .pagination {
+    gap: 0.3rem;
+  }
+  .pagination button {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+  }
+}
+</style>
+
+<section class="recent-posts" loading="lazy">      
+  <h2>Recent Posts</h2>
+  <div id="recent-posts-container" class="grid">
+    <div class="loading">Loading posts</div>
+  </div>      
+  <div id="pagination" class="pagination"></div>      
+</section>      
+
+<script>
+// ========== KONFIGURASI ==========
+const POSTS_SOURCE = '/posts2.json';
+const POSTS_PER_PAGE = 12;
+let currentPage = parseInt(new URLSearchParams(window.location.search).get('page')) || 1;
+let filteredPosts = [];
+let allPosts = [];
+
+// ========== FUNGSI UTILITY ==========
+function getCategoryCandidates(hostname) {
+  const parts = hostname.split('.');
+  if (parts.length < 2) return { sub: null, domain: null };
+  const maybeDomainIndex = parts.length - 3;
+  const domain = (maybeDomainIndex >= 0) ? parts[maybeDomainIndex] : parts[0];
+  const subLabels = (maybeDomainIndex > 0) ? parts.slice(0, maybeDomainIndex) : [];
+  const rawSub = subLabels.length ? subLabels.join('.') : null;
+  const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+  return { 
+    sub: rawSub ? normalize(rawSub) : null, 
+    domain: domain ? normalize(domain) : null 
+  };
+}
+
+// FUNGSI RANDOM SEMUA POSTINGAN (TANPA BATAS)
+function shuffleAllPosts(posts) {
+  if (!Array.isArray(posts) || posts.length === 0) return [];
+  
+  // Clone array untuk di-shuffle
+  const shuffled = [...posts];
+  
+  // Fisher-Yates shuffle algorithm
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
+  return shuffled; // Return SEMUA postingan yang sudah diacak
+}
+
+function formatDate(dateString) {
+  if (!dateString) return '';
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    
+    const day = date.getDate();
+    const month = date.toLocaleDateString('id-ID', { 
+      month: 'short' 
+    }).replace('.', '');
+    const year = date.getFullYear();
+    
+    return `${day} ${month} ${year}`;
+  } catch (e) {
+    return '';
+  }
+}
+
+// ========== RENDER POST CARD (DENGAN SAFETY CHECK) ==========
+function renderPostCard(post) {
+  const article = document.createElement('article');
+  article.className = 'post-card';
+  
+  // 1. TANGGAL (jika ada di data)
+  if (post.date) {
+    const formattedDate = formatDate(post.date);
+    if (formattedDate) {
+      const dateDiv = document.createElement('div');
+      dateDiv.className = 'post-date';
+      dateDiv.textContent = formattedDate;
+      article.appendChild(dateDiv);
+    }
+  }
+  
+  // 2. CATEGORIES (selalu tampilkan jika ada)
+  if (post.categories && Array.isArray(post.categories) && post.categories.length > 0) {
+    const categoriesDiv = document.createElement('div');
+    categoriesDiv.className = 'post-categories';
+    
+    post.categories.forEach(category => {
+      if (category && typeof category === 'string') {
+        const link = document.createElement('a');
+        link.href = `/categories?q=${encodeURIComponent(category)}`;
+        link.className = 'category-link';
+        link.textContent = category;
+        link.title = `Lihat postingan di kategori: ${category}`;
+        categoriesDiv.appendChild(link);
+      }
+    });
+    
+    if (categoriesDiv.children.length > 0) {
+      article.appendChild(categoriesDiv);
+    }
+  }
+  
+  // 3. JUDUL
+  const h3 = document.createElement('h3');
+  const titleLink = document.createElement('a');
+  titleLink.href = post.url || '#';
+  titleLink.textContent = post.title || '(no title)';
+  h3.appendChild(titleLink);
+  article.appendChild(h3);
+  
+  // 4. EXCERPT
+  if (post.excerpt) {
+    const excerpt = document.createElement('p');
+    excerpt.className = 'post-excerpt';
+    excerpt.textContent = post.excerpt;
+    article.appendChild(excerpt);
+  }
+  
+  // 5. FOOTER (Tags & Labels) - HANYA JIKA ADA DATA
+  const hasTags = post.tags && Array.isArray(post.tags) && post.tags.length > 0;
+  const hasLabels = post.labels && Array.isArray(post.labels) && post.labels.length > 0;
+  
+  if (hasTags || hasLabels) {
+    const footer = document.createElement('div');
+    footer.className = 'post-footer';
+    
+    // Tags (jika ada)
+    if (hasTags) {
+      const tagsDiv = document.createElement('div');
+      tagsDiv.className = 'post-tags';
+      
+      post.tags.forEach(tag => {
+        if (tag && typeof tag === 'string') {
+          const link = document.createElement('a');
+          link.href = `/tags?q=${encodeURIComponent(tag)}`;
+          link.className = 'tag-link';
+          link.textContent = `#${tag}`;
+          link.title = `Filter by tag: ${tag}`;
+          tagsDiv.appendChild(link);
+        }
+      });
+      
+      if (tagsDiv.children.length > 0) {
+        footer.appendChild(tagsDiv);
+      }
+    }
+    
+    // Labels (jika ada)
+    if (hasLabels) {
+      const labelsDiv = document.createElement('div');
+      labelsDiv.className = 'post-labels';
+      
+      post.labels.forEach(label => {
+        if (label && typeof label === 'string') {
+          const link = document.createElement('a');
+          link.href = `/labels?q=${encodeURIComponent(label)}`;
+          link.className = 'label-link';
+          link.textContent = label;
+          link.title = `Filter by label: ${label}`;
+          labelsDiv.appendChild(link);
+        }
+      });
+      
+      if (labelsDiv.children.length > 0) {
+        footer.appendChild(labelsDiv);
+      }
+    }
+    
+    // Hanya tambah footer jika ada children
+    if (footer.children.length > 0) {
+      article.appendChild(footer);
+    }
+  }
+  
+  return article;
+}
+
+// ========== LOAD & PROCESS POSTS ==========
+async function loadAndProcessPosts() {
+  try {
+    console.log('Loading posts from:', POSTS_SOURCE);
+    const response = await fetch(POSTS_SOURCE);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    allPosts = await response.json();
+    console.log(`Loaded ${allPosts.length} posts`);
+    
+    // Debug: Lihat struktur data pertama
+    if (allPosts.length > 0) {
+      console.log('Sample post structure:', {
+        title: allPosts[0].title,
+        hasDate: !!allPosts[0].date,
+        hasTags: !!(allPosts[0].tags && allPosts[0].tags.length),
+        hasLabels: !!(allPosts[0].labels && allPosts[0].labels.length),
+        fullData: allPosts[0]
+      });
+    }
+    
+    // Filter berdasarkan kategori
+    const { sub: subCategory, domain: domainCategory } = getCategoryCandidates(window.location.hostname);
+    const normalize = s => String(s || '').replace(/[-.]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+    
+    console.log('Category detection:', { subCategory, domainCategory });
+    
+    if (subCategory) {
+      filteredPosts = allPosts.filter(p => 
+        p.categories && 
+        Array.isArray(p.categories) && 
+        p.categories.some(c => c && normalize(c) === subCategory)
+      );
+      console.log(`Found ${filteredPosts.length} posts for subcategory: ${subCategory}`);
+    }
+    
+    if (filteredPosts.length === 0 && domainCategory) {
+      filteredPosts = allPosts.filter(p => 
+        p.categories && 
+        Array.isArray(p.categories) && 
+        p.categories.some(c => c && normalize(c) === domainCategory)
+      );
+      console.log(`Found ${filteredPosts.length} posts for domain category: ${domainCategory}`);
+    }
+    
+    // FALLBACK: SEMUA POSTINGAN DIACAK (TANPA BATAS)
+    if (filteredPosts.length === 0) {
+      console.log('No category match, showing ALL posts in random order');
+      filteredPosts = shuffleAllPosts(allPosts); // Acak SEMUA postingan
+    }
+    
+    // Urutkan berdasarkan date (jika ada) atau tetap acak
+    // Note: Karena sudah di-shuffle, kita tidak perlu sort lagi
+    // Jika ingin tetap ada urutan tanggal untuk matched posts:
+    if (filteredPosts.length > 0 && filteredPosts[0].date) {
+      // Cek apakah ini matched posts (bukan random fallback)
+      const isMatched = subCategory || domainCategory;
+      if (isMatched) {
+        // Untuk matched posts, urutkan berdasarkan tanggal
+        filteredPosts.sort((a, b) => {
+          const dateA = a.date ? new Date(a.date).getTime() : 0;
+          const dateB = b.date ? new Date(b.date).getTime() : 0;
+          return dateB - dateA; // Terbaru ke terlama
+        });
+        console.log('Matched posts sorted by date');
+      }
+    }
+    
+    renderPosts();
+    
+  } catch (error) {
+    console.error('Error loading posts:', error);
+    renderNoPosts(`Error: ${error.message}`);
+  }
+}
+
+// ========== RENDER POSTS & PAGINATION ==========
+function renderPosts() {
+  const container = document.getElementById('recent-posts-container');
+  const pagination = document.getElementById('pagination');
+  
+  if (filteredPosts.length === 0) {
+    renderNoPosts('No posts available');
+    return;
+  }
+  
+  container.innerHTML = '';
+  pagination.innerHTML = '';
+  
+  const start = (currentPage - 1) * POSTS_PER_PAGE;
+  const end = start + POSTS_PER_PAGE;
+  const pagePosts = filteredPosts.slice(start, end);
+  
+  console.log(`Rendering ${pagePosts.length} posts for page ${currentPage} (Total: ${filteredPosts.length})`);
+  
+  // Render post cards
+  pagePosts.forEach((post, index) => {
+    const card = renderPostCard(post);
+    container.appendChild(card);
+  });
+  
+  // Pagination
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  if (totalPages > 1) {
+    const prevBtn = document.createElement('button');
+    prevBtn.textContent = 'Prev';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.onclick = () => changePage(currentPage - 1);
+    pagination.appendChild(prevBtn);
+    
+    const maxVisible = 5;
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, currentPage + 2);
+    
+    if (currentPage <= 3) {
+      endPage = Math.min(totalPages, maxVisible);
+    } else if (currentPage >= totalPages - 2) {
+      startPage = Math.max(1, totalPages - maxVisible + 1);
+    }
+    
+    if (startPage > 1) { 
+      addPageButton(1); 
+      if (startPage > 2) addEllipsis(); 
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      addPageButton(i);
+    }
+    
+    if (endPage < totalPages) { 
+      if (endPage < totalPages - 1) addEllipsis(); 
+      addPageButton(totalPages); 
+    }
+    
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = 'Next';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.onclick = () => changePage(currentPage + 1);
+    pagination.appendChild(nextBtn);
+  }
+}
+
+// ========== PAGINATION HELPER ==========
+function addPageButton(page) {
+  const pagination = document.getElementById('pagination');
+  const pageBtn = document.createElement('button');
+  pageBtn.textContent = page;
+  
+  if (page === currentPage) {
+    pageBtn.disabled = true;
+    pageBtn.style.fontWeight = 'bold';
+    pageBtn.style.background = '#005ec7';
+    pageBtn.style.cursor = 'default';
+  }
+  
+  pageBtn.onclick = () => changePage(page);
+  pagination.appendChild(pageBtn);
+}
+
+function addEllipsis() {
+  const pagination = document.getElementById('pagination');
+  const span = document.createElement('span');
+  span.textContent = '…';
+  span.style.padding = '0 0.3rem';
+  pagination.appendChild(span);
+}
+
+function changePage(page) {
+  currentPage = page;
+  renderPosts();
+  
+  // Update URL tanpa reload
+  const newUrl = `${window.location.pathname}?page=${String(page).padStart(2, '0')}`;
+  history.pushState({}, '', newUrl);
+  
+  // Scroll ke atas dengan smooth
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== ERROR HANDLING ==========
+function renderNoPosts(message = 'No posts found') {
+  const container = document.getElementById('recent-posts-container');
+  const pagination = document.getElementById('pagination');
+  
+  container.innerHTML = `
+    <div style="text-align:center; padding:3rem; color:#666; grid-column:1/-1;">
+      <p style="margin-bottom:1rem;">${message}</p>
+      <button onclick="window.location.reload()" style="
+        background: var(--dynamic-color, #0078ff);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+      ">
+        Refresh Page
+      </button>
+    </div>
+  `;
+  
+  pagination.innerHTML = '';
+}
+
+// ========== INITIALIZE ==========
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Initializing posts loader...');
+  loadAndProcessPosts();
+  
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', () => {
+    currentPage = parseInt(new URLSearchParams(window.location.search).get('page')) || 1;
+    renderPosts();
+  });
+});
+</script>
