@@ -27,14 +27,14 @@ permalink: /categories/
     const hostname = location.hostname;
     const pathname = location.pathname;
     
-    // Ambil kategori dari query parameter
+    // Ambil keyword dari query parameter
     const urlParams = new URLSearchParams(window.location.search);
-    let categoryName = urlParams.get('q') || '';
+    let keywordName = urlParams.get('q') || '';
     const pageNum = parseInt(urlParams.get('page') || '1');
     
-    // Clean category name - lowercase semua
-    if (categoryName) {
-      categoryName = decodeURIComponent(categoryName)
+    // Clean keyword name - lowercase semua
+    if (keywordName) {
+      keywordName = decodeURIComponent(keywordName)
         .replace(/\+/g, ' ')
         .trim()
         .toLowerCase();
@@ -50,7 +50,7 @@ permalink: /categories/
 
     const subdomain = formatText(subdomainRaw.trim());
 
-    const hasKeyword = categoryName !== '';
+    const hasKeyword = keywordName !== '';
     
     let titleText;
     let pageTitle;
@@ -58,11 +58,11 @@ permalink: /categories/
     
     if (hasKeyword) {
       // HANYA keyword lowercase
-      titleText = categoryName;
-      pageTitle = categoryName;
-      h1Title = categoryName;
+      titleText = keywordName;
+      pageTitle = keywordName;
+      h1Title = keywordName;
     } else {
-      // Halaman semua kategori
+      // Halaman semua categories
       titleText = `categories`;
       pageTitle = 'categories';
       h1Title = 'categories';
@@ -86,7 +86,7 @@ permalink: /categories/
     metaDesc.name = 'description';
     
     if (hasKeyword) {
-      metaDesc.content = categoryName + ' - photo, video, and contents';
+      metaDesc.content = keywordName + ' - photo, video, and contents';
     } else {
       metaDesc.content = 'browse posts by categories - photo, video, and contents';
     }
@@ -99,12 +99,12 @@ permalink: /categories/
       metaKeywords.name = 'keywords';
       // Generate variations
       const variations = [
-        categoryName,
-        categoryName + ' category',
-        categoryName + ' posts',
-        categoryName + ' articles',
-        categoryName + ' topics',
-        categoryName + ' collection'
+        keywordName,
+        keywordName + ' category',
+        keywordName + ' posts',
+        keywordName + ' articles',
+        keywordName + ' topics',
+        keywordName + ' collection'
       ];
       metaKeywords.content = variations.join(', ');
       if (!metaKeywords.parentNode) document.head.appendChild(metaKeywords);
@@ -115,7 +115,7 @@ permalink: /categories/
     canonical.setAttribute('rel', 'canonical');
     
     if (hasKeyword) {
-      const cleanQuery = encodeURIComponent(categoryName.replace(/\s+/g, '+'));
+      const cleanQuery = encodeURIComponent(keywordName.replace(/\s+/g, '+'));
       canonical.setAttribute('href', location.origin + '/categories/?q=' + cleanQuery);
     } else {
       canonical.setAttribute('href', location.origin + '/categories/');
@@ -127,13 +127,13 @@ permalink: /categories/
     if (hasKeyword) {
       // Open Graph
       const ogTags = [
-        { property: 'og:title', content: categoryName },
-        { property: 'og:description', content: categoryName + ' - photo, video, and contents' },
+        { property: 'og:title', content: keywordName },
+        { property: 'og:description', content: keywordName + ' - photo, video, and contents' },
         { property: 'og:url', content: location.href },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: location.origin + '/photo/fallback.png' },
         { property: 'og:site_name', content: subdomain },
-        { property: 'article:section', content: categoryName }
+        { property: 'article:section', content: keywordName }
       ];
       
       ogTags.forEach(tag => {
@@ -146,8 +146,8 @@ permalink: /categories/
       // Twitter Cards
       const twitterTags = [
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: categoryName },
-        { name: 'twitter:description', content: categoryName + ' - photo, video, and contents' },
+        { name: 'twitter:title', content: keywordName },
+        { name: 'twitter:description', content: keywordName + ' - photo, video, and contents' },
         { name: 'twitter:image', content: location.origin + '/photo/fallback.png' }
       ];
       
@@ -792,14 +792,14 @@ function shuffleArray(array) {
   return shuffled;
 }
 
-// Fungsi untuk mendapatkan kategori dari query parameter
-function getCategoryFromURL() {
+// Fungsi untuk mendapatkan keyword dari query parameter
+function getKeywordFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
-  const categoryParam = urlParams.get('q');
+  const keywordParam = urlParams.get('q');
   const pageNum = parseInt(urlParams.get('page') || '1');
   
   return {
-    category: categoryParam ? decodeURIComponent(categoryParam)
+    keyword: keywordParam ? decodeURIComponent(keywordParam)
       .replace(/\+/g, ' ')
       .replace(/\s+/g, ' ')    // Multiple spaces jadi satu
       .trim()
@@ -809,54 +809,54 @@ function getCategoryFromURL() {
 }
 
 // Fungsi untuk membuat URL kategori dengan query parameter
-function createCategoryURL(category, page = 1) {
+function createCategoryURL(keyword, page = 1) {
   // Trim spasi sebelum/sesudah
-  const cleanCategory = category.trim();
+  const cleanKeyword = keyword.trim();
   
   // Encode untuk URL (spasi jadi +)
-  const encodedCategory = encodeURIComponent(cleanCategory.replace(/\s+/g, '+'));
+  const encodedKeyword = encodeURIComponent(cleanKeyword.replace(/\s+/g, '+'));
   
   if (page > 1) {
-    return `/categories/?q=${encodedCategory}&page=${page}`;
+    return `/categories/?q=${encodedKeyword}&page=${page}`;
   }
-  return `/categories/?q=${encodedCategory}`;
+  return `/categories/?q=${encodedKeyword}`;
 }
 
-// Fungsi untuk mencari post yang mengandung kategori tertentu (HANYA di content)
-function searchPostsByCategory(posts, category) {
-  const lowerCategory = category.toLowerCase().trim();
+// Fungsi untuk mencari post yang mengandung keyword tertentu (HANYA di content)
+function searchPostsByKeyword(posts, keyword) {
+  const lowerKeyword = keyword.toLowerCase().trim();
   
   return posts.filter(post => {
     // HANYA cari di content (sesuai permintaan)
     const content = post.content || '';
-    return content.toLowerCase().includes(lowerCategory);
+    return content.toLowerCase().includes(lowerKeyword);
   });
 }
 
-// Format judul dengan kategori di awal
-function formatTitleWithCategory(originalTitle, category) {
-  if (!category) return originalTitle;
-  return category + ' - ' + originalTitle;
+// Format judul dengan keyword di awal
+function formatTitleWithKeyword(originalTitle, keyword) {
+  if (!keyword) return originalTitle;
+  return keyword + ' - ' + originalTitle;
 }
 
 // Generate related keywords untuk SEO
-function generateRelatedKeywords(category) {
+function generateRelatedKeywords(keyword) {
   const suffixes = ['category', 'posts', 'articles', 'topics', 'collection', 'archive', 'section', 'group'];
-  return suffixes.map(suffix => category + ' ' + suffix);
+  return suffixes.map(suffix => keyword + ' ' + suffix);
 }
 
 // Fungsi untuk membuat Structured Data
-function createStructuredData(category, results, currentPage, totalPages) {
+function createStructuredData(keyword, results, currentPage, totalPages) {
   const data = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": category || "Categories",
-    "description": category ? category + " - photo, video, and contents" : "Browse posts by categories",
+    "name": keyword || "Categories",
+    "description": keyword ? keyword + " - photo, video, and contents" : "Browse posts by categories",
     "url": window.location.href,
-    "mainEntity": category ? {
+    "mainEntity": keyword ? {
       "@type": "Thing",
-      "name": category,
-      "description": "Posts in " + category + " category"
+      "name": keyword,
+      "description": "Posts in " + keyword + " category"
     } : null
   };
 
@@ -874,11 +874,11 @@ function createStructuredData(category, results, currentPage, totalPages) {
     ]
   };
 
-  if (category) {
+  if (keyword) {
     breadcrumbData.itemListElement.push({
       "@type": "ListItem",
       "position": 2,
-      "name": category,
+      "name": keyword,
       "item": window.location.href
     });
   } else {
@@ -894,15 +894,15 @@ function createStructuredData(category, results, currentPage, totalPages) {
   const articleSchemas = results.slice(0, 10).map((post, index) => ({
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": formatTitleWithCategory(post.title || 'Untitled', category),
+    "headline": formatTitleWithKeyword(post.title || 'Untitled', keyword),
     "description": post.excerpt || post.content?.substring(0, 200) || '',
     "url": post.url || window.location.origin + '/',
-    "keywords": category ? generateRelatedKeywords(category).join(', ') : '',
-    "about": category ? {
+    "keywords": keyword ? generateRelatedKeywords(keyword).join(', ') : '',
+    "about": keyword ? {
       "@type": "Thing",
-      "name": category
+      "name": keyword
     } : null,
-    "articleSection": category || '',
+    "articleSection": keyword || '',
     "position": index + 1
   }));
 
@@ -915,23 +915,23 @@ function createStructuredData(category, results, currentPage, totalPages) {
 
 // Fungsi utama untuk categories
 async function runCategories() {
-  const { category, page } = getCategoryFromURL();
+  const { keyword, page } = getKeywordFromURL();
   const container = document.getElementById("categoriesResults");
   const breadcrumb = document.getElementById("categoriesBreadcrumb");
   const seoHidden = document.getElementById("seoHiddenContent");
 
-  // Update breadcrumb - HANYA Home › Category (jika ada kategori)
-  if (category) {
+  // Update breadcrumb - HANYA Home › Keyword (jika ada keyword)
+  if (keyword) {
     breadcrumb.innerHTML = `
       <a href="/">Home</a>
       <span class="breadcrumb-separator">›</span>
-      <span style="color: #e74c3c; font-weight: bold;">${escapeHtml(category)}</span>
+      <span style="color: #e74c3c; font-weight: bold;">${escapeHtml(keyword)}</span>
     `;
     
     // Kosongkan container untuk langsung tampilkan hasil
     container.innerHTML = '';
   } else {
-    // Halaman categories tanpa kategori
+    // Halaman categories tanpa keyword
     breadcrumb.innerHTML = `
       <a href="/">Home</a>
       <span class="breadcrumb-separator">›</span>
@@ -941,7 +941,7 @@ async function runCategories() {
     container.innerHTML = `
       <div class="categories-empty">
         <h1>Browse Posts by Category</h1>
-        <p>Enter a category in the URL like: <code>/categories/?q=category-name</code></p>
+        <p>Enter a keyword in the URL like: <code>/categories/?q=keyword</code></p>
       </div>
     `;
     return;
@@ -953,8 +953,8 @@ async function runCategories() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const allPosts = await response.json();
 
-    // 2. Cari post yang mengandung kategori (HANYA di content)
-    const allResults = searchPostsByCategory(allPosts, category);
+    // 2. Cari post yang mengandung keyword (HANYA di content)
+    const allResults = searchPostsByKeyword(allPosts, keyword);
     
     // 3. Pagination
     const postsPerPage = 10;
@@ -965,7 +965,7 @@ async function runCategories() {
     const currentResults = allResults.slice(startIndex, endIndex);
 
     // 4. Create Structured Data
-    const structuredData = createStructuredData(category, currentResults, page, totalPages);
+    const structuredData = createStructuredData(keyword, currentResults, page, totalPages);
     
     // Add structured data to page
     const script = document.createElement('script');
@@ -987,68 +987,68 @@ async function runCategories() {
     });
 
     // 5. Add hidden SEO content untuk keyword density
-    if (seoHidden && category) {
-      const relatedKeywords = generateRelatedKeywords(category);
+    if (seoHidden && keyword) {
+      const relatedKeywords = generateRelatedKeywords(keyword);
       seoHidden.innerHTML = `
-        <h2>Posts in ${escapeHtml(category)} category</h2>
-        <p>Find the best ${escapeHtml(category)} content, ${escapeHtml(category)} articles, and ${escapeHtml(category)} topics.</p>
-        <p>Browse ${escapeHtml(category)} posts and ${escapeHtml(category)} collection.</p>
+        <h2>Posts in ${escapeHtml(keyword)} category</h2>
+        <p>Find the best ${escapeHtml(keyword)} content, ${escapeHtml(keyword)} articles, and ${escapeHtml(keyword)} topics.</p>
+        <p>Browse ${escapeHtml(keyword)} posts and ${escapeHtml(keyword)} collection.</p>
         <ul>
           ${relatedKeywords.map(kw => `<li>${escapeHtml(kw)}</li>`).join('')}
         </ul>
-        <p>Updated regularly with new ${escapeHtml(category)} content.</p>
+        <p>Updated regularly with new ${escapeHtml(keyword)} content.</p>
       `;
     }
 
     // 6. Tampilkan hasil
     if (currentResults.length > 0) {
-      displayCategoryResults(currentResults, category, container, page, totalPages, totalResults);
+      displayCategoryResults(currentResults, keyword, container, page, totalPages, totalResults);
     } else {
       // Langsung tampilkan random posts jika tidak ada hasil
-      await loadRandomPosts(container, 9, category);
+      await loadRandomPosts(container, 9, keyword);
     }
 
   } catch (error) {
     console.error("Categories error:", error);
     // Langsung tampilkan random posts jika error
-    await loadRandomPosts(container, 9, category);
+    await loadRandomPosts(container, 9, keyword);
   }
 }
 
-// Fungsi: Tampilkan hasil pencarian berdasarkan kategori
-function displayCategoryResults(results, category, container, currentPage, totalPages, totalResults) {
-  const lowerCategory = category.toLowerCase();
+// Fungsi: Tampilkan hasil pencarian berdasarkan keyword
+function displayCategoryResults(results, keyword, container, currentPage, totalPages, totalResults) {
+  const lowerKeyword = keyword.toLowerCase();
   
   // Buat regex untuk highlight
-  const escapedCategory = lowerCategory.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const categoryRegex = new RegExp(`(${escapedCategory})`, 'gi');
+  const escapedKeyword = lowerKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const keywordRegex = new RegExp(`(${escapedKeyword})`, 'gi');
   
   const html = results.map(post => {
-    // Format judul dengan kategori di awal
+    // Format judul dengan keyword di awal
     const originalTitle = post.title || 'Untitled Post';
-    const formattedTitle = formatTitleWithCategory(originalTitle, category);
+    const formattedTitle = formatTitleWithKeyword(originalTitle, keyword);
     const postURL = post.url || '#';
     
-    // Buat snippet dari content dengan kategori highlighted
+    // Buat snippet dari content dengan keyword highlighted
     let snippet = '';
     const content = post.content || '';
-    const categoryIndex = content.toLowerCase().indexOf(lowerCategory);
+    const keywordIndex = content.toLowerCase().indexOf(lowerKeyword);
     
-    if (categoryIndex !== -1) {
-      // Ambil konteks sekitar kategori
-      const start = Math.max(0, categoryIndex - 150);
-      const end = Math.min(content.length, categoryIndex + lowerCategory.length + 150);
+    if (keywordIndex !== -1) {
+      // Ambil konteks sekitar keyword
+      const start = Math.max(0, keywordIndex - 150);
+      const end = Math.min(content.length, keywordIndex + lowerKeyword.length + 150);
       snippet = content.substring(start, end);
       snippet = (start > 0 ? '...' : '') + snippet + (end < content.length ? '...' : '');
       
-      // Highlight kategori
-      snippet = snippet.replace(categoryRegex, '<mark class="highlight">$1</mark>');
+      // Highlight keyword
+      snippet = snippet.replace(keywordRegex, '<mark class="highlight">$1</mark>');
     } else {
       snippet = content.substring(0, 200) + '...';
     }
     
-    // ALT IMG: HANYA kategori saja
-    const altText = escapeHtml(category);
+    // ALT IMG: HANYA keyword saja
+    const altText = escapeHtml(keyword);
     
     return `
       <div class="categories-result">
@@ -1057,7 +1057,7 @@ function displayCategoryResults(results, category, container, currentPage, total
           <a href="${postURL}">
             <img src="/photo/fallback.png" 
                  alt="${altText}"
-                 title="${escapeHtml(category)} category"
+                 title="${escapeHtml(keyword)} category"
                  loading="lazy" 
                  style="max-width:100%; height:auto; border-radius: 5px;">
           </a>
@@ -1073,13 +1073,13 @@ function displayCategoryResults(results, category, container, currentPage, total
     paginationHTML = `
       <div class="pagination">
         ${currentPage > 1 ? 
-          `<a href="${createCategoryURL(category, currentPage - 1)}" class="page-link" rel="prev">← Previous</a>` : 
+          `<a href="${createCategoryURL(keyword, currentPage - 1)}" class="page-link" rel="prev">← Previous</a>` : 
           `<span class="page-link disabled">← Previous</span>`}
         
         <span class="page-link active">Page ${currentPage} of ${totalPages}</span>
         
         ${currentPage < totalPages ? 
-          `<a href="${createCategoryURL(category, currentPage + 1)}" class="page-link" rel="next">Next →</a>` : 
+          `<a href="${createCategoryURL(keyword, currentPage + 1)}" class="page-link" rel="next">Next →</a>` : 
           `<span class="page-link disabled">Next →</span>`}
       </div>
     `;
@@ -1089,7 +1089,7 @@ function displayCategoryResults(results, category, container, currentPage, total
 }
 
 // Fungsi: Load random posts
-async function loadRandomPosts(container, count = 9, category = '') {
+async function loadRandomPosts(container, count = 9, keyword = '') {
   try {
     const response = await fetch("/posts-acak.json");
     if (!response.ok) throw new Error(`Failed to load random posts`);
@@ -1107,11 +1107,11 @@ async function loadRandomPosts(container, count = 9, category = '') {
     const randomPostsHTML = randomPosts.map(post => {
       const postURL = post.url || '#';
       const originalTitle = post.title || 'Untitled Post';
-      const formattedTitle = category ? formatTitleWithCategory(originalTitle, category) : originalTitle;
+      const formattedTitle = keyword ? formatTitleWithKeyword(originalTitle, keyword) : originalTitle;
       const excerpt = post.excerpt || post.content?.substring(0, 150) || '';
       
-      // ALT IMG: HANYA kategori atau default
-      const altText = category ? escapeHtml(category) : "random posts";
+      // ALT IMG: HANYA keyword atau default
+      const altText = keyword ? escapeHtml(keyword) : "random posts";
       
       return `
         <div class="random-post">
@@ -1119,7 +1119,7 @@ async function loadRandomPosts(container, count = 9, category = '') {
             <a href="${postURL}">
               <img src="/photo/fallback.png" 
                    alt="${altText}"
-                   title="${category ? escapeHtml(category) + ' category' : 'random posts'}"
+                   title="${keyword ? escapeHtml(keyword) + ' category' : 'random posts'}"
                    loading="lazy" 
                    style="max-width:100%; height:auto; border-radius: 5px;">
             </a>
@@ -1178,16 +1178,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href*="/categories/"]').forEach(link => {
       const href = link.getAttribute('href');
       
-      // Jika link menggunakan format /categories/category-name (tanpa query)
+      // Jika link menggunakan format /categories/keyword (tanpa query)
       if (href.startsWith('/categories/') && !href.includes('?q=') && !href.endsWith('/categories/')) {
         const match = href.match(/^\/categories\/(.+)$/);
         if (match && match[1]) {
-          const categoryFromHref = decodeURIComponent(match[1])
+          const keywordFromHref = decodeURIComponent(match[1])
             .replace(/-/g, ' ')
             .trim()
             .toLowerCase();
           
-          const newURL = createCategoryURL(categoryFromHref);
+          const newURL = createCategoryURL(keywordFromHref);
           link.setAttribute('href', newURL);
         }
       }
@@ -1200,16 +1200,16 @@ function redirectOldCategoryURLs() {
   const currentPath = window.location.pathname;
   const urlParams = new URLSearchParams(window.location.search);
   
-  // Jika mengakses /categories/category-name (format lama), redirect ke /categories/?q=category-name
+  // Jika mengakses /categories/keyword (format lama), redirect ke /categories/?q=keyword
   if (currentPath.startsWith('/categories/') && !currentPath.endsWith('/categories/')) {
     const parts = currentPath.split('/').filter(p => p);
     if (parts[0] === 'categories' && parts[1] && !urlParams.has('q')) {
-      const category = decodeURIComponent(parts[1])
+      const keyword = decodeURIComponent(parts[1])
         .replace(/-/g, ' ')
         .trim()
         .toLowerCase();
       
-      const newURL = createCategoryURL(category);
+      const newURL = createCategoryURL(keyword);
       if (window.location.href !== newURL) {
         window.history.replaceState(null, '', newURL);
         location.reload();
