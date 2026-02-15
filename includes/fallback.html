@@ -1,10 +1,10 @@
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
-  <div id="random-include"></div>
+  <div loading="lazy" id="random-include"></div>
 
   <script>
     (function () {
-      fetch("/assets/data/includes.json")
+      fetch("https://nengmaya538.github.io/assets/data/includes.json")
         .then(function (res) {
           return res.json();
         })
@@ -14,7 +14,7 @@
           var randomIndex = Math.floor(Math.random() * files.length);
           var randomFile = files[randomIndex];
 
-          return fetch("/includes/" + randomFile);
+          return fetch("https://nengmaya538.github.io/includes/" + randomFile);
         })
         .then(function (res) {
           if (!res) return;
@@ -29,4 +29,3 @@
         });
     })();
   </script>
-
