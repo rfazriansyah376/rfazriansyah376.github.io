@@ -12,7 +12,7 @@
     }
 
     // Ambil daftar file dari includes.json
-    var jsonUrl = addAntiCache("https://nengmaya538.github.io/assets/data/includes.json");
+    var jsonUrl = addAntiCache("/assets/data/includes.json");
     
     // Gunakan teknik fetch dengan mode no-cors
     fetch(jsonUrl, {
@@ -43,7 +43,7 @@
       }
 
       // Ambil konten HTML
-      var htmlUrl = addAntiCache("https://nengmaya538.github.io/includes/" + randomFile);
+      var htmlUrl = addAntiCache("/includes/" + randomFile);
       
       return fetch(htmlUrl, {
         method: 'GET',
