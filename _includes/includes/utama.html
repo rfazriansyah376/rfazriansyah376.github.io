@@ -16,7 +16,7 @@
   const files = [];
   if (subdomain) files.push(subdomain + '.html');
   files.push(domain + '.html');
-  files.push('default.html'); // fallback
+  files.push('fallback.html'); // fallback
   
   // 4. Load konten
   function loadContent(fileList) {
@@ -45,4 +45,3 @@
   }
 })();
 </script>
-
