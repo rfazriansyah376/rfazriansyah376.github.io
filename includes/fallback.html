@@ -1,31 +1,89 @@
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<iframe
+  loading="lazy"
+  id="random-include"
+  style="width:100%; border:none; overflow:hidden;"
+  scrolling="no"
+></iframe>
 
-  <div loading="lazy" id="random-include"></div>
+<script>
+  (function () {
+    // Fungsi untuk membuat parameter anti-cache
+    function addAntiCache(url) {
+      var separator = url.indexOf('?') === -1 ? '?' : '&';
+      return url + separator + 'nocache=' + Date.now() + '_' + Math.random().toString(36).substring(7);
+    }
 
-  <script>
-    (function () {
-      fetch("https://nengmaya538.github.io/assets/data/includes.json")
-        .then(function (res) {
-          return res.json();
-        })
-        .then(function (files) {
-          if (!files || !files.length) return;
+    // Fetch includes.json dengan anti-cache
+    fetch(addAntiCache("https://nengmaya538.github.io/assets/data/includes.json"), {
+      cache: 'no-store',
+      headers: {
+        'Pragma': 'no-cache',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0'
+      }
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP error ' + res.status);
+      return res.json();
+    })
+    .then(function (files) {
+      if (!files || !files.length) {
+        throw new Error('No files available');
+      }
 
-          var randomIndex = Math.floor(Math.random() * files.length);
-          var randomFile = files[randomIndex];
+      var randomIndex = Math.floor(Math.random() * files.length);
+      var randomFile = files[randomIndex];
 
-          return fetch("https://nengmaya538.github.io/includes/" + randomFile);
-        })
-        .then(function (res) {
-          if (!res) return;
-          return res.text();
-        })
-        .then(function (html) {
-          if (!html) return;
-          document.getElementById("random-include").innerHTML = html;
-        })
-        .catch(function (err) {
-          console.error("Random include error:", err);
-        });
-    })();
-  </script>
+      // Fetch file HTML dengan anti-cache juga
+      return fetch(addAntiCache("https://nengmaya538.github.io/includes/" + randomFile), {
+        cache: 'no-store',
+        headers: {
+          'Pragma': 'no-cache',
+          'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0'
+        }
+      });
+    })
+    .then(function (res) {
+      if (!res) throw new Error('No response');
+      return res.text();
+    })
+    .then(function (html) {
+      if (!html) throw new Error('Empty HTML');
+
+      // Buat iframe dan inject HTML ke dalamnya
+      var iframe = document.getElementById("random-include");
+      var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+      iframeDoc.open();
+      iframeDoc.write(html);
+      iframeDoc.close();
+
+      // Sesuaikan tinggi iframe
+      iframe.style.height = iframeDoc.body.scrollHeight + "px";
+      
+      // Tambahkan resize observer untuk konten dinamis
+      var resizeObserver = new ResizeObserver(function() {
+        iframe.style.height = iframeDoc.body.scrollHeight + "px";
+      });
+      
+      if (iframeDoc.body) {
+        resizeObserver.observe(iframeDoc.body);
+      }
+    })
+    .catch(function (err) {
+      console.error("Random include error:", err);
+      
+      // Tampilkan error di iframe
+      var iframe = document.getElementById("random-include");
+      var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+      
+      iframeDoc.open();
+      iframeDoc.write(`
+        <div style="padding:20px; text-align:center; color:#666;">
+          <p>Maaf, konten tidak dapat dimuat.</p>
+          <p><a href="javascript:location.reload()">Muat ulang</a></p>
+        </div>
+      `);
+      iframeDoc.close();
+    });
+  })();
+</script>
