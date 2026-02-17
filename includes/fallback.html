@@ -1,89 +1,72 @@
-<div id="random-content2"></div>
+<div id="random-content2">Memuat...</div>
 
 <script>
-  (function () {
-    var container = document.getElementById("random-content2");
-    if (!container) return;
+(function() {
+  const container = document.getElementById('random-content2');
+  if (!container) return;
 
-    // Fungsi untuk membuat parameter anti-cache
-    function addAntiCache(url) {
-      var separator = url.indexOf('?') === -1 ? '?' : '&';
-      return url + separator + 'nocache=' + Date.now();
-    }
-
-    // Ambil daftar file dari includes.json
-    var jsonUrl = addAntiCache("/assets/data/includes.json");
-    
-    // Gunakan teknik fetch dengan mode no-cors
-    fetch(jsonUrl, {
-      method: 'GET',
-      mode: 'cors', // Ubah ke 'cors' dari 'no-cors'
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error('HTTP error ' + response.status);
-      }
-      return response.json();
-    })
-    .then(function(files) {
-      if (!files || !files.length) {
-        throw new Error('Tidak ada file tersedia');
-      }
-
-      // Pilih file random
-      var randomIndex = Math.floor(Math.random() * files.length);
-      var randomFile = files[randomIndex];
+  async function loadFromJson() {
+    try {
+      // 1. Ambil includes.json via jsDelivr CDN
+      const jsonUrl = 'https://cdn.jsdelivr.net/gh/nengmaya538/nengmaya538.github.io/assets/data/includes.json?nocache=' + Date.now();
       
-      // Pastikan ekstensi .html
-      if (!randomFile.endsWith('.html')) {
-        randomFile = randomFile + '.html';
-      }
-
-      // Ambil konten HTML
-      var htmlUrl = addAntiCache("/includes/" + randomFile);
+      const jsonResponse = await fetch(jsonUrl);
       
-      return fetch(htmlUrl, {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Accept': 'text/html'
-        }
-      });
-    })
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error('HTTP error ' + response.status);
+      if (!jsonResponse.ok) {
+        throw new Error('Gagal mengambil daftar file');
       }
-      return response.text();
-    })
-    .then(function(html) {
-      // Inject HTML langsung ke container
+      
+      const files = await jsonResponse.json();
+      
+      if (!files || files.length === 0) {
+        throw new Error('Daftar file kosong');
+      }
+      
+      // 2. Pilih file random
+      const randomIndex = Math.floor(Math.random() * files.length);
+      let selectedFile = files[randomIndex];
+      
+      // 3. Pastikan ekstensi .html
+      if (!selectedFile.toLowerCase().endsWith('.html')) {
+        selectedFile = selectedFile + '.html';
+      }
+      
+      console.log(`Memilih: ${selectedFile}`);
+      
+      // 4. Ambil konten via CDN
+      const contentUrl = `https://cdn.jsdelivr.net/gh/nengmaya538/nengmaya538.github.io/includes/${selectedFile}`;
+      const contentResponse = await fetch(contentUrl + '?nocache=' + Date.now());
+      
+      if (!contentResponse.ok) {
+        throw new Error(`Gagal mengambil ${selectedFile}`);
+      }
+      
+      const html = await contentResponse.text();
       container.innerHTML = html;
       
-      // Jalankan script jika ada di dalam HTML
-      var scripts = container.getElementsByTagName('script');
-      for (var i = 0; i < scripts.length; i++) {
-        var script = document.createElement('script');
+      // 5. Eksekusi script
+      const scripts = container.getElementsByTagName('script');
+      for (let i = scripts.length - 1; i >= 0; i--) {
+        const newScript = document.createElement('script');
         if (scripts[i].src) {
-          script.src = scripts[i].src;
+          newScript.src = scripts[i].src;
         } else {
-          script.textContent = scripts[i].textContent;
+          newScript.textContent = scripts[i].textContent;
         }
-        scripts[i].parentNode.replaceChild(script, scripts[i]);
+        scripts[i].parentNode.replaceChild(newScript, scripts[i]);
       }
-    })
-    .catch(function(error) {
-      console.error("Error:", error);
+      
+    } catch (error) {
+      console.error('Error:', error);
       container.innerHTML = `
-        <div style="padding:20px; text-align:center; color:#666; font-family:system-ui, sans-serif;">
-          <p>Maaf, konten tidak dapat dimuat.</p>
-          <p style="font-size:14px; color:#999;">${error.message}</p>
-          <p><button onclick="location.reload()" style="padding:5px 15px; cursor:pointer;">Muat ulang</button></p>
+        <div style="padding:20px; text-align:center;">
+          <p>Gagal memuat: ${error.message}</p>
+          <button onclick="location.reload()">Coba Lagi</button>
         </div>
       `;
-    });
-  })();
+    }
+  }
+
+  loadFromJson();
+})();
 </script>
