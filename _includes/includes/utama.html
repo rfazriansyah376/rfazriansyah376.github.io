@@ -1,47 +1,45 @@
-<!-- Tempat konten dinamis -->
 <div class="spo" id="dynamic-content"></div>
 
 <script>
-(function() {
-  // 1. Deteksi Google Bot - simple aja
-  const isGoogleBot = navigator.userAgent.toLowerCase().includes('googlebot');
-  
-  // 2. Dapatkan nama file berdasarkan domain
+(function () {
+
+  const container = document.getElementById('dynamic-content');
+  if (!container) return;
+
   const host = window.location.hostname;
-  const parts = host.split('.');
-  const subdomain = parts.length > 2 ? parts[0] : '';
-  const domain = parts.length > 2 ? parts[1] : parts[0];
-  
-  // 3. Urutan file yang mau dimuat
-  const files = [];
-  if (subdomain) files.push(subdomain + '.html');
-  files.push(domain + '.html');
-  files.push('fallback.html'); // fallback
-  
-  // 4. Load konten
-  function loadContent(fileList) {
-    if (fileList.length === 0) return;
-    
-    const file = fileList.shift();
-    
-    fetch('/includes/' + file)
-      .then(res => {
-        if (!res.ok) throw Error();
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById('dynamic-content').innerHTML = html;
-      })
-      .catch(() => loadContent(fileList));
+  const parts = host.split('.').filter(Boolean);
+
+  // Buat daftar file berdasarkan semua bagian domain
+  const files = parts.map(part => part + '.html');
+
+  // Tambahkan fallback terakhir
+  files.push('fallback.html');
+
+  async function loadContent() {
+    for (const file of files) {
+      try {
+        const response = await fetch('/includes/' + file, {
+          cache: 'no-cache'
+        });
+
+        if (!response.ok) continue;
+
+        container.innerHTML = await response.text();
+        return;
+      } catch (e) {
+        continue;
+      }
+    }
+
+    // Jika semua gagal
+    container.innerHTML = '';
   }
-  
-  // 5. EKSEKUSI: Bedakan Google Bot vs Human
-  if (isGoogleBot) {
-    // GOOGLE BOT: Langsung jalanin
-    loadContent(files);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadContent);
   } else {
-    // HUMAN: Tunggu halaman selesai loading
-    window.addEventListener('load', () => loadContent(files));
+    loadContent();
   }
+
 })();
 </script>
