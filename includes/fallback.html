@@ -1,28 +1,50 @@
 <div id="random-include"></div>
-  <script>
-    (function () {
-      fetch("https://nengmaya538.github.io/assets/data/includes.json")
-        .then(function (res) {
-          return res.json();
-        })
-        .then(function (files) {
-          if (!files || !files.length) return;
 
-          var randomIndex = Math.floor(Math.random() * files.length);
-          var randomFile = files[randomIndex];
+<script>
+(function () {
 
-          return fetch("https://nengmaya538.github.io/includes/" + randomFile);
-        })
-        .then(function (res) {
-          if (!res) return;
-          return res.text();
-        })
-        .then(function (html) {
-          if (!html) return;
-          document.getElementById("random-include").innerHTML = html;
-        })
-        .catch(function (err) {
-          console.error("Random include error:", err);
-        });
-    })();
-  </script>
+  const container = document.getElementById("random-include");
+  if (!container) return;
+
+  async function loadRandomInclude() {
+    try {
+
+      // Tambahkan timestamp supaya tidak kena cache
+      const jsonUrl = "https://nengmaya538.github.io/assets/data/includes.json?v=" + Date.now();
+
+      const res = await fetch(jsonUrl, {
+        cache: "no-store"
+      });
+
+      if (!res.ok) return;
+
+      const files = await res.json();
+      if (!Array.isArray(files) || files.length === 0) return;
+
+      // Random murni setiap reload
+      const randomFile = files[Math.floor(Math.random() * files.length)];
+
+      const htmlUrl = "https://nengmaya538.github.io/includes/" 
+                      + randomFile + "?v=" + Date.now();
+
+      const htmlRes = await fetch(htmlUrl, {
+        cache: "no-store"
+      });
+
+      if (!htmlRes.ok) return;
+
+      container.innerHTML = await htmlRes.text();
+
+    } catch (err) {
+      console.error("Random include error:", err);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadRandomInclude);
+  } else {
+    loadRandomInclude();
+  }
+
+})();
+</script>
