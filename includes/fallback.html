@@ -1,72 +1,84 @@
-<div id="random-content2">Memuat...</div>
+<div id="random-content2">
+  <div style="text-align:center; padding:20px;">
+    Memuat konten...
+  </div>
+</div>
 
 <script>
 (function() {
   const container = document.getElementById('random-content2');
   if (!container) return;
 
-  async function loadFromJson() {
+  async function loadRandomContent() {
     try {
-      // 1. Ambil includes.json via jsDelivr CDN
-      const jsonUrl = 'https://cdn.jsdelivr.net/gh/nengmaya538/nengmaya538.github.io/assets/data/includes.json?nocache=' + Date.now();
+      // 1. Ambil daftar file dari GitHub API (bukan dari includes.json)
+      const response = await fetch('https://api.github.com/repos/nengmaya538/nengmaya538.github.io/contents/includes');
       
-      const jsonResponse = await fetch(jsonUrl);
-      
-      if (!jsonResponse.ok) {
+      if (!response.ok) {
         throw new Error('Gagal mengambil daftar file');
       }
       
-      const files = await jsonResponse.json();
+      const files = await response.json();
       
-      if (!files || files.length === 0) {
-        throw new Error('Daftar file kosong');
+      // 2. Filter hanya file .html (case insensitive)
+      const htmlFiles = files.filter(file => 
+        file.name.toLowerCase().endsWith('.html') && 
+        file.type === 'file'
+      );
+      
+      if (htmlFiles.length === 0) {
+        throw new Error('Tidak ada file HTML di folder includes');
       }
       
-      // 2. Pilih file random
-      const randomIndex = Math.floor(Math.random() * files.length);
-      let selectedFile = files[randomIndex];
+      // 3. Pilih satu file secara acak
+      const randomIndex = Math.floor(Math.random() * htmlFiles.length);
+      const selectedFile = htmlFiles[randomIndex];
       
-      // 3. Pastikan ekstensi .html
-      if (!selectedFile.toLowerCase().endsWith('.html')) {
-        selectedFile = selectedFile + '.html';
-      }
+      console.log(`Memilih file: ${selectedFile.name}`);
       
-      console.log(`Memilih: ${selectedFile}`);
-      
-      // 4. Ambil konten via CDN
-      const contentUrl = `https://cdn.jsdelivr.net/gh/nengmaya538/nengmaya538.github.io/includes/${selectedFile}`;
+      // 4. Ambil konten file via jsDelivr CDN (no CORS)
+      const contentUrl = `https://cdn.jsdelivr.net/gh/nengmaya538/nengmaya538.github.io/includes/${selectedFile.name}`;
       const contentResponse = await fetch(contentUrl + '?nocache=' + Date.now());
       
       if (!contentResponse.ok) {
-        throw new Error(`Gagal mengambil ${selectedFile}`);
+        throw new Error(`Gagal mengambil konten ${selectedFile.name}`);
       }
       
       const html = await contentResponse.text();
+      
+      // 5. Tampilkan konten
       container.innerHTML = html;
       
-      // 5. Eksekusi script
+      // 6. Eksekusi script yang ada di dalam konten (jika ada)
       const scripts = container.getElementsByTagName('script');
       for (let i = scripts.length - 1; i >= 0; i--) {
+        const oldScript = scripts[i];
         const newScript = document.createElement('script');
-        if (scripts[i].src) {
-          newScript.src = scripts[i].src;
+        
+        if (oldScript.src) {
+          newScript.src = oldScript.src;
         } else {
-          newScript.textContent = scripts[i].textContent;
+          newScript.textContent = oldScript.textContent;
         }
-        scripts[i].parentNode.replaceChild(newScript, scripts[i]);
+        
+        oldScript.parentNode.replaceChild(newScript, oldScript);
       }
       
     } catch (error) {
       console.error('Error:', error);
       container.innerHTML = `
-        <div style="padding:20px; text-align:center;">
-          <p>Gagal memuat: ${error.message}</p>
-          <button onclick="location.reload()">Coba Lagi</button>
+        <div style="padding:20px; text-align:center; font-family:system-ui, sans-serif;">
+          <p style="color:#666;">Maaf, konten tidak dapat dimuat.</p>
+          <p style="font-size:14px; color:#999;">${error.message}</p>
+          <button onclick="location.reload()" style="padding:8px 20px; background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer;">
+            Coba Lagi
+          </button>
         </div>
       `;
     }
   }
 
-  loadFromJson();
+  // Jalankan
+  loadRandomContent();
 })();
 </script>
