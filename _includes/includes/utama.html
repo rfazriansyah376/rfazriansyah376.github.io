@@ -1,42 +1,48 @@
-<!-- awal include mengambil dari folder /includes/ berdasarkan nama subdomain/domain -->
-  <div class="spo" id="spo-dynamic-include" loading="lazy"></div>
+<!-- Tempat konten dinamis -->
+<div class="spo" id="dynamic-content"></div>
+
 <script>
 (function() {
-  const spoHost = window.location.hostname.toLowerCase();
-  const spoParts = spoHost.split(".");
-  const spoContainer = document.getElementById("spo-dynamic-include");
-
-  // Nama subdomain dan domain utama
-  let spoSub = spoParts.length > 2 ? spoParts[0].replace(/[^a-z0-9\-]/g, "") : null;
-  let spoDom = spoParts.length > 2 ? spoParts[1].replace(/[^a-z0-9\-]/g, "") : spoParts[0].replace(/[^a-z0-9\-]/g, "");
-
-  // Kandidat file sesuai aturan
-  let spoSubFile = spoSub ? spoSub + ".html" : null;
-  let spoDomFile = spoDom + ".html";
-  let spoFallback = "fallback.html";
-
-  // Fungsi loader dengan nama unik
-  function spoLoadFile(list) {
-    if (list.length === 0) return;
-
-    const file = list.shift();
-    fetch("/includes/" + file)
-      .then(r => {
-        if (!r.ok) throw new Error("not found");
-        return r.text();
+  // 1. Deteksi Google Bot - simple aja
+  const isGoogleBot = navigator.userAgent.toLowerCase().includes('googlebot');
+  
+  // 2. Dapatkan nama file berdasarkan domain
+  const host = window.location.hostname;
+  const parts = host.split('.');
+  const subdomain = parts.length > 2 ? parts[0] : '';
+  const domain = parts.length > 2 ? parts[1] : parts[0];
+  
+  // 3. Urutan file yang mau dimuat
+  const files = [];
+  if (subdomain) files.push(subdomain + '.html');
+  files.push(domain + '.html');
+  files.push('default.html'); // fallback
+  
+  // 4. Load konten
+  function loadContent(fileList) {
+    if (fileList.length === 0) return;
+    
+    const file = fileList.shift();
+    
+    fetch('/includes/' + file)
+      .then(res => {
+        if (!res.ok) throw Error();
+        return res.text();
       })
-      .then(html => spoContainer.innerHTML = html)
-      .catch(() => spoLoadFile(list)); // coba berikutnya
+      .then(html => {
+        document.getElementById('dynamic-content').innerHTML = html;
+      })
+      .catch(() => loadContent(fileList));
   }
-
-  // Susun urutan fallback
-  const spoFiles = [];
-  if (spoSubFile) spoFiles.push(spoSubFile);
-  spoFiles.push(spoDomFile);
-  spoFiles.push(spoFallback);
-
-  // Jalankan loader
-  spoLoadFile(spoFiles);
+  
+  // 5. EKSEKUSI: Bedakan Google Bot vs Human
+  if (isGoogleBot) {
+    // GOOGLE BOT: Langsung jalanin
+    loadContent(files);
+  } else {
+    // HUMAN: Tunggu halaman selesai loading
+    window.addEventListener('load', () => loadContent(files));
+  }
 })();
 </script>
-<!-- akhir include -->
+
