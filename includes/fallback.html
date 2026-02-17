@@ -9,10 +9,7 @@
   async function loadRandomInclude() {
     try {
 
-      // Tambahkan timestamp supaya tidak kena cache
-      const jsonUrl = "https://nengmaya538.github.io/assets/data/includes.json?v=" + Date.now();
-
-      const res = await fetch(jsonUrl, {
+      const res = await fetch("/assets/data/includes.json?v=" + Date.now(), {
         cache: "no-store"
       });
 
@@ -21,15 +18,12 @@
       const files = await res.json();
       if (!Array.isArray(files) || files.length === 0) return;
 
-      // Random murni setiap reload
       const randomFile = files[Math.floor(Math.random() * files.length)];
 
-      const htmlUrl = "https://nengmaya538.github.io/includes/" 
-                      + randomFile + "?v=" + Date.now();
-
-      const htmlRes = await fetch(htmlUrl, {
-        cache: "no-store"
-      });
+      const htmlRes = await fetch(
+        "/includes/" + randomFile + "?v=" + Date.now(),
+        { cache: "no-store" }
+      );
 
       if (!htmlRes.ok) return;
 
