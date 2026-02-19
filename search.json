@@ -9,6 +9,8 @@ permalink: /search.json
     "url": {{ post.url | jsonify }},
     "content": {{ post.content | strip_html | jsonify }},
     "categories": {{ post.categories | jsonify }},
+    "tags": {% if post.tags %}{{ post.tags | jsonify }}{% else %}[]{% endif %},
+    "labels": {% if post.labels %}{{ post.labels | jsonify }}{% else %}[]{% endif %},
     "excerpt": {{ post.excerpt | default: post.content | strip_html | truncatewords: 30 | jsonify }},
     "date": "{{ post.date | date: "%Y-%m-%d" }}"
   }{% unless forloop.last %},{% endunless %}
