@@ -7,6 +7,9 @@ permalink: /posts-acak.json
     {
       "title": {{ post.title | jsonify }},
       "url": {{ post.url | jsonify }},
+   "categories": {{ post.categories | jsonify }},
+    "tags": {% if post.tags %}{{ post.tags | jsonify }}{% else %}[]{% endif %},
+    "labels": {% if post.labels %}{{ post.labels | jsonify }}{% else %}[]{% endif %},
       "excerpt": {% if post.excerpt and post.excerpt != "" %}
         {{ post.excerpt | strip_html | truncatewords: 200 | jsonify }}
       {% else %}
