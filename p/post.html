@@ -11,56 +11,142 @@ permalink: /post/
     <meta http-equiv="content-language" content="en">
     <meta name="robots" content="index, follow">
     
-    
-    <!-- Title akan di-update JavaScript -->
+    <!-- Title will be updated by JavaScript -->
     <title id="dynamic-title">Search Exclusive Content Archive</title>
     
-    <!-- Meta Description akan di-update JavaScript -->
+    <!-- Meta Description will be updated by JavaScript -->
     <meta id="dynamic-description" name="description" content="Browse our comprehensive collections of celebrity content, including photos, videos, biographies, and exclusive material.">
     
-   
+    <!-- Canonical URL - dynamically follows current query or URL -->
+    <link id="dynamic-canonical" rel="canonical" href="">
     
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 1000px; margin: 0 auto; padding: 20px; }
-        h1 { color: #333; font-size: 2.2em; }
-        h2 { color: #444; margin-top: 40px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
-        a { color: #0066cc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        section { margin: 40px 0; }
-        .breadcrumb { padding: 10px 0; margin-bottom: 20px; border-bottom: 1px solid #eee; }
-        .breadcrumb a { color: #666; }
-        .breadcrumb span { color: #333; font-weight: bold; }
-        .quick-facts { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 30px 0; }
-        .faq-item { margin: 25px 0; }
-        ul { list-style: none; padding: 0; }
-        li { margin-bottom: 8px; }
-        hr { border: none; border-top: 1px solid #eee; margin: 30px 0; }
-        .hidden { display: none; }
-        .query-placeholder { font-weight: bold; }
-        [data-query-section] { display: none; }
-        [data-query-section].active { display: block; }
-        .default-content.active { display: block; }
-        .default-content { display: none; }
+        :root {
+            --primary-color: #0066cc;
+            --primary-hover: #0052a3;
+            --primary-light: #e6f0ff;
+            --text-dark: #333;
+            --text-light: #666;
+            --border-color: #f0f0f0;
+            --bg-light: #f9f9f9;
+        }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            line-height: 1.6; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        
+        h1 { 
+            color: var(--text-dark); 
+            font-size: 2.2em; 
+        }
+        
+        h2 { 
+            color: var(--text-dark); 
+            margin-top: 40px; 
+            border-bottom: 2px solid var(--border-color); 
+            padding-bottom: 10px; 
+        }
+        
+        a { 
+            color: var(--primary-color); 
+            text-decoration: none; 
+        }
+        
+        a:hover { 
+            color: var(--primary-hover);
+            text-decoration: underline; 
+        }
+        
+        section { 
+            margin: 40px 0; 
+        }
+        
+        .breadcrumb { 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            border-bottom: 1px solid var(--border-color); 
+        }
+        
+        .breadcrumb a { 
+            color: var(--text-light); 
+        }
+        
+        .breadcrumb span { 
+            color: var(--text-dark); 
+            font-weight: bold; 
+        }
+        
+        .quick-facts { 
+            background: var(--bg-light); 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 30px 0; 
+        }
+        
+        .faq-item { 
+            margin: 25px 0; 
+        }
+        
+        ul { 
+            list-style: none; 
+            padding: 0; 
+        }
+        
+        li { 
+            margin-bottom: 8px; 
+        }
+        
+        hr { 
+            border: none; 
+            border-top: 1px solid var(--border-color); 
+            margin: 30px 0; 
+        }
+        
+        .hidden { 
+            display: none; 
+        }
+        
+        .query-placeholder { 
+            font-weight: bold; 
+        }
+        
+        [data-query-section] { 
+            display: none; 
+        }
+        
+        [data-query-section].active { 
+            display: block; 
+        }
+        
+        .default-content.active { 
+            display: block; 
+        }
+        
+        .default-content { 
+            display: none; 
+        }
     </style>
 {% include head.html %}
-  </head>
+</head>
 <body><div loading="lazy">
 
     <main>
     {% include /ads/gobloggugel/nanouturfs.html %}
         <!-- ============================================
-             DEFAULT CONTENT (tampil jika tidak ada query)
+             DEFAULT CONTENT (shown if no query)
              ============================================ -->
         <div id="default-content" class="default-content active">
             <h1>Search Exclusive Content Archive</h1>
             <p>Browse our comprehensive collections of celebrity content, including photos, videos, biographies, and exclusive material.</p>
-            
-            
         </div>
         
         <!-- ============================================
-             QUERY-BASED CONTENT (disembunyikan sampai ada query)
-             Semua konten ini sudah ada di HTML untuk SEO
+             QUERY-BASED CONTENT (hidden until query exists)
+             All content is already in HTML for SEO
              ============================================ -->
         <div id="query-content" style="display: none;">
             <!-- BREADCRUMB -->
@@ -75,16 +161,15 @@ permalink: /post/
             <!-- QUICK FACTS -->
             <div class="quick-facts" id="quick-facts">
                 <h2>About <span class="query-placeholder"></span></h2>
-                
             </div>
             
-            <!-- INTRO PARAGRAPH (berbagai varian) -->
+            <!-- INTRO PARAGRAPH (various variants) -->
             <div id="intro-leak" class="intro-varian hidden">
-                <p>Welcome to the most comprehensive collection of <strong class="query-placeholder"></strong> content available online. This archive brings together all <strong><span class="base-placeholder"></span> leaked material</strong>, including <a href="" class="dynamic-link" data-variant="leaked+photos">leaked photos</a>, <a href="" class="dynamic-link" data-variant="leaked+videos">private videos</a>, and <a href="" class="dynamic-link" data-variant="exclusive+content">exclusive content</a> that has surfaced over time. Whether you're looking for <a href="" class="dynamic-link" data-variant="rare+leaks">rare leaks</a>, <a href="" class="dynamic-link" data-variant="uncensored">uncensored material</a>, or <a href="" class="dynamic-link" data-variant="behind+the+scenes">behind-the-scenes moments</a>, this page has everything in one place.</p>
+                <p>Welcome to the most comprehensive collection of <strong class="query-placeholder"></strong> content available online. This archive brings together all <strong><span class="base-placeholder"></span> leaked material</strong>, including <a href="" class="dynamic-link" data-variant="leaked+photos">leaked photos</a>, <a href="" class="dynamic-link" data-variant="leaked+videos">private videos</a>, and <a href="" class="dynamic-link" data-variant="exclusive+content">exclusive content</a> that has surfaced over time. Whether you are looking for <a href="" class="dynamic-link" data-variant="rare+leaks">rare leaks</a>, <a href="" class="dynamic-link" data-variant="uncensored">uncensored material</a>, or <a href="" class="dynamic-link" data-variant="behind+the+scenes">behind-the-scenes moments</a>, this page has everything in one place.</p>
             </div>
             
             <div id="intro-photo" class="intro-varian hidden">
-                <p>Welcome to the complete <strong class="query-placeholder"></strong> photo archive. This gallery contains every <a href="" class="dynamic-link" data-variant="photos">photo</a> available, from <a href="" class="dynamic-link" data-variant="professional+photoshoot">professional photoshoots</a> to <a href="" class="dynamic-link" data-variant="candid">candid moments</a>. Browse through <a href="" class="dynamic-link" data-variant="gallery">photo galleries</a>, <a href="" class="dynamic-link" data-variant="pictures">picture collections</a>, and <a href="" class="dynamic-link" data-variant="images">image archives</a> spanning her entire career. Whether you're looking for <a href="" class="dynamic-link" data-variant="rare+photos">rare shots</a> or <a href="" class="dynamic-link" data-variant="high+quality">high-quality images</a>, you'll find them here.</p>
+                <p>Welcome to the complete <strong class="query-placeholder"></strong> photo archive. This gallery contains every <a href="" class="dynamic-link" data-variant="photos">photo</a> available, from <a href="" class="dynamic-link" data-variant="professional+photoshoot">professional photoshoots</a> to <a href="" class="dynamic-link" data-variant="candid">candid moments</a>. Browse through <a href="" class="dynamic-link" data-variant="gallery">photo galleries</a>, <a href="" class="dynamic-link" data-variant="pictures">picture collections</a>, and <a href="" class="dynamic-link" data-variant="images">image archives</a> spanning her entire career. Whether you are looking for <a href="" class="dynamic-link" data-variant="rare+photos">rare shots</a> or <a href="" class="dynamic-link" data-variant="high+quality">high-quality images</a>, you will find them here.</p>
             </div>
             
             <div id="intro-video" class="intro-varian hidden">
@@ -92,15 +177,15 @@ permalink: /post/
             </div>
             
             <div id="intro-bio" class="intro-varian hidden">
-                <p>Welcome to the complete <strong class="query-placeholder"></strong> biography archive. Here you'll find detailed information about <a href="" class="dynamic-link" data-variant="bio">life</a>, including <a href="" class="dynamic-link" data-variant="age">age</a>, <a href="" class="dynamic-link" data-variant="height">height</a>, <a href="" class="dynamic-link" data-variant="background">background</a>, and <a href="" class="dynamic-link" data-variant="career">career journey</a>. Learn about <a href="" class="dynamic-link" data-variant="personal+life">personal life</a>, <a href="" class="dynamic-link" data-variant="relationships">relationships</a>, and <a href="" class="dynamic-link" data-variant="net+worth">net worth</a>. This comprehensive biography compiles all publicly available information.</p>
+                <p>Welcome to the complete <strong class="query-placeholder"></strong> biography archive. Here you will find detailed information about <a href="" class="dynamic-link" data-variant="bio">her life</a>, including <a href="" class="dynamic-link" data-variant="age">age</a>, <a href="" class="dynamic-link" data-variant="height">height</a>, <a href="" class="dynamic-link" data-variant="background">background</a>, and <a href="" class="dynamic-link" data-variant="career">career journey</a>. Learn about <a href="" class="dynamic-link" data-variant="personal+life">personal life</a>, <a href="" class="dynamic-link" data-variant="relationships">relationships</a>, and <a href="" class="dynamic-link" data-variant="net+worth">net worth</a>. This comprehensive biography compiles all publicly available information.</p>
             </div>
             
             <div id="intro-platform" class="intro-varian hidden">
-                <p>Welcome to the <strong class="query-placeholder"></strong> platform content archive. This collection brings together all material from <a href="" class="dynamic-link" data-variant="instagram">Instagram</a>, <a href="" class="dynamic-link" data-variant="facebook">facebook</a>, <a href="" class="dynamic-link" data-variant="twitter">Twitter</a>, and other platforms. Explore exclusive platform-specific content all in one place.</p>
+                <p>Welcome to the <strong class="query-placeholder"></strong> platform content archive. This collection brings together all material from <a href="" class="dynamic-link" data-variant="instagram">Instagram</a>, <a href="" class="dynamic-link" data-variant="facebook">Facebook</a>, <a href="" class="dynamic-link" data-variant="twitter">Twitter</a>, and other platforms. Explore exclusive platform-specific content all in one place.</p>
             </div>
             
             <div id="intro-general" class="intro-varian hidden">
-                <p>Welcome to the most comprehensive collection of <strong class="query-placeholder"></strong> content available online. This archive brings together everything in one place: <a href="" class="dynamic-link" data-variant="photos">photos</a>, <a href="" class="dynamic-link" data-variant="videos">videos</a>, <a href="" class="dynamic-link" data-variant="biography">biography</a>, <a href="" class="dynamic-link" data-variant="exclusive">exclusive content</a>, and <a href="" class="dynamic-link" data-variant="leaked">leaked material</a>. Whether you're a longtime fan or just discovering, this page provides complete access to all available content.</p>
+                <p>Welcome to the most comprehensive collection of <strong class="query-placeholder"></strong> content available online. This archive brings together everything in one place: <a href="" class="dynamic-link" data-variant="photos">photos</a>, <a href="" class="dynamic-link" data-variant="videos">videos</a>, <a href="" class="dynamic-link" data-variant="biography">biography</a>, <a href="" class="dynamic-link" data-variant="exclusive">exclusive content</a>, and <a href="" class="dynamic-link" data-variant="leaked">leaked material</a>. Whether you are a longtime fan or just discovering, this page provides complete access to all available content.</p>
             </div>
             
             <hr>
@@ -115,14 +200,14 @@ permalink: /post/
                 <a href="" class="dynamic-link" data-variant="videos">video collections</a>, and 
                 <a href="" class="dynamic-link" data-variant="bio">personal biography</a>. Others seek 
                 <a href="" class="dynamic-link" data-variant="exclusive">exclusive content</a> from platforms like 
-                <a href="" class="dynamic-link" data-variant="facebook">facebook</a>, 
+                <a href="" class="dynamic-link" data-variant="facebook">Facebook</a>, 
                 <a href="" class="dynamic-link" data-variant="instagram">Instagram</a>, and 
                 <a href="" class="dynamic-link" data-variant="tiktok">TikTok</a>. Our archive covers all these areas comprehensively.</p>
             </section>
             
             <!-- SECTION 2: Photo Gallery -->
             <section id="section-photo">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/ai6x3uCdl_4"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/ai6x3uCdl_4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 <h2><span class="query-placeholder"></span> Photo Gallery</h2>
                 <p>The <strong><span class="query-placeholder"></span> photo archive</strong> includes 
                 <a href="" class="dynamic-link" data-variant="photos">photos</a> from throughout her career, including 
@@ -146,10 +231,10 @@ permalink: /post/
             <!-- SECTION 3: Video Archive -->
             <section id="section-video">
                 <h2><span class="query-placeholder"></span> Video Collection</h2>
-                   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/3rYIDK1bbW4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/3rYIDK1bbW4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 <p>Our <strong><span class="query-placeholder"></span> video archive</strong> brings together 
                 <a href="" class="dynamic-link" data-variant="videos"><span class="query-placeholder"></span> videos</a> from all stages. This includes 
-                <a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> hot live performances</a>, 
+                <a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> live performances</a>, 
                 <a href="" class="dynamic-link" data-variant="interviews"><span class="query-placeholder"></span> interviews</a>, 
                 <a href="" class="dynamic-link" data-variant="behind+the+scenes+footage"><span class="query-placeholder"></span> behind-the-scenes footage</a>, and 
                 <a href="" class="dynamic-link" data-variant="exclusive+clips"><span class="query-placeholder"></span> exclusive clips</a>.</p>
@@ -171,9 +256,9 @@ permalink: /post/
                 <a href="" class="dynamic-link" data-variant="leaked+photos"><span class="query-placeholder"></span> leaked photos</a>, 
                 <a href="" class="dynamic-link" data-variant="leaked+videos"><span class="query-placeholder"></span> private videos</a>, and 
                 <a href="" class="dynamic-link" data-variant="exclusive+leaks"><span class="query-placeholder"></span> exclusive leaks</a>. Our collection includes 
-                <a href="" class="dynamic-link" data-variant="rare+leaks"><span class="query-placeholder"></span> hot</a>, 
-                <a href="" class="dynamic-link" data-variant="unreleased"><span class="query-placeholder"></span> sexy</a>, and 
-                <a href="" class="dynamic-link" data-variant="confidential"><span class="query-placeholder"></span> bikini</a>.</p>
+                <a href="" class="dynamic-link" data-variant="rare+leaks"><span class="query-placeholder"></span> rare leaks</a>, 
+                <a href="" class="dynamic-link" data-variant="unreleased"><span class="query-placeholder"></span> unreleased content</a>, and 
+                <a href="" class="dynamic-link" data-variant="confidential"><span class="query-placeholder"></span> confidential material</a>.</p>
                 
                 <p>Fans also search for <a href="" class="dynamic-link" data-variant="private+collection"><span class="query-placeholder"></span> private collections</a>, 
                 <a href="" class="dynamic-link" data-variant="archive"><span class="query-placeholder"></span> complete archives</a>, and 
@@ -189,7 +274,7 @@ permalink: /post/
                 
                 <ul>
                     <li><a href="" class="dynamic-link" data-variant="instagram"><span class="query-placeholder"></span> Instagram content</a> – posts, stories, and shared moments</li>
-                    <li><a href="" class="dynamic-link" data-variant="facebook"><span class="query-placeholder"></span> facebook content</a> – exclusive subscriber material</li>
+                    <li><a href="" class="dynamic-link" data-variant="facebook"><span class="query-placeholder"></span> Facebook content</a> – exclusive subscriber material</li>
                     <li><a href="" class="dynamic-link" data-variant="twitter"><span class="query-placeholder"></span> Twitter/X archive</a> – tweets and interactions</li>
                     <li><a href="" class="dynamic-link" data-variant="tiktok"><span class="query-placeholder"></span> TikTok videos</a> – short-form content and trends</li>
                     <li><a href="" class="dynamic-link" data-variant="youtube"><span class="query-placeholder"></span> YouTube appearances</a> – interviews and features</li>
@@ -203,7 +288,7 @@ permalink: /post/
             <!-- SECTION 6: Exclusive Content -->
             <section id="section-exclusive">
                 <h2>Exclusive <span class="query-placeholder"></span> Content</h2>
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/m_Vh4JRXIfE" title="angel karamoy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/m_Vh4JRXIfE" title="exclusive content" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 <p>Beyond public appearances, various <strong>exclusive content</strong> has emerged. 
                 This section features <a href="" class="dynamic-link" data-variant="behind+the+scenes"><span class="query-placeholder"></span> behind-the-scenes moments</a>, 
                 <a href="" class="dynamic-link" data-variant="private+gatherings"><span class="query-placeholder"></span> private gatherings</a>, 
@@ -221,8 +306,8 @@ permalink: /post/
             <!-- SECTION 7: Biography -->
             <section id="section-bio">
                 <h2>About <span class="query-placeholder"></span></h2>
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/QXFMiUCYoYQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <p>Understanding <strong><span class="query-placeholder"></span></strong> means knowing the story. This section covers:</p>
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/QXFMiUCYoYQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <p>Understanding <strong><span class="query-placeholder"></span></strong> means knowing the story. This section covers:</p>
                 
                 <ul>
                     <li><a href="" class="dynamic-link" data-variant="early+life"><span class="query-placeholder"></span> Early life and background</a> – where she came from</li>
@@ -238,15 +323,15 @@ permalink: /post/
             
             <!-- SECTION 8: Related Searches -->
             <section id="section-related">
-           <iframe width="100%" height="100%" src="https://www.youtube.com/embed/e8m2shmdJoE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <h2>You Might Also Be Interested In</h2>
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/e8m2shmdJoE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <h2>You Might Also Be Interested In</h2>
                 <ul>
                     <li><a href="/categories/?q=celebrity+profiles">Celebrity profiles and archives</a></li>
                     <li><a href="/categories/?q=exclusive+collections">Exclusive content collections</a></li>
                     <li><a href="/categories/?q=photo+archives">Photo archives</a></li>
                     <li><a href="/categories/?q=video+collections">Video collections</a></li>
                     <li><a href="/categories/?q=leaked+content">Leaked content</a></li>
-                    <li><a href="/categories/?q=facebook+leaks">facebook leaks</a></li>
+                    <li><a href="/categories/?q=facebook+leaks">Facebook leaks</a></li>
                 </ul>
             </section>
             
@@ -280,8 +365,7 @@ permalink: /post/
                 
                 <div class="faq-item">
                     <h3>How can I learn about the background?</h3>
-                  
-  <p>The <a href="" class="dynamic-link" data-variant="biography"><span class="query-placeholder"></span> biography section</a> provides comprehensive information.</p>
+                    <p>The <a href="" class="dynamic-link" data-variant="biography"><span class="query-placeholder"></span> biography section</a> provides comprehensive information.</p>
                 </div>
             </section>
             <hr />
@@ -299,17 +383,34 @@ permalink: /post/
     
     <script>
     (function() {
-        // Ambil query dari URL
+        // Get query from URL - works for multi subdomain and multi query
+        function getCanonicalUrl() {
+            return window.location.href.split('?')[0];
+        }
+        
+        // Set canonical URL dynamically
+        function setCanonicalUrl() {
+            const canonicalLink = document.getElementById('dynamic-canonical');
+            const currentUrl = window.location.href;
+            const baseUrl = currentUrl.split('?')[0];
+            canonicalLink.href = baseUrl;
+        }
+        
+        // Get query parameters - works with all URL formats including subdomains
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
-        // Jika tidak ada query, tampilkan default content
+        // If no query, show default content
         if (!query) {
             document.getElementById('default-content').classList.add('active');
+            setCanonicalUrl();
             return;
         }
         
-        // Sembunyikan default, tampilkan query content
+        // Set canonical URL before any changes
+        setCanonicalUrl();
+        
+        // Hide default, show query content
         document.getElementById('default-content').classList.remove('active');
         document.getElementById('default-content').style.display = 'none';
         document.getElementById('query-content').style.display = 'block';
@@ -318,12 +419,12 @@ permalink: /post/
         query = decodeURIComponent(query.replace(/\+/g, ' '));
         const originalQuery = query;
         
-        // Daftar kata yang akan dihapus untuk mendapatkan base name
+        // Words to remove to get base name
         const removeTerms = [
             '2025', '2024'
         ];
         
-        // Fungsi untuk mendapatkan base name
+        // Function to get base name
         function getBaseName(query) {
             let base = query.toLowerCase();
             removeTerms.forEach(term => {
@@ -335,7 +436,7 @@ permalink: /post/
         
         const baseName = getBaseName(query);
         
-        // Deteksi tipe query
+        // Detect query type
         const queryLower = query.toLowerCase();
         let queryType = 'general';
         
@@ -370,16 +471,16 @@ permalink: /post/
         // Update breadcrumb
         document.getElementById('breadcrumb-name').textContent = baseName;
         
-        // Update semua placeholder dengan baseName
+        // Update all placeholders with baseName
         document.querySelectorAll('.query-placeholder').forEach(el => {
             el.textContent = baseName;
         });
         
-        // Tampilkan intro yang sesuai
+        // Show appropriate intro
         document.querySelectorAll('.intro-varian').forEach(el => el.classList.add('hidden'));
         document.getElementById(`intro-${queryType}`).classList.remove('hidden');
         
-        // Update semua dynamic links
+        // Update all dynamic links
         function updateLinks() {
             document.querySelectorAll('.dynamic-link').forEach(link => {
                 const variant = link.getAttribute('data-variant');
@@ -391,39 +492,36 @@ permalink: /post/
         
         updateLinks();
         
-        // Update semua link yang perlu base name di text
+        // Update all links that need base name in text
         document.querySelectorAll('.base-placeholder').forEach(el => {
             el.textContent = baseName;
         });
         
+        // Fix any symbol/icon typos
+        function fixSymbols() {
+            // Fix Facebook capitalization (if any)
+            document.body.innerHTML = document.body.innerHTML.replace(/facebook/g, 'Facebook');
+            document.body.innerHTML = document.body.innerHTML.replace(/tiktok/g, 'TikTok');
+            document.body.innerHTML = document.body.innerHTML.replace(/instagram/g, 'Instagram');
+            document.body.innerHTML = document.body.innerHTML.replace(/youtube/g, 'YouTube');
+            document.body.innerHTML = document.body.innerHTML.replace(/snapchat/g, 'Snapchat');
+            document.body.innerHTML = document.body.innerHTML.replace(/discord/g, 'Discord');
+            document.body.innerHTML = document.body.innerHTML.replace(/telegram/g, 'Telegram');
+            document.body.innerHTML = document.body.innerHTML.replace(/reddit/g, 'Reddit');
+        }
+        
+        fixSymbols();
+        
     })();
     </script>
-    
+ 
+    <br /><br /><br />
+    <nav>
+    {% include /kw/p/post.html %}
+    </nav>
+    {% include footer.html %}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    
-
-<br /><br /><br />
-<nav>
-{% include /kw/p/post.html %}
-</nav>
-{% include footer.html %}
-
-
-{% include /ads/gobloggugel/sosmed.html %}
+    {% include /ads/gobloggugel/sosmed.html %}
 
 </div>
 </body>
