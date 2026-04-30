@@ -13,9 +13,14 @@ permalink: /edition08/
     <meta name="referrer" content="always">
     <title id="dynamic-title">TheArchive · Complete Topic Resource</title>
     <meta id="dynamic-description" name="description" content="Complete archive and collection. Permanent access. Premium quality content.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition09/">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #c41e3a;
+            --primary-color-rgb: 196, 30, 58;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#f5f2eb;font-family:'Inter',sans-serif;color:#1a1a1a}
         
@@ -37,19 +42,19 @@ permalink: /edition08/
         
         /* Hero Section - Editorial Style */
         .hero{margin-bottom:64px;border-bottom:1px solid #e0ddd8;padding-bottom:48px}
-        .hero-eyebrow{font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;color:#c41e3a;margin-bottom:16px}
+        .hero-eyebrow{font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--primary-color);margin-bottom:16px}
         .hero-title{font-family:'Playfair Display',serif;font-size:4rem;font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-0.02em}
         .hero-dek{font-size:1rem;color:#444;max-width:800px;line-height:1.5;margin-bottom:24px}
         .hero-stats{display:flex;gap:32px}
         .hero-stat{display:flex;flex-direction:column}
-        .hero-stat-number{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#c41e3a}
+        .hero-stat-number{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--primary-color)}
         .hero-stat-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:#666}
         
         /* Featured Card */
         .featured-section{margin-bottom:64px}
         .featured-card{display:grid;grid-template-columns:1fr 1fr;background:#fff;border:1px solid #e0ddd8;padding:0}
         .featured-content{padding:40px}
-        .featured-category{font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:#c41e3a;margin-bottom:12px}
+        .featured-category{font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-bottom:12px}
         .featured-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:16px;line-height:1.2}
         .featured-desc{color:#555;font-size:0.85rem;line-height:1.5;margin-bottom:24px}
         .featured-meta{display:flex;gap:16px;font-size:0.7rem;color:#999}
@@ -62,9 +67,9 @@ permalink: /edition08/
         /* Article Card Style - Editorial */
         .article-card{cursor:pointer;transition:all 0.2s ease}
         .article-card:hover{transform:translateY(-4px)}
-        .article-card:hover .article-title{color:#c41e3a}
+        .article-card:hover .article-title{color:var(--primary-color)}
         .article-preview{background:#fff;height:200px;border:1px solid #e0ddd8;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:3rem}
-        .article-category{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#c41e3a;margin-bottom:8px}
+        .article-category{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-bottom:8px}
         .article-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px;line-height:1.3;transition:color 0.2s}
         .article-excerpt{font-size:0.75rem;color:#666;line-height:1.4;margin-bottom:12px}
         .article-meta{display:flex;gap:12px;font-size:0.65rem;color:#999}
@@ -74,7 +79,7 @@ permalink: /edition08/
         .col-archive .subtitle{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:24px;padding-bottom:8px;border-bottom:1px solid #e0ddd8}
         .archive-list{list-style:none}
         .archive-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #e0ddd8;cursor:pointer;transition:color 0.2s}
-        .archive-item:hover{color:#c41e3a}
+        .archive-item:hover{color:var(--primary-color)}
         .archive-name{font-size:0.85rem;font-weight:500}
         .archive-count{font-size:0.65rem;color:#999}
         
@@ -95,7 +100,7 @@ permalink: /edition08/
 
 <script>
 (function(){
-    // ========== DATABASE VARIAN EDITORIAL (100% BERBEDA) ==========
+    // ========== DATABASE VARIAN EDITORIAL (100% DIFFERENT) ==========
     
     // 50 Editorial Actions
     const ACTIONS = [
@@ -157,7 +162,7 @@ permalink: /edition08/
         "Record Collection Ultimate"
     ];
     
-    // 20 Era Indicators (tanpa tahun spesifik)
+    // 20 Era Indicators (without specific year)
     const ERAS = [
         "modern era","contemporary period","digital age","information age","classical period",
         "traditional era","historic collection","legacy archive","heritage series","vintage compilation",
@@ -188,12 +193,12 @@ permalink: /edition08/
         "archivepress","vaultpub","collectionhouse","resourcemedia","knowledgeworks",
         "compilationstudio","anthologypress","libraryeditions","repositorybooks","documentcenter",
         "recordarchive","filedepot","storagemedia","digitalvault","cyberpress",
-        "netpubs","webeditions","onlinearXiv","cloudlibrary","digitalcollection"
+        "netpubs","webeditions","onlinearchive","cloudlibrary","digitalcollection"
     ];
     
     // 6 Category Types (editorial)
     const CATEGORIES = ['Archive','Collection','Resource','Library','Compendium','Anthology'];
-    const CATEGORY_COLORS = ['#c41e3a','#1a1a1a','#c41e3a','#1a1a1a','#c41e3a','#1a1a1a'];
+    const CATEGORY_COLORS = ['var(--primary-color)','#1a1a1a','var(--primary-color)','#1a1a1a','var(--primary-color)','#1a1a1a'];
     
     // 10 Preview Backgrounds (pattern/style)
     const PREVIEW_STYLES = [
@@ -280,7 +285,7 @@ permalink: /edition08/
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
@@ -311,7 +316,7 @@ permalink: /edition08/
         };
     };
     
-    // ========== GENERATE METRIK ==========
+    // ========== GENERATE METRICS ==========
     const genMetrics = () => ({
         views: range(...rand(VIEW_RANGES)), saves: range(...rand(SAVE_RANGES)),
         notes: range(...rand(NOTE_RANGES)), era: rand(ERAS),
@@ -380,7 +385,7 @@ permalink: /edition08/
         return tags.join('');
     };
     
-    // ========== SEO DINAMIS ==========
+    // ========== DYNAMIC SEO ==========
     const updateSEO = () => {
         let titles = [
             `${displayTopic} · Complete Archive & Collection | TheArchive`,
@@ -396,10 +401,10 @@ permalink: /edition08/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href);
     };
     
-    // ========== GET CURRENT DATE (FORMAT EDITORIAL) ==========
+    // ========== GET CURRENT DATE (EDITORIAL FORMAT) ==========
     const getEditorialDate = () => {
         const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -418,7 +423,7 @@ permalink: /edition08/
         document.getElementById('app').innerHTML = `
             <div class="site-header">
                 <div class="logo-area">
-                    <div class="logo">The<span style="color:#c41e3a">Archive</span></div>
+                    <div class="logo">The<span style="color:var(--primary-color)">Archive</span></div>
                     <div class="logo-sub">EST. 2024 · DIGITAL LIBRARY</div>
                 </div>
                 <div class="header-meta">
@@ -428,7 +433,7 @@ permalink: /edition08/
             </div>
             
             <div class="breadcrumb">
-                <a href="/">HOME</a> / <a href="/edition09/">ARCHIVE</a> / <span style="color:#c41e3a">${displayTopic.toUpperCase()}</span>
+                <a href="/">HOME</a> / <a href="/edition09/">ARCHIVE</a> / <span style="color:var(--primary-color)">${displayTopic.toUpperCase()}</span>
             </div>
             
             <div class="hero">

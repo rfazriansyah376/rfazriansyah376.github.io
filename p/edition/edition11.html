@@ -13,16 +13,20 @@ permalink: /edition11/
     <meta name="referrer" content="always">
     <title id="dynamic-title">The Encyclopedia · Complete Topic Library</title>
     <meta id="dynamic-description" name="description" content="Complete encyclopedia and knowledge library. Comprehensive entries. Permanent access.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition12/">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:opsz,wght@6..20,400;6..20,500;6..20,600;6..20,700;6..20,800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #c41e3a;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#faf9f6;font-family:'Inter',sans-serif;color:#1a1a1a}
         
-        /* Style Encyclopedia / Library Catalog - Klasik, Elegan, Detail */
+        /* Style Encyclopedia / Library Catalog - Classic, Elegant, Detailed */
         .encyclopedia-wrapper{max-width:1300px;margin:0 auto;padding:0 32px}
         
-        /* Header Klasik */
+        /* Classic Header */
         .classic-header{border-bottom:3px double #1a1a1a;padding:32px 0 24px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
         .title-area .main-title{font-family:'Crimson Pro',serif;font-size:2rem;font-weight:800;letter-spacing:-0.5px}
         .title-area .sub-title{font-family:'Crimson Pro',serif;font-size:0.8rem;font-style:italic;color:#666;margin-top:4px}
@@ -36,7 +40,7 @@ permalink: /edition11/
         
         /* Hero Encyclopedia */
         .encyclopedia-hero{background:#fff;border:1px solid #e0ddd8;padding:48px;margin-bottom:48px;box-shadow:0 4px 12px rgba(0,0,0,0.02)}
-        .hero-call-number{font-family:'Crimson Pro',serif;font-size:0.7rem;letter-spacing:2px;color:#c41e3a;margin-bottom:16px;text-transform:uppercase}
+        .hero-call-number{font-family:'Crimson Pro',serif;font-size:0.7rem;letter-spacing:2px;color:var(--primary-color);margin-bottom:16px;text-transform:uppercase}
         .hero-entry-title{font-family:'Crimson Pro',serif;font-size:3rem;font-weight:800;margin-bottom:20px;line-height:1.1}
         .hero-meta{display:flex;gap:24px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #e0ddd8}
         .hero-meta-item{font-size:0.7rem;color:#666}
@@ -44,7 +48,7 @@ permalink: /edition11/
         .hero-abstract{font-size:0.95rem;line-height:1.6;color:#333;margin-bottom:24px;font-family:'Crimson Pro',serif}
         .hero-stats{display:flex;gap:32px;background:#f5f2eb;padding:20px;margin-top:16px}
         .hero-stat{text-align:center}
-        .hero-stat-value{font-family:'Crimson Pro',serif;font-size:1.5rem;font-weight:700;color:#c41e3a}
+        .hero-stat-value{font-family:'Crimson Pro',serif;font-size:1.5rem;font-weight:700;color:var(--primary-color)}
         .hero-stat-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:#666}
         
         /* Main Layout: 2 columns */
@@ -55,28 +59,28 @@ permalink: /edition11/
         .toc-title{font-family:'Crimson Pro',serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid #e0ddd8}
         .toc-list{list-style:none}
         .toc-item{padding:8px 0;border-bottom:1px solid #f0eeea;cursor:pointer;transition:color 0.2s}
-        .toc-item:hover{color:#c41e3a}
+        .toc-item:hover{color:var(--primary-color)}
         .toc-item .toc-chapter{font-size:0.65rem;color:#999;font-family:'Crimson Pro',serif;font-style:italic}
         .toc-item .toc-title-text{font-size:0.75rem;font-weight:500}
         
-        /* Right Content - Encyclopedia Entries (Panjang) */
+        /* Right Content - Encyclopedia Entries (Long) */
         .entries-container{display:flex;flex-direction:column;gap:48px}
         
-        /* Encyclopedia Entry Card - Sangat Panjang */
+        /* Encyclopedia Entry Card - Very Long */
         .encyclopedia-entry{background:#fff;border:1px solid #e0ddd8;padding:32px;transition:all 0.2s;cursor:pointer}
-        .encyclopedia-entry:hover{border-color:#c41e3a40;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+        .encyclopedia-entry:hover{border-color:color-mix(in srgb, var(--primary-color) 25%, transparent);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
         .entry-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px}
-        .entry-category{display:inline-block;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#c41e3a;border:1px solid #c41e3a40;padding:4px 12px;border-radius:30px}
+        .entry-category{display:inline-block;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);border:1px solid color-mix(in srgb, var(--primary-color) 25%, transparent);padding:4px 12px;border-radius:30px}
         .entry-date{font-size:0.65rem;color:#999;font-family:'Crimson Pro',serif;font-style:italic}
         .entry-title{font-family:'Crimson Pro',serif;font-size:1.4rem;font-weight:700;margin-bottom:16px}
         .entry-subtitle{font-size:0.8rem;color:#666;margin-bottom:20px;font-style:italic}
         
-        /* Konten Panjang seperti artikel ensiklopedia */
+        /* Long Content like encyclopedia articles */
         .entry-content{font-size:0.85rem;line-height:1.7;color:#333;margin-bottom:20px}
         .entry-content p{margin-bottom:12px}
         .entry-content .section-head{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:700;margin:16px 0 8px;color:#1a1a1a}
         
-        .entry-metadata{background:#faf9f6;padding:16px;margin:16px 0;font-size:0.7rem;border-left:3px solid #c41e3a}
+        .entry-metadata{background:#faf9f6;padding:16px;margin:16px 0;font-size:0.7rem;border-left:3px solid var(--primary-color)}
         .metadata-line{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:4px}
         
         .entry-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
@@ -84,9 +88,9 @@ permalink: /edition11/
         
         .entry-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #e0ddd8}
         .entry-citation{font-size:0.65rem;color:#999;font-family:'Crimson Pro',serif;font-style:italic}
-        .entry-readmore{font-size:0.7rem;color:#c41e3a;font-weight:500}
+        .entry-readmore{font-size:0.7rem;color:var(--primary-color);font-weight:500}
         
-        /* Right Sidebar kecil */
+        /* Small Right Sidebar */
         .info-box{background:#faf9f6;border:1px solid #e0ddd8;padding:24px;margin-bottom:32px}
         .info-title{font-family:'Crimson Pro',serif;font-size:0.8rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e0ddd8}
         .info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0eeea;font-size:0.7rem}
@@ -95,7 +99,7 @@ permalink: /edition11/
         
         .see-also-list{list-style:none}
         .see-also-item{padding:8px 0;border-bottom:1px solid #f0eeea;cursor:pointer;font-size:0.75rem}
-        .see-also-item:hover{color:#c41e3a}
+        .see-also-item:hover{color:var(--primary-color)}
         
         /* Footer */
         .encyclopedia-footer{margin-top:64px;padding:32px 0;border-top:1px solid #e0ddd8;text-align:center;font-size:0.7rem;color:#999}
@@ -111,7 +115,7 @@ permalink: /edition11/
 
 <script>
 (function(){
-    // ========== DATABASE ENCYCLOPEDIA STYLE (PANJANG & DETAIL) ==========
+    // ========== ENCYCLOPEDIA STYLE DATABASE (LONG & DETAILED) ==========
     
     // 80 Entry Types
     const ENTRY_TYPES = [
@@ -152,7 +156,7 @@ permalink: /edition11/
         "Digital Preservation","Knowledge Management","Information Science","Data Curation","Content Strategy"
     ];
     
-    // 70 Content Paragraphs (untuk konten panjang)
+    // 70 Content Paragraphs (for long content)
     const CONTENT_PARAGRAPHS = [
         "This comprehensive entry provides an in-depth examination of the subject matter, drawing from authoritative sources and verified references. The information presented here has been carefully curated from primary documents and scholarly research, ensuring accuracy and reliability.",
         "Historical context and development of this topic reveals a rich tapestry of intellectual contributions spanning multiple centuries. Scholars have long recognized the importance of understanding the fundamental principles that govern this domain of knowledge.",
@@ -171,7 +175,7 @@ permalink: /edition11/
         "Empirical evidence supporting these conclusions comes from multiple independent studies and replicated experiments, confirming the reliability of reported findings."
     ];
     
-    // 50 Section Headings (untuk struktur artikel)
+    // 50 Section Headings (for article structure)
     const SECTION_HEADINGS = [
         "Historical Background and Development","Theoretical Framework and Foundations","Methodological Approaches and Techniques",
         "Critical Analysis and Evaluation","Practical Applications and Implications","Contemporary Perspectives and Debates",
@@ -210,9 +214,6 @@ permalink: /edition11/
         "archivalcoll","manuscriptlib","referencecoll","specialcoll","rarebooks"
     ];
     
-    // 10 Category Colors
-    const CATEGORY_COLORS = ['#c41e3a','#1a1a1a','#2d5a27','#8b4513','#4a6fa5','#9b6b43','#5c4a3d','#3d5a5c','#7c3a3a','#2a5a5a'];
-    
     // 20 File Sizes
     const FILE_SIZES = ['245 KB','512 KB','1.2 MB','2.4 MB','4.8 MB','8.5 MB','12 MB','18 MB','24 MB','32 MB','48 MB','64 MB','96 MB','128 MB','256 MB','512 MB'];
     
@@ -233,28 +234,28 @@ permalink: /edition11/
         "Reviewed","Updated","Expanded","Revised","Corrected","Enhanced","Supplemented"
     ];
     
-    // 20 Bio Templates (Panjang)
+    // 20 Bio Templates (Long)
     const BIO_TEMPLATES = [
-        (n,f) => `The complete ${n} encyclopedia. Comprehensive entries covering all aspects of ${n} knowledge. ${f.toLocaleString()}+ scholarly citations. Permanent archive.`,
-        (n,f) => `Official ${n} reference work. ${f.toLocaleString()}+ verified entries. Academic peer review. Complete documentation.`,
-        (n) => `${n} definitive encyclopedia. Historical records, contemporary analysis, and future perspectives. Fully documented.`,
-        (n,f) => `Authoritative ${n} reference. ${f.toLocaleString()}+ scholarly references. Interdisciplinary coverage.`,
-        (n) => `${n} comprehensive knowledge base. Systematic organization. Complete archival preservation.`,
-        (n,f) => `The ${n} encyclopedia ${f.toLocaleString()}+ entries. Trusted by scholars worldwide.`,
-        (n) => `Ultimate ${n} reference work. Complete historical and contemporary coverage.`,
-        (n,f) => `${n} knowledge repository. ${f.toLocaleString()}+ academic citations.`,
-        (n) => `Premium ${n} encyclopedia. Professional quality. Comprehensive scope.`,
-        (n,f) => `Original ${n} reference. ${f.toLocaleString()}+ verified citations.`,
-        (n) => `${n} master encyclopedia. Complete verified entries.`,
-        (n,f) => `${n} definitive reference. ${f.toLocaleString()}+ scholarly works.`,
-        (n) => `Most comprehensive ${n} encyclopedia online.`,
-        (n,f) => `${f.toLocaleString()}+ scholars reference ${n} encyclopedia.`,
-        (n) => `${n} complete knowledge archive. Permanent preservation.`,
-        (n,f) => `The authoritative ${n} encyclopedia. ${f.toLocaleString()}+ citations.`,
-        (n) => `${n} comprehensive reference work. Fully documented.`,
-        (n,f) => `Leading ${n} encyclopedia. ${f.toLocaleString()}+ entries.`,
-        (n) => `${n} complete scholarly archive. Peer reviewed.`,
-        (n,f) => `Professional ${n} encyclopedia. ${f.toLocaleString()}+ references.`
+        (n,f) => `The complete ${n.toLowerCase()} encyclopedia. Comprehensive entries covering all aspects of ${n.toLowerCase()} knowledge. ${f.toLocaleString()}+ scholarly citations. Permanent archive.`,
+        (n,f) => `Official ${n.toLowerCase()} reference work. ${f.toLocaleString()}+ verified entries. Academic peer review. Complete documentation.`,
+        (n) => `${n.toLowerCase()} definitive encyclopedia. Historical records, contemporary analysis, and future perspectives. Fully documented.`,
+        (n,f) => `Authoritative ${n.toLowerCase()} reference. ${f.toLocaleString()}+ scholarly references. Interdisciplinary coverage.`,
+        (n) => `${n.toLowerCase()} comprehensive knowledge base. Systematic organization. Complete archival preservation.`,
+        (n,f) => `The ${n.toLowerCase()} encyclopedia ${f.toLocaleString()}+ entries. Trusted by scholars worldwide.`,
+        (n) => `Ultimate ${n.toLowerCase()} reference work. Complete historical and contemporary coverage.`,
+        (n,f) => `${n.toLowerCase()} knowledge repository. ${f.toLocaleString()}+ academic citations.`,
+        (n) => `Premium ${n.toLowerCase()} encyclopedia. Professional quality. Comprehensive scope.`,
+        (n,f) => `Original ${n.toLowerCase()} reference. ${f.toLocaleString()}+ verified citations.`,
+        (n) => `${n.toLowerCase()} master encyclopedia. Complete verified entries.`,
+        (n,f) => `${n.toLowerCase()} definitive reference. ${f.toLocaleString()}+ scholarly works.`,
+        (n) => `Most comprehensive ${n.toLowerCase()} encyclopedia online.`,
+        (n,f) => `${f.toLocaleString()}+ scholars reference ${n.toLowerCase()} encyclopedia.`,
+        (n) => `${n.toLowerCase()} complete knowledge archive. Permanent preservation.`,
+        (n,f) => `The authoritative ${n.toLowerCase()} encyclopedia. ${f.toLocaleString()}+ citations.`,
+        (n) => `${n.toLowerCase()} comprehensive reference work. Fully documented.`,
+        (n,f) => `Leading ${n.toLowerCase()} encyclopedia. ${f.toLocaleString()}+ entries.`,
+        (n) => `${n.toLowerCase()} complete scholarly archive. Peer reviewed.`,
+        (n,f) => `Professional ${n.toLowerCase()} encyclopedia. ${f.toLocaleString()}+ references.`
     ];
     
     // 50 Related Entry Names
@@ -284,7 +285,7 @@ permalink: /edition11/
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
@@ -313,7 +314,7 @@ permalink: /edition11/
         };
     };
     
-    // ========== GENERATE METRIK ==========
+    // ========== GENERATE METRICS ==========
     const genMetrics = () => ({
         views: range(...rand(VIEW_RANGES)), citations: range(...rand(CITATION_RANGES)),
         volume: range(...rand(VOLUME_RANGES)), callNumber: rand(CALL_NUMBERS),
@@ -321,16 +322,16 @@ permalink: /edition11/
         lastUpdate: rand(TIME_INDICATORS), contributor: rand(CONTRIBUTORS)
     });
     
-    // ========== GENERATE KONTEN PANJANG ==========
+    // ========== GENERATE LONG CONTENT ==========
     const generateLongContent = () => {
-        // Pilih 4-6 paragraph random
+        // Select 4-6 random paragraphs
         let numParagraphs = range(4, 7);
         let paragraphs = [];
         for(let i=0;i<numParagraphs;i++){
             paragraphs.push(rand(CONTENT_PARAGRAPHS));
         }
         
-        // Pilih 2-3 section headings
+        // Select 2-3 section headings
         let numSections = range(2, 4);
         let sections = [];
         for(let i=0;i<numSections;i++){
@@ -342,11 +343,10 @@ permalink: /edition11/
         return { paragraphs, sections };
     };
     
-    // ========== RENDER ENCYCLOPEDIA ENTRY (PANJANG) ==========
+    // ========== RENDER ENCYCLOPEDIA ENTRY (LONG) ==========
     const renderEncyclopediaEntry = (link, idx) => {
         let m = genMetrics();
         let content = generateLongContent();
-        let categoryColor = rand(CATEGORY_COLORS);
         let dn = rand(DISPLAY_NAMES);
         let un = rand(USERNAMES);
         let fmt = (n) => n.toLocaleString();
@@ -360,7 +360,7 @@ permalink: /edition11/
         return `
             <div class="encyclopedia-entry" data-url="${link.url}">
                 <div class="entry-header">
-                    <div class="entry-category" style="border-color:${categoryColor}40;color:${categoryColor}">${link.subject.toUpperCase()}</div>
+                    <div class="entry-category">${link.subject.toUpperCase()}</div>
                     <div class="entry-date">${m.lastUpdate} · ${currentYear - range(1,8)}</div>
                 </div>
                 <div class="entry-title">${link.title}</div>
@@ -445,14 +445,14 @@ permalink: /edition11/
             `${displayTopic} · Authoritative Academic Reference | The Encyclopedia`
         ];
         let descs = [
-            `Complete ${displayTopic} encyclopedia entry. ${range(50,200)} pages of comprehensive coverage. Scholarly references. Permanent archive.`,
-            `Access the definitive ${displayTopic} reference work. Fully documented. Academic peer review.`,
-            `${displayTopic} comprehensive knowledge base. Complete historical and contemporary coverage.`,
-            `Authoritative ${displayTopic} encyclopedia. ${range(100,500)}+ scholarly citations.`
+            `Complete ${displayTopic.toLowerCase()} encyclopedia entry. ${range(50,200)} pages of comprehensive coverage. Scholarly references. Permanent archive.`,
+            `Access the definitive ${displayTopic.toLowerCase()} reference work. Fully documented. Academic peer review.`,
+            `${displayTopic.toLowerCase()} comprehensive knowledge base. Complete historical and contemporary coverage.`,
+            `Authoritative ${displayTopic.toLowerCase()} encyclopedia. ${range(100,500)}+ scholarly citations.`
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0] + '?q=' + encodeURIComponent(rawQuery));
     };
     
     // ========== RENDER PAGE ==========
@@ -466,17 +466,17 @@ permalink: /edition11/
         document.getElementById('app').innerHTML = `
             <div class="classic-header">
                 <div class="title-area">
-                    <div class="main-title">The <span style="color:#c41e3a">Encyclopedia</span></div>
+                    <div class="main-title">The <span style="color:var(--primary-color)">Encyclopedia</span></div>
                     <div class="sub-title">of Knowledge · Complete Reference Library</div>
                 </div>
                 <div class="header-info">
-                    <div class="edition">Volume ${range(12,48)} · ${currentYear} Edition</div>
+                    <div class="edition">Volume ${range(12,48)} · ${currentYear} edition</div>
                     <div style="margin-top:4px">ISSN ${range(1000,9999)}-${range(1000,9999)}</div>
                 </div>
             </div>
             
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition12/">Encyclopedia</a> › <span style="color:#c41e3a">${displayTopic}</span>
+                <a href="/">Home</a> › <a href="/edition12/">Encyclopedia</a> › <span style="color:var(--primary-color)">${displayTopic}</span>
             </div>
             
             <div class="encyclopedia-hero">

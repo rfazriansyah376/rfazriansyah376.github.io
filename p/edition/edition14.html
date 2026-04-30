@@ -13,74 +13,92 @@ permalink: /edition14/
     <meta name="referrer" content="always">
     <title id="dynamic-title">EVIDENCE BOARD · Forensic Intelligence Portal</title>
     <meta id="dynamic-description" name="description" content="Forensic evidence board. Digital investigation portal with chain-of-custody tracking.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition15/">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-hue: 25;
+            --primary-saturation: 45%;
+            --primary-lightness: 45%;
+            --bg-dark: #1a1410;
+            --bg-card: #0f0c0a;
+            --bg-darker: #080604;
+            --bg-tag: #1a1410;
+            --bg-hover: #2a1f18;
+            --border-color: #3a2e28;
+            --text-primary: #e8e0d8;
+            --text-secondary: #c8c0b8;
+            --text-muted: #7a6050;
+            --text-meta: #a08060;
+            --accent: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+            --accent-light: hsl(var(--primary-hue), var(--primary-saturation), 70%);
+            --accent-glow: hsla(var(--primary-hue), var(--primary-saturation), 70%, 0.6);
+        }
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#1a1410;font-family:'Inter',sans-serif;color:#e8e0d8}
+        body{background:var(--bg-dark);font-family:'Inter',sans-serif;color:var(--text-primary)}
         
         /* Style Evidence Board / Forensics - Case File, Crime Board, Police Evidence */
         .evidence-container{max-width:1600px;margin:0 auto;padding:24px}
         
         /* Header Case File */
-        .case-header{background:#0f0c0a;border:1px solid #3a2e28;border-radius:4px;padding:20px 28px;margin-bottom:24px}
-        .case-number{font-family:'Special Elite',monospace;font-size:0.7rem;color:#b87c4f;letter-spacing:2px;margin-bottom:8px}
+        .case-header{background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;padding:20px 28px;margin-bottom:24px}
+        .case-number{font-family:'Special Elite',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:2px;margin-bottom:8px}
         .case-title{font-family:'Special Elite',monospace;font-size:1.6rem;font-weight:400;margin-bottom:12px}
-        .case-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px dashed #3a2e28}
-        .meta-item{font-size:0.65rem;color:#a08060}
-        .confidential-stamp{font-family:'Special Elite',monospace;font-size:0.7rem;color:#b87c4f;border:1px solid #b87c4f;padding:4px 12px;display:inline-block}
+        .case-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px dashed var(--border-color)}
+        .meta-item{font-size:0.65rem;color:var(--text-meta)}
+        .confidential-stamp{font-family:'Special Elite',monospace;font-size:0.7rem;color:var(--accent);border:1px solid var(--accent);padding:4px 12px;display:inline-block}
         
         /* Evidence Grid - Masonry Style */
         .evidence-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px;margin-bottom:32px}
         
         /* Evidence Card - Like Physical Evidence on Board */
-        .evidence-card{background:#0f0c0a;border:1px solid #3a2e28;border-radius:4px;overflow:hidden;cursor:pointer;transition:all 0.2s}
-        .evidence-card:hover{transform:translateY(-4px);border-color:#b87c4f;box-shadow:0 8px 20px rgba(0,0,0,0.3)}
-        .card-pin{height:8px;background:linear-gradient(135deg,#b87c4f,#8b5a2e);width:100%}
+        .evidence-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;overflow:hidden;cursor:pointer;transition:all 0.2s}
+        .evidence-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+        .card-pin{height:8px;background:linear-gradient(135deg,var(--accent),hsl(var(--primary-hue),var(--primary-saturation),30%));width:100%}
         .card-content{padding:20px}
         
         /* Evidence Badge */
-        .evidence-badge{display:inline-block;background:#2a1f18;padding:4px 12px;border-radius:2px;font-family:'Special Elite',monospace;font-size:0.55rem;color:#b87c4f;margin-bottom:12px}
-        .evidence-type{font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:#7a6050;margin-bottom:4px}
+        .evidence-badge{display:inline-block;background:var(--bg-hover);padding:4px 12px;border-radius:2px;font-family:'Special Elite',monospace;font-size:0.55rem;color:var(--accent);margin-bottom:12px}
+        .evidence-type{font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px}
         
         /* Chain of Custody */
-        .chain-custody{background:#080604;padding:12px;margin:16px 0;border-left:3px solid #b87c4f;font-family:'Special Elite',monospace;font-size:0.6rem;color:#a08060}
+        .chain-custody{background:var(--bg-darker);padding:12px;margin:16px 0;border-left:3px solid var(--accent);font-family:'Special Elite',monospace;font-size:0.6rem;color:var(--text-meta)}
         .custody-line{display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.55rem}
         
         /* Evidence Tags */
         .evidence-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
-        .evidence-tag{background:#1a1410;border:1px solid #3a2e28;padding:2px 8px;border-radius:2px;font-size:0.55rem;font-family:'Special Elite',monospace}
+        .evidence-tag{background:var(--bg-tag);border:1px solid var(--border-color);padding:2px 8px;border-radius:2px;font-size:0.55rem;font-family:'Special Elite',monospace}
         
-        /* Description (Panjang) */
-        .evidence-desc{font-size:0.7rem;line-height:1.5;color:#c8c0b8;margin:12px 0}
-        .forensic-note{background:#1a1410;padding:12px;margin:12px 0;border-left:2px solid #b87c4f;font-size:0.65rem;font-style:italic;color:#a08060}
+        /* Description (Long) */
+        .evidence-desc{font-size:0.7rem;line-height:1.5;color:var(--text-secondary);margin:12px 0}
+        .forensic-note{background:var(--bg-tag);padding:12px;margin:12px 0;border-left:2px solid var(--accent);font-size:0.65rem;font-style:italic;color:var(--text-meta)}
         
         /* Connection Lines (Simulated) */
-        .connections{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:12px;border-top:1px dashed #3a2e28}
-        .connection{display:inline-flex;align-items:center;gap:6px;background:#1a1410;padding:4px 10px;border-radius:2px;font-size:0.55rem;cursor:pointer}
-        .connection:hover{background:#2a1f18;color:#b87c4f}
+        .connections{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:12px;border-top:1px dashed var(--border-color)}
+        .connection{display:inline-flex;align-items:center;gap:6px;background:var(--bg-tag);padding:4px 10px;border-radius:2px;font-size:0.55rem;cursor:pointer}
+        .connection:hover{background:var(--bg-hover);color:var(--accent)}
         
         /* Right Sidebar - Evidence Log */
         .sidebar-evidence{display:none}
         
         /* Timeline Bar */
-        .timeline-bar{background:#0f0c0a;border:1px solid #3a2e28;border-radius:4px;padding:16px 20px;margin-bottom:24px}
-        .timeline-label{font-family:'Special Elite',monospace;font-size:0.6rem;color:#b87c4f;margin-bottom:12px}
+        .timeline-bar{background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;padding:16px 20px;margin-bottom:24px}
+        .timeline-label{font-family:'Special Elite',monospace;font-size:0.6rem;color:var(--accent);margin-bottom:12px}
         .timeline-steps{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-        .timeline-step{font-size:0.6rem;color:#7a6050;position:relative;padding-left:12px}
-        .timeline-step::before{content:'●';position:absolute;left:0;color:#b87c4f;font-size:8px}
-        .timeline-step.active{color:#e8c080}
-        .timeline-step.active::before{color:#e8c080;text-shadow:0 0 4px #e8c080}
+        .timeline-step{font-size:0.6rem;color:var(--text-muted);position:relative;padding-left:12px}
+        .timeline-step::before{content:'●';position:absolute;left:0;color:var(--accent);font-size:8px}
+        .timeline-step.active{color:var(--accent-light)}
+        .timeline-step.active::before{color:var(--accent-light);text-shadow:0 0 4px var(--accent-glow)}
         
         /* Footer */
-        .evidence-footer{margin-top:24px;padding:16px 20px;background:#0f0c0a;border:1px solid #3a2e28;border-radius:4px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.55rem;color:#7a6050;font-family:'Special Elite',monospace}
+        .evidence-footer{margin-top:24px;padding:16px 20px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.55rem;color:var(--text-muted);font-family:'Special Elite',monospace}
         
         @media(max-width:800px){.evidence-grid{grid-template-columns:1fr}}
     </style>
 {% include head.html %}
   </head>
 <body><div loading="lazy">
-<div class="evidence-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#7a6050;font-family:'Special Elite',monospace">>_ LOADING EVIDENCE BOARD...</div></div>
+<div class="evidence-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--text-muted);font-family:'Special Elite',monospace">>_ LOADING EVIDENCE BOARD...</div></div>
 
 <script>
 (function(){
@@ -89,7 +107,7 @@ permalink: /edition14/
     // Evidence Types
     const EVIDENCE_TYPES = ['DIGITAL_FORENSICS','METADATA_ANALYSIS','TIMESTAMP_VERIFICATION','SOURCE_ATTRIBUTION','CHAIN_CUSTODY','HASH_VERIFICATION'];
     
-    // 60 Evidence Descriptions (panjang seperti laporan forensik)
+    // 60 Evidence Descriptions (long like forensic reports)
     const EVIDENCE_DESCS = [
         "Digital forensic analysis of the recovered files revealed consistent metadata patterns across {count} separate instances. File creation timestamps show correlation within {seconds} seconds, suggesting batch processing from a single source.",
         "Examination of the data structure indicates the material was originally captured on {device_type} devices. EXIF data analysis confirms {confidence}% probability of authentic origin with no signs of post-processing manipulation.",
@@ -101,7 +119,7 @@ permalink: /edition14/
         "Cross-referencing against known databases reveals {matches} partial matches with previously documented material. Unique identifiers suggest the content belongs to a previously unidentified batch."
     ];
     
-    // 40 Forensic Notes (panjang)
+    // 40 Forensic Notes (long)
     const FORENSIC_NOTES = [
         "Chain of custody verified through cryptographic signatures. Each transfer point has been documented with timestamps and digital fingerprints. No breaks in the chain detected.",
         "Metadata analysis confirms the files were created on {date} using {software} software. Geolocation data indicates the original device was located within {region} region.",
@@ -137,7 +155,7 @@ permalink: /edition14/
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const formatNumber = (n) => n.toLocaleString();
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
@@ -160,7 +178,7 @@ permalink: /edition14/
         return { url:`/edition15/?q=${encodeURIComponent(newQ)}`, type: evidenceType };
     };
     
-    // ========== GENERATE EVIDENCE CARD (PANJANG) ==========
+    // ========== GENERATE EVIDENCE CARD (LONG) ==========
     const generateEvidenceCard = (idx) => {
         let evidenceId = `E-${new Date().getFullYear()}-${String(range(1000,9999))}`;
         let evidenceType = rand(EVIDENCE_TYPES);
@@ -218,7 +236,7 @@ permalink: /edition14/
                     </div>
                     
                     <div class="chain-custody">
-                        <div style="margin-bottom:6px;color:#b87c4f">📋 CHAIN_OF_CUSTODY</div>
+                        <div style="margin-bottom:6px;color:var(--accent)">📋 CHAIN_OF_CUSTODY</div>
                         <div class="custody-line"><span>➤ ${chain}</span></div>
                         <div class="custody-line" style="margin-top:6px"><span>🔒 SIGNED: ${range(3,8)} verifications · ${verificationScore}% integrity</span></div>
                     </div>

@@ -11,44 +11,51 @@ permalink: /edition03/
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="referrer" content="always">
-    <title id="dynamic-title">LeakX · Akses Konten Viral Terbaru</title>
-    <meta id="dynamic-description" name="description" content="Temukan konten viral terbaru. Update setiap hari. Akses eksklusif untuk member.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition04/">
+    <title id="dynamic-title">LeakX · Latest Viral Content Access</title>
+    <meta id="dynamic-description" name="description" content="Discover the latest viral content. Updated daily. Exclusive access for members.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition03/">
     <style>
+        :root {
+            --primary-color: #1d9bf0;
+            --primary-rgb: 29, 155, 240;
+            --accent-color: color-mix(in srgb, var(--primary-color) 70%, #ec489a);
+            --accent-rgb: 236, 72, 154;
+        }
+
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#e7e9ea}
         .container{max-width:600px;margin:0 auto;background:#000;min-height:100vh;border-left:1px solid #2f3336;border-right:1px solid #2f3336}
         .header{position:sticky;top:0;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);padding:12px 16px;border-bottom:1px solid #2f3336;z-index:10;display:flex;justify-content:space-between;align-items:center}
-        .logo{font-size:1.3rem;font-weight:700}.logo span{color:#1d9bf0}.logo .accent{color:#ec489a}
+        .logo{font-size:1.3rem;font-weight:700}.logo span{color:var(--primary-color)}.logo .accent{color:var(--accent-color)}
         .search-box{background:#202327;padding:6px 12px;border-radius:30px;font-size:0.7rem;color:#71767b}
         .breadcrumb{padding:8px 16px;font-size:0.7rem;color:#71767b;background:#000;border-bottom:1px solid #2f3336}
-        .breadcrumb a{color:#1d9bf0;text-decoration:none}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .trending-bar{padding:12px 16px;border-bottom:1px solid #2f3336;display:flex;gap:12px;overflow-x:auto;scrollbar-width:thin}
         .trending-item{font-size:0.7rem;white-space:nowrap;cursor:pointer;padding:4px 10px;border-radius:20px;transition:all 0.2s}
-        .trending-item:hover{background:#1d9bf022;color:#1d9bf0}
+        .trending-item:hover{background:rgba(var(--primary-rgb),0.13);color:var(--primary-color)}
         .profile-header{padding:16px;border-bottom:1px solid #2f3336}
         .profile-row{display:flex;justify-content:space-between;align-items:center}
         .profile-name{font-size:1.2rem;font-weight:700}
         .profile-handle{font-size:0.7rem;color:#71767b;margin-top:2px}
-        .follow-btn{background:#1d9bf0;padding:6px 18px;border-radius:30px;font-size:0.7rem;font-weight:600;cursor:pointer}
+        .follow-btn{background:var(--primary-color);padding:6px 18px;border-radius:30px;font-size:0.7rem;font-weight:600;cursor:pointer}
         .profile-bio{font-size:0.8rem;margin-top:8px;line-height:1.4}
         .profile-stats{display:flex;gap:16px;margin-top:10px;font-size:0.7rem;color:#71767b}
         .tabs{display:flex;border-bottom:1px solid #2f3336}
         .tab{flex:1;text-align:center;padding:12px;font-size:0.7rem;font-weight:600;cursor:pointer}
-        .tab.active{border-bottom:2px solid #1d9bf0;color:#1d9bf0}
+        .tab.active{border-bottom:2px solid var(--primary-color);color:var(--primary-color)}
         .link-card{padding:12px 16px;border-bottom:1px solid #2f3336;cursor:pointer;transition:background 0.1s}
         .link-card:hover{background:#080808}
         .card-header{display:flex;gap:10px;margin-bottom:8px}
         .card-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem}
-        .a1{background:linear-gradient(135deg,#1d9bf0,#0a5a8a)}.a2{background:linear-gradient(135deg,#ec489a,#9b2c6b)}.a3{background:linear-gradient(135deg,#00ba7c,#006644)}.a4{background:linear-gradient(135deg,#f59e0b,#92400e)}.a5{background:linear-gradient(135deg,#8b5cf6,#5b21b6)}.a6{background:linear-gradient(135deg,#ef4444,#991b1b)}.a7{background:linear-gradient(135deg,#06b6d4,#155e75)}.a8{background:linear-gradient(135deg,#d946ef,#86198f)}
+        .a1{background:linear-gradient(135deg,var(--primary-color),color-mix(in srgb, var(--primary-color) 70%, black))}.a2{background:linear-gradient(135deg,var(--accent-color),color-mix(in srgb, var(--accent-color) 70%, black))}.a3{background:linear-gradient(135deg,#00ba7c,#006644)}.a4{background:linear-gradient(135deg,#f59e0b,#92400e)}.a5{background:linear-gradient(135deg,#8b5cf6,#5b21b6)}.a6{background:linear-gradient(135deg,#ef4444,#991b1b)}.a7{background:linear-gradient(135deg,#06b6d4,#155e75)}.a8{background:linear-gradient(135deg,#d946ef,#86198f)}
         .card-user-info{flex:1}.card-name{font-weight:700;font-size:0.85rem}.card-username{font-size:0.75rem;color:#71767b}.card-time{font-size:0.7rem;color:#71767b}
         .card-content{font-size:0.85rem;line-height:1.4;margin-bottom:8px;padding-left:50px}
         .badge{display:inline-block;font-size:0.6rem;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
-        .b-hot{background:#ec489a;color:#fff}.b-new{background:#00ba7c;color:#fff}.b-viral{background:#f59e0b;color:#fff}.b-exclusive{background:#8b5cf6;color:#fff}.b-leaked{background:#ef4444;color:#fff}.b-rare{background:#06b6d4;color:#fff}.b-limited{background:#d946ef;color:#fff}
+        .b-hot{background:var(--accent-color);color:#fff}.b-new{background:#00ba7c;color:#fff}.b-viral{background:#f59e0b;color:#fff}.b-exclusive{background:#8b5cf6;color:#fff}.b-leaked{background:#ef4444;color:#fff}.b-rare{background:#06b6d4;color:#fff}.b-limited{background:#d946ef;color:#fff}
         .media-preview{background:#1a1a1a;border-radius:20px;margin:8px 0 8px 50px;padding:10px;display:flex;align-items:center;gap:10px;border:1px solid #2f3336}
         .play-icon{width:36px;height:36px;background:rgba(0,0,0,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
         .media-info{flex:1}.media-title{font-size:0.75rem;font-weight:600}.media-meta{font-size:0.6rem;color:#71767b;margin-top:4px}
-        .cta-btn{background:linear-gradient(135deg,#1d9bf0,#ec489a);color:#fff;padding:8px 20px;border-radius:40px;font-size:0.7rem;font-weight:700;display:inline-block;margin-left:50px;margin-top:6px;text-align:center;cursor:pointer;animation:pulse 2s infinite}
+        .cta-btn{background:linear-gradient(135deg,var(--primary-color),var(--accent-color));color:#fff;padding:8px 20px;border-radius:40px;font-size:0.7rem;font-weight:700;display:inline-block;margin-left:50px;margin-top:6px;text-align:center;cursor:pointer;animation:pulse 2s infinite}
         @keyframes pulse{0%{opacity:1}50%{opacity:0.85}100%{opacity:1}}
         .card-actions{display:flex;gap:24px;margin-top:8px;padding-left:50px;font-size:0.7rem;color:#71767b}
         .action{display:flex;align-items:center;gap:4px}.sidebar-section{padding:16px;border-top:1px solid #2f3336}
@@ -57,7 +64,7 @@ permalink: /edition03/
         .trend-rank{font-size:0.65rem;color:#71767b}.trend-name{font-weight:600;font-size:0.8rem}.trend-posts{font-size:0.6rem;color:#71767b}
         .follow-suggest{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:6px;border-radius:8px;cursor:pointer}.follow-suggest:hover{background:#080808}
         .suggest-info{flex:1}.suggest-name{font-weight:600;font-size:0.8rem}.suggest-handle{font-size:0.65rem;color:#71767b}
-        .suggest-follow{background:transparent;border:1px solid #1d9bf0;color:#1d9bf0;padding:4px 12px;border-radius:30px;font-size:0.65rem;cursor:pointer}
+        .suggest-follow{background:transparent;border:1px solid var(--primary-color);color:var(--primary-color);padding:4px 12px;border-radius:30px;font-size:0.65rem;cursor:pointer}
         .footer{padding:16px;text-align:center;font-size:0.6rem;color:#71767b;border-top:1px solid #2f3336}
         @media(max-width:640px){.container{border-left:none;border-right:none}.card-content,.media-preview,.card-actions,.cta-btn{padding-left:50px;margin-left:0}}
     </style>
@@ -68,7 +75,7 @@ permalink: /edition03/
 
 <script>
 (function(){
-    // ========== DATABASE VARIAN (SEMUA ELEMEN UNIK) ==========
+    // ========== DATABASE VARIAN (ALL UNIQUE ELEMENTS) ==========
     
     // 50 Action Verbs
     const A = [
@@ -110,7 +117,7 @@ permalink: /edition03/
         "closing soon","final hours","last call"
     ];
     
-    // 30 Triggers (kalimat FOMO)
+    // 30 Triggers (FOMO phrases)
     const T = [
         "⚠️ Only few views left before removal! ⚠️",
         "🔥 1.2M people already watched this 🔥",
@@ -203,7 +210,7 @@ permalink: /edition03/
         "📂 ACCESS FOLDER 📂","🔓 UNLOCK NOW 🔓","🎬 PLAY NOW 🎬","⚡ INSTANT ACCESS ⚡"
     ];
     
-    // 15 Bio Templates
+    // 15 Bio Templates (All English)
     const BIO = [
         (n,f) => `The complete archive of ${n} exclusive content. Updated daily. ${f}+ followers.`,
         (n,f) => `Official ${n} content hub. Latest leaks and exclusives. Join ${f}+ others.`,
@@ -225,7 +232,7 @@ permalink: /edition03/
     // 20 Handle Suffixes
     const HS = ['archive','hub','central','vault','leaks','exclusive','content','library','source','channel','zone','base','portal','network','global','daily','live','feed','spot','place'];
     
-    // 30 Trending Templates
+    // 30 Trending Templates (All English)
     const TR_TR = [
         (n) => `#${n.replace(/ /g,'')}Leak`,(n) => `#${n.replace(/ /g,'')}Viral`,(n) => `#${n.replace(/ /g,'')}Exclusive`,
         (n) => `#${n.replace(/ /g,'')}Archive`,() => `#ViralLeaks`,() => `#TrendingNow`,() => `#ExclusiveContent`,
@@ -249,7 +256,7 @@ permalink: /edition03/
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     
-    // ========== EKSTRAK NAMA ==========
+    // ========== EXTRACT NAME ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
@@ -264,15 +271,15 @@ permalink: /edition03/
     const displayName = fmt(baseName);
     const displayLower = displayName.toLowerCase();
     
-    // ========== GENERATE LINK (100% UNIK SETIAP PANGGILAN) ==========
+    // ========== GENERATE LINK (100% UNIQUE EACH CALL) ==========
     const genLink = () => {
         let a = rand(A), c = rand(C), q = rand(Q), u = rand(U);
         let newQ = `${displayLower} ${a} ${c} ${q}`;
         if(Math.random() > 0.2) newQ += ` ${u}`;
-        return { url:`/edition04/?q=${encodeURIComponent(newQ)}`, anchor:`${a[0].toUpperCase()+a.slice(1)} ${c}`, qual:q, act:a, ct:c };
+        return { url:`/edition03/?q=${encodeURIComponent(newQ)}`, anchor:`${a[0].toUpperCase()+a.slice(1)} ${c}`, qual:q, act:a, ct:c };
     };
     
-    // ========== GENERATE METRIK ==========
+    // ========== GENERATE METRICS ==========
     const genMetrics = () => ({
         views: range(...rand(VR)), replies: range(...rand(RR)), retweets: range(...rand(RT)),
         likes: range(...rand(LR)), time: rand(TA), fsize: rand(FS), fcount: range(5,250)
@@ -293,7 +300,7 @@ permalink: /edition03/
                         <div class="card-time">· ${m.time}</div>
                     </div>
                 </div>
-                <div class="card-content">${trig} ${displayName} ${link.anchor} ${link.qual} content just dropped!<div style="margin-top:4px;font-size:0.7rem;color:#1d9bf0">👁️ ${fmt(m.views)} views</div></div>
+                <div class="card-content">${trig} ${displayName} ${link.anchor} ${link.qual} content just dropped!<div style="margin-top:4px;font-size:0.7rem;color:var(--primary-color)">👁️ ${fmt(m.views)} views</div></div>
                 <div class="media-preview"><div class="play-icon">▶</div><div class="media-info"><div class="media-title">${link.anchor.toUpperCase()} · ${link.qual.toUpperCase()}</div><div class="media-meta">${m.fsize} · ${m.fcount} files</div></div><div>→</div></div>
                 <div class="cta-btn">${cta}</div>
                 <div class="card-actions"><span class="action">💬 ${fmt(m.replies)}</span><span class="action">🔁 ${fmt(m.retweets)}</span><span class="action">❤️ ${fmt(m.likes)}</span><span class="action">📤 ${Math.floor(m.views/80)}</span></div>
@@ -326,13 +333,32 @@ permalink: /edition03/
     // ========== RENDER TRENDING BAR ==========
     const renderBar = (links) => links.slice(0,12).map(l => `<span class="trending-item" data-url="${l.url}">🔥 ${l.anchor}</span>`).join('');
     
-    // ========== SEO DINAMIS ==========
+    // ========== DYNAMIC SEO ==========
     const updateSEO = () => {
-        let titles = [`${displayName} · Akses Konten Eksklusif Terbaru | LeakX`,`${displayName} Viral Archive - Full Collection | LeakX`,`${displayName} Leaked Content Hub - Update Harian | LeakX`,`${displayName} Exclusive Vault - Premium Access | LeakX`,`${displayName} Complete Archive - 2025 Edition | LeakX`,`${displayName} Mega Collection - Download Now | LeakX`];
-        let descs = [`Temukan konten eksklusif ${displayName} terbaru. Update viral setiap hari. Akses cepat dan mudah.`,`Archive lengkap ${displayName} termasuk video dan foto eksklusif. Update real-time.`,`${displayName} leaked content collection terlengkap. Ribuan file siap diakses. Limited time only.`,`Kanal resmi ${displayName} archive. Dapatkan akses ke konten premium dan eksklusif.`];
+        let titles = [
+            `${displayName} · Access Latest Exclusive Content | LeakX`,
+            `${displayName} Viral Archive - Full Collection | LeakX`,
+            `${displayName} Leaked Content Hub - Daily Updates | LeakX`,
+            `${displayName} Exclusive Vault - Premium Access | LeakX`,
+            `${displayName} Complete Archive - 2025 Edition | LeakX`,
+            `${displayName} Mega Collection - Download Now | LeakX`
+        ];
+        let descs = [
+            `Discover the latest exclusive ${displayName} content. Viral updates every day. Fast and easy access.`,
+            `Complete archive of ${displayName} including exclusive videos and photos. Real-time updates.`,
+            `The most complete ${displayName} leaked content collection. Thousands of files ready to access. Limited time only.`,
+            `Official ${displayName} archive channel. Get access to premium and exclusive content.`
+        ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // Dynamic canonical following the query
+        let can = document.getElementById('dynamic-canonical');
+        if(can) {
+            let currentUrl = window.location.href;
+            // Update canonical to the full current URL including query parameters
+            can.setAttribute('href', currentUrl);
+        }
     };
     
     // ========== RENDER PAGE ==========
@@ -342,18 +368,18 @@ permalink: /edition03/
         let bio = rand(BIO)(displayName, stats.followers);
         let handle = `${displayLower.replace(/\s/g,'')}_${rand(HS)}`;
         let tabs = ['For You','Latest','Trending','New','Hot','Viral','Now'];
-        let secTitles = ['🔥 Trending terkait','🌍 Viral sekarang','📈 Populer','💥 Sedang ramai','⚡ Breaking now','🔥 Hot topics'];
+        let secTitles = ['🔥 Related Trends','🌍 Viral Now','📈 Popular','💥 Buzzing','⚡ Breaking Now','🔥 Hot Topics'];
         let footers = ['LeakX','ViralLeak','LeakCentral','ExclusiveHub','ContentVault','LeakZone'];
         
         document.getElementById('app').innerHTML = `
             <div class="header"><div class="logo">Leak<span>X</span><span class="accent">.</span></div><div class="search-box">🔍 Search</div></div>
-            <div class="breadcrumb"><a href="/">Home</a> / <a href="/edition04/">Go</a> / ${displayName}</div>
+            <div class="breadcrumb"><a href="/">Home</a> / <a href="/edition03/">Go</a> / ${displayName}</div>
             <div class="trending-bar">${renderBar(links)}</div>
-            <div class="profile-header"><div class="profile-row"><div><div class="profile-name">${displayName} <span style="font-size:0.7rem;color:#1d9bf0;">· ${rand(['Archive','Hub','Vault','Central','Source'])}</span></div><div class="profile-handle">@${handle}</div></div><div class="follow-btn">Follow</div></div><div class="profile-bio">${bio}</div><div class="profile-stats"><span>📝 ${stats.tweets} Posts</span><span>👥 ${stats.following} Following</span><span>❤️ ${stats.followers} Followers</span></div></div>
+            <div class="profile-header"><div class="profile-row"><div><div class="profile-name">${displayName} <span style="font-size:0.7rem;color:var(--primary-color);">· ${rand(['Archive','Hub','Vault','Central','Source'])}</span></div><div class="profile-handle">@${handle}</div></div><div class="follow-btn">Follow</div></div><div class="profile-bio">${bio}</div><div class="profile-stats"><span>📝 ${stats.tweets} Posts</span><span>👥 ${stats.following} Following</span><span>❤️ ${stats.followers} Followers</span></div></div>
             <div class="tabs"><div class="tab active">${rand(tabs)}</div><div class="tab">Following</div><div class="tab">Media</div><div class="tab">Likes</div></div>
             <div id="feedContainer">${links.map((l,i)=>renderCard(l,i)).join('')}</div>
             <div class="sidebar-section"><div class="section-title">${rand(secTitles)}</div><div id="trendingContainer">${renderTrending(links)}</div></div>
-            <div class="sidebar-section"><div class="section-title">${rand(['Who to follow','Rekomendasi','Suggested for you','Anda mungkin suka','Similar accounts','People also follow'])}</div><div id="followContainer">${renderFollow()}</div></div>
+            <div class="sidebar-section"><div class="section-title">${rand(['Who to follow','Recommendations','Suggested for you','You might like','Similar accounts','People also follow'])}</div><div id="followContainer">${renderFollow()}</div></div>
             <div class="footer">${rand(footers)} · ${stats.followers} followers · Updated ${rand(['real-time','every 5 minutes','constantly','live','hourly','continuously'])} · #${displayLower.replace(/\s/g,'')}${rand(['Hub','Central','Archive','Zone'])}</div>
         `;
         

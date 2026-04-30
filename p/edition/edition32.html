@@ -3,6 +3,7 @@ layout: null
 permalink: /edition32/
 ---
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,94 +14,111 @@ permalink: /edition32/
     <meta name="bingbot" content="index, follow">
     <meta name="yandex" content="index, follow">
     <meta name="referrer" content="always">
-    <title id="dynamic-title">BREAKING FEED · Leak News Ticker</title>
+    <title id="dynamic-title">BREAKING FEED � Leak News Ticker</title>
     <meta id="dynamic-description" name="description" content="Breaking news feed for leak collections. Latest updates and trending content.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition33/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition32/">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#fafafa;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#1a1a1a}
+        
+        /* GLOBAL COLOR VARIABLES - EASILY CHANGE THEME BY MODIFYING THESE */
+        :root {
+            --primary-color: #2563eb;        /* Main brand color - blue */
+            --primary-dark: #1e40af;          /* Darker shade for hover */
+            --primary-light: #dbeafe;         /* Light shade for backgrounds */
+            --primary-soft: #eff6ff;          /* Soft background */
+            --accent-color: #dc2626;          /* Accent color for badges/live */
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --border-light: #e2e8f0;
+            --bg-page: #fafafa;
+            --bg-white: #ffffff;
+            --bg-ticker: #f1f5f9;
+        }
+        
+        body{background:var(--bg-page);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:var(--text-dark)}
         
         /* News Ticker / Breaking Feed Style */
         .feed-container{max-width:800px;margin:0 auto;padding:20px}
         
         /* Header Breaking News Style */
-        .breaking-header{background:#1a1a2e;color:#fff;border-radius:16px;padding:16px 20px;margin-bottom:24px}
+        .breaking-header{background:var(--primary-dark);color:#fff;border-radius:16px;padding:16px 20px;margin-bottom:24px}
         .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
         .logo{font-size:1.1rem;font-weight:800}
-        .logo span{color:#ef4444}
-        .live-badge{background:#ef4444;padding:4px 12px;border-radius:20px;font-size:0.6rem;font-weight:700}
-        .ticker-text{font-size:0.7rem;color:#94a3b8;font-family:monospace}
+        .logo span{color:var(--accent-color)}
+        .live-badge{background:var(--accent-color);padding:4px 12px;border-radius:20px;font-size:0.6rem;font-weight:700}
+        .ticker-text{font-size:0.7rem;color:#cbd5e1;font-family:monospace}
         
         /* Breadcrumb */
-        .breadcrumb{font-size:0.7rem;color:#64748b;margin-bottom:20px}
-        .breadcrumb a{color:#3b82f6;text-decoration:none}
+        .breadcrumb{font-size:0.7rem;color:var(--text-muted);margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero - Breaking News */
-        .hero-breaking{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;margin-bottom:24px}
-        .hero-badge{display:inline-block;background:#fee2e2;color:#ef4444;padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
+        .hero-breaking{background:var(--bg-white);border:1px solid var(--border-light);border-radius:16px;padding:24px;margin-bottom:24px}
+        .hero-badge{display:inline-block;background:#fee2e2;color:var(--accent-color);padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
         .hero-title{font-size:1.2rem;font-weight:800;margin-bottom:12px}
-        .hero-title span{color:#ef4444}
-        .hero-desc{font-size:0.75rem;color:#64748b;line-height:1.5;margin-bottom:14px}
-        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;color:#94a3b8}
+        .hero-title span{color:var(--accent-color)}
+        .hero-desc{font-size:0.75rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;color:var(--text-light)}
         
         /* Breaking Ticker Bar */
-        .ticker-bar{background:#f1f5f9;border-radius:12px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-        .ticker-label{background:#ef4444;color:#fff;padding:4px 12px;border-radius:20px;font-size:0.6rem;font-weight:700}
+        .ticker-bar{background:var(--bg-ticker);border-radius:12px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .ticker-label{background:var(--accent-color);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.6rem;font-weight:700}
         .ticker-items{display:flex;flex-wrap:wrap;gap:16px}
-        .ticker-item{font-size:0.7rem;color:#1e293b;text-decoration:none}
-        .ticker-item:hover{color:#ef4444}
+        .ticker-item{font-size:0.7rem;color:var(--text-dark);text-decoration:none}
+        .ticker-item:hover{color:var(--accent-color)}
         
         /* News Categories (Tabs) */
-        .news-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;border-bottom:1px solid #e2e8f0;padding-bottom:12px}
-        .tab{background:transparent;padding:6px 16px;border-radius:30px;font-size:0.7rem;text-decoration:none;color:#64748b}
-        .tab:hover{background:#f1f5f9;color:#1e293b}
-        .tab-active{background:#1a1a2e;color:#fff}
+        .news-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--border-light);padding-bottom:12px}
+        .tab{background:transparent;padding:6px 16px;border-radius:30px;font-size:0.7rem;text-decoration:none;color:var(--text-muted)}
+        .tab:hover{background:var(--bg-ticker);color:var(--text-dark)}
+        .tab-active{background:var(--primary-dark);color:#fff}
         
         /* Feed Items - News Article Style */
         .feed-items{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
         
         /* News Card */
-        .news-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;text-decoration:none;display:block;color:#1e293b}
-        .news-card:hover{border-color:#cbd5e1;background:#fefefe}
+        .news-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:16px;padding:20px;text-decoration:none;display:block;color:var(--text-dark)}
+        .news-card:hover{border-color:var(--text-light);background:#fefefe}
         .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
-        .card-category{font-size:0.6rem;font-weight:700;color:#ef4444;text-transform:uppercase}
-        .card-date{font-size:0.55rem;color:#94a3b8}
+        .card-category{font-size:0.6rem;font-weight:700;color:var(--accent-color);text-transform:uppercase}
+        .card-date{font-size:0.55rem;color:var(--text-light)}
         .card-title{font-size:0.85rem;font-weight:700;margin-bottom:8px;line-height:1.3}
-        .card-title span{color:#ef4444}
-        .card-excerpt{font-size:0.7rem;color:#64748b;line-height:1.5;margin-bottom:12px}
-        .card-meta{display:flex;gap:16px;font-size:0.6rem;color:#94a3b8}
-        .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid #f1f5f9}
-        .card-tag{font-size:0.55rem;color:#3b82f6;background:#eff6ff;padding:4px 10px;border-radius:20px;text-decoration:none}
-        .card-tag:hover{background:#3b82f6;color:#fff}
+        .card-title span{color:var(--accent-color)}
+        .card-excerpt{font-size:0.7rem;color:var(--text-muted);line-height:1.5;margin-bottom:12px}
+        .card-meta{display:flex;gap:16px;font-size:0.6rem;color:var(--text-light)}
+        .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border-light)}
+        .card-tag{font-size:0.55rem;color:var(--primary-color);background:var(--primary-soft);padding:4px 10px;border-radius:20px;text-decoration:none}
+        .card-tag:hover{background:var(--primary-color);color:#fff}
         
         /* Sidebar - Trending / Popular */
-        .trending-section{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;margin-bottom:24px}
-        .trending-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #e2e8f0}
+        .trending-section{background:var(--bg-white);border:1px solid var(--border-light);border-radius:16px;padding:20px;margin-bottom:24px}
+        .trending-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
         .trending-list{display:flex;flex-direction:column;gap:12px}
-        .trending-item{display:flex;align-items:center;gap:12px;text-decoration:none;color:#1e293b}
-        .trending-item:hover .trending-name{color:#ef4444}
+        .trending-item{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text-dark)}
+        .trending-item:hover .trending-name{color:var(--accent-color)}
         .trending-rank{font-size:0.8rem;font-weight:800;color:#cbd5e1;min-width:28px}
         .trending-name{font-size:0.7rem;flex:1}
-        .trending-views{font-size:0.55rem;color:#94a3b8}
+        .trending-views{font-size:0.55rem;color:var(--text-light)}
         
         /* Newsletter / Alert Section */
-        .alert-section{background:#f0f9ff;border:1px solid #bae6fd;border-radius:16px;padding:20px;text-align:center}
-        .alert-title{font-size:0.7rem;font-weight:700;color:#0369a1;margin-bottom:8px}
+        .alert-section{background:var(--primary-soft);border:1px solid #bae6fd;border-radius:16px;padding:20px;text-align:center}
+        .alert-title{font-size:0.7rem;font-weight:700;color:var(--primary-dark);margin-bottom:8px}
         .alert-desc{font-size:0.65rem;color:#0c4a6e;margin-bottom:12px}
         .alert-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-        .alert-btn{background:#0369a1;color:#fff;padding:6px 16px;border-radius:30px;font-size:0.65rem;text-decoration:none}
-        .alert-btn:hover{background:#0284c7}
+        .alert-btn{background:var(--primary-color);color:#fff;padding:6px 16px;border-radius:30px;font-size:0.65rem;text-decoration:none}
+        .alert-btn:hover{background:var(--primary-dark)}
         
         /* Clean Bottom */
-        .feed-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #e2e8f0;text-align:center;font-size:0.55rem;color:#94a3b8}
+        .feed-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-light);text-align:center;font-size:0.55rem;color:var(--text-light)}
         
         @media(max-width:600px){.feed-container{padding:16px}.hero-title{font-size:1rem}}
     </style>
 {% include head.html %}
-  </head>
+</head>
 <body><div loading="lazy">
-<div class="feed-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#94a3b8">📰 LOADING BREAKING FEED...</div></div>
+<div class="feed-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--text-light)"> LOADING BREAKING FEED...</div></div>
 
 <script>
 (function(){
@@ -112,12 +130,12 @@ permalink: /edition32/
         "Telegram Leak", "Instagram Leak", "Mega Leak", "Rare Leak"
     ];
     
-    // Feed Items - Setiap heading mengandung "leak" + query
+    // Feed Items - Each heading contains "leak" + query
     const FEED_ITEMS = [
         {
             category: "BREAKING",
             date: "Permanent",
-            title: "{name} Complete Master Leak Archive — Full Collection Released",
+            title: "{name} Complete Master Leak Archive � Full Collection Released",
             excerpt: "The complete {name} leak archive has been permanently preserved. All files verified and organized. Access the definitive collection now.",
             tags: ["Complete", "Master", "Archive"],
             views: "Permanent"
@@ -125,7 +143,7 @@ permalink: /edition32/
         {
             category: "EXCLUSIVE",
             date: "Permanent",
-            title: "{name} OnlyFans Complete Leak — Premium Content Exposed",
+            title: "{name} OnlyFans Complete Leak � Premium Content Exposed",
             excerpt: "Full {name} OnlyFans subscription leak. All exclusive subscriber content has been preserved and verified. Premium vault now accessible.",
             tags: ["OnlyFans", "Premium", "Exclusive"],
             views: "Permanent"
@@ -133,7 +151,7 @@ permalink: /edition32/
         {
             category: "VIRAL",
             date: "Permanent",
-            title: "{name} TikTok Complete Leak Compilation — Trending Videos",
+            title: "{name} TikTok Complete Leak Compilation � Trending Videos",
             excerpt: "Viral {name} TikTok content compilation. All trending videos and private content preserved. The most requested collection.",
             tags: ["TikTok", "Viral", "Compilation"],
             views: "Permanent"
@@ -141,7 +159,7 @@ permalink: /edition32/
         {
             category: "CHANNEL",
             date: "Permanent",
-            title: "{name} Telegram Complete Leak Channel — Full Archive",
+            title: "{name} Telegram Complete Leak Channel � Full Archive",
             excerpt: "Complete {name} Telegram channel leak. All messages, media, and shared content permanently preserved. Channel archive now available.",
             tags: ["Telegram", "Channel", "Archive"],
             views: "Permanent"
@@ -149,7 +167,7 @@ permalink: /edition32/
         {
             category: "GALLERY",
             date: "Permanent",
-            title: "{name} Instagram Complete Leak Gallery — Private Stories",
+            title: "{name} Instagram Complete Leak Gallery � Private Stories",
             excerpt: "Complete {name} Instagram leak gallery. All private stories and posts preserved. The full Instagram collection.",
             tags: ["Instagram", "Gallery", "Private"],
             views: "Permanent"
@@ -157,7 +175,7 @@ permalink: /edition32/
         {
             category: "BACKUP",
             date: "Permanent",
-            title: "{name} Mega Complete Leak Archive — Cloud Backup",
+            title: "{name} Mega Complete Leak Archive � Cloud Backup",
             excerpt: "Complete {name} Mega leak archive. The entire cloud backup collection has been preserved. Full file archive available.",
             tags: ["Mega", "Backup", "Cloud"],
             views: "Permanent"
@@ -165,7 +183,7 @@ permalink: /edition32/
         {
             category: "RARE",
             date: "Permanent",
-            title: "{name} Rare Leak Collection — Unseen Material",
+            title: "{name} Rare Leak Collection � Unseen Material",
             excerpt: "Rare and unseen {name} content collection. Hard-to-find material preserved for collectors. The rarest archive.",
             tags: ["Rare", "Unseen", "Collector"],
             views: "Permanent"
@@ -173,7 +191,7 @@ permalink: /edition32/
         {
             category: "FAN FAVORITE",
             date: "Permanent",
-            title: "{name} Fan Favorites Leak Collection — Most Requested",
+            title: "{name} Fan Favorites Leak Collection � Most Requested",
             excerpt: "Fan-curated {name} leak collection. The most requested content from the community. Top rated and loved.",
             tags: ["Fan Favorite", "Curated", "Top Rated"],
             views: "Permanent"
@@ -181,7 +199,7 @@ permalink: /edition32/
         {
             category: "VIDEO",
             date: "Permanent",
-            title: "{name} Complete Video Leak Archive — Full HD Collection",
+            title: "{name} Complete Video Leak Archive � Full HD Collection",
             excerpt: "Complete {name} video leak archive. All video content in HD quality. The definitive video collection.",
             tags: ["Video", "HD", "Complete"],
             views: "Permanent"
@@ -189,7 +207,7 @@ permalink: /edition32/
         {
             category: "PHOTO",
             date: "Permanent",
-            title: "{name} Complete Photo Leak Gallery — Full Resolution",
+            title: "{name} Complete Photo Leak Gallery � Full Resolution",
             excerpt: "Complete {name} photo leak gallery. All images in full resolution. The ultimate photo collection.",
             tags: ["Photo", "Gallery", "HD"],
             views: "Permanent"
@@ -231,7 +249,7 @@ permalink: /edition32/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "breaking news feed"; }
@@ -250,7 +268,7 @@ permalink: /edition32/
     const genInternalLink = (keyword) => {
         let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
         let newQ = `${nameLower} ${cleanKeyword} breaking feed`;
-        return `/edition33/?q=${encodeURIComponent(newQ)}`;
+        return `/edition32/?q=${encodeURIComponent(newQ)}`;
     };
     
     // ========== GENERATE NEWS TABS ==========
@@ -275,7 +293,7 @@ permalink: /edition32/
         for(let item of TICKER_ITEMS){
             let fullItem = `${displayName} ${item}`;
             let url = genInternalLink(item);
-            tickerHtml += `<a href="${url}" class="ticker-item">🔴 ${fullItem}</a>`;
+            tickerHtml += `<a href="${url}" class="ticker-item"> ${fullItem}</a>`;
         }
         return `
             <div class="ticker-bar">
@@ -303,15 +321,15 @@ permalink: /edition32/
             itemsHtml += `
                 <a href="${itemUrl}" class="news-card">
                     <div class="card-header">
-                        <div class="card-category">📰 ${item.category}</div>
+                        <div class="card-category"> ${item.category}</div>
                         <div class="card-date">${item.date}</div>
                     </div>
-                    <div class="card-title"><span>🔴</span> ${title}</div>
+                    <div class="card-title"><span></span> ${title}</div>
                     <div class="card-excerpt">${excerpt}</div>
                     <div class="card-meta">
-                        <span>👁️ Trending</span>
-                        <span>📌 Permanent</span>
-                        <span>✅ Verified</span>
+                        <span> Trending</span>
+                        <span> Permanent</span>
+                        <span> Verified</span>
                     </div>
                     <div class="card-tags">
                         ${tagsHtml}
@@ -342,7 +360,7 @@ permalink: /edition32/
         }
         return `
             <div class="trending-section">
-                <div class="trending-title">🔥 Trending Now — Most Popular</div>
+                <div class="trending-title"> Trending Now � Most Popular</div>
                 <div class="trending-list">
                     ${trendingHtml}
                 </div>
@@ -359,7 +377,7 @@ permalink: /edition32/
         }
         return `
             <div class="alert-section">
-                <div class="alert-title">🔔 Never Miss a Leak</div>
+                <div class="alert-title"> Never Miss a Leak</div>
                 <div class="alert-desc">Get the latest updates delivered to you</div>
                 <div class="alert-buttons">
                     ${buttonsHtml}
@@ -373,13 +391,13 @@ permalink: /edition32/
         let totalItems = FEED_ITEMS.length;
         return `
             <div class="hero-breaking">
-                <div class="hero-badge">⚡ BREAKING NEWS ⚡</div>
+                <div class="hero-badge"> BREAKING NEWS </div>
                 <div class="hero-title"><span>${displayName}</span> Leak News Feed</div>
                 <div class="hero-desc">${FEED_DESC.replace('{name}', displayName)}</div>
                 <div class="hero-stats">
-                    <span>📰 ${totalItems} Breaking Stories</span>
-                    <span>🔥 Real-time Updates</span>
-                    <span>✅ Verified Sources</span>
+                    <span> ${totalItems} Breaking Stories</span>
+                    <span> Real-time Updates</span>
+                    <span> Verified Sources</span>
                 </div>
             </div>
         `;
@@ -389,7 +407,7 @@ permalink: /edition32/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition33/">Breaking Feed</a> › ${displayName} Leak News
+                <a href="/">Home</a> � <a href="/edition32/">Breaking Feed</a> � ${displayName} Leak News
             </div>
         `;
     };
@@ -403,19 +421,19 @@ permalink: /edition32/
                     <div class="logo">Leak<span>Feed</span></div>
                     <div class="live-badge">LIVE</div>
                 </div>
-                <div class="ticker-text">📰 ${totalItems} breaking stories · Updated permanently · Verified news</div>
+                <div class="ticker-text"> ${totalItems} breaking stories � Updated permanently � Verified news</div>
             </div>
         `;
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO WITH DYNAMIC CANONICAL ==========
     const updateSEO = () => {
         let totalItems = FEED_ITEMS.length;
         let titles = [
-            `${displayName} Leak Breaking Feed — News Ticker`,
-            `${displayName} Leak News Feed — Breaking Updates`,
+            `${displayName} Leak Breaking Feed � News Ticker`,
+            `${displayName} Leak News Feed � Breaking Updates`,
             `Breaking Feed: ${displayName} Leak Archive News`,
-            `${displayName} Leak Breaking News — Live Ticker`
+            `${displayName} Leak Breaking News � Live Ticker`
         ];
         let descs = [
             `Breaking news feed for ${displayName} leak collections. ${totalItems} breaking stories. Trending updates.`,
@@ -424,7 +442,17 @@ permalink: /edition32/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // DYNAMIC CANONICAL - follows current query parameter
+        let canonicalUrl = window.location.href.split('?')[0];
+        let currentQuery = window.location.search;
+        if(currentQuery) {
+            canonicalUrl = window.location.href;
+        } else {
+            canonicalUrl = window.location.href;
+        }
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', canonicalUrl);
     };
     
     // ========== RENDER PAGE ==========
@@ -440,13 +468,13 @@ permalink: /edition32/
             ${generateAlertSection()}
             
             <div class="feed-bottom">
-                <span>📰 ${displayName} Leak Breaking Feed · Real-time News Ticker · Verified Updates</span>
+                <span> ${displayName} Leak Breaking Feed � Real-time News Ticker � Verified Updates</span>
             </div>
         `;
         
         // Handle internal links (static navigation)
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition33/?q=')){
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition32/?q=')){
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.location.href = link.getAttribute('href');

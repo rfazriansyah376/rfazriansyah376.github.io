@@ -18,86 +18,104 @@ permalink: /edition25/
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition26/">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ========== GLOBAL COLOR VARIABLES - CHANGE YOUR MAIN COLOR HERE ========== */
+        .global-style {
+            --color-primary: #58a6ff;       /* Main accent color */
+            --color-primary-hover: #79b8ff; /* Lighter accent for hovers */
+            --color-secondary: #a371f7;     /* Secondary accent for gradients */
+            --color-success: #238636;       /* Success/button color */
+            --color-success-hover: #2ea043; /* Success hover */
+            --color-bg: #0d1117;            /* Main background */
+            --color-surface: #161b22;       /* Card/header surfaces */
+            --color-surface-hover: #1f2937;  /* Surface hover state */
+            --color-border: #30363d;        /* Default border */
+            --color-text: #e6edf3;          /* Primary text */
+            --color-text-secondary: #8b949e; /* Secondary/muted text */
+            --color-badge-bg: #23863620;    /* Badge background */
+            --color-badge-border: #238636;  /* Badge border */
+            --color-badge-text: #3fb950;    /* Badge text */
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#0d1117;font-family:'Plus Jakarta Sans',sans-serif;color:#e6edf3}
+        body{background:var(--color-bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--color-text)}
         
         /* Style Resource Navigator - Mega Directory, Organized, Professional */
         .navigator-container{max-width:1400px;margin:0 auto;padding:0 24px}
         
         /* Header */
-        .nav-header{background:#161b22;border-bottom:1px solid #30363d;padding:20px 0;margin-bottom:32px}
+        .nav-header{background:var(--color-surface);border-bottom:1px solid var(--color-border);padding:20px 0;margin-bottom:32px}
         .header-flex{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
         .logo{display:flex;align-items:center;gap:10px}
         .logo-icon{font-size:28px}
-        .logo-text{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#58a6ff,#a371f7);-webkit-background-clip:text;background-clip:text;color:transparent}
-        .breadcrumb{font-size:0.7rem;color:#8b949e}
-        .breadcrumb a{color:#58a6ff;text-decoration:none}
+        .logo-text{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .breadcrumb{font-size:0.7rem;color:var(--color-text-secondary)}
+        .breadcrumb a{color:var(--color-primary);text-decoration:none}
         
         /* Hero Section with Query */
-        .hero-section{background:linear-gradient(135deg,#161b22,#0d1117);border-radius:24px;padding:48px;margin-bottom:40px;border:1px solid #30363d}
-        .hero-badge{display:inline-block;background:#23863620;border:1px solid #238636;color:#3fb950;padding:4px 16px;border-radius:30px;font-size:0.65rem;margin-bottom:16px}
+        .hero-section{background:linear-gradient(135deg,var(--color-surface),var(--color-bg));border-radius:24px;padding:48px;margin-bottom:40px;border:1px solid var(--color-border)}
+        .hero-badge{display:inline-block;background:var(--color-badge-bg);border:1px solid var(--color-badge-border);color:var(--color-badge-text);padding:4px 16px;border-radius:30px;font-size:0.65rem;margin-bottom:16px}
         .hero-title{font-size:2.5rem;font-weight:800;margin-bottom:16px;line-height:1.2}
-        .hero-title span{background:linear-gradient(135deg,#58a6ff,#a371f7);-webkit-background-clip:text;background-clip:text;color:transparent}
-        .hero-desc{font-size:0.9rem;color:#8b949e;max-width:800px;margin-bottom:24px;line-height:1.5}
+        .hero-title span{background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .hero-desc{font-size:0.9rem;color:var(--color-text-secondary);max-width:800px;margin-bottom:24px;line-height:1.5}
         .hero-stats{display:flex;gap:32px;flex-wrap:wrap}
-        .hero-stat .number{font-size:1.5rem;font-weight:800;color:#58a6ff}
-        .hero-stat .label{font-size:0.65rem;color:#8b949e}
+        .hero-stat .number{font-size:1.5rem;font-weight:800;color:var(--color-primary)}
+        .hero-stat .label{font-size:0.65rem;color:var(--color-text-secondary)}
         
         /* Search Bar */
-        .search-wrapper{background:#161b22;border:1px solid #30363d;border-radius:56px;padding:8px 8px 8px 24px;display:flex;align-items:center;gap:12px;margin-bottom:40px}
-        .search-icon{color:#8b949e;font-size:18px}
-        .search-input{flex:1;background:transparent;border:none;outline:none;color:#e6edf3;font-size:0.9rem;padding:12px 0}
-        .search-btn{background:#238636;border:none;padding:10px 28px;border-radius:40px;color:#fff;font-weight:600;cursor:pointer;font-size:0.8rem}
+        .search-wrapper{background:var(--color-surface);border:1px solid var(--color-border);border-radius:56px;padding:8px 8px 8px 24px;display:flex;align-items:center;gap:12px;margin-bottom:40px}
+        .search-icon{color:var(--color-text-secondary);font-size:18px}
+        .search-input{flex:1;background:transparent;border:none;outline:none;color:var(--color-text);font-size:0.9rem;padding:12px 0}
+        .search-btn{background:var(--color-success);border:none;padding:10px 28px;border-radius:40px;color:#fff;font-weight:600;cursor:pointer;font-size:0.8rem}
         
         /* Main Grid - 3 Columns Mega Directory */
         .directory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:48px}
         
         /* Category Card */
-        .category-card{background:#161b22;border:1px solid #30363d;border-radius:20px;overflow:hidden;transition:all 0.2s}
-        .category-card:hover{transform:translateY(-4px);border-color:#58a6ff}
-        .category-header{background:#1f2937;padding:16px 20px;border-bottom:1px solid #30363d}
+        .category-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:20px;overflow:hidden;transition:all 0.2s}
+        .category-card:hover{transform:translateY(-4px);border-color:var(--color-primary)}
+        .category-header{background:var(--color-surface-hover);padding:16px 20px;border-bottom:1px solid var(--color-border)}
         .category-title{font-size:1rem;font-weight:700;margin-bottom:4px}
-        .category-title a{color:#e6edf3;text-decoration:none}
-        .category-count{font-size:0.6rem;color:#8b949e}
+        .category-title a{color:var(--color-text);text-decoration:none}
+        .category-count{font-size:0.6rem;color:var(--color-text-secondary)}
         .category-items{padding:8px 0}
         .category-item{padding:12px 20px;border-bottom:1px solid #21262d;cursor:pointer;transition:all 0.2s}
-        .category-item:hover{background:#1f2937;padding-left:24px}
+        .category-item:hover{background:var(--color-surface-hover);padding-left:24px}
         .item-name{font-size:0.75rem;font-weight:500;margin-bottom:4px}
-        .item-meta{font-size:0.55rem;color:#8b949e}
-        .view-all{padding:12px 20px;text-align:center;font-size:0.7rem;color:#58a6ff;cursor:pointer;border-top:1px solid #21262d}
+        .item-meta{font-size:0.55rem;color:var(--color-text-secondary)}
+        .view-all{padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--color-primary);cursor:pointer;border-top:1px solid #21262d}
         
         /* Second Row - 2 Columns Featured */
         .featured-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-bottom:48px}
-        .featured-card{background:#161b22;border:1px solid #30363d;border-radius:20px;padding:24px;cursor:pointer;transition:all 0.2s}
-        .featured-card:hover{transform:translateY(-4px);border-color:#58a6ff}
+        .featured-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:20px;padding:24px;cursor:pointer;transition:all 0.2s}
+        .featured-card:hover{transform:translateY(-4px);border-color:var(--color-primary)}
         .featured-icon{font-size:32px;margin-bottom:16px}
         .featured-title{font-size:1rem;font-weight:700;margin-bottom:8px}
-        .featured-desc{font-size:0.7rem;color:#8b949e;margin-bottom:16px;line-height:1.5}
-        .featured-meta{display:flex;gap:16px;font-size:0.6rem;color:#8b949e}
+        .featured-desc{font-size:0.7rem;color:var(--color-text-secondary);margin-bottom:16px;line-height:1.5}
+        .featured-meta{display:flex;gap:16px;font-size:0.6rem;color:var(--color-text-secondary)}
         
         /* Bottom Section - Quick Links & Resources */
-        .quick-links{background:#161b22;border:1px solid #30363d;border-radius:20px;padding:28px;margin-bottom:40px}
-        .quick-title{font-size:0.9rem;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #30363d}
+        .quick-links{background:var(--color-surface);border:1px solid var(--color-border);border-radius:20px;padding:28px;margin-bottom:40px}
+        .quick-title{font-size:0.9rem;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--color-border)}
         .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-        .quick-link{padding:10px 0;cursor:pointer;font-size:0.7rem;color:#8b949e;transition:color 0.2s}
-        .quick-link:hover{color:#58a6ff}
+        .quick-link{padding:10px 0;cursor:pointer;font-size:0.7rem;color:var(--color-text-secondary);transition:color 0.2s}
+        .quick-link:hover{color:var(--color-primary)}
         
         /* Footer */
-        .nav-footer{margin-top:48px;padding:32px 0;border-top:1px solid #30363d;text-align:center;font-size:0.65rem;color:#8b949e;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+        .nav-footer{margin-top:48px;padding:32px 0;border-top:1px solid var(--color-border);text-align:center;font-size:0.65rem;color:var(--color-text-secondary);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
         
         @media(max-width:1000px){.directory-grid{grid-template-columns:repeat(2,1fr)}.featured-grid{grid-template-columns:1fr}}
         @media(max-width:700px){.directory-grid{grid-template-columns:1fr}.hero-title{font-size:1.6rem}.hero-section{padding:28px}}
     </style>
 {% include head.html %}
   </head>
-<body><div loading="lazy">
-<div class="navigator-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#8b949e">⚡ Loading Resource Navigator...</div></div>
+<body class="global-style"><div loading="lazy">
+<div class="navigator-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--color-text-secondary)">⚡ Loading Resource Navigator...</div></div>
 
 <script>
 (function(){
     // ========== DATABASE RESOURCE NAVIGATOR ==========
     
-    // Categories dengan item terkait query
+    // Categories with related query items
     const CATEGORIES = [
         { name: "Complete Video Archives", icon: "🎬", items: [] },
         { name: "Photo Galleries & Collections", icon: "📸", items: [] },
@@ -107,7 +125,7 @@ permalink: /edition25/
         { name: "Platform-Specific Archives", icon: "📱", items: [] }
     ];
     
-    // 120 Item Names untuk setiap kategori
+    // 120 Item Names for each category
     const ITEM_NAMES = [
         "Master {name} Video Archive - Complete Collection",
         "{name} Full Length Videos Compilation",
@@ -131,7 +149,7 @@ permalink: /edition25/
         "{name} Historical Photo Collection"
     ];
     
-    // 50 Item Descriptions (panjang)
+    // 50 Item Descriptions (long)
     const ITEM_DESCS = [
         "Complete collection of {name} video content spanning {years} years. Includes rare footage, interviews, performances, and behind-the-scenes material. Updated regularly with new discoveries.",
         "The most comprehensive {name} video archive available anywhere. Over {count} carefully curated videos in highest quality. Perfect for dedicated fans.",
@@ -161,7 +179,7 @@ permalink: /edition25/
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const formatNumber = (n) => n.toLocaleString();
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ 
@@ -177,13 +195,12 @@ permalink: /edition25/
     const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
     const displayName = formatTopic(baseTopic);
     const nameLower = displayName.toLowerCase();
-    const namePlural = nameLower + (nameLower.endsWith('s') ? "'" : "'s");
     
     // ========== GENERATE LINK ==========
     const genLink = (category, item = null) => {
         let itemName = item || rand(ITEM_NAMES).replace('{name}', displayName);
         let newQ = `${nameLower} ${itemName.toLowerCase().substring(0, 40)}`;
-        return { url:`/edition26/?q=${encodeURIComponent(newQ)}`, category: category };
+        return { url:`/edition25/?q=${encodeURIComponent(newQ)}`, category: category };
     };
     
     // ========== GENERATE CATEGORY ITEMS ==========
@@ -306,8 +323,12 @@ permalink: /edition25/
             `${displayName} content navigator - your complete guide to finding and accessing all ${displayName} content. Video archives, photo galleries, exclusive vaults, and fan favorites.`
         ];
         document.title = rand(titles);
-        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        // Update description
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        // Update canonical to follow the current query (dynamic)
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
     };
     
     // ========== RENDER PAGE ==========
@@ -322,7 +343,7 @@ permalink: /edition25/
                         <div class="logo-text">ResourceNavigator</div>
                     </div>
                     <div class="breadcrumb">
-                        <a href="/">Home</a> › <a href="/edition26/">Navigator</a> › ${displayName}
+                        <a href="/">Home</a> › <a href="/edition25/">Navigator</a> › ${displayName}
                     </div>
                 </div>
             </div>

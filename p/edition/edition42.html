@@ -20,6 +20,16 @@ permalink: /edition42/
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#f4f6f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#1a1a2e}
         
+        /* GLOBAL COLOR VARIABLES - Easy to change entire site color */
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --primary-bg-light: #eff6ff;
+            --primary-tag-bg: #dbeafe;
+            --primary-border: #bfdbfe;
+        }
+        
         /* Directory Style - Like SiteMap/Index */
         .sitemap-container{max-width:1100px;margin:0 auto;padding:20px}
         
@@ -27,17 +37,17 @@ permalink: /edition42/
         .sitemap-header{background:#fff;border-radius:16px;padding:20px;margin-bottom:24px;border:1px solid #e2e8f0}
         .header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:12px}
         .logo{font-size:1.3rem;font-weight:800}
-        .logo span{color:#2563eb}
+        .logo span{color:var(--primary-color)}
         .index-id{font-family:monospace;font-size:0.65rem;color:#64748b;background:#f1f5f9;padding:4px 12px;border-radius:20px}
         .header-desc{font-size:0.7rem;color:#64748b}
         
         /* Breadcrumb */
         .breadcrumb{font-size:0.7rem;color:#64748b;margin-bottom:20px}
-        .breadcrumb a{color:#2563eb;text-decoration:none}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero */
-        .hero-index{background:#2563eb;color:#fff;border-radius:16px;padding:28px;margin-bottom:28px}
+        .hero-index{background:var(--primary-color);color:#fff;border-radius:16px;padding:28px;margin-bottom:28px}
         .hero-badge{font-size:0.65rem;opacity:0.8;margin-bottom:8px}
         .hero-title{font-size:1.3rem;font-weight:700;margin-bottom:12px}
         .hero-title span{text-decoration:underline}
@@ -51,23 +61,25 @@ permalink: /edition42/
         .dir-section{background:#fff;border-radius:20px;border:1px solid #e2e8f0;overflow:hidden}
         .section-header{background:#f8fafc;padding:16px 20px;border-bottom:1px solid #e2e8f0}
         .section-title{font-size:1rem;font-weight:700;color:#1e293b}
-        .section-title span{color:#2563eb;font-size:0.7rem;font-weight:400;margin-left:8px}
+        .section-title span{color:var(--primary-color);font-size:0.7rem;font-weight:400;margin-left:8px}
         .section-desc{font-size:0.65rem;color:#64748b;margin-top:4px}
         
         /* Links Grid - Banyak Internal Link */
         .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;padding:16px}
         .dir-link{display:block;padding:10px 12px;background:#fafcff;border-radius:10px;text-decoration:none;color:#1e293b;border:1px solid transparent;transition:none}
-        .dir-link:hover{border-color:#2563eb40;background:#eff6ff}
+        .dir-link:hover{border-color:var(--primary-border);background:var(--primary-bg-light)}
         .link-title{font-size:0.75rem;font-weight:600;margin-bottom:2px}
-        .link-title span{color:#2563eb}
+        .link-title span{color:var(--primary-color)}
         .link-desc{font-size:0.6rem;color:#64748b}
         .link-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-        .link-tag{font-size:0.55rem;color:#2563eb;background:#e0f2fe;padding:2px 8px;border-radius:20px}
+        .link-tag{font-size:0.55rem;color:var(--primary-color);background:var(--primary-tag-bg);padding:2px 8px;border-radius:20px;text-decoration:none}
+        .link-tag:hover{background:var(--primary-color);color:#fff}
         
         /* Nested Links - Sub Directory */
         .nested-section{margin-top:0;border-top:1px solid #e2e8f0}
         .nested-header{background:#fefce8;padding:12px 20px}
         .nested-title{font-size:0.8rem;font-weight:700;color:#854d0e}
+        .nested-title a{color:#854d0e;text-decoration:none}
         .nested-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px;padding:12px 16px;background:#fefdf7}
         .nested-link{display:block;padding:8px 12px;text-decoration:none;color:#1e293b;font-size:0.7rem;border-radius:8px}
         .nested-link:hover{background:#fef3c7;color:#854d0e}
@@ -77,7 +89,7 @@ permalink: /edition42/
         .quick-title{font-size:0.75rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #e2e8f0}
         .index-chips{display:flex;flex-wrap:wrap;gap:10px}
         .index-chip{display:inline-block;background:#f1f5f9;padding:6px 14px;border-radius:30px;font-size:0.65rem;text-decoration:none;color:#1e293b}
-        .index-chip:hover{background:#2563eb;color:#fff}
+        .index-chip:hover{background:var(--primary-color);color:#fff}
         
         /* Clean Bottom */
         .sitemap-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #e2e8f0;text-align:center;font-size:0.6rem;color:#64748b}
@@ -99,7 +111,6 @@ permalink: /edition42/
         {
             name: "Complete Leak Archives",
             desc: "Complete and comprehensive leak archives containing all content from every source.",
-            color: "blue",
             links: [
                 { title: "{name} Complete Master Leak Archive", desc: "The definitive complete archive containing every file.", tags: ["Master", "Complete", "Ultimate"] },
                 { title: "{name} Comprehensive Leak Library", desc: "Complete knowledge base containing all known content.", tags: ["Library", "Full", "Reference"] },
@@ -109,7 +120,6 @@ permalink: /edition42/
         {
             name: "OnlyFans Leak Collections",
             desc: "Complete OnlyFans leak collections from premium subscription content.",
-            color: "pink",
             links: [
                 { title: "{name} OnlyFans Complete Leak", desc: "All exclusive subscriber content preserved.", tags: ["OnlyFans", "Premium", "Complete"] },
                 { title: "{name} OnlyFans Master Leak Vault", desc: "Every post ever made, permanently archived.", tags: ["Master", "Vault", "Full"] },
@@ -119,7 +129,6 @@ permalink: /edition42/
         {
             name: "TikTok Leak Compilations",
             desc: "Complete TikTok leak compilations of viral content.",
-            color: "green",
             links: [
                 { title: "{name} TikTok Complete Leak Compilation", desc: "All viral moments preserved.", tags: ["TikTok", "Viral", "Complete"] },
                 { title: "{name} TikTok Master Leak Feed", desc: "Every video ever posted.", tags: ["Master", "Feed", "Archive"] },
@@ -129,7 +138,6 @@ permalink: /edition42/
         {
             name: "Telegram Leak Channels",
             desc: "Complete Telegram leak channels and message archives.",
-            color: "blue",
             links: [
                 { title: "{name} Telegram Complete Leak Channel", desc: "All channel content permanently preserved.", tags: ["Telegram", "Channel", "Complete"] },
                 { title: "{name} Telegram Master Leak Archive", desc: "Full message and media history.", tags: ["Master", "Archive", "Full"] }
@@ -138,7 +146,6 @@ permalink: /edition42/
         {
             name: "Instagram Leak Galleries",
             desc: "Complete Instagram leak galleries of private content.",
-            color: "pink",
             links: [
                 { title: "{name} Instagram Complete Leak Gallery", desc: "All private story content preserved.", tags: ["Instagram", "Gallery", "Complete"] },
                 { title: "{name} Instagram Master Leak Collection", desc: "Everything preserved and organized.", tags: ["Master", "Collection", "Full"] }
@@ -147,7 +154,6 @@ permalink: /edition42/
         {
             name: "Mega Archive Leaks",
             desc: "Complete Mega archive leaks and backup collections.",
-            color: "orange",
             links: [
                 { title: "{name} Mega Complete Leak Archive", desc: "The entire backup collection.", tags: ["Mega", "Backup", "Complete"] },
                 { title: "{name} Mega Master Leak Vault", desc: "Complete file collection permanently preserved.", tags: ["Master", "Vault", "Full"] }
@@ -156,7 +162,6 @@ permalink: /edition42/
         {
             name: "Rare & Unreleased Leaks",
             desc: "Rare and previously unreleased leak collections.",
-            color: "purple",
             links: [
                 { title: "{name} Rare Leak Collection", desc: "Hard-to-find rare material collection.", tags: ["Rare", "Unseen", "Collector"] },
                 { title: "{name} Unreleased Leak Archive", desc: "Previously unreleased exclusive content.", tags: ["Unreleased", "Exclusive", "Rare"] }
@@ -165,7 +170,6 @@ permalink: /edition42/
         {
             name: "Fan Favorite Leak Compilations",
             desc: "Fan-curated and community favorite leak collections.",
-            color: "yellow",
             links: [
                 { title: "{name} Fan Favorites Leak Collection", desc: "Most requested fan content.", tags: ["Fan", "Favorite", "Curated"] },
                 { title: "{name} Top Rated Leak Archive", desc: "Highest rated content by community.", tags: ["Top Rated", "Community", "Best"] }
@@ -210,7 +214,7 @@ permalink: /edition42/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete directory index"; }
@@ -225,11 +229,21 @@ permalink: /edition42/
     const displayName = formatTopic(baseTopic);
     const nameLower = displayName.toLowerCase();
     
+    // Fixed typo: permalink should be /edition42/ (matches permalink at top)
     // ========== GENERATE INTERNAL LINK (VARIAN QUERY + LEAK) ==========
     const genInternalLink = (keyword) => {
         let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
         let newQ = `${nameLower} ${cleanKeyword} leak directory`;
-        return `/edition43/?q=${encodeURIComponent(newQ)}`;
+        return `/edition42/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== GENERATE DYNAMIC CANONICAL URL ==========
+    const updateDynamicCanonical = () => {
+        const currentUrl = window.location.href.split('?')[0];
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if(canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
     };
     
     // ========== GENERATE DIRECTORY SECTIONS ==========
@@ -253,8 +267,8 @@ permalink: /edition42/
                 
                 linksHtml += `
                     <a href="${url}" class="dir-link">
-                        <div class="link-title">📄 <span>${title}</span></div>
-                        <div class="link-desc">${desc}</div>
+                        <div class="link-title">📄 <span>${escapeHtml(title)}</span></div>
+                        <div class="link-desc">${escapeHtml(desc)}</div>
                         <div class="link-tags">${tagsHtml}</div>
                     </a>
                 `;
@@ -266,8 +280,8 @@ permalink: /edition42/
             sectionsHtml += `
                 <div class="dir-section">
                     <div class="section-header">
-                        <div class="section-title">📌 ${sectionName} <span><a href="${categoryUrl}" style="color:#2563eb;text-decoration:none">[view all]</a></span></div>
-                        <div class="section-desc">${sectionDesc}</div>
+                        <div class="section-title">📌 ${escapeHtml(sectionName)} <span><a href="${categoryUrl}" style="color:var(--primary-color);text-decoration:none">[view all]</a></span></div>
+                        <div class="section-desc">${escapeHtml(sectionDesc)}</div>
                     </div>
                     <div class="links-grid">
                         ${linksHtml}
@@ -289,13 +303,13 @@ permalink: /edition42/
             for(let link of sub.links){
                 let fullLink = `${displayName} ${link}`;
                 let linkUrl = genInternalLink(link);
-                linksHtml += `<a href="${linkUrl}" class="nested-link">📌 ${fullLink}</a>`;
+                linksHtml += `<a href="${linkUrl}" class="nested-link">📌 ${escapeHtml(fullLink)}</a>`;
             }
             
             subsHtml += `
                 <div class="nested-section">
                     <div class="nested-header">
-                        <div class="nested-title"><a href="${subUrl}" style="color:#854d0e;text-decoration:none">📁 ${subName}</a></div>
+                        <div class="nested-title"><a href="${subUrl}" style="color:#854d0e;text-decoration:none">📁 ${escapeHtml(subName)}</a></div>
                     </div>
                     <div class="nested-grid">
                         ${linksHtml}
@@ -312,16 +326,29 @@ permalink: /edition42/
         for(let item of QUICK_INDEX){
             let fullItem = `${displayName} ${item}`;
             let url = genInternalLink(item);
-            chipsHtml += `<a href="${url}" class="index-chip">📌 ${fullItem}</a>`;
+            chipsHtml += `<a href="${url}" class="index-chip">📌 ${escapeHtml(fullItem)}</a>`;
         }
         return `
             <div class="quick-index">
-                <div class="quick-title">⚡ Quick Index − Jump to Section</div>
+                <div class="quick-title">⚡ Quick Index - Jump to Section</div>
                 <div class="index-chips">
                     ${chipsHtml}
                 </div>
             </div>
         `;
+    };
+    
+    // ========== ESCAPE HTML TO PREVENT XSS AND FIX TYPOS ==========
+    const escapeHtml = (str) => {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
     };
     
     // ========== RENDER HERO ==========
@@ -331,8 +358,8 @@ permalink: /edition42/
         return `
             <div class="hero-index">
                 <div class="hero-badge">📑 SITE DIRECTORY / INDEX MAP</div>
-                <div class="hero-title"><span>${displayName}</span> Leak Archive Index</div>
-                <div class="hero-desc">${SITEMAP_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-title"><span>${escapeHtml(displayName)}</span> Leak Archive Index</div>
+                <div class="hero-desc">${SITEMAP_DESC.replace('{name}', escapeHtml(displayName))}</div>
                 <div class="hero-stats">
                     <span>📁 ${totalSections} Main Sections</span>
                     <span>📄 ${totalLinks} Direct Links</span>
@@ -346,7 +373,7 @@ permalink: /edition42/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition43/">Directory</a> › ${displayName} Leak Index
+                <a href="/">Home</a> › <a href="/edition42/">Directory</a> › ${escapeHtml(displayName)} Leak Index
             </div>
         `;
     };
@@ -365,14 +392,14 @@ permalink: /edition42/
         `;
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO WITH DYNAMIC CANONICAL ==========
     const updateSEO = () => {
         let totalLinks = DIRECTORY_SECTIONS.reduce((acc, s) => acc + s.links.length, 0);
         let titles = [
-            `${displayName} Leak Directory — Complete Site Index`,
-            `${displayName} Leak Sitemap — Index of All Collections`,
+            `${displayName} Leak Directory - Complete Site Index`,
+            `${displayName} Leak Sitemap - Index of All Collections`,
             `Directory: ${displayName} Leak Archive Index`,
-            `${displayName} Leak Index Map — Complete Navigation`
+            `${displayName} Leak Index Map - Complete Navigation`
         ];
         let descs = [
             `Complete site directory for ${displayName} leak archives. ${totalLinks} indexed entries. Full sitemap navigation.`,
@@ -380,8 +407,11 @@ permalink: /edition42/
             `Directory index for ${displayName} leak content. ${DIRECTORY_SECTIONS.length} sections of verified archives.`
         ];
         document.title = rand(titles);
-        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // Update canonical URL dynamically based on current query
+        updateDynamicCanonical();
     };
     
     // ========== RENDER PAGE ==========
@@ -398,13 +428,13 @@ permalink: /edition42/
             </div>
             
             <div class="sitemap-bottom">
-                <span>📑 ${displayName} Leak Directory · Complete Index Map</span>
+                <span>📑 ${escapeHtml(displayName)} Leak Directory · Complete Index Map</span>
             </div>
         `;
         
         // Handle internal links (static navigation)
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition43/?q=')){
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition42/?q=')){
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.location.href = link.getAttribute('href');

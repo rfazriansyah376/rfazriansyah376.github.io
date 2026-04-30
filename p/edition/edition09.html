@@ -16,6 +16,11 @@ permalink: /edition09/
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition10/">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #c4a747;
+            --primary-transparent: #c4a74720;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#0a0a0a;font-family:'Inter',sans-serif;color:#e0e0e0}
         
@@ -28,7 +33,7 @@ permalink: /edition09/
         .institution{font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;color:#888}
         .vault-title{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;letter-spacing:-0.5px;margin-top:8px}
         .catalog-info{font-size:0.7rem;color:#666}
-        .accession-badge{background:#1a1a1a;padding:6px 16px;border-radius:30px;font-size:0.7rem;border-left:2px solid #c4a747}
+        .accession-badge{background:#1a1a1a;padding:6px 16px;border-radius:30px;font-size:0.7rem;border-left:2px solid var(--primary-color)}
         
         /* Search & Filter Bar */
         .search-bar{background:#111;border:1px solid #222;border-radius:12px;padding:12px 20px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -37,19 +42,19 @@ permalink: /edition09/
         .search-input input{background:transparent;border:none;color:#e0e0e0;padding:8px 0;width:100%;outline:none}
         .filter-group{display:flex;gap:12px}
         .filter-btn{background:#1a1a1a;border:none;padding:6px 16px;border-radius:30px;font-size:0.7rem;color:#888;cursor:pointer}
-        .filter-active{background:#c4a747;color:#0a0a0a}
+        .filter-active{background:var(--primary-color);color:#0a0a0a}
         
         /* Main Grid - Catalog Style */
         .catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;margin-bottom:48px}
         
         /* Collection Card - Like Museum Exhibit */
         .collection-card{background:#111;border:1px solid #222;border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.3s ease}
-        .collection-card:hover{transform:translateY(-4px);border-color:#c4a747;box-shadow:0 12px 24px rgba(0,0,0,0.3)}
+        .collection-card:hover{transform:translateY(-4px);border-color:var(--primary-color);box-shadow:0 12px 24px rgba(0,0,0,0.3)}
         .card-media{height:180px;background:linear-gradient(135deg,#1a1a1a,#0a0a0a);display:flex;align-items:center;justify-content:center;position:relative}
         .card-icon{font-size:48px;opacity:0.7}
         .card-badge{position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);padding:4px 10px;border-radius:20px;font-size:0.6rem;font-family:monospace}
         .card-content{padding:20px}
-        .card-category{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#c4a747;margin-bottom:6px}
+        .card-category{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-bottom:6px}
         .card-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:8px}
         .card-meta{display:flex;gap:16px;font-size:0.6rem;color:#666;margin-bottom:12px}
         .card-description{font-size:0.7rem;line-height:1.5;color:#aaa;margin-bottom:16px}
@@ -57,12 +62,12 @@ permalink: /edition09/
         /* Metadata Tags */
         .metadata-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #222}
         .tag{background:#1a1a1a;padding:2px 10px;border-radius:20px;font-size:0.55rem;color:#888}
-        .tag-highlight{background:#c4a74720;border:1px solid #c4a747;color:#c4a747}
+        .tag-highlight{background:var(--primary-transparent);border:1px solid var(--primary-color);color:var(--primary-color)}
         
         /* Stats Bar */
         .stats-bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:20px 0;margin-top:20px;border-top:1px solid #222}
         .stat-item{text-align:center}
-        .stat-number{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#c4a747}
+        .stat-number{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--primary-color)}
         .stat-label{font-size:0.6rem;color:#666;margin-top:4px}
         
         /* Sidebar - Featured Collections */
@@ -82,7 +87,7 @@ permalink: /edition09/
 
 <script>
 (function(){
-    // ========== DATABASE DEEP ARCHIVE / COLLECTION STYLE ==========
+    // ========== DEEP ARCHIVE DATABASE / COLLECTION STYLE ==========
     
     // Collection Categories
     const CATEGORIES = [
@@ -90,7 +95,7 @@ permalink: /edition09/
         'INTERVIEW_CLIPS','LIVESTREAM_RECORDINGS','SOCIAL_MEDIA_HIGHLIGHTS','UNRELEASED_MATERIAL','SPECIAL_COLLECTION'
     ];
     
-    // 60 Collection Titles (menarik untuk penggemar)
+    // 60 Collection Titles (engaging for fans)
     const TITLES = [
         "The Complete Archive: Behind the Curtain",
         "Exclusive Moments: A Visual Journey",
@@ -102,11 +107,11 @@ permalink: /edition09/
         "Ultimate Collection: Rare & Unreleased",
         "The Private Collection: Intimate Moments",
         "Archival Treasures: Rediscovered Gems",
-        "The Director's Cut: Extended Edition",
+        "The Director's Cut: Extended edition",
         "Complete Works: Professional Portfolio"
     ];
     
-    // 80 Content Descriptions (panjang, engaging untuk penggemar)
+    // 80 Content Descriptions (detailed, engaging for fans)
     const DESCRIPTIONS = [
         "This comprehensive collection features {count} previously unreleased items spanning {years} years. Each piece has been carefully preserved and cataloged from original sources. Fans will discover rare behind-the-scenes moments, candid interactions, and exclusive content not found elsewhere.",
         "Curated from multiple archive sources, this collection represents the most complete assembly of {subject} content available. The material has been digitally restored and organized chronologically, offering a unique window into {subject}'s creative journey and personal evolution.",
@@ -143,7 +148,7 @@ permalink: /edition09/
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const formatNumber = (n) => n.toLocaleString();
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
@@ -166,7 +171,7 @@ permalink: /edition09/
         return { url:`/edition10/?q=${encodeURIComponent(newQ)}`, category: cat };
     };
     
-    // ========== GENERATE COLLECTION CARD (PANJANG) ==========
+    // ========== GENERATE COLLECTION CARD (DETAILED) ==========
     const generateCollectionCard = (idx) => {
         let category = rand(CATEGORIES);
         let title = rand(TITLES);
@@ -217,7 +222,7 @@ permalink: /edition09/
         `;
     };
     
-    // ========== GENERATE FEATURED COLLECTION (lebih panjang) ==========
+    // ========== GENERATE FEATURED COLLECTION (more detailed) ==========
     const generateFeaturedCard = (idx) => {
         let category = rand(CATEGORIES);
         let title = rand(TITLES);
@@ -258,7 +263,8 @@ permalink: /edition09/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href.split('?')[0] + '?q=' + encodeURIComponent(rawQuery));
     };
     
     // ========== RENDER PAGE ==========

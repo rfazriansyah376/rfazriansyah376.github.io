@@ -3,6 +3,7 @@ layout: null
 permalink: /edition50/
 ---
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +13,20 @@ permalink: /edition50/
     <meta name="googlebot" content="index, follow">
     <meta name="bingbot" content="index, follow">
     <meta name="yandex" content="index, follow">
-    meta(name="referrer" content="always")
-    <title id="dynamic-title">PINBOARD · Leak Sticky Notes Wall</title>
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">PINBOARD � Leak Sticky Notes Wall</title>
     <meta id="dynamic-description" name="description" content="Pinboard sticky notes wall for leak collections. Colorful notes for every collection.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition01/">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
+        
+        /* GLOBAL COLOR VARIABLE - CHANGE THIS ONE VALUE TO UPDATE THE ENTIRE THEME */
+        :root {
+            --global-color: #c0392b; /* Default Red - Change to any color (e.g., #2980b9 for blue, #27ae60 for green) */
+            --global-color-dark: #a93226;
+            --global-color-light: #e74c3c;
+        }
+        
         body{background:#d4c4a8;font-family:'Comic Neue','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;color:#2c2418}
         
         /* Cork Board Texture */
@@ -30,20 +39,20 @@ permalink: /edition50/
         .pinboard-header{background:rgba(180,150,110,0.7);backdrop-filter:blur(4px);border-radius:24px;padding:20px;margin-bottom:24px;border:2px solid #b8956e}
         .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
         .logo{font-size:1.3rem;font-weight:800}
-        .logo span{color:#c0392b}
-        .pin-count{background:#c0392b;color:#fff;padding:4px 14px;border-radius:30px;font-size:0.65rem;font-weight:700}
+        .logo span{color:var(--global-color)}
+        .pin-count{background:var(--global-color);color:#fff;padding:4px 14px;border-radius:30px;font-size:0.65rem;font-weight:700}
         .header-desc{font-size:0.7rem;color:#4a3a28}
         
         /* Breadcrumb */
         .breadcrumb{font-size:0.7rem;color:#7a6048;margin-bottom:20px}
-        .breadcrumb a{color:#c0392b;text-decoration:none}
+        .breadcrumb a{color:var(--global-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero */
         .hero-pinboard{background:rgba(180,150,110,0.5);border-radius:24px;padding:28px;margin-bottom:28px;border:2px dashed #b8956e}
-        .hero-badge{display:inline-block;background:#c0392b;color:#fff;padding:4px 16px;border-radius:30px;font-size:0.65rem;margin-bottom:12px}
+        .hero-badge{display:inline-block;background:var(--global-color);color:#fff;padding:4px 16px;border-radius:30px;font-size:0.65rem;margin-bottom:12px}
         .hero-title{font-size:1.3rem;font-weight:800;margin-bottom:12px}
-        .hero-title span{color:#c0392b}
+        .hero-title span{color:var(--global-color)}
         .hero-desc{font-size:0.75rem;color:#4a3a28;line-height:1.5;margin-bottom:14px}
         .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:#7a6048}
         
@@ -60,19 +69,19 @@ permalink: /edition50/
         
         .pin-push{text-align:center;padding:8px 0 4px;font-size:18px;opacity:0.6}
         .note-content{padding:8px 16px 16px}
-        .note-category{font-size:0.55rem;font-weight:700;color:#c0392b;text-transform:uppercase;margin-bottom:8px}
+        .note-category{font-size:0.55rem;font-weight:700;color:var(--global-color);text-transform:uppercase;margin-bottom:8px}
         .note-title{font-size:0.8rem;font-weight:800;margin-bottom:6px;line-height:1.3}
-        .note-title span{color:#c0392b}
+        .note-title span{color:var(--global-color)}
         .note-desc{font-size:0.65rem;color:#5a4a38;line-height:1.4;margin-bottom:10px}
         .note-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;padding-top:6px;border-top:1px dashed #e0d6a8}
-        .note-tag{font-size:0.55rem;color:#c0392b;background:#fff0d0;padding:2px 8px;border-radius:12px}
+        .note-tag{font-size:0.55rem;color:var(--global-color);background:#fff0d0;padding:2px 8px;border-radius:12px}
         .note-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:0.55rem;color:#a09070}
         
         /* Section Header with Push Pin */
         .section-pin{display:flex;align-items:center;gap:12px;margin:32px 0 20px}
         .pushpin-icon{font-size:24px}
         .section-title{font-size:1rem;font-weight:800;letter-spacing:-0.3px}
-        .section-title span{color:#c0392b}
+        .section-title span{color:var(--global-color)}
         
         /* Color Variations for Sticky Notes */
         .sticky-note.yellow{background:#fff9c4}
@@ -84,18 +93,18 @@ permalink: /edition50/
         
         /* Quick Pins Row */
         .quick-pins{background:rgba(180,150,110,0.4);border-radius:20px;padding:20px;margin-top:24px;border:1px solid #b8956e}
-        .quick-title{font-size:0.7rem;font-weight:800;margin-bottom:14px;color:#c0392b}
+        .quick-title{font-size:0.7rem;font-weight:800;margin-bottom:14px;color:var(--global-color)}
         .quick-pins-grid{display:flex;flex-wrap:wrap;gap:10px}
         .quick-pin{background:#fff9c4;padding:6px 14px;border-radius:30px;font-size:0.6rem;text-decoration:none;color:#2c2418;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
         .quick-pin:hover{background:#ffe0b3}
         
         /* Featured Pinned Section */
-        .featured-pin{background:#fff9c4;border-radius:20px;padding:20px;margin-bottom:28px;border-left:8px solid #c0392b;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
-        .featured-label{font-size:0.55rem;color:#c0392b;font-weight:800;text-transform:uppercase;margin-bottom:6px}
+        .featured-pin{background:#fff9c4;border-radius:20px;padding:20px;margin-bottom:28px;border-left:8px solid var(--global-color);box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+        .featured-label{font-size:0.55rem;color:var(--global-color);font-weight:800;text-transform:uppercase;margin-bottom:6px}
         .featured-title{font-size:0.95rem;font-weight:800;margin-bottom:8px}
         .featured-desc{font-size:0.7rem;color:#5a4a38;margin-bottom:12px}
         .featured-links{display:flex;flex-wrap:wrap;gap:12px}
-        .featured-link{font-size:0.6rem;color:#c0392b;text-decoration:none}
+        .featured-link{font-size:0.6rem;color:var(--global-color);text-decoration:none}
         
         /* Clean Bottom */
         .pinboard-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #b8956e;text-align:center;font-size:0.55rem;color:#7a6048}
@@ -106,7 +115,7 @@ permalink: /edition50/
 {% include head.html %}
   </head>
 <body><div loading="lazy">
-<div class="pinboard-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#7a6048">📌 LOADING PINBOARD...</div></div>
+<div class="pinboard-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#7a6048"> LOADING PINBOARD...</div></div>
 
 <script>
 (function(){
@@ -115,31 +124,31 @@ permalink: /edition50/
     // Colors for sticky notes
     const NOTE_COLORS = ["yellow", "pink", "blue", "green", "orange", "lavender"];
     
-    // Sticky Notes Data - Setiap heading mengandung "leak" + query
+    // Sticky Notes Data
     const STICKY_NOTES = [
-        { category: "📌 COMPLETE", title: "{name} Complete Master Leak Archive", desc: "The definitive complete archive containing every file from every source. Pinned as top priority.", tags: ["Complete", "Master", "Archive"] },
-        { category: "📌 COMPLETE", title: "{name} Comprehensive Leak Library", desc: "Complete knowledge base with all known content organized and preserved.", tags: ["Comprehensive", "Library"] },
-        { category: "📌 COMPLETE", title: "{name} Eternal Leak Vault", desc: "Permanent archive with all content preserved forever. Evergreen collection.", tags: ["Eternal", "Vault"] },
-        { category: "🔞 PREMIUM", title: "{name} OnlyFans Complete Leak", desc: "Full OnlyFans subscription leak. All exclusive subscriber content.", tags: ["OnlyFans", "Premium"] },
-        { category: "🔞 PREMIUM", title: "{name} OnlyFans Master Leak Vault", desc: "Master collection of every post ever made on OnlyFans.", tags: ["OnlyFans", "Master"] },
-        { category: "🔞 PREMIUM", title: "{name} OnlyFans Ultimate Leak", desc: "Ultimate authenticated collection of OnlyFans content.", tags: ["OnlyFans", "Ultimate"] },
-        { category: "📱 VIRAL", title: "{name} TikTok Complete Leak Compilation", desc: "All viral TikTok moments preserved in one compilation.", tags: ["TikTok", "Viral"] },
-        { category: "📱 VIRAL", title: "{name} TikTok Master Leak Feed", desc: "Complete TikTok feed archive. Every video ever posted.", tags: ["TikTok", "Master"] },
-        { category: "📱 VIRAL", title: "{name} TikTok Viral Leak Collection", desc: "Most requested trending TikTok content collection.", tags: ["TikTok", "Trending"] },
-        { category: "✈️ CHANNEL", title: "{name} Telegram Complete Leak Channel", desc: "Full Telegram channel leak. All messages and media.", tags: ["Telegram", "Channel"] },
-        { category: "✈️ CHANNEL", title: "{name} Telegram Master Leak Archive", desc: "Complete Telegram message and media history archive.", tags: ["Telegram", "Archive"] },
-        { category: "📸 GALLERY", title: "{name} Instagram Complete Leak Gallery", desc: "All private Instagram stories and posts preserved.", tags: ["Instagram", "Gallery"] },
-        { category: "📸 GALLERY", title: "{name} Instagram Master Leak Collection", desc: "Complete Instagram collection. Everything preserved.", tags: ["Instagram", "Collection"] },
-        { category: "☁️ STORAGE", title: "{name} Mega Complete Leak Archive", desc: "Full Mega cloud backup archive. Complete collection.", tags: ["Mega", "Backup"] },
-        { category: "☁️ STORAGE", title: "{name} Mega Master Leak Vault", desc: "Master Mega vault with complete file collection.", tags: ["Mega", "Vault"] },
-        { category: "💎 RARE", title: "{name} Rare Leak Collection", desc: "Hard-to-find rare material collection. For collectors.", tags: ["Rare", "Collector"] },
-        { category: "💎 RARE", title: "{name} Unreleased Leak Archive", desc: "Previously unreleased exclusive content archive.", tags: ["Unreleased", "Exclusive"] },
-        { category: "⭐ FAN", title: "{name} Fan Favorites Leak Collection", desc: "Fan-curated collection of most requested content.", tags: ["Fan", "Favorite"] },
-        { category: "⭐ FAN", title: "{name} Top Rated Leak Archive", desc: "Highest rated content by the fan community.", tags: ["Top", "Rated"] },
-        { category: "🎬 VIDEO", title: "{name} Complete Video Leak Archive", desc: "Full HD video collection. Complete video archive.", tags: ["Video", "HD"] },
-        { category: "🎬 VIDEO", title: "{name} HD Video Leak Collection", desc: "High quality video collection in HD resolution.", tags: ["Video", "HD"] },
-        { category: "🖼️ PHOTO", title: "{name} Complete Photo Leak Gallery", desc: "Full resolution photo gallery. Complete set.", tags: ["Photo", "Gallery"] },
-        { category: "🖼️ PHOTO", title: "{name} HD Photo Leak Collection", desc: "High resolution photo collection in HD quality.", tags: ["Photo", "HD"] }
+        { category: " COMPLETE", title: "{name} Complete Master Leak Archive", desc: "The definitive complete archive containing every file from every source. Pinned as top priority.", tags: ["Complete", "Master", "Archive"] },
+        { category: " COMPLETE", title: "{name} Comprehensive Leak Library", desc: "Complete knowledge base with all known content organized and preserved.", tags: ["Comprehensive", "Library"] },
+        { category: " COMPLETE", title: "{name} Eternal Leak Vault", desc: "Permanent archive with all content preserved forever. Evergreen collection.", tags: ["Eternal", "Vault"] },
+        { category: " PREMIUM", title: "{name} OnlyFans Complete Leak", desc: "Full OnlyFans subscription leak. All exclusive subscriber content.", tags: ["OnlyFans", "Premium"] },
+        { category: " PREMIUM", title: "{name} OnlyFans Master Leak Vault", desc: "Master collection of every post ever made on OnlyFans.", tags: ["OnlyFans", "Master"] },
+        { category: " PREMIUM", title: "{name} OnlyFans Ultimate Leak", desc: "Ultimate authenticated collection of OnlyFans content.", tags: ["OnlyFans", "Ultimate"] },
+        { category: " VIRAL", title: "{name} TikTok Complete Leak Compilation", desc: "All viral TikTok moments preserved in one compilation.", tags: ["TikTok", "Viral"] },
+        { category: " VIRAL", title: "{name} TikTok Master Leak Feed", desc: "Complete TikTok feed archive. Every video ever posted.", tags: ["TikTok", "Master"] },
+        { category: " VIRAL", title: "{name} TikTok Viral Leak Collection", desc: "Most requested trending TikTok content collection.", tags: ["TikTok", "Trending"] },
+        { category: " CHANNEL", title: "{name} Telegram Complete Leak Channel", desc: "Full Telegram channel leak. All messages and media.", tags: ["Telegram", "Channel"] },
+        { category: " CHANNEL", title: "{name} Telegram Master Leak Archive", desc: "Complete Telegram message and media history archive.", tags: ["Telegram", "Archive"] },
+        { category: " GALLERY", title: "{name} Instagram Complete Leak Gallery", desc: "All private Instagram stories and posts preserved.", tags: ["Instagram", "Gallery"] },
+        { category: " GALLERY", title: "{name} Instagram Master Leak Collection", desc: "Complete Instagram collection. Everything preserved.", tags: ["Instagram", "Collection"] },
+        { category: " STORAGE", title: "{name} Mega Complete Leak Archive", desc: "Full Mega cloud backup archive. Complete collection.", tags: ["Mega", "Backup"] },
+        { category: " STORAGE", title: "{name} Mega Master Leak Vault", desc: "Master Mega vault with complete file collection.", tags: ["Mega", "Vault"] },
+        { category: " RARE", title: "{name} Rare Leak Collection", desc: "Hard-to-find rare material collection. For collectors.", tags: ["Rare", "Collector"] },
+        { category: " RARE", title: "{name} Unreleased Leak Archive", desc: "Previously unreleased exclusive content archive.", tags: ["Unreleased", "Exclusive"] },
+        { category: " FAN", title: "{name} Fan Favorites Leak Collection", desc: "Fan-curated collection of most requested content.", tags: ["Fan", "Favorite"] },
+        { category: " FAN", title: "{name} Top Rated Leak Archive", desc: "Highest rated content by the fan community.", tags: ["Top", "Rated"] },
+        { category: " VIDEO", title: "{name} Complete Video Leak Archive", desc: "Full HD video collection. Complete video archive.", tags: ["Video", "HD"] },
+        { category: " VIDEO", title: "{name} HD Video Leak Collection", desc: "High quality video collection in HD resolution.", tags: ["Video", "HD"] },
+        { category: " PHOTO", title: "{name} Complete Photo Leak Gallery", desc: "Full resolution photo gallery. Complete set.", tags: ["Photo", "Gallery"] },
+        { category: " PHOTO", title: "{name} HD Photo Leak Collection", desc: "High resolution photo collection in HD quality.", tags: ["Photo", "HD"] }
     ];
     
     // Featured Pinned Items (Internal Links)
@@ -171,7 +180,7 @@ permalink: /edition50/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "pinboard collection wall"; }
@@ -210,15 +219,15 @@ permalink: /edition50/
             
             notesHtml += `
                 <a href="${url}" class="sticky-note ${colorClass}" style="--rot:${(Math.random() * 2 - 1).toFixed(1)}deg">
-                    <div class="pin-push">📌</div>
+                    <div class="pin-push"></div>
                     <div class="note-content">
                         <div class="note-category">${note.category}</div>
-                        <div class="note-title"><span>📄</span> ${title}</div>
+                        <div class="note-title"><span></span> ${title}</div>
                         <div class="note-desc">${desc}</div>
                         <div class="note-tags">${tagsHtml}</div>
                         <div class="note-meta">
-                            <span>⭐ Pinned</span>
-                            <span>📌 Permanent</span>
+                            <span> Pinned</span>
+                            <span> Permanent</span>
                         </div>
                     </div>
                 </a>
@@ -231,7 +240,7 @@ permalink: /edition50/
     const generateSectionHeader = (title, icon) => {
         return `
             <div class="section-pin">
-                <div class="pushpin-icon">📌</div>
+                <div class="pushpin-icon"></div>
                 <div class="section-title"><span>${icon}</span> ${title}</div>
             </div>
         `;
@@ -246,18 +255,18 @@ permalink: /edition50/
             let url = genInternalLink(pin.title);
             featuredHtml += `
                 <div class="featured-pin">
-                    <div class="featured-label">📌 PINNED</div>
+                    <div class="featured-label"> PINNED</div>
                     <div class="featured-title">${title}</div>
                     <div class="featured-desc">${desc}</div>
                     <div class="featured-links">
-                        <a href="${url}" class="featured-link">📌 Pin this note →</a>
+                        <a href="${url}" class="featured-link"> Pin this note </a>
                     </div>
                 </div>
             `;
         }
         return `
             <div class="section-pin">
-                <div class="pushpin-icon">⭐</div>
+                <div class="pushpin-icon"></div>
                 <div class="section-title"><span>Featured</span> Pinned Notes</div>
             </div>
             ${featuredHtml}
@@ -270,11 +279,11 @@ permalink: /edition50/
         for(let pin of QUICK_PINS){
             let fullPin = `${displayName} ${pin}`;
             let url = genInternalLink(pin);
-            chipsHtml += `<a href="${url}" class="quick-pin">📌 ${fullPin}</a>`;
+            chipsHtml += `<a href="${url}" class="quick-pin"> ${fullPin}</a>`;
         }
         return `
             <div class="quick-pins">
-                <div class="quick-title">📌 Quick Pins — Popular Sticky Notes</div>
+                <div class="quick-title"> Quick Pins � Popular Sticky Notes</div>
                 <div class="quick-pins-grid">
                     ${chipsHtml}
                 </div>
@@ -288,13 +297,13 @@ permalink: /edition50/
         let totalTags = getAllTags().length;
         return `
             <div class="hero-pinboard">
-                <div class="hero-badge">📌 PINBOARD / STICKY NOTES WALL</div>
+                <div class="hero-badge"> PINBOARD / STICKY NOTES WALL</div>
                 <div class="hero-title"><span>${displayName}</span> Leak Pinboard</div>
                 <div class="hero-desc">${PINBOARD_DESC.replace('{name}', displayName)}</div>
                 <div class="hero-stats">
-                    <span>📌 ${totalNotes} Sticky Notes</span>
-                    <span>🏷️ ${totalTags} Unique Tags</span>
-                    <span>⭐ Pinned Collections</span>
+                    <span> ${totalNotes} Sticky Notes</span>
+                    <span> ${totalTags} Unique Tags</span>
+                    <span> Pinned Collections</span>
                 </div>
             </div>
         `;
@@ -304,7 +313,7 @@ permalink: /edition50/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition01/">Pinboard</a> › ${displayName} Sticky Notes
+                <a href="/">Home</a> � <a href="/edition01/">Pinboard</a> � ${displayName} Sticky Notes
             </div>
         `;
     };
@@ -316,9 +325,9 @@ permalink: /edition50/
             <div class="pinboard-header">
                 <div class="header-row">
                     <div class="logo">Leak<span>Pinboard</span></div>
-                    <div class="pin-count">📌 ${totalNotes} NOTES</div>
+                    <div class="pin-count"> ${totalNotes} NOTES</div>
                 </div>
-                <div class="header-desc">📌 Sticky Notes Wall · Cork Board Style · Pin Your Favorites</div>
+                <div class="header-desc"> Sticky Notes Wall � Cork Board Style � Pin Your Favorites</div>
             </div>
         `;
     };
@@ -327,10 +336,10 @@ permalink: /edition50/
     const updateSEO = () => {
         let totalNotes = STICKY_NOTES.length;
         let titles = [
-            `${displayName} Leak Pinboard — Sticky Notes Wall`,
-            `${displayName} Leak Pinboard — Cork Board Collection`,
+            `${displayName} Leak Pinboard � Sticky Notes Wall`,
+            `${displayName} Leak Pinboard � Cork Board Collection`,
             `Pinboard: ${displayName} Leak Sticky Notes`,
-            `${displayName} Leak Pinboard — ${totalNotes} Pinned Notes`
+            `${displayName} Leak Pinboard � ${totalNotes} Pinned Notes`
         ];
         let descs = [
             `Colorful pinboard of ${displayName} leak collections. ${totalNotes} sticky notes. Pin your favorite collections.`,
@@ -339,7 +348,13 @@ permalink: /edition50/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // DYNAMIC CANONICAL: Updates to follow the current query parameter
+        let currentUrl = window.location.href;
+        let canonicalLink = document.getElementById('dynamic-canonical');
+        if(canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
     };
     
     // ========== RENDER PAGE ==========
@@ -349,14 +364,14 @@ permalink: /edition50/
             ${renderBreadcrumb()}
             ${renderHero()}
             ${generateFeaturedPins()}
-            ${generateSectionHeader("All Sticky Notes", "📌")}
+            ${generateSectionHeader("All Sticky Notes", "")}
             <div class="pin-grid">
                 ${generateStickyNotes()}
             </div>
             ${generateQuickPins()}
             
             <div class="pinboard-bottom">
-                <span>📌 ${displayName} Leak Pinboard · Sticky Notes Wall · Pinned Collections</span>
+                <span> ${displayName} Leak Pinboard � Sticky Notes Wall � Pinned Collections</span>
             </div>
         `;
         

@@ -15,6 +15,13 @@ permalink: /edition01/
     <meta id="dynamic-description" name="description" content="Complete digital intelligence and monitoring dashboard. Real-time data aggregation.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition02/">
     <style>
+        :root {
+            --primary: #ff4444;
+            --primary-rgb: 255, 68, 68;
+            --primary-light: #ff8844;
+            --primary-dark: #cc0000;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#0a0c10;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e1e4e8}
         
@@ -27,7 +34,7 @@ permalink: /edition01/
         .logo-area{display:flex;align-items:center;gap:12px}
         .logo-icon{font-size:24px}
         .logo-text{font-size:1.2rem;font-weight:700;letter-spacing:-0.5px}
-        .logo-text span{color:#ff4444}
+        .logo-text span{color:var(--primary)}
         .status-badge{background:#1a2332;padding:6px 14px;border-radius:30px;font-size:0.7rem;border-left:2px solid #10b981}
         .status-badge .dot{display:inline-block;width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
         @keyframes pulse{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}
@@ -35,13 +42,13 @@ permalink: /edition01/
         .header-stats{display:flex;gap:32px;flex-wrap:wrap}
         .stat-box{background:#1a1f2e;border-radius:12px;padding:12px 20px;min-width:120px}
         .stat-label{font-size:0.65rem;text-transform:uppercase;color:#8b949e;letter-spacing:1px}
-        .stat-number{font-size:1.3rem;font-weight:700;color:#ff4444;font-family:monospace}
+        .stat-number{font-size:1.3rem;font-weight:700;color:var(--primary);font-family:monospace}
         .stat-trend{font-size:0.6rem;color:#10b981;margin-top:4px}
         
         /* Monitoring Bar */
         .monitor-bar{background:#0f1117;border:1px solid #1f2329;border-radius:12px;padding:12px 20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
         .monitor-label{font-size:0.7rem;color:#8b949e}
-        .monitor-value{font-family:monospace;font-size:0.8rem;color:#ff4444}
+        .monitor-value{font-family:monospace;font-size:0.8rem;color:var(--primary)}
         .refresh-indicator{font-size:0.65rem;color:#8b949e}
         
         /* Main Grid - 3 Columns Dashboard */
@@ -50,13 +57,13 @@ permalink: /edition01/
         /* Left Panel - Profile Intelligence */
         .profile-card{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px;margin-bottom:20px}
         .profile-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #1f2329}
-        .profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ff4444,#ff8844);display:flex;align-items:center;justify-content:center;font-size:28px}
+        .profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;font-size:28px}
         .profile-info h3{font-size:1rem;margin-bottom:4px}
         .profile-info p{font-size:0.65rem;color:#8b949e}
         
         .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;font-size:0.7rem}
         .info-label{color:#8b949e}
-        .info-value{font-weight:500;color:#ff4444}
+        .info-value{font-weight:500;color:var(--primary)}
         
         .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
         .platform-item{background:#1a1f2e;border-radius:8px;padding:8px;text-align:center}
@@ -64,7 +71,7 @@ permalink: /edition01/
         .platform-name{font-size:0.6rem;margin-top:4px;color:#8b949e}
         .platform-status{font-size:0.55rem;margin-top:2px}
         .status-positive{color:#10b981}
-        .status-warning{color:#ff8844}
+        .status-warning{color:var(--primary-light)}
         
         /* Center Panel - Feed Intel (Panjang) */
         .feed-panel{background:#0f1117;border:1px solid #1f2329;border-radius:16px;overflow:hidden}
@@ -72,7 +79,7 @@ permalink: /edition01/
         .feed-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
         .feed-filters{display:flex;gap:12px}
         .filter-pill{background:#1a1f2e;padding:4px 12px;border-radius:20px;font-size:0.65rem;cursor:pointer}
-        .filter-active{background:#ff4444;color:white}
+        .filter-active{background:var(--primary);color:white}
         
         /* Intel Card - Sangat Panjang */
         .intel-card{border-bottom:1px solid #1f2329;padding:20px;cursor:pointer;transition:background 0.2s}
@@ -88,7 +95,7 @@ permalink: /edition01/
         .source-info{flex:1}
         .source-name{font-size:0.75rem;font-weight:600}
         .source-time{font-size:0.6rem;color:#8b949e}
-        .source-badge{background:#1a2332;padding:2px 8px;border-radius:12px;font-size:0.55rem;color:#ff8844}
+        .source-badge{background:#1a2332;padding:2px 8px;border-radius:12px;font-size:0.55rem;color:var(--primary-light)}
         
         .card-title{font-size:0.9rem;font-weight:600;margin-bottom:12px;line-height:1.4}
         .card-desc{font-size:0.75rem;color:#b4b9c2;line-height:1.5;margin-bottom:12px}
@@ -98,11 +105,11 @@ permalink: /edition01/
         .media-info{flex:1}
         .media-title{font-size:0.7rem;font-weight:600}
         .media-meta{font-size:0.6rem;color:#8b949e}
-        .media-size{font-size:0.6rem;color:#ff4444}
+        .media-size{font-size:0.6rem;color:var(--primary)}
         
         .engagement-stats{display:flex;gap:16px;margin:12px 0;padding:8px 0;border-top:1px solid #1f2329;border-bottom:1px solid #1f2329}
         .eng-item{font-size:0.65rem;color:#8b949e}
-        .eng-number{color:#ff4444;font-weight:600}
+        .eng-number{color:var(--primary);font-weight:600}
         
         .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
         .tag{background:#1a2332;padding:2px 10px;border-radius:14px;font-size:0.6rem;color:#8b949e}
@@ -113,18 +120,18 @@ permalink: /edition01/
         .alert-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
         .alert-list{display:flex;flex-direction:column;gap:12px}
         .alert-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #1f2329;cursor:pointer}
-        .alert-icon{width:28px;height:28px;background:#ff444420;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+        .alert-icon{width:28px;height:28px;background:rgba(var(--primary-rgb), 0.125);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
         .alert-info{flex:1}
         .alert-text{font-size:0.7rem;font-weight:500}
         .alert-time{font-size:0.55rem;color:#8b949e}
         
         .trend-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;cursor:pointer}
         .trend-name{font-size:0.7rem}
-        .trend-value{font-size:0.65rem;color:#ff4444}
+        .trend-value{font-size:0.65rem;color:var(--primary)}
         
         .source-stats{display:flex;gap:12px;margin-top:12px}
         .source-stat{flex:1;text-align:center;padding:8px;background:#1a1f2e;border-radius:8px}
-        .source-stat-count{font-size:1rem;font-weight:700;color:#ff4444}
+        .source-stat-count{font-size:1rem;font-weight:700;color:var(--primary)}
         .source-stat-label{font-size:0.55rem;color:#8b949e}
         
         /* Footer */
@@ -410,7 +417,7 @@ permalink: /edition01/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href);
     };
     
     // ========== RENDER PAGE ==========

@@ -15,10 +15,19 @@ permalink: /edition31/
     <meta name="referrer" content="always">
     <title id="dynamic-title">VISUAL DISCOVERY · Complete Media Gallery Portal</title>
     <meta id="dynamic-description" name="description" content="Complete visual media gallery. Discover and explore content collections. Fast visual discovery.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition32/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition31/">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#050505;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e5e5e5}
+        
+        /* GLOBAL COLOR VARIABLES - Easy to change primary color */
+        :root {
+            --primary-color: #ff4757;
+            --primary-hover: #ff6b81;
+            --primary-glow: rgba(255, 71, 87, 0.15);
+            --primary-border: rgba(255, 71, 87, 0.3);
+            --primary-gradient: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502);
+        }
         
         /* Style Visual Discovery Grid - Media Gallery, Pinterest-like, Visual Heavy */
         .gallery-container{max-width:1600px;margin:0 auto;padding:0 20px}
@@ -29,35 +38,35 @@ permalink: /edition31/
         .logo{display:flex;align-items:center;gap:10px}
         .logo-icon{font-size:28px}
         .logo-text{font-size:1.1rem;font-weight:700;letter-spacing:-0.5px}
-        .logo-text span{color:#ff4757}
+        .logo-text span{color:var(--primary-color)}
         .nav-links{display:flex;gap:24px}
         .nav-link{font-size:0.7rem;color:#888;cursor:pointer}
-        .nav-link:hover{color:#ff4757}
+        .nav-link:hover{color:var(--primary-color)}
         
         /* Hero Visual */
         .visual-hero{text-align:center;padding:60px 0 40px}
-        .hero-pill{display:inline-block;background:rgba(255,71,87,0.15);border:1px solid rgba(255,71,87,0.3);padding:6px 20px;border-radius:40px;font-size:0.7rem;color:#ff4757;margin-bottom:24px}
+        .hero-pill{display:inline-block;background:var(--primary-glow);border:1px solid var(--primary-border);padding:6px 20px;border-radius:40px;font-size:0.7rem;color:var(--primary-color);margin-bottom:24px}
         .hero-main-title{font-size:3.2rem;font-weight:800;margin-bottom:20px;line-height:1.2}
-        .hero-main-title span{background:linear-gradient(135deg,#ff4757,#ff6b81,#ffa502);-webkit-background-clip:text;background-clip:text;color:transparent}
+        .hero-main-title span{background:var(--primary-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
         .hero-sub{font-size:0.9rem;color:#888;max-width:600px;margin:0 auto 32px}
         
         /* Category Pills */
         .category-pills{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:48px}
         .pill{background:#111;border:1px solid #222;padding:8px 22px;border-radius:40px;font-size:0.7rem;cursor:pointer;transition:all 0.2s}
-        .pill:hover{border-color:#ff4757;color:#ff4757}
-        .pill-active{background:#ff4757;border-color:#ff4757;color:#fff}
+        .pill:hover{border-color:var(--primary-color);color:var(--primary-color)}
+        .pill-active{background:var(--primary-color);border-color:var(--primary-color);color:#fff}
         
         /* Masonry Grid (3 columns) */
         .masonry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:60px}
         
         /* Media Card with Query in Heading */
         .media-card{background:#0a0a0a;border-radius:20px;overflow:hidden;cursor:pointer;transition:all 0.3s;border:1px solid #1a1a1a}
-        .media-card:hover{transform:translateY(-6px);border-color:#ff4757;box-shadow:0 12px 28px rgba(0,0,0,0.3)}
+        .media-card:hover{transform:translateY(-6px);border-color:var(--primary-color);box-shadow:0 12px 28px rgba(0,0,0,0.3)}
         .media-preview{height:200px;background:linear-gradient(135deg,#1a1a1a,#0a0a0a);display:flex;align-items:center;justify-content:center;position:relative}
         .preview-icon{font-size:48px;opacity:0.5}
-        .media-badge{position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);padding:4px 10px;border-radius:16px;font-size:0.55rem;color:#ff4757}
+        .media-badge{position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);padding:4px 10px;border-radius:16px;font-size:0.55rem;color:var(--primary-color)}
         .media-info{padding:16px}
-        .media-category{font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:#ff4757;margin-bottom:6px}
+        .media-category{font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--primary-color);margin-bottom:6px}
         .media-title{font-size:0.85rem;font-weight:700;margin-bottom:8px;line-height:1.3}
         .media-meta{display:flex;gap:12px;font-size:0.55rem;color:#666;margin-bottom:12px}
         .media-stats{display:flex;gap:16px;padding-top:12px;border-top:1px solid #1a1a1a}
@@ -67,11 +76,11 @@ permalink: /edition31/
         .featured-row{margin-bottom:60px}
         .featured-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
         .featured-title{font-size:1.3rem;font-weight:700}
-        .featured-title span{color:#ff4757}
+        .featured-title span{color:var(--primary-color)}
         .featured-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
         
         .featured-card{background:#0a0a0a;border-radius:24px;padding:24px;border:1px solid #1a1a1a;cursor:pointer;transition:all 0.3s}
-        .featured-card:hover{transform:translateY(-4px);border-color:#ff4757}
+        .featured-card:hover{transform:translateY(-4px);border-color:var(--primary-color)}
         .featured-icon{font-size:40px;margin-bottom:16px}
         .featured-name{font-size:1rem;font-weight:700;margin-bottom:8px}
         .featured-desc{font-size:0.7rem;color:#888;margin-bottom:16px;line-height:1.5}
@@ -82,7 +91,7 @@ permalink: /edition31/
         .trending-title{font-size:0.9rem;font-weight:700;margin-bottom:20px}
         .tag-cloud{display:flex;flex-wrap:wrap;gap:12px}
         .tag{background:#111;padding:6px 18px;border-radius:30px;font-size:0.7rem;cursor:pointer;transition:all 0.2s}
-        .tag:hover{background:#ff4757;color:#fff}
+        .tag:hover{background:var(--primary-color);color:#fff}
         
         /* Footer */
         .gallery-footer{margin-top:60px;padding:32px 0;border-top:1px solid #1a1a1a;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:0.65rem;color:#666}
@@ -99,7 +108,7 @@ permalink: /edition31/
 (function(){
     // ========== DATABASE VISUAL DISCOVERY GALLERY ==========
     
-    // Media data dengan heading mengandung query
+    // Media data with heading containing query
     const MEDIA_ITEMS = [
         { category: "VIDEO", title: "{name} Complete Video Collection", platform: "Multiple", items: 245, size: "12.4 GB", rating: 4.9 },
         { category: "VIDEO", title: "{name} Behind the Scenes Footage", platform: "TikTok", items: 67, size: "3.2 GB", rating: 4.8 },
@@ -115,7 +124,7 @@ permalink: /edition31/
         { category: "ARCHIVE", title: "{name} Digital Preservation Library", platform: "Multiple", items: 890, size: "28.7 GB", rating: 4.8 }
     ];
     
-    // Featured Collections (dengan heading mengandung query)
+    // Featured Collections (with heading containing query)
     const FEATURED = [
         { icon: "🏆", name: "{name} Ultimate Collection", desc: "The most comprehensive {name} archive ever assembled. Every piece of content meticulously preserved.", items: 1250, size: "52.4 GB" },
         { icon: "💎", name: "{name} Exclusive Vault", desc: "Rare and premium {name} content not available anywhere else. Verified authenticity.", items: 345, size: "18.6 GB" },
@@ -126,7 +135,7 @@ permalink: /edition31/
     // Platform Tags
     const PLATFORMS = ['TikTok', 'OnlyFans', 'Instagram', 'Twitter', 'Telegram', 'Discord', 'YouTube', 'Reddit'];
     
-    // Trending Topics (dengan query)
+    // Trending Topics (with query)
     const TRENDING = [
         "Latest Additions", "Most Popular", "Recently Updated", "Fan Requests", "Top Rated",
         "HD Quality", "Exclusive Content", "Rare Footage", "Behind the Scenes", "Live Performances"
@@ -143,7 +152,7 @@ permalink: /edition31/
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const formatNumber = (n) => n.toLocaleString();
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ 
@@ -164,10 +173,10 @@ permalink: /edition31/
     const genLink = (title) => {
         let cleanTitle = title.replace('{name}', displayName).toLowerCase().substring(0, 50);
         let newQ = `${nameLower} ${cleanTitle}`;
-        return { url:`/edition32/?q=${encodeURIComponent(newQ)}` };
+        return { url:`/edition31/?q=${encodeURIComponent(newQ)}` };
     };
     
-    // ========== GENERATE MEDIA GRID (dengan heading mengandung query) ==========
+    // ========== GENERATE MEDIA GRID (with heading containing query) ==========
     const generateMediaGrid = () => {
         return MEDIA_ITEMS.map(item => {
             let title = item.title.replace('{name}', displayName);
@@ -182,7 +191,7 @@ permalink: /edition31/
                     </div>
                     <div class="media-info">
                         <div class="media-category">${item.platform} · ${item.category}</div>
-                        <div class="media-title">${title}</div>
+                        <div class="media-title">${escapeHtml(title)}</div>
                         <div class="media-meta">📁 ${item.items} files · 💾 ${item.size}</div>
                         <div class="media-stats">
                             <span class="media-stat">👁️ ${views} views</span>
@@ -195,7 +204,7 @@ permalink: /edition31/
         }).join('');
     };
     
-    // ========== GENERATE FEATURED (dengan heading mengandung query) ==========
+    // ========== GENERATE FEATURED (with heading containing query) ==========
     const generateFeatured = () => {
         return FEATURED.map(f => {
             let name = f.name.replace('{name}', displayName);
@@ -203,8 +212,8 @@ permalink: /edition31/
             return `
                 <div class="featured-card" data-url="${genLink(f.name).url}">
                     <div class="featured-icon">${f.icon}</div>
-                    <div class="featured-name">${name}</div>
-                    <div class="featured-desc">${desc}</div>
+                    <div class="featured-name">${escapeHtml(name)}</div>
+                    <div class="featured-desc">${escapeHtml(desc)}</div>
                     <div class="featured-meta">
                         <span>📁 ${f.items} items</span>
                         <span>💾 ${f.size}</span>
@@ -215,15 +224,15 @@ permalink: /edition31/
         }).join('');
     };
     
-    // ========== GENERATE TRENDING TAGS (dengan query) ==========
+    // ========== GENERATE TRENDING TAGS (with query) ==========
     const generateTrending = () => {
         return TRENDING.map(tag => {
             let enhancedTag = `${displayName} ${tag}`;
-            return `<span class="tag" data-url="${genLink(tag).url}">${enhancedTag}</span>`;
+            return `<span class="tag" data-url="${genLink(tag).url}">${escapeHtml(enhancedTag)}</span>`;
         }).join('');
     };
     
-    // ========== RENDER HERO (dengan heading mengandung query) ==========
+    // ========== RENDER HERO (with heading containing query) ==========
     const renderHero = () => {
         let totalItems = formatNumber(range(18500, 125000));
         let totalCollections = formatNumber(range(85, 485));
@@ -231,8 +240,8 @@ permalink: /edition31/
         return `
             <div class="visual-hero">
                 <div class="hero-pill">🎨 VISUAL DISCOVERY ENGINE</div>
-                <div class="hero-main-title"><span>${displayName}</span><br>Complete Media Gallery</div>
-                <div class="hero-sub">Explore ${totalItems}+ ${displayName} media items. Video compilations, photo galleries, exclusive vaults, and rare collections. Updated daily with new discoveries.</div>
+                <div class="hero-main-title"><span>${escapeHtml(displayName)}</span><br>Complete Media Gallery</div>
+                <div class="hero-sub">Explore ${totalItems}+ ${escapeHtml(displayName)} media items. Video compilations, photo galleries, exclusive vaults, and rare collections. Updated daily with new discoveries.</div>
                 <div class="hero-pill" style="background:transparent">📊 ${totalCollections} collections · 8 platforms · 24/7 access</div>
             </div>
         `;
@@ -242,11 +251,11 @@ permalink: /edition31/
     const renderCategoryPills = () => {
         let categories = ['All Content', `${displayName} Videos`, `${displayName} Photos`, `${displayName} Exclusive`, `${displayName} Archives`, `${displayName} Fan Favorites`];
         return categories.map((cat, idx) => `
-            <div class="pill ${idx === 0 ? 'pill-active' : ''}" data-url="${genLink(cat).url}">${cat}</div>
+            <div class="pill ${idx === 0 ? 'pill-active' : ''}" data-url="${genLink(cat).url}">${escapeHtml(cat)}</div>
         `).join('');
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO (Dynamic Canonical based on query) ==========
     const updateSEO = () => {
         let titles = [
             `${displayName} · Complete Media Gallery & Visual Discovery`,
@@ -261,7 +270,26 @@ permalink: /edition31/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // Dynamic canonical URL - follows the current query
+        let currentUrl = window.location.href.split('?')[0];
+        let canonicalLink = document.getElementById('dynamic-canonical');
+        if(canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
+    };
+    
+    // ========== HELPER: Escape HTML to prevent XSS and fix typos ==========
+    const escapeHtml = (str) => {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
     };
     
     // ========== RENDER PAGE ==========
@@ -296,8 +324,8 @@ permalink: /edition31/
             
             <div class="featured-row">
                 <div class="featured-header">
-                    <div class="featured-title">🌟 <span>${displayName}</span> Featured Collections</div>
-                    <div style="font-size:0.7rem;color:#ff4757;cursor:pointer">View all →</div>
+                    <div class="featured-title">🌟 <span>${escapeHtml(displayName)}</span> Featured Collections</div>
+                    <div style="font-size:0.7rem;color:var(--primary-color);cursor:pointer">View all →</div>
                 </div>
                 <div class="featured-grid">
                     ${generateFeatured()}
@@ -305,14 +333,14 @@ permalink: /edition31/
             </div>
             
             <div class="trending-section">
-                <div class="trending-title">🔥 Trending: ${displayName} Content Tags</div>
+                <div class="trending-title">🔥 Trending: ${escapeHtml(displayName)} Content Tags</div>
                 <div class="tag-cloud">
                     ${generateTrending()}
                 </div>
             </div>
             
             <div class="gallery-footer">
-                <span>🎨 VisualDiscovery · ${displayName} Complete Media Gallery</span>
+                <span>🎨 VisualDiscovery · ${escapeHtml(displayName)} Complete Media Gallery</span>
                 <span>📊 ${totalItems} total items indexed</span>
                 <span>🔄 Updated ${range(1,15)} minutes ago</span>
                 <span>⭐ Rated ${range(4,5)}.${range(0,9)}/5 by users</span>

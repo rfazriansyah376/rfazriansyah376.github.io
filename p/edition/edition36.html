@@ -3,6 +3,7 @@ layout: null
 permalink: /edition36/
 ---
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,78 +14,91 @@ permalink: /edition36/
     <meta name="bingbot" content="index, follow">
     <meta name="yandex" content="index, follow">
     <meta name="referrer" content="always">
-    <title id="dynamic-title">STACKED PANELS · Layered Leak Navigator</title>
+    <title id="dynamic-title">Stacked Panels � Layered Leak Navigator</title>
     <meta id="dynamic-description" name="description" content="Stacked panels layered navigation for leak collections. Accordion-style directory.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition37/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition36/">
     <style>
+        /* --- GLOBAL COLOR VARIABLE --- */
+        :root {
+            --primary-color: #60a5fa; /* CHANGE THIS ONE COLOR FOR THE WHOLE THEME */
+            --primary-dark: #3b82f6;
+            --primary-light: #93c5fd;
+            --bg-dark: #1e293b;
+            --bg-card: #0f172a;
+            --border-color: #334155;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#1e293b;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#e2e8f0}
+        body{background:var(--bg-dark);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:var(--text-main)}
         
         /* Stacked Panels Style - Like Layered Navigation / Depth Cards */
         .panels-container{max-width:900px;margin:0 auto;padding:20px}
         
         /* Header */
-        .panels-header{background:#0f172a;border-radius:20px;padding:20px;margin-bottom:24px;border:1px solid #334155}
+        .panels-header{background:var(--bg-card);border-radius:20px;padding:20px;margin-bottom:24px;border:1px solid var(--border-color)}
         .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
         .logo{font-size:1.1rem;font-weight:800}
-        .logo span{color:#60a5fa}
-        .depth-badge{background:#1e293b;color:#60a5fa;padding:4px 14px;border-radius:30px;font-size:0.6rem;font-weight:600;border:1px solid #334155}
-        .header-desc{font-size:0.65rem;color:#94a3b8}
+        .logo span{color:var(--primary-color)}
+        .depth-badge{background:var(--bg-dark);color:var(--primary-color);padding:4px 14px;border-radius:30px;font-size:0.6rem;font-weight:600;border:1px solid var(--border-color)}
+        .header-desc{font-size:0.65rem;color:var(--text-muted)}
         
         /* Breadcrumb */
-        .breadcrumb{font-size:0.7rem;color:#94a3b8;margin-bottom:20px}
-        .breadcrumb a{color:#60a5fa;text-decoration:none}
+        .breadcrumb{font-size:0.7rem;color:var(--text-muted);margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero */
-        .hero-panels{background:#0f172a;border-radius:20px;padding:28px;margin-bottom:28px;border:1px solid #334155}
-        .hero-badge{display:inline-block;background:#60a5fa;color:#0f172a;padding:4px 16px;border-radius:30px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
+        .hero-panels{background:var(--bg-card);border-radius:20px;padding:28px;margin-bottom:28px;border:1px solid var(--border-color)}
+        .hero-badge{display:inline-block;background:var(--primary-color);color:var(--bg-card);padding:4px 16px;border-radius:30px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
         .hero-title{font-size:1.2rem;font-weight:800;margin-bottom:12px}
-        .hero-title span{color:#60a5fa}
-        .hero-desc{font-size:0.75rem;color:#94a3b8;line-height:1.5;margin-bottom:14px}
-        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:#94a3b8}
+        .hero-title span{color:var(--primary-color)}
+        .hero-desc{font-size:0.75rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:var(--text-muted)}
         
         /* Depth Stats Row */
         .depth-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
-        .depth-card{background:#0f172a;border:1px solid #334155;border-radius:16px;padding:14px;text-align:center}
-        .depth-number{font-size:1.2rem;font-weight:800;color:#60a5fa}
-        .depth-label{font-size:0.55rem;color:#94a3b8;margin-top:4px}
+        .depth-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;padding:14px;text-align:center}
+        .depth-number{font-size:1.2rem;font-weight:800;color:var(--primary-color)}
+        .depth-label{font-size:0.55rem;color:var(--text-muted);margin-top:4px}
         
         /* Stacked Panels - Layered Depth */
         .panel-stack{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
         
         /* Panel Level 1 - Main Category */
-        .panel-l1{background:#0f172a;border:1px solid #334155;border-radius:16px;overflow:hidden}
-        .panel-l1-header{background:#1e293b;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334155}
+        .panel-l1{background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;overflow:hidden}
+        .panel-l1-header{background:var(--bg-dark);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color)}
         .panel-l1-title{font-size:0.85rem;font-weight:800}
-        .panel-l1-title span{color:#60a5fa}
-        .panel-l1-count{background:#334155;padding:2px 10px;border-radius:20px;font-size:0.55rem}
+        .panel-l1-title span{color:var(--primary-color)}
+        .panel-l1-count{background:var(--border-color);padding:2px 10px;border-radius:20px;font-size:0.55rem}
         
         /* Panel Level 2 - Sub Category */
-        .panel-l2{padding:12px 20px;border-bottom:1px solid #1e293b}
+        .panel-l2{padding:12px 20px;border-bottom:1px solid var(--bg-dark)}
         .panel-l2-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
         .panel-l2-title{font-size:0.75rem;font-weight:700;color:#cbd5e1}
         .panel-l2-count{font-size:0.55rem;color:#64748b}
         
         /* Panel Level 3 - Items Grid */
         .panel-l3{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;padding-left:16px}
-        .panel-item{display:block;background:#1e293b;border:1px solid #334155;border-radius:10px;padding:10px 12px;text-decoration:none;color:#e2e8f0;font-size:0.65rem}
-        .panel-item:hover{background:#2d3a5e;border-color:#60a5fa}
-        .item-callno{font-family:monospace;font-size:0.5rem;color:#60a5fa;margin-bottom:4px}
+        .panel-item{display:block;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--text-main);font-size:0.65rem}
+        .panel-item:hover{background:#2d3a5e;border-color:var(--primary-color)}
+        .item-callno{font-family:monospace;font-size:0.5rem;color:var(--primary-color);margin-bottom:4px}
         .item-title{font-size:0.7rem;font-weight:500;margin-bottom:2px}
         .item-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
-        .item-tag{font-size:0.45rem;color:#60a5fa;background:#1e293b;padding:2px 6px;border-radius:4px}
+        .item-tag{font-size:0.45rem;color:var(--primary-color);background:var(--bg-dark);padding:2px 6px;border-radius:4px;text-decoration:none}
+        .item-tag:hover{background:var(--primary-dark);color:white}
         
         /* Quick Navigation Panel */
-        .quick-nav{background:#0f172a;border:1px solid #334155;border-radius:20px;padding:20px;margin-top:20px}
-        .quick-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;color:#60a5fa}
+        .quick-nav{background:var(--bg-card);border:1px solid var(--border-color);border-radius:20px;padding:20px;margin-top:20px}
+        .quick-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;color:var(--primary-color)}
         .quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
-        .quick-link{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:10px 14px;text-decoration:none;color:#e2e8f0;font-size:0.65rem;display:flex;justify-content:space-between;align-items:center}
-        .quick-link:hover{background:#2d3a5e;border-color:#60a5fa}
-        .quick-arrow{color:#60a5fa}
+        .quick-link{background:var(--bg-dark);border:1px solid var(--border-color);border-radius:12px;padding:10px 14px;text-decoration:none;color:var(--text-main);font-size:0.65rem;display:flex;justify-content:space-between;align-items:center}
+        .quick-link:hover{background:#2d3a5e;border-color:var(--primary-color)}
+        .quick-arrow{color:var(--primary-color)}
         
         /* Clean Bottom */
-        .panels-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #334155;text-align:center;font-size:0.55rem;color:#64748b}
+        .panels-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-color);text-align:center;font-size:0.55rem;color:#64748b}
         
         @media(max-width:700px){.depth-stats{grid-template-columns:repeat(2,1fr)}.panel-l3{grid-template-columns:1fr}}
         @media(max-width:500px){.panels-container{padding:16px}}
@@ -92,18 +106,18 @@ permalink: /edition36/
 {% include head.html %}
   </head>
 <body><div loading="lazy">
-<div class="panels-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#64748b">📚 LOADING STACKED PANELS...</div></div>
+<div class="panels-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#64748b"> LOADING STACKED PANELS...</div></div>
 
 <script>
 (function(){
     // ========== DATABASE STACKED PANELS (EVERGREEN, MANY INTERNAL LINKS) ==========
     
-    // Layered Panel Data - Setiap heading mengandung "leak" + query
+    // Layered Panel Data
     const PANEL_DATA = [
         {
             id: "L1-01",
             title: "Complete Leak Archives",
-            icon: "📚",
+            icon: "",
             count: 3,
             children: [
                 { id: "L2-01", title: "Master Archives", items: [
@@ -116,7 +130,7 @@ permalink: /edition36/
         {
             id: "L1-02",
             title: "OnlyFans Leak Collections",
-            icon: "🔞",
+            icon: "",
             count: 3,
             children: [
                 { id: "L2-02", title: "Premium Tiers", items: [
@@ -129,7 +143,7 @@ permalink: /edition36/
         {
             id: "L1-03",
             title: "TikTok Leak Compilations",
-            icon: "📱",
+            icon: "",
             count: 3,
             children: [
                 { id: "L2-03", title: "Video Categories", items: [
@@ -142,7 +156,7 @@ permalink: /edition36/
         {
             id: "L1-04",
             title: "Telegram Leak Channels",
-            icon: "✈️",
+            icon: "",
             count: 2,
             children: [
                 { id: "L2-04", title: "Channel Types", items: [
@@ -154,7 +168,7 @@ permalink: /edition36/
         {
             id: "L1-05",
             title: "Instagram Leak Galleries",
-            icon: "📸",
+            icon: "",
             count: 2,
             children: [
                 { id: "L2-05", title: "Content Formats", items: [
@@ -166,7 +180,7 @@ permalink: /edition36/
         {
             id: "L1-06",
             title: "Mega Archive Leaks",
-            icon: "☁️",
+            icon: "",
             count: 2,
             children: [
                 { id: "L2-06", title: "Storage Types", items: [
@@ -178,7 +192,7 @@ permalink: /edition36/
         {
             id: "L1-07",
             title: "Rare & Unreleased Leaks",
-            icon: "💎",
+            icon: "",
             count: 2,
             children: [
                 { id: "L2-07", title: "Rarity Levels", items: [
@@ -190,7 +204,7 @@ permalink: /edition36/
         {
             id: "L1-08",
             title: "Fan Favorite Leak Compilations",
-            icon: "⭐",
+            icon: "",
             count: 2,
             children: [
                 { id: "L2-08", title: "Rating Categories", items: [
@@ -202,7 +216,7 @@ permalink: /edition36/
         {
             id: "L1-09",
             title: "Video Leak Archives",
-            icon: "🎬",
+            icon: "",
             count: 3,
             children: [
                 { id: "L2-09", title: "Video Quality", items: [
@@ -215,7 +229,7 @@ permalink: /edition36/
         {
             id: "L1-10",
             title: "Photo Leak Galleries",
-            icon: "🖼️",
+            icon: "",
             count: 3,
             children: [
                 { id: "L2-10", title: "Resolution Guide", items: [
@@ -251,7 +265,7 @@ permalink: /edition36/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC FROM QUERY ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "stacked panels navigation"; }
@@ -270,7 +284,7 @@ permalink: /edition36/
     const genInternalLink = (keyword) => {
         let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
         let newQ = `${nameLower} ${cleanKeyword} panel`;
-        return `/edition37/?q=${encodeURIComponent(newQ)}`;
+        return `/edition36/?q=${encodeURIComponent(newQ)}`;
     };
     
     // ========== GENERATE STACKED PANELS ==========
@@ -290,7 +304,7 @@ permalink: /edition36/
                     }
                     itemsHtml += `
                         <a href="${itemUrl}" class="panel-item">
-                            <div class="item-callno">📄 ${item.callno}</div>
+                            <div class="item-callno"> ${item.callno}</div>
                             <div class="item-title">${itemName}</div>
                             <div class="item-tags">${tagsHtml}</div>
                         </a>
@@ -299,7 +313,7 @@ permalink: /edition36/
                 childrenHtml += `
                     <div class="panel-l2">
                         <div class="panel-l2-header">
-                            <div class="panel-l2-title">📁 ${child.title}</div>
+                            <div class="panel-l2-title"> ${child.title}</div>
                             <div class="panel-l2-count">${child.items.length} items</div>
                         </div>
                         <div class="panel-l3">
@@ -342,14 +356,14 @@ permalink: /edition36/
             let url = genInternalLink(link);
             quickHtml += `
                 <a href="${url}" class="quick-link">
-                    <span>⚡ ${fullLink}</span>
-                    <span class="quick-arrow">→</span>
+                    <span> ${fullLink}</span>
+                    <span class="quick-arrow"></span>
                 </a>
             `;
         }
         return `
             <div class="quick-nav">
-                <div class="quick-title">⚡ QUICK NAVIGATION — Direct Access</div>
+                <div class="quick-title"> QUICK NAVIGATION � Direct Access</div>
                 <div class="quick-grid">
                     ${quickHtml}
                 </div>
@@ -362,13 +376,13 @@ permalink: /edition36/
         const stats = getDepthStats();
         return `
             <div class="hero-panels">
-                <div class="hero-badge">📚 STACKED PANELS / LAYERED NAVIGATION</div>
+                <div class="hero-badge"> STACKED PANELS / LAYERED NAVIGATION</div>
                 <div class="hero-title"><span>${displayName}</span> Leak Panels</div>
                 <div class="hero-desc">${PANELS_DESC.replace('{name}', displayName)}</div>
                 <div class="hero-stats">
-                    <span>📊 ${stats.totalL1} Level 1 Panels</span>
-                    <span>📋 ${stats.totalL2} Level 2 Sections</span>
-                    <span>📄 ${stats.totalL3} Level 3 Items</span>
+                    <span> ${stats.totalL1} Level 1 Panels</span>
+                    <span> ${stats.totalL2} Level 2 Sections</span>
+                    <span> ${stats.totalL3} Level 3 Items</span>
                 </div>
             </div>
         `;
@@ -378,7 +392,7 @@ permalink: /edition36/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition37/">Panels</a> › ${displayName} Leak Stack
+                <a href="/">Home</a> � <a href="/edition36/">Panels</a> � ${displayName} Leak Stack
             </div>
         `;
     };
@@ -390,21 +404,22 @@ permalink: /edition36/
             <div class="panels-header">
                 <div class="header-row">
                     <div class="logo">Leak<span>Panels</span></div>
-                    <div class="depth-badge">📚 ${stats.totalL3} DEPTH ITEMS</div>
+                    <div class="depth-badge"> ${stats.totalL3} DEPTH ITEMS</div>
                 </div>
-                <div class="header-desc">Stacked Panels · Layered Navigation · 3-Level Depth</div>
+                <div class="header-desc">Stacked Panels � Layered Navigation � 3-Level Depth</div>
             </div>
         `;
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO DYNAMICALLY BASED ON QUERY ==========
     const updateSEO = () => {
         const stats = getDepthStats();
+        // Title variations based on query
         let titles = [
-            `${displayName} Leak Panels — Stacked Layered Navigation`,
-            `${displayName} Leak Stacked Panels — Depth Directory`,
+            `${displayName} Leak Panels � Stacked Layered Navigation`,
+            `${displayName} Leak Stacked Panels � Depth Directory`,
             `Panels: ${displayName} Leak Layered Navigation`,
-            `${displayName} Leak Panels — ${stats.totalL1} Layer 1 Panels`
+            `${displayName} Leak Panels � ${stats.totalL1} Layer 1 Panels`
         ];
         let descs = [
             `Stacked panels layered navigation for ${displayName} leak collections. ${stats.totalL1} main panels. 3-level depth directory.`,
@@ -413,7 +428,13 @@ permalink: /edition36/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // Canonical URL points to the current page (without query string or with it? Best practice: without)
+        // But to prevent duplicate content, we set it to the base URL. However, since content changes based on query,
+        // we keep it dynamic to the exact URL to represent the unique content.
+        // If you want a fixed canonical, change the line below to window.location.href.split('?')[0]
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
     };
     
     // ========== RENDER PAGE ==========
@@ -429,16 +450,17 @@ permalink: /edition36/
             ${generateQuickNav()}
             
             <div class="panels-bottom">
-                <span>📚 ${displayName} Leak Panels · Stacked Layered Navigation · ${getDepthStats().totalL3} Depth Items</span>
+                <span> ${displayName} Leak Panels � Stacked Layered Navigation � ${getDepthStats().totalL3} Depth Items</span>
             </div>
         `;
         
-        // Handle internal links (static navigation)
+        // Ensure internal links use the same dynamic routing without full page reload if needed,
+        // but default behavior is fine as they point to the same structure.
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition37/?q=')){
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition36/?q=')){
                 link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.location.href = link.getAttribute('href');
+                    // Allow default behavior to load new query
+                    return true;
                 });
             }
         });

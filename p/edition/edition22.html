@@ -15,10 +15,17 @@ permalink: /edition22/
     <meta name="referrer" content="always">
     <title id="dynamic-title">ARCHIVE BOX · Static Leak Collection</title>
     <meta id="dynamic-description" name="description" content="Static archive box collection. Permanent leak library. Verified and preserved.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition23/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition22/">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#e8e4dd;font-family:'Georgia','Times New Roman',serif;color:#1a1a1a}
+        
+        /* GLOBAL COLOR VARIABLE - CHANGE ONE COLOR FOR THE ENTIRE SITE */
+        :root {
+            --primary-color: #8b4513;  /* GLOBAL THEME COLOR - MODIFY THIS */
+            --primary-light: #a05e2c;
+            --primary-dark: #6b3410;
+        }
         
         /* Library Card Catalog Style - Clean, Vintage, Fast */
         .archive-container{max-width:1200px;margin:0 auto;padding:20px}
@@ -27,20 +34,20 @@ permalink: /edition22/
         .archive-header{background:#fff;padding:24px;margin-bottom:24px;border:1px solid #d4cfc8;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
         .header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:12px}
         .logo{font-size:1.4rem;font-weight:700;letter-spacing:-0.5px}
-        .logo span{color:#8b4513}
-        .catalog-id{font-family:'Courier New',monospace;font-size:0.7rem;color:#8b4513;background:#f5f2eb;padding:4px 12px;border-radius:4px}
+        .logo span{color:var(--primary-color)}
+        .catalog-id{font-family:'Courier New',monospace;font-size:0.7rem;color:var(--primary-color);background:#f5f2eb;padding:4px 12px;border-radius:4px}
         .header-desc{font-size:0.75rem;color:#666;margin-top:8px}
         
         /* Breadcrumb */
-        .breadcrumb{font-size:0.7rem;color:#8b4513;margin-bottom:20px}
-        .breadcrumb a{color:#8b4513;text-decoration:none}
+        .breadcrumb{font-size:0.7rem;color:var(--primary-color);margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero Section */
         .hero-box{background:#f5f2eb;border:1px solid #d4cfc8;padding:28px;margin-bottom:28px}
-        .hero-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:#8b4513;margin-bottom:8px}
+        .hero-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-bottom:8px}
         .hero-title{font-size:1.8rem;font-weight:700;margin-bottom:12px;line-height:1.2}
-        .hero-title span{color:#8b4513}
+        .hero-title span{color:var(--primary-color)}
         .hero-desc{font-size:0.85rem;color:#555;max-width:700px;line-height:1.5;margin-bottom:16px}
         .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.7rem;color:#666}
         
@@ -49,15 +56,15 @@ permalink: /edition22/
         
         /* Sections with Boxes */
         .archive-section{margin-bottom:32px}
-        .section-title{font-size:1.1rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:2px solid #8b4513}
+        .section-title{font-size:1.1rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:2px solid var(--primary-color)}
         .box-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
         
         /* Archive Box Card - Like Physical Catalog Card */
         .archive-box{display:block;background:#fff;border:1px solid #d4cfc8;padding:18px;text-decoration:none;color:inherit}
-        .archive-box:hover{border-color:#8b4513;background:#fefcf9}
-        .box-type{font-family:'Courier New',monospace;font-size:0.6rem;color:#8b4513;margin-bottom:8px}
+        .archive-box:hover{border-color:var(--primary-color);background:#fefcf9}
+        .box-type{font-family:'Courier New',monospace;font-size:0.6rem;color:var(--primary-color);margin-bottom:8px}
         .box-title{font-size:0.85rem;font-weight:700;margin-bottom:6px;line-height:1.3}
-        .box-title span{color:#8b4513}
+        .box-title span{color:var(--primary-color)}
         .box-desc{font-size:0.7rem;color:#666;line-height:1.4;margin-bottom:8px}
         .box-meta{display:flex;gap:12px;font-size:0.6rem;color:#999;margin-top:8px;padding-top:8px;border-top:1px solid #f0ede8}
         
@@ -68,13 +75,13 @@ permalink: /edition22/
         .sidebar-list{list-style:none}
         .sidebar-list li{padding:8px 0;border-bottom:1px solid #f0ede8}
         .sidebar-list a{text-decoration:none;color:#1a1a1a;font-size:0.7rem;display:block}
-        .sidebar-list a:hover{color:#8b4513}
+        .sidebar-list a:hover{color:var(--primary-color)}
         .sidebar-meta{font-size:0.6rem;color:#999;margin-top:2px}
         
         /* Footer */
         .archive-footer{margin-top:40px;padding:24px 0;border-top:1px solid #d4cfc8;text-align:center;font-size:0.65rem;color:#888}
         .footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:12px}
-        .footer-links a{color:#8b4513;text-decoration:none}
+        .footer-links a{color:var(--primary-color);text-decoration:none}
         
         @media(max-width:800px){.archive-grid{grid-template-columns:1fr}.hero-title{font-size:1.3rem}}
         @media(max-width:500px){.archive-container{padding:16px}.box-grid{grid-template-columns:1fr}}
@@ -82,7 +89,7 @@ permalink: /edition22/
 {% include head.html %}
   </head>
 <body><div loading="lazy">
-<div class="archive-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#8b4513">Loading Archive Boxes...</div></div>
+<div class="archive-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--primary-color)">Loading Archive Boxes...</div></div>
 
 <script>
 (function(){
@@ -175,7 +182,7 @@ permalink: /edition22/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete archive collection"; }
@@ -193,7 +200,38 @@ permalink: /edition22/
     // ========== GENERATE LINK ==========
     const genLink = (title) => {
         let newQ = `${nameLower} ${title.toLowerCase().substring(0, 45)} archive box`;
-        return `/edition23/?q=${encodeURIComponent(newQ)}`;
+        return `/edition22/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== UPDATE CANONICAL AND TITLE DYNAMICALLY BASED ON QUERY ==========
+    const updateSEO = () => {
+        let totalBoxes = ARCHIVE_SECTIONS.reduce((acc, s) => acc + s.boxes.length, 0);
+        
+        // Dynamic title based on query
+        let titles = [
+            `${displayName} Archive Boxes — Static Leak Collection`,
+            `${displayName} Leak Archive — Complete Box Catalog`,
+            `${displayName} Permanent Leak Boxes — Verified Archive`,
+            `Archive Box: ${displayName} Complete Leak Collection`
+        ];
+        
+        // Dynamic description based on query
+        let descs = [
+            `Static archive boxes for ${displayName} leak collections. ${totalBoxes} permanent boxes. Verified and preserved. Evergreen library.`,
+            `${displayName} leak archive in box format. Complete catalog of all ${displayName} leak content. Permanent reference.`,
+            `Archive box collection for ${displayName} leaks. ${ARCHIVE_SECTIONS.length} sections of verified content.`
+        ];
+        
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // DYNAMIC CANONICAL - follows the current query parameter
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) {
+            let currentUrl = window.location.href;
+            can.setAttribute('href', currentUrl);
+        }
     };
     
     // ========== GENERATE ARCHIVE SECTIONS ==========
@@ -214,8 +252,8 @@ permalink: /edition22/
                         <div class="box-desc">${desc}</div>
                         <div class="box-meta">
                             <span>${box.meta}</span>
-                            <span>Verified</span>
-                            <span>Permanent</span>
+                            <span>✓ Verified</span>
+                            <span>∞ Permanent</span>
                         </div>
                     </a>
                 `;
@@ -255,11 +293,11 @@ permalink: /edition22/
                 <div class="sidebar-card">
                     <div class="sidebar-title">📊 Catalog Information</div>
                     <ul class="sidebar-list">
-                        <li><span>Total Boxes: ${totalBoxes}</span><div class="sidebar-meta">Verified Items</div></li>
+                        <li><span>Total Boxes: ${totalBoxes}</span><div class="sidebar-meta">✓ Verified Items</div></li>
                         <li><span>Sections: ${totalSections}</span><div class="sidebar-meta">Main Categories</div></li>
                         <li><span>Status: Complete</span><div class="sidebar-meta">Full Archive</div></li>
                         <li><span>Verification: Authenticated</span><div class="sidebar-meta">Source Verified</div></li>
-                        <li><span>Preservation: Permanent</span><div class="sidebar-meta">Evergreen</div></li>
+                        <li><span>Preservation: Permanent</span><div class="sidebar-meta">∞ Evergreen</div></li>
                     </ul>
                 </div>
                 
@@ -273,10 +311,10 @@ permalink: /edition22/
                 <div class="sidebar-card">
                     <div class="sidebar-title">⚡ Quick Access</div>
                     <ul class="sidebar-list">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/edition23/">Archive Home</a></li>
-                        <li><a href="#">Browse All Boxes</a></li>
-                        <li><a href="#">Catalog Index</a></li>
+                        <li><a href="/">🏠 Home</a></li>
+                        <li><a href="/edition22/">📦 Archive Home</a></li>
+                        <li><a href="#">📑 Browse All Boxes</a></li>
+                        <li><a href="#">📇 Catalog Index</a></li>
                     </ul>
                 </div>
             </div>
@@ -305,7 +343,7 @@ permalink: /edition22/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition23/">Archive</a> › ${displayName} Leak Boxes
+                <a href="/">🏠 Home</a> › <a href="/edition22/">📦 Archive</a> › ${displayName} Leak Boxes
             </div>
         `;
     };
@@ -319,28 +357,9 @@ permalink: /edition22/
                     <div class="logo">Archive<span>Box</span></div>
                     <div class="catalog-id">CATALOG ID: A-${Math.floor(Math.random()*1000)+1000}</div>
                 </div>
-                <div class="header-desc">Static Archive · ${totalBoxes} Permanent Boxes · Verified Collection</div>
+                <div class="header-desc">Static Archive · ${totalBoxes} Permanent Boxes · ✓ Verified Collection</div>
             </div>
         `;
-    };
-    
-    // ========== UPDATE SEO ==========
-    const updateSEO = () => {
-        let totalBoxes = ARCHIVE_SECTIONS.reduce((acc, s) => acc + s.boxes.length, 0);
-        let titles = [
-            `${displayName} Archive Boxes — Static Leak Collection`,
-            `${displayName} Leak Archive — Complete Box Catalog`,
-            `${displayName} Permanent Leak Boxes — Verified Archive`,
-            `Archive Box: ${displayName} Complete Leak Collection`
-        ];
-        let descs = [
-            `Static archive boxes for ${displayName} leak collections. ${totalBoxes} permanent boxes. Verified and preserved. Evergreen library.`,
-            `${displayName} leak archive in box format. Complete catalog of all ${displayName} leak content. Permanent reference.`,
-            `Archive box collection for ${displayName} leaks. ${ARCHIVE_SECTIONS.length} sections of verified content.`
-        ];
-        document.title = rand(titles);
-        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
     };
     
     // ========== RENDER PAGE ==========
@@ -359,16 +378,16 @@ permalink: /edition22/
             
             <div class="archive-footer">
                 <div class="footer-links">
-                    <a href="/">Home</a> · <a href="/edition23/">Archive</a> · <a href="#">Catalog</a> · <a href="#">Index</a>
+                    <a href="/">🏠 Home</a> · <a href="/edition22/">📦 Archive</a> · <a href="#">📑 Catalog</a> · <a href="#">📇 Index</a>
                 </div>
                 <div>${displayName} Static Archive · ${ARCHIVE_SECTIONS.reduce((acc, s) => acc + s.boxes.length, 0)} Permanent Boxes</div>
-                <div style="margin-top:8px">Content preserved · Verified · Evergreen Edition</div>
+                <div style="margin-top:8px">Content preserved · ✓ Verified · ∞ Evergreen edition22</div>
             </div>
         `;
         
         // Handle internal links (static navigation)
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition23/?q=')){
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition22/?q=')){
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.location.href = link.getAttribute('href');
