@@ -11,10 +11,15 @@ permalink: /about/
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
-    <title id="dynamic-title">LeakX Â· Viral Leaked Content Feed</title>
+    <title id="dynamic-title">LeakX · Viral Leaked Content Feed</title>
     <meta id="dynamic-description" name="description" content="The viral feed for leaked influencer content. Real-time tweets about TikTok leaks, OnlyFans leaks, and exclusive content.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition/">
+    <link id="dynamic-canonical" rel="canonical">
     <style>
+        /* GLOBAL COLOR VARIABLE - CHANGE ONLY THIS ONE */
+        :root {
+            --brand-color: #1d9bf0;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +41,6 @@ permalink: /about/
             border-right: 1px solid #2f3336;
         }
 
-        /* header ala Twitter */
         .twitter-header {
             position: sticky;
             top: 0;
@@ -53,10 +57,9 @@ permalink: /about/
         }
 
         .logo span {
-            color: #1d9bf0;
+            color: var(--brand-color);
         }
 
-        /* breadcrumb */
         .breadcrumb {
             padding: 0.5rem 1rem;
             font-size: 0.7rem;
@@ -66,11 +69,10 @@ permalink: /about/
         }
 
         .breadcrumb a {
-            color: #1d9bf0;
+            color: var(--brand-color);
             text-decoration: none;
         }
 
-        /* trending bar */
         .trending-bar {
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #2f3336;
@@ -81,11 +83,10 @@ permalink: /about/
 
         .trending-topic {
             font-size: 0.7rem;
-            color: #1d9bf0;
+            color: var(--brand-color);
             white-space: nowrap;
         }
 
-        /* tweet card */
         .tweet-card {
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #2f3336;
@@ -105,7 +106,7 @@ permalink: /about/
         .tweet-avatar {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #1d9bf0, #ec489a);
+            background: linear-gradient(135deg, var(--brand-color), #ec489a);
             border-radius: 50%;
             flex-shrink: 0;
             display: flex;
@@ -141,11 +142,10 @@ permalink: /about/
         }
 
         .tweet-content a {
-            color: #1d9bf0;
+            color: var(--brand-color);
             text-decoration: none;
         }
 
-        /* media preview */
         .tweet-media {
             background: #1a1a1a;
             border-radius: 16px;
@@ -157,7 +157,6 @@ permalink: /about/
             border: 1px solid #2f3336;
         }
 
-        /* tweet actions */
         .tweet-actions {
             display: flex;
             gap: 2rem;
@@ -171,16 +170,6 @@ permalink: /about/
             display: flex;
             align-items: center;
             gap: 0.3rem;
-        }
-
-        /* sidebar trending */
-        .trending-sidebar {
-            display: none;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #2f3336;
         }
 
         .footer {
@@ -209,8 +198,8 @@ permalink: /about/
         }
     </style>
 {% include head.html %}
-  </head>
-<body><div loading="lazy">
+</head>
+<body><div>
 
 <div class="twitter-container">
     <!-- DEFAULT TWITTER FEED (home) -->
@@ -222,64 +211,64 @@ permalink: /about/
             <a href="/">Home</a> / LeakX Feed
         </div>
         <div class="trending-bar">
-            <span class="trending-topic">ðŸ”¥ #LeakedTikTok</span>
-            <span class="trending-topic">ðŸ’Ž #OnlyFansLeaks</span>
-            <span class="trending-topic">ðŸ“¸ #InstagramLeaks</span>
-            <span class="trending-topic">ðŸ’¬ #TelegramLeaks</span>
+            <span class="trending-topic">🔥 #LeakedTikTok</span>
+            <span class="trending-topic">💎 #OnlyFansLeaks</span>
+            <span class="trending-topic">📸 #InstagramLeaks</span>
+            <span class="trending-topic">💬 #TelegramLeaks</span>
         </div>
 
         <!-- TWEET 1 -->
         <div class="tweet-card">
             <div class="tweet-header">
-                <div class="tweet-avatar">ðŸ”¥</div>
+                <div class="tweet-avatar">🔥</div>
                 <div class="tweet-user-info">
                     <span class="tweet-name">LeakHunter</span>
                     <span class="tweet-username">@leakhunter</span>
-                    <span class="tweet-time">Â· 2h</span>
+                    <span class="tweet-time">· 2h</span>
                 </div>
             </div>
             <div class="tweet-content">
-                ðŸ”¥ BREAKING: TikTok star leaked video compilation just dropped! 200+ clips going viral on Telegram.
+                🔥 BREAKING: TikTok star leaked video compilation just dropped! 200+ clips going viral on Telegram.
                 <a href="/edition/?q=tiktok+star+leaked+video+compilation">leakx.com/trending</a>
             </div>
             <div class="tweet-media">
-                <span>ðŸŽ¬</span> <span style="font-size:0.7rem;">Leaked Video Pack Â· 2.3GB Â· Trending #1</span>
+                <span>🎬</span> <span style="font-size:0.7rem;">Leaked Video Pack · 2.3GB · Trending #1</span>
             </div>
             <div class="tweet-actions">
-                <span class="tweet-action">ðŸ’¬ 234</span>
-                <span class="tweet-action">ðŸ” 1.2K</span>
-                <span class="tweet-action">â¤ï¸ 4.5K</span>
-                <span class="tweet-action">ðŸ“Œ</span>
+                <span class="tweet-action">💬 234</span>
+                <span class="tweet-action">🔁 1.2K</span>
+                <span class="tweet-action">❤️ 4.5K</span>
+                <span class="tweet-action">📌</span>
             </div>
         </div>
 
         <!-- TWEET 2 -->
         <div class="tweet-card">
             <div class="tweet-header">
-                <div class="tweet-avatar">ðŸ’Ž</div>
+                <div class="tweet-avatar">💎</div>
                 <div class="tweet-user-info">
                     <span class="tweet-name">OnlyFansLeaks</span>
                     <span class="tweet-username">@ofleaks</span>
-                    <span class="tweet-time">Â· 5h</span>
+                    <span class="tweet-time">· 5h</span>
                 </div>
             </div>
             <div class="tweet-content">
-                ðŸ’Ž EXCLUSIVE: OnlyFans creator leaked complete set (500+ files). Limited time access.
+                💎 EXCLUSIVE: OnlyFans creator leaked complete set (500+ files). Limited time access.
                 <a href="/edition/?q=onlyfans+creator+leaked+complete+set">leakx.com/ofleaks</a>
             </div>
             <div class="tweet-media">
-                <span>ðŸ”ž</span> <span style="font-size:0.7rem;">Leaked OnlyFans Archive Â· 4.1GB</span>
+                <span>🔞</span> <span style="font-size:0.7rem;">Leaked OnlyFans Archive · 4.1GB</span>
             </div>
             <div class="tweet-actions">
-                <span class="tweet-action">ðŸ’¬ 567</span>
-                <span class="tweet-action">ðŸ” 2.1K</span>
-                <span class="tweet-action">â¤ï¸ 8.9K</span>
-                <span class="tweet-action">ðŸ“Œ</span>
+                <span class="tweet-action">💬 567</span>
+                <span class="tweet-action">🔁 2.1K</span>
+                <span class="tweet-action">❤️ 8.9K</span>
+                <span class="tweet-action">📌</span>
             </div>
         </div>
     </div>
 
-    <!-- QUERY-BASED TWITTER FEED (dinamis per influencer) -->
+    <!-- QUERY-BASED TWITTER FEED (dynamic per influencer) -->
     <div id="query-twitter" class="query-twitter">
         <div class="twitter-header">
             <div class="logo">Leak<span>X</span></div>
@@ -295,7 +284,7 @@ permalink: /about/
                     <h2 id="profile-name" style="font-size: 1.1rem;"></h2>
                     <p id="profile-handle" style="font-size: 0.7rem; color: #71767b;"></p>
                 </div>
-                <div style="background: #1d9bf0; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.7rem;">Follow</div>
+                <div style="background: var(--brand-color); padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.7rem;">Follow</div>
             </div>
             <p id="profile-bio" style="font-size: 0.8rem; margin-top: 0.5rem;"></p>
             <div style="display: flex; gap: 1rem; margin-top: 0.5rem; font-size: 0.7rem; color: #71767b;">
@@ -307,18 +296,18 @@ permalink: /about/
 
         <!-- TABS -->
         <div style="display: flex; border-bottom: 1px solid #2f3336;">
-            <div style="flex:1; text-align: center; padding: 0.75rem; font-size: 0.7rem; font-weight: 600; border-bottom: 2px solid #1d9bf0;">Tweets</div>
+            <div style="flex:1; text-align: center; padding: 0.75rem; font-size: 0.7rem; font-weight: 600; border-bottom: 2px solid var(--brand-color);">Tweets</div>
             <div style="flex:1; text-align: center; padding: 0.75rem; font-size: 0.7rem; color: #71767b;">Replies</div>
             <div style="flex:1; text-align: center; padding: 0.75rem; font-size: 0.7rem; color: #71767b;">Media</div>
             <div style="flex:1; text-align: center; padding: 0.75rem; font-size: 0.7rem; color: #71767b;">Likes</div>
         </div>
 
-        <!-- TWEETS FEED (PANJANG) -->
+        <!-- TWEETS FEED -->
         <div id="tweets-feed"></div>
 
-        <!-- TRENDING SIDEBAR (di dalam feed) -->
+        <!-- TRENDING SIDEBAR -->
         <div style="padding: 1rem; border-top: 1px solid #2f3336; margin-top: 0.5rem;">
-            <div style="font-weight: 700; margin-bottom: 0.5rem;">ðŸ”¥ Trending related</div>
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">🔥 Trending related</div>
             <div id="trending-topics"></div>
         </div>
 
@@ -329,13 +318,19 @@ permalink: /about/
         </div>
 
         <div class="footer" id="footer">
-            LeakX Â· Viral leaked content feed Â· Updated real-time
+            LeakX · Viral leaked content feed · Updated real-time
         </div>
     </div>
 </div>
 
 <script>
 (function() {
+    // Set canonical URL dynamically based on current URL
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) {
+        canonicalLink.setAttribute('href', window.location.href);
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     let query = urlParams.get('q');
 
@@ -353,7 +348,7 @@ permalink: /about/
 
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     
-    // extract nama influencer
+    // extract influencer name
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'twitter', 'feed', 'tweet'];
     let baseRaw = query.toLowerCase();
     removeTerms.forEach(term => {
@@ -376,21 +371,21 @@ permalink: /about/
     const followerCount = Math.floor(Math.random() * 800) + 200;
     
     // SEO
-    let pageTitle = `${displayName} Leaked Content Â· Twitter Feed | LeakX`;
+    let pageTitle = `${displayName} Leaked Content · Twitter Feed | LeakX`;
     let pageDesc = `Latest tweets about ${displayName} leaked content. ${followerCount} followers. Real-time updates on leaked videos and photos.`;
     document.title = pageTitle;
     const metaTag = document.getElementById('dynamic-description');
     if (metaTag) metaTag.setAttribute('content', pageDesc);
     
     document.getElementById('bc-name').innerText = displayName;
-    document.getElementById('profile-name').innerHTML = `${displayName} <span style="font-size:0.7rem; color:#1d9bf0;">Â· Leaked Archive</span>`;
+    document.getElementById('profile-name').innerHTML = `${displayName} <span style="font-size:0.7rem; color:var(--brand-color);">· Leaked Archive</span>`;
     document.getElementById('profile-handle').innerHTML = `@${displayLower}_leaks`;
     document.getElementById('profile-bio').innerHTML = `The complete archive of ${displayName} leaked content. Videos, photos, and exclusive material. #LeakedContent #ViralLeaks`;
     document.getElementById('tweet-count').innerHTML = `${tweetCountNum} Tweets`;
     document.getElementById('following-count').innerHTML = `${followingCount} Following`;
     document.getElementById('follower-count').innerHTML = `${followerCount} Followers`;
     
-    // helper: membuat tweet card
+    // helper: create tweet card
     function makeTweet(author, username, avatar, timeAgo, content, linkVariant, linkText, mediaIcon, mediaDesc, replies, retweets, likes) {
         const newQ = `${displayLower} ${linkVariant}`;
         return `
@@ -400,7 +395,7 @@ permalink: /about/
                     <div class="tweet-user-info">
                         <span class="tweet-name">${author}</span>
                         <span class="tweet-username">@${username}</span>
-                        <span class="tweet-time">Â· ${timeAgo}</span>
+                        <span class="tweet-time">· ${timeAgo}</span>
                     </div>
                 </div>
                 <div class="tweet-content">
@@ -411,27 +406,27 @@ permalink: /about/
                     <span>${mediaIcon}</span> <span style="font-size:0.7rem;">${mediaDesc}</span>
                 </div>
                 <div class="tweet-actions">
-                    <span class="tweet-action">ðŸ’¬ ${replies}</span>
-                    <span class="tweet-action">ðŸ” ${retweets}</span>
-                    <span class="tweet-action">â¤ï¸ ${likes}</span>
-                    <span class="tweet-action">ðŸ“Œ</span>
+                    <span class="tweet-action">💬 ${replies}</span>
+                    <span class="tweet-action">🔁 ${retweets}</span>
+                    <span class="tweet-action">❤️ ${likes}</span>
+                    <span class="tweet-action">📌</span>
                 </div>
             </div>
         `;
     }
     
-    // TWEETS (8-10 tweets panjang)
+    // TWEETS (8 tweets)
     const tweets = [
         {
             author: 'LeakArchive',
             username: 'leakarchive',
-            avatar: 'ðŸ“',
+            avatar: '📁',
             timeAgo: '1h',
-            content: `ðŸ”¥ JUST DROPPED: The complete ${displayName} leaked video compilation. 200+ clips including deleted TikTok videos and private footage. This is the most comprehensive leak archive yet.`,
+            content: `🔥 JUST DROPPED: The complete ${displayName} leaked video compilation. 200+ clips including deleted TikTok videos and private footage. This is the most comprehensive leak archive yet.`,
             linkVariant: 'leaked video full compilation',
             linkText: 'leakx.com/leakedvideo',
-            mediaIcon: 'ðŸŽ¬',
-            mediaDesc: `Leaked Video Pack Â· ${Math.floor(Math.random() * 200) + 100}+ files Â· Trending`,
+            mediaIcon: '🎬',
+            mediaDesc: `Leaked Video Pack · ${Math.floor(Math.random() * 200) + 100}+ files · Trending`,
             replies: Math.floor(Math.random() * 100) + 20,
             retweets: Math.floor(Math.random() * 500) + 100,
             likes: Math.floor(Math.random() * 2000) + 500
@@ -439,13 +434,13 @@ permalink: /about/
         {
             author: 'ViralLeaks',
             username: 'viralleaks',
-            avatar: 'âš„1¤7',
+            avatar: '⚡',
             timeAgo: '3h',
-            content: `ðŸ’Ž EXCLUSIVE: ${displayName} leaked OnlyFans content just surfaced. Full set of ${Math.floor(Math.random() * 300) + 100} files. Limited time before it gets taken down.`,
+            content: `💎 EXCLUSIVE: ${displayName} leaked OnlyFans content just surfaced. Full set of ${Math.floor(Math.random() * 300) + 100} files. Limited time before it gets taken down.`,
             linkVariant: 'leaked onlyfans content',
             linkText: 'leakx.com/ofleaks',
-            mediaIcon: 'ðŸ”ž',
-            mediaDesc: `Leaked OnlyFans Archive Â· Exclusive content`,
+            mediaIcon: '🔞',
+            mediaDesc: `Leaked OnlyFans Archive · Exclusive content`,
             replies: Math.floor(Math.random() * 80) + 15,
             retweets: Math.floor(Math.random() * 400) + 80,
             likes: Math.floor(Math.random() * 1500) + 400
@@ -453,13 +448,13 @@ permalink: /about/
         {
             author: 'TelegramLeaks',
             username: 'tgleaks',
-            avatar: 'ðŸ’¬',
+            avatar: '💬',
             timeAgo: '5h',
-            content: `ðŸ“± ${displayName} leaked content is spreading fast on Telegram. I've compiled the best channels with complete archives. Join before they're gone.`,
+            content: `📱 ${displayName} leaked content is spreading fast on Telegram. I've compiled the best channels with complete archives. Join before they're gone.`,
             linkVariant: 'leaked telegram channel',
             linkText: 'leakx.com/telegram',
-            mediaIcon: 'ðŸ’¬',
-            mediaDesc: `Telegram Leak Channel Â· 50K+ members`,
+            mediaIcon: '💬',
+            mediaDesc: `Telegram Leak Channel · 50K+ members`,
             replies: Math.floor(Math.random() * 60) + 10,
             retweets: Math.floor(Math.random() * 300) + 60,
             likes: Math.floor(Math.random() * 1200) + 300
@@ -467,13 +462,13 @@ permalink: /about/
         {
             author: 'PhotoLeaks',
             username: 'photoleaks',
-            avatar: 'ðŸ“¸',
+            avatar: '📸',
             timeAgo: '8h',
-            content: `ðŸ“¸ ${displayName} leaked photo gallery updated! ${Math.floor(Math.random() * 200) + 80} new images added including private Instagram stories and deleted posts. Full gallery below.`,
+            content: `📸 ${displayName} leaked photo gallery updated! ${Math.floor(Math.random() * 200) + 80} new images added including private Instagram stories and deleted posts. Full gallery below.`,
             linkVariant: 'leaked photos full gallery',
             linkText: 'leakx.com/photos',
-            mediaIcon: 'ðŸ–¼ï¸„1¤7',
-            mediaDesc: `Leaked Photo Gallery Â· ${Math.floor(Math.random() * 300) + 100}+ images`,
+            mediaIcon: '🖼️',
+            mediaDesc: `Leaked Photo Gallery · ${Math.floor(Math.random() * 300) + 100}+ images`,
             replies: Math.floor(Math.random() * 50) + 8,
             retweets: Math.floor(Math.random() * 250) + 50,
             likes: Math.floor(Math.random() * 1000) + 200
@@ -481,13 +476,13 @@ permalink: /about/
         {
             author: 'DiscordLeaks',
             username: 'discordleaks',
-            avatar: 'ðŸŽ®',
+            avatar: '🎮',
             timeAgo: '12h',
-            content: `ðŸŽ® Discord server with ${displayName} leaked content just went public. Full archive including videos and photos. Invite link below.`,
+            content: `🎮 Discord server with ${displayName} leaked content just went public. Full archive including videos and photos. Invite link below.`,
             linkVariant: 'leaked discord server',
             linkText: 'leakx.com/discord',
-            mediaIcon: 'ðŸŽ®',
-            mediaDesc: `Discord Leak Server Â· Private archive`,
+            mediaIcon: '🎮',
+            mediaDesc: `Discord Leak Server · Private archive`,
             replies: Math.floor(Math.random() * 40) + 5,
             retweets: Math.floor(Math.random() * 200) + 40,
             likes: Math.floor(Math.random() * 800) + 150
@@ -495,13 +490,13 @@ permalink: /about/
         {
             author: 'TwitterLeaks',
             username: 'twitterleaks',
-            avatar: 'ðŸ¦',
+            avatar: '🐦',
             timeAgo: '1d',
-            content: `ðŸ¦ Viral ${displayName} leaked Twitter threads compilation. Everything that went viral on X. Archived and preserved.`,
+            content: `🐦 Viral ${displayName} leaked Twitter threads compilation. Everything that went viral on X. Archived and preserved.`,
             linkVariant: 'leaked twitter threads',
             linkText: 'leakx.com/twitter',
-            mediaIcon: 'ðŸ¦',
-            mediaDesc: `Twitter Leak Archive Â· Viral threads`,
+            mediaIcon: '🐦',
+            mediaDesc: `Twitter Leak Archive · Viral threads`,
             replies: Math.floor(Math.random() * 30) + 3,
             retweets: Math.floor(Math.random() * 150) + 30,
             likes: Math.floor(Math.random() * 600) + 100
@@ -509,13 +504,13 @@ permalink: /about/
         {
             author: 'RedditLeaks',
             username: 'redditleaks',
-            avatar: 'ðŸ”´',
+            avatar: '🔴',
             timeAgo: '1d',
-            content: `ðŸ”´ Reddit community discussing ${displayName} leaked content. Full archive of removed posts and preserved threads.`,
+            content: `🔴 Reddit community discussing ${displayName} leaked content. Full archive of removed posts and preserved threads.`,
             linkVariant: 'leaked reddit posts',
             linkText: 'leakx.com/reddit',
-            mediaIcon: 'ðŸ”´',
-            mediaDesc: `Reddit Leak Archive Â· Community discussion`,
+            mediaIcon: '🔴',
+            mediaDesc: `Reddit Leak Archive · Community discussion`,
             replies: Math.floor(Math.random() * 25) + 2,
             retweets: Math.floor(Math.random() * 120) + 20,
             likes: Math.floor(Math.random() * 500) + 80
@@ -523,13 +518,13 @@ permalink: /about/
         {
             author: 'ExclusiveVault',
             username: 'exclusivevault',
-            avatar: 'ðŸ’Ž',
+            avatar: '💎',
             timeAgo: '2d',
-            content: `ðŸ’Ž RARE: ${displayName} exclusive leaked content not available anywhere else. Limited access vault. Get it before it's gone.`,
+            content: `💎 RARE: ${displayName} exclusive leaked content not available anywhere else. Limited access vault. Get it before it's gone.`,
             linkVariant: 'exclusive leaked vault',
             linkText: 'leakx.com/vault',
-            mediaIcon: 'ðŸ’Ž',
-            mediaDesc: `Exclusive Leak Vault Â· Rare content`,
+            mediaIcon: '💎',
+            mediaDesc: `Exclusive Leak Vault · Rare content`,
             replies: Math.floor(Math.random() * 20) + 1,
             retweets: Math.floor(Math.random() * 100) + 15,
             likes: Math.floor(Math.random() * 400) + 60
@@ -565,20 +560,14 @@ permalink: /about/
                 <div style="font-weight:600; font-size:0.8rem;">${sug.name}</div>
                 <div style="font-size:0.65rem; color:#71767b;">@${sug.handle}</div>
             </div>
-            <a href="/edition/?q=${encodeURIComponent(displayLower + ' ' + sug.variant)}" style="background: #1d9bf0; padding: 0.2rem 0.8rem; border-radius: 30px; font-size:0.7rem; text-decoration:none; color:#fff;">Follow</a>
+            <a href="/edition/?q=${encodeURIComponent(displayLower + ' ' + sug.variant)}" style="background: var(--brand-color); padding: 0.2rem 0.8rem; border-radius: 30px; font-size:0.7rem; text-decoration:none; color:#fff;">Follow</a>
         </div>
     `).join('');
     
     // footer
     const today = new Date();
     const dateStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    document.getElementById('footer').innerHTML = `LeakX Â· ${followerCount} followers Â· Updated real-time Â· #${displayLower.replace(/ /g, '')}Leaked`;
-    
-    // canonical
-    const canonical = document.getElementById('dynamic-canonical');
-    if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
-    }
+    document.getElementById('footer').innerHTML = `LeakX · ${followerCount} followers · Updated real-time · #${displayLower.replace(/ /g, '')}Leaked`;
 })();
 </script>
 <nav>
