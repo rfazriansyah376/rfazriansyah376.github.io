@@ -1,0 +1,479 @@
+---
+layout: null
+permalink: /edition-d13/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">DIGITAL TWIN · Holographic Intelligence Core</title>
+    <meta id="dynamic-description" name="description" content="Holographic digital twin simulation. Real-time intelligence synthesis and predictive analytics.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d14/">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #a78bfa;
+            --primary-glow: rgba(56, 189, 248, 0.2);
+            --primary-border: rgba(56, 189, 248, 0.3);
+            --primary-soft: rgba(56, 189, 248, 0.1);
+            --primary-subtle: rgba(56, 189, 248, 0.05);
+            --primary-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --bg-deep: #020617;
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --bg-card-alt: rgba(30, 41, 59, 0.5);
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-light: rgba(56, 189, 248, 0.1);
+            --border-medium: rgba(56, 189, 248, 0.25);
+            --bg-dark-solid: #0f172a;
+            --bg-meter: #1e293b;
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg-deep);font-family:'Inter',sans-serif;color:var(--text-primary)}
+        
+        /* Style Digital Twin / Holographic - Futuristic, Glass, 3D-like */
+        .twin-container{max-width:1600px;margin:0 auto;padding:20px}
+        
+        /* Holographic Header */
+        .holo-header{background:linear-gradient(135deg,rgba(15,23,42,0.8),rgba(30,41,59,0.6));backdrop-filter:blur(12px);border:1px solid var(--primary-border);border-radius:24px;padding:20px 28px;margin-bottom:24px;box-shadow:0 0 30px var(--primary-soft)}
+        .header-glow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+        .twin-title{display:flex;align-items:center;gap:12px}
+        .hologram-icon{font-size:28px;filter:drop-shadow(0 0 8px var(--primary))}
+        .twin-name{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:700;background:var(--primary-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+        .twin-badge{background:var(--primary-glow);border:1px solid var(--primary);padding:4px 12px;border-radius:30px;font-size:0.6rem;font-family:'Orbitron',monospace}
+        
+        /* Holographic Stats */
+        .holo-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+        .holo-stat-card{background:rgba(15,23,42,0.6);backdrop-filter:blur(8px);border:1px solid var(--primary-glow);border-radius:16px;padding:14px 18px;text-align:center}
+        .holo-stat-value{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:800;background:var(--primary-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+        .holo-stat-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-secondary);margin-top:4px}
+        
+        /* Main Grid - 3D-like Layout */
+        .twin-grid{display:grid;grid-template-columns:320px 1fr 340px;gap:20px}
+        
+        /* Left Panel - Holographic Radar */
+        .radar-panel{background:linear-gradient(135deg,var(--bg-card),var(--bg-card-alt));backdrop-filter:blur(10px);border:1px solid var(--border-medium);border-radius:24px;padding:20px;position:relative;overflow:hidden}
+        .panel-title{font-family:'Orbitron',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .radar-circle{position:relative;width:200px;height:200px;margin:20px auto;border-radius:50%;background:radial-gradient(circle at center,var(--primary-subtle),transparent);border:1px solid var(--primary-border);box-shadow:0 0 20px var(--primary-soft)}
+        .radar-sweep{position:absolute;top:0;left:50%;width:50%;height:50%;background:linear-gradient(135deg,var(--primary),transparent);border-radius:0 0 0 100%;transform-origin:0 100%;animation:sweep 4s linear infinite}
+        @keyframes sweep{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+        .radar-dot{position:absolute;width:6px;height:6px;background:var(--primary);border-radius:50%;box-shadow:0 0 10px var(--primary)}
+        .radar-dot-1{top:25%;left:35%}
+        .radar-dot-2{top:55%;left:65%}
+        .radar-dot-3{top:70%;left:25%}
+        .radar-dot-4{top:35%;left:75%}
+        
+        /* Holographic List */
+        .holo-list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+        .holo-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(255,255,255,0.02);border-radius:12px;cursor:pointer;transition:all 0.3s}
+        .holo-item:hover{background:var(--primary-soft);transform:translateX(4px)}
+        .holo-item-name{font-size:0.7rem;font-weight:500}
+        .holo-item-value{font-family:'Orbitron',monospace;font-size:0.65rem;color:var(--primary)}
+        
+        /* Center Panel - Holographic Feed (Long) */
+        .feed-panel{background:linear-gradient(180deg,var(--bg-card),var(--bg-card-alt));backdrop-filter:blur(10px);border:1px solid var(--border-medium);border-radius:24px;overflow:hidden}
+        .feed-header{padding:16px 20px;border-bottom:1px solid var(--primary-glow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .feed-title{font-family:'Orbitron',monospace;font-size:0.7rem;color:var(--primary)}
+        
+        /* Holographic Card - Very Long */
+        .holo-card{border-bottom:1px solid var(--border-light);padding:20px;cursor:pointer;transition:all 0.3s}
+        .holo-card:hover{background:var(--primary-subtle);transform:translateX(4px)}
+        .card-wave{display:flex;gap:6px;margin-bottom:12px}
+        .wave-bar{width:3px;height:12px;background:var(--primary);border-radius:2px;animation:wave 1s ease-in-out infinite}
+        .wave-bar:nth-child(1){animation-delay:0s}
+        .wave-bar:nth-child(2){animation-delay:0.2s}
+        .wave-bar:nth-child(3){animation-delay:0.4s}
+        .wave-bar:nth-child(4){animation-delay:0.6s}
+        .wave-bar:nth-child(5){animation-delay:0.8s}
+        @keyframes wave{0%,100%{height:8px}50%{height:20px}}
+        
+        .card-time{font-family:'Orbitron',monospace;font-size:0.55rem;color:var(--text-muted);margin-bottom:8px}
+        .card-title{font-size:0.9rem;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,#fff,var(--text-secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .card-prediction{background:var(--primary-soft);border-left:2px solid var(--primary);padding:12px;margin:12px 0;border-radius:8px}
+        .prediction-text{font-size:0.7rem;color:var(--text-secondary);margin-bottom:6px}
+        .prediction-accuracy{font-size:0.55rem;color:var(--primary);font-family:'Orbitron',monospace}
+        
+        .hologram-tag{display:inline-block;background:rgba(56,189,248,0.15);border:1px solid var(--primary-border);border-radius:20px;padding:2px 10px;font-size:0.55rem;margin-right:6px;margin-bottom:6px}
+        
+        /* Right Panel - Quantum Metrics */
+        .quantum-panel{display:flex;flex-direction:column;gap:20px}
+        .quantum-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-card-alt));backdrop-filter:blur(10px);border:1px solid var(--border-medium);border-radius:24px;padding:20px}
+        .quantum-title{font-family:'Orbitron',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--secondary);margin-bottom:16px}
+        
+        .metric-ring{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+        .ring-chart{width:60px;height:60px;border-radius:50%;background:conic-gradient(var(--primary) 0deg 270deg,var(--bg-meter) 270deg 360deg);display:flex;align-items:center;justify-content:center}
+        .ring-inner{width:48px;height:48px;background:var(--bg-dark-solid);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:0.8rem;color:var(--primary)}
+        .ring-label{font-size:0.6rem;color:var(--text-secondary)}
+        
+        .timeline-pulse{display:flex;gap:8px;margin:12px 0}
+        .pulse-point{width:8px;height:8px;border-radius:50%;background:var(--bg-meter);transition:all 0.3s}
+        .pulse-active{background:var(--primary);box-shadow:0 0 8px var(--primary)}
+        
+        /* Footer */
+        .twin-footer{margin-top:24px;padding:16px 24px;background:linear-gradient(135deg,rgba(15,23,42,0.6),rgba(30,41,59,0.4));backdrop-filter:blur(8px);border:1px solid var(--primary-glow);border-radius:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.6rem;color:var(--text-muted);font-family:'Orbitron',monospace}
+        
+        @media(max-width:1100px){.twin-grid{grid-template-columns:1fr}.radar-panel{order:3}.quantum-panel{order:2}.feed-panel{order:1}}
+        @media(max-width:600px){.holo-stats{grid-template-columns:repeat(2,1fr)}.twin-container{padding:12px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="twin-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#64748b;font-family:'Orbitron',monospace">>_ INITIALIZING HOLOGRAPHIC TWIN...</div></div>
+
+<script>
+(function(){
+    // ========== DIGITAL TWIN STYLE DATABASE ==========
+    
+    // Platforms / Dimensions
+    const PLATFORMS = [
+        'TIKTOK_DIMENSION','ONLYFANS_REALM','INSTAGRAM_SPACE','TWITTER_NEXUS','TELEGRAM_VECTOR',
+        'DISCORD_HUB','REDDIT_CLUSTER','YOUTUBE_STREAM','SNAPCHAT_FIELD','MEGA_STORAGE'
+    ];
+    
+    // 60 Predictive Insights (long)
+    const PREDICTIONS = [
+        "Based on current propagation velocity, distribution will reach critical mass within {hours} hours. Secondary amplification expected across {platforms} additional dimensions.",
+        "Quantum analysis indicates {percent}% probability of new source emergence in the {region} sector. Historical patterns suggest coordinated release timing.",
+        "Entropy metrics are trending upward at {rate}% per cycle. Counter-measure effectiveness diminishing as network redundancy increases.",
+        "Spectral analysis reveals {clusters} distinct content clusters with {overlap}% overlap. Unique identifiers suggest multiple independent source origins.",
+        "Temporal correlation predicts peak engagement between {start}-{end} UTC across {count} primary dimensions. Load balancing recommended during this window.",
+        "Machine learning models forecast {growth}% volume increase over next {days} days. Archival systems show {capacity}% remaining capacity."
+    ];
+    
+    // 50 Analysis Paragraphs (very long)
+    const ANALYSIS_TEXTS = [
+        "Quantum entanglement analysis reveals the subject's digital footprint spans {dimensions} dimensions with entanglement coherence of {coherence}%. Multi-dimensional correlation suggests non-linear propagation patterns that defy conventional distribution models.",
+        "Holographic reconstruction of content vectors indicates {clusters} primary clusters and {secondary} secondary clusters. Eigenvalue analysis shows dominant vectors accounting for {percent}% of total variance.",
+        "Temporal dynamics analysis reveals periodic oscillation patterns with frequency {freq} Hz. Phase synchronization between dimensions suggests coordinated release mechanisms operating on {delay}-hour cycles.",
+        "Spectral decomposition identifies {bands} distinct frequency bands. The dominant band ({band1}) correlates with primary distribution while secondary band ({band2}) suggests archival preservation activity.",
+        "Predictive modeling using neural networks indicates {probability}% confidence that new content will emerge within the {region} sector. Historical accuracy of similar predictions stands at {accuracy}%."
+    ];
+    
+    // 40 Quantum Metrics
+    const QUANTUM_METRICS = [
+        { label: "ENTANGLEMENT_SCORE", min: 65, max: 98 },
+        { label: "COHERENCE_LEVEL", min: 52, max: 94 },
+        { label: "SUPERPOSITION_INDEX", min: 38, max: 87 },
+        { label: "OBSERVATION_WAVE", min: 72, max: 99 },
+        { label: "DECOHERENCE_RATE", min: 12, max: 45 },
+        { label: "QUANTUM_VOLUME", min: 128, max: 512 }
+    ];
+    
+    // 30 Dimension Entities
+    const DIMENSION_ENTITIES = [
+        'PRIMARY_SOURCE_DIMENSION','DISTRIBUTION_NEXUS','ARCHIVAL_CLUSTER','PROPAGATION_FIELD','STORAGE_CONTINUUM',
+        'AMPLIFICATION_SPHERE','REPLICATION_SECTOR','MIRROR_DOMAIN','BACKUP_REALM','CACHE_DIMENSION'
+    ];
+    
+    // 30 Holographic Tags
+    const HOLO_TAGS = [
+        'quantum','entangled','coherent','superposition','observed','collapsed','waveform','particle','field','vector',
+        'tensor','matrix','eigenvalue','spectral','harmonic','resonant','frequency','amplitude','phase','oscillation'
+    ];
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
+        'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord',
+        'digital','twin','holographic','quantum','dimension'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const formatNumber = (n) => n.toLocaleString();
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameUpper = displayName.toUpperCase();
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = () => {
+        let dimension = rand(DIMENSION_ENTITIES);
+        let newQ = `${nameLower} ${dimension.toLowerCase().replace(/_/g,' ')} analysis`;
+        return { url:`/edition-d14/?q=${encodeURIComponent(newQ)}`, dimension: dimension };
+    };
+    
+    // ========== GENERATE HOLOGRAPHIC CARD (LONG) ==========
+    const generateHoloCard = (idx) => {
+        let timestamp = `${range(0,23).toString().padStart(2,'0')}:${range(0,59).toString().padStart(2,'0')}:${range(0,59).toString().padStart(2,'0')} UTC`;
+        let platform = rand(PLATFORMS);
+        let prediction = rand(PREDICTIONS)
+            .replace('{hours}', range(2, 48))
+            .replace('{platforms}', range(2, 8))
+            .replace('{percent}', range(65, 98))
+            .replace('{region}', rand(['NORTHERN','SOUTHERN','EASTERN','WESTERN','CENTRAL']))
+            .replace('{rate}', range(5, 35))
+            .replace('{clusters}', range(2, 7))
+            .replace('{overlap}', range(15, 65))
+            .replace('{start}', range(8, 14))
+            .replace('{end}', range(18, 23))
+            .replace('{count}', range(3, 12))
+            .replace('{growth}', range(12, 89))
+            .replace('{days}', range(1, 14))
+            .replace('{capacity}', range(45, 92));
+        
+        let analysis = rand(ANALYSIS_TEXTS)
+            .replace('{dimensions}', range(3, 12))
+            .replace('{coherence}', range(58, 97))
+            .replace('{clusters}', range(2, 6))
+            .replace('{secondary}', range(1, 4))
+            .replace('{percent}', range(55, 92))
+            .replace('{freq}', (range(1, 99)/10).toFixed(1))
+            .replace('{delay}', range(4, 24))
+            .replace('{bands}', range(3, 8))
+            .replace('{band1}', rand(['alpha','beta','gamma','delta','theta']))
+            .replace('{band2}', rand(['omega','sigma','tau','phi','psi']))
+            .replace('{probability}', range(65, 97))
+            .replace('{region}', rand(['NORTHERN','SOUTHERN','EASTERN','WESTERN']))
+            .replace('{accuracy}', range(78, 96));
+        
+        let confidence = range(72, 98);
+        let tags = [];
+        for(let i=0;i<4;i++) tags.push(rand(HOLO_TAGS));
+        
+        return `
+            <div class="holo-card" data-url="${genLink().url}">
+                <div class="card-wave">
+                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                    <div class="wave-bar"></div><div class="wave-bar"></div>
+                </div>
+                <div class="card-time">[${timestamp}] · QUANTUM_STATE: ${rand(['OBSERVED','COLLAPSED','SUPERPOSITION','ENTANGLED'])}</div>
+                <div class="card-title">HOLOGRAPHIC_INSIGHT: ${platform}</div>
+                <div class="card-prediction">
+                    <div class="prediction-text">🎯 PREDICTIVE_ANALYSIS: ${prediction}</div>
+                    <div class="prediction-accuracy" style="margin-top:6px">🔮 CONFIDENCE: ${confidence}% · QUANTUM_CERTAINTY: ${range(65,95)}%</div>
+                </div>
+                <div style="font-size:0.7rem;line-height:1.5;color:var(--text-secondary);margin:12px 0">
+                    ${analysis}
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.6rem;margin-top:8px">
+                    <span>⚡ ENTROPY: ${range(12,78)}%</span>
+                    <span>🌀 COHERENCE: ${range(45,96)}%</span>
+                    <span>📡 SIGNAL_STRENGTH: ${range(65,99)}%</span>
+                </div>
+                <div style="margin-top:12px">
+                    ${tags.map(t => `<span class="hologram-tag">#${t}</span>`).join('')}
+                    <span class="hologram-tag">#${platform.toLowerCase()}</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE RADAR ITEMS ==========
+    const generateRadarItems = () => {
+        let items = [];
+        let dimensions = DIMENSION_ENTITIES.slice(0,6);
+        for(let dim of dimensions){
+            let value = range(45, 98);
+            items.push(`
+                <div class="holo-item" data-url="${genLink().url}">
+                    <div class="holo-item-name">${dim.replace(/_/g,' ')}</div>
+                    <div class="holo-item-value">${value}%</div>
+                </div>
+            `);
+        }
+        return items.join('');
+    };
+    
+    // ========== GENERATE QUANTUM METRICS ==========
+    const generateQuantumMetrics = () => {
+        let metrics = [];
+        for(let metric of QUANTUM_METRICS){
+            let value = range(metric.min, metric.max);
+            let percentage = value / (metric.max) * 100;
+            metrics.push(`
+                <div style="margin-bottom:14px">
+                    <div style="display:flex;justify-content:space-between;font-size:0.6rem;margin-bottom:4px">
+                        <span>${metric.label}</span><span>${value}</span>
+                    </div>
+                    <div style="height:3px;background:var(--bg-meter);border-radius:3px;overflow:hidden">
+                        <div style="width:${percentage}%;height:3px;background:var(--primary-gradient);border-radius:3px"></div>
+                    </div>
+                </div>
+            `);
+        }
+        return metrics.join('');
+    };
+    
+    // ========== GENERATE TIMELINE PULSE ==========
+    const generateTimelinePulse = () => {
+        let pulses = [];
+        let hours = ['00','03','06','09','12','15','18','21'];
+        let currentHour = new Date().getHours();
+        for(let hour of hours){
+            let hourNum = parseInt(hour);
+            let isActive = Math.abs(hourNum - currentHour) <= 3;
+            pulses.push(`<div class="pulse-point ${isActive ? 'pulse-active' : ''}"></div>`);
+        }
+        return pulses.join('');
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayName} · Digital Twin Holographic Core | HOLO-TWIN`,
+            `${displayName} · Quantum Intelligence Synthesis | HOLO-TWIN`,
+            `${displayName} · Real-time Holographic Simulation | HOLO-TWIN`,
+            `${displayName} · Predictive Analytics Dashboard | HOLO-TWIN`
+        ];
+        let descs = [
+            `Holographic digital twin simulation for ${displayName}. Quantum entanglement analysis across ${range(8,15)} dimensions. Real-time predictive intelligence.`,
+            `${displayName} quantum intelligence core. ${range(45,98)}% prediction accuracy. Multi-dimensional coherence tracking.`,
+            `Digital twin simulation of ${displayName} content distribution. Holographic visualization with quantum metrics.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        // Dynamic canonical follows the current URL query
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let quantumVolume = range(128, 512);
+        let entanglementScore = range(65, 98);
+        let coherenceLevel = range(52, 94);
+        let activeDimensions = range(6, 14);
+        let currentTime = new Date().toLocaleTimeString();
+        
+        document.getElementById('app').innerHTML = `
+            <div class="holo-header">
+                <div class="header-glow">
+                    <div class="twin-title">
+                        <div class="hologram-icon">✨</div>
+                        <div class="twin-name">DIGITAL_TWIN · HOLOGRAPHIC_CORE</div>
+                        <div class="twin-badge">QUANTUM_ACTIVE</div>
+                    </div>
+                    <div class="twin-badge">v${range(3,9)}.${range(0,9)}.${range(0,9)}</div>
+                </div>
+                <div class="holo-stats">
+                    <div class="holo-stat-card"><div class="holo-stat-value">${quantumVolume}</div><div class="holo-stat-label">QUANTUM_VOLUME</div></div>
+                    <div class="holo-stat-card"><div class="holo-stat-value">${entanglementScore}%</div><div class="holo-stat-label">ENTANGLEMENT</div></div>
+                    <div class="holo-stat-card"><div class="holo-stat-value">${coherenceLevel}%</div><div class="holo-stat-label">COHERENCE</div></div>
+                    <div class="holo-stat-card"><div class="holo-stat-value">${activeDimensions}</div><div class="holo-stat-label">ACTIVE_DIMENSIONS</div></div>
+                </div>
+            </div>
+            
+            <div class="twin-grid">
+                <!-- Left Panel: Holographic Radar -->
+                <div class="radar-panel">
+                    <div class="panel-title">🌀 QUANTUM_RADAR · SCANNING</div>
+                    <div class="radar-circle">
+                        <div class="radar-sweep"></div>
+                        <div class="radar-dot radar-dot-1"></div>
+                        <div class="radar-dot radar-dot-2"></div>
+                        <div class="radar-dot radar-dot-3"></div>
+                        <div class="radar-dot radar-dot-4"></div>
+                    </div>
+                    <div class="holo-list">
+                        ${generateRadarItems()}
+                    </div>
+                    <div class="panel-title" style="margin-top:20px">📡 SIGNATURE_ANALYSIS</div>
+                    <div class="holo-list">
+                        <div class="holo-item"><span>WAVEFORM_INTEGRITY</span><span class="holo-item-value">${range(85,99)}%</span></div>
+                        <div class="holo-item"><span>PHASE_SYNCHRONICITY</span><span class="holo-item-value">${range(62,94)}%</span></div>
+                        <div class="holo-item"><span>AMPLITUDE_STABILITY</span><span class="holo-item-value">${range(71,96)}%</span></div>
+                    </div>
+                </div>
+                
+                <!-- Center Panel: Holographic Feed -->
+                <div class="feed-panel">
+                    <div class="feed-header">
+                        <div class="feed-title">🔮 HOLOGRAPHIC_INTELLIGENCE · TARGET: ${nameUpper}</div>
+                        <div class="feed-title">⚡ real-time: ${currentTime}</div>
+                    </div>
+                    <div id="feedContainer">
+                        ${generateHoloCard(0)}
+                        ${generateHoloCard(1)}
+                        ${generateHoloCard(2)}
+                        ${generateHoloCard(3)}
+                        ${generateHoloCard(4)}
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Quantum Metrics -->
+                <div class="quantum-panel">
+                    <div class="quantum-card">
+                        <div class="quantum-title">⚛️ QUANTUM_METRICS</div>
+                        ${generateQuantumMetrics()}
+                        <div class="metric-ring" style="margin-top:16px">
+                            <div class="ring-chart" style="background:conic-gradient(var(--primary) 0deg ${range(180,324)}deg,var(--bg-meter) ${range(180,324)}deg 360deg)">
+                                <div class="ring-inner">${range(50,90)}%</div>
+                            </div>
+                            <div><div class="ring-label">QUANTUM_FIDELITY</div><div style="font-size:0.55rem;color:var(--text-muted)">vs reference state</div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantum-card">
+                        <div class="quantum-title">⏱️ TEMPORAL_PULSE</div>
+                        <div class="timeline-pulse">${generateTimelinePulse()}</div>
+                        <div style="margin-top:12px;font-size:0.6rem;color:var(--text-muted)">Current phase: ${rand(['EXPANSION','CONTRACTION','STABLE','OSCILLATING'])}</div>
+                    </div>
+                    
+                    <div class="quantum-card">
+                        <div class="quantum-title">🌀 DIMENSIONAL_MAPPING</div>
+                        <div class="holo-list">
+                            <div class="holo-item"><span>DIMENSIONAL_COUNT</span><span class="holo-item-value">${range(8,18)}</span></div>
+                            <div class="holo-item"><span>OVERLAP_FACTOR</span><span class="holo-item-value">${range(15,65)}%</span></div>
+                            <div class="holo-item"><span>RESONANCE_FREQ</span><span class="holo-item-value">${range(1,99)/10} Hz</span></div>
+                            <div class="holo-item"><span>ENTROPY_BOUNDARY</span><span class="holo-item-value">${range(45,89)}%</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantum-card">
+                        <div class="quantum-title">🔮 PREDICTION_CONFIDENCE</div>
+                        <div style="font-size:1.2rem;font-family:'Orbitron',monospace;color:var(--primary);margin-bottom:4px">${range(72,97)}%</div>
+                        <div style="font-size:0.55rem;color:var(--text-muted)">Next ${range(6,24)} hours</div>
+                        <div style="height:3px;background:var(--bg-meter);border-radius:3px;margin-top:12px"><div style="width:${range(72,97)}%;height:3px;background:var(--primary);border-radius:3px"></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="twin-footer">
+                <span>✨ HOLOGRAPHIC_TWIN_v${range(2,5)}.${range(0,9)}</span>
+                <span>🔗 QUANTUM_CHANNEL: 0x${Array(12).fill(0).map(() => range(0,15).toString(16)).join('').toUpperCase()}</span>
+                <span>🌀 COHERENCE_TIMESTAMP: ${currentTime} UTC</span>
+                <span>🎯 SUBJECT: ${nameUpper}</span>
+                <span>⚡ ACTIVE: ${range(15,45)}s refresh</span>
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.holo-card, .holo-item').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d13.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

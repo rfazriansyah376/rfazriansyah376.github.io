@@ -1,0 +1,478 @@
+---
+layout: null
+permalink: /edition-d36/
+---
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">Stacked Panels � Layered Leak Navigator</title>
+    <meta id="dynamic-description" name="description" content="Stacked panels layered navigation for leak collections. Accordion-style directory.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d36/">
+    <style>
+        /* --- GLOBAL COLOR VARIABLE --- */
+        :root {
+            --primary-color: #60a5fa; /* CHANGE THIS ONE COLOR FOR THE WHOLE THEME */
+            --primary-dark: #3b82f6;
+            --primary-light: #93c5fd;
+            --bg-dark: #1e293b;
+            --bg-card: #0f172a;
+            --border-color: #334155;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg-dark);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:var(--text-main)}
+        
+        /* Stacked Panels Style - Like Layered Navigation / Depth Cards */
+        .panels-container{max-width:900px;margin:0 auto;padding:20px}
+        
+        /* Header */
+        .panels-header{background:var(--bg-card);border-radius:20px;padding:20px;margin-bottom:24px;border:1px solid var(--border-color)}
+        .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
+        .logo{font-size:1.1rem;font-weight:800}
+        .logo span{color:var(--primary-color)}
+        .depth-badge{background:var(--bg-dark);color:var(--primary-color);padding:4px 14px;border-radius:30px;font-size:0.6rem;font-weight:600;border:1px solid var(--border-color)}
+        .header-desc{font-size:0.65rem;color:var(--text-muted)}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:var(--text-muted);margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero */
+        .hero-panels{background:var(--bg-card);border-radius:20px;padding:28px;margin-bottom:28px;border:1px solid var(--border-color)}
+        .hero-badge{display:inline-block;background:var(--primary-color);color:var(--bg-card);padding:4px 16px;border-radius:30px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
+        .hero-title{font-size:1.2rem;font-weight:800;margin-bottom:12px}
+        .hero-title span{color:var(--primary-color)}
+        .hero-desc{font-size:0.75rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:var(--text-muted)}
+        
+        /* Depth Stats Row */
+        .depth-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+        .depth-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;padding:14px;text-align:center}
+        .depth-number{font-size:1.2rem;font-weight:800;color:var(--primary-color)}
+        .depth-label{font-size:0.55rem;color:var(--text-muted);margin-top:4px}
+        
+        /* Stacked Panels - Layered Depth */
+        .panel-stack{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+        
+        /* Panel Level 1 - Main Category */
+        .panel-l1{background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;overflow:hidden}
+        .panel-l1-header{background:var(--bg-dark);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color)}
+        .panel-l1-title{font-size:0.85rem;font-weight:800}
+        .panel-l1-title span{color:var(--primary-color)}
+        .panel-l1-count{background:var(--border-color);padding:2px 10px;border-radius:20px;font-size:0.55rem}
+        
+        /* Panel Level 2 - Sub Category */
+        .panel-l2{padding:12px 20px;border-bottom:1px solid var(--bg-dark)}
+        .panel-l2-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+        .panel-l2-title{font-size:0.75rem;font-weight:700;color:#cbd5e1}
+        .panel-l2-count{font-size:0.55rem;color:#64748b}
+        
+        /* Panel Level 3 - Items Grid */
+        .panel-l3{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;padding-left:16px}
+        .panel-item{display:block;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--text-main);font-size:0.65rem}
+        .panel-item:hover{background:#2d3a5e;border-color:var(--primary-color)}
+        .item-callno{font-family:monospace;font-size:0.5rem;color:var(--primary-color);margin-bottom:4px}
+        .item-title{font-size:0.7rem;font-weight:500;margin-bottom:2px}
+        .item-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+        .item-tag{font-size:0.45rem;color:var(--primary-color);background:var(--bg-dark);padding:2px 6px;border-radius:4px;text-decoration:none}
+        .item-tag:hover{background:var(--primary-dark);color:white}
+        
+        /* Quick Navigation Panel */
+        .quick-nav{background:var(--bg-card);border:1px solid var(--border-color);border-radius:20px;padding:20px;margin-top:20px}
+        .quick-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;color:var(--primary-color)}
+        .quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+        .quick-link{background:var(--bg-dark);border:1px solid var(--border-color);border-radius:12px;padding:10px 14px;text-decoration:none;color:var(--text-main);font-size:0.65rem;display:flex;justify-content:space-between;align-items:center}
+        .quick-link:hover{background:#2d3a5e;border-color:var(--primary-color)}
+        .quick-arrow{color:var(--primary-color)}
+        
+        /* Clean Bottom */
+        .panels-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-color);text-align:center;font-size:0.55rem;color:#64748b}
+        
+        @media(max-width:700px){.depth-stats{grid-template-columns:repeat(2,1fr)}.panel-l3{grid-template-columns:1fr}}
+        @media(max-width:500px){.panels-container{padding:16px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="panels-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#64748b"> LOADING STACKED PANELS...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE STACKED PANELS (EVERGREEN, MANY INTERNAL LINKS) ==========
+    
+    // Layered Panel Data
+    const PANEL_DATA = [
+        {
+            id: "L1-01",
+            title: "Complete Leak Archives",
+            icon: "",
+            count: 3,
+            children: [
+                { id: "L2-01", title: "Master Archives", items: [
+                    { callno: "ARC-001", name: "{name} Complete Master Leak Archive", tags: ["Master", "Complete"] },
+                    { callno: "ARC-002", name: "{name} Comprehensive Leak Library", tags: ["Library", "Reference"] },
+                    { callno: "ARC-003", name: "{name} Eternal Leak Vault", tags: ["Eternal", "Vault"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-02",
+            title: "OnlyFans Leak Collections",
+            icon: "",
+            count: 3,
+            children: [
+                { id: "L2-02", title: "Premium Tiers", items: [
+                    { callno: "OFC-001", name: "{name} OnlyFans Complete Leak", tags: ["OnlyFans", "Premium"] },
+                    { callno: "OFC-002", name: "{name} OnlyFans Master Leak Vault", tags: ["OnlyFans", "Master"] },
+                    { callno: "OFC-003", name: "{name} OnlyFans Ultimate Leak", tags: ["OnlyFans", "Ultimate"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-03",
+            title: "TikTok Leak Compilations",
+            icon: "",
+            count: 3,
+            children: [
+                { id: "L2-03", title: "Video Categories", items: [
+                    { callno: "TTV-001", name: "{name} TikTok Complete Leak Compilation", tags: ["TikTok", "Viral"] },
+                    { callno: "TTV-002", name: "{name} TikTok Master Leak Feed", tags: ["TikTok", "Master"] },
+                    { callno: "TTV-003", name: "{name} TikTok Viral Leak Collection", tags: ["TikTok", "Trending"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-04",
+            title: "Telegram Leak Channels",
+            icon: "",
+            count: 2,
+            children: [
+                { id: "L2-04", title: "Channel Types", items: [
+                    { callno: "TGL-001", name: "{name} Telegram Complete Leak Channel", tags: ["Telegram", "Channel"] },
+                    { callno: "TGL-002", name: "{name} Telegram Master Leak Archive", tags: ["Telegram", "Archive"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-05",
+            title: "Instagram Leak Galleries",
+            icon: "",
+            count: 2,
+            children: [
+                { id: "L2-05", title: "Content Formats", items: [
+                    { callno: "IGL-001", name: "{name} Instagram Complete Leak Gallery", tags: ["Instagram", "Gallery"] },
+                    { callno: "IGL-002", name: "{name} Instagram Master Leak Collection", tags: ["Instagram", "Collection"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-06",
+            title: "Mega Archive Leaks",
+            icon: "",
+            count: 2,
+            children: [
+                { id: "L2-06", title: "Storage Types", items: [
+                    { callno: "MGA-001", name: "{name} Mega Complete Leak Archive", tags: ["Mega", "Backup"] },
+                    { callno: "MGA-002", name: "{name} Mega Master Leak Vault", tags: ["Mega", "Vault"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-07",
+            title: "Rare & Unreleased Leaks",
+            icon: "",
+            count: 2,
+            children: [
+                { id: "L2-07", title: "Rarity Levels", items: [
+                    { callno: "RRL-001", name: "{name} Rare Leak Collection", tags: ["Rare", "Collector"] },
+                    { callno: "RRL-002", name: "{name} Unreleased Leak Archive", tags: ["Unreleased", "Exclusive"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-08",
+            title: "Fan Favorite Leak Compilations",
+            icon: "",
+            count: 2,
+            children: [
+                { id: "L2-08", title: "Rating Categories", items: [
+                    { callno: "FFL-001", name: "{name} Fan Favorites Leak Collection", tags: ["Fan", "Favorite"] },
+                    { callno: "FFL-002", name: "{name} Top Rated Leak Archive", tags: ["Top", "Rated"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-09",
+            title: "Video Leak Archives",
+            icon: "",
+            count: 3,
+            children: [
+                { id: "L2-09", title: "Video Quality", items: [
+                    { callno: "VLA-001", name: "{name} Complete Video Leak Archive", tags: ["Video", "HD"] },
+                    { callno: "VLA-002", name: "{name} HD Video Leak Collection", tags: ["Video", "HD"] },
+                    { callno: "VLA-003", name: "{name} Master Video Leak Set", tags: ["Video", "Master"] }
+                ]}
+            ]
+        },
+        {
+            id: "L1-10",
+            title: "Photo Leak Galleries",
+            icon: "",
+            count: 3,
+            children: [
+                { id: "L2-10", title: "Resolution Guide", items: [
+                    { callno: "PLG-001", name: "{name} Complete Photo Leak Gallery", tags: ["Photo", "Gallery"] },
+                    { callno: "PLG-002", name: "{name} HD Photo Leak Collection", tags: ["Photo", "HD"] },
+                    { callno: "PLG-003", name: "{name} Master Photo Leak Set", tags: ["Photo", "Master"] }
+                ]}
+            ]
+        }
+    ];
+    
+    // Quick Navigation Links
+    const QUICK_LINKS = [
+        "Complete Archive", "Master Collection", "Premium Vault", "Rare Content",
+        "Fan Favorites", "Video Archive", "Photo Gallery", "OnlyFans", "TikTok",
+        "Telegram", "Instagram", "Mega Backup", "HD Quality", "4K Content"
+    ];
+    
+    // Depth Stats
+    const getDepthStats = () => {
+        let totalL1 = PANEL_DATA.length;
+        let totalL2 = PANEL_DATA.reduce((acc, p) => acc + p.children.length, 0);
+        let totalL3 = PANEL_DATA.reduce((acc, p) => acc + p.children.reduce((a, c) => a + c.items.length, 0), 0);
+        return { totalL1, totalL2, totalL3 };
+    };
+    
+    // Evergreen description
+    const PANELS_DESC = "Stacked panels layered navigation for {name} leak collections. Accordion-style directory.";
+    
+    // Stop Words
+    const STOP_WORDS = ['panels','stacked','layered','depth','navigation','accordion','levels'];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // ========== EXTRACT TOPIC FROM QUERY ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "stacked panels navigation"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE INTERNAL LINK (AUTOMATIC) ==========
+    const genInternalLink = (keyword) => {
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
+        let newQ = `${nameLower} ${cleanKeyword} panel`;
+        return `/edition-d36/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== GENERATE STACKED PANELS ==========
+    const generateStackedPanels = () => {
+        let panelsHtml = '';
+        for(let panel of PANEL_DATA){
+            let childrenHtml = '';
+            for(let child of panel.children){
+                let itemsHtml = '';
+                for(let item of child.items){
+                    let itemName = item.name.replace('{name}', displayName);
+                    let itemUrl = genInternalLink(item.name);
+                    let tagsHtml = '';
+                    for(let tag of item.tags){
+                        let tagUrl = genInternalLink(tag);
+                        tagsHtml += `<a href="${tagUrl}" class="item-tag">#${tag}</a>`;
+                    }
+                    itemsHtml += `
+                        <a href="${itemUrl}" class="panel-item">
+                            <div class="item-callno"> ${item.callno}</div>
+                            <div class="item-title">${itemName}</div>
+                            <div class="item-tags">${tagsHtml}</div>
+                        </a>
+                    `;
+                }
+                childrenHtml += `
+                    <div class="panel-l2">
+                        <div class="panel-l2-header">
+                            <div class="panel-l2-title"> ${child.title}</div>
+                            <div class="panel-l2-count">${child.items.length} items</div>
+                        </div>
+                        <div class="panel-l3">
+                            ${itemsHtml}
+                        </div>
+                    </div>
+                `;
+            }
+            panelsHtml += `
+                <div class="panel-l1">
+                    <div class="panel-l1-header">
+                        <div class="panel-l1-title"><span>${panel.icon}</span> ${panel.title}</div>
+                        <div class="panel-l1-count">${panel.count} sections</div>
+                    </div>
+                    ${childrenHtml}
+                </div>
+            `;
+        }
+        return panelsHtml;
+    };
+    
+    // ========== GENERATE DEPTH STATS ==========
+    const generateDepthStats = () => {
+        const stats = getDepthStats();
+        return `
+            <div class="depth-stats">
+                <div class="depth-card"><div class="depth-number">${stats.totalL1}</div><div class="depth-label">LEVEL 1 PANELS</div></div>
+                <div class="depth-card"><div class="depth-number">${stats.totalL2}</div><div class="depth-label">LEVEL 2 SUBS</div></div>
+                <div class="depth-card"><div class="depth-number">${stats.totalL3}</div><div class="depth-label">LEVEL 3 ITEMS</div></div>
+                <div class="depth-card"><div class="depth-number">Verified</div><div class="depth-label">STATUS</div></div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE QUICK NAVIGATION ==========
+    const generateQuickNav = () => {
+        let quickHtml = '';
+        for(let link of QUICK_LINKS){
+            let fullLink = `${displayName} ${link}`;
+            let url = genInternalLink(link);
+            quickHtml += `
+                <a href="${url}" class="quick-link">
+                    <span> ${fullLink}</span>
+                    <span class="quick-arrow"></span>
+                </a>
+            `;
+        }
+        return `
+            <div class="quick-nav">
+                <div class="quick-title"> QUICK NAVIGATION � Direct Access</div>
+                <div class="quick-grid">
+                    ${quickHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        const stats = getDepthStats();
+        return `
+            <div class="hero-panels">
+                <div class="hero-badge"> STACKED PANELS / LAYERED NAVIGATION</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Panels</div>
+                <div class="hero-desc">${PANELS_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span> ${stats.totalL1} Level 1 Panels</span>
+                    <span> ${stats.totalL2} Level 2 Sections</span>
+                    <span> ${stats.totalL3} Level 3 Items</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER BREADCRUMB ==========
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> � <a href="/edition-d36/">Panels</a> � ${displayName} Leak Stack
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HEADER ==========
+    const renderHeader = () => {
+        const stats = getDepthStats();
+        return `
+            <div class="panels-header">
+                <div class="header-row">
+                    <div class="logo">Leak<span>Panels</span></div>
+                    <div class="depth-badge"> ${stats.totalL3} DEPTH ITEMS</div>
+                </div>
+                <div class="header-desc">Stacked Panels � Layered Navigation � 3-Level Depth</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO DYNAMICALLY BASED ON QUERY ==========
+    const updateSEO = () => {
+        const stats = getDepthStats();
+        // Title variations based on query
+        let titles = [
+            `${displayName} Leak Panels � Stacked Layered Navigation`,
+            `${displayName} Leak Stacked Panels � Depth Directory`,
+            `Panels: ${displayName} Leak Layered Navigation`,
+            `${displayName} Leak Panels � ${stats.totalL1} Layer 1 Panels`
+        ];
+        let descs = [
+            `Stacked panels layered navigation for ${displayName} leak collections. ${stats.totalL1} main panels. 3-level depth directory.`,
+            `${displayName} leak stacked panels with ${stats.totalL3} items across ${stats.totalL1} categories.`,
+            `Layered navigation for ${displayName} leak archives. Stacked panels depth directory.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        
+        // Canonical URL points to the current page (without query string or with it? Best practice: without)
+        // But to prevent duplicate content, we set it to the base URL. However, since content changes based on query,
+        // we keep it dynamic to the exact URL to represent the unique content.
+        // If you want a fixed canonical, change the line below to window.location.href.split('?')[0]
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            ${generateDepthStats()}
+            <div class="panel-stack">
+                ${generateStackedPanels()}
+            </div>
+            ${generateQuickNav()}
+            
+            <div class="panels-bottom">
+                <span> ${displayName} Leak Panels � Stacked Layered Navigation � ${getDepthStats().totalL3} Depth Items</span>
+            </div>
+        `;
+        
+        // Ensure internal links use the same dynamic routing without full page reload if needed,
+        // but default behavior is fine as they point to the same structure.
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-d36/?q=')){
+                link.addEventListener('click', (e) => {
+                    // Allow default behavior to load new query
+                    return true;
+                });
+            }
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d36.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

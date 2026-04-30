@@ -1,0 +1,402 @@
+---
+layout: null
+permalink: /edition-d25/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">RESOURCE NAVIGATOR · Complete Content Directory</title>
+    <meta id="dynamic-description" name="description" content="Complete content resource navigator. Find everything you need. Organized directory with fast access.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d26/">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========== GLOBAL COLOR VARIABLES - CHANGE YOUR MAIN COLOR HERE ========== */
+        .global-style {
+            --color-primary: #58a6ff;       /* Main accent color */
+            --color-primary-hover: #79b8ff; /* Lighter accent for hovers */
+            --color-secondary: #a371f7;     /* Secondary accent for gradients */
+            --color-success: #238636;       /* Success/button color */
+            --color-success-hover: #2ea043; /* Success hover */
+            --color-bg: #0d1117;            /* Main background */
+            --color-surface: #161b22;       /* Card/header surfaces */
+            --color-surface-hover: #1f2937;  /* Surface hover state */
+            --color-border: #30363d;        /* Default border */
+            --color-text: #e6edf3;          /* Primary text */
+            --color-text-secondary: #8b949e; /* Secondary/muted text */
+            --color-badge-bg: #23863620;    /* Badge background */
+            --color-badge-border: #238636;  /* Badge border */
+            --color-badge-text: #3fb950;    /* Badge text */
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--color-bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--color-text)}
+        
+        /* Style Resource Navigator - Mega Directory, Organized, Professional */
+        .navigator-container{max-width:1400px;margin:0 auto;padding:0 24px}
+        
+        /* Header */
+        .nav-header{background:var(--color-surface);border-bottom:1px solid var(--color-border);padding:20px 0;margin-bottom:32px}
+        .header-flex{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+        .logo{display:flex;align-items:center;gap:10px}
+        .logo-icon{font-size:28px}
+        .logo-text{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .breadcrumb{font-size:0.7rem;color:var(--color-text-secondary)}
+        .breadcrumb a{color:var(--color-primary);text-decoration:none}
+        
+        /* Hero Section with Query */
+        .hero-section{background:linear-gradient(135deg,var(--color-surface),var(--color-bg));border-radius:24px;padding:48px;margin-bottom:40px;border:1px solid var(--color-border)}
+        .hero-badge{display:inline-block;background:var(--color-badge-bg);border:1px solid var(--color-badge-border);color:var(--color-badge-text);padding:4px 16px;border-radius:30px;font-size:0.65rem;margin-bottom:16px}
+        .hero-title{font-size:2.5rem;font-weight:800;margin-bottom:16px;line-height:1.2}
+        .hero-title span{background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .hero-desc{font-size:0.9rem;color:var(--color-text-secondary);max-width:800px;margin-bottom:24px;line-height:1.5}
+        .hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+        .hero-stat .number{font-size:1.5rem;font-weight:800;color:var(--color-primary)}
+        .hero-stat .label{font-size:0.65rem;color:var(--color-text-secondary)}
+        
+        /* Search Bar */
+        .search-wrapper{background:var(--color-surface);border:1px solid var(--color-border);border-radius:56px;padding:8px 8px 8px 24px;display:flex;align-items:center;gap:12px;margin-bottom:40px}
+        .search-icon{color:var(--color-text-secondary);font-size:18px}
+        .search-input{flex:1;background:transparent;border:none;outline:none;color:var(--color-text);font-size:0.9rem;padding:12px 0}
+        .search-btn{background:var(--color-success);border:none;padding:10px 28px;border-radius:40px;color:#fff;font-weight:600;cursor:pointer;font-size:0.8rem}
+        
+        /* Main Grid - 3 Columns Mega Directory */
+        .directory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:48px}
+        
+        /* Category Card */
+        .category-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:20px;overflow:hidden;transition:all 0.2s}
+        .category-card:hover{transform:translateY(-4px);border-color:var(--color-primary)}
+        .category-header{background:var(--color-surface-hover);padding:16px 20px;border-bottom:1px solid var(--color-border)}
+        .category-title{font-size:1rem;font-weight:700;margin-bottom:4px}
+        .category-title a{color:var(--color-text);text-decoration:none}
+        .category-count{font-size:0.6rem;color:var(--color-text-secondary)}
+        .category-items{padding:8px 0}
+        .category-item{padding:12px 20px;border-bottom:1px solid #21262d;cursor:pointer;transition:all 0.2s}
+        .category-item:hover{background:var(--color-surface-hover);padding-left:24px}
+        .item-name{font-size:0.75rem;font-weight:500;margin-bottom:4px}
+        .item-meta{font-size:0.55rem;color:var(--color-text-secondary)}
+        .view-all{padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--color-primary);cursor:pointer;border-top:1px solid #21262d}
+        
+        /* Second Row - 2 Columns Featured */
+        .featured-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-bottom:48px}
+        .featured-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:20px;padding:24px;cursor:pointer;transition:all 0.2s}
+        .featured-card:hover{transform:translateY(-4px);border-color:var(--color-primary)}
+        .featured-icon{font-size:32px;margin-bottom:16px}
+        .featured-title{font-size:1rem;font-weight:700;margin-bottom:8px}
+        .featured-desc{font-size:0.7rem;color:var(--color-text-secondary);margin-bottom:16px;line-height:1.5}
+        .featured-meta{display:flex;gap:16px;font-size:0.6rem;color:var(--color-text-secondary)}
+        
+        /* Bottom Section - Quick Links & Resources */
+        .quick-links{background:var(--color-surface);border:1px solid var(--color-border);border-radius:20px;padding:28px;margin-bottom:40px}
+        .quick-title{font-size:0.9rem;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--color-border)}
+        .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+        .quick-link{padding:10px 0;cursor:pointer;font-size:0.7rem;color:var(--color-text-secondary);transition:color 0.2s}
+        .quick-link:hover{color:var(--color-primary)}
+        
+        /* Footer */
+        .nav-footer{margin-top:48px;padding:32px 0;border-top:1px solid var(--color-border);text-align:center;font-size:0.65rem;color:var(--color-text-secondary);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+        
+        @media(max-width:1000px){.directory-grid{grid-template-columns:repeat(2,1fr)}.featured-grid{grid-template-columns:1fr}}
+        @media(max-width:700px){.directory-grid{grid-template-columns:1fr}.hero-title{font-size:1.6rem}.hero-section{padding:28px}}
+    </style>
+{% include head.html %}
+  </head>
+<body class="global-style"><div loading="lazy">
+<div class="navigator-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--color-text-secondary)">⚡ Loading Resource Navigator...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE RESOURCE NAVIGATOR ==========
+    
+    // Categories with related query items
+    const CATEGORIES = [
+        { name: "Complete Video Archives", icon: "🎬", items: [] },
+        { name: "Photo Galleries & Collections", icon: "📸", items: [] },
+        { name: "Exclusive Content Vaults", icon: "💎", items: [] },
+        { name: "Rare & Unreleased Material", icon: "🔮", items: [] },
+        { name: "Fan Favorite Compilations", icon: "⭐", items: [] },
+        { name: "Platform-Specific Archives", icon: "📱", items: [] }
+    ];
+    
+    // 120 Item Names for each category
+    const ITEM_NAMES = [
+        "Master {name} Video Archive - Complete Collection",
+        "{name} Full Length Videos Compilation",
+        "Ultimate {name} Video Library",
+        "{name} Behind the Scenes Footage",
+        "{name} Live Performance Recordings",
+        "{name} Interview Video Collection",
+        "{name} TikTok Video Compilation",
+        "{name} YouTube Content Archive",
+        "{name} Personal Vlog Collection",
+        "{name} Professional Video Portfolio",
+        "{name} Complete Photo Gallery",
+        "{name} High Resolution Image Collection",
+        "{name} Candid Photography Archive",
+        "{name} Professional Photoshoot Collection",
+        "{name} Red Carpet Appearance Photos",
+        "{name} Behind the Scenes Images",
+        "{name} Instagram Photo Dump",
+        "{name} Exclusive Photo Set",
+        "{name} Rare Image Archive",
+        "{name} Historical Photo Collection"
+    ];
+    
+    // 50 Item Descriptions (long)
+    const ITEM_DESCS = [
+        "Complete collection of {name} video content spanning {years} years. Includes rare footage, interviews, performances, and behind-the-scenes material. Updated regularly with new discoveries.",
+        "The most comprehensive {name} video archive available anywhere. Over {count} carefully curated videos in highest quality. Perfect for dedicated fans.",
+        "Exclusive {name} content you won't find elsewhere. This vault contains rare and hard-to-find videos that have been requested by fans for years.",
+        "Professional {name} video collection featuring high-quality recordings. Includes all major appearances and performances. Organized chronologically."
+    ];
+    
+    // 30 Platform Focus
+    const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter','Telegram','Discord','YouTube','Reddit','Snapchat','Facebook'];
+    
+    // 40 Quick Link Topics
+    const QUICK_LINKS = [
+        "Newest Additions", "Most Popular", "Top Rated", "Recently Updated", "Fan Requests",
+        "Complete Guide", "Beginner's Guide", "Advanced Search", "How to Navigate", "Help Center",
+        "Community Favorites", "Editor's Choice", "Curated Collections", "Verified Content", "HD Quality",
+        "Mobile Friendly", "Fast Access", "Direct Links", "Backup Sources", "Archive Status"
+    ];
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'navigator','resource','directory','guide','navigation','finder','explorer','browser',
+        'leaked','leak','leaks','archive','collection','content','vault','library','compilation'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const formatNumber = (n) => n.toLocaleString();
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ 
+        rawQuery = "popular content collection";
+    }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = (category, item = null) => {
+        let itemName = item || rand(ITEM_NAMES).replace('{name}', displayName);
+        let newQ = `${nameLower} ${itemName.toLowerCase().substring(0, 40)}`;
+        return { url:`/edition-d25/?q=${encodeURIComponent(newQ)}`, category: category };
+    };
+    
+    // ========== GENERATE CATEGORY ITEMS ==========
+    const generateCategoryItems = (categoryName, count) => {
+        let items = [];
+        for(let i=0;i<count;i++){
+            let itemTemplate = rand(ITEM_NAMES);
+            let itemName = itemTemplate.replace('{name}', displayName);
+            let platform = rand(PLATFORMS);
+            let fileCount = formatNumber(range(12, 385));
+            let size = `${range(45, 850)} MB`;
+            items.push(`
+                <div class="category-item" data-url="${genLink(categoryName, itemName).url}">
+                    <div class="item-name">${itemName}</div>
+                    <div class="item-meta">${platform} · ${fileCount} files · ${size}</div>
+                </div>
+            `);
+        }
+        return items.join('');
+    };
+    
+    // ========== GENERATE FEATURED CARD ==========
+    const generateFeaturedCard = (idx) => {
+        let title = rand(ITEM_NAMES).replace('{name}', displayName);
+        let descTemplate = rand(ITEM_DESCS);
+        let years = range(2, 8);
+        let count = formatNumber(range(45, 1250));
+        let desc = descTemplate.replace('{name}', displayName).replace('{years}', years).replace('{count}', count);
+        let size = range(185, 3850);
+        let items = formatNumber(range(85, 850));
+        
+        return `
+            <div class="featured-card" data-url="${genLink('featured', title).url}">
+                <div class="featured-icon">${idx % 2 === 0 ? '📀' : '💿'}</div>
+                <div class="featured-title">${title}</div>
+                <div class="featured-desc">${desc.substring(0, 120)}...</div>
+                <div class="featured-meta">
+                    <span>📁 ${items} items</span>
+                    <span>💾 ${size} MB</span>
+                    <span>⭐ ${range(4,5)}.${range(0,9)}/5</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE QUICK LINKS ==========
+    const generateQuickLinks = () => {
+        let links = [];
+        for(let i=0;i<16;i++){
+            let link = rand(QUICK_LINKS);
+            links.push(`
+                <div class="quick-link" data-url="${genLink('quick', link).url}">
+                    › ${link}
+                </div>
+            `);
+        }
+        return links.join('');
+    };
+    
+    // ========== RENDER HERO SECTION WITH QUERY ==========
+    const renderHeroSection = () => {
+        let totalItems = formatNumber(range(12500, 48500));
+        let totalCollections = formatNumber(range(125, 485));
+        let totalPlatforms = PLATFORMS.length;
+        
+        return `
+            <div class="hero-section">
+                <div class="hero-badge">⭐ OFFICIAL RESOURCE DIRECTORY ⭐</div>
+                <div class="hero-title">Complete <span>${displayName}</span> Content Navigator</div>
+                <div class="hero-desc">Your ultimate guide to finding and accessing all ${displayName} content. This comprehensive directory organizes everything from video archives to photo galleries, exclusive vaults to rare material. Updated daily with new discoveries.</div>
+                <div class="hero-stats">
+                    <div class="hero-stat"><div class="number">${totalItems}+</div><div class="label">Total Items</div></div>
+                    <div class="hero-stat"><div class="number">${totalCollections}</div><div class="label">Collections</div></div>
+                    <div class="hero-stat"><div class="number">${totalPlatforms}</div><div class="label">Platforms</div></div>
+                    <div class="hero-stat"><div class="number">24/7</div><div class="label">Access</div></div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER CATEGORY HEADERS WITH QUERY ==========
+    const renderCategoryCard = (category, idx) => {
+        let enhancedTitle = category.name.replace('Archives', `${displayName} Archives`).replace('Galleries', `${displayName} Galleries`).replace('Vaults', `${displayName} Vaults`).replace('Material', `${displayName} Material`).replace('Compilations', `${displayName} Compilations`).replace('Archives', `${displayName} ${category.name}`);
+        
+        if(idx === 0) enhancedTitle = `Complete ${displayName} Video Archives`;
+        if(idx === 1) enhancedTitle = `${displayName} Photo Galleries & Collections`;
+        if(idx === 2) enhancedTitle = `${displayName} Exclusive Content Vaults`;
+        if(idx === 3) enhancedTitle = `${displayName} Rare & Unreleased Material`;
+        if(idx === 4) enhancedTitle = `${displayName} Fan Favorite Compilations`;
+        if(idx === 5) enhancedTitle = `${displayName} Platform-Specific Archives`;
+        
+        let itemCount = range(8, 18);
+        let totalInCat = range(45, 385);
+        
+        return `
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title"><a href="#">${enhancedTitle}</a></div>
+                    <div class="category-count">${totalInCat} collections · updated daily</div>
+                </div>
+                <div class="category-items">
+                    ${generateCategoryItems(category.name, itemCount)}
+                </div>
+                <div class="view-all" data-url="${genLink(category.name, 'view-all').url}">View all ${totalInCat} ${displayName} collections →</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `Complete ${displayName} Content Navigator | Resource Directory`,
+            `${displayName} Content Directory - Find Everything You Need`,
+            `Ultimate ${displayName} Resource Navigator | Complete Guide`,
+            `${displayName} Archives & Collections Navigator | Content Finder`
+        ];
+        let descs = [
+            `Complete ${displayName} content resource navigator. ${formatNumber(range(1250, 18500))}+ organized items across ${PLATFORMS.length} platforms. Find video archives, photo galleries, exclusive vaults, and rare material. Updated daily.`,
+            `The ultimate ${displayName} resource directory. Everything organized in one place. Fast navigation, categorized content, and easy access. Over ${formatNumber(range(850, 4850))} curated collections.`,
+            `${displayName} content navigator - your complete guide to finding and accessing all ${displayName} content. Video archives, photo galleries, exclusive vaults, and fan favorites.`
+        ];
+        document.title = rand(titles);
+        // Update description
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        // Update canonical to follow the current query (dynamic)
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let searchTerm = `${displayName} complete content collection`;
+        
+        document.getElementById('app').innerHTML = `
+            <div class="nav-header">
+                <div class="header-flex">
+                    <div class="logo">
+                        <div class="logo-icon">🧭</div>
+                        <div class="logo-text">ResourceNavigator</div>
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="/">Home</a> › <a href="/edition-d25/">Navigator</a> › ${displayName}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" value="${searchTerm}" placeholder="Search ${displayName} content...">
+                <button class="search-btn">Search</button>
+            </div>
+            
+            ${renderHeroSection()}
+            
+            <div class="directory-grid">
+                ${CATEGORIES.map((cat, idx) => renderCategoryCard(cat, idx)).join('')}
+            </div>
+            
+            <div class="featured-grid">
+                ${Array.from({length:4}, (_,i) => generateFeaturedCard(i)).join('')}
+            </div>
+            
+            <div class="quick-links">
+                <div class="quick-title">🔗 Quick Navigation — ${displayName} Content Resources</div>
+                <div class="links-grid">
+                    ${generateQuickLinks()}
+                </div>
+            </div>
+            
+            <div class="nav-footer">
+                <span>🧭 ${displayName} Resource Navigator v${range(2,4)}.${range(0,9)}</span>
+                <span>📚 ${formatNumber(range(12500, 48500))}+ indexed items</span>
+                <span>🔄 Updated ${range(1,12)} minutes ago</span>
+                <span>⭐ Rated ${range(4,5)}.${range(0,9)}/5 by users</span>
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.category-item, .featured-card, .quick-link, .view-all, .search-btn').forEach(card => {
+            card.addEventListener('click', () => { 
+                if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url');
+            });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d25.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

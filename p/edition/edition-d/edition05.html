@@ -1,0 +1,852 @@
+---
+layout: null
+permalink: /edition-d05/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">LeakX · Access Latest Viral Content</title>
+    <meta id="dynamic-description" name="description" content="Discover the latest viral content. Updated daily. Exclusive access for members.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d06/">
+    <style>
+        :root {
+            /* --- GLOBAL BASE COLOR: Change this ONE value to update the entire theme --- */
+            --base-color: #1d9bf0;
+            --base-color-rgb: 29, 155, 240;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #e7e9ea;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #000000;
+            min-height: 100vh;
+            border-left: 1px solid #2f3336;
+            border-right: 1px solid #2f3336;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(12px);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #2f3336;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo span { color: var(--base-color); }
+        .logo .accent { color: #ec489a; }
+
+        .search-box {
+            background: #202327;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #71767b;
+        }
+
+        .breadcrumb {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            color: #71767b;
+            background: #000000;
+            border-bottom: 1px solid #2f3336;
+        }
+
+        .breadcrumb a {
+            color: var(--base-color);
+            text-decoration: none;
+        }
+
+        .trending-bar {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #2f3336;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .trending-item {
+            font-size: 0.7rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+        }
+
+        .trending-item:hover {
+            background: rgba(var(--base-color-rgb), 0.13);
+            color: var(--base-color);
+        }
+
+        .profile-header {
+            padding: 1rem;
+            border-bottom: 1px solid #2f3336;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .profile-handle {
+            font-size: 0.7rem;
+            color: #71767b;
+        }
+
+        .follow-btn {
+            background: var(--base-color);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .profile-bio {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            color: #71767b;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #2f3336;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--base-color);
+            color: var(--base-color);
+        }
+
+        .link-card {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #2f3336;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .link-card:hover {
+            background: #080808;
+        }
+
+        .card-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .avatar-1 { background: linear-gradient(135deg, var(--base-color), #0a5a8a); }
+        .avatar-2 { background: linear-gradient(135deg, #ec489a, #9b2c6b); }
+        .avatar-3 { background: linear-gradient(135deg, #00ba7c, #006644); }
+        .avatar-4 { background: linear-gradient(135deg, #f59e0b, #92400e); }
+        .avatar-5 { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+
+        .card-user-info { flex: 1; }
+        .card-name { font-weight: 700; font-size: 0.85rem; }
+        .card-username { font-size: 0.75rem; color: #71767b; }
+        .card-time { font-size: 0.7rem; color: #71767b; }
+
+        .card-content {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            padding-left: 48px;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 12px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .badge-hot { background: #ec489a; color: white; }
+        .badge-new { background: #00ba7c; color: white; }
+        .badge-viral { background: #f59e0b; color: white; }
+        .badge-exclusive { background: #8b5cf6; color: white; }
+        .badge-leaked { background: #ef4444; color: white; }
+
+        .media-preview {
+            background: #1a1a1a;
+            border-radius: 16px;
+            margin: 0.5rem 0 0.5rem 48px;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid #2f3336;
+        }
+
+        .play-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(0,0,0,0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .media-info { flex: 1; }
+        .media-title { font-size: 0.75rem; font-weight: 500; }
+        .media-meta { font-size: 0.6rem; color: #71767b; margin-top: 0.2rem; }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--base-color), #ec489a);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-left: 48px;
+            margin-top: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            animation: softPulse 2s infinite;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes softPulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.92; transform: scale(1.01); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+            padding-left: 48px;
+            font-size: 0.7rem;
+            color: #71767b;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.2s;
+        }
+        .action-item:hover { color: var(--base-color); }
+
+        .sidebar-section {
+            padding: 1rem;
+            border-top: 1px solid #2f3336;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .trending-topic {
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            padding: 0.3rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .trending-topic:hover { background: #080808; }
+
+        .trending-rank { font-size: 0.65rem; color: #71767b; }
+        .trending-name { font-weight: 600; font-size: 0.8rem; }
+        .trending-posts { font-size: 0.6rem; color: #71767b; }
+
+        .follow-suggestion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding: 0.3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .follow-suggestion:hover { background: #080808; }
+
+        .suggestion-info { flex: 1; }
+        .suggestion-name { font-weight: 600; font-size: 0.8rem; }
+        .suggestion-handle { font-size: 0.65rem; color: #71767b; }
+        .suggestion-follow {
+            background: transparent;
+            border: 1px solid var(--base-color);
+            color: var(--base-color);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .suggestion-follow:hover {
+            background: rgba(var(--base-color-rgb), 0.13);
+        }
+
+        .footer {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.6rem;
+            color: #71767b;
+            border-top: 1px solid #2f3336;
+        }
+
+        @media (max-width: 640px) {
+            .container { border-left: none; border-right: none; }
+            .card-content, .media-preview, .card-actions, .cta-button { padding-left: 48px; margin-left: 0; }
+        }
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+
+<div class="container" id="app">
+    <div id="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh; color: #71767b;">
+        ⚡ Loading...
+    </div>
+</div>
+
+<script>
+(function() {
+    // ========== EXTENSIVE SEMANTIC DATABASE (100% VARIANTS) ==========
+    
+    // Level 1: Action Verbs (25 variants)
+    const ACTIONS = [
+        "watch", "download", "view", "access", "stream", "unlock", "see", "get", "open", "reveal",
+        "browse", "check", "find", "discover", "explore", "preview", "grab", "snag", "claim", "fetch",
+        "retrieve", "launch", "play", "load", "show"
+    ];
+    
+    // Level 2: Content Types (30 variants)
+    const CONTENT_TYPES = [
+        "full video", "complete set", "mega folder", "archive", "compilation", "collection", "dump", 
+        "vault", "gallery", "pack", "bundle", "library", "database", "repository", "leak", 
+        "exclusive", "private content", "premium", "master collection", "ultimate pack", "director cut",
+        "extended version", "uncut footage", "raw files", "original source", "backup files",
+        "full season", "complete series", "master tape", "studio version"
+    ];
+    
+    // Level 3: Qualifiers (25 variants)
+    const QUALIFIERS = [
+        "exclusive", "viral", "leaked", "private", "premium", "uncensored", "full HD", "rare", 
+        "limited", "new", "2024", "2025", "authentic", "verified", "original", "legit", "official",
+        "unreleased", "uncut", "unfiltered", "behind the scene", "backup", "master", "raw", "unedited"
+    ];
+    
+    // Level 4: Urgency Phrases (20 variants)
+    const URGENCY = [
+        "before takedown", "limited time", "only today", "expiring soon", "last chance", "few left",
+        "trending now", "viral today", "hot off the press", "breaking now", "just dropped",
+        "fresh upload", "new release", "latest update", "today only", "this week only",
+        "almost gone", "selling fast", "high demand", "popular right now"
+    ];
+    
+    // Level 5: Trigger Sentences (15 variants - all different)
+    const TRIGGERS = [
+        { type: "fomo", text: "⚠️ Only few views left before removal! ⚠️" },
+        { type: "social", text: "🔥 1.2M people already watched this 🔥" },
+        { type: "urgency", text: "⏰ Link expires in 24 hours ⏰" },
+        { type: "scarcity", text: "📁 Last copy available 📁" },
+        { type: "activity", text: "🔒 47 people viewing this right now 🔒" },
+        { type: "curiosity", text: "🫣 You won't believe what's inside 🫣" },
+        { type: "alert", text: "🚨 Copyright holder requested removal 🚨" },
+        { type: "exclusive", text: "💎 Only 1000 people have seen this 💎" },
+        { type: "breaking", text: "📢 BREAKING: Just uploaded 5 mins ago 📢" },
+        { type: "viral", text: "🌍 Going viral across all platforms 🌍" },
+        { type: "secret", text: "🤫 Don't share this link publicly 🤫" },
+        { type: "limited", text: "⏳ Access expires when this post hits 50K views ⏳" },
+        { type: "trending", text: "📈 Trending #1 on LeakX right now 📈" },
+        { type: "new", text: "✨ NEW: Never seen before content ✨" },
+        { type: "warning", text: "⚠️ WARNING: This will be deleted soon ⚠️" }
+    ];
+    
+    // Level 6: Avatar Styles (5 variants)
+    const AVATAR_STYLES = ['avatar-1', 'avatar-2', 'avatar-3', 'avatar-4', 'avatar-5'];
+    const AVATAR_ICONS = ['🔥', '💎', '⭐', '👑', '🔞', '💿', '📁', '🎬', '📸', '🎥', '📹', '🎞️', '📀', '💾', '🗂️'];
+    
+    // Level 7: Display Names & Usernames (20 unique combinations)
+    const DISPLAY_NAMES = [
+        "LeakArchive", "ViralFinder", "ExclusiveHub", "ContentVault", "LeakCentral", 
+        "ViralNow", "DailyXclusive", "LeakFeed", "ContentKing", "VaultKeeper",
+        "LeakMaster", "ViralTracker", "ExclusiveSource", "ContentCollector", "LeakHunter",
+        "ViralAlert", "FlashLeak", "RapidViral", "LeakRadar", "ContentReveal"
+    ];
+    
+    const USERNAMES = [
+        "leakarchive", "viralfinder", "exclusivehub", "contentvault", "leakcentral", 
+        "viralnow", "dailyxclusive", "leakfeed", "contentking", "vaultkeeper",
+        "leakmaster", "viraltracker", "exclusivesource", "contentcollector", "leakhunter",
+        "viraldaily", "flashleak", "rapidviral", "leakradar", "contentreveal"
+    ];
+    
+    // Level 8: Badge Types (5 variants)
+    const BADGE_TYPES = ['hot', 'new', 'viral', 'exclusive', 'leaked'];
+    const BADGE_LABELS = { hot: 'HOT', new: 'NEW', viral: 'VIRAL', exclusive: 'EXCLUSIVE', leaked: 'LEAKED' };
+    const BADGE_CLASSES = { hot: 'badge-hot', new: 'badge-new', viral: 'badge-viral', exclusive: 'badge-exclusive', leaked: 'badge-leaked' };
+    
+    // Level 9: File sizes (varied)
+    const FILE_SIZES = ['45 MB', '89 MB', '124 MB', '256 MB', '512 MB', '789 MB', '1.2 GB', '1.8 GB', '2.3 GB', '3.1 GB', '4.5 GB', '5.0 GB', '678 MB', '345 MB', '892 MB'];
+    
+    // Level 10: View counts
+    const VIEW_RANGES = [
+        [1000, 5000], [5000, 15000], [15000, 35000], [35000, 70000], [70000, 120000],
+        [120000, 200000], [200000, 350000], [350000, 550000], [550000, 800000], [800000, 1000000]
+    ];
+    
+    // Level 11: Time ago variations
+    const TIME_AGOS = ['5m', '12m', '28m', '1h', '2h', '3h', '5h', '7h', '11h', '14h', '18h', '22h', '1d', '2d'];
+    
+    // Level 12: Reply, Retweet, Like ranges
+    const REPLY_RANGES = [[5, 30], [30, 80], [80, 150], [150, 300], [300, 600]];
+    const RETWEET_RANGES = [[20, 80], [80, 200], [200, 500], [500, 1200], [1200, 3000]];
+    const LIKE_RANGES = [[100, 500], [500, 1500], [1500, 4000], [4000, 10000], [10000, 25000]];
+    
+    // ========== GET QUERY FROM URL ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    
+    if (!rawQuery || rawQuery.trim() === "") {
+        window.location.href = "/";
+        return;
+    }
+    
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g, ' '));
+    
+    // ========== EXTRACT BASE NAME ==========
+    const STOP_WORDS = [
+        'leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 
+        'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 
+        'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 
+        'private', 'premium', 'watch', 'download', 'view', 'access', 'stream', 'unlock', 
+        'see', 'get', 'open', 'reveal', 'full', 'complete', 'hot', 'new', '2024', '2025',
+        'uncensored', 'hd', 'rare', 'limited', 'authentic', 'verified', 'original'
+    ];
+    
+    let baseName = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(word => {
+        const regex = new RegExp('\\b' + word + '\\b', 'gi');
+        baseName = baseName.replace(regex, '');
+    });
+    baseName = baseName.replace(/\s+/g, ' ').trim();
+    if (baseName.length < 2) baseName = rawQuery;
+    
+    function formatName(str) {
+        return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    }
+    const displayName = formatName(baseName);
+    const displayLower = displayName.toLowerCase();
+    
+    // ========== UTILITY FUNCTIONS ==========
+    function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function randomNumberRange(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    
+    // ========== GENERATE VARIANT LINK (EACH CALL IS DIFFERENT) ==========
+    function generateVariantLink() {
+        const action = randomItem(ACTIONS);
+        const contentType = randomItem(CONTENT_TYPES);
+        const qualifier = randomItem(QUALIFIERS);
+        const urgency = randomItem(URGENCY);
+        
+        // 70% chance include urgency
+        let newQuery = `${displayLower} ${action} ${contentType} ${qualifier}`;
+        if (Math.random() > 0.3) {
+            newQuery += ` ${urgency}`;
+        }
+        
+        return {
+            url: `/edition-d05/?q=${encodeURIComponent(newQuery)}`,
+            anchor: `${action.charAt(0).toUpperCase() + action.slice(1)} ${contentType}`,
+            qualifier: qualifier,
+            urgency: urgency,
+            action: action,
+            contentType: contentType
+        };
+    }
+    
+    // ========== GENERATE BULK LINKS ==========
+    function generateBulkLinks(count = 15) {
+        const links = [];
+        for (let i = 0; i < count; i++) {
+            links.push(generateVariantLink());
+        }
+        return links;
+    }
+    
+    // ========== GENERATE UNIQUE METRICS ==========
+    function generateUniqueMetrics(index) {
+        const viewRange = randomItem(VIEW_RANGES);
+        const views = randomNumberRange(viewRange[0], viewRange[1]);
+        const replyRange = randomItem(REPLY_RANGES);
+        const replies = randomNumberRange(replyRange[0], replyRange[1]);
+        const retweetRange = randomItem(RETWEET_RANGES);
+        const retweets = randomNumberRange(retweetRange[0], retweetRange[1]);
+        const likeRange = randomItem(LIKE_RANGES);
+        const likes = randomNumberRange(likeRange[0], likeRange[1]);
+        const timeAgo = randomItem(TIME_AGOS);
+        const fileSize = randomItem(FILE_SIZES);
+        
+        return { views, replies, retweets, likes, timeAgo, fileSize };
+    }
+    
+    // ========== RENDER ONE LINK CARD (100% UNIQUE) ==========
+    function renderLinkCard(link, index) {
+        const metrics = generateUniqueMetrics(index);
+        const trigger = randomItem(TRIGGERS);
+        const avatarStyle = randomItem(AVATAR_STYLES);
+        const avatarIcon = randomItem(AVATAR_ICONS);
+        const displayNameRand = randomItem(DISPLAY_NAMES);
+        const usernameRand = randomItem(USERNAMES);
+        const badgeType = randomItem(BADGE_TYPES);
+        const badgeLabel = BADGE_LABELS[badgeType];
+        const badgeClass = BADGE_CLASSES[badgeType];
+        
+        // Format numbers with commas
+        const formatNum = (num) => num.toLocaleString();
+        
+        // Varied CTA text
+        const ctaTexts = [
+            `⚡ CLICK TO ${link.action.toUpperCase()} ⚡`,
+            `🎬 ${link.action.toUpperCase()} NOW →`,
+            `🔓 UNLOCK ${link.contentType.toUpperCase()} →`,
+            `👇 ${link.action.toUpperCase()} HERE 👇`,
+            `▶️ ${link.action.toUpperCase()} FULL VERSION`,
+            `📥 ${link.action.toUpperCase()} NOW - LIMITED!`,
+            `🎯 TAP TO ${link.action.toUpperCase()}`,
+            `✨ ${link.action.toUpperCase()} EXCLUSIVE ✨`
+        ];
+        const ctaText = randomItem(ctaTexts);
+        
+        return `
+            <div class="link-card" data-url="${link.url}">
+                <div class="card-header">
+                    <div class="card-avatar ${avatarStyle}">${avatarIcon}</div>
+                    <div class="card-user-info">
+                        <div class="card-name">
+                            ${displayNameRand}
+                            <span class="badge ${badgeClass}">${badgeLabel}</span>
+                        </div>
+                        <div class="card-username">@${usernameRand}</div>
+                        <div class="card-time">· ${metrics.timeAgo}</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    ${trigger.text} ${displayName} ${link.anchor} ${link.qualifier} content just dropped!
+                    <div style="margin-top: 4px; font-size: 0.7rem; color: var(--base-color);">👁️ ${formatNum(metrics.views)} views</div>
+                </div>
+                <div class="media-preview">
+                    <div class="play-icon">▶</div>
+                    <div class="media-info">
+                        <div class="media-title">${link.anchor.toUpperCase()} · ${link.qualifier.toUpperCase()}</div>
+                        <div class="media-meta">${metrics.fileSize} · ${Math.floor(Math.random() * 30) + 1} files</div>
+                    </div>
+                    <div>→</div>
+                </div>
+                <div class="cta-button">
+                    ${ctaText}
+                </div>
+                <div class="card-actions">
+                    <span class="action-item">💬 ${formatNum(metrics.replies)}</span>
+                    <span class="action-item">🔁 ${formatNum(metrics.retweets)}</span>
+                    <span class="action-item">❤️ ${formatNum(metrics.likes)}</span>
+                    <span class="action-item">📤 ${Math.floor(metrics.views / 100)}</span>
+                </div>
+            </div>
+        `;
+    }
+    
+    // ========== RENDER TRENDING TOPICS (DIFFERENT VARIANTS) ==========
+    function renderTrendingTopics(baseLinks) {
+        const trendingItems = [];
+        const trendingNames = [
+            `#${displayLower.replace(/ /g, '')}Leak`,
+            `#${displayLower.replace(/ /g, '')}Viral`,
+            `#${displayLower.replace(/ /g, '')}Exclusive`,
+            `#${displayLower.replace(/ /g, '')}Archive`,
+            `#ViralLeaks`,
+            `#TrendingNow`,
+            `#ExclusiveContent`,
+            `#LeakOfTheDay`
+        ];
+        
+        for (let i = 0; i < 6; i++) {
+            const link = baseLinks[i] || generateVariantLink();
+            const topicName = randomItem(trendingNames) + (Math.random() > 0.5 ? `${Math.floor(Math.random() * 100)}` : '');
+            const posts = randomNumberRange(5, 95);
+            trendingItems.push(`
+                <div class="trending-topic" data-url="${link.url}">
+                    <div class="trending-rank">Trending ${i+1} · ${link.qualifier.toUpperCase()}</div>
+                    <div class="trending-name">${topicName}</div>
+                    <div class="trending-posts">${posts}K posts</div>
+                </div>
+            `);
+        }
+        return trendingItems.join('');
+    }
+    
+    // ========== RENDER WHO TO FOLLOW (DIFFERENT VARIANTS) ==========
+    function renderWhoToFollow() {
+        const suggestions = [];
+        for (let i = 0; i < 4; i++) {
+            const link = generateVariantLink();
+            const name = randomItem(DISPLAY_NAMES);
+            const handle = randomItem(USERNAMES);
+            suggestions.push(`
+                <div class="follow-suggestion" data-url="${link.url}">
+                    <div class="suggestion-info">
+                        <div class="suggestion-name">${name}</div>
+                        <div class="suggestion-handle">@${handle}</div>
+                    </div>
+                    <div class="suggestion-follow">Follow</div>
+                </div>
+            `);
+        }
+        return suggestions.join('');
+    }
+    
+    // ========== RENDER TRENDING BAR ==========
+    function renderTrendingBar(links) {
+        return links.slice(0, 10).map(link => 
+            `<span class="trending-item" data-url="${link.url}">🔥 ${link.anchor}</span>`
+        ).join('');
+    }
+    
+    // ========== UPDATE SEO WITH VARIANTS ==========
+    function updateSEO() {
+        const seoTitles = [
+            `${displayName} · Access Latest Exclusive Content | LeakX`,
+            `${displayName} Viral Archive - Full Collection | LeakX`,
+            `${displayName} Leaked Content Hub - Daily Updates | LeakX`,
+            `${displayName} Exclusive Vault - Premium Access | LeakX`,
+            `${displayName} Complete Archive - 2025 edition | LeakX`
+        ];
+        
+        const seoDescs = [
+            `Discover the latest exclusive ${displayName} content. New viral updates every day. Fast and easy access.`,
+            `Complete archive of ${displayName} including exclusive videos and photos. Real-time updates from various sources.`,
+            `The most complete ${displayName} leaked content collection. Thousands of files ready to access. Limited time only.`,
+            `Official ${displayName} archive channel. Get access to premium and exclusive content.`,
+            `${displayName} viral content hub. Updated every hour. Don't miss out.`
+        ];
+        
+        document.title = randomItem(seoTitles);
+        
+        let metaDesc = document.getElementById('dynamic-description');
+        if (metaDesc) metaDesc.setAttribute('content', randomItem(seoDescs));
+        
+        // ========== DYNAMIC CANONICAL FOLLOWING THE QUERY ==========
+        let canonical = document.getElementById('dynamic-canonical');
+        if (canonical) {
+            const baseUrl = window.location.href.split('?')[0];
+            const queryString = window.location.search;
+            canonical.setAttribute('href', baseUrl + queryString);
+        }
+    }
+    
+    // ========== RENDER FULL PAGE ==========
+    function renderPage() {
+        const bulkLinks = generateBulkLinks(18);
+        const randomNumbers = {
+            tweets: randomNumberRange(80, 580),
+            following: randomNumberRange(40, 250),
+            followers: randomNumberRange(150, 950)
+        };
+        
+        // Varied bios
+        const bios = [
+            `The complete archive of ${displayName} exclusive content. Updated daily with new material. ${randomNumbers.followers}+ followers.`,
+            `Official ${displayName} content hub. Get the latest leaks, exclusives, and viral updates. Join ${randomNumbers.followers}+ others.`,
+            `${displayName} archive since 2024. Thousands of files available. Premium quality guaranteed.`,
+            `Your #1 source for ${displayName} content. Follow for daily updates and exclusive drops.`
+        ];
+        
+        // Varied handles
+        const handleSuffixes = ['archive', 'hub', 'central', 'vault', 'leaks', 'exclusive', 'content', 'library', 'source', 'channel'];
+        const randomHandle = `${displayLower}_${randomItem(handleSuffixes)}`;
+        
+        const html = `
+            <div class="header">
+                <div class="logo">Leak<span>X</span><span class="accent">.</span></div>
+                <div class="search-box">🔍 Search</div>
+            </div>
+            <div class="breadcrumb">
+                <a href="/">Home</a> / <a href="/edition-d05/">edition</a> / ${displayName}
+            </div>
+            <div class="trending-bar" id="trendingBar">
+                ${renderTrendingBar(bulkLinks)}
+            </div>
+            
+            <div class="profile-header">
+                <div class="profile-row">
+                    <div>
+                        <div class="profile-name">${displayName} <span style="font-size:0.7rem; color: var(--base-color);">· ${randomItem(['Archive', 'Hub', 'Vault', 'Central', 'Source'])}</span></div>
+                        <div class="profile-handle">@${randomHandle}</div>
+                    </div>
+                    <div class="follow-btn">${Math.random() > 0.5 ? 'Follow' : '+ Follow'}</div>
+                </div>
+                <div class="profile-bio">
+                    ${randomItem(bios)}
+                </div>
+                <div class="profile-stats">
+                    <span>📝 ${randomNumbers.tweets} Posts</span>
+                    <span>👥 ${randomNumbers.following} Following</span>
+                    <span>❤️ ${randomNumbers.followers} Followers</span>
+                </div>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active">${randomItem(['For You', 'Latest', 'Trending', 'New'])}</div>
+                <div class="tab">Following</div>
+                <div class="tab">Media</div>
+                <div class="tab">Likes</div>
+            </div>
+            
+            <div id="feedContainer">
+                ${bulkLinks.map((link, idx) => renderLinkCard(link, idx)).join('')}
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="section-title">🔥 ${randomItem(['Related trends', 'Viral now', 'Popular', 'Trending'])}</div>
+                <div id="trendingContainer">
+                    ${renderTrendingTopics(bulkLinks)}
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="section-title">${randomItem(['Who to follow', 'Recommendations', 'Suggested for you', 'You might like'])}</div>
+                <div id="followContainer">
+                    ${renderWhoToFollow()}
+                </div>
+            </div>
+            
+            <div class="footer">
+                LeakX · ${randomNumbers.followers} followers · Updated ${randomItem(['real-time', 'every 5 minutes', 'constantly', 'live'])} · #${displayLower.replace(/ /g, '')}${randomItem(['Archive', 'Hub', 'Central'])}
+            </div>
+        `;
+        
+        document.getElementById('app').innerHTML = html;
+        attachEventListeners();
+    }
+    
+    // ========== ATTACH EVENT LISTENERS ==========
+    function attachEventListeners() {
+        const clickableElements = document.querySelectorAll('[data-url]');
+        clickableElements.forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const url = this.getAttribute('data-url');
+                if (url) window.location.href = url;
+            });
+        });
+        
+        const linkCards = document.querySelectorAll('.link-card');
+        linkCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                if (url) window.location.href = url;
+            });
+        });
+        
+        const trendingItems = document.querySelectorAll('.trending-item');
+        trendingItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                if (url) window.location.href = url;
+            });
+        });
+        
+        const followSugg = document.querySelectorAll('.follow-suggestion');
+        followSugg.forEach(sugg => {
+            sugg.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                if (url) window.location.href = url;
+            });
+        });
+        
+        const trendingTopics = document.querySelectorAll('.trending-topic');
+        trendingTopics.forEach(topic => {
+            topic.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                if (url) window.location.href = url;
+            });
+        });
+    }
+    
+    // ========== EXECUTE ==========
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d05.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

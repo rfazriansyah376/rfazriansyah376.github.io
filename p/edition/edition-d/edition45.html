@@ -1,0 +1,445 @@
+---
+layout: null
+permalink: /edition-d45/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">CARD CATALOG · Leak Filing System</title>
+    <meta id="dynamic-description" name="description" content="Complete card catalog filing system for leak archives. Library-style organization.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d46/">
+    <style>
+        /* ========== GLOBAL COLOR SYSTEM ========== */
+        :root {
+            /* Primary Base Color - Change this one variable to change entire site theme */
+            --primary-color: #8b4513;
+            
+            /* Auto-generated shades (based on primary) */
+            --primary-light: color-mix(in srgb, var(--primary-color) 70%, white);
+            --primary-dark: color-mix(in srgb, var(--primary-color) 85%, black);
+            --primary-bg-light: color-mix(in srgb, var(--primary-color) 8%, #f5f0e6);
+            --primary-border: color-mix(in srgb, var(--primary-color) 35%, #c8bfa8);
+            --primary-text: color-mix(in srgb, var(--primary-color) 90%, #2c2418);
+            
+            /* Neutral colors */
+            --bg-main: #e6e0d4;
+            --bg-card: #f5f0e6;
+            --bg-card-dark: #e8dfd0;
+            --bg-highlight: #fefbf5;
+            --text-main: #2c2418;
+            --text-muted: #6b5a42;
+            --border-light: #c8bfa8;
+            --border-lighter: #e8dfd0;
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg-main);font-family:'Courier New','Georgia','Times New Roman',serif;color:var(--text-main)}
+        
+        /* Card Catalog Style - Like Library Filing Cabinet */
+        .catalog-container{max-width:1200px;margin:0 auto;padding:20px}
+        
+        /* Header - Card Drawer Style */
+        .catalog-header{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;padding:20px;margin-bottom:24px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.03)}
+        .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:12px}
+        .logo{font-family:'Georgia',serif;font-size:1.2rem;font-weight:700;letter-spacing:-0.3px}
+        .logo span{color:var(--primary-color)}
+        .catalog-code{font-family:'Courier New',monospace;font-size:0.65rem;color:var(--primary-color);background:var(--bg-card-dark);padding:4px 12px;border-radius:4px}
+        .header-desc{font-size:0.7rem;color:var(--text-muted);font-family:'Courier New',monospace}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:var(--primary-color);margin-bottom:20px;font-family:'Courier New',monospace}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero - Filing Cabinet */
+        .hero-catalog{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;padding:28px;margin-bottom:28px}
+        .hero-badge{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-bottom:8px;font-family:'Courier New',monospace}
+        .hero-title{font-size:1.3rem;font-weight:700;margin-bottom:12px;font-family:'Georgia',serif}
+        .hero-title span{color:var(--primary-color)}
+        .hero-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;color:var(--primary-color);font-family:'Courier New',monospace}
+        
+        /* Filing Drawers Grid */
+        .drawers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:32px}
+        
+        /* Drawer Card - Like Physical Drawer */
+        .drawer-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;overflow:hidden}
+        .drawer-label{background:var(--bg-card-dark);padding:14px 16px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center}
+        .drawer-letter{font-family:'Courier New',monospace;font-size:0.9rem;font-weight:800;color:var(--primary-color)}
+        .drawer-title{font-size:0.75rem;font-weight:700;font-family:'Georgia',serif}
+        .drawer-count{font-size:0.55rem;color:var(--primary-color);background:var(--bg-card);padding:2px 8px;border-radius:20px}
+        
+        .drawer-items{padding:8px}
+        .drawer-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border-lighter);text-decoration:none;color:var(--text-main);font-size:0.7rem}
+        .drawer-item:hover{background:var(--primary-bg-light)}
+        .item-code{font-family:'Courier New',monospace;font-size:0.6rem;color:var(--primary-color)}
+        .item-title{flex:1;margin-left:12px}
+        .item-arrow{color:var(--primary-color);opacity:0.5}
+        
+        .drawer-footer{padding:10px 12px;border-top:1px solid var(--border-lighter);text-align:center}
+        .drawer-footer a{font-size:0.6rem;color:var(--primary-color);text-decoration:none;font-family:'Courier New',monospace}
+        .drawer-footer a:hover{text-decoration:underline}
+        
+        /* Reference Section - Cross Reference Cards */
+        .reference-section{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;padding:20px;margin-bottom:24px}
+        .reference-title{font-size:0.75rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-light);font-family:'Georgia',serif}
+        .reference-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+        .reference-card{background:var(--bg-highlight);border:1px solid var(--border-lighter);border-radius:4px;padding:12px;text-decoration:none;display:block}
+        .reference-card:hover{background:var(--primary-bg-light);border-color:var(--border-light)}
+        .reference-callno{font-family:'Courier New',monospace;font-size:0.55rem;color:var(--primary-color);margin-bottom:4px}
+        .reference-name{font-size:0.7rem;font-weight:600}
+        .reference-desc{font-size:0.55rem;color:var(--text-muted);margin-top:4px}
+        
+        /* Alphabet Index - Quick Jump */
+        .alphabet-index{background:#fff;border:1px solid var(--border-light);border-radius:4px;padding:16px;margin-bottom:24px}
+        .alphabet-title{font-size:0.7rem;font-weight:700;margin-bottom:12px;font-family:'Georgia',serif}
+        .alphabet-chips{display:flex;flex-wrap:wrap;gap:8px}
+        .alphabet-chip{background:var(--bg-card);padding:6px 14px;border-radius:4px;font-size:0.65rem;text-decoration:none;color:var(--text-main);font-family:'Courier New',monospace}
+        .alphabet-chip:hover{background:var(--primary-color);color:#fff}
+        
+        /* Subject Headings */
+        .subject-section{margin-bottom:24px}
+        .subject-title{font-size:0.7rem;font-weight:700;margin-bottom:12px;font-family:'Georgia',serif}
+        .subject-grid{display:flex;flex-wrap:wrap;gap:10px}
+        .subject-tag{background:var(--bg-card-dark);padding:6px 16px;border-radius:20px;font-size:0.65rem;text-decoration:none;color:var(--text-main)}
+        .subject-tag:hover{background:var(--primary-color);color:#fff}
+        
+        /* Clean Bottom */
+        .catalog-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-light);text-align:center;font-size:0.6rem;color:var(--primary-color);font-family:'Courier New',monospace}
+        
+        @media(max-width:700px){.drawers-grid{grid-template-columns:1fr}.reference-grid{grid-template-columns:1fr}}
+        @media(max-width:500px){.catalog-container{padding:16px}.hero-title{font-size:1.1rem}}
+        
+        /* Loading state */
+        .loading-state{display:flex;justify-content:center;align-items:center;height:100vh;color:var(--primary-color);font-family:'Courier New',monospace}
+    </style>
+{% include head.html %}
+</head>
+<body><div loading="lazy">
+<div class="catalog-container" id="app"><div class="loading-state">⚙️ LOADING CARD CATALOG...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE CARD CATALOG (EVERGREEN, MANY INTERNAL LINKS) ==========
+    
+    // Drawers - Filing Categories (Each heading contains "leak" + query)
+    const DRAWERS = [
+        { letter: "A", name: "Complete Leak Archives", count: "3", items: [
+            { code: "ARC-001", title: "{name} Complete Master Leak Archive" },
+            { code: "ARC-002", title: "{name} Comprehensive Leak Library" },
+            { code: "ARC-003", title: "{name} Eternal Leak Vault" }
+        ]},
+        { letter: "B", name: "OnlyFans Leak Collections", count: "3", items: [
+            { code: "OFC-001", title: "{name} OnlyFans Complete Leak" },
+            { code: "OFC-002", title: "{name} OnlyFans Master Leak Vault" },
+            { code: "OFC-003", title: "{name} OnlyFans Ultimate Leak Archive" }
+        ]},
+        { letter: "C", name: "TikTok Leak Compilations", count: "3", items: [
+            { code: "TTV-001", title: "{name} TikTok Complete Leak Compilation" },
+            { code: "TTV-002", title: "{name} TikTok Master Leak Feed" },
+            { code: "TTV-003", title: "{name} TikTok Viral Leak Collection" }
+        ]},
+        { letter: "D", name: "Telegram Leak Channels", count: "2", items: [
+            { code: "TGL-001", title: "{name} Telegram Complete Leak Channel" },
+            { code: "TGL-002", title: "{name} Telegram Master Leak Archive" }
+        ]},
+        { letter: "E", name: "Instagram Leak Galleries", count: "2", items: [
+            { code: "IGL-001", title: "{name} Instagram Complete Leak Gallery" },
+            { code: "IGL-002", title: "{name} Instagram Master Leak Collection" }
+        ]},
+        { letter: "F", name: "Mega Archive Leaks", count: "2", items: [
+            { code: "MGA-001", title: "{name} Mega Complete Leak Archive" },
+            { code: "MGA-002", title: "{name} Mega Master Leak Vault" }
+        ]},
+        { letter: "G", name: "Rare & Unreleased Leaks", count: "2", items: [
+            { code: "RRL-001", title: "{name} Rare Leak Collection" },
+            { code: "RRL-002", title: "{name} Unreleased Leak Archive" }
+        ]},
+        { letter: "H", name: "Fan Favorite Leak Compilations", count: "2", items: [
+            { code: "FFL-001", title: "{name} Fan Favorites Leak Collection" },
+            { code: "FFL-002", title: "{name} Top Rated Leak Archive" }
+        ]},
+        { letter: "I", name: "Video Leak Archives", count: "3", items: [
+            { code: "VLA-001", title: "{name} Complete Video Leak Archive" },
+            { code: "VLA-002", title: "{name} HD Video Leak Collection" },
+            { code: "VLA-003", title: "{name} Master Video Leak Set" }
+        ]},
+        { letter: "J", name: "Photo Leak Galleries", count: "3", items: [
+            { code: "PLG-001", title: "{name} Complete Photo Leak Gallery" },
+            { code: "PLG-002", title: "{name} HD Photo Leak Collection" },
+            { code: "PLG-003", title: "{name} Master Photo Leak Set" }
+        ]}
+    ];
+    
+    // Reference Cards (Cross Reference / Internal Links)
+    const REFERENCE_CARDS = [
+        { callno: "REF-VID-001", name: "Video Leak Reference Guide", desc: "Complete video leak catalog" },
+        { callno: "REF-PIC-001", name: "Photo Leak Reference Guide", desc: "Complete photo leak catalog" },
+        { callno: "REF-PREM-001", name: "Premium Leak Reference", desc: "Premium collections guide" },
+        { callno: "REF-RARE-001", name: "Rare Leak Reference", desc: "Rare material guide" },
+        { callno: "REF-FAN-001", name: "Fan Favorite Reference", desc: "Top rated collections" },
+        { callno: "REF-MAST-001", name: "Master Leak Index", desc: "Complete master reference" }
+    ];
+    
+    // Alphabet Index Links (Quick Jump)
+    const ALPHABET_INDEX = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    
+    // Subject Headings (Topic Tags - Internal Links)
+    const SUBJECT_HEADINGS = [
+        "Complete Archives", "Master Collections", "Premium Vaults", "Rare Material",
+        "Fan Favorites", "Video Archives", "Photo Galleries", "OnlyFans Collections",
+        "TikTok Compilations", "Telegram Channels", "Instagram Galleries", "Mega Backups",
+        "Unreleased Content", "HD Quality", "Verified Archives", "Permanent Collections"
+    ];
+    
+    // Evergreen description - in English
+    const CATALOG_DESC = "Complete card catalog filing system for {name} leak archives. Organized by drawer, cross-referenced, fully indexed.";
+    
+    // Stop Words
+    const STOP_WORDS = ['catalog','card','drawer','filing','library','cabinet','index','reference'];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // ========== EXTRACT TOPIC FROM QUERY ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete library catalog"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE INTERNAL LINK ==========
+    // Uses current page permalink with dynamic query parameter
+    const genInternalLink = (keyword) => {
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
+        let newQ = `${nameLower} ${cleanKeyword} catalog entry`;
+        // Use the current page's permalink structure (keeping /edition-d45/)
+        return `/edition-d45/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== UPDATE DYNAMIC CANONICAL ==========
+    const updateDynamicCanonical = () => {
+        // Canonical URL follows current query parameter
+        const currentUrl = window.location.href;
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
+    };
+    
+    // ========== GENERATE DRAWERS ==========
+    const generateDrawers = () => {
+        let drawersHtml = '';
+        for(let drawer of DRAWERS){
+            let drawerUrl = genInternalLink(drawer.name);
+            let itemsHtml = '';
+            for(let item of drawer.items){
+                let title = item.title.replace('{name}', displayName);
+                let itemUrl = genInternalLink(item.title);
+                itemsHtml += `
+                    <a href="${itemUrl}" class="drawer-item">
+                        <span class="item-code">${item.code}</span>
+                        <span class="item-title">📄 ${title}</span>
+                        <span class="item-arrow">→</span>
+                    </a>
+                `;
+            }
+            
+            drawersHtml += `
+                <div class="drawer-card">
+                    <div class="drawer-label">
+                        <span class="drawer-letter">DRAWER ${drawer.letter}</span>
+                        <span class="drawer-title">${drawer.name}</span>
+                        <span class="drawer-count">${drawer.count} items</span>
+                    </div>
+                    <div class="drawer-items">
+                        ${itemsHtml}
+                    </div>
+                    <div class="drawer-footer">
+                        <a href="${drawerUrl}">→ View all ${drawer.count} items in Drawer ${drawer.letter}</a>
+                    </div>
+                </div>
+            `;
+        }
+        return drawersHtml;
+    };
+    
+    // ========== GENERATE REFERENCE CARDS ==========
+    const generateReferenceCards = () => {
+        let refsHtml = '';
+        for(let ref of REFERENCE_CARDS){
+            let refUrl = genInternalLink(ref.name);
+            refsHtml += `
+                <a href="${refUrl}" class="reference-card">
+                    <div class="reference-callno">📌 ${ref.callno}</div>
+                    <div class="reference-name">${ref.name}</div>
+                    <div class="reference-desc">${ref.desc}</div>
+                </a>
+            `;
+        }
+        return `
+            <div class="reference-section">
+                <div class="reference-title">📚 Cross Reference Cards</div>
+                <div class="reference-grid">
+                    ${refsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE ALPHABET INDEX ==========
+    const generateAlphabetIndex = () => {
+        let chipsHtml = '';
+        for(let letter of ALPHABET_INDEX){
+            let url = genInternalLink(`Drawer ${letter}`);
+            chipsHtml += `<a href="${url}" class="alphabet-chip">${letter}</a>`;
+        }
+        return `
+            <div class="alphabet-index">
+                <div class="alphabet-title">🔤 Alphabetical Index — Quick Jump</div>
+                <div class="alphabet-chips">
+                    ${chipsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE SUBJECT HEADINGS ==========
+    const generateSubjectHeadings = () => {
+        let subjectsHtml = '';
+        for(let subject of SUBJECT_HEADINGS){
+            let fullSubject = `${displayName} ${subject}`;
+            let url = genInternalLink(subject);
+            subjectsHtml += `<a href="${url}" class="subject-tag">📌 ${fullSubject}</a>`;
+        }
+        return `
+            <div class="subject-section">
+                <div class="subject-title">🏷️ Subject Headings</div>
+                <div class="subject-grid">
+                    ${subjectsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        let totalDrawers = DRAWERS.length;
+        let totalItems = DRAWERS.reduce((acc, d) => acc + d.items.length, 0);
+        return `
+            <div class="hero-catalog">
+                <div class="hero-badge">📇 CARD CATALOG / LIBRARY FILING SYSTEM</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Catalog</div>
+                <div class="hero-desc">${CATALOG_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span>📁 ${totalDrawers} Filing Drawers</span>
+                    <span>📄 ${totalItems} Catalog Cards</span>
+                    <span>🔗 Cross-Referenced</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER BREADCRUMB ==========
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-d45/">Catalog</a> › ${displayName} Leak Filing System
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HEADER ==========
+    const renderHeader = () => {
+        let totalItems = DRAWERS.reduce((acc, d) => acc + d.items.length, 0);
+        return `
+            <div class="catalog-header">
+                <div class="header-row">
+                    <div class="logo">Leak<span>Catalog</span></div>
+                    <div class="catalog-code">FILE SYSTEM v1.0</div>
+                </div>
+                <div class="header-desc">Card Catalog · ${totalItems} Filing Cards · Library of Congress Style</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO (Title + Description + Canonical) ==========
+    const updateSEO = () => {
+        let totalDrawers = DRAWERS.length;
+        let titles = [
+            `${displayName} Leak Catalog — Card Catalog Filing System`,
+            `${displayName} Leak Library Catalog — Complete Index`,
+            `Card Catalog: ${displayName} Leak Archives`,
+            `${displayName} Leak Filing System — Library Catalog`
+        ];
+        let descs = [
+            `Complete card catalog for ${displayName} leak archives. ${totalDrawers} filing drawers. Library-style organization.`,
+            `${displayName} leak library catalog with ${totalDrawers} drawers and cross-reference cards.`,
+            `Card catalog filing system for ${displayName} leak collections. Complete library index.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // Update canonical dynamically based on current URL with query
+        updateDynamicCanonical();
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            
+            <div class="drawers-grid">
+                ${generateDrawers()}
+            </div>
+            
+            ${generateReferenceCards()}
+            ${generateAlphabetIndex()}
+            ${generateSubjectHeadings()}
+            
+            <div class="catalog-bottom">
+                <span>📇 ${displayName} Leak Catalog · Card Catalog Filing System · Complete Library Index</span>
+            </div>
+        `;
+        
+        // Handle internal links (static navigation)
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-d45/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    // Initialize: Update SEO with dynamic canonical, then render page
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d45.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

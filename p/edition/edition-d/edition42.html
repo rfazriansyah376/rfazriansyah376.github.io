@@ -1,0 +1,455 @@
+---
+layout: null
+permalink: /edition-d42/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">SITE DIRECTORY · Leak Index Map</title>
+    <meta id="dynamic-description" name="description" content="Complete site directory and index map. Leak archive navigation. All collections listed.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d43/">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f4f6f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#1a1a2e}
+        
+        /* GLOBAL COLOR VARIABLES - Easy to change entire site color */
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --primary-bg-light: #eff6ff;
+            --primary-tag-bg: #dbeafe;
+            --primary-border: #bfdbfe;
+        }
+        
+        /* Directory Style - Like SiteMap/Index */
+        .sitemap-container{max-width:1100px;margin:0 auto;padding:20px}
+        
+        /* Header */
+        .sitemap-header{background:#fff;border-radius:16px;padding:20px;margin-bottom:24px;border:1px solid #e2e8f0}
+        .header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:12px}
+        .logo{font-size:1.3rem;font-weight:800}
+        .logo span{color:var(--primary-color)}
+        .index-id{font-family:monospace;font-size:0.65rem;color:#64748b;background:#f1f5f9;padding:4px 12px;border-radius:20px}
+        .header-desc{font-size:0.7rem;color:#64748b}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:#64748b;margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero */
+        .hero-index{background:var(--primary-color);color:#fff;border-radius:16px;padding:28px;margin-bottom:28px}
+        .hero-badge{font-size:0.65rem;opacity:0.8;margin-bottom:8px}
+        .hero-title{font-size:1.3rem;font-weight:700;margin-bottom:12px}
+        .hero-title span{text-decoration:underline}
+        .hero-desc{font-size:0.8rem;opacity:0.9;line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;opacity:0.8}
+        
+        /* Main Layout - Single Column Directory */
+        .directory-grid{display:flex;flex-direction:column;gap:28px;margin-bottom:32px}
+        
+        /* Directory Section */
+        .dir-section{background:#fff;border-radius:20px;border:1px solid #e2e8f0;overflow:hidden}
+        .section-header{background:#f8fafc;padding:16px 20px;border-bottom:1px solid #e2e8f0}
+        .section-title{font-size:1rem;font-weight:700;color:#1e293b}
+        .section-title span{color:var(--primary-color);font-size:0.7rem;font-weight:400;margin-left:8px}
+        .section-desc{font-size:0.65rem;color:#64748b;margin-top:4px}
+        
+        /* Links Grid - Banyak Internal Link */
+        .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;padding:16px}
+        .dir-link{display:block;padding:10px 12px;background:#fafcff;border-radius:10px;text-decoration:none;color:#1e293b;border:1px solid transparent;transition:none}
+        .dir-link:hover{border-color:var(--primary-border);background:var(--primary-bg-light)}
+        .link-title{font-size:0.75rem;font-weight:600;margin-bottom:2px}
+        .link-title span{color:var(--primary-color)}
+        .link-desc{font-size:0.6rem;color:#64748b}
+        .link-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+        .link-tag{font-size:0.55rem;color:var(--primary-color);background:var(--primary-tag-bg);padding:2px 8px;border-radius:20px;text-decoration:none}
+        .link-tag:hover{background:var(--primary-color);color:#fff}
+        
+        /* Nested Links - Sub Directory */
+        .nested-section{margin-top:0;border-top:1px solid #e2e8f0}
+        .nested-header{background:#fefce8;padding:12px 20px}
+        .nested-title{font-size:0.8rem;font-weight:700;color:#854d0e}
+        .nested-title a{color:#854d0e;text-decoration:none}
+        .nested-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px;padding:12px 16px;background:#fefdf7}
+        .nested-link{display:block;padding:8px 12px;text-decoration:none;color:#1e293b;font-size:0.7rem;border-radius:8px}
+        .nested-link:hover{background:#fef3c7;color:#854d0e}
+        
+        /* Quick Index Sidebar */
+        .quick-index{background:#fff;border-radius:16px;border:1px solid #e2e8f0;padding:20px;margin-bottom:24px}
+        .quick-title{font-size:0.75rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #e2e8f0}
+        .index-chips{display:flex;flex-wrap:wrap;gap:10px}
+        .index-chip{display:inline-block;background:#f1f5f9;padding:6px 14px;border-radius:30px;font-size:0.65rem;text-decoration:none;color:#1e293b}
+        .index-chip:hover{background:var(--primary-color);color:#fff}
+        
+        /* Clean Bottom */
+        .sitemap-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #e2e8f0;text-align:center;font-size:0.6rem;color:#64748b}
+        
+        @media(max-width:700px){.links-grid{grid-template-columns:1fr}.nested-grid{grid-template-columns:1fr}}
+        @media(max-width:500px){.sitemap-container{padding:16px}.hero-title{font-size:1.1rem}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="sitemap-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#64748b">Loading Site Directory...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE SITE DIRECTORY (EVERGREEN, MANY INTERNAL LINKS) ==========
+    
+    // Main Directory Sections - Setiap heading mengandung "leak" + query
+    const DIRECTORY_SECTIONS = [
+        {
+            name: "Complete Leak Archives",
+            desc: "Complete and comprehensive leak archives containing all content from every source.",
+            links: [
+                { title: "{name} Complete Master Leak Archive", desc: "The definitive complete archive containing every file.", tags: ["Master", "Complete", "Ultimate"] },
+                { title: "{name} Comprehensive Leak Library", desc: "Complete knowledge base containing all known content.", tags: ["Library", "Full", "Reference"] },
+                { title: "{name} Eternal Leak Vault", desc: "Permanent archive with all content preserved forever.", tags: ["Vault", "Eternal", "Permanent"] }
+            ]
+        },
+        {
+            name: "OnlyFans Leak Collections",
+            desc: "Complete OnlyFans leak collections from premium subscription content.",
+            links: [
+                { title: "{name} OnlyFans Complete Leak", desc: "All exclusive subscriber content preserved.", tags: ["OnlyFans", "Premium", "Complete"] },
+                { title: "{name} OnlyFans Master Leak Vault", desc: "Every post ever made, permanently archived.", tags: ["Master", "Vault", "Full"] },
+                { title: "{name} OnlyFans Ultimate Leak Archive", desc: "Complete authenticated collection.", tags: ["Ultimate", "Authentic", "Premium"] }
+            ]
+        },
+        {
+            name: "TikTok Leak Compilations",
+            desc: "Complete TikTok leak compilations of viral content.",
+            links: [
+                { title: "{name} TikTok Complete Leak Compilation", desc: "All viral moments preserved.", tags: ["TikTok", "Viral", "Complete"] },
+                { title: "{name} TikTok Master Leak Feed", desc: "Every video ever posted.", tags: ["Master", "Feed", "Archive"] },
+                { title: "{name} TikTok Viral Leak Collection", desc: "Most requested trending videos.", tags: ["Viral", "Trending", "Popular"] }
+            ]
+        },
+        {
+            name: "Telegram Leak Channels",
+            desc: "Complete Telegram leak channels and message archives.",
+            links: [
+                { title: "{name} Telegram Complete Leak Channel", desc: "All channel content permanently preserved.", tags: ["Telegram", "Channel", "Complete"] },
+                { title: "{name} Telegram Master Leak Archive", desc: "Full message and media history.", tags: ["Master", "Archive", "Full"] }
+            ]
+        },
+        {
+            name: "Instagram Leak Galleries",
+            desc: "Complete Instagram leak galleries of private content.",
+            links: [
+                { title: "{name} Instagram Complete Leak Gallery", desc: "All private story content preserved.", tags: ["Instagram", "Gallery", "Complete"] },
+                { title: "{name} Instagram Master Leak Collection", desc: "Everything preserved and organized.", tags: ["Master", "Collection", "Full"] }
+            ]
+        },
+        {
+            name: "Mega Archive Leaks",
+            desc: "Complete Mega archive leaks and backup collections.",
+            links: [
+                { title: "{name} Mega Complete Leak Archive", desc: "The entire backup collection.", tags: ["Mega", "Backup", "Complete"] },
+                { title: "{name} Mega Master Leak Vault", desc: "Complete file collection permanently preserved.", tags: ["Master", "Vault", "Full"] }
+            ]
+        },
+        {
+            name: "Rare & Unreleased Leaks",
+            desc: "Rare and previously unreleased leak collections.",
+            links: [
+                { title: "{name} Rare Leak Collection", desc: "Hard-to-find rare material collection.", tags: ["Rare", "Unseen", "Collector"] },
+                { title: "{name} Unreleased Leak Archive", desc: "Previously unreleased exclusive content.", tags: ["Unreleased", "Exclusive", "Rare"] }
+            ]
+        },
+        {
+            name: "Fan Favorite Leak Compilations",
+            desc: "Fan-curated and community favorite leak collections.",
+            links: [
+                { title: "{name} Fan Favorites Leak Collection", desc: "Most requested fan content.", tags: ["Fan", "Favorite", "Curated"] },
+                { title: "{name} Top Rated Leak Archive", desc: "Highest rated content by community.", tags: ["Top Rated", "Community", "Best"] }
+            ]
+        }
+    ];
+    
+    // Sub Directory / Nested Links (More Internal Links)
+    const SUB_DIRECTORIES = [
+        {
+            name: "Video Leak Archives",
+            links: ["Full Video Collection", "HD Video Archive", "Master Video Set", "Video Compilation Pack"]
+        },
+        {
+            name: "Photo Leak Galleries",
+            links: ["Complete Photo Set", "HD Image Archive", "Gallery Collection", "Photo Dump"]
+        },
+        {
+            name: "Behind the Scenes Leaks",
+            links: ["BTS Complete", "Making Of Archive", "Behind Curtain", "Studio Sessions"]
+        },
+        {
+            name: "Interview Leak Compilations",
+            links: ["Full Interviews", "Press Conference Archive", "Q&A Sessions", "Media Appearances"]
+        }
+    ];
+    
+    // Quick Index Categories (More Internal Links)
+    const QUICK_INDEX = [
+        "Master Leak Archives", "Complete Collections", "Premium Vault", "Rare Content",
+        "Fan Favorites", "Video Leaks", "Photo Leaks", "Telegram Leaks", "OnlyFans Leaks",
+        "TikTok Leaks", "Instagram Leaks", "Mega Leaks", "Unreleased Content", "HD Quality",
+        "Verified Archives", "Permanent Collections", "Full Library", "Master Set"
+    ];
+    
+    // Evergreen description
+    const SITEMAP_DESC = "Complete site directory and index map for {name} leak archives. All collections organized and linked.";
+    
+    // Stop Words
+    const STOP_WORDS = ['sitemap','directory','index','map','navigation','guide','reference','catalog'];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete directory index"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // Fixed typo: permalink should be /edition-d42/ (matches permalink at top)
+    // ========== GENERATE INTERNAL LINK (VARIAN QUERY + LEAK) ==========
+    const genInternalLink = (keyword) => {
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
+        let newQ = `${nameLower} ${cleanKeyword} leak directory`;
+        return `/edition-d42/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== GENERATE DYNAMIC CANONICAL URL ==========
+    const updateDynamicCanonical = () => {
+        const currentUrl = window.location.href.split('?')[0];
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if(canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
+    };
+    
+    // ========== GENERATE DIRECTORY SECTIONS ==========
+    const generateDirectorySections = () => {
+        let sectionsHtml = '';
+        for(let section of DIRECTORY_SECTIONS){
+            let sectionName = section.name;
+            let sectionDesc = section.desc;
+            
+            let linksHtml = '';
+            for(let link of section.links){
+                let title = link.title.replace('{name}', displayName);
+                let desc = link.desc.replace('{name}', displayName);
+                let url = genInternalLink(link.title);
+                
+                let tagsHtml = '';
+                for(let tag of link.tags){
+                    let tagUrl = genInternalLink(tag);
+                    tagsHtml += `<a href="${tagUrl}" class="link-tag">${tag}</a>`;
+                }
+                
+                linksHtml += `
+                    <a href="${url}" class="dir-link">
+                        <div class="link-title">📄 <span>${escapeHtml(title)}</span></div>
+                        <div class="link-desc">${escapeHtml(desc)}</div>
+                        <div class="link-tags">${tagsHtml}</div>
+                    </a>
+                `;
+            }
+            
+            // Add category link to tags
+            let categoryUrl = genInternalLink(section.name);
+            
+            sectionsHtml += `
+                <div class="dir-section">
+                    <div class="section-header">
+                        <div class="section-title">📌 ${escapeHtml(sectionName)} <span><a href="${categoryUrl}" style="color:var(--primary-color);text-decoration:none">[view all]</a></span></div>
+                        <div class="section-desc">${escapeHtml(sectionDesc)}</div>
+                    </div>
+                    <div class="links-grid">
+                        ${linksHtml}
+                    </div>
+                </div>
+            `;
+        }
+        return sectionsHtml;
+    };
+    
+    // ========== GENERATE SUB DIRECTORIES (NESTED LINKS) ==========
+    const generateSubDirectories = () => {
+        let subsHtml = '';
+        for(let sub of SUB_DIRECTORIES){
+            let subName = sub.name;
+            let subUrl = genInternalLink(sub.name);
+            
+            let linksHtml = '';
+            for(let link of sub.links){
+                let fullLink = `${displayName} ${link}`;
+                let linkUrl = genInternalLink(link);
+                linksHtml += `<a href="${linkUrl}" class="nested-link">📌 ${escapeHtml(fullLink)}</a>`;
+            }
+            
+            subsHtml += `
+                <div class="nested-section">
+                    <div class="nested-header">
+                        <div class="nested-title"><a href="${subUrl}" style="color:#854d0e;text-decoration:none">📁 ${escapeHtml(subName)}</a></div>
+                    </div>
+                    <div class="nested-grid">
+                        ${linksHtml}
+                    </div>
+                </div>
+            `;
+        }
+        return subsHtml;
+    };
+    
+    // ========== GENERATE QUICK INDEX ==========
+    const generateQuickIndex = () => {
+        let chipsHtml = '';
+        for(let item of QUICK_INDEX){
+            let fullItem = `${displayName} ${item}`;
+            let url = genInternalLink(item);
+            chipsHtml += `<a href="${url}" class="index-chip">📌 ${escapeHtml(fullItem)}</a>`;
+        }
+        return `
+            <div class="quick-index">
+                <div class="quick-title">⚡ Quick Index - Jump to Section</div>
+                <div class="index-chips">
+                    ${chipsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== ESCAPE HTML TO PREVENT XSS AND FIX TYPOS ==========
+    const escapeHtml = (str) => {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        let totalLinks = DIRECTORY_SECTIONS.reduce((acc, s) => acc + s.links.length, 0);
+        let totalSections = DIRECTORY_SECTIONS.length;
+        return `
+            <div class="hero-index">
+                <div class="hero-badge">📑 SITE DIRECTORY / INDEX MAP</div>
+                <div class="hero-title"><span>${escapeHtml(displayName)}</span> Leak Archive Index</div>
+                <div class="hero-desc">${SITEMAP_DESC.replace('{name}', escapeHtml(displayName))}</div>
+                <div class="hero-stats">
+                    <span>📁 ${totalSections} Main Sections</span>
+                    <span>📄 ${totalLinks} Direct Links</span>
+                    <span>🔗 Fully Indexed</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER BREADCRUMB ==========
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-d42/">Directory</a> › ${escapeHtml(displayName)} Leak Index
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HEADER ==========
+    const renderHeader = () => {
+        let totalLinks = DIRECTORY_SECTIONS.reduce((acc, s) => acc + s.links.length, 0);
+        return `
+            <div class="sitemap-header">
+                <div class="header-top">
+                    <div class="logo">Leak<span>Directory</span></div>
+                    <div class="index-id">INDEX: ${new Date().getFullYear()}</div>
+                </div>
+                <div class="header-desc">Complete Site Index · ${totalLinks} Listed Entries · Fully Interconnected</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO WITH DYNAMIC CANONICAL ==========
+    const updateSEO = () => {
+        let totalLinks = DIRECTORY_SECTIONS.reduce((acc, s) => acc + s.links.length, 0);
+        let titles = [
+            `${displayName} Leak Directory - Complete Site Index`,
+            `${displayName} Leak Sitemap - Index of All Collections`,
+            `Directory: ${displayName} Leak Archive Index`,
+            `${displayName} Leak Index Map - Complete Navigation`
+        ];
+        let descs = [
+            `Complete site directory for ${displayName} leak archives. ${totalLinks} indexed entries. Full sitemap navigation.`,
+            `${displayName} leak sitemap with ${totalLinks} directory links. Complete index of all collections.`,
+            `Directory index for ${displayName} leak content. ${DIRECTORY_SECTIONS.length} sections of verified archives.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // Update canonical URL dynamically based on current query
+        updateDynamicCanonical();
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            
+            <div class="directory-grid">
+                ${generateDirectorySections()}
+                ${generateSubDirectories()}
+                ${generateQuickIndex()}
+            </div>
+            
+            <div class="sitemap-bottom">
+                <span>📑 ${escapeHtml(displayName)} Leak Directory · Complete Index Map</span>
+            </div>
+        `;
+        
+        // Handle internal links (static navigation)
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-d42/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d42.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

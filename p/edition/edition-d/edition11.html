@@ -1,0 +1,554 @@
+---
+layout: null
+permalink: /edition-d11/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">The Encyclopedia · Complete Topic Library</title>
+    <meta id="dynamic-description" name="description" content="Complete encyclopedia and knowledge library. Comprehensive entries. Permanent access.">
+    <link id="dynamic-canonical" rel="canonical" href="">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:opsz,wght@6..20,400;6..20,500;6..20,600;6..20,700;6..20,800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #c41e3a;
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#faf9f6;font-family:'Inter',sans-serif;color:#1a1a1a}
+        
+        /* Style Encyclopedia / Library Catalog - Classic, Elegant, Detailed */
+        .encyclopedia-wrapper{max-width:1300px;margin:0 auto;padding:0 32px}
+        
+        /* Classic Header */
+        .classic-header{border-bottom:3px double #1a1a1a;padding:32px 0 24px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
+        .title-area .main-title{font-family:'Crimson Pro',serif;font-size:2rem;font-weight:800;letter-spacing:-0.5px}
+        .title-area .sub-title{font-family:'Crimson Pro',serif;font-size:0.8rem;font-style:italic;color:#666;margin-top:4px}
+        .header-info{text-align:right;font-size:0.7rem;color:#666}
+        .header-info .edition{font-family:'Crimson Pro',serif;font-weight:600}
+        
+        /* Breadcrumb */
+        .breadcrumb{margin-bottom:24px;font-size:0.7rem;color:#666;border-bottom:1px solid #e0ddd8;padding-bottom:12px}
+        .breadcrumb a{color:#1a1a1a;text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero Encyclopedia */
+        .encyclopedia-hero{background:#fff;border:1px solid #e0ddd8;padding:48px;margin-bottom:48px;box-shadow:0 4px 12px rgba(0,0,0,0.02)}
+        .hero-call-number{font-family:'Crimson Pro',serif;font-size:0.7rem;letter-spacing:2px;color:var(--primary-color);margin-bottom:16px;text-transform:uppercase}
+        .hero-entry-title{font-family:'Crimson Pro',serif;font-size:3rem;font-weight:800;margin-bottom:20px;line-height:1.1}
+        .hero-meta{display:flex;gap:24px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #e0ddd8}
+        .hero-meta-item{font-size:0.7rem;color:#666}
+        .hero-meta-item strong{font-weight:600;color:#1a1a1a}
+        .hero-abstract{font-size:0.95rem;line-height:1.6;color:#333;margin-bottom:24px;font-family:'Crimson Pro',serif}
+        .hero-stats{display:flex;gap:32px;background:#f5f2eb;padding:20px;margin-top:16px}
+        .hero-stat{text-align:center}
+        .hero-stat-value{font-family:'Crimson Pro',serif;font-size:1.5rem;font-weight:700;color:var(--primary-color)}
+        .hero-stat-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:#666}
+        
+        /* Main Layout: 2 columns */
+        .main-layout{display:grid;grid-template-columns:280px 1fr;gap:48px;margin-bottom:64px}
+        
+        /* Left Sidebar - Table of Contents */
+        .toc-panel{position:sticky;top:20px;align-self:start}
+        .toc-title{font-family:'Crimson Pro',serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid #e0ddd8}
+        .toc-list{list-style:none}
+        .toc-item{padding:8px 0;border-bottom:1px solid #f0eeea;cursor:pointer;transition:color 0.2s}
+        .toc-item:hover{color:var(--primary-color)}
+        .toc-item .toc-chapter{font-size:0.65rem;color:#999;font-family:'Crimson Pro',serif;font-style:italic}
+        .toc-item .toc-title-text{font-size:0.75rem;font-weight:500}
+        
+        /* Right Content - Encyclopedia Entries (Long) */
+        .entries-container{display:flex;flex-direction:column;gap:48px}
+        
+        /* Encyclopedia Entry Card - Very Long */
+        .encyclopedia-entry{background:#fff;border:1px solid #e0ddd8;padding:32px;transition:all 0.2s;cursor:pointer}
+        .encyclopedia-entry:hover{border-color:color-mix(in srgb, var(--primary-color) 25%, transparent);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+        .entry-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+        .entry-category{display:inline-block;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);border:1px solid color-mix(in srgb, var(--primary-color) 25%, transparent);padding:4px 12px;border-radius:30px}
+        .entry-date{font-size:0.65rem;color:#999;font-family:'Crimson Pro',serif;font-style:italic}
+        .entry-title{font-family:'Crimson Pro',serif;font-size:1.4rem;font-weight:700;margin-bottom:16px}
+        .entry-subtitle{font-size:0.8rem;color:#666;margin-bottom:20px;font-style:italic}
+        
+        /* Long Content like encyclopedia articles */
+        .entry-content{font-size:0.85rem;line-height:1.7;color:#333;margin-bottom:20px}
+        .entry-content p{margin-bottom:12px}
+        .entry-content .section-head{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:700;margin:16px 0 8px;color:#1a1a1a}
+        
+        .entry-metadata{background:#faf9f6;padding:16px;margin:16px 0;font-size:0.7rem;border-left:3px solid var(--primary-color)}
+        .metadata-line{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:4px}
+        
+        .entry-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+        .entry-tag{background:#f0eeea;padding:4px 12px;border-radius:16px;font-size:0.65rem;color:#666}
+        
+        .entry-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #e0ddd8}
+        .entry-citation{font-size:0.65rem;color:#999;font-family:'Crimson Pro',serif;font-style:italic}
+        .entry-readmore{font-size:0.7rem;color:var(--primary-color);font-weight:500}
+        
+        /* Small Right Sidebar */
+        .info-box{background:#faf9f6;border:1px solid #e0ddd8;padding:24px;margin-bottom:32px}
+        .info-title{font-family:'Crimson Pro',serif;font-size:0.8rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e0ddd8}
+        .info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0eeea;font-size:0.7rem}
+        .info-row span:first-child{color:#666}
+        .info-row span:last-child{font-weight:500}
+        
+        .see-also-list{list-style:none}
+        .see-also-item{padding:8px 0;border-bottom:1px solid #f0eeea;cursor:pointer;font-size:0.75rem}
+        .see-also-item:hover{color:var(--primary-color)}
+        
+        /* Footer */
+        .encyclopedia-footer{margin-top:64px;padding:32px 0;border-top:1px solid #e0ddd8;text-align:center;font-size:0.7rem;color:#999}
+        
+        /* Responsive */
+        @media(max-width:900px){.main-layout{grid-template-columns:1fr}.toc-panel{display:none}.encyclopedia-hero{padding:24px}.hero-entry-title{font-size:2rem}}
+        @media(max-width:600px){.encyclopedia-wrapper{padding:0 16px}.encyclopedia-entry{padding:20px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="encyclopedia-wrapper" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#999">⚡ Loading Encyclopedia...</div></div>
+
+<script>
+(function(){
+    // ========== ENCYCLOPEDIA STYLE DATABASE (LONG & DETAILED) ==========
+    
+    // 80 Entry Types
+    const ENTRY_TYPES = [
+        "comprehensive entry","complete article","detailed monograph","authoritative treatise","scholarly paper",
+        "academic study","research article","critical analysis","systematic review","literature survey",
+        "historical account","biographical sketch","chronological record","thematic exploration","conceptual framework",
+        "theoretical foundation","practical guide","technical specification","professional handbook","reference work",
+        "encyclopedia article","dictionary entry","lexicon definition","glossary term","thesaurus reference",
+        "bibliographic record","catalog entry","archive document","manuscript description","codex notation",
+        "folio notation","volume reference","chapter excerpt","section highlight","part selection",
+        "book extract","journal article","magazine feature","periodical piece","serial publication"
+    ];
+    
+    // 80 Subject Categories
+    const SUBJECTS = [
+        "comprehensive overview","detailed analysis","systematic study","critical examination","historical perspective",
+        "contemporary view","theoretical approach","practical application","technical implementation","professional practice",
+        "academic discipline","research field","study area","knowledge domain","information science",
+        "data management","knowledge organization","information retrieval","document processing","content management",
+        "digital humanities","computational analysis","quantitative research","qualitative study","mixed methods",
+        "case study analysis","comparative assessment","evaluative framework","interpretive approach","constructive critique"
+    ];
+    
+    // 60 Time Periods (Evergreen)
+    const PERIODS = [
+        "ancient records","classical period","medieval era","renaissance age","enlightenment epoch",
+        "industrial age","modern era","contemporary period","digital age","information era",
+        "historical context","traditional knowledge","established wisdom","classic reference","standard work",
+        "canonical text","authoritative source","definitive edition","master compilation","ultimate collection",
+        "archival record","preserved document","historical archive","original manuscript","primary source"
+    ];
+    
+    // 50 Contributors/Authors (Editorial)
+    const CONTRIBUTORS = [
+        "Editorial Board","Academic Council","Research Committee","Scholarly Press","University Press",
+        "Knowledge Foundation","Research Institute","Academic Society","Professional Association","Industry Council",
+        "Historical Society","Archival Commission","Library Association","Museum Council","Cultural Heritage",
+        "Digital Preservation","Knowledge Management","Information Science","Data Curation","Content Strategy"
+    ];
+    
+    // 70 Content Paragraphs (for long content)
+    const CONTENT_PARAGRAPHS = [
+        "This comprehensive entry provides an in-depth examination of the subject matter, drawing from authoritative sources and verified references. The information presented here has been carefully curated from primary documents and scholarly research, ensuring accuracy and reliability.",
+        "Historical context and development of this topic reveals a rich tapestry of intellectual contributions spanning multiple centuries. Scholars have long recognized the importance of understanding the fundamental principles that govern this domain of knowledge.",
+        "Methodological approaches to studying this subject have evolved significantly over time. Contemporary researchers employ diverse techniques ranging from traditional textual analysis to advanced computational methods, each offering unique insights.",
+        "Critical analysis of existing literature demonstrates several key themes that consistently emerge across different studies and perspectives. These recurring patterns suggest underlying principles that warrant further investigation.",
+        "Practical applications of this knowledge extend across multiple domains and industries. Professionals in various fields have successfully implemented these concepts to solve complex problems and drive innovation.",
+        "Comparative assessment of different theoretical frameworks reveals both complementary and contradictory elements. Understanding these relationships is essential for developing a comprehensive perspective on the subject.",
+        "Future directions for research and inquiry point toward several promising avenues. Emerging technologies and methodologies offer unprecedented opportunities for deeper understanding and practical application.",
+        "Documentation and archival preservation ensure that this knowledge remains accessible for future generations. Proper curation and metadata management facilitate discovery and reuse.",
+        "Interdisciplinary connections enrich our understanding of this topic by bringing diverse perspectives and methodologies to bear on common questions and challenges.",
+        "The significance of this subject within the broader intellectual landscape cannot be overstated. Its influence extends across multiple disciplines and continues to shape contemporary discourse.",
+        "Comprehensive documentation includes detailed annotations, cross-references, and bibliographic citations. Each claim is supported by verifiable evidence from authoritative sources.",
+        "This analysis synthesizes findings from more than fifty primary sources, including original documents, scholarly articles, and professional publications. The resulting synthesis provides a comprehensive overview.",
+        "Special attention has been given to methodological rigor and analytical depth. Each conclusion is grounded in evidence and subject to systematic verification procedures.",
+        "Theoretical foundations are examined in detail, tracing their development from initial formulation through subsequent refinement and current state of knowledge.",
+        "Empirical evidence supporting these conclusions comes from multiple independent studies and replicated experiments, confirming the reliability of reported findings."
+    ];
+    
+    // 50 Section Headings (for article structure)
+    const SECTION_HEADINGS = [
+        "Historical Background and Development","Theoretical Framework and Foundations","Methodological Approaches and Techniques",
+        "Critical Analysis and Evaluation","Practical Applications and Implications","Contemporary Perspectives and Debates",
+        "Future Directions and Emerging Trends","Documentation and Archival Records","Interdisciplinary Connections",
+        "Comparative Assessment and Synthesis","Chronological Development Timeline","Major Contributors and Influences",
+        "Key Concepts and Terminology","Research Methodology and Design","Data Collection and Analysis",
+        "Findings and Results Discussion","Conclusions and Recommendations","References and Further Reading"
+    ];
+    
+    // 30 Call Numbers (Library classification style)
+    const CALL_NUMBERS = [
+        "REF.ARC.001","REF.ARC.002","REF.ARC.003","REF.HIS.001","REF.HIS.002","REF.SCI.001",
+        "REF.SCI.002","REF.PHI.001","REF.PHI.002","REF.ART.001","REF.ART.002","REF.LIT.001",
+        "REF.LIT.002","REF.TEC.001","REF.TEC.002","REF.SOC.001","REF.SOC.002","REF.ECO.001",
+        "REF.ECO.002","REF.LAW.001","REF.MED.001","REF.MED.002","REF.ENG.001","REF.ENG.002"
+    ];
+    
+    // 30 ISBN-style identifiers
+    const IDENTIFIERS = [
+        "978-0-000-00000-0","978-1-000-00000-0","978-0-100-00000-0","978-1-100-00000-0",
+        "978-0-200-00000-0","978-1-200-00000-0","000-0-000-00000-0","000-1-000-00000-0"
+    ];
+    
+    // 50 Display Names (Librarian/Curator style)
+    const DISPLAY_NAMES = [
+        "Encyclopedia Britannica","Library of Knowledge","Academic Archive","Scholarly Repository","Research Collection",
+        "Historical Archive","Digital Library","Knowledge Base","Information Center","Document Repository",
+        "Archival Collection","Manuscript Library","Reference Collection","Special Collections","Rare Book Room",
+        "Periodical Archive","Media Archive","Data Repository","Scholarly Commons","Institutional Repository"
+    ];
+    
+    // 30 Usernames
+    const USERNAMES = [
+        "encyclopedia","knowledgebase","academicarchive","scholarlypub","researchcoll",
+        "historicarchive","digitallibrary","knowledgecenter","infocenter","documentrepo",
+        "archivalcoll","manuscriptlib","referencecoll","specialcoll","rarebooks"
+    ];
+    
+    // 20 File Sizes
+    const FILE_SIZES = ['245 KB','512 KB','1.2 MB','2.4 MB','4.8 MB','8.5 MB','12 MB','18 MB','24 MB','32 MB','48 MB','64 MB','96 MB','128 MB','256 MB','512 MB'];
+    
+    // 20 View Ranges
+    const VIEW_RANGES = [
+        [5000,15000],[15000,40000],[40000,90000],[90000,180000],[180000,350000],
+        [350000,600000],[600000,1000000],[1000000,1800000],[1800000,3000000],[3000000,5000000],
+        [5000000,8000000],[8000000,12000000],[12000000,20000000],[20000000,35000000],[35000000,60000000]
+    ];
+    
+    // Citation ranges
+    const CITATION_RANGES = [[50,200],[200,600],[600,1500],[1500,3500],[3500,8000],[8000,18000]];
+    const VOLUME_RANGES = [[1,5],[5,15],[15,35],[35,75],[75,150]];
+    
+    // 20 Time Indicators
+    const TIME_INDICATORS = [
+        "First published","Last revised","Digitized","Archived","Cataloged","Indexed",
+        "Reviewed","Updated","Expanded","Revised","Corrected","Enhanced","Supplemented"
+    ];
+    
+    // 20 Bio Templates (Long)
+    const BIO_TEMPLATES = [
+        (n,f) => `The complete ${n.toLowerCase()} encyclopedia. Comprehensive entries covering all aspects of ${n.toLowerCase()} knowledge. ${f.toLocaleString()}+ scholarly citations. Permanent archive.`,
+        (n,f) => `Official ${n.toLowerCase()} reference work. ${f.toLocaleString()}+ verified entries. Academic peer review. Complete documentation.`,
+        (n) => `${n.toLowerCase()} definitive encyclopedia. Historical records, contemporary analysis, and future perspectives. Fully documented.`,
+        (n,f) => `Authoritative ${n.toLowerCase()} reference. ${f.toLocaleString()}+ scholarly references. Interdisciplinary coverage.`,
+        (n) => `${n.toLowerCase()} comprehensive knowledge base. Systematic organization. Complete archival preservation.`,
+        (n,f) => `The ${n.toLowerCase()} encyclopedia ${f.toLocaleString()}+ entries. Trusted by scholars worldwide.`,
+        (n) => `Ultimate ${n.toLowerCase()} reference work. Complete historical and contemporary coverage.`,
+        (n,f) => `${n.toLowerCase()} knowledge repository. ${f.toLocaleString()}+ academic citations.`,
+        (n) => `Premium ${n.toLowerCase()} encyclopedia. Professional quality. Comprehensive scope.`,
+        (n,f) => `Original ${n.toLowerCase()} reference. ${f.toLocaleString()}+ verified citations.`,
+        (n) => `${n.toLowerCase()} master encyclopedia. Complete verified entries.`,
+        (n,f) => `${n.toLowerCase()} definitive reference. ${f.toLocaleString()}+ scholarly works.`,
+        (n) => `Most comprehensive ${n.toLowerCase()} encyclopedia online.`,
+        (n,f) => `${f.toLocaleString()}+ scholars reference ${n.toLowerCase()} encyclopedia.`,
+        (n) => `${n.toLowerCase()} complete knowledge archive. Permanent preservation.`,
+        (n,f) => `The authoritative ${n.toLowerCase()} encyclopedia. ${f.toLocaleString()}+ citations.`,
+        (n) => `${n.toLowerCase()} comprehensive reference work. Fully documented.`,
+        (n,f) => `Leading ${n.toLowerCase()} encyclopedia. ${f.toLocaleString()}+ entries.`,
+        (n) => `${n.toLowerCase()} complete scholarly archive. Peer reviewed.`,
+        (n,f) => `Professional ${n.toLowerCase()} encyclopedia. ${f.toLocaleString()}+ references.`
+    ];
+    
+    // 50 Related Entry Names
+    const RELATED_ENTRIES = [
+        (n) => `${n}: Historical Overview`,(n) => `${n}: Theoretical Foundations`,(n) => `${n}: Methodological Approaches`,
+        (n) => `${n}: Contemporary Perspectives`,(n) => `${n}: Future Directions`,(n) => `${n}: Critical Analysis`,
+        (n) => `${n}: Comparative Studies`,(n) => `${n}: Interdisciplinary Connections`,(n) => `Complete ${n} Bibliography`,
+        (n) => `${n}: Primary Sources`,(n) => `${n}: Secondary Literature`,(n) => `${n}: Research Methods`,
+        (n) => `${n}: Case Studies`,(n) => `${n}: Practical Applications`,() => `Knowledge Organization Theory`,
+        () => `Information Science Foundations`,() => `Digital Preservation Methods`,() => `Archival Theory and Practice`,
+        () => `Library Science Core Concepts`,() => `Documentation Standards`,() => `Metadata Frameworks`
+    ];
+    
+    // See Also items
+    const SEE_ALSO = [
+        "Related Topics","Cross References","Bibliographic Sources","Archival Materials","Primary Documents"
+    ];
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'encyclopedia','reference','archive','library','collection','knowledge','information','database',
+        'compendium','dictionary','lexicon','thesaurus','glossary','handbook','guide','manual',
+        'complete','comprehensive','ultimate','definitive','essential','authoritative','scholarly','academic'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayTopic = formatTopic(baseTopic);
+    const topicLower = displayTopic.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = () => {
+        let e = rand(ENTRY_TYPES), s = rand(SUBJECTS), p = rand(PERIODS);
+        let newQ = `${topicLower} ${e} ${s} ${p}`;
+        if(Math.random() > 0.5) newQ += ` ${rand(PERIODS)}`;
+        return { 
+            url:`/edition-d12/?q=${encodeURIComponent(newQ)}`, 
+            title:`${displayTopic}: ${e.charAt(0).toUpperCase()+e.slice(1)}`,
+            subject:s,
+            period:p,
+            entryType:e
+        };
+    };
+    
+    // ========== GENERATE METRICS ==========
+    const genMetrics = () => ({
+        views: range(...rand(VIEW_RANGES)), citations: range(...rand(CITATION_RANGES)),
+        volume: range(...rand(VOLUME_RANGES)), callNumber: rand(CALL_NUMBERS),
+        identifier: rand(IDENTIFIERS), fileSize: rand(FILE_SIZES),
+        lastUpdate: rand(TIME_INDICATORS), contributor: rand(CONTRIBUTORS)
+    });
+    
+    // ========== GENERATE LONG CONTENT ==========
+    const generateLongContent = () => {
+        // Select 4-6 random paragraphs
+        let numParagraphs = range(4, 7);
+        let paragraphs = [];
+        for(let i=0;i<numParagraphs;i++){
+            paragraphs.push(rand(CONTENT_PARAGRAPHS));
+        }
+        
+        // Select 2-3 section headings
+        let numSections = range(2, 4);
+        let sections = [];
+        for(let i=0;i<numSections;i++){
+            let heading = rand(SECTION_HEADINGS);
+            let content = rand(CONTENT_PARAGRAPHS);
+            sections.push(`<div class="section-head">${heading}</div><p>${content}</p>`);
+        }
+        
+        return { paragraphs, sections };
+    };
+    
+    // ========== RENDER ENCYCLOPEDIA ENTRY (LONG) ==========
+    const renderEncyclopediaEntry = (link, idx) => {
+        let m = genMetrics();
+        let content = generateLongContent();
+        let dn = rand(DISPLAY_NAMES);
+        let un = rand(USERNAMES);
+        let fmt = (n) => n.toLocaleString();
+        let currentYear = new Date().getFullYear();
+        
+        // Generate random tags
+        let tags = [];
+        let tagOptions = ['Reference','Archive','Documentation','Scholarly','Academic','Research','Historical','Contemporary','Analysis','Review'];
+        for(let i=0;i<4;i++) tags.push(rand(tagOptions));
+        
+        return `
+            <div class="encyclopedia-entry" data-url="${link.url}">
+                <div class="entry-header">
+                    <div class="entry-category">${link.subject.toUpperCase()}</div>
+                    <div class="entry-date">${m.lastUpdate} · ${currentYear - range(1,8)}</div>
+                </div>
+                <div class="entry-title">${link.title}</div>
+                <div class="entry-subtitle">${link.period} · ${link.entryType}</div>
+                
+                <div class="entry-content">
+                    <p>${content.paragraphs[0]}</p>
+                    <p>${content.paragraphs[1] || rand(CONTENT_PARAGRAPHS)}</p>
+                    ${content.sections.join('')}
+                    <p>${content.paragraphs[content.paragraphs.length-1]}</p>
+                </div>
+                
+                <div class="entry-metadata">
+                    <div class="metadata-line"><strong>Call Number:</strong> ${m.callNumber}</div>
+                    <div class="metadata-line"><strong>Identifier:</strong> ${m.identifier}</div>
+                    <div class="metadata-line"><strong>Volume:</strong> ${m.volume} · <strong>Pages:</strong> ${range(120,850)}</div>
+                    <div class="metadata-line"><strong>Publisher:</strong> ${dn}</div>
+                    <div class="metadata-line"><strong>Contributor:</strong> ${m.contributor}</div>
+                    <div class="metadata-line"><strong>File Size:</strong> ${m.fileSize}</div>
+                </div>
+                
+                <div class="entry-tags">
+                    ${tags.map(t => `<span class="entry-tag">${topicLower} ${t.toLowerCase()}</span>`).join('')}
+                    <span class="entry-tag">${fmt(m.views)} views</span>
+                    <span class="entry-tag">${fmt(m.citations)} citations</span>
+                </div>
+                
+                <div class="entry-footer">
+                    <div class="entry-citation">Suggested citation: ${dn} (${currentYear - range(1,5)}). ${link.title}. Vol. ${m.volume}, pp. ${range(12,340)}.</div>
+                    <div class="entry-readmore">Read full entry →</div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER TABLE OF CONTENTS ==========
+    const renderTOC = (links) => {
+        let items = [];
+        let chapters = ['Introduction','Historical Background','Theoretical Framework','Methodology','Analysis','Conclusion','Bibliography'];
+        for(let i=0;i<chapters.length;i++){
+            let link = links[i % links.length] || genLink();
+            items.push(`
+                <li class="toc-item" data-url="${link.url}">
+                    <div class="toc-chapter">Chapter ${String(i+1).padStart(2,'0')}</div>
+                    <div class="toc-title-text">${chapters[i]}</div>
+                </li>
+            `);
+        }
+        return items.join('');
+    };
+    
+    // ========== RENDER INFO BOX ==========
+    const renderInfoBox = () => {
+        let metrics = [
+            { label:"Entry Count", value:range(125,680).toLocaleString() },
+            { label:"Total Pages", value:range(12500,84500).toLocaleString() },
+            { label:"Illustrations", value:range(45,380).toLocaleString() },
+            { label:"Tables", value:range(12,85).toLocaleString() },
+            { label:"Bibliographies", value:range(25,180).toLocaleString() },
+            { label:"Index Terms", value:range(450,2800).toLocaleString() }
+        ];
+        return metrics.map(m => `<div class="info-row"><span>${m.label}</span><span>${m.value}</span></div>`).join('');
+    };
+    
+    // ========== RENDER SEE ALSO ==========
+    const renderSeeAlso = (links) => {
+        let items = [];
+        for(let i=0;i<6;i++){
+            let link = links[i] || genLink();
+            let entry = rand(RELATED_ENTRIES)(displayTopic);
+            items.push(`<li class="see-also-item" data-url="${link.url}">${entry}</li>`);
+        }
+        return items.join('');
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayTopic} · Complete Encyclopedia Entry | The Encyclopedia`,
+            `${displayTopic} · Scholarly Reference Work | The Encyclopedia`,
+            `${displayTopic} · Comprehensive Knowledge Base | The Encyclopedia`,
+            `${displayTopic} · Authoritative Academic Reference | The Encyclopedia`
+        ];
+        let descs = [
+            `Complete ${displayTopic.toLowerCase()} encyclopedia entry. ${range(50,200)} pages of comprehensive coverage. Scholarly references. Permanent archive.`,
+            `Access the definitive ${displayTopic.toLowerCase()} reference work. Fully documented. Academic peer review.`,
+            `${displayTopic.toLowerCase()} comprehensive knowledge base. Complete historical and contemporary coverage.`,
+            `Authoritative ${displayTopic.toLowerCase()} encyclopedia. ${range(100,500)}+ scholarly citations.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0] + '?q=' + encodeURIComponent(rawQuery));
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let links = Array.from({length:5}, ()=>genLink());
+        let stats = { entries: range(85,420), citations: range(1250,8500), contributors: range(45,180) };
+        let bio = rand(BIO_TEMPLATES)(displayTopic, stats.citations);
+        let currentYear = new Date().getFullYear();
+        let edition = range(1,8);
+        
+        document.getElementById('app').innerHTML = `
+            <div class="classic-header">
+                <div class="title-area">
+                    <div class="main-title">The <span style="color:var(--primary-color)">Encyclopedia</span></div>
+                    <div class="sub-title">of Knowledge · Complete Reference Library</div>
+                </div>
+                <div class="header-info">
+                    <div class="edition">Volume ${range(12,48)} · ${currentYear} edition</div>
+                    <div style="margin-top:4px">ISSN ${range(1000,9999)}-${range(1000,9999)}</div>
+                </div>
+            </div>
+            
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-d12/">Encyclopedia</a> › <span style="color:var(--primary-color)">${displayTopic}</span>
+            </div>
+            
+            <div class="encyclopedia-hero">
+                <div class="hero-call-number">CALL NUMBER: ${rand(CALL_NUMBERS)}</div>
+                <div class="hero-entry-title">${displayTopic}</div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item"><strong>Entry ID:</strong> ENC-${String(range(1000,9999))}</div>
+                    <div class="hero-meta-item"><strong>Last Revised:</strong> ${currentYear - range(0,2)}</div>
+                    <div class="hero-meta-item"><strong>Reading Time:</strong> ${range(15,65)} minutes</div>
+                </div>
+                <div class="hero-abstract">${bio}</div>
+                <div class="hero-stats">
+                    <div class="hero-stat"><div class="hero-stat-value">${stats.entries.toLocaleString()}</div><div class="hero-stat-label">ENTRIES</div></div>
+                    <div class="hero-stat"><div class="hero-stat-value">${stats.citations.toLocaleString()}</div><div class="hero-stat-label">CITATIONS</div></div>
+                    <div class="hero-stat"><div class="hero-stat-value">${stats.contributors.toLocaleString()}</div><div class="hero-stat-label">CONTRIBUTORS</div></div>
+                    <div class="hero-stat"><div class="hero-stat-value">${range(25,120)}</div><div class="hero-stat-label">LANGUAGES</div></div>
+                </div>
+            </div>
+            
+            <div class="main-layout">
+                <div class="toc-panel">
+                    <div class="toc-title">CONTENTS</div>
+                    <ul class="toc-list" id="tocList">
+                        ${renderTOC(links)}
+                    </ul>
+                    <div class="info-box" style="margin-top:32px">
+                        <div class="info-title">PUBLICATION INFO</div>
+                        ${renderInfoBox()}
+                    </div>
+                </div>
+                
+                <div class="entries-container" id="entriesContainer">
+                    ${links.map((l,i)=>renderEncyclopediaEntry(l,i)).join('')}
+                    ${renderEncyclopediaEntry(genLink(), 5)}
+                    ${renderEncyclopediaEntry(genLink(), 6)}
+                </div>
+            </div>
+            
+            <div class="main-layout" style="margin-top:0">
+                <div></div>
+                <div>
+                    <div class="info-box">
+                        <div class="info-title">📚 SEE ALSO</div>
+                        <ul class="see-also-list" id="seeAlsoList">
+                            ${renderSeeAlso(links)}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="encyclopedia-footer">
+                <p>The Encyclopedia · ${displayTopic} Complete Reference Work · ${stats.entries.toLocaleString()} Entries · ${stats.citations.toLocaleString()} Citations</p>
+                <p style="margin-top:8px">© ${currentYear} The Encyclopedia. All rights reserved. ISSN ${range(1000,9999)}-${range(1000,9999)}</p>
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.encyclopedia-entry, .toc-item, .see-also-item').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d11.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

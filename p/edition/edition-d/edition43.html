@@ -1,0 +1,626 @@
+---
+layout: null
+permalink: /edition-d43/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">EXPLORER TREE · Hierarchical Leak Index</title>
+    <meta id="dynamic-description" name="description" content="Explorer tree hierarchical index for leak collections. File-system style navigation.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d44/">
+    <style>
+        /* ------------------------------------------------
+           GLOBAL COLOR SCHEME (Easy to change)
+           Change the --primary-color and --primary-dark values to change the whole theme
+        ------------------------------------------------- */
+        :root {
+            --primary-color: #8ab4f8;    /* Default: Light Blue */
+            --primary-dark: #6d93d4;     /* Default: Darker Blue for hover */
+            --bg-body: #202124;
+            --bg-surface: #2d2e32;
+            --bg-elevated: #3c4043;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --border-color: #3c4043;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: var(--bg-body);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica Neue, sans-serif;
+            color: var(--text-primary);
+        }
+        
+        /* Explorer Tree Style - Like Windows File Explorer / VS Code Tree View */
+        .explorer-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* Header */
+        .explorer-header {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+        .header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+        .logo { font-size: 1.1rem; font-weight: 700; }
+        .logo span { color: var(--primary-color); }
+        .explorer-badge {
+            background: var(--bg-elevated);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .header-desc { font-size: 0.65rem; color: var(--text-secondary); }
+        
+        /* Breadcrumb */
+        .breadcrumb { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 20px; }
+        .breadcrumb a { color: var(--primary-color); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        
+        /* Hero */
+        .hero-explorer {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border-color);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--bg-body);
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .hero-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .hero-title span { color: var(--primary-color); }
+        .hero-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px; }
+        .hero-stats { display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.6rem; color: var(--text-secondary); }
+        
+        /* Main Layout - 2 Columns (Tree + Content) */
+        .explorer-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; margin-bottom: 32px; }
+        
+        /* Left Panel - Explorer Tree */
+        .tree-panel {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            position: sticky;
+            top: 20px;
+        }
+        .tree-header {
+            background: var(--bg-body);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tree-header-title { font-size: 0.7rem; font-weight: 600; color: var(--primary-color); }
+        .tree-header-desc { font-size: 0.55rem; color: var(--text-secondary); margin-top: 2px; }
+        
+        /* Tree View */
+        .tree-view { padding: 8px 0; }
+        .tree-root { padding-left: 0; }
+        .tree-folder { margin: 0; }
+        .tree-folder-details { margin: 0; }
+        .folder-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .folder-icon { font-size: 14px; color: var(--primary-color); min-width: 18px; }
+        .folder-name { color: var(--text-primary); }
+        .folder-count { font-size: 0.55rem; color: var(--text-secondary); margin-left: 6px; }
+        
+        .tree-items { padding-left: 24px; }
+        .tree-item {
+            display: block;
+            padding: 6px 12px;
+            text-decoration: none;
+            color: #bdc1c6;
+            font-size: 0.7rem;
+            border-left: 2px solid transparent;
+        }
+        .tree-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
+        .tree-item.active {
+            background: var(--bg-elevated);
+            border-left-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .tree-icon { font-size: 12px; margin-right: 8px; }
+        
+        /* Nested Tree (Sub-folders) */
+        .sub-tree { padding-left: 24px; margin-top: 4px; margin-bottom: 4px; }
+        .sub-folder-header { display: flex; align-items: center; gap: 6px; padding: 5px 12px; font-size: 0.65rem; }
+        .sub-folder-name { color: #bdc1c6; }
+        .sub-items { padding-left: 28px; }
+        .sub-item {
+            display: block;
+            padding: 5px 12px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.6rem;
+        }
+        .sub-item:hover { background: #35363a; color: var(--text-primary); }
+        
+        /* Right Panel - Content Area */
+        .content-panel {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+        }
+        .content-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+        .content-title span { color: var(--primary-color); }
+        .content-desc { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5; }
+        
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+        .content-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            text-decoration: none;
+            display: block;
+        }
+        .content-card:hover { background: var(--bg-elevated); border-color: var(--primary-color); }
+        .card-icon { font-size: 18px; margin-bottom: 8px; }
+        .card-title { font-size: 0.7rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .card-desc { font-size: 0.55rem; color: var(--text-secondary); }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+        .card-tag {
+            font-size: 0.5rem;
+            color: var(--primary-color);
+            background: var(--bg-elevated);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        /* Quick Access Footer */
+        .quick-explorer {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            margin-top: 20px;
+        }
+        .quick-title { font-size: 0.65rem; font-weight: 600; color: var(--primary-color); margin-bottom: 12px; }
+        .quick-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .quick-chip {
+            background: var(--bg-body);
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            text-decoration: none;
+            color: #bdc1c6;
+            border: 1px solid var(--border-color);
+        }
+        .quick-chip:hover { background: var(--primary-color); color: var(--bg-body); border-color: var(--primary-color); }
+        
+        /* Clean Bottom */
+        .explorer-bottom { margin-top: 32px; padding: 16px 0; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.55rem; color: var(--text-secondary); }
+        
+        @media (max-width: 800px) {
+            .explorer-layout { grid-template-columns: 1fr; }
+            .tree-panel { position: static; margin-bottom: 20px; }
+        }
+        @media (max-width: 500px) {
+            .explorer-container { padding: 16px; }
+        }
+    </style>
+{% include head.html %}
+</head>
+<body>
+<div loading="lazy">
+<div class="explorer-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--text-secondary)">📂 LOADING EXPLORER TREE...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE EXPLORER TREE (EVERGREEN, MANY INTERNAL LINKS) ==========
+    
+    const TREE_DATA = [
+        {
+            name: "📁 Complete Leak Archives",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Complete Master Leak Archive", tags: ["Master", "Complete"] },
+                { name: "📄 {name} Comprehensive Leak Library", tags: ["Library", "Reference"] },
+                { name: "📄 {name} Eternal Leak Vault", tags: ["Vault", "Eternal"] }
+            ],
+            subFolders: null
+        },
+        {
+            name: "📁 OnlyFans Leak Collections",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} OnlyFans Complete Leak", tags: ["Premium", "Complete"] },
+                { name: "📄 {name} OnlyFans Master Leak Vault", tags: ["Master", "Vault"] },
+                { name: "📄 {name} OnlyFans Ultimate Leak", tags: ["Ultimate", "Archive"] }
+            ],
+            subFolders: [
+                { name: "📁 Premium Tiers", items: ["Standard Tier", "Premium Tier", "Ultimate Tier"] }
+            ]
+        },
+        {
+            name: "📁 TikTok Leak Compilations",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} TikTok Complete Leak Compilation", tags: ["Viral", "Complete"] },
+                { name: "📄 {name} TikTok Master Leak Feed", tags: ["Master", "Feed"] },
+                { name: "📄 {name} TikTok Viral Leak Collection", tags: ["Viral", "Trending"] }
+            ],
+            subFolders: [
+                { name: "📁 Video Categories", items: ["Short Clips", "Full Videos", "Highlights"] }
+            ]
+        },
+        {
+            name: "📁 Telegram Leak Channels",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Telegram Complete Leak Channel", tags: ["Channel", "Complete"] },
+                { name: "📄 {name} Telegram Master Leak Archive", tags: ["Master", "Archive"] }
+            ],
+            subFolders: [
+                { name: "📁 Channel Types", items: ["Public Channels", "Private Groups", "Archived Chats"] }
+            ]
+        },
+        {
+            name: "📁 Instagram Leak Galleries",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Instagram Complete Leak Gallery", tags: ["Gallery", "Complete"] },
+                { name: "📄 {name} Instagram Master Leak Collection", tags: ["Master", "Collection"] }
+            ],
+            subFolders: [
+                { name: "📁 Content Formats", items: ["Stories", "Posts", "Highlights", "Archives"] }
+            ]
+        },
+        {
+            name: "📁 Mega Archive Leaks",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Mega Complete Leak Archive", tags: ["Backup", "Complete"] },
+                { name: "📄 {name} Mega Master Leak Vault", tags: ["Master", "Vault"] }
+            ],
+            subFolders: null
+        },
+        {
+            name: "📁 Rare & Unreleased Leaks",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Rare Leak Collection", tags: ["Rare", "Unseen"] },
+                { name: "📄 {name} Unreleased Leak Archive", tags: ["Unreleased", "Exclusive"] }
+            ],
+            subFolders: [
+                { name: "📁 Rarity Levels", items: ["Common", "Rare", "Epic", "Legendary"] }
+            ]
+        },
+        {
+            name: "📁 Fan Favorite Leak Compilations",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Fan Favorites Leak Collection", tags: ["Curated", "Favorite"] },
+                { name: "📄 {name} Top Rated Leak Archive", tags: ["Top", "Rated"] }
+            ],
+            subFolders: [
+                { name: "📁 Rating Categories", items: ["5 Star Rated", "Most Viewed", "Most Shared"] }
+            ]
+        },
+        {
+            name: "📁 Video Leak Archives",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Complete Video Leak Archive", tags: ["Video", "HD"] },
+                { name: "📄 {name} HD Video Leak Collection", tags: ["HD", "Quality"] },
+                { name: "📄 {name} Master Video Leak Set", tags: ["Master", "Set"] }
+            ],
+            subFolders: [
+                { name: "📁 Video Quality", items: ["480p", "720p", "1080p", "4K"] }
+            ]
+        },
+        {
+            name: "📁 Photo Leak Galleries",
+            icon: "📂",
+            items: [
+                { name: "📄 {name} Complete Photo Leak Gallery", tags: ["Photo", "Gallery"] },
+                { name: "📄 {name} HD Photo Leak Collection", tags: ["HD", "Resolution"] },
+                { name: "📄 {name} Master Photo Leak Set", tags: ["Master", "Set"] }
+            ],
+            subFolders: [
+                { name: "📁 Resolution Guide", items: ["HD", "Full HD", "2K", "4K", "Original"] }
+            ]
+        }
+    ];
+    
+    const QUICK_EXPLORER = [
+        "Complete Archive", "Master Collection", "Premium Vault", "Rare Content",
+        "Fan Favorites", "Video Archive", "Photo Gallery", "OnlyFans", "TikTok",
+        "Telegram", "Instagram", "Mega Backup", "HD Quality", "4K Content"
+    ];
+    
+    const EXPLORER_DESC = "Explorer tree hierarchical index for {name} leak collections. File-system style navigation.";
+    const STOP_WORDS = ['explorer','tree','hierarchical','index','folder','directory','browser','navigator'];
+    
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // Ekstrak query
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "explorer tree directory"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // Generate Internal Link (TIDAK DIUBAH)
+    const genInternalLink = (keyword) => {
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
+        let newQ = `${nameLower} ${cleanKeyword} explorer`;
+        return `/edition-d44/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // Generate Tree View
+    const generateTreeView = () => {
+        let treeHtml = '';
+        for(let folder of TREE_DATA){
+            let folderName = folder.name;
+            let folderUrl = genInternalLink(folderName.substring(3));
+            let itemsHtml = '';
+            for(let item of folder.items){
+                let itemName = item.name.replace('{name}', displayName);
+                let itemUrl = genInternalLink(item.name);
+                let tagsHtml = '';
+                for(let tag of item.tags){
+                    tagsHtml += `<span class="card-tag">#${tag}</span>`;
+                }
+                itemsHtml += `
+                    <a href="${itemUrl}" class="tree-item">
+                        <span class="tree-icon">📄</span> ${itemName}
+                    </a>
+                `;
+            }
+            
+            let subFoldersHtml = '';
+            if(folder.subFolders){
+                for(let sub of folder.subFolders){
+                    let subName = sub.name;
+                    let subUrl = genInternalLink(subName.substring(3));
+                    let subItemsHtml = '';
+                    for(let subItem of sub.items){
+                        let fullSubItem = `${displayName} ${subItem}`;
+                        let subItemUrl = genInternalLink(subItem);
+                        subItemsHtml += `<a href="${subItemUrl}" class="sub-item">📄 ${fullSubItem}</a>`;
+                    }
+                    subFoldersHtml += `
+                        <div class="sub-tree">
+                            <div class="sub-folder-header">
+                                <span class="folder-icon">📁</span>
+                                <a href="${subUrl}" style="color:#bdc1c6;text-decoration:none" class="sub-folder-name">${subName}</a>
+                            </div>
+                            <div class="sub-items">
+                                ${subItemsHtml}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            treeHtml += `
+                <div class="tree-folder">
+                    <div class="folder-header">
+                        <span class="folder-icon">📁</span>
+                        <a href="${folderUrl}" style="color:var(--text-primary);text-decoration:none" class="folder-name">${folderName}</a>
+                        <span class="folder-count">(${folder.items.length})</span>
+                    </div>
+                    <div class="tree-items">
+                        ${itemsHtml}
+                        ${subFoldersHtml}
+                    </div>
+                </div>
+            `;
+        }
+        return `
+            <div class="tree-panel">
+                <div class="tree-header">
+                    <div class="tree-header-title">📂 EXPLORER TREE</div>
+                    <div class="tree-header-desc">File-system navigation · Hierarchical index</div>
+                </div>
+                <div class="tree-view">
+                    ${treeHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // Generate Content Panel
+    const generateContentPanel = () => {
+        let contentCards = '';
+        let featuredItems = [];
+        for(let folder of TREE_DATA.slice(0,6)){
+            for(let item of folder.items.slice(0,1)){
+                featuredItems.push(item);
+            }
+        }
+        for(let item of featuredItems){
+            let itemName = item.name.replace('{name}', displayName);
+            let itemUrl = genInternalLink(item.name);
+            let tagsHtml = '';
+            for(let tag of item.tags){
+                let tagUrl = genInternalLink(tag);
+                tagsHtml += `<a href="${tagUrl}" class="card-tag">#${tag}</a>`;
+            }
+            contentCards += `
+                <a href="${itemUrl}" class="content-card">
+                    <div class="card-icon">📄</div>
+                    <div class="card-title">${itemName}</div>
+                    <div class="card-desc">${item.tags[0]} collection · Verified</div>
+                    <div class="card-tags">${tagsHtml}</div>
+                </a>
+            `;
+        }
+        
+        let totalFolders = TREE_DATA.length;
+        let totalItems = TREE_DATA.reduce((acc, f) => acc + f.items.length, 0);
+        
+        return `
+            <div class="content-panel">
+                <div class="content-title"><span>📂 ${displayName}</span> Leak Explorer</div>
+                <div class="content-desc">Complete hierarchical index of ${totalFolders} folders and ${totalItems} items. Click any file or folder to explore.</div>
+                <div class="content-grid">
+                    ${contentCards}
+                </div>
+            </div>
+        `;
+    };
+    
+    // Generate Quick Explorer
+    const generateQuickExplorer = () => {
+        let chipsHtml = '';
+        for(let qe of QUICK_EXPLORER){
+            let fullQe = `${displayName} ${qe}`;
+            let url = genInternalLink(qe);
+            chipsHtml += `<a href="${url}" class="quick-chip">📂 ${fullQe}</a>`;
+        }
+        return `
+            <div class="quick-explorer">
+                <div class="quick-title">⚡ Quick Explorer — Popular Paths</div>
+                <div class="quick-chips">
+                    ${chipsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // Render Hero
+    const renderHero = () => {
+        let totalFolders = TREE_DATA.length;
+        let totalItems = TREE_DATA.reduce((acc, f) => acc + f.items.length, 0);
+        return `
+            <div class="hero-explorer">
+                <div class="hero-badge">📂 EXPLORER TREE / HIERARCHICAL INDEX</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Explorer</div>
+                <div class="hero-desc">${EXPLORER_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span>📁 ${totalFolders} Root Folders</span>
+                    <span>📄 ${totalItems} Indexed Items</span>
+                    <span>🌳 Hierarchical Tree</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // Render Breadcrumb
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-d44/">Explorer</a> › ${displayName} Leak Tree
+            </div>
+        `;
+    };
+    
+    // Render Header
+    const renderHeader = () => {
+        let totalItems = TREE_DATA.reduce((acc, f) => acc + f.items.length, 0);
+        return `
+            <div class="explorer-header">
+                <div class="header-row">
+                    <div class="logo">Leak<span>Explorer</span></div>
+                    <div class="explorer-badge">📂 ${totalItems} ITEMS INDEXED</div>
+                </div>
+                <div class="header-desc">File Explorer Style · Hierarchical Tree · Complete Index</div>
+            </div>
+        `;
+    };
+    
+    // Update SEO (Canonical dinamis sesuai query)
+    const updateSEO = () => {
+        let totalFolders = TREE_DATA.length;
+        let titles = [
+            `${displayName} Leak Explorer — Hierarchical Tree Index`,
+            `${displayName} Leak Tree Explorer — File System Navigation`,
+            `Explorer Tree: ${displayName} Leak Index`,
+            `${displayName} Leak Explorer — ${totalFolders} Root Folders`
+        ];
+        let descs = [
+            `Hierarchical explorer tree for ${displayName} leak collections. ${totalFolders} root folders. File-system style navigation.`,
+            `${displayName} leak tree explorer with folder structure. Complete hierarchical index.`,
+            `File explorer style directory for ${displayName} leak archives. Tree navigation system.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // --- PERUBAHAN UTAMA: Canonical Dinamis Mengikuti Query ---
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) {
+            // Ambil URL saat ini tanpa hash, lalu set sebagai canonical
+            let currentUrl = window.location.href.split('#')[0];
+            can.setAttribute('href', currentUrl);
+        }
+    };
+    
+    // Render Page
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            
+            <div class="explorer-layout">
+                ${generateTreeView()}
+                ${generateContentPanel()}
+            </div>
+            ${generateQuickExplorer()}
+            
+            <div class="explorer-bottom">
+                <span>📂 ${displayName} Leak Explorer · Hierarchical Tree Index · File System Navigation</span>
+            </div>
+        `;
+        
+        // Handle internal links
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-d44/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d43.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div>
+</body>
+</html>

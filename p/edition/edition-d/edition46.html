@@ -1,0 +1,427 @@
+---
+layout: null
+permalink: /edition-d46/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">LEAK DASHBOARD · Grid Collection Manager</title>
+    <meta id="dynamic-description" name="description" content="Grid dashboard manager for leak collections. Card masonry view. Complete overview.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-d46/">
+    <style>
+        /* -----------------------------------------------
+           GLOBAL COLOR SYSTEM (Easy to change)
+           Change --primary-color value to update theme
+        ----------------------------------------------- */
+        :root {
+            --primary-color: #3b82f6;    /* Main brand color (Blue) */
+            --primary-dark: #0f172a;     /* Dark variant for backgrounds */
+            --primary-light: #eff6ff;    /* Light variant for tags/badges */
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --bg-page: #f1f5f9;
+            --border-light: #e2e8f0;
+            --card-bg: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg-page);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:var(--text-dark)}
+        
+        /* Grid Dashboard Style - Card Masonry / Dashboard Overview */
+        .dashboard-container{max-width:1400px;margin:0 auto;padding:20px}
+        
+        /* Header */
+        .dashboard-header{background:var(--card-bg);border-radius:20px;padding:20px;margin-bottom:24px;border:1px solid var(--border-light)}
+        .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
+        .logo{font-size:1.1rem;font-weight:800}
+        .logo span{color:var(--primary-color)}
+        .dashboard-id{font-family:monospace;font-size:0.6rem;color:var(--text-muted);background:var(--bg-page);padding:4px 12px;border-radius:20px}
+        .header-desc{font-size:0.7rem;color:var(--text-muted)}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:var(--text-muted);margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero */
+        .hero-dashboard{background:var(--primary-dark);color:#fff;border-radius:20px;padding:28px;margin-bottom:28px}
+        .hero-badge{font-size:0.65rem;color:#94a3b8;margin-bottom:8px}
+        .hero-title{font-size:1.2rem;font-weight:700;margin-bottom:12px}
+        .hero-title span{color:var(--primary-color);filter:brightness(1.2)}
+        .hero-desc{font-size:0.75rem;color:#cbd5e1;line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:#94a3b8}
+        
+        /* Stats Row */
+        .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+        .stat-card{background:var(--card-bg);border:1px solid var(--border-light);border-radius:16px;padding:16px;text-align:center}
+        .stat-number{font-size:1.3rem;font-weight:800;color:var(--primary-color)}
+        .stat-label{font-size:0.6rem;color:var(--text-muted);margin-top:4px;text-transform:uppercase}
+        
+        /* Category Filters */
+        .filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+        .filter-btn{background:var(--card-bg);border:1px solid var(--border-light);padding:6px 16px;border-radius:30px;font-size:0.65rem;text-decoration:none;color:var(--text-dark)}
+        .filter-btn:hover{background:var(--primary-color);color:#fff;border-color:var(--primary-color)}
+        .filter-active{background:var(--primary-dark);color:#fff;border-color:var(--primary-dark)}
+        
+        /* Masonry Grid - 4 Columns */
+        .masonry-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:32px}
+        
+        /* Dashboard Card */
+        .dashboard-card{background:var(--card-bg);border:1px solid var(--border-light);border-radius:20px;overflow:hidden;text-decoration:none;display:block;color:var(--text-dark)}
+        .dashboard-card:hover{border-color:var(--primary-color);box-shadow:var(--shadow-sm)}
+        .card-banner{height:100px;background:linear-gradient(135deg, var(--primary-color), #764ba2);display:flex;align-items:center;justify-content:center;font-size:36px}
+        .card-content{padding:16px}
+        .card-category{font-size:0.55rem;color:var(--primary-color);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+        .card-title{font-size:0.8rem;font-weight:700;margin-bottom:8px;line-height:1.3}
+        .card-title span{color:#ef4444}
+        .card-stats{display:flex;gap:12px;margin-bottom:12px;font-size:0.55rem;color:#94a3b8}
+        .card-tags{display:flex;flex-wrap:wrap;gap:6px}
+        .card-tag{font-size:0.55rem;color:var(--primary-color);background:var(--primary-light);padding:2px 8px;border-radius:12px;text-decoration:none}
+        .card-tag:hover{background:var(--primary-color);color:white}
+        
+        /* Section Headers */
+        .section-header{display:flex;justify-content:space-between;align-items:center;margin:28px 0 16px}
+        .section-title{font-size:0.9rem;font-weight:700}
+        .section-title span{color:var(--primary-color)}
+        .section-link{font-size:0.65rem;color:var(--primary-color);text-decoration:none}
+        
+        /* Featured Row - Large Cards */
+        .featured-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:24px}
+        .featured-card{background:var(--card-bg);border:1px solid var(--border-light);border-radius:20px;padding:20px;text-decoration:none;display:flex;gap:16px;align-items:center}
+        .featured-card:hover{border-color:var(--primary-color)}
+        .featured-icon{font-size:32px;min-width:50px}
+        .featured-info{flex:1}
+        .featured-title{font-size:0.8rem;font-weight:700;margin-bottom:4px;color:var(--text-dark)}
+        .featured-desc{font-size:0.6rem;color:var(--text-muted)}
+        .featured-meta{font-size:0.55rem;color:var(--primary-color);margin-top:6px}
+        
+        /* Popular Tags */
+        .tags-section{background:var(--card-bg);border:1px solid var(--border-light);border-radius:20px;padding:20px;margin-bottom:24px}
+        .tags-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;color:var(--primary-color)}
+        .tags-cloud{display:flex;flex-wrap:wrap;gap:8px}
+        .tag{background:var(--bg-page);padding:5px 14px;border-radius:20px;font-size:0.6rem;text-decoration:none;color:var(--text-dark)}
+        .tag:hover{background:var(--primary-color);color:#fff}
+        
+        /* Clean Bottom */
+        .dashboard-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-light);text-align:center;font-size:0.55rem;color:#94a3b8}
+        
+        @media(max-width:1000px){.masonry-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}.stats-row{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:700px){.featured-grid{grid-template-columns:1fr}.stats-row{grid-template-columns:1fr}}
+        @media(max-width:500px){.dashboard-container{padding:16px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="dashboard-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#94a3b8">📊 LOADING DASHBOARD...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE GRID DASHBOARD (EVERGREEN, MANY INTERNAL LINKS) ==========
+    
+    // Dashboard Cards - Each heading contains "leak" + query
+    const DASHBOARD_CARDS = [
+        { category: "COMPLETE", title: "{name} Complete Master Leak Archive", icon: "📚", stats: ["Master", "Complete"], tags: ["Complete", "Master", "Archive"] },
+        { category: "COMPLETE", title: "{name} Comprehensive Leak Library", icon: "📖", stats: ["Library", "Full"], tags: ["Comprehensive", "Library", "Reference"] },
+        { category: "COMPLETE", title: "{name} Eternal Leak Vault", icon: "🏛️", stats: ["Vault", "Eternal"], tags: ["Eternal", "Vault", "Permanent"] },
+        { category: "PREMIUM", title: "{name} OnlyFans Complete Leak", icon: "🔞", stats: ["Premium", "Complete"], tags: ["OnlyFans", "Premium", "Exclusive"] },
+        { category: "PREMIUM", title: "{name} OnlyFans Master Leak Vault", icon: "💎", stats: ["Master", "Vault"], tags: ["OnlyFans", "Master", "Vault"] },
+        { category: "PREMIUM", title: "{name} OnlyFans Ultimate Leak", icon: "👑", stats: ["Ultimate", "Premium"], tags: ["OnlyFans", "Ultimate", "Archive"] },
+        { category: "VIRAL", title: "{name} TikTok Complete Leak Compilation", icon: "📱", stats: ["Viral", "Complete"], tags: ["TikTok", "Viral", "Compilation"] },
+        { category: "VIRAL", title: "{name} TikTok Master Leak Feed", icon: "⚡", stats: ["Master", "Feed"], tags: ["TikTok", "Master", "Archive"] },
+        { category: "VIRAL", title: "{name} TikTok Viral Leak Collection", icon: "🔥", stats: ["Viral", "Trending"], tags: ["TikTok", "Viral", "Collection"] },
+        { category: "CHANNEL", title: "{name} Telegram Complete Leak Channel", icon: "✈️", stats: ["Channel", "Complete"], tags: ["Telegram", "Channel", "Archive"] },
+        { category: "CHANNEL", title: "{name} Telegram Master Leak Archive", icon: "📡", stats: ["Master", "Archive"], tags: ["Telegram", "Master", "Archive"] },
+        { category: "GALLERY", title: "{name} Instagram Complete Leak Gallery", icon: "📸", stats: ["Gallery", "Complete"], tags: ["Instagram", "Gallery", "Private"] },
+        { category: "GALLERY", title: "{name} Instagram Master Leak Collection", icon: "🖼️", stats: ["Master", "Collection"], tags: ["Instagram", "Master", "Collection"] },
+        { category: "STORAGE", title: "{name} Mega Complete Leak Archive", icon: "☁️", stats: ["Backup", "Complete"], tags: ["Mega", "Backup", "Cloud"] },
+        { category: "STORAGE", title: "{name} Mega Master Leak Vault", icon: "🗄️", stats: ["Master", "Vault"], tags: ["Mega", "Master", "Vault"] },
+        { category: "RARE", title: "{name} Rare Leak Collection", icon: "💎", stats: ["Rare", "Collector"], tags: ["Rare", "Unseen", "Collector"] },
+        { category: "RARE", title: "{name} Unreleased Leak Archive", icon: "🔮", stats: ["Unreleased", "Exclusive"], tags: ["Unreleased", "Exclusive", "Archive"] },
+        { category: "FAN", title: "{name} Fan Favorites Leak Collection", icon: "⭐", stats: ["Curated", "Favorite"], tags: ["Fan", "Favorite", "Curated"] },
+        { category: "FAN", title: "{name} Top Rated Leak Archive", icon: "🏆", stats: ["Top Rated", "Best"], tags: ["Top", "Rated", "Best"] },
+        { category: "VIDEO", title: "{name} Complete Video Leak Archive", icon: "🎬", stats: ["Video", "HD"], tags: ["Video", "Complete", "HD"] },
+        { category: "VIDEO", title: "{name} HD Video Leak Collection", icon: "📹", stats: ["HD", "Quality"], tags: ["Video", "HD", "Quality"] },
+        { category: "PHOTO", title: "{name} Complete Photo Leak Gallery", icon: "🖼️", stats: ["Photo", "Gallery"], tags: ["Photo", "Complete", "Gallery"] },
+        { category: "PHOTO", title: "{name} HD Photo Leak Collection", icon: "📷", stats: ["HD", "Resolution"], tags: ["Photo", "HD", "Resolution"] }
+    ];
+    
+    // Featured Cards (Larger, More Prominent)
+    const FEATURED_CARDS = [
+        { icon: "🏆", title: "Complete Master Leak Archive", desc: "The definitive collection of all {name} content", meta: "⭐ Featured Collection" },
+        { icon: "💎", title: "OnlyFans Premium Vault", desc: "Complete OnlyFans subscription content", meta: "🔞 Premium Access" },
+        { icon: "🔥", title: "TikTok Viral Compilation", desc: "Most viewed and shared TikTok content", meta: "📱 Trending Now" },
+        { icon: "⭐", title: "Fan Favorites Collection", desc: "Community curated top content", meta: "❤️ Fan Choice" }
+    ];
+    
+    // Filter Categories
+    const FILTER_CATEGORIES = ["All", "Complete", "Premium", "Viral", "Channel", "Gallery", "Rare", "Fan", "Video", "Photo"];
+    
+    // Popular Tags (Internal Links)
+    const POPULAR_TAGS = [
+        "Complete Leak", "Master Leak", "Ultimate Leak", "Premium Leak", "Rare Leak",
+        "Viral Leak", "HD Leak", "Verified Leak", "Permanent Leak", "Archive Leak",
+        "Collection Leak", "Vault Leak", "Gallery Leak", "Compilation Leak"
+    ];
+    
+    // Evergreen description
+    const DASHBOARD_DESC = "Complete grid dashboard for {name} leak collections. Card masonry view with categories and tags.";
+    
+    // Stop Words
+    const STOP_WORDS = ['dashboard','grid','masonry','card','overview','manager','hub','console'];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "dashboard grid overview"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE INTERNAL LINK ==========
+    const genInternalLink = (keyword) => {
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
+        let newQ = `${nameLower} ${cleanKeyword} dashboard`.replace(/\s+/g, ' ').trim();
+        return `/edition-d46/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== GENERATE STATS ROW ==========
+    const generateStatsRow = () => {
+        let totalCards = DASHBOARD_CARDS.length;
+        let totalCategories = [...new Set(DASHBOARD_CARDS.map(c => c.category))].length;
+        let totalTags = [...new Set(DASHBOARD_CARDS.flatMap(c => c.tags))].length;
+        return `
+            <div class="stats-row">
+                <div class="stat-card"><div class="stat-number">${totalCards}</div><div class="stat-label">TOTAL CARDS</div></div>
+                <div class="stat-card"><div class="stat-number">${totalCategories}</div><div class="stat-label">CATEGORIES</div></div>
+                <div class="stat-card"><div class="stat-number">${totalTags}</div><div class="stat-label">UNIQUE TAGS</div></div>
+                <div class="stat-card"><div class="stat-number">Verified</div><div class="stat-label">STATUS</div></div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE FILTER BAR ==========
+    const generateFilterBar = () => {
+        let filtersHtml = '';
+        for(let i=0; i<FILTER_CATEGORIES.length; i++){
+            let filter = FILTER_CATEGORIES[i];
+            let filterUrl = genInternalLink(filter);
+            let activeClass = i === 0 ? 'filter-active' : '';
+            filtersHtml += `<a href="${filterUrl}" class="filter-btn ${activeClass}">${filter}</a>`;
+        }
+        return `<div class="filter-bar">${filtersHtml}</div>`;
+    };
+    
+    // ========== GENERATE MASONRY GRID ==========
+    const generateMasonryGrid = () => {
+        let cardsHtml = '';
+        for(let card of DASHBOARD_CARDS){
+            let title = card.title.replace('{name}', displayName);
+            let cardUrl = genInternalLink(card.title);
+            let tagsHtml = '';
+            for(let tag of card.tags){
+                let tagUrl = genInternalLink(tag);
+                tagsHtml += `<a href="${tagUrl}" class="card-tag">#${tag}</a>`;
+            }
+            cardsHtml += `
+                <a href="${cardUrl}" class="dashboard-card">
+                    <div class="card-banner">${card.icon}</div>
+                    <div class="card-content">
+                        <div class="card-category">${card.category}</div>
+                        <div class="card-title"><span>📄</span> ${title}</div>
+                        <div class="card-stats">
+                            <span>${card.stats[0]}</span>
+                            <span>${card.stats[1]}</span>
+                            <span>Verified</span>
+                        </div>
+                        <div class="card-tags">
+                            ${tagsHtml}
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+        return `
+            <div class="section-header">
+                <div class="section-title">📦 <span>All Collections</span> · ${DASHBOARD_CARDS.length} Cards</div>
+            </div>
+            <div class="masonry-grid">
+                ${cardsHtml}
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE FEATURED SECTION ==========
+    const generateFeaturedSection = () => {
+        let featuredHtml = '';
+        for(let featured of FEATURED_CARDS){
+            let title = featured.title;
+            let desc = featured.desc.replace('{name}', displayName);
+            let url = genInternalLink(featured.title);
+            featuredHtml += `
+                <a href="${url}" class="featured-card">
+                    <div class="featured-icon">${featured.icon}</div>
+                    <div class="featured-info">
+                        <div class="featured-title">${title}</div>
+                        <div class="featured-desc">${desc}</div>
+                        <div class="featured-meta">${featured.meta} →</div>
+                    </div>
+                </a>
+            `;
+        }
+        return `
+            <div class="section-header">
+                <div class="section-title">⭐ <span>Featured Collections</span> · Editor's Pick</div>
+            </div>
+            <div class="featured-grid">
+                ${featuredHtml}
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE TAGS SECTION ==========
+    const generateTagsSection = () => {
+        let tagsHtml = '';
+        for(let tag of POPULAR_TAGS){
+            let fullTag = `${displayName} ${tag}`;
+            let url = genInternalLink(tag);
+            tagsHtml += `<a href="${url}" class="tag">🏷️ ${fullTag}</a>`;
+        }
+        return `
+            <div class="tags-section">
+                <div class="tags-title">🏷️ Popular Tags — Browse by Topic</div>
+                <div class="tags-cloud">
+                    ${tagsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        let totalCards = DASHBOARD_CARDS.length;
+        let totalCategories = [...new Set(DASHBOARD_CARDS.map(c => c.category))].length;
+        return `
+            <div class="hero-dashboard">
+                <div class="hero-badge">📊 GRID DASHBOARD / CARD MASONRY</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Dashboard</div>
+                <div class="hero-desc">${DASHBOARD_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span>📦 ${totalCards} Dashboard Cards</span>
+                    <span>📁 ${totalCategories} Categories</span>
+                    <span>🏷️ Filterable Tags</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER BREADCRUMB ==========
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-d46/">Dashboard</a> › ${displayName} Leak Grid
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HEADER ==========
+    const renderHeader = () => {
+        let totalCards = DASHBOARD_CARDS.length;
+        return `
+            <div class="dashboard-header">
+                <div class="header-row">
+                    <div class="logo">Leak<span>Dashboard</span></div>
+                    <div class="dashboard-id">GRID v2.0</div>
+                </div>
+                <div class="header-desc">Card Masonry · ${totalCards} Collection Cards · Filterable Grid</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO (Dynamic Canonical based on query) ==========
+    const updateSEO = () => {
+        let totalCards = DASHBOARD_CARDS.length;
+        let titles = [
+            `${displayName} Leak Dashboard — Grid Collection Manager`,
+            `${displayName} Leak Card Grid — Masonry Dashboard`,
+            `Dashboard: ${displayName} Leak Archive Grid View`,
+            `${displayName} Leak Dashboard — ${totalCards} Collections`
+        ];
+        let descs = [
+            `Grid dashboard for ${displayName} leak collections. ${totalCards} cards in masonry layout. Complete overview.`,
+            `${displayName} leak dashboard with ${totalCards} collection cards. Filterable grid view.`,
+            `Card masonry dashboard for ${displayName} leak archives. Browse all collections in grid format.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        
+        // DYNAMIC CANONICAL: Following the query parameter
+        let canonicalLink = document.getElementById('dynamic-canonical');
+        if(canonicalLink) {
+            let currentUrl = new URL(window.location.href);
+            let baseUrl = currentUrl.origin + currentUrl.pathname;
+            let query = currentUrl.searchParams.get('q');
+            if(query) {
+                canonicalLink.setAttribute('href', baseUrl + '?q=' + encodeURIComponent(query));
+            } else {
+                canonicalLink.setAttribute('href', baseUrl);
+            }
+        }
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            ${generateStatsRow()}
+            ${generateFilterBar()}
+            ${generateFeaturedSection()}
+            ${generateMasonryGrid()}
+            ${generateTagsSection()}
+            
+            <div class="dashboard-bottom">
+                <span>📊 ${displayName} Leak Dashboard · Grid Card Manager · Complete Collection Overview</span>
+            </div>
+        `;
+        
+        // Handle internal links (static navigation)
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-d46/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-d/edition-d46.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>
