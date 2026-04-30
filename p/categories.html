@@ -11,49 +11,180 @@ permalink: /categories/
     <meta http-equiv="content-language" content="en">
     <meta name="robots" content="index, follow">
     
+    <!-- Dynamic Canonical Tag - follows current URL including query parameters -->
+    <link rel="canonical" id="dynamic-canonical" href="">
     
-    <!-- Title akan di-update JavaScript -->
+    <!-- Dynamic Title -->
     <title id="dynamic-title">Search Exclusive Content Archive</title>
     
-    <!-- Meta Description akan di-update JavaScript -->
+    <!-- Dynamic Meta Description -->
     <meta id="dynamic-description" name="description" content="Browse our comprehensive collections of celebrity content, including photos, videos, biographies, and exclusive material.">
     
-   
-    
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 1000px; margin: 0 auto; padding: 20px; }
-        h1 { color: #333; font-size: 2.2em; }
-        h2 { color: #444; margin-top: 40px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
-        h3 { color: #555; margin-top: 25px; }
-        a { color: #0066cc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        section { margin: 40px 0; }
-        .breadcrumb { padding: 10px 0; margin-bottom: 20px; border-bottom: 1px solid #eee; }
-        .breadcrumb a { color: #666; }
-        .breadcrumb span { color: #333; font-weight: bold; }
-        .quick-facts { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 30px 0; }
-        .faq-item { margin: 25px 0; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin: 20px 0; }
-        .info-card { background: #f5f5f5; padding: 15px; border-radius: 8px; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 8px; }
-        hr { border: none; border-top: 1px solid #eee; margin: 30px 0; }
-        .hidden { display: none; }
-        .query-placeholder { font-weight: bold; }
-        [data-query-section] { display: none; }
-        [data-query-section].active { display: block; }
-        .default-content.active { display: block; }
-        .default-content { display: none; }
-        .stats-list { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; }
-        .stat-item { flex: 1; min-width: 150px; background: #fff; padding: 12px; border: 1px solid #e0e0e0; border-radius: 6px; }
+        /* ============================================
+           GLOBAL COLOR SYSTEM - Change one variable to update entire site
+           ============================================ */
+        :root {
+            /* Primary Brand Color - Change this value to update the entire color scheme */
+            --primary-color: #0066cc;
+            --primary-dark: #004d99;
+            --primary-light: #e6f0ff;
+            --primary-muted: #f0f5fa;
+            --text-dark: #333333;
+            --text-medium: #444444;
+            --text-light: #555555;
+            --border-light: #e0e0e0;
+            --bg-light: #f9f9f9;
+            --card-bg: #f5f5f5;
+            --white: #ffffff;
+        }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            line-height: 1.6; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            color: var(--text-dark);
+        }
+        
+        h1 { 
+            color: var(--primary-color); 
+            font-size: 2.2em; 
+        }
+        
+        h2 { 
+            color: var(--text-medium); 
+            margin-top: 40px; 
+            border-bottom: 2px solid var(--border-light); 
+            padding-bottom: 10px; 
+        }
+        
+        h3 { 
+            color: var(--text-light); 
+            margin-top: 25px; 
+        }
+        
+        a { 
+            color: var(--primary-color); 
+            text-decoration: none; 
+        }
+        
+        a:hover { 
+            text-decoration: underline; 
+            color: var(--primary-dark);
+        }
+        
+        section { 
+            margin: 40px 0; 
+        }
+        
+        .breadcrumb { 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            border-bottom: 1px solid var(--border-light); 
+        }
+        
+        .breadcrumb a { 
+            color: var(--text-medium); 
+        }
+        
+        .breadcrumb span { 
+            color: var(--text-dark); 
+            font-weight: bold; 
+        }
+        
+        .quick-facts { 
+            background: var(--primary-muted); 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 30px 0; 
+        }
+        
+        .faq-item { 
+            margin: 25px 0; 
+        }
+        
+        .info-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 15px; 
+            margin: 20px 0; 
+        }
+        
+        .info-card { 
+            background: var(--card-bg); 
+            padding: 15px; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-light);
+        }
+        
+        .info-card h3 {
+            margin-top: 0;
+        }
+        
+        ul { 
+            padding-left: 20px; 
+        }
+        
+        li { 
+            margin-bottom: 8px; 
+        }
+        
+        hr { 
+            border: none; 
+            border-top: 1px solid var(--border-light); 
+            margin: 30px 0; 
+        }
+        
+        .hidden { 
+            display: none; 
+        }
+        
+        .query-placeholder { 
+            font-weight: bold; 
+            color: var(--primary-color);
+        }
+        
+        [data-query-section] { 
+            display: none; 
+        }
+        
+        [data-query-section].active { 
+            display: block; 
+        }
+        
+        .default-content.active { 
+            display: block; 
+        }
+        
+        .default-content { 
+            display: none; 
+        }
+        
+        .stats-list { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            justify-content: space-between; 
+        }
+        
+        .stat-item { 
+            flex: 1; 
+            min-width: 150px; 
+            background: var(--white); 
+            padding: 12px; 
+            border: 1px solid var(--border-light); 
+            border-radius: 6px; 
+        }
     </style>
 {% include head.html %}
-  </head>
+</head>
 <body><div loading="lazy">
 
     <main>
         <!-- ============================================
-             DEFAULT CONTENT (tampil jika tidak ada query)
+             DEFAULT CONTENT (shown when no query exists)
              ============================================ -->
         <div id="default-content" class="default-content active">
             <h1>Digital Media Resource Center</h1>
@@ -87,8 +218,8 @@ permalink: /categories/
         </div>
         
         <!-- ============================================
-             QUERY-BASED CONTENT (disembunyikan sampai ada query)
-             Semua konten ini sudah ada di HTML untuk SEO
+             QUERY-BASED CONTENT (hidden until query exists)
+             All content is present in HTML for SEO purposes
              ============================================ -->
         <div id="query-content" style="display: none;">
             <!-- BREADCRUMB -->
@@ -100,9 +231,7 @@ permalink: /categories/
             <!-- H1 -->
             <h1 id="main-heading"></h1>
             
-            
-            
-            <!-- INTRO PARAGRAPH (berbagai varian dalam format poin) -->
+            <!-- INTRO PARAGRAPH (various formats as list items) -->
             <div id="intro-leak" class="intro-varian hidden">
                 <p>This page provides structured access to <strong class="query-placeholder"></strong> materials that have circulated through various channels. The following categories organize content by format, source, and distribution type.</p>
                 <ul>
@@ -166,7 +295,7 @@ permalink: /categories/
             
             <hr>
             
-            <!-- SECTION 1: Most Searched - TABEL FORMAT -->
+            <!-- SECTION 1: Most Searched - TABLE FORMAT -->
             <section id="section-most-searched">
                 <h2><span class="query-placeholder"></span> Most Requested Content Categories</h2>
                 <iframe src="https://www.youtube.com/embed/h7vwWFfm8pU" style="width:100%;aspect-ratio:9/16;border:0;" loading="lazy" allowfullscreen></iframe>
@@ -466,17 +595,24 @@ permalink: /categories/
     
     <script>
     (function() {
-        // Ambil query dari URL
+        // Get query from URL
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
-        // Jika tidak ada query, tampilkan default content
+        // Set dynamic canonical URL - follows current URL including query parameters
+        const currentUrl = window.location.href;
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
+        
+        // If no query exists, show default content
         if (!query) {
             document.getElementById('default-content').classList.add('active');
             return;
         }
         
-        // Sembunyikan default, tampilkan query content
+        // Hide default, show query content
         document.getElementById('default-content').classList.remove('active');
         document.getElementById('default-content').style.display = 'none';
         document.getElementById('query-content').style.display = 'block';
@@ -485,12 +621,12 @@ permalink: /categories/
         query = decodeURIComponent(query.replace(/\+/g, ' '));
         const originalQuery = query;
         
-        // Daftar kata yang akan dihapus untuk mendapatkan base name
+        // List of terms to remove to get base name
         const removeTerms = [
             '2025', '2024'
         ];
         
-        // Fungsi untuk mendapatkan base name
+        // Function to get base name
         function getBaseName(query) {
             let base = query.toLowerCase();
             removeTerms.forEach(term => {
@@ -502,7 +638,7 @@ permalink: /categories/
         
         const baseName = getBaseName(query);
         
-        // Deteksi tipe query
+        // Detect query type
         const queryLower = query.toLowerCase();
         let queryType = 'general';
         
@@ -537,16 +673,16 @@ permalink: /categories/
         // Update breadcrumb
         document.getElementById('breadcrumb-name').textContent = baseName;
         
-        // Update semua placeholder dengan baseName
+        // Update all placeholders with baseName
         document.querySelectorAll('.query-placeholder').forEach(el => {
             el.textContent = baseName;
         });
         
-        // Tampilkan intro yang sesuai
+        // Show appropriate intro
         document.querySelectorAll('.intro-varian').forEach(el => el.classList.add('hidden'));
         document.getElementById(`intro-${queryType}`).classList.remove('hidden');
         
-        // Update semua dynamic links
+        // Update all dynamic links
         function updateLinks() {
             document.querySelectorAll('.dynamic-link').forEach(link => {
                 const variant = link.getAttribute('data-variant');
@@ -558,7 +694,7 @@ permalink: /categories/
         
         updateLinks();
         
-        // Update semua link yang perlu base name di text
+        // Update all links that need base name in text
         document.querySelectorAll('.base-placeholder').forEach(el => {
             el.textContent = baseName;
         });
@@ -566,15 +702,13 @@ permalink: /categories/
     })();
     </script>
     
-    
+    <br /><br /><br />
+    <nav>
+    {% include /kw/p/categories.html %}
+    </nav>
+    {% include footer.html %}
 
-<br /><br /><br />
-<nav>
-{% include /kw/p/categories.html %}
-</nav>
-{% include footer.html %}
-
-{% include /ads/gobloggugel/sosmed.html %}
+    {% include /ads/gobloggugel/sosmed.html %}
 
 </div>
 </body>
