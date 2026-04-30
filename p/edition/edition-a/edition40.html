@@ -15,82 +15,100 @@ permalink: /edition-a40/
     <meta name="referrer" content="always">
     <title id="dynamic-title">COMMAND LAUNCHER · Leak Quick Access Hub</title>
     <meta id="dynamic-description" name="description" content="Command launcher quick access hub for leak collections. Launch and navigate instantly.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a41/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a40/">
     <style>
+        /* ===== GLOBAL COLOR SYSTEM ===== */
+        :root {
+            /* Primary Base Color - Change this one variable to change entire theme */
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --primary-light: #93c5fd;
+            --primary-glow: rgba(96, 165, 250, 0.2);
+            
+            /* Derived Colors */
+            --bg-dark: #1a1a2e;
+            --bg-card: #0f0f1a;
+            --bg-hover: #1e1e32;
+            --border: #2d2d44;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --text-muted: #64748b;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','SF Mono',monospace;color:#e2e8f0}
+        body{background:var(--bg-dark);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','SF Mono',monospace;color:var(--text-main)}
         
         /* Command Palette Style - Like Spotlight / CMD+K / Quick Launcher */
         .launcher-container{max-width:900px;margin:0 auto;padding:20px}
         
         /* Header Terminal Style */
-        .cmd-header{background:#0f0f1a;border-radius:16px;padding:16px 20px;margin-bottom:24px;border:1px solid #2d2d44}
+        .cmd-header{background:var(--bg-card);border-radius:16px;padding:16px 20px;margin-bottom:24px;border:1px solid var(--border)}
         .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
         .logo{font-size:1rem;font-weight:700;font-family:monospace}
-        .logo span{color:#60a5fa}
-        .cmd-badge{font-family:monospace;font-size:0.6rem;color:#60a5fa;background:#1e1e32;padding:4px 12px;border-radius:20px}
-        .cmd-prompt{font-family:monospace;font-size:0.65rem;color:#64748b}
+        .logo span{color:var(--primary)}
+        .cmd-badge{font-family:monospace;font-size:0.6rem;color:var(--primary);background:var(--bg-hover);padding:4px 12px;border-radius:20px}
+        .cmd-prompt{font-family:monospace;font-size:0.65rem;color:var(--text-muted)}
         
         /* Breadcrumb */
-        .breadcrumb{font-family:monospace;font-size:0.65rem;color:#60a5fa;margin-bottom:20px}
-        .breadcrumb a{color:#60a5fa;text-decoration:none}
+        .breadcrumb{font-family:monospace;font-size:0.65rem;color:var(--primary);margin-bottom:20px}
+        .breadcrumb a{color:var(--primary);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero - Command Center */
-        .hero-cmd{background:#0f0f1a;border-radius:16px;padding:28px;margin-bottom:28px;border:1px solid #2d2d44}
-        .hero-badge{font-family:monospace;font-size:0.6rem;color:#60a5fa;margin-bottom:8px}
+        .hero-cmd{background:var(--bg-card);border-radius:16px;padding:28px;margin-bottom:28px;border:1px solid var(--border)}
+        .hero-badge{font-family:monospace;font-size:0.6rem;color:var(--primary);margin-bottom:8px}
         .hero-title{font-size:1.2rem;font-weight:700;margin-bottom:12px;font-family:monospace}
         .hero-title span{color:#fbbf24}
-        .hero-desc{font-size:0.75rem;color:#94a3b8;line-height:1.5;margin-bottom:14px}
-        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:#64748b;font-family:monospace}
+        .hero-desc{font-size:0.75rem;color:var(--text-dim);line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:var(--text-muted);font-family:monospace}
         
         /* Search / Command Bar */
-        .command-bar{background:#0f0f1a;border:1px solid #3b82f6;border-radius:60px;padding:12px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px}
-        .cmd-icon{color:#60a5fa;font-size:18px}
-        .cmd-input{flex:1;background:transparent;border:none;outline:none;color:#e2e8f0;font-family:monospace;font-size:0.8rem}
-        .cmd-shortcut{background:#1e1e32;padding:4px 10px;border-radius:8px;font-size:0.55rem;color:#94a3b8;font-family:monospace}
+        .command-bar{background:var(--bg-card);border:1px solid var(--primary);border-radius:60px;padding:12px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px}
+        .cmd-icon{color:var(--primary);font-size:18px}
+        .cmd-input{flex:1;background:transparent;border:none;outline:none;color:var(--text-main);font-family:monospace;font-size:0.8rem}
+        .cmd-shortcut{background:var(--bg-hover);padding:4px 10px;border-radius:8px;font-size:0.55rem;color:var(--text-dim);font-family:monospace}
         
         /* Quick Actions Grid */
         .actions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:32px}
-        .action-btn{background:#0f0f1a;border:1px solid #2d2d44;border-radius:12px;padding:14px;text-decoration:none;color:#e2e8f0;display:flex;align-items:center;gap:12px}
-        .action-btn:hover{background:#1e1e32;border-color:#60a5fa}
+        .action-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px;text-decoration:none;color:var(--text-main);display:flex;align-items:center;gap:12px}
+        .action-btn:hover{background:var(--bg-hover);border-color:var(--primary)}
         .action-icon{font-size:20px}
         .action-text{font-size:0.7rem;font-weight:500}
-        .action-shortcut{font-size:0.55rem;color:#64748b;margin-left:auto}
+        .action-shortcut{font-size:0.55rem;color:var(--text-muted);margin-left:auto}
         
         /* Command Groups - Like App Categories */
         .cmd-group{margin-bottom:28px}
-        .group-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #2d2d44;color:#60a5fa;font-family:monospace;text-transform:uppercase;letter-spacing:1px}
+        .group-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--border);color:var(--primary);font-family:monospace;text-transform:uppercase;letter-spacing:1px}
         .cmd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
-        .cmd-item{background:#0f0f1a;border:1px solid #2d2d44;border-radius:10px;padding:12px 14px;text-decoration:none;color:#e2e8f0;display:flex;align-items:center;gap:10px}
-        .cmd-item:hover{background:#1e1e32;border-color:#60a5fa}
+        .cmd-item{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;text-decoration:none;color:var(--text-main);display:flex;align-items:center;gap:10px}
+        .cmd-item:hover{background:var(--bg-hover);border-color:var(--primary)}
         .cmd-icon-small{font-size:16px}
         .cmd-name{flex:1;font-size:0.7rem}
-        .cmd-arrow{color:#64748b;font-size:12px}
+        .cmd-arrow{color:var(--text-muted);font-size:12px}
         
         /* Recent Commands */
-        .recent-section{background:#0f0f1a;border:1px solid #2d2d44;border-radius:16px;padding:20px;margin-bottom:24px}
-        .recent-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;color:#60a5fa;font-family:monospace}
+        .recent-section{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:24px}
+        .recent-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;color:var(--primary);font-family:monospace}
         .recent-list{display:flex;flex-wrap:wrap;gap:10px}
-        .recent-cmd{background:#1e1e32;padding:6px 14px;border-radius:20px;font-size:0.6rem;text-decoration:none;color:#e2e8f0;font-family:monospace}
-        .recent-cmd:hover{background:#3b82f6;color:#fff}
+        .recent-cmd{background:var(--bg-hover);padding:6px 14px;border-radius:20px;font-size:0.6rem;text-decoration:none;color:var(--text-main);font-family:monospace}
+        .recent-cmd:hover{background:var(--primary);color:#fff}
         
         /* Popular Tags */
-        .tags-section{background:#0f0f1a;border:1px solid #2d2d44;border-radius:16px;padding:20px}
-        .tags-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;color:#60a5fa;font-family:monospace}
+        .tags-section{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px}
+        .tags-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;color:var(--primary);font-family:monospace}
         .tags-cloud{display:flex;flex-wrap:wrap;gap:8px}
-        .tag-cmd{background:#1e1e32;padding:5px 12px;border-radius:16px;font-size:0.6rem;text-decoration:none;color:#e2e8f0}
-        .tag-cmd:hover{background:#3b82f6;color:#fff}
+        .tag-cmd{background:var(--bg-hover);padding:5px 12px;border-radius:16px;font-size:0.6rem;text-decoration:none;color:var(--text-main)}
+        .tag-cmd:hover{background:var(--primary);color:#fff}
         
         /* Clean Bottom */
-        .launcher-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #2d2d44;text-align:center;font-size:0.55rem;color:#64748b;font-family:monospace}
+        .launcher-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border);text-align:center;font-size:0.55rem;color:var(--text-muted);font-family:monospace}
         
         @media(max-width:600px){.launcher-container{padding:16px}.actions-grid{grid-template-columns:1fr}.cmd-grid{grid-template-columns:1fr}}
     </style>
 {% include head.html %}
   </head>
 <body><div loading="lazy">
-<div class="launcher-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#64748b;font-family:monospace">⌨️ LOADING COMMAND LAUNCHER...</div></div>
+<div class="launcher-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--text-muted);font-family:monospace">⌨️ LOADING COMMAND LAUNCHER...</div></div>
 
 <script>
 (function(){
@@ -108,7 +126,7 @@ permalink: /edition-a40/
         { icon: "⭐", name: "Fan Favorite Leak Compilations", shortcut: "⌘F" }
     ];
     
-    // Command Groups - Setiap heading mengandung "leak" + query
+    // Command Groups - Each heading contains "leak" + query
     const COMMAND_GROUPS = [
         {
             name: "Complete Leak Archives",
@@ -209,7 +227,7 @@ permalink: /edition-a40/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "command launcher leak hub"; }
@@ -228,7 +246,7 @@ permalink: /edition-a40/
     const genInternalLink = (keyword) => {
         let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
         let newQ = `${nameLower} ${cleanKeyword} launch`;
-        return `/edition-a41/?q=${encodeURIComponent(newQ)}`;
+        return `/edition-a40/?q=${encodeURIComponent(newQ)}`;
     };
     
     // ========== GENERATE QUICK ACTIONS ==========
@@ -256,7 +274,6 @@ permalink: /edition-a40/
         let groupsHtml = '';
         for(let group of COMMAND_GROUPS){
             let groupName = group.name;
-            let groupUrl = genInternalLink(group.name);
             let commandsHtml = '';
             for(let cmd of group.commands){
                 let cmdName = cmd.name.replace('{name}', displayName);
@@ -352,7 +369,7 @@ permalink: /edition-a40/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition-a41/">Launcher</a> › ${displayName} Leak Commands
+                <a href="/">Home</a> › <a href="/edition-a40/">Launcher</a> › ${displayName} Leak Commands
             </div>
         `;
     };
@@ -371,7 +388,7 @@ permalink: /edition-a40/
         `;
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO WITH DYNAMIC CANONICAL ==========
     const updateSEO = () => {
         let totalGroups = COMMAND_GROUPS.length;
         let titles = [
@@ -386,8 +403,16 @@ permalink: /edition-a40/
             `Quick access hub for ${displayName} leak archives. Type or click to launch any collection.`
         ];
         document.title = rand(titles);
-        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // Dynamic canonical URL that includes the current query
+        let can = document.getElementById('dynamic-canonical');
+        if(can) {
+            let baseUrl = window.location.href.split('?')[0];
+            let currentQuery = window.location.search;
+            can.setAttribute('href', baseUrl + currentQuery);
+        }
     };
     
     // ========== RENDER PAGE ==========
@@ -409,7 +434,7 @@ permalink: /edition-a40/
         
         // Handle internal links (static navigation)
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-a41/?q=')){
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-a40/?q=')){
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.location.href = link.getAttribute('href');

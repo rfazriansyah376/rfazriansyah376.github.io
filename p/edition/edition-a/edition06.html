@@ -11,10 +11,17 @@ permalink: /edition-a06/
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="referrer" content="always">
-    <title id="dynamic-title">LeakX · Akses Konten Viral Terbaru</title>
-    <meta id="dynamic-description" name="description" content="Temukan konten viral terbaru. Update setiap hari. Akses eksklusif untuk member.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a07/">
+    <title id="dynamic-title">LeakX · Access Latest Viral Content</title>
+    <meta id="dynamic-description" name="description" content="Discover the latest viral content. Updated daily. Exclusive access for members.">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <style>
+        :root {
+            --primary-color: #1d9bf0;
+            --primary-color-rgb: 29, 155, 240;
+            --secondary-color: #ec489a;
+            --secondary-color-rgb: 236, 72, 154;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -56,7 +63,7 @@ permalink: /edition-a06/
         }
 
         .logo span {
-            color: #1d9bf0;
+            color: var(--primary-color);
         }
 
         .search-box {
@@ -77,7 +84,7 @@ permalink: /edition-a06/
         }
 
         .breadcrumb a {
-            color: #1d9bf0;
+            color: var(--primary-color);
             text-decoration: none;
         }
 
@@ -99,7 +106,7 @@ permalink: /edition-a06/
         }
 
         .trending-item:hover {
-            color: #1d9bf0;
+            color: var(--primary-color);
         }
 
         /* profile header */
@@ -125,7 +132,7 @@ permalink: /edition-a06/
         }
 
         .follow-btn {
-            background: #1d9bf0;
+            background: var(--primary-color);
             padding: 0.3rem 1rem;
             border-radius: 30px;
             font-size: 0.7rem;
@@ -168,11 +175,11 @@ permalink: /edition-a06/
         }
 
         .tab.active {
-            border-bottom: 2px solid #1d9bf0;
-            color: #1d9bf0;
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
         }
 
-        /* link card - komponen utama untuk klik */
+        /* link card - main component for clicks */
         .link-card {
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #2f3336;
@@ -194,7 +201,7 @@ permalink: /edition-a06/
         .card-avatar {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #1d9bf0, #ec489a);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 50%;
             flex-shrink: 0;
             display: flex;
@@ -231,7 +238,7 @@ permalink: /edition-a06/
 
         .badge {
             display: inline-block;
-            background: #1d9bf0;
+            background: var(--primary-color);
             font-size: 0.6rem;
             padding: 0.1rem 0.4rem;
             border-radius: 12px;
@@ -240,7 +247,7 @@ permalink: /edition-a06/
         }
 
         .badge.hot {
-            background: #ec489a;
+            background: var(--secondary-color);
         }
 
         .badge.new {
@@ -282,12 +289,12 @@ permalink: /edition-a06/
 
         .view-count {
             font-size: 0.6rem;
-            color: #1d9bf0;
+            color: var(--primary-color);
         }
 
         /* CTA button */
         .cta-button {
-            background: linear-gradient(135deg, #1d9bf0, #ec489a);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 6px 14px;
             border-radius: 30px;
@@ -382,7 +389,7 @@ permalink: /edition-a06/
         }
 
         .suggestion-follow {
-            background: #1d9bf0;
+            background: var(--primary-color);
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
             font-size: 0.65rem;
@@ -416,12 +423,12 @@ permalink: /edition-a06/
         <div>Loading...</div>
     </div>
 
-    <!-- konten utama akan di-render oleh JS -->
+    <!-- main content will be rendered by JS -->
 </div>
 
 <script>
 (function() {
-    // ========== KONFIGURASI DATABASE KATA ==========
+    // ========== WORD DATABASE CONFIGURATION ==========
     const ACTIONS = [
         "watch", "download", "view", "access", "stream", 
         "unlock", "see", "get", "open", "reveal",
@@ -460,11 +467,11 @@ permalink: /edition-a06/
     const USERNAMES = ["leakarchive", "viralfinder", "exclusivehub", "contentvault", "leakcentral", "viralnow", "dailyxclusive", "leakfeed", "contentking", "vaultkeeper"];
     const DISPLAY_NAMES = ["LeakArchive", "ViralFinder", "ExclusiveHub", "ContentVault", "LeakCentral", "ViralNow", "DailyXclusive", "LeakFeed", "ContentKing", "VaultKeeper"];
     
-    // ========== AMBIL KUERI DARI URL ==========
+    // ========== GET QUERY FROM URL ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     
-    // Jika tidak ada kueri, redirect ke halaman utama
+    // If no query, redirect to homepage
     if (!rawQuery || rawQuery.trim() === "") {
         window.location.href = "/";
         return;
@@ -472,7 +479,7 @@ permalink: /edition-a06/
     
     rawQuery = decodeURIComponent(rawQuery.replace(/\+/g, ' '));
     
-    // ========== EKSTRAK NAMA DASAR ==========
+    // ========== EXTRACT BASE NAME ==========
     const STOP_WORDS = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', 'watch', 'download', 'view', 'access', 'stream', 'unlock', 'see', 'get', 'open', 'reveal', 'full', 'complete', 'hot', 'new'];
     
     let baseName = rawQuery.toLowerCase();
@@ -489,7 +496,7 @@ permalink: /edition-a06/
     const displayName = formatName(baseName);
     const displayLower = displayName.toLowerCase();
     
-    // ========== FUNGSI PEMBUAT LINK DINAMIS ==========
+    // ========== DYNAMIC LINK GENERATOR FUNCTIONS ==========
     function generateVariantLink(suffixType = "full") {
         const action = ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
         const contentType = CONTENT_TYPES[Math.floor(Math.random() * CONTENT_TYPES.length)];
@@ -518,7 +525,7 @@ permalink: /edition-a06/
         return links;
     }
     
-    // ========== FUNGSI RENDER LINK CARD ==========
+    // ========== RENDER LINK CARD FUNCTION ==========
     function renderLinkCard(link, index) {
         const views = Math.floor(Math.random() * 50000) + 1000;
         const size = Math.floor(Math.random() * 500) + 50;
@@ -609,20 +616,24 @@ permalink: /edition-a06/
         return suggestions.join('');
     }
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO WITH DYNAMIC CANONICAL ==========
     function updateSEO() {
-        const pageTitle = `${displayName} · Akses Konten Eksklusif Terbaru | LeakX`;
-        const pageDesc = `Temukan konten eksklusif ${displayName} terbaru. Update viral setiap hari. Akses cepat dan mudah.`;
+        const pageTitle = `${displayName} · Latest Exclusive Content Access | LeakX`;
+        const pageDesc = `Discover the latest exclusive ${displayName} content. Updated daily with viral materials. Fast and easy access.`;
         document.title = pageTitle;
         
         let metaDesc = document.getElementById('dynamic-description');
         if (metaDesc) metaDesc.setAttribute('content', pageDesc);
         
+        // Dynamic canonical fully follows the query
         let canonical = document.getElementById('dynamic-canonical');
-        if (canonical) canonical.setAttribute('href', window.location.href.split('?')[0]);
+        if (canonical) {
+            const currentFullUrl = window.location.href;
+            canonical.setAttribute('href', currentFullUrl);
+        }
     }
     
-    // ========== RENDER HALAMAN UTUH ==========
+    // ========== RENDER FULL PAGE ==========
     function renderPage() {
         const bulkLinks = generateBulkLinks(12);
         const randomNumbers = {
@@ -646,7 +657,7 @@ permalink: /edition-a06/
             <div class="profile-header">
                 <div class="profile-row">
                     <div>
-                        <div class="profile-name">${displayName} <span style="font-size:0.7rem; color:#1d9bf0;">· Archive</span></div>
+                        <div class="profile-name">${displayName} <span style="font-size:0.7rem; color:var(--primary-color);">· Archive</span></div>
                         <div class="profile-handle">@${displayLower}_archive</div>
                     </div>
                     <div class="follow-btn">Follow</div>
@@ -673,7 +684,7 @@ permalink: /edition-a06/
             </div>
             
             <div class="sidebar-section">
-                <div class="section-title">🔥 Trending terkait</div>
+                <div class="section-title">🔥 Related Trending</div>
                 <div id="trendingContainer">
                     ${renderTrendingTopics(bulkLinks)}
                 </div>
@@ -695,9 +706,9 @@ permalink: /edition-a06/
         attachEventListeners();
     }
     
-    // ========== ATTACH EVENT LISTENER UNTUK SEMUA LINK ==========
+    // ========== ATTACH EVENT LISTENER FOR ALL LINKS ==========
     function attachEventListeners() {
-        // Semua elemen dengan data-url akan menjadi link
+        // All elements with data-url will become links
         const clickableElements = document.querySelectorAll('[data-url]');
         clickableElements.forEach(el => {
             el.addEventListener('click', function(e) {
@@ -707,7 +718,7 @@ permalink: /edition-a06/
             });
         });
         
-        // Link card
+        // Link cards
         const linkCards = document.querySelectorAll('.link-card');
         linkCards.forEach(card => {
             card.addEventListener('click', function() {
@@ -716,7 +727,7 @@ permalink: /edition-a06/
             });
         });
         
-        // Trending items di bar
+        // Trending items in bar
         const trendingItems = document.querySelectorAll('.trending-item');
         trendingItems.forEach(item => {
             item.addEventListener('click', function() {
@@ -734,7 +745,7 @@ permalink: /edition-a06/
             });
         });
         
-        // Trending topics di sidebar
+        // Trending topics in sidebar
         const trendingTopics = document.querySelectorAll('.trending-topic');
         trendingTopics.forEach(topic => {
             topic.addEventListener('click', function() {
@@ -744,7 +755,7 @@ permalink: /edition-a06/
         });
     }
     
-    // ========== EKSEKUSI ==========
+    // ========== EXECUTION ==========
     updateSEO();
     renderPage();
 })();

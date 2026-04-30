@@ -13,54 +13,68 @@ permalink: /edition-a21/
     <meta name="referrer" content="always">
     <title id="dynamic-title">PREMIUM ACCESS · Complete Content Vault</title>
     <meta id="dynamic-description" name="description" content="Premium content access gateway. Complete vault with exclusive collections and verified archives.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a22/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a21/">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 50%,#16213e 100%);min-height:100vh;font-family:'Montserrat',sans-serif;color:#e2e2e6}
+        
+        /* GLOBAL COLOR VARIABLES - CHANGE PRIMARY COLOR HERE */
+        :root {
+            --primary-color: #c4a747;
+            --primary-dark: #a07e2e;
+            --primary-light: #e8c87a;
+            --primary-glow: rgba(196, 167, 71, 0.3);
+            --bg-dark: #0a0a0a;
+            --bg-card: rgba(20,20,40,0.6);
+            --text-light: #e2e2e6;
+            --text-muted: #aaa;
+            --text-dark: #0a0a0a;
+        }
+        
+        body{background:linear-gradient(135deg,var(--bg-dark) 0%,#1a1a2e 50%,#16213e 100%);min-height:100vh;font-family:'Montserrat',sans-serif;color:var(--text-light)}
         
         /* Style Premium Gateway - Luxury, Exclusive, High-End */
         .gateway-container{max-width:1300px;margin:0 auto;padding:32px 24px}
         
         /* Hero Section - Luxury */
         .hero-premium{text-align:center;margin-bottom:60px}
-        .premium-badge{display:inline-block;background:linear-gradient(135deg,#c4a747,#e8c87a);color:#0a0a0a;padding:6px 20px;border-radius:40px;font-size:0.7rem;font-weight:800;letter-spacing:2px;margin-bottom:24px;text-transform:uppercase}
-        .hero-title{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:800;margin-bottom:16px;background:linear-gradient(135deg,#fff,#c4a747);-webkit-background-clip:text;background-clip:text;color:transparent}
-        .hero-subtitle{font-size:1rem;color:#aaa;max-width:600px;margin:0 auto 32px;line-height:1.6}
+        .premium-badge{display:inline-block;background:linear-gradient(135deg,var(--primary-color),var(--primary-light));color:var(--text-dark);padding:6px 20px;border-radius:40px;font-size:0.7rem;font-weight:800;letter-spacing:2px;margin-bottom:24px;text-transform:uppercase}
+        .hero-title{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:800;margin-bottom:16px;background:linear-gradient(135deg,#fff,var(--primary-color));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .hero-subtitle{font-size:1rem;color:var(--text-muted);max-width:600px;margin:0 auto 32px;line-height:1.6}
         
         /* Access Options - 3 Tiers */
         .tiers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:60px}
-        .tier-card{background:rgba(20,20,40,0.6);backdrop-filter:blur(12px);border-radius:28px;padding:32px;border:1px solid rgba(196,167,71,0.2);transition:all 0.3s;cursor:pointer;position:relative}
-        .tier-card:hover{transform:translateY(-8px);border-color:#c4a747;box-shadow:0 20px 40px rgba(0,0,0,0.3)}
-        .tier-popular{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#c4a747;color:#0a0a0a;padding:4px 16px;border-radius:30px;font-size:0.6rem;font-weight:800;letter-spacing:1px}
+        .tier-card{background:var(--bg-card);backdrop-filter:blur(12px);border-radius:28px;padding:32px;border:1px solid var(--primary-glow);transition:all 0.3s;cursor:pointer;position:relative}
+        .tier-card:hover{transform:translateY(-8px);border-color:var(--primary-color);box-shadow:0 20px 40px rgba(0,0,0,0.3)}
+        .tier-popular{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary-color);color:var(--text-dark);padding:4px 16px;border-radius:30px;font-size:0.6rem;font-weight:800;letter-spacing:1px}
         .tier-icon{font-size:48px;margin-bottom:20px}
         .tier-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:8px}
-        .tier-price{font-size:2rem;font-weight:800;color:#c4a747;margin-bottom:16px}
+        .tier-price{font-size:2rem;font-weight:800;color:var(--primary-color);margin-bottom:16px}
         .tier-price span{font-size:0.8rem;color:#888}
         .tier-features{list-style:none;margin:20px 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)}
         .tier-features li{padding:8px 0;font-size:0.75rem;display:flex;align-items:center;gap:8px}
-        .tier-button{background:transparent;border:1px solid #c4a747;padding:12px 24px;border-radius:40px;font-weight:600;width:100%;cursor:pointer;transition:all 0.2s;color:#fff}
-        .tier-button:hover{background:#c4a747;color:#0a0a0a}
+        .tier-button{background:transparent;border:1px solid var(--primary-color);padding:12px 24px;border-radius:40px;font-weight:600;width:100%;cursor:pointer;transition:all 0.2s;color:#fff}
+        .tier-button:hover{background:var(--primary-color);color:var(--text-dark)}
         
         /* Featured Collections */
         .featured-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
         .featured-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700}
-        .featured-link{color:#c4a747;font-size:0.8rem;cursor:pointer}
+        .featured-link{color:var(--primary-color);font-size:0.8rem;cursor:pointer}
         
         .collections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-bottom:60px}
         .collection-card{background:rgba(20,20,40,0.4);border-radius:24px;padding:24px;border:1px solid rgba(255,255,255,0.05);cursor:pointer;transition:all 0.3s}
-        .collection-card:hover{background:rgba(30,30,50,0.6);border-color:#c4a74740;transform:translateY(-4px)}
+        .collection-card:hover{background:rgba(30,30,50,0.6);border-color:var(--primary-glow);transform:translateY(-4px)}
         .collection-icon{font-size:32px;margin-bottom:16px}
         .collection-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:8px}
-        .collection-desc{font-size:0.7rem;color:#aaa;margin-bottom:16px;line-height:1.5}
+        .collection-desc{font-size:0.7rem;color:var(--text-muted);margin-bottom:16px;line-height:1.5}
         .collection-meta{display:flex;justify-content:space-between;font-size:0.6rem;color:#666}
         
         /* Testimonials */
         .testimonials-section{margin-bottom:60px}
         .testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-        .testimonial-card{background:rgba(20,20,40,0.4);border-radius:20px;padding:24px;border-left:3px solid #c4a747}
+        .testimonial-card{background:rgba(20,20,40,0.4);border-radius:20px;padding:24px;border-left:3px solid var(--primary-color)}
         .testimonial-text{font-size:0.8rem;line-height:1.5;color:#ccc;margin-bottom:16px;font-style:italic}
-        .testimonial-author{font-size:0.7rem;font-weight:600;color:#c4a747}
+        .testimonial-author{font-size:0.7rem;font-weight:600;color:var(--primary-color)}
         .testimonial-role{font-size:0.55rem;color:#666}
         
         /* FAQ Section */
@@ -88,11 +102,11 @@ permalink: /edition-a21/
     const COLLECTION_NAMES = [
         "The Complete Archive", "Master Vault Collection", "Ultimate Fan Library",
         "Premier Content Suite", "Signature Collection", "Legacy Archive",
-        "Diamond edition-a Vault", "Platinum Collection", "Collector's Choice",
+        "Diamond Edition Vault", "Platinum Collection", "Collector's Choice",
         "Exclusive Masters", "Heritage Archive", "Crown Jewel Collection"
     ];
     
-    // Collection Descriptions (panjang)
+    // Collection Descriptions (long)
     const COLLECTION_DESCS = [
         "This comprehensive collection features every available piece of content spanning the entire career. Carefully curated and organized for easy access. Includes rare behind-the-scenes material and personal moments.",
         "The most requested collection in our vault. Features exclusive content not available anywhere else. Verified authentic and presented in highest quality. Updated regularly with new discoveries.",
@@ -123,17 +137,17 @@ permalink: /edition-a21/
     ];
     
     // 20 Platform Sources
-    const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter','Telegram','Discord','YouTube','Reddit'];
+    const PLATFORMS = ['TikTok', 'OnlyFans', 'Instagram', 'Twitter', 'Telegram', 'Discord', 'YouTube', 'Reddit'];
     
     // Stop Words
-    const STOP_WORDS = ['premium','access','gateway','vault','collection','archive','content','resource','library'];
+    const STOP_WORDS = ['premium', 'access', 'gateway', 'vault', 'collection', 'archive', 'content', 'resource', 'library'];
     
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const formatNumber = (n) => n.toLocaleString();
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ 
@@ -153,7 +167,7 @@ permalink: /edition-a21/
     // ========== GENERATE LINK ==========
     const genLink = (type = 'collection') => {
         let newQ = `${nameLower} ${rand(['premium','complete','master','ultimate'])} ${rand(['vault','archive','collection','gateway'])}`;
-        return { url:`/edition-a22/?q=${encodeURIComponent(newQ)}`, type: type };
+        return { url:`/edition-a21/?q=${encodeURIComponent(newQ)}`, type: type };
     };
     
     // ========== GENERATE COLLECTION CARD ==========
@@ -167,7 +181,7 @@ permalink: /edition-a21/
         
         return `
             <div class="collection-card" data-url="${genLink('collection').url}">
-                <div class="collection-icon">${idx % 2 === 0 ? '📀' : '💎'}</div>
+                <div class="collection-icon">${idx % 2 === 0 ? '💿' : '💎'}</div>
                 <div class="collection-name">${name}</div>
                 <div class="collection-desc">${desc.substring(0, 100)}...</div>
                 <div class="collection-meta">
@@ -182,7 +196,7 @@ permalink: /edition-a21/
     // ========== GENERATE TESTIMONIALS ==========
     const generateTestimonials = () => {
         let testimonials = [];
-        let names = ['Sarah M.','David K.','Emma L.','Michael R.','Jessica W.','Chris T.'];
+        let names = ['Sarah M.', 'David K.', 'Emma L.', 'Michael R.', 'Jessica W.', 'Chris T.'];
         for(let i=0;i<4;i++){
             testimonials.push(`
                 <div class="testimonial-card">
@@ -200,7 +214,7 @@ permalink: /edition-a21/
         let faqs = FAQS.slice(0,6);
         return faqs.map(faq => `
             <div class="faq-item">
-                <div class="faq-question">❓ ${faq.q} <span style="color:#c4a747">▼</span></div>
+                <div class="faq-question">❓ ${faq.q} <span style="color:var(--primary-color)">▼</span></div>
                 <div class="faq-answer">${faq.a}</div>
             </div>
         `).join('');
@@ -221,7 +235,14 @@ permalink: /edition-a21/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // Dynamic canonical URL based on current query
+        let canonicalLink = document.getElementById('dynamic-canonical');
+        if(canonicalLink) {
+            let currentUrl = window.location.href.split('?')[0];
+            let queryString = window.location.search;
+            canonicalLink.setAttribute('href', currentUrl + queryString);
+        }
     };
     
     // ========== RENDER PAGE ==========

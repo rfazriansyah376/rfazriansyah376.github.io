@@ -3,6 +3,7 @@ layout: null
 permalink: /edition-a33/
 ---
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,88 +14,98 @@ permalink: /edition-a33/
     <meta name="bingbot" content="index, follow">
     <meta name="yandex" content="index, follow">
     <meta name="referrer" content="always">
-    <title id="dynamic-title">LEAK BOOKLET · Complete Reference Catalog</title>
+    <title id="dynamic-title">LEAK BOOKLET � Complete Reference Catalog</title>
     <meta id="dynamic-description" name="description" content="Complete reference booklet catalog for leak collections. Flip card style directory.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a34/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a33/">
     <style>
+        /* GLOBAL COLOR VARIABLE - CHANGE ONE COLOR FOR ENTIRE THEME */
+        :root {
+            --primary-color: #8b4513;    /*  Change this to any color (e.g., #2c3e66, #1a5f7a, #9b2c2c) */
+            --primary-light: #f5f2eb;
+            --primary-dark: #5a2e0c;
+            --bg-color: #f0ede8;
+            --text-color: #2c2418;
+            --border-color: #d4cfc8;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#f0ede8;font-family:'Georgia','Times New Roman',serif;color:#2c2418}
+        body{background:var(--bg-color);font-family:'Georgia','Times New Roman',serif;color:var(--text-color)}
         
         /* Booklet Style - Like Mini Catalog / Reference Book */
         .booklet-container{max-width:1000px;margin:0 auto;padding:20px}
         
         /* Header */
-        .booklet-header{background:#fff;border-radius:8px;padding:20px;margin-bottom:24px;border:1px solid #d4cfc8;box-shadow:0 2px 4px rgba(0,0,0,0.02)}
+        .booklet-header{background:#fff;border-radius:8px;padding:20px;margin-bottom:24px;border:1px solid var(--border-color);box-shadow:0 2px 4px rgba(0,0,0,0.02)}
         .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
         .logo{font-size:1.2rem;font-weight:800;font-family:Georgia,serif}
-        .logo span{color:#8b4513}
-        .booklet-id{font-family:'Courier New',monospace;font-size:0.6rem;color:#8b4513;background:#f5f2eb;padding:4px 12px;border-radius:4px}
+        .logo span{color:var(--primary-color)}
+        .booklet-id{font-family:'Courier New',monospace;font-size:0.6rem;color:var(--primary-color);background:var(--primary-light);padding:4px 12px;border-radius:4px}
         .header-desc{font-size:0.65rem;color:#6b5a42;font-style:italic}
         
         /* Breadcrumb */
-        .breadcrumb{font-size:0.7rem;color:#8b4513;margin-bottom:20px;font-family:'Courier New',monospace}
-        .breadcrumb a{color:#8b4513;text-decoration:none}
+        .breadcrumb{font-size:0.7rem;color:var(--primary-color);margin-bottom:20px;font-family:'Courier New',monospace}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero */
-        .hero-booklet{background:#fff;border:1px solid #d4cfc8;border-radius:8px;padding:28px;margin-bottom:28px}
-        .hero-badge{display:inline-block;background:#8b4513;color:#fff;padding:4px 16px;border-radius:30px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
+        .hero-booklet{background:#fff;border:1px solid var(--border-color);border-radius:8px;padding:28px;margin-bottom:28px}
+        .hero-badge{display:inline-block;background:var(--primary-color);color:#fff;padding:4px 16px;border-radius:30px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
         .hero-title{font-size:1.3rem;font-weight:800;margin-bottom:12px;font-family:Georgia,serif}
-        .hero-title span{color:#8b4513}
+        .hero-title span{color:var(--primary-color)}
         .hero-desc{font-size:0.75rem;color:#5a4a38;line-height:1.5;margin-bottom:14px}
-        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:#8b4513}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:var(--primary-color)}
         
         /* Booklet Sections - Like Book Chapters */
         .booklet-section{margin-bottom:32px}
-        .section-header{background:#fff;border:1px solid #d4cfc8;border-radius:8px;padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
-        .section-number{font-family:'Courier New',monospace;font-size:0.7rem;color:#8b4513;background:#f5f2eb;padding:2px 8px;border-radius:4px}
+        .section-header{background:#fff;border:1px solid var(--border-color);border-radius:8px;padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+        .section-number{font-family:'Courier New',monospace;font-size:0.7rem;color:var(--primary-color);background:var(--primary-light);padding:2px 8px;border-radius:4px}
         .section-title{font-size:0.85rem;font-weight:800;font-family:Georgia,serif}
-        .section-count{font-size:0.55rem;color:#8b4513;margin-left:auto}
+        .section-count{font-size:0.55rem;color:var(--primary-color);margin-left:auto}
         
         /* Card Grid */
         .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
         
         /* Flip Card Style */
-        .flip-card{background:#fff;border:1px solid #d4cfc8;border-radius:8px;padding:16px;text-decoration:none;display:block;color:#2c2418}
-        .flip-card:hover{background:#fefcf9;border-color:#8b4513}
-        .card-callno{font-family:'Courier New',monospace;font-size:0.55rem;color:#8b4513;margin-bottom:6px}
+        .flip-card{background:#fff;border:1px solid var(--border-color);border-radius:8px;padding:16px;text-decoration:none;display:block;color:var(--text-color)}
+        .flip-card:hover{background:#fefcf9;border-color:var(--primary-color)}
+        .card-callno{font-family:'Courier New',monospace;font-size:0.55rem;color:var(--primary-color);margin-bottom:6px}
         .card-title{font-size:0.75rem;font-weight:700;margin-bottom:6px;line-height:1.3}
-        .card-title span{color:#8b4513}
+        .card-title span{color:var(--primary-color)}
         .card-desc{font-size:0.6rem;color:#6b5a42;margin-bottom:8px;line-height:1.4}
         .card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
-        .card-tag{font-size:0.5rem;color:#8b4513;background:#f5f2eb;padding:2px 6px;border-radius:4px}
+        .card-tag{font-size:0.5rem;color:var(--primary-color);background:var(--primary-light);padding:2px 6px;border-radius:4px}
         .card-meta{display:flex;justify-content:space-between;margin-top:8px;padding-top:6px;border-top:1px solid #f0ede8;font-size:0.5rem;color:#a09070}
         
         /* Appendix Section */
-        .appendix-section{background:#fff;border:1px solid #d4cfc8;border-radius:8px;padding:20px;margin-top:24px}
-        .appendix-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;font-family:Georgia,serif;color:#8b4513}
+        .appendix-section{background:#fff;border:1px solid var(--border-color);border-radius:8px;padding:20px;margin-top:24px}
+        .appendix-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;font-family:Georgia,serif;color:var(--primary-color)}
         .appendix-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-        .appendix-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#faf8f4;border-radius:8px;text-decoration:none;color:#2c2418;font-size:0.65rem}
-        .appendix-item:hover{background:#8b4513;color:#fff}
+        .appendix-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#faf8f4;border-radius:8px;text-decoration:none;color:var(--text-color);font-size:0.65rem}
+        .appendix-item:hover{background:var(--primary-color);color:#fff}
         .appendix-page{font-family:'Courier New',monospace;font-size:0.55rem}
         
         /* Index Section */
-        .index-section{background:#fff;border:1px solid #d4cfc8;border-radius:8px;padding:20px;margin-top:20px}
-        .index-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;font-family:Georgia,serif;color:#8b4513}
+        .index-section{background:#fff;border:1px solid var(--border-color);border-radius:8px;padding:20px;margin-top:20px}
+        .index-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;font-family:Georgia,serif;color:var(--primary-color)}
         .index-chips{display:flex;flex-wrap:wrap;gap:10px}
-        .index-chip{background:#f5f2eb;padding:5px 14px;border-radius:30px;font-size:0.6rem;text-decoration:none;color:#2c2418}
-        .index-chip:hover{background:#8b4513;color:#fff}
+        .index-chip{background:var(--primary-light);padding:5px 14px;border-radius:30px;font-size:0.6rem;text-decoration:none;color:var(--text-color)}
+        .index-chip:hover{background:var(--primary-color);color:#fff}
         
         /* Clean Bottom */
-        .booklet-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #d4cfc8;text-align:center;font-size:0.55rem;color:#a09070}
+        .booklet-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-color);text-align:center;font-size:0.55rem;color:#a09070}
         
         @media(max-width:600px){.booklet-container{padding:16px}.card-grid{grid-template-columns:1fr}}
     </style>
 {% include head.html %}
   </head>
 <body><div loading="lazy">
-<div class="booklet-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#8b4513">📖 LOADING BOOKLET CATALOG...</div></div>
+<div class="booklet-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--primary-color)"> LOADING BOOKLET CATALOG...</div></div>
 
 <script>
 (function(){
     // ========== DATABASE BOOKLET CATALOG (EVERGREEN, MANY INTERNAL LINKS) ==========
     
-    // Booklet Sections - Setiap heading mengandung "leak" + query
+    // Booklet Sections - Each heading contains "leak" + query
     const BOOKLET_SECTIONS = [
         {
             number: "01",
@@ -212,7 +223,7 @@ permalink: /edition-a33/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC FROM QUERY ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete reference catalog"; }
@@ -227,11 +238,20 @@ permalink: /edition-a33/
     const displayName = formatTopic(baseTopic);
     const nameLower = displayName.toLowerCase();
     
+    // ========== GENERATE DYNAMIC CANONICAL BASED ON QUERY ==========
+    const updateCanonicalUrl = () => {
+        const currentUrl = window.location.href;
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
+    };
+    
     // ========== GENERATE INTERNAL LINK (AUTOMATIC) ==========
     const genInternalLink = (keyword) => {
         let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
         let newQ = `${nameLower} ${cleanKeyword} booklet`;
-        return `/edition-a34/?q=${encodeURIComponent(newQ)}`;
+        return `/edition-a33/?q=${encodeURIComponent(newQ)}`;
     };
     
     // ========== GENERATE BOOKLET SECTIONS ==========
@@ -250,8 +270,8 @@ permalink: /edition-a33/
                 }
                 cardsHtml += `
                     <a href="${url}" class="flip-card">
-                        <div class="card-callno">📚 ${card.callno}</div>
-                        <div class="card-title"><span>📄</span> ${title}</div>
+                        <div class="card-callno"> ${card.callno}</div>
+                        <div class="card-title"><span></span> ${title}</div>
                         <div class="card-desc">${desc}</div>
                         <div class="card-tags">${tagsHtml}</div>
                         <div class="card-meta">
@@ -284,14 +304,14 @@ permalink: /edition-a33/
             let url = genInternalLink(item.name);
             appendixHtml += `
                 <a href="${url}" class="appendix-item">
-                    <div>📑 ${item.name}</div>
+                    <div> ${item.name}</div>
                     <div class="appendix-page">p. ${item.page}</div>
                 </a>
             `;
         }
         return `
             <div class="appendix-section">
-                <div class="appendix-title">📑 APPENDIX — Additional References</div>
+                <div class="appendix-title"> APPENDIX � Additional References</div>
                 <div class="appendix-grid">
                     ${appendixHtml}
                 </div>
@@ -305,11 +325,11 @@ permalink: /edition-a33/
         for(let keyword of INDEX_KEYWORDS){
             let fullKeyword = `${displayName} ${keyword}`;
             let url = genInternalLink(keyword);
-            chipsHtml += `<a href="${url}" class="index-chip">📌 ${fullKeyword}</a>`;
+            chipsHtml += `<a href="${url}" class="index-chip"> ${fullKeyword}</a>`;
         }
         return `
             <div class="index-section">
-                <div class="index-title">🔍 INDEX — Quick Reference</div>
+                <div class="index-title"> INDEX � Quick Reference</div>
                 <div class="index-chips">
                     ${chipsHtml}
                 </div>
@@ -323,13 +343,13 @@ permalink: /edition-a33/
         let totalCards = BOOKLET_SECTIONS.reduce((acc, s) => acc + s.cards.length, 0);
         return `
             <div class="hero-booklet">
-                <div class="hero-badge">📖 BOOKLET CATALOG / REFERENCE GUIDE</div>
+                <div class="hero-badge"> BOOKLET CATALOG / REFERENCE GUIDE</div>
                 <div class="hero-title"><span>${displayName}</span> Leak Booklet</div>
                 <div class="hero-desc">${BOOKLET_DESC.replace('{name}', displayName)}</div>
                 <div class="hero-stats">
-                    <span>📚 ${totalSections} Chapters</span>
-                    <span>📄 ${totalCards} Entries</span>
-                    <span>📖 Complete Reference</span>
+                    <span> ${totalSections} Chapters</span>
+                    <span> ${totalCards} Entries</span>
+                    <span> Complete Reference</span>
                 </div>
             </div>
         `;
@@ -339,7 +359,7 @@ permalink: /edition-a33/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition-a34/">Booklet</a> › ${displayName} Leak Catalog
+                <a href="/">Home</a> � <a href="/edition-a33/">Booklet</a> � ${displayName} Leak Catalog
             </div>
         `;
     };
@@ -353,7 +373,7 @@ permalink: /edition-a33/
                     <div class="logo">Leak<span>Booklet</span></div>
                     <div class="booklet-id">ISBN 978-${Math.floor(Math.random()*1000)}-${Math.floor(Math.random()*10000)}</div>
                 </div>
-                <div class="header-desc">Complete Reference Catalog · ${totalCards} Entries · Flip Card Style</div>
+                <div class="header-desc">Complete Reference Catalog � ${totalCards} Entries � Flip Card Style</div>
             </div>
         `;
     };
@@ -362,10 +382,10 @@ permalink: /edition-a33/
     const updateSEO = () => {
         let totalCards = BOOKLET_SECTIONS.reduce((acc, s) => acc + s.cards.length, 0);
         let titles = [
-            `${displayName} Leak Booklet — Complete Reference Catalog`,
-            `${displayName} Leak Booklet — Flip Card Directory`,
+            `${displayName} Leak Booklet � Complete Reference Catalog`,
+            `${displayName} Leak Booklet � Flip Card Directory`,
             `Booklet: ${displayName} Leak Reference Guide`,
-            `${displayName} Leak Booklet — ${totalCards} Entries`
+            `${displayName} Leak Booklet � ${totalCards} Entries`
         ];
         let descs = [
             `Complete reference booklet catalog for ${displayName} leak collections. ${totalCards} entries. Flip card style directory.`,
@@ -374,7 +394,9 @@ permalink: /edition-a33/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // Update canonical URL dynamically based on current query
+        updateCanonicalUrl();
     };
     
     // ========== RENDER PAGE ==========
@@ -388,13 +410,13 @@ permalink: /edition-a33/
             ${generateIndex()}
             
             <div class="booklet-bottom">
-                <span>📖 ${displayName} Leak Booklet · Complete Reference Catalog · ${BOOKLET_SECTIONS.reduce((acc, s) => acc + s.cards.length, 0)} Entries</span>
+                <span> ${displayName} Leak Booklet � Complete Reference Catalog � ${BOOKLET_SECTIONS.reduce((acc, s) => acc + s.cards.length, 0)} Entries</span>
             </div>
         `;
         
         // Handle internal links (static navigation)
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-a34/?q=')){
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-a33/?q=')){
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.location.href = link.getAttribute('href');

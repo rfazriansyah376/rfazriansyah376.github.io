@@ -1,8 +1,3 @@
----
-layout: null
-permalink: /edition-a49/
----
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,97 +10,351 @@ permalink: /edition-a49/
     <meta name="referrer" content="always">
     <title id="dynamic-title">STACKED CARDS · Leak Accordion Directory</title>
     <meta id="dynamic-description" name="description" content="Stacked cards accordion directory for leak collections. Collapsible sections. Easy navigation.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a50/">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a49/">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#eef2f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#1a2a3a}
-        
-        /* Stacked Cards / Accordion Style - Like FAQ or Directory */
-        .stack-container{max-width:900px;margin:0 auto;padding:20px}
-        
+        /* -------------------------------
+           GLOBAL COLOR SCHEME (EASY TO CHANGE)
+           Just modify the :root variables below
+        --------------------------------- */
+        :root {
+            --base-primary: #2c7da0;      /* Main brand color - change this to any color */
+            --base-primary-dark: #1f5e7a; /* Darker variant for hover states */
+            --base-primary-light: #e8f4f8; /* Light background variant */
+            --base-primary-soft: #b8d8e8;  /* Soft variant for accents */
+            --base-text-dark: #1a2a3a;
+            --base-text-muted: #6c8a9e;
+            --base-bg-page: #eef2f5;
+            --base-bg-card: #ffffff;
+            --base-border: #dce4ec;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--base-bg-page);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica Neue, sans-serif;
+            color: var(--base-text-dark);
+        }
+
+        /* Stacked Cards / Accordion Style */
+        .stack-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         /* Header */
-        .stack-header{background:#fff;border-radius:20px;padding:20px;margin-bottom:24px;border:1px solid #dce4ec}
-        .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
-        .logo{font-size:1.2rem;font-weight:800}
-        .logo span{color:#2c7da0}
-        .stack-badge{font-family:monospace;font-size:0.6rem;color:#2c7da0;background:#e8f4f8;padding:4px 12px;border-radius:20px}
-        .header-desc{font-size:0.7rem;color:#6c8a9e}
-        
+        .stack-header {
+            background: var(--base-bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--base-border);
+        }
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+        .logo span {
+            color: var(--base-primary);
+        }
+        .stack-badge {
+            font-family: monospace;
+            font-size: 0.6rem;
+            color: var(--base-primary);
+            background: var(--base-primary-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .header-desc {
+            font-size: 0.7rem;
+            color: var(--base-text-muted);
+        }
+
         /* Breadcrumb */
-        .breadcrumb{font-size:0.7rem;color:#6c8a9e;margin-bottom:20px}
-        .breadcrumb a{color:#2c7da0;text-decoration:none}
-        .breadcrumb a:hover{text-decoration:underline}
-        
+        .breadcrumb {
+            font-size: 0.7rem;
+            color: var(--base-text-muted);
+            margin-bottom: 20px;
+        }
+        .breadcrumb a {
+            color: var(--base-primary);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
         /* Hero */
-        .hero-stack{background:#2c5f7a;color:#fff;border-radius:20px;padding:28px;margin-bottom:28px}
-        .hero-badge{font-size:0.65rem;color:#b8d8e8;margin-bottom:8px}
-        .hero-title{font-size:1.2rem;font-weight:700;margin-bottom:12px}
-        .hero-title span{color:#f4d03f}
-        .hero-desc{font-size:0.75rem;color:#d4e4ec;line-height:1.5;margin-bottom:14px}
-        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.6rem;color:#b8d8e8}
-        
+        .hero-stack {
+            background: var(--base-primary-dark);
+            color: #fff;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 28px;
+        }
+        .hero-badge {
+            font-size: 0.65rem;
+            color: var(--base-primary-soft);
+            margin-bottom: 8px;
+        }
+        .hero-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .hero-title span {
+            color: #f4d03f;
+        }
+        .hero-desc {
+            font-size: 0.75rem;
+            color: #d4e4ec;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.6rem;
+            color: var(--base-primary-soft);
+        }
+
         /* Quick Stats Row */
-        .quick-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
-        .quick-stat{background:#fff;border-radius:16px;padding:14px;text-align:center;border:1px solid #dce4ec}
-        .quick-number{font-size:1.2rem;font-weight:800;color:#2c7da0}
-        .quick-label{font-size:0.55rem;color:#6c8a9e;text-transform:uppercase;margin-top:4px}
-        
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .quick-stat {
+            background: var(--base-bg-card);
+            border-radius: 16px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--base-border);
+        }
+        .quick-number {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--base-primary);
+        }
+        .quick-label {
+            font-size: 0.55rem;
+            color: var(--base-text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
         /* Stacked Cards - Accordion Style Sections */
-        .stack-section{margin-bottom:16px}
-        .stack-header-card{background:#fff;border:1px solid #dce4ec;border-radius:20px;overflow:hidden}
-        .section-title-bar{background:#f8fafc;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-bottom:1px solid #dce4ec}
-        .section-title{font-size:0.85rem;font-weight:700}
-        .section-title span{color:#2c7da0;margin-right:8px}
-        .section-count{background:#e8f4f8;color:#2c7da0;padding:2px 10px;border-radius:30px;font-size:0.6rem}
-        
-        /* Stacked Content (Always Visible - No Animation) */
-        .stack-content{padding:20px 24px;background:#fff}
-        .sub-items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-        .stack-item{display:block;background:#f8fafc;border-radius:12px;padding:12px 16px;text-decoration:none;color:#1a2a3a;border:1px solid #e8eef2}
-        .stack-item:hover{background:#e8f4f8;border-color:#2c7da0}
-        .item-title{font-size:0.7rem;font-weight:600;margin-bottom:4px}
-        .item-title span{color:#2c7da0}
-        .item-desc{font-size:0.6rem;color:#6c8a9e;margin-bottom:6px}
-        .item-tags{display:flex;flex-wrap:wrap;gap:6px}
-        .item-tag{font-size:0.55rem;color:#2c7da0;background:#e8f4f8;padding:2px 8px;border-radius:12px}
-        
+        .stack-section {
+            margin-bottom: 16px;
+        }
+        .stack-header-card {
+            background: var(--base-bg-card);
+            border: 1px solid var(--base-border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .section-title-bar {
+            background: #f8fafc;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 1px solid var(--base-border);
+            transition: background 0.2s;
+        }
+        .section-title-bar:hover {
+            background: var(--base-primary-light);
+        }
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        .section-title span {
+            color: var(--base-primary);
+            margin-right: 8px;
+        }
+        .section-count {
+            background: var(--base-primary-light);
+            color: var(--base-primary);
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+        }
+
+        /* Stacked Content (Collapsible) */
+        .stack-content {
+            padding: 20px 24px;
+            background: var(--base-bg-card);
+            display: block;
+        }
+        .sub-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .stack-item {
+            display: block;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: var(--base-text-dark);
+            border: 1px solid #e8eef2;
+            transition: all 0.2s;
+        }
+        .stack-item:hover {
+            background: var(--base-primary-light);
+            border-color: var(--base-primary);
+        }
+        .item-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .item-title span {
+            color: var(--base-primary);
+        }
+        .item-desc {
+            font-size: 0.6rem;
+            color: var(--base-text-muted);
+            margin-bottom: 6px;
+        }
+        .item-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .item-tag {
+            font-size: 0.55rem;
+            color: var(--base-primary);
+            background: var(--base-primary-light);
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-decoration: none;
+        }
+        .item-tag:hover {
+            background: var(--base-primary);
+            color: white;
+        }
+
         /* Nested Sub-section */
-        .nested-section{margin-top:16px;padding-top:16px;border-top:1px solid #e8eef2}
-        .nested-title{font-size:0.7rem;font-weight:700;margin-bottom:12px;color:#2c7da0}
-        .nested-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
-        .nested-link{display:block;padding:8px 12px;background:#f8fafc;border-radius:10px;text-decoration:none;color:#1a2a3a;font-size:0.65rem;border:1px solid #e8eef2}
-        .nested-link:hover{background:#e8f4f8;border-color:#2c7da0}
-        
+        .nested-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e8eef2;
+        }
+        .nested-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--base-primary);
+        }
+        .nested-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .nested-link {
+            display: block;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--base-text-dark);
+            font-size: 0.65rem;
+            border: 1px solid #e8eef2;
+            transition: all 0.2s;
+        }
+        .nested-link:hover {
+            background: var(--base-primary-light);
+            border-color: var(--base-primary);
+        }
+
         /* Quick Links Bar */
-        .quick-bar{background:#fff;border:1px solid #dce4ec;border-radius:20px;padding:16px 20px;margin-top:24px}
-        .quick-title{font-size:0.65rem;font-weight:700;margin-bottom:12px;color:#2c7da0}
-        .quick-chips{display:flex;flex-wrap:wrap;gap:8px}
-        .quick-chip{background:#f8fafc;padding:5px 14px;border-radius:30px;font-size:0.6rem;text-decoration:none;color:#1a2a3a;border:1px solid #e8eef2}
-        .quick-chip:hover{background:#2c7da0;color:#fff;border-color:#2c7da0}
-        
-        /* Clean Bottom */
-        .stack-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #dce4ec;text-align:center;font-size:0.55rem;color:#6c8a9e}
-        
-        @media(max-width:600px){.stack-container{padding:16px}.quick-stats{grid-template-columns:repeat(2,1fr)}.sub-items-grid{grid-template-columns:1fr}.nested-grid{grid-template-columns:1fr}}
+        .quick-bar {
+            background: var(--base-bg-card);
+            border: 1px solid var(--base-border);
+            border-radius: 20px;
+            padding: 16px 20px;
+            margin-top: 24px;
+        }
+        .quick-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--base-primary);
+        }
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .quick-chip {
+            background: #f8fafc;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            text-decoration: none;
+            color: var(--base-text-dark);
+            border: 1px solid #e8eef2;
+            transition: all 0.2s;
+        }
+        .quick-chip:hover {
+            background: var(--base-primary);
+            color: #fff;
+            border-color: var(--base-primary);
+        }
+
+        /* Bottom */
+        .stack-bottom {
+            margin-top: 32px;
+            padding: 16px 0;
+            border-top: 1px solid var(--base-border);
+            text-align: center;
+            font-size: 0.55rem;
+            color: var(--base-text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .stack-container { padding: 16px; }
+            .quick-stats { grid-template-columns: repeat(2, 1fr); }
+            .sub-items-grid { grid-template-columns: 1fr; }
+            .nested-grid { grid-template-columns: 1fr; }
+        }
     </style>
-{% include head.html %}
-  </head>
-<body><div loading="lazy">
-<div class="stack-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#6c8a9e">📚 LOADING STACKED DIRECTORY...</div></div>
+</head>
+<body>
+<div>
+<div class="stack-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--base-text-muted);">📚 LOADING STACKED DIRECTORY...</div></div>
+</div>
 
 <script>
 (function(){
-    // ========== DATABASE STACKED CARDS (EVERGREEN, MANY INTERNAL LINKS) ==========
-    
-    // Stack Sections - Setiap heading mengandung "leak" + query
+    // ========== DATABASE: STACKED CARDS (ALL ENGLISH CONTENT, NO INDONESIAN) ==========
     const STACK_SECTIONS = [
         {
             title: "Complete Leak Archives",
             icon: "📚",
             items: [
-                { title: "{name} Complete Master Leak Archive", desc: "The definitive complete archive", tags: ["Master", "Complete"] },
-                { title: "{name} Comprehensive Leak Library", desc: "Complete knowledge base", tags: ["Library", "Reference"] },
-                { title: "{name} Eternal Leak Vault", desc: "Permanent preserved archive", tags: ["Vault", "Eternal"] }
+                { title: "{name} Complete Master Leak Archive", desc: "The definitive complete archive of all leaked content", tags: ["Master", "Complete"] },
+                { title: "{name} Comprehensive Leak Library", desc: "Complete knowledge base and reference library", tags: ["Library", "Reference"] },
+                { title: "{name} Eternal Leak Vault", desc: "Permanent preserved archive with original files", tags: ["Vault", "Eternal"] }
             ],
             nested: null
         },
@@ -113,46 +362,46 @@ permalink: /edition-a49/
             title: "OnlyFans Leak Collections",
             icon: "🔞",
             items: [
-                { title: "{name} OnlyFans Complete Leak", desc: "Full subscription content", tags: ["Premium", "Complete"] },
-                { title: "{name} OnlyFans Master Leak Vault", desc: "Every post ever made", tags: ["Master", "Vault"] },
-                { title: "{name} OnlyFans Ultimate Leak", desc: "Complete authenticated", tags: ["Ultimate", "Archive"] }
+                { title: "{name} OnlyFans Complete Leak", desc: "Full subscription content archive", tags: ["Premium", "Complete"] },
+                { title: "{name} OnlyFans Master Leak Vault", desc: "Every post ever made with metadata", tags: ["Master", "Vault"] },
+                { title: "{name} OnlyFans Ultimate Leak", desc: "Complete authenticated content set", tags: ["Ultimate", "Archive"] }
             ],
-            nested: { title: "Premium Tier Breakdown", links: ["Standard Tier", "Premium Tier", "Ultimate Tier"] }
+            nested: { title: "Premium Tier Breakdown", links: ["Standard Tier Archive", "Premium Tier Vault", "Ultimate Tier Collection"] }
         },
         {
             title: "TikTok Leak Compilations",
             icon: "📱",
             items: [
-                { title: "{name} TikTok Complete Leak Compilation", desc: "All viral moments", tags: ["Viral", "Complete"] },
-                { title: "{name} TikTok Master Leak Feed", desc: "Every video ever posted", tags: ["Master", "Feed"] },
-                { title: "{name} TikTok Viral Leak Collection", desc: "Trending content", tags: ["Viral", "Trending"] }
+                { title: "{name} TikTok Complete Leak Compilation", desc: "All viral moments from top creators", tags: ["Viral", "Complete"] },
+                { title: "{name} TikTok Master Leak Feed", desc: "Every video ever posted on the platform", tags: ["Master", "Feed"] },
+                { title: "{name} TikTok Viral Leak Collection", desc: "Trending and most shared content", tags: ["Viral", "Trending"] }
             ],
-            nested: { title: "Video Categories", links: ["Short Clips", "Full Videos", "Highlights"] }
+            nested: { title: "Video Categories", links: ["Short Clips Archive", "Full Videos Collection", "Highlights Reel"] }
         },
         {
             title: "Telegram Leak Channels",
             icon: "✈️",
             items: [
-                { title: "{name} Telegram Complete Leak Channel", desc: "All channel content", tags: ["Channel", "Complete"] },
-                { title: "{name} Telegram Master Leak Archive", desc: "Full message history", tags: ["Master", "Archive"] }
+                { title: "{name} Telegram Complete Leak Channel", desc: "All channel content including media", tags: ["Channel", "Complete"] },
+                { title: "{name} Telegram Master Leak Archive", desc: "Full message history and files", tags: ["Master", "Archive"] }
             ],
-            nested: { title: "Channel Types", links: ["Public Channels", "Private Groups", "Archived Chats"] }
+            nested: { title: "Channel Types", links: ["Public Channels Index", "Private Groups Archive", "Archived Chats Database"] }
         },
         {
             title: "Instagram Leak Galleries",
             icon: "📸",
             items: [
-                { title: "{name} Instagram Complete Leak Gallery", desc: "All private stories", tags: ["Gallery", "Complete"] },
-                { title: "{name} Instagram Master Leak Collection", desc: "Everything preserved", tags: ["Master", "Collection"] }
+                { title: "{name} Instagram Complete Leak Gallery", desc: "All private stories and posts", tags: ["Gallery", "Complete"] },
+                { title: "{name} Instagram Master Leak Collection", desc: "Everything preserved including highlights", tags: ["Master", "Collection"] }
             ],
-            nested: { title: "Content Formats", links: ["Stories", "Posts", "Highlights", "Archives"] }
+            nested: { title: "Content Formats", links: ["Stories Archive", "Posts Library", "Highlights Collection", "Archives Backup"] }
         },
         {
             title: "Mega Archive Leaks",
             icon: "☁️",
             items: [
-                { title: "{name} Mega Complete Leak Archive", desc: "Full backup collection", tags: ["Backup", "Complete"] },
-                { title: "{name} Mega Master Leak Vault", desc: "Complete file collection", tags: ["Master", "Vault"] }
+                { title: "{name} Mega Complete Leak Archive", desc: "Full backup collection from Mega", tags: ["Backup", "Complete"] },
+                { title: "{name} Mega Master Leak Vault", desc: "Complete file collection with hashes", tags: ["Master", "Vault"] }
             ],
             nested: null
         },
@@ -160,59 +409,59 @@ permalink: /edition-a49/
             title: "Rare & Unreleased Leaks",
             icon: "💎",
             items: [
-                { title: "{name} Rare Leak Collection", desc: "Hard-to-find material", tags: ["Rare", "Unseen"] },
-                { title: "{name} Unreleased Leak Archive", desc: "Exclusive content", tags: ["Unreleased", "Exclusive"] }
+                { title: "{name} Rare Leak Collection", desc: "Hard-to-find exclusive material", tags: ["Rare", "Unseen"] },
+                { title: "{name} Unreleased Leak Archive", desc: "Exclusive never-before-seen content", tags: ["Unreleased", "Exclusive"] }
             ],
-            nested: { title: "Rarity Levels", links: ["Common", "Rare", "Epic", "Legendary"] }
+            nested: { title: "Rarity Levels", links: ["Common Archive", "Rare Vault", "Epic Collection", "Legendary Database"] }
         },
         {
             title: "Fan Favorite Leak Compilations",
             icon: "⭐",
             items: [
-                { title: "{name} Fan Favorites Leak Collection", desc: "Most requested content", tags: ["Curated", "Favorite"] },
-                { title: "{name} Top Rated Leak Archive", desc: "Highest rated content", tags: ["Top", "Rated"] }
+                { title: "{name} Fan Favorites Leak Collection", desc: "Most requested community favorites", tags: ["Curated", "Favorite"] },
+                { title: "{name} Top Rated Leak Archive", desc: "Highest rated content by users", tags: ["Top", "Rated"] }
             ],
-            nested: { title: "Rating Categories", links: ["5 Star Rated", "Most Viewed", "Most Shared", "Trending"] }
+            nested: { title: "Rating Categories", links: ["5 Star Rated Vault", "Most Viewed Archive", "Most Shared Collection", "Trending Now"] }
         },
         {
             title: "Video Leak Archives",
             icon: "🎬",
             items: [
                 { title: "{name} Complete Video Leak Archive", desc: "Full HD video collection", tags: ["Video", "HD"] },
-                { title: "{name} HD Video Leak Collection", desc: "High quality videos", tags: ["HD", "Quality"] },
-                { title: "{name} Master Video Leak Set", desc: "Complete video set", tags: ["Master", "Set"] }
+                { title: "{name} HD Video Leak Collection", desc: "High quality video files", tags: ["HD", "Quality"] },
+                { title: "{name} Master Video Leak Set", desc: "Complete video set in multiple formats", tags: ["Master", "Set"] }
             ],
-            nested: { title: "Video Quality", links: ["480p", "720p", "1080p", "4K"] }
+            nested: { title: "Video Quality", links: ["480p Archive", "720p Collection", "1080p Vault", "4K Ultra HD"] }
         },
         {
             title: "Photo Leak Galleries",
             icon: "🖼️",
             items: [
-                { title: "{name} Complete Photo Leak Gallery", desc: "Full resolution images", tags: ["Photo", "Gallery"] },
-                { title: "{name} HD Photo Leak Collection", desc: "High resolution photos", tags: ["HD", "Resolution"] },
-                { title: "{name} Master Photo Leak Set", desc: "Complete photo set", tags: ["Master", "Set"] }
+                { title: "{name} Complete Photo Leak Gallery", desc: "Full resolution image archive", tags: ["Photo", "Gallery"] },
+                { title: "{name} HD Photo Leak Collection", desc: "High resolution photographs", tags: ["HD", "Resolution"] },
+                { title: "{name} Master Photo Leak Set", desc: "Complete organized photo set", tags: ["Master", "Set"] }
             ],
-            nested: { title: "Resolution Guide", links: ["HD", "Full HD", "2K", "4K", "Original"] }
+            nested: { title: "Resolution Guide", links: ["HD Archive", "Full HD Collection", "2K Vault", "4K Originals", "Ultra HD"] }
         }
     ];
     
-    // Quick Access Links (Internal Links)
+    // Quick Access Links (English only)
     const QUICK_ACCESS = [
         "Complete Archive", "Master Collection", "Premium Vault", "Rare Content",
         "Fan Favorites", "Video Archive", "Photo Gallery", "OnlyFans", "TikTok",
         "Telegram", "Instagram", "Mega Backup", "HD Quality", "4K Content"
     ];
     
-    // Evergreen description
-    const STACK_DESC = "Stacked cards accordion directory for {name} leak collections. Expandable sections with complete navigation.";
+    // Evergreen description (English)
+    const STACK_DESC = "Stacked cards accordion directory for {name} leak collections. Expandable sections with complete internal navigation.";
     
-    // Stop Words
+    // Stop words to clean query
     const STOP_WORDS = ['stack','stacked','cards','accordion','directory','folder','tab','panel'];
     
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC FROM QUERY ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "stacked directory guide"; }
@@ -227,14 +476,15 @@ permalink: /edition-a49/
     const displayName = formatTopic(baseTopic);
     const nameLower = displayName.toLowerCase();
     
-    // ========== GENERATE INTERNAL LINK ==========
+    // ========== GENERATE DYNAMIC INTERNAL LINK (preserves permalink structure) ==========
     const genInternalLink = (keyword) => {
-        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
-        let newQ = `${nameLower} ${cleanKeyword} stack directory`;
-        return `/edition-a50/?q=${encodeURIComponent(newQ)}`;
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 55);
+        let newQ = `${nameLower} ${cleanKeyword} stack directory`.replace(/\s+/g, ' ').trim();
+        // Preserve exact permalink: /edition-a49/ (no change)
+        return `/edition-a49/?q=${encodeURIComponent(newQ)}`;
     };
     
-    // ========== GENERATE STACK SECTIONS ==========
+    // ========== GENERATE STACK SECTIONS (All content in English) ==========
     const generateStackSections = () => {
         let sectionsHtml = '';
         for(let section of STACK_SECTIONS){
@@ -253,25 +503,25 @@ permalink: /edition-a49/
                 }
                 itemsHtml += `
                     <a href="${itemUrl}" class="stack-item">
-                        <div class="item-title"><span>📄</span> ${itemTitle}</div>
-                        <div class="item-desc">${itemDesc}</div>
+                        <div class="item-title"><span>📄</span> ${escapeHtml(itemTitle)}</div>
+                        <div class="item-desc">${escapeHtml(itemDesc)}</div>
                         <div class="item-tags">${tagsHtml}</div>
                     </a>
                 `;
             }
             
-            // Nested section if exists
+            // Nested sub-section if exists
             let nestedHtml = '';
             if(section.nested){
                 let nestedLinksHtml = '';
                 for(let link of section.nested.links){
                     let fullLink = `${displayName} ${link} ${section.title}`;
                     let linkUrl = genInternalLink(link);
-                    nestedLinksHtml += `<a href="${linkUrl}" class="nested-link">📌 ${fullLink}</a>`;
+                    nestedLinksHtml += `<a href="${linkUrl}" class="nested-link">📌 ${escapeHtml(fullLink)}</a>`;
                 }
                 nestedHtml = `
                     <div class="nested-section">
-                        <div class="nested-title">📁 ${section.nested.title}</div>
+                        <div class="nested-title">📁 ${escapeHtml(section.nested.title)}</div>
                         <div class="nested-grid">
                             ${nestedLinksHtml}
                         </div>
@@ -280,10 +530,10 @@ permalink: /edition-a49/
             }
             
             sectionsHtml += `
-                <div class="stack-section">
+                <div class="stack-section" data-section-id="${section.title.replace(/\s/g,'')}">
                     <div class="stack-header-card">
-                        <div class="section-title-bar">
-                            <div class="section-title"><span>${section.icon}</span> <a href="${sectionUrl}" style="color:#1a2a3a;text-decoration:none">${sectionTitle}</a></div>
+                        <div class="section-title-bar" role="button" aria-expanded="true">
+                            <div class="section-title"><span>${section.icon}</span> <a href="${sectionUrl}" style="color:var(--base-text-dark);text-decoration:none">${escapeHtml(sectionTitle)}</a></div>
                             <div class="section-count">${section.items.length} items</div>
                         </div>
                         <div class="stack-content">
@@ -298,6 +548,18 @@ permalink: /edition-a49/
         }
         return sectionsHtml;
     };
+    
+    // Simple escape to prevent XSS
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
     
     // ========== GENERATE QUICK STATS ==========
     const generateQuickStats = () => {
@@ -320,7 +582,7 @@ permalink: /edition-a49/
         for(let qa of QUICK_ACCESS){
             let fullQa = `${displayName} ${qa}`;
             let url = genInternalLink(qa);
-            chipsHtml += `<a href="${url}" class="quick-chip">📌 ${fullQa}</a>`;
+            chipsHtml += `<a href="${url}" class="quick-chip">📌 ${escapeHtml(fullQa)}</a>`;
         }
         return `
             <div class="quick-bar">
@@ -339,22 +601,22 @@ permalink: /edition-a49/
         return `
             <div class="hero-stack">
                 <div class="hero-badge">📚 STACKED CARDS / ACCORDION DIRECTORY</div>
-                <div class="hero-title"><span>${displayName}</span> Leak Stack Directory</div>
-                <div class="hero-desc">${STACK_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-title"><span>${escapeHtml(displayName)}</span> Leak Stack Directory</div>
+                <div class="hero-desc">${STACK_DESC.replace('{name}', escapeHtml(displayName))}</div>
                 <div class="hero-stats">
                     <span>📁 ${totalSections} Stack Sections</span>
                     <span>📄 ${totalItems} Directory Entries</span>
-                    <span>🔗 Fully Nested</span>
+                    <span>🔗 Fully Nested Links</span>
                 </div>
             </div>
         `;
     };
     
-    // ========== RENDER BREADCRUMB ==========
+    // ========== RENDER BREADCRUMB (English) ==========
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition-a50/">Stack Directory</a> › ${displayName} Leak Stack
+                <a href="/">Home</a> › <a href="/edition-a49/">Stack Directory</a> › ${escapeHtml(displayName)} Leak Stack
             </div>
         `;
     };
@@ -373,7 +635,7 @@ permalink: /edition-a49/
         `;
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== DYNAMIC SEO: Canonical follows query param ==========
     const updateSEO = () => {
         let totalSections = STACK_SECTIONS.length;
         let titles = [
@@ -388,31 +650,85 @@ permalink: /edition-a49/
             `Stacked card navigation for ${displayName} leak archives. Complete hierarchical directory.`
         ];
         document.title = rand(titles);
-        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // CANONICAL URL DINAMIS: mengikuti query parameter saat ini (tanpa mengubah permalink dasar)
+        let currentUrl = window.location.href;
+        let baseCanonical = window.location.origin + window.location.pathname;
+        if(window.location.search && window.location.search.includes('q=')) {
+            // Canonical tetap menggunakan full URL dengan query karena konten dinamis berdasarkan query
+            let canonicalUrl = window.location.href.split('#')[0];
+            let linkCanonical = document.getElementById('dynamic-canonical');
+            if(linkCanonical) linkCanonical.setAttribute('href', canonicalUrl);
+        } else {
+            let linkCanonical = document.getElementById('dynamic-canonical');
+            if(linkCanonical) linkCanonical.setAttribute('href', baseCanonical);
+        }
     };
     
-    // ========== RENDER PAGE ==========
+    // ========== ACCORDION TOGGLE FUNCTIONALITY (click to collapse/expand, default expanded) ==========
+    const bindAccordionEvents = () => {
+        document.querySelectorAll('.section-title-bar').forEach(bar => {
+            // Remove any existing listener to avoid dupes
+            bar.removeEventListener('click', toggleHandler);
+            bar.addEventListener('click', toggleHandler);
+        });
+        
+        function toggleHandler(e) {
+            // Prevent if clicking on internal link inside title (a tag)
+            if(e.target.tagName === 'A' || e.target.closest('a')) return;
+            const card = this.closest('.stack-header-card');
+            const content = card.querySelector('.stack-content');
+            if(content) {
+                const isExpanded = content.style.display !== 'none';
+                if(isExpanded) {
+                    content.style.display = 'none';
+                    this.setAttribute('aria-expanded', 'false');
+                } else {
+                    content.style.display = 'block';
+                    this.setAttribute('aria-expanded', 'true');
+                }
+            }
+        }
+        
+        // Initialize all contents visible
+        document.querySelectorAll('.stack-content').forEach(content => {
+            content.style.display = 'block';
+        });
+        document.querySelectorAll('.section-title-bar').forEach(bar => {
+            bar.setAttribute('aria-expanded', 'true');
+        });
+    };
+    
+    // ========== RENDER COMPLETE PAGE ==========
     const renderPage = () => {
-        document.getElementById('app').innerHTML = `
+        const app = document.getElementById('app');
+        if(!app) return;
+        app.innerHTML = `
             ${renderHeader()}
             ${renderBreadcrumb()}
             ${renderHero()}
             ${generateQuickStats()}
-            ${generateStackSections()}
+            <div class="stack-sections-wrapper">
+                ${generateStackSections()}
+            </div>
             ${generateQuickBar()}
-            
             <div class="stack-bottom">
-                <span>📚 ${displayName} Leak Stack Directory · Accordion Navigation · Complete Index</span>
+                <span>📚 ${escapeHtml(displayName)} Leak Stack Directory · Accordion Navigation · Complete Index</span>
             </div>
         `;
         
-        // Handle internal links (static navigation)
+        // Bind accordion toggles after render
+        bindAccordionEvents();
+        
+        // Handle internal links to preserve same-page navigation with query
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-a50/?q=')){
+            const href = link.getAttribute('href');
+            if(href && href.startsWith('/edition-a49/?q=')) {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    window.location.href = link.getAttribute('href');
+                    window.location.href = href;
                 });
             }
         });
@@ -422,9 +738,5 @@ permalink: /edition-a49/
     renderPage();
 })();
 </script>
-
-{% include /kw/p/edition-a/edition-a49.html %}<br />
-{% include footer.html %}
-{% include /ads/gobloggugel/sosmed.html %}
-</div></body>
+</body>
 </html>

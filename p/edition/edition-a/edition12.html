@@ -13,9 +13,18 @@ permalink: /edition-a12/
     <meta name="referrer" content="always">
     <title id="dynamic-title">InfoCenter · Complete Topic Dashboard</title>
     <meta id="dynamic-description" name="description" content="Complete information center and resource dashboard. Permanent access. Premium quality data.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a13/">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-primary: #3b82f6;
+            --color-primary-hover: #2563eb;
+            --color-primary-bg: rgba(59, 130, 246, 0.1);
+            --color-primary-border: rgba(59, 130, 246, 0.25);
+            --color-primary-light: #60a5fa;
+            --color-primary-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#0b1120;font-family:'Space Grotesk',sans-serif;color:#e2e8f0}
         
@@ -25,18 +34,18 @@ permalink: /edition-a12/
         /* Stats Bar - Data Dashboard Style */
         .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:32px}
         .stat-card{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:20px;transition:all 0.2s}
-        .stat-card:hover{border-color:#3b82f6;background:#0f172a}
+        .stat-card:hover{border-color:var(--color-primary);background:#0f172a}
         .stat-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:8px}
-        .stat-value{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:#3b82f6;margin-bottom:4px}
+        .stat-value{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--color-primary);margin-bottom:4px}
         .stat-trend{font-size:0.65rem;color:#6b7280}
         
         /* Header dengan Linear Progress */
         .header-section{background:#111827;border:1px solid #1f2937;border-radius:20px;padding:24px 32px;margin-bottom:32px}
-        .topic-badge{display:inline-block;background:#3b82f620;border:1px solid #3b82f640;color:#60a5fa;padding:4px 12px;border-radius:20px;font-size:0.65rem;font-family:'JetBrains Mono',monospace;margin-bottom:16px}
+        .topic-badge{display:inline-block;background:var(--color-primary-bg);border:1px solid var(--color-primary-border);color:var(--color-primary-light);padding:4px 12px;border-radius:20px;font-size:0.65rem;font-family:'JetBrains Mono',monospace;margin-bottom:16px}
         .topic-title{font-size:2.5rem;font-weight:700;margin-bottom:12px;letter-spacing:-0.02em}
         .topic-description{color:#9ca3af;font-size:0.9rem;line-height:1.5;margin-bottom:20px;max-width:800px}
         .progress-container{background:#1f2937;border-radius:10px;height:4px;width:100%;margin:20px 0}
-        .progress-bar{background:#3b82f6;border-radius:10px;height:4px;width:0%}
+        .progress-bar{background:var(--color-primary);border-radius:10px;height:4px;width:0%}
         
         /* Main Grid - 3 Columns (Dashboard Style) */
         .main-dashboard{display:grid;grid-template-columns:280px 1fr 320px;gap:24px}
@@ -46,7 +55,7 @@ permalink: /edition-a12/
         .nav-header{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:20px}
         .nav-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;cursor:pointer;transition:all 0.2s;margin-bottom:4px}
         .nav-item:hover{background:#1f2937}
-        .nav-active{background:#1f2937;border-left:3px solid #3b82f6}
+        .nav-active{background:#1f2937;border-left:3px solid var(--color-primary)}
         .nav-icon{font-size:1.1rem}
         .nav-label{font-size:0.85rem;font-weight:500}
         .nav-count{margin-left:auto;font-size:0.7rem;color:#6b7280}
@@ -57,17 +66,17 @@ permalink: /edition-a12/
         .feed-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
         .feed-filter{display:flex;gap:12px}
         .filter-option{font-size:0.7rem;color:#6b7280;cursor:pointer;padding:4px 8px;border-radius:8px}
-        .filter-active{background:#1f2937;color:#3b82f6}
+        .filter-active{background:#1f2937;color:var(--color-primary)}
         
         /* Data Card yang Panjang - Lebih Banyak Konten */
         .data-card{border-bottom:1px solid #1f2937;padding:24px 20px;cursor:pointer;transition:background 0.2s}
         .data-card:hover{background:#0f172a}
         .card-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-        .card-avatar{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+        .card-avatar{width:48px;height:48px;border-radius:12px;background:var(--color-primary-gradient);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
         .card-meta{flex:1}
         .card-source{font-size:0.7rem;color:#6b7280;font-family:'JetBrains Mono',monospace}
         .card-date{font-size:0.65rem;color:#6b7280}
-        .card-badge{display:inline-block;background:#1f2937;padding:2px 8px;border-radius:12px;font-size:0.6rem;color:#3b82f6}
+        .card-badge{display:inline-block;background:#1f2937;padding:2px 8px;border-radius:12px;font-size:0.6rem;color:var(--color-primary)}
         
         .card-title{font-size:1.1rem;font-weight:600;margin-bottom:12px;line-height:1.3}
         .card-description{font-size:0.85rem;color:#9ca3af;line-height:1.5;margin-bottom:12px}
@@ -84,11 +93,11 @@ permalink: /edition-a12/
         
         .metric-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1f2937}
         .metric-name{font-size:0.8rem}
-        .metric-value{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#3b82f6}
+        .metric-value{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--color-primary)}
         
         .topic-list{display:flex;flex-direction:column;gap:12px}
         .topic-list-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;cursor:pointer}
-        .topic-list-item:hover .topic-list-name{color:#3b82f6}
+        .topic-list-item:hover .topic-list-name{color:var(--color-primary)}
         .topic-list-name{font-size:0.8rem}
         .topic-list-count{font-size:0.65rem;color:#6b7280}
         
@@ -97,7 +106,7 @@ permalink: /edition-a12/
         .recommend-info{flex:1}
         .recommend-name{font-size:0.8rem;font-weight:500}
         .recommend-handle{font-size:0.65rem;color:#6b7280}
-        .recommend-btn{background:transparent;border:1px solid #3b82f6;color:#3b82f6;padding:4px 12px;border-radius:20px;font-size:0.6rem;cursor:pointer}
+        .recommend-btn{background:transparent;border:1px solid var(--color-primary);color:var(--color-primary);padding:4px 12px;border-radius:20px;font-size:0.6rem;cursor:pointer}
         
         .status-indicator{display:flex;align-items:center;gap:8px;margin-top:12px}
         .status-dot{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981}
@@ -122,7 +131,7 @@ permalink: /edition-a12/
 
 <script>
 (function(){
-    // ========== DATABASE DASHBOARD STYLE (PANJANG & DETAIL) ==========
+    // ========== DATABASE DASHBOARD STYLE (LONG & DETAILED) ==========
     
     // 70 Action Verbs
     const ACTIONS = [
@@ -222,7 +231,7 @@ permalink: /edition-a12/
     
     // 8 Badge Types
     const BADGES = ['verified','premium','complete','master','expert','professional','certified','official'];
-    const BADGE_COLORS = { verified:'#3b82f6', premium:'#8b5cf6', complete:'#10b981', master:'#f59e0b', expert:'#ef4444', professional:'#06b6d4', certified:'#ec489a', official:'#6b7280' };
+    const BADGE_COLORS = { verified:'var(--color-primary)', premium:'#8b5cf6', complete:'#10b981', master:'#f59e0b', expert:'#ef4444', professional:'#06b6d4', certified:'#ec489a', official:'#6b7280' };
     
     // 30 File Sizes
     const FILE_SIZES = ['245 MB','512 MB','789 MB','1.2 GB','1.8 GB','2.3 GB','3.1 GB','4.5 GB','5.0 GB','6.2 GB','7.5 GB','8.9 GB','10.2 GB','12.5 GB','15.0 GB','18.3 GB','21.7 GB','25.0 GB','28.5 GB','32.0 GB','45 MB','89 MB','124 MB','256 MB','345 MB','678 MB','892 MB','1.5 GB','2.7 GB','3.9 GB'];
@@ -250,10 +259,10 @@ permalink: /edition-a12/
     const CTA_TEXTS = [
         "📊 ACCESS DATASET","📈 VIEW REPORT","🔍 ANALYZE DATA","💾 DOWNLOAD ARCHIVE","📁 BROWSE FILES",
         "📑 READ DOCUMENT","🔬 EXAMINE FINDINGS","📀 OPEN REPOSITORY","🗂️ EXPLORE COLLECTION","💿 ACCESS LIBRARY",
-        "📊 RUN ANALYSIS","📈 GENERATE REPORT","🔍 QUERY DATABASE","?? EXPORT DATA","📁 RETRIEVE FILES"
+        "📊 RUN ANALYSIS","📈 GENERATE REPORT","🔍 QUERY DATABASE","📤 EXPORT DATA","📁 RETRIEVE FILES"
     ];
     
-    // 20 Bio Templates (Panjang)
+    // 20 Bio Templates (Long)
     const BIO_TEMPLATES = [
         (n,f) => `Complete ${n} information archive. Comprehensive dataset with ${f.toLocaleString()}+ records. Real-time updates. Enterprise quality.`,
         (n,f) => `Official ${n} data repository. ${f.toLocaleString()}+ verified entries. Professional research grade. Permanent access.`,
@@ -322,7 +331,7 @@ permalink: /edition-a12/
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
@@ -355,7 +364,7 @@ permalink: /edition-a12/
         };
     };
     
-    // ========== GENERATE METRIK ==========
+    // ========== GENERATE METRICS ==========
     const genMetrics = () => ({
         views: range(...rand(VIEW_RANGES)), downloads: range(...rand(DOWNLOAD_RANGES)),
         citations: range(...rand(CITATION_RANGES)), references: range(...rand(REFERENCE_RANGES)),
@@ -363,7 +372,7 @@ permalink: /edition-a12/
         lastUpdate: rand(TIME_INDICATORS)
     });
     
-    // ========== RENDER DATA CARD (PANJANG) ==========
+    // ========== RENDER DATA CARD (LONG) ==========
     const renderDataCard = (link, idx) => {
         let m = genMetrics(), trigger = rand(TRIGGERS), avatarIcon = rand(AVATAR_ICONS);
         let dn = rand(DISPLAY_NAMES), un = rand(USERNAMES), badge = rand(BADGES), cta = rand(CTA_TEXTS);
@@ -485,7 +494,10 @@ permalink: /edition-a12/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // Dynamic canonical following query
+        let can = document.getElementById('dynamic-canonical');
+        if(can) can.setAttribute('href', window.location.href.split('#')[0]);
     };
     
     // ========== RENDER PAGE ==========

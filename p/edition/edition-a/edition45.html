@@ -17,94 +17,120 @@ permalink: /edition-a45/
     <meta id="dynamic-description" name="description" content="Complete card catalog filing system for leak archives. Library-style organization.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a46/">
     <style>
+        /* ========== GLOBAL COLOR SYSTEM ========== */
+        :root {
+            /* Primary Base Color - Change this one variable to change entire site theme */
+            --primary-color: #8b4513;
+            
+            /* Auto-generated shades (based on primary) */
+            --primary-light: color-mix(in srgb, var(--primary-color) 70%, white);
+            --primary-dark: color-mix(in srgb, var(--primary-color) 85%, black);
+            --primary-bg-light: color-mix(in srgb, var(--primary-color) 8%, #f5f0e6);
+            --primary-border: color-mix(in srgb, var(--primary-color) 35%, #c8bfa8);
+            --primary-text: color-mix(in srgb, var(--primary-color) 90%, #2c2418);
+            
+            /* Neutral colors */
+            --bg-main: #e6e0d4;
+            --bg-card: #f5f0e6;
+            --bg-card-dark: #e8dfd0;
+            --bg-highlight: #fefbf5;
+            --text-main: #2c2418;
+            --text-muted: #6b5a42;
+            --border-light: #c8bfa8;
+            --border-lighter: #e8dfd0;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#e6e0d4;font-family:'Courier New','Georgia','Times New Roman',serif;color:#2c2418}
+        body{background:var(--bg-main);font-family:'Courier New','Georgia','Times New Roman',serif;color:var(--text-main)}
         
         /* Card Catalog Style - Like Library Filing Cabinet */
         .catalog-container{max-width:1200px;margin:0 auto;padding:20px}
         
         /* Header - Card Drawer Style */
-        .catalog-header{background:#f5f0e6;border:1px solid #c8bfa8;border-radius:4px;padding:20px;margin-bottom:24px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.03)}
+        .catalog-header{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;padding:20px;margin-bottom:24px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.03)}
         .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:12px}
         .logo{font-family:'Georgia',serif;font-size:1.2rem;font-weight:700;letter-spacing:-0.3px}
-        .logo span{color:#8b4513}
-        .catalog-code{font-family:'Courier New',monospace;font-size:0.65rem;color:#8b4513;background:#f0e8dc;padding:4px 12px;border-radius:4px}
-        .header-desc{font-size:0.7rem;color:#6b5a42;font-family:'Courier New',monospace}
+        .logo span{color:var(--primary-color)}
+        .catalog-code{font-family:'Courier New',monospace;font-size:0.65rem;color:var(--primary-color);background:var(--bg-card-dark);padding:4px 12px;border-radius:4px}
+        .header-desc{font-size:0.7rem;color:var(--text-muted);font-family:'Courier New',monospace}
         
         /* Breadcrumb */
-        .breadcrumb{font-size:0.7rem;color:#8b4513;margin-bottom:20px;font-family:'Courier New',monospace}
-        .breadcrumb a{color:#8b4513;text-decoration:none}
+        .breadcrumb{font-size:0.7rem;color:var(--primary-color);margin-bottom:20px;font-family:'Courier New',monospace}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero - Filing Cabinet */
-        .hero-catalog{background:#f5f0e6;border:1px solid #c8bfa8;border-radius:4px;padding:28px;margin-bottom:28px}
-        .hero-badge{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#8b4513;margin-bottom:8px;font-family:'Courier New',monospace}
+        .hero-catalog{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;padding:28px;margin-bottom:28px}
+        .hero-badge{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-bottom:8px;font-family:'Courier New',monospace}
         .hero-title{font-size:1.3rem;font-weight:700;margin-bottom:12px;font-family:'Georgia',serif}
-        .hero-title span{color:#8b4513}
-        .hero-desc{font-size:0.8rem;color:#4a3e2c;line-height:1.5;margin-bottom:14px}
-        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;color:#8b4513;font-family:'Courier New',monospace}
+        .hero-title span{color:var(--primary-color)}
+        .hero-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;color:var(--primary-color);font-family:'Courier New',monospace}
         
         /* Filing Drawers Grid */
         .drawers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:32px}
         
         /* Drawer Card - Like Physical Drawer */
-        .drawer-card{background:#f5f0e6;border:1px solid #c8bfa8;border-radius:4px;overflow:hidden}
-        .drawer-label{background:#e8dfd0;padding:14px 16px;border-bottom:1px solid #c8bfa8;display:flex;justify-content:space-between;align-items:center}
-        .drawer-letter{font-family:'Courier New',monospace;font-size:0.9rem;font-weight:800;color:#8b4513}
+        .drawer-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;overflow:hidden}
+        .drawer-label{background:var(--bg-card-dark);padding:14px 16px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center}
+        .drawer-letter{font-family:'Courier New',monospace;font-size:0.9rem;font-weight:800;color:var(--primary-color)}
         .drawer-title{font-size:0.75rem;font-weight:700;font-family:'Georgia',serif}
-        .drawer-count{font-size:0.55rem;color:#8b4513;background:#f5f0e6;padding:2px 8px;border-radius:20px}
+        .drawer-count{font-size:0.55rem;color:var(--primary-color);background:var(--bg-card);padding:2px 8px;border-radius:20px}
         
         .drawer-items{padding:8px}
-        .drawer-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid #e8dfd0;text-decoration:none;color:#2c2418;font-size:0.7rem}
-        .drawer-item:hover{background:#f0e8dc}
-        .item-code{font-family:'Courier New',monospace;font-size:0.6rem;color:#8b4513}
+        .drawer-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border-lighter);text-decoration:none;color:var(--text-main);font-size:0.7rem}
+        .drawer-item:hover{background:var(--primary-bg-light)}
+        .item-code{font-family:'Courier New',monospace;font-size:0.6rem;color:var(--primary-color)}
         .item-title{flex:1;margin-left:12px}
-        .item-arrow{color:#8b4513;opacity:0.5}
+        .item-arrow{color:var(--primary-color);opacity:0.5}
         
-        .drawer-footer{padding:10px 12px;border-top:1px solid #e8dfd0;text-align:center}
-        .drawer-footer a{font-size:0.6rem;color:#8b4513;text-decoration:none;font-family:'Courier New',monospace}
+        .drawer-footer{padding:10px 12px;border-top:1px solid var(--border-lighter);text-align:center}
+        .drawer-footer a{font-size:0.6rem;color:var(--primary-color);text-decoration:none;font-family:'Courier New',monospace}
         .drawer-footer a:hover{text-decoration:underline}
         
         /* Reference Section - Cross Reference Cards */
-        .reference-section{background:#f5f0e6;border:1px solid #c8bfa8;border-radius:4px;padding:20px;margin-bottom:24px}
-        .reference-title{font-size:0.75rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #c8bfa8;font-family:'Georgia',serif}
+        .reference-section{background:var(--bg-card);border:1px solid var(--border-light);border-radius:4px;padding:20px;margin-bottom:24px}
+        .reference-title{font-size:0.75rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-light);font-family:'Georgia',serif}
         .reference-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-        .reference-card{background:#fefbf5;border:1px solid #e8dfd0;border-radius:4px;padding:12px;text-decoration:none;display:block}
-        .reference-card:hover{background:#f0e8dc;border-color:#c8bfa8}
-        .reference-callno{font-family:'Courier New',monospace;font-size:0.55rem;color:#8b4513;margin-bottom:4px}
+        .reference-card{background:var(--bg-highlight);border:1px solid var(--border-lighter);border-radius:4px;padding:12px;text-decoration:none;display:block}
+        .reference-card:hover{background:var(--primary-bg-light);border-color:var(--border-light)}
+        .reference-callno{font-family:'Courier New',monospace;font-size:0.55rem;color:var(--primary-color);margin-bottom:4px}
         .reference-name{font-size:0.7rem;font-weight:600}
-        .reference-desc{font-size:0.55rem;color:#6b5a42;margin-top:4px}
+        .reference-desc{font-size:0.55rem;color:var(--text-muted);margin-top:4px}
         
         /* Alphabet Index - Quick Jump */
-        .alphabet-index{background:#fff;border:1px solid #c8bfa8;border-radius:4px;padding:16px;margin-bottom:24px}
+        .alphabet-index{background:#fff;border:1px solid var(--border-light);border-radius:4px;padding:16px;margin-bottom:24px}
         .alphabet-title{font-size:0.7rem;font-weight:700;margin-bottom:12px;font-family:'Georgia',serif}
         .alphabet-chips{display:flex;flex-wrap:wrap;gap:8px}
-        .alphabet-chip{background:#f5f0e6;padding:6px 14px;border-radius:4px;font-size:0.65rem;text-decoration:none;color:#2c2418;font-family:'Courier New',monospace}
-        .alphabet-chip:hover{background:#8b4513;color:#fff}
+        .alphabet-chip{background:var(--bg-card);padding:6px 14px;border-radius:4px;font-size:0.65rem;text-decoration:none;color:var(--text-main);font-family:'Courier New',monospace}
+        .alphabet-chip:hover{background:var(--primary-color);color:#fff}
         
         /* Subject Headings */
         .subject-section{margin-bottom:24px}
         .subject-title{font-size:0.7rem;font-weight:700;margin-bottom:12px;font-family:'Georgia',serif}
         .subject-grid{display:flex;flex-wrap:wrap;gap:10px}
-        .subject-tag{background:#f0e8dc;padding:6px 16px;border-radius:20px;font-size:0.65rem;text-decoration:none;color:#2c2418}
-        .subject-tag:hover{background:#8b4513;color:#fff}
+        .subject-tag{background:var(--bg-card-dark);padding:6px 16px;border-radius:20px;font-size:0.65rem;text-decoration:none;color:var(--text-main)}
+        .subject-tag:hover{background:var(--primary-color);color:#fff}
         
         /* Clean Bottom */
-        .catalog-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #c8bfa8;text-align:center;font-size:0.6rem;color:#8b4513;font-family:'Courier New',monospace}
+        .catalog-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-light);text-align:center;font-size:0.6rem;color:var(--primary-color);font-family:'Courier New',monospace}
         
         @media(max-width:700px){.drawers-grid{grid-template-columns:1fr}.reference-grid{grid-template-columns:1fr}}
         @media(max-width:500px){.catalog-container{padding:16px}.hero-title{font-size:1.1rem}}
+        
+        /* Loading state */
+        .loading-state{display:flex;justify-content:center;align-items:center;height:100vh;color:var(--primary-color);font-family:'Courier New',monospace}
     </style>
 {% include head.html %}
-  </head>
+</head>
 <body><div loading="lazy">
-<div class="catalog-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#8b4513;font-family:'Courier New',monospace">⚙️ LOADING CARD CATALOG...</div></div>
+<div class="catalog-container" id="app"><div class="loading-state">⚙️ LOADING CARD CATALOG...</div></div>
 
 <script>
 (function(){
     // ========== DATABASE CARD CATALOG (EVERGREEN, MANY INTERNAL LINKS) ==========
     
-    // Drawers - Filing Categories (Setiap heading mengandung "leak" + query)
+    // Drawers - Filing Categories (Each heading contains "leak" + query)
     const DRAWERS = [
         { letter: "A", name: "Complete Leak Archives", count: "3", items: [
             { code: "ARC-001", title: "{name} Complete Master Leak Archive" },
@@ -174,7 +200,7 @@ permalink: /edition-a45/
         "Unreleased Content", "HD Quality", "Verified Archives", "Permanent Collections"
     ];
     
-    // Evergreen description
+    // Evergreen description - in English
     const CATALOG_DESC = "Complete card catalog filing system for {name} leak archives. Organized by drawer, cross-referenced, fully indexed.";
     
     // Stop Words
@@ -183,7 +209,7 @@ permalink: /edition-a45/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC FROM QUERY ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete library catalog"; }
@@ -199,10 +225,22 @@ permalink: /edition-a45/
     const nameLower = displayName.toLowerCase();
     
     // ========== GENERATE INTERNAL LINK ==========
+    // Uses current page permalink with dynamic query parameter
     const genInternalLink = (keyword) => {
         let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
         let newQ = `${nameLower} ${cleanKeyword} catalog entry`;
-        return `/edition-a46/?q=${encodeURIComponent(newQ)}`;
+        // Use the current page's permalink structure (keeping /edition-a45/)
+        return `/edition-a45/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== UPDATE DYNAMIC CANONICAL ==========
+    const updateDynamicCanonical = () => {
+        // Canonical URL follows current query parameter
+        const currentUrl = window.location.href;
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.setAttribute('href', currentUrl);
+        }
     };
     
     // ========== GENERATE DRAWERS ==========
@@ -322,7 +360,7 @@ permalink: /edition-a45/
     const renderBreadcrumb = () => {
         return `
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition-a46/">Catalog</a> › ${displayName} Leak Filing System
+                <a href="/">Home</a> › <a href="/edition-a45/">Catalog</a> › ${displayName} Leak Filing System
             </div>
         `;
     };
@@ -341,7 +379,7 @@ permalink: /edition-a45/
         `;
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO (Title + Description + Canonical) ==========
     const updateSEO = () => {
         let totalDrawers = DRAWERS.length;
         let titles = [
@@ -356,8 +394,11 @@ permalink: /edition-a45/
             `Card catalog filing system for ${displayName} leak collections. Complete library index.`
         ];
         document.title = rand(titles);
-        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // Update canonical dynamically based on current URL with query
+        updateDynamicCanonical();
     };
     
     // ========== RENDER PAGE ==========
@@ -382,7 +423,7 @@ permalink: /edition-a45/
         
         // Handle internal links (static navigation)
         document.querySelectorAll('a').forEach(link => {
-            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-a46/?q=')){
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-a45/?q=')){
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.location.href = link.getAttribute('href');
@@ -391,6 +432,7 @@ permalink: /edition-a45/
         });
     };
     
+    // Initialize: Update SEO with dynamic canonical, then render page
     updateSEO();
     renderPage();
 })();

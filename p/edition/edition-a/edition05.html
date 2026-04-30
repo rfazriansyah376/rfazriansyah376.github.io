@@ -11,10 +11,16 @@ permalink: /edition-a05/
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="referrer" content="always">
-    <title id="dynamic-title">LeakX · Akses Konten Viral Terbaru</title>
-    <meta id="dynamic-description" name="description" content="Temukan konten viral terbaru. Update setiap hari. Akses eksklusif untuk member.">
+    <title id="dynamic-title">LeakX · Access Latest Viral Content</title>
+    <meta id="dynamic-description" name="description" content="Discover the latest viral content. Updated daily. Exclusive access for members.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a06/">
     <style>
+        :root {
+            /* --- GLOBAL BASE COLOR: Change this ONE value to update the entire theme --- */
+            --base-color: #1d9bf0;
+            --base-color-rgb: 29, 155, 240;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -54,7 +60,7 @@ permalink: /edition-a05/
             font-weight: 700;
         }
 
-        .logo span { color: #1d9bf0; }
+        .logo span { color: var(--base-color); }
         .logo .accent { color: #ec489a; }
 
         .search-box {
@@ -74,7 +80,7 @@ permalink: /edition-a05/
         }
 
         .breadcrumb a {
-            color: #1d9bf0;
+            color: var(--base-color);
             text-decoration: none;
         }
 
@@ -97,8 +103,8 @@ permalink: /edition-a05/
         }
 
         .trending-item:hover {
-            background: #1d9bf022;
-            color: #1d9bf0;
+            background: rgba(var(--base-color-rgb), 0.13);
+            color: var(--base-color);
         }
 
         .profile-header {
@@ -123,7 +129,7 @@ permalink: /edition-a05/
         }
 
         .follow-btn {
-            background: #1d9bf0;
+            background: var(--base-color);
             padding: 0.3rem 1rem;
             border-radius: 30px;
             font-size: 0.7rem;
@@ -162,8 +168,8 @@ permalink: /edition-a05/
         }
 
         .tab.active {
-            border-bottom: 2px solid #1d9bf0;
-            color: #1d9bf0;
+            border-bottom: 2px solid var(--base-color);
+            color: var(--base-color);
         }
 
         .link-card {
@@ -194,7 +200,7 @@ permalink: /edition-a05/
             font-size: 1rem;
         }
 
-        .avatar-1 { background: linear-gradient(135deg, #1d9bf0, #0a5a8a); }
+        .avatar-1 { background: linear-gradient(135deg, var(--base-color), #0a5a8a); }
         .avatar-2 { background: linear-gradient(135deg, #ec489a, #9b2c6b); }
         .avatar-3 { background: linear-gradient(135deg, #00ba7c, #006644); }
         .avatar-4 { background: linear-gradient(135deg, #f59e0b, #92400e); }
@@ -253,7 +259,7 @@ permalink: /edition-a05/
         .media-meta { font-size: 0.6rem; color: #71767b; margin-top: 0.2rem; }
 
         .cta-button {
-            background: linear-gradient(135deg, #1d9bf0, #ec489a);
+            background: linear-gradient(135deg, var(--base-color), #ec489a);
             color: white;
             padding: 8px 16px;
             border-radius: 30px;
@@ -290,7 +296,7 @@ permalink: /edition-a05/
             gap: 0.3rem;
             transition: color 0.2s;
         }
-        .action-item:hover { color: #1d9bf0; }
+        .action-item:hover { color: var(--base-color); }
 
         .sidebar-section {
             padding: 1rem;
@@ -333,8 +339,8 @@ permalink: /edition-a05/
         .suggestion-handle { font-size: 0.65rem; color: #71767b; }
         .suggestion-follow {
             background: transparent;
-            border: 1px solid #1d9bf0;
-            color: #1d9bf0;
+            border: 1px solid var(--base-color);
+            color: var(--base-color);
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
             font-size: 0.65rem;
@@ -342,7 +348,7 @@ permalink: /edition-a05/
             transition: all 0.2s;
         }
         .suggestion-follow:hover {
-            background: #1d9bf022;
+            background: rgba(var(--base-color-rgb), 0.13);
         }
 
         .footer {
@@ -370,16 +376,16 @@ permalink: /edition-a05/
 
 <script>
 (function() {
-    // ========== DATABASE SEMANTIK YANG LUAS (100% VARIAN) ==========
+    // ========== EXTENSIVE SEMANTIC DATABASE (100% VARIANTS) ==========
     
-    // Level 1: Action Verbs (25 varian)
+    // Level 1: Action Verbs (25 variants)
     const ACTIONS = [
         "watch", "download", "view", "access", "stream", "unlock", "see", "get", "open", "reveal",
         "browse", "check", "find", "discover", "explore", "preview", "grab", "snag", "claim", "fetch",
         "retrieve", "launch", "play", "load", "show"
     ];
     
-    // Level 2: Content Types (30 varian)
+    // Level 2: Content Types (30 variants)
     const CONTENT_TYPES = [
         "full video", "complete set", "mega folder", "archive", "compilation", "collection", "dump", 
         "vault", "gallery", "pack", "bundle", "library", "database", "repository", "leak", 
@@ -388,14 +394,14 @@ permalink: /edition-a05/
         "full season", "complete series", "master tape", "studio version"
     ];
     
-    // Level 3: Qualifiers (25 varian)
+    // Level 3: Qualifiers (25 variants)
     const QUALIFIERS = [
         "exclusive", "viral", "leaked", "private", "premium", "uncensored", "full HD", "rare", 
         "limited", "new", "2024", "2025", "authentic", "verified", "original", "legit", "official",
         "unreleased", "uncut", "unfiltered", "behind the scene", "backup", "master", "raw", "unedited"
     ];
     
-    // Level 4: Urgency Phrases (20 varian)
+    // Level 4: Urgency Phrases (20 variants)
     const URGENCY = [
         "before takedown", "limited time", "only today", "expiring soon", "last chance", "few left",
         "trending now", "viral today", "hot off the press", "breaking now", "just dropped",
@@ -403,7 +409,7 @@ permalink: /edition-a05/
         "almost gone", "selling fast", "high demand", "popular right now"
     ];
     
-    // Level 5: Trigger Sentences (15 varian - berbeda-beda)
+    // Level 5: Trigger Sentences (15 variants - all different)
     const TRIGGERS = [
         { type: "fomo", text: "⚠️ Only few views left before removal! ⚠️" },
         { type: "social", text: "🔥 1.2M people already watched this 🔥" },
@@ -422,11 +428,11 @@ permalink: /edition-a05/
         { type: "warning", text: "⚠️ WARNING: This will be deleted soon ⚠️" }
     ];
     
-    // Level 6: Avatar Styles (5 varian)
+    // Level 6: Avatar Styles (5 variants)
     const AVATAR_STYLES = ['avatar-1', 'avatar-2', 'avatar-3', 'avatar-4', 'avatar-5'];
     const AVATAR_ICONS = ['🔥', '💎', '⭐', '👑', '🔞', '💿', '📁', '🎬', '📸', '🎥', '📹', '🎞️', '📀', '💾', '🗂️'];
     
-    // Level 7: Display Names & Usernames (20 kombinasi unik)
+    // Level 7: Display Names & Usernames (20 unique combinations)
     const DISPLAY_NAMES = [
         "LeakArchive", "ViralFinder", "ExclusiveHub", "ContentVault", "LeakCentral", 
         "ViralNow", "DailyXclusive", "LeakFeed", "ContentKing", "VaultKeeper",
@@ -441,12 +447,12 @@ permalink: /edition-a05/
         "viraldaily", "flashleak", "rapidviral", "leakradar", "contentreveal"
     ];
     
-    // Level 8: Badge Types (5 varian)
+    // Level 8: Badge Types (5 variants)
     const BADGE_TYPES = ['hot', 'new', 'viral', 'exclusive', 'leaked'];
     const BADGE_LABELS = { hot: 'HOT', new: 'NEW', viral: 'VIRAL', exclusive: 'EXCLUSIVE', leaked: 'LEAKED' };
     const BADGE_CLASSES = { hot: 'badge-hot', new: 'badge-new', viral: 'badge-viral', exclusive: 'badge-exclusive', leaked: 'badge-leaked' };
     
-    // Level 9: File sizes (bervariasi)
+    // Level 9: File sizes (varied)
     const FILE_SIZES = ['45 MB', '89 MB', '124 MB', '256 MB', '512 MB', '789 MB', '1.2 GB', '1.8 GB', '2.3 GB', '3.1 GB', '4.5 GB', '5.0 GB', '678 MB', '345 MB', '892 MB'];
     
     // Level 10: View counts
@@ -463,7 +469,7 @@ permalink: /edition-a05/
     const RETWEET_RANGES = [[20, 80], [80, 200], [200, 500], [500, 1200], [1200, 3000]];
     const LIKE_RANGES = [[100, 500], [500, 1500], [1500, 4000], [4000, 10000], [10000, 25000]];
     
-    // ========== AMBIL KUERI DARI URL ==========
+    // ========== GET QUERY FROM URL ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     
@@ -474,7 +480,7 @@ permalink: /edition-a05/
     
     rawQuery = decodeURIComponent(rawQuery.replace(/\+/g, ' '));
     
-    // ========== EKSTRAK NAMA DASAR ==========
+    // ========== EXTRACT BASE NAME ==========
     const STOP_WORDS = [
         'leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 
         'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 
@@ -498,11 +504,11 @@ permalink: /edition-a05/
     const displayName = formatName(baseName);
     const displayLower = displayName.toLowerCase();
     
-    // ========== FUNGSI UTILITY ==========
+    // ========== UTILITY FUNCTIONS ==========
     function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
     function randomNumberRange(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
     
-    // ========== GENERATE VARIAN LINK (SETIAP PANGGILAN BERBEDA) ==========
+    // ========== GENERATE VARIANT LINK (EACH CALL IS DIFFERENT) ==========
     function generateVariantLink() {
         const action = randomItem(ACTIONS);
         const contentType = randomItem(CONTENT_TYPES);
@@ -516,7 +522,7 @@ permalink: /edition-a05/
         }
         
         return {
-            url: `/edition-a06/?q=${encodeURIComponent(newQuery)}`,
+            url: `/edition-a05/?q=${encodeURIComponent(newQuery)}`,
             anchor: `${action.charAt(0).toUpperCase() + action.slice(1)} ${contentType}`,
             qualifier: qualifier,
             urgency: urgency,
@@ -525,7 +531,7 @@ permalink: /edition-a05/
         };
     }
     
-    // ========== GENERATE BANYAK LINK ==========
+    // ========== GENERATE BULK LINKS ==========
     function generateBulkLinks(count = 15) {
         const links = [];
         for (let i = 0; i < count; i++) {
@@ -534,7 +540,7 @@ permalink: /edition-a05/
         return links;
     }
     
-    // ========== GENERATE METRIK UNIK ==========
+    // ========== GENERATE UNIQUE METRICS ==========
     function generateUniqueMetrics(index) {
         const viewRange = randomItem(VIEW_RANGES);
         const views = randomNumberRange(viewRange[0], viewRange[1]);
@@ -550,7 +556,7 @@ permalink: /edition-a05/
         return { views, replies, retweets, likes, timeAgo, fileSize };
     }
     
-    // ========== RENDER SATU LINK CARD (100% UNIK) ==========
+    // ========== RENDER ONE LINK CARD (100% UNIQUE) ==========
     function renderLinkCard(link, index) {
         const metrics = generateUniqueMetrics(index);
         const trigger = randomItem(TRIGGERS);
@@ -562,10 +568,10 @@ permalink: /edition-a05/
         const badgeLabel = BADGE_LABELS[badgeType];
         const badgeClass = BADGE_CLASSES[badgeType];
         
-        // Format angka dengan koma
+        // Format numbers with commas
         const formatNum = (num) => num.toLocaleString();
         
-        // CTA text yang bervariasi
+        // Varied CTA text
         const ctaTexts = [
             `⚡ CLICK TO ${link.action.toUpperCase()} ⚡`,
             `🎬 ${link.action.toUpperCase()} NOW →`,
@@ -593,7 +599,7 @@ permalink: /edition-a05/
                 </div>
                 <div class="card-content">
                     ${trigger.text} ${displayName} ${link.anchor} ${link.qualifier} content just dropped!
-                    <div style="margin-top: 4px; font-size: 0.7rem; color: #1d9bf0;">👁️ ${formatNum(metrics.views)} views</div>
+                    <div style="margin-top: 4px; font-size: 0.7rem; color: var(--base-color);">👁️ ${formatNum(metrics.views)} views</div>
                 </div>
                 <div class="media-preview">
                     <div class="play-icon">▶</div>
@@ -616,7 +622,7 @@ permalink: /edition-a05/
         `;
     }
     
-    // ========== RENDER TRENDING TOPICS (VARIAN BERBEDA) ==========
+    // ========== RENDER TRENDING TOPICS (DIFFERENT VARIANTS) ==========
     function renderTrendingTopics(baseLinks) {
         const trendingItems = [];
         const trendingNames = [
@@ -645,7 +651,7 @@ permalink: /edition-a05/
         return trendingItems.join('');
     }
     
-    // ========== RENDER WHO TO FOLLOW (VARIAN BERBEDA) ==========
+    // ========== RENDER WHO TO FOLLOW (DIFFERENT VARIANTS) ==========
     function renderWhoToFollow() {
         const suggestions = [];
         for (let i = 0; i < 4; i++) {
@@ -672,22 +678,22 @@ permalink: /edition-a05/
         ).join('');
     }
     
-    // ========== UPDATE SEO DENGAN VARIAN ==========
+    // ========== UPDATE SEO WITH VARIANTS ==========
     function updateSEO() {
         const seoTitles = [
-            `${displayName} · Akses Konten Eksklusif Terbaru | LeakX`,
+            `${displayName} · Access Latest Exclusive Content | LeakX`,
             `${displayName} Viral Archive - Full Collection | LeakX`,
-            `${displayName} Leaked Content Hub - Update Harian | LeakX`,
+            `${displayName} Leaked Content Hub - Daily Updates | LeakX`,
             `${displayName} Exclusive Vault - Premium Access | LeakX`,
             `${displayName} Complete Archive - 2025 edition-a | LeakX`
         ];
         
         const seoDescs = [
-            `Temukan konten eksklusif ${displayName} terbaru. Update viral setiap hari. Akses cepat dan mudah.`,
-            `Archive lengkap ${displayName} termasuk video dan foto eksklusif. Update real-time dari berbagai sumber.`,
-            `${displayName} leaked content collection terlengkap. Ribuan file siap diakses. Limited time only.`,
-            `Kanal resmi ${displayName} archive. Dapatkan akses ke konten premium dan eksklusif.`,
-            `${displayName} viral content hub. Update setiap jam. Jangan sampai ketinggalan.`
+            `Discover the latest exclusive ${displayName} content. New viral updates every day. Fast and easy access.`,
+            `Complete archive of ${displayName} including exclusive videos and photos. Real-time updates from various sources.`,
+            `The most complete ${displayName} leaked content collection. Thousands of files ready to access. Limited time only.`,
+            `Official ${displayName} archive channel. Get access to premium and exclusive content.`,
+            `${displayName} viral content hub. Updated every hour. Don't miss out.`
         ];
         
         document.title = randomItem(seoTitles);
@@ -695,11 +701,16 @@ permalink: /edition-a05/
         let metaDesc = document.getElementById('dynamic-description');
         if (metaDesc) metaDesc.setAttribute('content', randomItem(seoDescs));
         
+        // ========== DYNAMIC CANONICAL FOLLOWING THE QUERY ==========
         let canonical = document.getElementById('dynamic-canonical');
-        if (canonical) canonical.setAttribute('href', window.location.href.split('?')[0]);
+        if (canonical) {
+            const baseUrl = window.location.href.split('?')[0];
+            const queryString = window.location.search;
+            canonical.setAttribute('href', baseUrl + queryString);
+        }
     }
     
-    // ========== RENDER HALAMAN UTUH ==========
+    // ========== RENDER FULL PAGE ==========
     function renderPage() {
         const bulkLinks = generateBulkLinks(18);
         const randomNumbers = {
@@ -708,7 +719,7 @@ permalink: /edition-a05/
             followers: randomNumberRange(150, 950)
         };
         
-        // Bio yang bervariasi
+        // Varied bios
         const bios = [
             `The complete archive of ${displayName} exclusive content. Updated daily with new material. ${randomNumbers.followers}+ followers.`,
             `Official ${displayName} content hub. Get the latest leaks, exclusives, and viral updates. Join ${randomNumbers.followers}+ others.`,
@@ -716,7 +727,7 @@ permalink: /edition-a05/
             `Your #1 source for ${displayName} content. Follow for daily updates and exclusive drops.`
         ];
         
-        // Handle yang bervariasi
+        // Varied handles
         const handleSuffixes = ['archive', 'hub', 'central', 'vault', 'leaks', 'exclusive', 'content', 'library', 'source', 'channel'];
         const randomHandle = `${displayLower}_${randomItem(handleSuffixes)}`;
         
@@ -726,7 +737,7 @@ permalink: /edition-a05/
                 <div class="search-box">🔍 Search</div>
             </div>
             <div class="breadcrumb">
-                <a href="/">Home</a> / <a href="/edition-a06/">edition-a</a> / ${displayName}
+                <a href="/">Home</a> / <a href="/edition-a05/">edition-a</a> / ${displayName}
             </div>
             <div class="trending-bar" id="trendingBar">
                 ${renderTrendingBar(bulkLinks)}
@@ -735,7 +746,7 @@ permalink: /edition-a05/
             <div class="profile-header">
                 <div class="profile-row">
                     <div>
-                        <div class="profile-name">${displayName} <span style="font-size:0.7rem; color:#1d9bf0;">· ${randomItem(['Archive', 'Hub', 'Vault', 'Central', 'Source'])}</span></div>
+                        <div class="profile-name">${displayName} <span style="font-size:0.7rem; color: var(--base-color);">· ${randomItem(['Archive', 'Hub', 'Vault', 'Central', 'Source'])}</span></div>
                         <div class="profile-handle">@${randomHandle}</div>
                     </div>
                     <div class="follow-btn">${Math.random() > 0.5 ? 'Follow' : '+ Follow'}</div>
@@ -762,14 +773,14 @@ permalink: /edition-a05/
             </div>
             
             <div class="sidebar-section">
-                <div class="section-title">🔥 ${randomItem(['Trending terkait', 'Viral sekarang', 'Populer', 'Sedang ramai'])}</div>
+                <div class="section-title">🔥 ${randomItem(['Related trends', 'Viral now', 'Popular', 'Trending'])}</div>
                 <div id="trendingContainer">
                     ${renderTrendingTopics(bulkLinks)}
                 </div>
             </div>
             
             <div class="sidebar-section">
-                <div class="section-title">${randomItem(['Who to follow', 'Rekomendasi', 'Suggested for you', 'Anda mungkin suka'])}</div>
+                <div class="section-title">${randomItem(['Who to follow', 'Recommendations', 'Suggested for you', 'You might like'])}</div>
                 <div id="followContainer">
                     ${renderWhoToFollow()}
                 </div>
@@ -784,7 +795,7 @@ permalink: /edition-a05/
         attachEventListeners();
     }
     
-    // ========== ATTACH EVENT LISTENER ==========
+    // ========== ATTACH EVENT LISTENERS ==========
     function attachEventListeners() {
         const clickableElements = document.querySelectorAll('[data-url]');
         clickableElements.forEach(el => {
@@ -828,7 +839,7 @@ permalink: /edition-a05/
         });
     }
     
-    // ========== EKSEKUSI ==========
+    // ========== EXECUTE ==========
     updateSEO();
     renderPage();
 })();

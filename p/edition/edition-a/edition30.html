@@ -16,59 +16,76 @@ permalink: /edition-a30/
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a31/">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
+        /* ========== GLOBAL COLOR SYSTEM ========== */
+        :root {
+            --primary-color: #0066cc;      /* Change this one color to change entire theme */
+            --primary-dark: #0052a3;
+            --primary-light: rgba(0, 102, 204, 0.1);
+            --text-dark: #1a1a1a;
+            --text-muted: #555555;
+            --text-light: #666666;
+            --border-light: #eaeaea;
+            --border-medium: #e0e0e0;
+            --bg-light: #ffffff;
+            --bg-offwhite: #f9f9f9;
+            --bg-gray: #f5f5f5;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --transition: all 0.2s ease;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#ffffff;font-family:'Inter',sans-serif;color:#1a1a1a}
+        body{background:var(--bg-light);font-family:'Inter',sans-serif;color:var(--text-dark)}
         
         /* Style Search Engine / Discovery Portal - Clean, Fast, User-Friendly */
         .discovery-container{max-width:1200px;margin:0 auto;padding:0 20px}
         
         /* Header Search */
-        .search-header{background:#ffffff;border-bottom:1px solid #eaeaea;padding:24px 0 20px;margin-bottom:32px}
+        .search-header{background:var(--bg-light);border-bottom:1px solid var(--border-light);padding:24px 0 20px;margin-bottom:32px}
         .logo-area{display:flex;align-items:center;gap:12px;margin-bottom:32px}
         .logo-icon{font-size:28px}
-        .logo-text{font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#1a1a1a,#666);-webkit-background-clip:text;background-clip:text;color:transparent}
+        .logo-text{font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,var(--text-dark),var(--text-light));-webkit-background-clip:text;background-clip:text;color:transparent}
         
         /* Main Search Box */
-        .search-box-large{background:#fff;border:2px solid #e0e0e0;border-radius:60px;padding:8px 8px 8px 24px;display:flex;align-items:center;gap:12px;transition:all 0.2s;margin-bottom:16px}
-        .search-box-large:focus-within{border-color:#0066cc;box-shadow:0 0 0 3px rgba(0,102,204,0.1)}
+        .search-box-large{background:var(--bg-light);border:2px solid var(--border-medium);border-radius:60px;padding:8px 8px 8px 24px;display:flex;align-items:center;gap:12px;transition:var(--transition);margin-bottom:16px}
+        .search-box-large:focus-within{border-color:var(--primary-color);box-shadow:0 0 0 3px var(--primary-light)}
         .search-icon{color:#999;font-size:20px}
         .search-input{flex:1;border:none;outline:none;font-size:1rem;padding:14px 0;background:transparent}
-        .search-button{background:#0066cc;color:#fff;border:none;padding:10px 28px;border-radius:40px;font-weight:600;cursor:pointer;font-size:0.85rem}
-        .search-button:hover{background:#0052a3}
+        .search-button{background:var(--primary-color);color:#fff;border:none;padding:10px 28px;border-radius:40px;font-weight:600;cursor:pointer;font-size:0.85rem}
+        .search-button:hover{background:var(--primary-dark)}
         
-        .search-suggestions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px;font-size:0.7rem;color:#666}
-        .suggestion{background:#f5f5f5;padding:6px 14px;border-radius:30px;cursor:pointer}
-        .suggestion:hover{background:#e0e0e0}
+        .search-suggestions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px;font-size:0.7rem;color:var(--text-light)}
+        .suggestion{background:var(--bg-gray);padding:6px 14px;border-radius:30px;cursor:pointer}
+        .suggestion:hover{background:var(--border-light)}
         
         /* Results Header */
         .results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:16px}
-        .results-count{font-size:0.8rem;color:#666}
+        .results-count{font-size:0.8rem;color:var(--text-light)}
         .filter-bar{display:flex;gap:12px}
-        .filter-btn{background:transparent;border:none;padding:6px 16px;border-radius:30px;font-size:0.7rem;cursor:pointer;color:#666}
-        .filter-active{background:#0066cc;color:#fff}
+        .filter-btn{background:transparent;border:none;padding:6px 16px;border-radius:30px;font-size:0.7rem;cursor:pointer;color:var(--text-light)}
+        .filter-active{background:var(--primary-color);color:#fff}
         
         /* Main Grid - 2 Columns (Search Results + Related) */
         .results-grid{display:grid;grid-template-columns:1fr 320px;gap:40px}
         
-        /* Search Results (Panjang) */
-        .result-card{background:#fff;border:1px solid #eaeaea;border-radius:20px;padding:24px;margin-bottom:20px;transition:all 0.2s;cursor:pointer}
-        .result-card:hover{border-color:#0066cc;box-shadow:0 4px 12px rgba(0,0,0,0.05);transform:translateY(-2px)}
-        .result-badge{display:inline-block;background:#f0f0f0;padding:4px 12px;border-radius:20px;font-size:0.6rem;font-weight:600;margin-bottom:12px}
-        .result-title{font-size:1.1rem;font-weight:700;margin-bottom:10px;color:#1a1a1a}
-        .result-url{font-size:0.65rem;color:#0066cc;margin-bottom:12px;word-break:break-all}
-        .result-desc{font-size:0.8rem;line-height:1.5;color:#555;margin-bottom:16px}
-        .result-meta{display:flex;gap:20px;font-size:0.65rem;color:#999;padding-top:12px;border-top:1px solid #f0f0f0}
+        /* Search Results */
+        .result-card{background:var(--bg-light);border:1px solid var(--border-light);border-radius:20px;padding:24px;margin-bottom:20px;transition:var(--transition);cursor:pointer}
+        .result-card:hover{border-color:var(--primary-color);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+        .result-badge{display:inline-block;background:var(--bg-gray);padding:4px 12px;border-radius:20px;font-size:0.6rem;font-weight:600;margin-bottom:12px}
+        .result-title{font-size:1.1rem;font-weight:700;margin-bottom:10px;color:var(--text-dark)}
+        .result-url{font-size:0.65rem;color:var(--primary-color);margin-bottom:12px;word-break:break-all}
+        .result-desc{font-size:0.8rem;line-height:1.5;color:var(--text-muted);margin-bottom:16px}
+        .result-meta{display:flex;gap:20px;font-size:0.65rem;color:#999;padding-top:12px;border-top:1px solid var(--bg-gray)}
         .result-meta span{display:flex;align-items:center;gap:4px}
         
         /* Platform Tags */
-        .platform-tag{display:inline-flex;align-items:center;gap:4px;background:#f8f8f8;padding:4px 10px;border-radius:20px;font-size:0.6rem;margin-right:8px;margin-bottom:8px}
+        .platform-tag{display:inline-flex;align-items:center;gap:4px;background:var(--bg-gray);padding:4px 10px;border-radius:20px;font-size:0.6rem;margin-right:8px;margin-bottom:8px}
         
         /* Related Searches Sidebar */
         .related-panel{position:sticky;top:20px}
-        .related-card{background:#f9f9f9;border-radius:20px;padding:20px;margin-bottom:24px}
-        .related-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#666;margin-bottom:16px}
-        .related-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eaeaea;cursor:pointer}
-        .related-item:hover .related-name{color:#0066cc}
+        .related-card{background:var(--bg-offwhite);border-radius:20px;padding:20px;margin-bottom:24px}
+        .related-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);margin-bottom:16px}
+        .related-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border-light);cursor:pointer}
+        .related-item:hover .related-name{color:var(--primary-color)}
         .related-name{font-size:0.75rem;font-weight:500}
         .related-count{font-size:0.6rem;color:#999}
         
@@ -76,7 +93,7 @@ permalink: /edition-a30/
         .stats-card .stat-row{display:flex;justify-content:space-between;padding:8px 0;font-size:0.7rem}
         
         /* Footer */
-        .discovery-footer{margin-top:60px;padding:32px 0;border-top:1px solid #eaeaea;text-align:center;font-size:0.7rem;color:#999}
+        .discovery-footer{margin-top:60px;padding:32px 0;border-top:1px solid var(--border-light);text-align:center;font-size:0.7rem;color:#999}
         
         @media(max-width:800px){.results-grid{grid-template-columns:1fr}.related-panel{order:2}.results-list{order:1}}
         @media(max-width:600px){.search-box-large{padding:6px 6px 6px 16px}.search-button{padding:8px 20px;font-size:0.75rem}.search-input{font-size:0.85rem}}
@@ -90,7 +107,7 @@ permalink: /edition-a30/
 (function(){
     // ========== DATABASE CONTENT DISCOVERY ENGINE ==========
     
-    // 100 Result Titles (menarik dan SEO-friendly)
+    // 100 Result Titles (engaging and SEO-friendly)
     const TITLES = [
         "Complete Archive Collection - Full Content Library",
         "Master Compilation - All Available Media",
@@ -109,7 +126,7 @@ permalink: /edition-a30/
         "Digital Archive - Preserved Content Library"
     ];
     
-    // 150 Result Descriptions (panjang, detail, SEO-rich)
+    // 150 Result Descriptions (detailed, SEO-rich)
     const DESCRIPTIONS = [
         "This comprehensive archive contains over {count} files spanning {years} years of content. Each item has been carefully preserved and organized chronologically. The collection includes rare behind-the-scenes footage, personal moments, professional work, and fan-favorite highlights. All content has been verified and is presented in the highest available quality.",
         "The complete collection you've been searching for. Featuring {videos} videos, {photos} photos, and {other} additional content. This master archive has been compiled from multiple sources to ensure completeness. Updated regularly as new material becomes available.",
@@ -156,11 +173,10 @@ permalink: /edition-a30/
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const formatNumber = (n) => n.toLocaleString();
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ 
-        // Default search jika tidak ada query
         rawQuery = "popular content";
     }
     rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
@@ -181,7 +197,7 @@ permalink: /edition-a30/
         return { url:`/edition-a31/?q=${encodeURIComponent(newQ)}`, platform: platform };
     };
     
-    // ========== GENERATE SEARCH RESULT CARD (PANJANG) ==========
+    // ========== GENERATE SEARCH RESULT CARD ==========
     const generateResultCard = (idx) => {
         let title = rand(TITLES);
         let platform = rand(PLATFORMS);
@@ -204,7 +220,6 @@ permalink: /edition-a30/
         
         let platformDesc = PLATFORM_DESCS[platform] || "Various platform content";
         
-        // Generate tags
         let tags = [platform, 'archive', 'collection'];
         if(Math.random() > 0.5) tags.push('verified');
         if(Math.random() > 0.6) tags.push('complete');
@@ -212,8 +227,6 @@ permalink: /edition-a30/
         
         let views = range(1250, 125000);
         let lastUpdated = `${range(1,30)} days ago`;
-        
-        let resultUrl = `/${nameLower.replace(/ /g,'-')}/${platform.toLowerCase()}/archive`;
         
         return `
             <div class="result-card" data-url="${genLink(idx).url}">
@@ -266,7 +279,7 @@ permalink: /edition-a30/
         return items.join('');
     };
     
-    // ========== UPDATE SEO ==========
+    // ========== UPDATE SEO (DYNAMIC CANONICAL URL ==========
     const updateSEO = () => {
         let titles = [
             `${displayName} Content Discovery · Find What You're Looking For`,
@@ -281,7 +294,16 @@ permalink: /edition-a30/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        
+        // DYNAMIC CANONICAL URL - follows query parameter
+        let currentUrl = window.location.href;
+        let canonicalUrl = currentUrl.split('?')[0];
+        let query = urlParams.get('q');
+        if(query && query.trim() !== "") {
+            canonicalUrl = currentUrl;
+        }
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', canonicalUrl);
     };
     
     // ========== RENDER PAGE ==========
@@ -300,7 +322,7 @@ permalink: /edition-a30/
                 
                 <div class="search-box-large">
                     <span class="search-icon">🔍</span>
-                    <input type="text" class="search-input" placeholder="Search for content, collections, archives..." value="${searchTerm}">
+                    <input type="text" class="search-input" placeholder="Search for content, collections, archives..." value="${searchTerm.replace(/"/g, '&quot;')}">
                     <button class="search-button">Search</button>
                 </div>
                 
@@ -347,16 +369,16 @@ permalink: /edition-a30/
                     
                     <div class="related-card stats-card">
                         <div class="related-title">📊 DISCOVERY STATS</div>
-                        <div class="stat-row"><span>Total indexed items</span><span style="color:#0066cc;font-weight:600">${totalIndexed.toLocaleString()}</span></div>
-                        <div class="stat-row"><span>Active collections</span><span style="color:#0066cc;font-weight:600">${range(125, 485)}</span></div>
-                        <div class="stat-row"><span>Platforms covered</span><span style="color:#0066cc;font-weight:600">${platformsCount}</span></div>
-                        <div class="stat-row"><span>Last updated</span><span style="color:#0066cc;font-weight:600">${range(1,6)} minutes ago</span></div>
-                        <div class="stat-row"><span>Daily searches</span><span style="color:#0066cc;font-weight:600">${formatNumber(range(850, 4850))}</span></div>
+                        <div class="stat-row"><span>Total indexed items</span><span style="color:var(--primary-color);font-weight:600">${totalIndexed.toLocaleString()}</span></div>
+                        <div class="stat-row"><span>Active collections</span><span style="color:var(--primary-color);font-weight:600">${range(125, 485)}</span></div>
+                        <div class="stat-row"><span>Platforms covered</span><span style="color:var(--primary-color);font-weight:600">${platformsCount}</span></div>
+                        <div class="stat-row"><span>Last updated</span><span style="color:var(--primary-color);font-weight:600">${range(1,6)} minutes ago</span></div>
+                        <div class="stat-row"><span>Daily searches</span><span style="color:var(--primary-color);font-weight:600">${formatNumber(range(850, 4850))}</span></div>
                     </div>
                     
                     <div class="related-card">
                         <div class="related-title">💡 SEARCH TIPS</div>
-                        <div style="font-size:0.7rem;color:#666;line-height:1.5">
+                        <div style="font-size:0.7rem;color:var(--text-light);line-height:1.5">
                             <p style="margin-bottom:8px">✓ Use specific terms like "complete archive" or "master collection"</p>
                             <p style="margin-bottom:8px">✓ Include platform names for better results (TikTok, OnlyFans, etc)</p>
                             <p style="margin-bottom:8px">✓ Sort by "Recent" to find newest content first</p>
@@ -379,6 +401,26 @@ permalink: /edition-a30/
         document.querySelectorAll('.result-card, .related-item, .suggestion').forEach(card => {
             card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
         });
+        
+        // Search button functionality
+        const searchBtn = document.querySelector('.search-button');
+        const searchInput = document.querySelector('.search-input');
+        if(searchBtn && searchInput) {
+            searchBtn.addEventListener('click', () => {
+                let newQuery = searchInput.value.trim();
+                if(newQuery) {
+                    window.location.href = window.location.pathname + '?q=' + encodeURIComponent(newQuery);
+                }
+            });
+            searchInput.addEventListener('keypress', (e) => {
+                if(e.key === 'Enter') {
+                    let newQuery = searchInput.value.trim();
+                    if(newQuery) {
+                        window.location.href = window.location.pathname + '?q=' + encodeURIComponent(newQuery);
+                    }
+                }
+            });
+        }
     };
     
     updateSEO();

@@ -13,9 +13,12 @@ permalink: /edition-a16/
     <meta name="referrer" content="always">
     <title id="dynamic-title">Academic Journal · Complete Research Repository</title>
     <meta id="dynamic-description" name="description" content="Peer-reviewed academic journal. Complete research archive. Open access repository.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a17/">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2c5f8a;
+        }
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#fefefe;font-family:'Source Sans Pro',sans-serif;color:#1a1a1a}
         
@@ -23,28 +26,28 @@ permalink: /edition-a16/
         .journal-container{max-width:1200px;margin:0 auto;padding:0 24px}
         
         /* Header Akademik */
-        .academic-header{background:#fff;border-bottom:3px solid #2c5f8a;padding:32px 0 24px;margin-bottom:32px}
+        .academic-header{background:#fff;border-bottom:3px solid var(--primary-color);padding:32px 0 24px;margin-bottom:32px}
         .journal-title{font-family:'PT Serif',serif;font-size:2.2rem;font-weight:700;color:#1a1a1a;letter-spacing:-0.5px}
-        .journal-subtitle{font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;color:#2c5f8a;margin-top:8px}
+        .journal-subtitle{font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-top:8px}
         .journal-meta{display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:12px}
         .issn{font-size:0.7rem;color:#666;font-family:'PT Serif',serif;font-style:italic}
-        .volume-info{font-size:0.7rem;color:#2c5f8a;font-weight:600}
+        .volume-info{font-size:0.7rem;color:var(--primary-color);font-weight:600}
         
         /* Breadcrumb */
         .breadcrumb{margin-bottom:24px;font-size:0.7rem;color:#666}
-        .breadcrumb a{color:#2c5f8a;text-decoration:none}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero Section - Paper Abstract */
-        .paper-hero{background:#f8f9fa;border-left:4px solid #2c5f8a;padding:32px 40px;margin-bottom:40px}
-        .paper-doi{font-family:'PT Serif',serif;font-size:0.7rem;color:#2c5f8a;margin-bottom:12px}
+        .paper-hero{background:#f8f9fa;border-left:4px solid var(--primary-color);padding:32px 40px;margin-bottom:40px}
+        .paper-doi{font-family:'PT Serif',serif;font-size:0.7rem;color:var(--primary-color);margin-bottom:12px}
         .paper-title{font-family:'PT Serif',serif;font-size:2rem;font-weight:700;margin-bottom:16px;line-height:1.2}
         .paper-authors{font-size:0.8rem;color:#555;margin-bottom:12px}
         .paper-authors span{background:#eee;padding:2px 8px;border-radius:4px;margin-right:8px;font-size:0.7rem}
         .paper-date{font-size:0.7rem;color:#999;margin-bottom:20px}
         .paper-abstract{font-size:0.9rem;line-height:1.6;color:#333;margin-bottom:20px}
         .paper-keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-        .keyword{background:#eef2f5;padding:4px 12px;border-radius:20px;font-size:0.65rem;color:#2c5f8a}
+        .keyword{background:#eef2f5;padding:4px 12px;border-radius:20px;font-size:0.65rem;color:var(--primary-color)}
         
         /* Main Layout: 2 columns */
         .journal-grid{display:grid;grid-template-columns:260px 1fr;gap:40px}
@@ -55,20 +58,20 @@ permalink: /edition-a16/
         .nav-title{font-family:'PT Serif',serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e0e0e0}
         .nav-list{list-style:none}
         .nav-item{padding:8px 0;border-bottom:1px solid #f0f0f0;cursor:pointer;font-size:0.75rem;transition:color 0.2s}
-        .nav-item:hover{color:#2c5f8a}
-        .nav-item.active{color:#2c5f8a;font-weight:600}
+        .nav-item:hover{color:var(--primary-color)}
+        .nav-item.active{color:var(--primary-color);font-weight:600}
         
         .metric-row{display:flex;justify-content:space-between;padding:8px 0;font-size:0.7rem;border-bottom:1px solid #f0f0f0}
         .metric-label{color:#666}
-        .metric-value{font-weight:600;color:#2c5f8a}
+        .metric-value{font-weight:600;color:var(--primary-color)}
         
         /* Main Content - Articles (Panjang seperti jurnal) */
         .articles-section{display:flex;flex-direction:column;gap:32px}
         
         /* Article Card - Full Paper Style */
         .research-article{background:#fff;border:1px solid #e0e0e0;padding:32px;transition:all 0.2s;cursor:pointer}
-        .research-article:hover{border-color:#2c5f8a;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
-        .article-section{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#2c5f8a;margin-bottom:12px}
+        .research-article:hover{border-color:var(--primary-color);box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+        .article-section{font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary-color);margin-bottom:12px}
         .article-title{font-family:'PT Serif',serif;font-size:1.3rem;font-weight:700;margin-bottom:12px;line-height:1.3}
         .article-authors{font-size:0.7rem;color:#666;margin-bottom:16px}
         .article-authors .author-name{font-weight:600}
@@ -77,8 +80,8 @@ permalink: /edition-a16/
         .article-abstract{font-size:0.8rem;line-height:1.5;color:#444;margin-bottom:16px}
         
         /* Methodology section */
-        .methodology-box{background:#f8f9fa;padding:16px;margin:16px 0;border-left:3px solid #2c5f8a}
-        .methodology-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;margin-bottom:8px;color:#2c5f8a}
+        .methodology-box{background:#f8f9fa;padding:16px;margin:16px 0;border-left:3px solid var(--primary-color)}
+        .methodology-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;margin-bottom:8px;color:var(--primary-color)}
         .methodology-text{font-size:0.75rem;line-height:1.5;color:#555}
         
         /* Results section */
@@ -101,7 +104,7 @@ permalink: /edition-a16/
         
         .article-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #e0e0e0}
         .citation-info{font-size:0.65rem;color:#999;font-family:'PT Serif',serif;font-style:italic}
-        .read-full{font-size:0.7rem;color:#2c5f8a;font-weight:600}
+        .read-full{font-size:0.7rem;color:var(--primary-color);font-weight:600}
         
         /* Sidebar Right - kita tidak punya, tapi kita buat stats di kiri */
         .stat-item{display:flex;justify-content:space-between;padding:6px 0;font-size:0.7rem}
@@ -120,7 +123,7 @@ permalink: /edition-a16/
 
 <script>
 (function(){
-    // ========== DATABASE ACADEMIC JOURNAL STYLE (PANJANG & DETAIL) ==========
+    // ========== DATABASE ACADEMIC JOURNAL STYLE (COMPREHENSIVE & DETAILED) ==========
     
     // 100 Research Methodologies
     const METHODOLOGIES = [
@@ -160,7 +163,7 @@ permalink: /edition-a16/
         "Research Evaluation","Scientometrics","Journal of Documentation","Information Processing & Management","Knowledge Organization"
     ];
     
-    // 80 Paragraph Templates untuk Abstract (panjang)
+    // 80 Paragraph Templates for Abstract (comprehensive)
     const ABSTRACT_TEMPLATES = [
         "This comprehensive study investigates the fundamental principles and contemporary applications of the subject matter. Through systematic analysis of primary sources and secondary literature, we identify key patterns and emerging themes that shape current understanding.",
         "The present research examines the historical development and theoretical foundations of this domain. Drawing from archival materials and scholarly publications, we trace the evolution of core concepts and methodologies over time.",
@@ -234,7 +237,7 @@ permalink: /edition-a16/
         "O'Brien, P.","Patel, S.","Quinn, R. T.","Roberts, A. J.","Smith, B. C.","Taylor, M. R."
     ];
     
-    // 50 Author Affiliations (dari institutions)
+    // 50 Author Affiliations (from institutions)
     const getAuthorAffiliation = () => rand(INSTITUTIONS);
     
     // 30 Display Names (Journal names)
@@ -270,7 +273,7 @@ permalink: /edition-a16/
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
@@ -290,21 +293,21 @@ permalink: /edition-a16/
         let m = rand(METHODOLOGIES), f = rand(RESEARCH_FIELDS);
         let newQ = `${topicLower} ${m} ${f}`;
         return { 
-            url:`/edition-a17/?q=${encodeURIComponent(newQ)}`, 
+            url:`/edition-a16/?q=${encodeURIComponent(newQ)}`, 
             title:`${displayTopic}: ${m.charAt(0).toUpperCase()+m.slice(1)}`,
             methodology:m,
             field:f
         };
     };
     
-    // ========== GENERATE METRIK ==========
+    // ========== GENERATE METRICS ==========
     const genMetrics = () => ({
         citations: range(...rand(CITATION_RANGES)), downloads: range(...rand(DOWNLOAD_RANGES)),
         volume: rand(VOLUMES), issue: range(1,12), doi: rand(DOIS),
         time: rand(TIME_INDICATORS), year: 2020 + range(-4,4)
     });
     
-    // ========== GENERATE RESEARCH ARTICLE (PANJANG) ==========
+    // ========== GENERATE RESEARCH ARTICLE (COMPREHENSIVE) ==========
     const generateResearchArticle = (link, idx) => {
         let m = genMetrics();
         let author1 = rand(AUTHORS);
@@ -450,7 +453,8 @@ permalink: /edition-a16/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
     };
     
     // ========== RENDER PAGE ==========
@@ -473,7 +477,7 @@ permalink: /edition-a16/
             </div>
             
             <div class="breadcrumb">
-                <a href="/">Home</a> › <a href="/edition-a17/">Journal</a> › ${displayTopic}
+                <a href="/">Home</a> › <a href="/edition-a16/">Journal</a> › ${displayTopic}
             </div>
             
             <div class="paper-hero">

@@ -17,8 +17,22 @@ permalink: /edition-a37/
     <meta id="dynamic-description" name="description" content="Premium access plans for leak vault collections. Choose your plan. Permanent access.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a38/">
     <style>
+        /* -------------------------------
+           GLOBAL COLOR VARIABLES
+           Change --primary-color to your desired brand color
+        ------------------------------- */
+        :root {
+            --primary-color: #0066cc;    /* <-- CHANGE THIS FOR GLOBAL COLOR UPDATE */
+            --primary-dark: #0052a3;
+            --primary-light: #e8f0fe;
+            --bg-body: #f0f2f5;
+            --text-dark: #1a1a2e;
+            --text-muted: #5a626e;
+            --border-light: #e0e4e8;
+        }
+        
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#1a1a2e}
+        body{background:var(--bg-body);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:var(--text-dark)}
         
         /* Pricing Table Style - Clean, Professional, Fast */
         .premium-container{max-width:1000px;margin:0 auto;padding:20px}
@@ -27,71 +41,71 @@ permalink: /edition-a37/
         .premium-header{text-align:center;padding:24px 0;margin-bottom:24px;border-bottom:2px solid #d4d8dd}
         .header-icon{font-size:32px;margin-bottom:8px}
         .premium-title{font-size:1.6rem;font-weight:800;letter-spacing:-0.5px}
-        .premium-title span{color:#0066cc}
+        .premium-title span{color:var(--primary-color)}
         .premium-sub{font-size:0.7rem;color:#6c757d;margin-top:6px}
         
         /* Breadcrumb */
         .breadcrumb{font-size:0.7rem;color:#6c757d;margin-bottom:20px;padding:8px 0}
-        .breadcrumb a{color:#0066cc;text-decoration:none}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
         .breadcrumb a:hover{text-decoration:underline}
         
         /* Hero Section */
-        .hero-premium{background:#fff;border-radius:16px;padding:28px;margin-bottom:28px;border:1px solid #e0e4e8}
-        .hero-badge{display:inline-block;background:#e8f0fe;color:#0066cc;padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:600;margin-bottom:12px}
+        .hero-premium{background:#fff;border-radius:16px;padding:28px;margin-bottom:28px;border:1px solid var(--border-light)}
+        .hero-badge{display:inline-block;background:var(--primary-light);color:var(--primary-color);padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:600;margin-bottom:12px}
         .hero-title{font-size:1.3rem;font-weight:700;margin-bottom:12px}
-        .hero-title span{color:#0066cc}
-        .hero-desc{font-size:0.8rem;color:#5a626e;line-height:1.5;margin-bottom:14px}
+        .hero-title span{color:var(--primary-color)}
+        .hero-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
         .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;color:#6c757d}
         
         /* Pricing Grid - 3 Columns */
         .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px}
         
         /* Pricing Card */
-        .pricing-card{background:#fff;border-radius:20px;border:1px solid #e0e4e8;overflow:hidden}
-        .pricing-card.featured{border:2px solid #0066cc;position:relative}
-        .featured-badge{background:#0066cc;color:#fff;text-align:center;padding:6px;font-size:0.6rem;font-weight:700}
+        .pricing-card{background:#fff;border-radius:20px;border:1px solid var(--border-light);overflow:hidden}
+        .pricing-card.featured{border:2px solid var(--primary-color);position:relative}
+        .featured-badge{background:var(--primary-color);color:#fff;text-align:center;padding:6px;font-size:0.6rem;font-weight:700}
         .card-inner{padding:24px}
         .plan-name{font-size:1rem;font-weight:800;margin-bottom:8px}
-        .plan-price{font-size:1.8rem;font-weight:800;color:#0066cc;margin-bottom:12px}
+        .plan-price{font-size:1.8rem;font-weight:800;color:var(--primary-color);margin-bottom:12px}
         .plan-price span{font-size:0.7rem;font-weight:400;color:#6c757d}
         .plan-desc{font-size:0.7rem;color:#6c757d;margin-bottom:16px;line-height:1.4}
         .feature-list{list-style:none;margin:16px 0}
         .feature-list li{padding:8px 0;font-size:0.7rem;border-bottom:1px solid #f0f2f5;display:flex;gap:8px}
-        .feature-list li::before{content:"✓";color:#0066cc;font-weight:700}
-        .plan-button{display:block;background:#0066cc;color:#fff;text-align:center;padding:10px;border-radius:30px;text-decoration:none;font-size:0.7rem;font-weight:600;margin-top:16px}
-        .plan-button:hover{background:#0052a3}
-        .plan-button.secondary{background:#e8f0fe;color:#0066cc}
+        .feature-list li::before{content:"✓";color:var(--primary-color);font-weight:700}
+        .plan-button{display:block;background:var(--primary-color);color:#fff;text-align:center;padding:10px;border-radius:30px;text-decoration:none;font-size:0.7rem;font-weight:600;margin-top:16px}
+        .plan-button:hover{background:var(--primary-dark)}
+        .plan-button.secondary{background:var(--primary-light);color:var(--primary-color)}
         .plan-button.secondary:hover{background:#d4e2fc}
         
         /* Comparison Table */
-        .comparison-section{background:#fff;border-radius:20px;border:1px solid #e0e4e8;padding:24px;margin-bottom:32px}
-        .comparison-title{font-size:0.9rem;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #e0e4e8}
+        .comparison-section{background:#fff;border-radius:20px;border:1px solid var(--border-light);padding:24px;margin-bottom:32px}
+        .comparison-title{font-size:0.9rem;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border-light)}
         .comparison-table{width:100%;border-collapse:collapse}
         .comparison-table th,.comparison-table td{padding:12px 8px;text-align:left;border-bottom:1px solid #f0f2f5;font-size:0.7rem}
-        .comparison-table th{font-weight:700;color:#1a1a2e}
-        .comparison-table td{color:#5a626e}
-        .check-mark{color:#0066cc;font-weight:700}
+        .comparison-table th{font-weight:700;color:var(--text-dark)}
+        .comparison-table td{color:var(--text-muted)}
+        .check-mark{color:var(--primary-color);font-weight:700}
         
         /* Sidebar */
         .premium-grid{display:grid;grid-template-columns:1fr 260px;gap:24px;margin-bottom:32px}
-        .faq-section{background:#fff;border-radius:20px;border:1px solid #e0e4e8;padding:24px}
-        .faq-title{font-size:0.8rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e0e4e8}
+        .faq-section{background:#fff;border-radius:20px;border:1px solid var(--border-light);padding:24px}
+        .faq-title{font-size:0.8rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
         .faq-item{padding:12px 0;border-bottom:1px solid #f0f2f5}
         .faq-question{font-size:0.75rem;font-weight:600;margin-bottom:4px}
         .faq-answer{font-size:0.65rem;color:#6c757d;line-height:1.4}
         
         /* Sidebar Info */
         .sidebar{position:sticky;top:20px}
-        .info-card{background:#fff;border-radius:16px;border:1px solid #e0e4e8;padding:20px;margin-bottom:20px}
-        .info-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #e0e4e8}
+        .info-card{background:#fff;border-radius:16px;border:1px solid var(--border-light);padding:20px;margin-bottom:20px}
+        .info-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
         .info-list{list-style:none}
         .info-list li{padding:8px 0;border-bottom:1px solid #f0f2f5}
-        .info-list a{text-decoration:none;color:#1a1a2e;font-size:0.7rem;display:block}
-        .info-list a:hover{color:#0066cc}
+        .info-list a{text-decoration:none;color:var(--text-dark);font-size:0.7rem;display:block}
+        .info-list a:hover{color:var(--primary-color)}
         .info-meta{font-size:0.55rem;color:#6c757d;margin-top:2px}
         .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f2f5;font-size:0.7rem}
         .stat-label{color:#6c757d}
-        .stat-value{color:#0066cc;font-weight:600}
+        .stat-value{color:var(--primary-color);font-weight:600}
         
         /* Clean Bottom */
         .premium-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #d4d8dd;text-align:center;font-size:0.6rem;color:#6c757d}
@@ -108,7 +122,7 @@ permalink: /edition-a37/
 (function(){
     // ========== DATABASE PREMIUM PLANS (EVERGREEN, STATIC, NO ANIMATION) ==========
     
-    // Pricing Plans - Setiap plan mengandung "leak" + query
+    // Pricing Plans - Each plan contains "leak" + query
     const PRICING_PLANS = [
         {
             name: "Standard Access",
@@ -156,7 +170,7 @@ permalink: /edition-a37/
         }
     ];
     
-    // Comparison Features - Setiap feature mengandung "leak" + query
+    // Comparison Features - Each feature contains "leak" + query
     const COMPARISON_FEATURES = [
         { name: "Complete {name} Leak Archives", standard: "✓", premium: "✓", ultimate: "✓" },
         { name: "OnlyFans {name} Leak Collections", standard: "✓", premium: "✓", ultimate: "✓" },
@@ -192,7 +206,7 @@ permalink: /edition-a37/
     // ========== UTILITY ==========
     const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // ========== EKSTRAK TOPIK ==========
+    // ========== EXTRACT TOPIC ==========
     const urlParams = new URLSearchParams(window.location.search);
     let rawQuery = urlParams.get('q');
     if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete archive access"; }
@@ -378,6 +392,11 @@ permalink: /edition-a37/
     
     // ========== UPDATE SEO ==========
     const updateSEO = () => {
+        // Update Canonical URL to current path WITHOUT query parameters (dinamis mengikuti path)
+        let canonicalUrl = window.location.href.split('?')[0];
+        let canonicalTag = document.getElementById('dynamic-canonical');
+        if(canonicalTag) canonicalTag.setAttribute('href', canonicalUrl);
+        
         let titles = [
             `${displayName} Leak Premium Plans — Access Vault Collections`,
             `${displayName} Leak Access — Choose Your Premium Plan`,
@@ -391,7 +410,6 @@ permalink: /edition-a37/
         ];
         document.title = rand(titles);
         let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
-        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
     };
     
     // ========== RENDER PAGE ==========
