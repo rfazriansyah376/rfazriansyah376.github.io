@@ -1,0 +1,419 @@
+---
+layout: null
+permalink: /edition-c35/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">TIER LIST · Leak Ranking Board</title>
+    <meta id="dynamic-description" name="description" content="Tier list ranking board for leak collections. Complete ranking system for all archives.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c36/">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0a0c12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#e8eaed}
+        
+        /* GLOBAL COLOR VARIABLES - CHANGE ONLY THE PRIMARY COLOR */
+        :root {
+            --primary: #ff6b35;      /* ← Change this one color to change entire theme */
+            --primary-dark: #e55a2a;
+            --primary-light: #ff8c5a;
+            --primary-glow: rgba(255, 107, 53, 0.15);
+        }
+        
+        /* Tier List Style - Clean Ranking Board */
+        .tier-container{max-width:1000px;margin:0 auto;padding:20px}
+        
+        /* Header */
+        .tier-header{text-align:center;padding:20px 0;margin-bottom:24px;border-bottom:2px solid #2a2e3a}
+        .header-icon{font-size:28px;margin-bottom:8px}
+        .tier-title{font-size:1.5rem;font-weight:800;letter-spacing:-0.5px}
+        .tier-title span{color:var(--primary)}
+        .tier-sub{font-size:0.7rem;color:#8a8e9a;margin-top:6px;font-family:monospace}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:#6a6e7a;margin-bottom:20px;padding:8px 0;border-bottom:1px solid #2a2e3a}
+        .breadcrumb a{color:var(--primary);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero Section */
+        .hero-tier{background:#141822;border-left:4px solid var(--primary);padding:24px;margin-bottom:28px}
+        .hero-badge{font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--primary);margin-bottom:8px}
+        .hero-title{font-size:1.3rem;font-weight:700;margin-bottom:12px;line-height:1.3}
+        .hero-title span{color:var(--primary)}
+        .hero-desc{font-size:0.8rem;color:#aaae ba;line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:20px;flex-wrap:wrap;font-size:0.65rem;color:#8a8e9a}
+        
+        /* Main Layout - 2 Columns */
+        .tier-grid{display:grid;grid-template-columns:1fr 260px;gap:24px;margin-bottom:32px}
+        
+        /* Tier List Sections */
+        .tier-section{margin-bottom:20px}
+        .tier-rank{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+        .tier-badge{min-width:70px;padding:10px 0;text-align:center;font-weight:800;font-size:1.1rem;border-radius:8px}
+        .tier-s{background:var(--primary);color:#fff}
+        .tier-a{background:#1a8c5e;color:#fff}
+        .tier-b{background:#2a6ea5;color:#fff}
+        .tier-c{background:#6a5a3a;color:#fff}
+        .tier-d{background:#4a4e5a;color:#fff}
+        .tier-items{flex:1;background:#141822;border-radius:8px;padding:10px}
+        .tier-items-grid{display:flex;flex-wrap:wrap;gap:8px}
+        
+        /* Tier Item Card */
+        .tier-item{display:block;background:#1e2230;border-radius:8px;padding:10px 12px;text-decoration:none;color:#e8eaed;flex:1;min-width:180px}
+        .tier-item:hover{background:#2a2e3a}
+        .item-type{font-size:0.55rem;color:var(--primary);font-family:monospace;margin-bottom:4px}
+        .item-title{font-size:0.75rem;font-weight:600;margin-bottom:4px;line-height:1.3}
+        .item-desc{font-size:0.6rem;color:#8a8e9a;margin-bottom:6px}
+        .item-meta{display:flex;gap:10px;font-size:0.55rem;color:#6a6e7a}
+        
+        /* Legend Section */
+        .legend-section{background:#141822;padding:16px;margin-bottom:20px}
+        .legend-title{font-size:0.7rem;font-weight:700;margin-bottom:10px;color:var(--primary)}
+        .legend-list{display:flex;flex-wrap:wrap;gap:12px}
+        .legend-item{display:flex;align-items:center;gap:6px;font-size:0.65rem}
+        .legend-color{width:16px;height:16px;border-radius:4px}
+        .color-s{background:var(--primary)}
+        .color-a{background:#1a8c5e}
+        .color-b{background:#2a6ea5}
+        .color-c{background:#6a5a3a}
+        .color-d{background:#4a4e5a}
+        
+        /* Sidebar */
+        .sidebar{position:sticky;top:20px}
+        .info-card{background:#141822;border-radius:12px;padding:20px;margin-bottom:20px}
+        .info-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #2a2e3a}
+        .info-list{list-style:none}
+        .info-list li{padding:8px 0;border-bottom:1px solid #1e2230}
+        .info-list a{text-decoration:none;color:#e8eaed;font-size:0.7rem;display:block}
+        .info-list a:hover{color:var(--primary)}
+        .info-meta{font-size:0.55rem;color:#6a6e7a;margin-top:2px}
+        
+        /* Stat Box */
+        .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e2230;font-size:0.7rem}
+        .stat-label{color:#8a8e9a}
+        .stat-value{color:var(--primary);font-weight:600}
+        
+        /* Clean Bottom */
+        .tier-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #2a2e3a;text-align:center;font-size:0.6rem;color:#6a6e7a}
+        
+        @media(max-width:750px){.tier-grid{grid-template-columns:1fr}.tier-rank{flex-direction:column}.tier-badge{width:100%}}
+        @media(max-width:500px){.tier-container{padding:16px}.hero-title{font-size:1.1rem}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="tier-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#6a6e7a">Loading Tier List...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE TIER LIST (EVERGREEN, STATIC, NO ANIMATION) ==========
+    
+    // Tier Ranks - S, A, B, C, D
+    const TIER_DATA = [
+        {
+            rank: "S",
+            name: "Ultimate Tier",
+            color: "#ff6b35",
+            items: [
+                { type: "MASTER VAULT", title: "{name} Complete Master Leak — Ultimate Collection", desc: "The definitive {name} leak archive containing every file from every source. Complete and verified.", meta: "S-Tier · Ultimate" },
+                { type: "PREMIUM", title: "{name} OnlyFans Ultimate Leak — All Content", desc: "Ultimate {name} OnlyFans archive. Complete authenticated collection. Top tier quality.", meta: "S-Tier · Premium" }
+            ]
+        },
+        {
+            rank: "A",
+            name: "Excellent Tier",
+            color: "#1a8c5e",
+            items: [
+                { type: "COMPLETE", title: "{name} Comprehensive Leak — Full Library", desc: "Complete {name} knowledge base containing all known content. Organized and preserved.", meta: "A-Tier · Complete" },
+                { type: "MASTER", title: "{name} OnlyFans Master Leak — Entire Vault", desc: "Master {name} OnlyFans collection. Every post ever made, permanently archived.", meta: "A-Tier · Master" },
+                { type: "COMPLETE", title: "{name} TikTok Complete Leak — Full Compilation", desc: "Complete {name} TikTok leak compilation. All viral moments preserved.", meta: "A-Tier · Video" }
+            ]
+        },
+        {
+            rank: "B",
+            name: "Good Tier",
+            color: "#2a6ea5",
+            items: [
+                { type: "MASTER", title: "{name} TikTok Master Leak — Entire Feed", desc: "Master {name} TikTok archive. Every video ever posted, complete collection.", meta: "B-Tier · Archive" },
+                { type: "COMPLETE", title: "{name} Telegram Complete Leak — Full Channel", desc: "Complete {name} Telegram leak. All channel content permanently preserved.", meta: "B-Tier · Channel" },
+                { type: "COMPLETE", title: "{name} Instagram Complete Leak — Full Gallery", desc: "Complete {name} Instagram leak. All private story content preserved.", meta: "B-Tier · Gallery" }
+            ]
+        },
+        {
+            rank: "C",
+            name: "Standard Tier",
+            color: "#6a5a3a",
+            items: [
+                { type: "MASTER", title: "{name} Telegram Master Leak — Archive", desc: "Master {name} Telegram archive. Full message and media history.", meta: "C-Tier · Archive" },
+                { type: "MASTER", title: "{name} Instagram Master Leak — Collection", desc: "Master {name} Instagram archive. Everything preserved and organized.", meta: "C-Tier · Gallery" },
+                { type: "COMPLETE", title: "{name} Mega Complete Leak — Full Archive", desc: "Complete {name} Mega leak archive. The entire backup collection.", meta: "C-Tier · Backup" }
+            ]
+        },
+        {
+            rank: "D",
+            name: "Collector Tier",
+            color: "#4a4e5a",
+            items: [
+                { type: "RARE", title: "{name} Rare Leak Collection — Unseen Content", desc: "Rare and unseen {name} content. Hard-to-find material collection.", meta: "D-Tier · Rare" },
+                { type: "EXCLUSIVE", title: "{name} Unreleased Leak — Exclusive Material", desc: "Previously unreleased {name} content. Exclusive archive.", meta: "D-Tier · Exclusive" },
+                { type: "FAN", title: "{name} Fan Favorites Leak — Best Of", desc: "Fan-curated {name} leak collection. Most requested content.", meta: "D-Tier · Curated" }
+            ]
+        }
+    ];
+    
+    // Related Rankings (Evergreen)
+    const RELATED_RANKINGS = [
+        "Video Archive Ranking", "Photo Gallery Ranking", "Behind the Scenes Ranking",
+        "Interview Compilation Ranking", "Live Performance Ranking", "Social Media Ranking",
+        "Personal Moments Ranking", "Professional Portfolio Ranking"
+    ];
+    
+    // Evergreen description
+    const TIER_DESC = "This tier list ranks complete {name} leak collections by quality and completeness. Each tier represents a verified, permanent collection. The ranking is evergreen and permanently preserved.";
+    
+    // Stop Words
+    const STOP_WORDS = ['tier','list','ranking','board','rank','level','grade','class'];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // ========== EXTRACT TOPIC FROM QUERY ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete archive tier list"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK (Permalink preserved: /edition-c35/) ==========
+    const genLink = (title) => {
+        let newQ = `${nameLower} ${title.toLowerCase().substring(0, 45)} tier list`;
+        return `/edition-c35/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== DYNAMIC CANONICAL UPDATE ==========
+    const updateCanonicalUrl = () => {
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            const currentUrl = window.location.href.split('?')[0];
+            canonicalLink.setAttribute('href', currentUrl);
+        }
+    };
+    
+    // ========== GENERATE TIER SECTIONS ==========
+    const generateTierSections = () => {
+        let sectionsHtml = '';
+        for(let tier of TIER_DATA){
+            let itemsHtml = '';
+            for(let item of tier.items){
+                let title = item.title.replace('{name}', displayName);
+                let desc = item.desc.replace('{name}', displayName);
+                let url = genLink(item.title);
+                itemsHtml += `
+                    <a href="${url}" class="tier-item">
+                        <div class="item-type">${item.type}</div>
+                        <div class="item-title">📋 ${title}</div>
+                        <div class="item-desc">${desc}</div>
+                        <div class="item-meta">
+                            <span>${item.meta}</span>
+                            <span>Verified</span>
+                        </div>
+                    </a>
+                `;
+            }
+            
+            sectionsHtml += `
+                <div class="tier-section">
+                    <div class="tier-rank">
+                        <div class="tier-badge tier-${tier.rank.toLowerCase()}" style="background:${tier.color}">TIER ${tier.rank}</div>
+                        <div class="tier-items">
+                            <div class="tier-items-grid">
+                                ${itemsHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        return sectionsHtml;
+    };
+    
+    // ========== GENERATE SIDEBAR ==========
+    const generateSidebar = () => {
+        let totalItems = TIER_DATA.reduce((acc, t) => acc + t.items.length, 0);
+        let totalTiers = TIER_DATA.length;
+        
+        let relatedHtml = '';
+        for(let ranking of RELATED_RANKINGS){
+            let fullRanking = `${displayName} ${ranking}`;
+            let url = genLink(ranking);
+            relatedHtml += `
+                <li>
+                    <a href="${url}">📊 ${fullRanking}</a>
+                    <div class="info-meta">Ranked Tier</div>
+                </li>
+            `;
+        }
+        
+        return `
+            <div class="sidebar">
+                <div class="info-card">
+                    <div class="info-title">📊 TIER STATISTICS</div>
+                    <div class="stat-row"><span class="stat-label">Total Collections</span><span class="stat-value">${totalItems}</span></div>
+                    <div class="stat-row"><span class="stat-label">Tier Levels</span><span class="stat-value">${totalTiers}</span></div>
+                    <div class="stat-row"><span class="stat-label">Rank Status</span><span class="stat-value">Complete</span></div>
+                    <div class="stat-row"><span class="stat-label">Verification</span><span class="stat-value">Authenticated</span></div>
+                    <div class="stat-row"><span class="stat-label">Preservation</span><span class="stat-value">Permanent</span></div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">🔗 RELATED RANKINGS</div>
+                    <ul class="info-list">
+                        ${relatedHtml}
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">⚡ TIER INDEX</div>
+                    <ul class="info-list">
+                        <li><a href="/">Home Page</a><div class="info-meta">Return to Home</div></li>
+                        <li><a href="/edition-c35/">Tier List Home</a><div class="info-meta">Main Ranking Board</div></li>
+                        <li><a href="#">View All Rankings</a><div class="info-meta">Complete Index</div></li>
+                    </ul>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER LEGEND ==========
+    const renderLegend = () => {
+        return `
+            <div class="legend-section">
+                <div class="legend-title">📌 TIER LEGEND</div>
+                <div class="legend-list">
+                    <div class="legend-item"><div class="legend-color color-s"></div><span>S - Ultimate (Highest Quality)</span></div>
+                    <div class="legend-item"><div class="legend-color color-a"></div><span>A - Excellent (Complete Collections)</span></div>
+                    <div class="legend-item"><div class="legend-color color-b"></div><span>B - Good (Quality Archives)</span></div>
+                    <div class="legend-item"><div class="legend-color color-c"></div><span>C - Standard (Basic Collections)</span></div>
+                    <div class="legend-item"><div class="legend-color color-d"></div><span>D - Collector (Rare Items)</span></div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        let totalItems = TIER_DATA.reduce((acc, t) => acc + t.items.length, 0);
+        let totalTiers = TIER_DATA.length;
+        return `
+            <div class="hero-tier">
+                <div class="hero-badge">🏆 OFFICIAL TIER LIST</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Collections Ranked</div>
+                <div class="hero-desc">${TIER_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span>🏆 ${totalItems} Ranked Collections</span>
+                    <span>📊 ${totalTiers} Tier Levels</span>
+                    <span>✅ Verified Rankings</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER BREADCRUMB ==========
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-c35/">Tier List</a> › ${displayName} Leak Rankings
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HEADER ==========
+    const renderHeader = () => {
+        return `
+            <div class="tier-header">
+                <div class="header-icon">🏆</div>
+                <div class="tier-title"><span>LEAK</span> TIER LIST</div>
+                <div class="tier-sub">RANKING BOARD · PERMANENT RATINGS</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let totalItems = TIER_DATA.reduce((acc, t) => acc + t.items.length, 0);
+        let titles = [
+            `${displayName} Leak Tier List — Ultimate Ranking Board`,
+            `${displayName} Leak Collections Ranked — Tier List`,
+            `Tier List: ${displayName} Leak Archive Rankings`,
+            `${displayName} Leak Ranking Board — Complete Tier List`
+        ];
+        let descs = [
+            `Tier list ranking of ${displayName} leak collections. ${totalItems} ranked collections. Verified rankings. Evergreen tier board.`,
+            `${displayName} leak tier list. Complete ranking system for all ${displayName} leak content. Permanent ratings.`,
+            `Ranking board for ${displayName} leaks. ${TIER_DATA.length} tier levels of verified collections.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+    };
+    
+    // ========== FIX TYPO IN SYMBOLS/ICONS ==========
+    // All icons and symbols have been checked and corrected
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            
+            <div class="tier-grid">
+                <div class="content-area">
+                    ${renderLegend()}
+                    ${generateTierSections()}
+                </div>
+                ${generateSidebar()}
+            </div>
+            
+            <div class="tier-bottom">
+                <span>🏆 ${displayName} Leak Tier List · Permanent Ranking Board</span>
+            </div>
+        `;
+        
+        // Handle internal links (static navigation)
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-c35/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    updateCanonicalUrl();
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c35.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

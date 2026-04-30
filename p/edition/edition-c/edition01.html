@@ -1,0 +1,550 @@
+---
+layout: null
+permalink: /edition-c01/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">LeakBase · Digital Intelligence Dashboard</title>
+    <meta id="dynamic-description" name="description" content="Complete digital intelligence and monitoring dashboard. Real-time data aggregation.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c02/">
+    <style>
+        :root {
+            --primary: #ff4444;
+            --primary-rgb: 255, 68, 68;
+            --primary-light: #ff8844;
+            --primary-dark: #cc0000;
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0a0c10;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e1e4e8}
+        
+        /* Style OSINT/Data Intelligence Dashboard - Dark, Data-Rich, Monitoring Focused */
+        .dashboard-container{max-width:1400px;margin:0 auto;padding:20px}
+        
+        /* Header dengan status monitoring */
+        .monitor-header{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px 24px;margin-bottom:24px}
+        .header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+        .logo-area{display:flex;align-items:center;gap:12px}
+        .logo-icon{font-size:24px}
+        .logo-text{font-size:1.2rem;font-weight:700;letter-spacing:-0.5px}
+        .logo-text span{color:var(--primary)}
+        .status-badge{background:#1a2332;padding:6px 14px;border-radius:30px;font-size:0.7rem;border-left:2px solid #10b981}
+        .status-badge .dot{display:inline-block;width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+        @keyframes pulse{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}
+        
+        .header-stats{display:flex;gap:32px;flex-wrap:wrap}
+        .stat-box{background:#1a1f2e;border-radius:12px;padding:12px 20px;min-width:120px}
+        .stat-label{font-size:0.65rem;text-transform:uppercase;color:#8b949e;letter-spacing:1px}
+        .stat-number{font-size:1.3rem;font-weight:700;color:var(--primary);font-family:monospace}
+        .stat-trend{font-size:0.6rem;color:#10b981;margin-top:4px}
+        
+        /* Monitoring Bar */
+        .monitor-bar{background:#0f1117;border:1px solid #1f2329;border-radius:12px;padding:12px 20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .monitor-label{font-size:0.7rem;color:#8b949e}
+        .monitor-value{font-family:monospace;font-size:0.8rem;color:var(--primary)}
+        .refresh-indicator{font-size:0.65rem;color:#8b949e}
+        
+        /* Main Grid - 3 Columns Dashboard */
+        .intel-grid{display:grid;grid-template-columns:300px 1fr 300px;gap:20px}
+        
+        /* Left Panel - Profile Intelligence */
+        .profile-card{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px;margin-bottom:20px}
+        .profile-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #1f2329}
+        .profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;font-size:28px}
+        .profile-info h3{font-size:1rem;margin-bottom:4px}
+        .profile-info p{font-size:0.65rem;color:#8b949e}
+        
+        .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;font-size:0.7rem}
+        .info-label{color:#8b949e}
+        .info-value{font-weight:500;color:var(--primary)}
+        
+        .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+        .platform-item{background:#1a1f2e;border-radius:8px;padding:8px;text-align:center}
+        .platform-icon{font-size:18px}
+        .platform-name{font-size:0.6rem;margin-top:4px;color:#8b949e}
+        .platform-status{font-size:0.55rem;margin-top:2px}
+        .status-positive{color:#10b981}
+        .status-warning{color:var(--primary-light)}
+        
+        /* Center Panel - Feed Intel (Panjang) */
+        .feed-panel{background:#0f1117;border:1px solid #1f2329;border-radius:16px;overflow:hidden}
+        .feed-header{padding:16px 20px;border-bottom:1px solid #1f2329;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .feed-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+        .feed-filters{display:flex;gap:12px}
+        .filter-pill{background:#1a1f2e;padding:4px 12px;border-radius:20px;font-size:0.65rem;cursor:pointer}
+        .filter-active{background:var(--primary);color:white}
+        
+        /* Intel Card - Sangat Panjang */
+        .intel-card{border-bottom:1px solid #1f2329;padding:20px;cursor:pointer;transition:background 0.2s}
+        .intel-card:hover{background:#12161f}
+        .card-source{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+        .source-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+        .source-tiktok{background:#000;color:#fff}
+        .source-onlyfans{background:#00aff0;color:#fff}
+        .source-instagram{background:#d62976;color:#fff}
+        .source-twitter{background:#1da1f2;color:#fff}
+        .source-telegram{background:#0088cc;color:#fff}
+        .source-discord{background:#5865f2;color:#fff}
+        .source-info{flex:1}
+        .source-name{font-size:0.75rem;font-weight:600}
+        .source-time{font-size:0.6rem;color:#8b949e}
+        .source-badge{background:#1a2332;padding:2px 8px;border-radius:12px;font-size:0.55rem;color:var(--primary-light)}
+        
+        .card-title{font-size:0.9rem;font-weight:600;margin-bottom:12px;line-height:1.4}
+        .card-desc{font-size:0.75rem;color:#b4b9c2;line-height:1.5;margin-bottom:12px}
+        
+        .media-preview{background:#1a1f2e;border-radius:12px;margin:12px 0;padding:12px;display:flex;align-items:center;gap:12px}
+        .media-icon{width:40px;height:40px;background:#2a2f3e;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+        .media-info{flex:1}
+        .media-title{font-size:0.7rem;font-weight:600}
+        .media-meta{font-size:0.6rem;color:#8b949e}
+        .media-size{font-size:0.6rem;color:var(--primary)}
+        
+        .engagement-stats{display:flex;gap:16px;margin:12px 0;padding:8px 0;border-top:1px solid #1f2329;border-bottom:1px solid #1f2329}
+        .eng-item{font-size:0.65rem;color:#8b949e}
+        .eng-number{color:var(--primary);font-weight:600}
+        
+        .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+        .tag{background:#1a2332;padding:2px 10px;border-radius:14px;font-size:0.6rem;color:#8b949e}
+        
+        /* Right Panel - Metrics & Alerts */
+        .right-panel{display:flex;flex-direction:column;gap:20px}
+        .alert-card{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px}
+        .alert-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .alert-list{display:flex;flex-direction:column;gap:12px}
+        .alert-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #1f2329;cursor:pointer}
+        .alert-icon{width:28px;height:28px;background:rgba(var(--primary-rgb), 0.125);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+        .alert-info{flex:1}
+        .alert-text{font-size:0.7rem;font-weight:500}
+        .alert-time{font-size:0.55rem;color:#8b949e}
+        
+        .trend-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;cursor:pointer}
+        .trend-name{font-size:0.7rem}
+        .trend-value{font-size:0.65rem;color:var(--primary)}
+        
+        .source-stats{display:flex;gap:12px;margin-top:12px}
+        .source-stat{flex:1;text-align:center;padding:8px;background:#1a1f2e;border-radius:8px}
+        .source-stat-count{font-size:1rem;font-weight:700;color:var(--primary)}
+        .source-stat-label{font-size:0.55rem;color:#8b949e}
+        
+        /* Footer */
+        .dashboard-footer{margin-top:24px;padding:20px;border-top:1px solid #1f2329;text-align:center;font-size:0.65rem;color:#8b949e}
+        
+        @media(max-width:1100px){.intel-grid{grid-template-columns:1fr}.profile-card{order:2}.right-panel{order:3}.feed-panel{order:1}}
+        @media(max-width:600px){.dashboard-container{padding:12px}.header-stats{gap:12px}.stat-box{padding:8px 12px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="dashboard-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#8b949e">⚡ Loading Intelligence Dashboard...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE INTEL DASHBOARD (PANJANG & DETAIL) ==========
+    
+    // 80 Platform Sources
+    const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter/X','Telegram','Discord','Reddit','YouTube','Snapchat','Facebook','WhatsApp','Signal','Mega','Google Drive','Dropbox'];
+    
+    // 60 Content Types
+    const CONTENT_TYPES = [
+        "video compilation","photo gallery","private stream","exclusive content","backup archive",
+        "original footage","raw material","unedited clips","full dump","complete set","mega pack",
+        "master collection","vault content","premium assets","exclusive media","private collection",
+        "leaked content","breached data","exposed material","released files","published content",
+        "archived media","preserved files","documented content","recorded footage","captured media"
+    ];
+    
+    // 40 File Sizes
+    const FILE_SIZES = ['245 MB','512 MB','789 MB','1.2 GB','1.8 GB','2.3 GB','3.1 GB','4.5 GB','5.0 GB','6.2 GB','7.5 GB','8.9 GB','10.2 GB','12.5 GB','15.0 GB','18.3 GB','21.7 GB','25.0 GB','28.5 GB','32.0 GB','45 MB','89 MB','124 MB','256 MB','345 MB','678 MB','892 MB','1.5 GB','2.7 GB','3.9 GB'];
+    
+    // 50 Engagement Ranges
+    const VIEW_RANGES = [[15000,50000],[50000,150000],[150000,350000],[350000,750000],[750000,1500000],[1500000,3000000],[3000000,6000000],[6000000,12000000],[12000000,25000000]];
+    const LIKE_RANGES = [[500,2000],[2000,8000],[8000,25000],[25000,70000],[70000,180000],[180000,400000],[400000,900000]];
+    const COMMENT_RANGES = [[50,200],[200,800],[800,2500],[2500,8000],[8000,20000],[20000,50000]];
+    const SHARE_RANGES = [[30,150],[150,600],[600,2000],[2000,6000],[6000,18000],[18000,50000]];
+    
+    // 40 Time Indicators
+    const TIME_INDICATORS = [
+        "just now","5 minutes ago","12 minutes ago","1 hour ago","2 hours ago","3 hours ago","5 hours ago","7 hours ago","11 hours ago","14 hours ago","18 hours ago","22 hours ago","1 day ago","2 days ago","3 days ago","5 days ago","1 week ago","2 weeks ago","3 weeks ago","1 month ago"
+    ];
+    
+    // 50 Headline Templates
+    const HEADLINES = [
+        "BREAKING: New content surfaced on {platform}",
+        "EXCLUSIVE: Complete archive now available",
+        "{source} leaked {count} files including rare content",
+        "URGENT: Content spreading rapidly on {platform}",
+        "Massive dump: {size} of exclusive material",
+        "{count}+ new items added to master collection",
+        "Undocumented content discovered on {platform}",
+        "Fresh leak: {platform} exclusive just dropped",
+        "Viral alert: Content trending on {count} platforms",
+        "Complete vault access now available",
+        "Rare footage from {platform} exposed",
+        "Private collection leaked in its entirety"
+    ];
+    
+    // 40 Description Paragraphs (panjang)
+    const DESC_PARAGRAPHS = [
+        "This comprehensive collection includes previously unreleased footage and behind-the-scenes content. The material spans multiple platforms and time periods, offering unprecedented access to the subject's digital footprint.",
+        "Digital forensic analysis confirms the authenticity of this material. Each file has been verified against known sources and timestamps. The collection represents a complete archive of the subject's online presence.",
+        "The leaked content has been circulating rapidly across major social platforms. Telegram channels and Discord servers have reported thousands of downloads within hours of the initial release.",
+        "Platform moderators are actively removing this content, but archival copies continue to spread. The material has been preserved in multiple repositories to ensure long-term availability.",
+        "This vault contains material that was previously thought to be lost or deleted. Recovery efforts have successfully restored files from multiple backup sources and cached versions.",
+        "The collection spans {start_year} to present, documenting the evolution of the subject's online activity. New material continues to be discovered and added to the archive regularly."
+    ];
+    
+    // 30 Alert Messages
+    const ALERTS = [
+        "New content detected on Telegram","Platform X removing related material","High traffic spike detected",
+        "New source channel discovered","Content trending on multiple platforms","Backup archive created",
+        "Verification completed for {count} files","Mirror link generated","Download surge detected"
+    ];
+    
+    // 50 Source Names (untuk display)
+    const SOURCE_NAMES = [
+        "IntelMonitor","DataScraper","ArchiveKeeper","LeakTracker","ContentWatcher",
+        "PlatformScanner","DigitalForensics","BackupArchivist","VaultMonitor","SourceTracker",
+        "ContentAnalyzer","DataCollector","ArchiveSystem","LeakDetector","IntelHub"
+    ];
+    
+    // 40 Source Handles
+    const SOURCE_HANDLES = [
+        "intelmonitor","datascraper","archivekeeper","leaktracker","contentwatcher",
+        "platformscanner","digitalforensics","backuparchivist","vaultmonitor","sourcetracker"
+    ];
+    
+    // Platform icons & colors
+    const PLATFORM_CONFIG = {
+        'TikTok': { icon: '📱', bg: '#000', color: '#fff', class: 'source-tiktok' },
+        'OnlyFans': { icon: '🔞', bg: '#00aff0', color: '#fff', class: 'source-onlyfans' },
+        'Instagram': { icon: '📸', bg: '#d62976', color: '#fff', class: 'source-instagram' },
+        'Twitter/X': { icon: '🐦', bg: '#1da1f2', color: '#fff', class: 'source-twitter' },
+        'Telegram': { icon: '✈️', bg: '#0088cc', color: '#fff', class: 'source-telegram' },
+        'Discord': { icon: '🎮', bg: '#5865f2', color: '#fff', class: 'source-discord' },
+        'Reddit': { icon: '🤖', bg: '#ff4500', color: '#fff', class: 'source-reddit' },
+        'YouTube': { icon: '▶️', bg: '#ff0000', color: '#fff', class: 'source-youtube' }
+    };
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
+        'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    // ========== EKSTRAK TOPIK (PUBLIC FIGURE) ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = () => {
+        let platform = rand(PLATFORMS);
+        let contentType = rand(CONTENT_TYPES);
+        let newQ = `${nameLower} ${contentType} ${platform}`;
+        if(Math.random() > 0.4) newQ += ` ${rand(['exclusive','rare','complete','full'])}`;
+        return { 
+            url:`/edition-c02/?q=${encodeURIComponent(newQ)}`, 
+            title:`${displayName}: ${contentType} from ${platform}`,
+            platform: platform,
+            contentType: contentType
+        };
+    };
+    
+    // ========== GENERATE METRIK ==========
+    const genMetrics = () => ({
+        views: range(...rand(VIEW_RANGES)), likes: range(...rand(LIKE_RANGES)),
+        comments: range(...rand(COMMENT_RANGES)), shares: range(...rand(SHARE_RANGES)),
+        fileSize: rand(FILE_SIZES), time: rand(TIME_INDICATORS),
+        fileCount: range(15,450)
+    });
+    
+    // ========== GENERATE PLATFORM STATS ==========
+    const generatePlatformStats = () => {
+        let stats = {};
+        PLATFORMS.slice(0,8).forEach(p => {
+            stats[p] = range(5,245);
+        });
+        return stats;
+    };
+    
+    // ========== RENDER INTEL CARD (PANJANG) ==========
+    const renderIntelCard = (link, idx) => {
+        let m = genMetrics();
+        let sourceName = rand(SOURCE_NAMES);
+        let sourceHandle = rand(SOURCE_HANDLES);
+        let platformConfig = PLATFORM_CONFIG[link.platform] || { icon: '📁', bg: '#1f2329', color: '#fff', class: '' };
+        let headline = rand(HEADLINES)
+            .replace('{platform}', link.platform)
+            .replace('{source}', sourceName)
+            .replace('{count}', m.fileCount.toLocaleString())
+            .replace('{size}', m.fileSize);
+        let desc = rand(DESC_PARAGRAPHS)
+            .replace('{start_year}', 2020 + range(-3,2))
+            .replace('{count}', m.fileCount.toLocaleString());
+        let platformStat = generatePlatformStats();
+        let fmt = (n) => n.toLocaleString();
+        
+        // Generate tags
+        let tags = [link.platform, link.contentType, nameLower, m.fileSize];
+        for(let i=0;i<3;i++) tags.push(rand(['viral','trending','exclusive','rare','verified','original']));
+        
+        return `
+            <div class="intel-card" data-url="${link.url}">
+                <div class="card-source">
+                    <div class="source-icon ${platformConfig.class}" style="background:${platformConfig.bg};color:${platformConfig.color}">${platformConfig.icon}</div>
+                    <div class="source-info">
+                        <div class="source-name">${sourceName} · @${sourceHandle}</div>
+                        <div class="source-time">${m.time} · via ${link.platform}</div>
+                    </div>
+                    <div class="source-badge">${rand(['NEW','UPDATED','VERIFIED','TRENDING'])}</div>
+                </div>
+                
+                <div class="card-title">${headline}</div>
+                <div class="card-desc">${desc}</div>
+                
+                <div class="media-preview">
+                    <div class="media-icon">${platformConfig.icon}</div>
+                    <div class="media-info">
+                        <div class="media-title">${link.contentType.toUpperCase()} · ${m.fileCount} files</div>
+                        <div class="media-meta">${m.fileSize} total · Format: ${rand(['MP4','JPG','PNG','MOV','ZIP'])}</div>
+                    </div>
+                    <div class="media-size">⬇️ ${fmt(Math.floor(m.views/50))}</div>
+                </div>
+                
+                <div class="engagement-stats">
+                    <span class="eng-item">👁️ ${fmt(m.views)} views</span>
+                    <span class="eng-item">❤️ ${fmt(m.likes)} likes</span>
+                    <span class="eng-item">💬 ${fmt(m.comments)} comments</span>
+                    <span class="eng-item">🔁 ${fmt(m.shares)} shares</span>
+                </div>
+                
+                <div class="tags">
+                    ${tags.map(t => `<span class="tag">#${t.toLowerCase().replace(/\s/g,'')}</span>`).join('')}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER ALERTS ==========
+    const renderAlerts = () => {
+        let alerts = [];
+        for(let i=0;i<5;i++){
+            let alert = rand(ALERTS).replace('{count}', range(50,500).toLocaleString());
+            alerts.push(`
+                <div class="alert-item" data-url="${genLink().url}">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-info">
+                        <div class="alert-text">${alert}</div>
+                        <div class="alert-time">${rand(TIME_INDICATORS)}</div>
+                    </div>
+                </div>
+            `);
+        }
+        return alerts.join('');
+    };
+    
+    // ========== RENDER TRENDING ==========
+    const renderTrending = () => {
+        let trends = [];
+        let platforms = PLATFORMS.slice(0,6);
+        platforms.forEach(p => {
+            trends.push(`
+                <div class="trend-item" data-url="${genLink().url}">
+                    <div class="trend-name">${p}</div>
+                    <div class="trend-value">${range(125,8500).toLocaleString()} mentions</div>
+                </div>
+            `);
+        });
+        return trends.join('');
+    };
+    
+    // ========== RENDER SOURCE STATS ==========
+    const renderSourceStats = () => {
+        let stats = generatePlatformStats();
+        let topSources = Object.entries(stats).sort((a,b) => b[1] - a[1]).slice(0,4);
+        return topSources.map(([name, count]) => `
+            <div class="source-stat"><div class="source-stat-count">${count}</div><div class="source-stat-label">${name}</div></div>
+        `).join('');
+    };
+    
+    // ========== RENDER PLATFORM GRID ==========
+    const renderPlatformGrid = () => {
+        let platforms = PLATFORMS.slice(0,8);
+        let stats = generatePlatformStats();
+        return platforms.map(p => `
+            <div class="platform-item">
+                <div class="platform-icon">${PLATFORM_CONFIG[p]?.icon || '📁'}</div>
+                <div class="platform-name">${p}</div>
+                <div class="platform-status ${stats[p] > 50 ? 'status-positive' : 'status-warning'}">${stats[p]} items</div>
+            </div>
+        `).join('');
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayName} · Digital Intelligence Dashboard | LeakBase`,
+            `${displayName} · Complete Content Monitoring | LeakBase`,
+            `${displayName} · Real-time Leak Detection | LeakBase`,
+            `${displayName} · OSINT Intelligence Dashboard | LeakBase`
+        ];
+        let descs = [
+            `Complete ${displayName} digital intelligence dashboard. Real-time monitoring across ${range(8,15)} platforms. ${range(500,5000)}+ tracked items.`,
+            `${displayName} content monitoring and alert system. Automatic detection across major social platforms. Updated in real-time.`,
+            `Comprehensive ${displayName} digital footprint analysis. Track leaked content across TikTok, OnlyFans, Instagram, Twitter, Telegram, and more.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let links = Array.from({length:8}, ()=>genLink());
+        let stats = generatePlatformStats();
+        let totalItems = Object.values(stats).reduce((a,b) => a + b, 0);
+        let newToday = range(12,145);
+        let currentTime = new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+        
+        document.getElementById('app').innerHTML = `
+            <div class="monitor-header">
+                <div class="header-top">
+                    <div class="logo-area">
+                        <div class="logo-icon">🕵️</div>
+                        <div class="logo-text">Leak<span>Base</span></div>
+                    </div>
+                    <div class="status-badge"><span class="dot"></span>Monitoring Active · ${range(4,12)} sources</div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-box"><div class="stat-label">TOTAL ITEMS</div><div class="stat-number">${totalItems.toLocaleString()}</div><div class="stat-trend">+${newToday} new today</div></div>
+                    <div class="stat-box"><div class="stat-label">PLATFORMS</div><div class="stat-number">${Object.keys(stats).length}</div><div class="stat-trend">${range(1,5)} active</div></div>
+                    <div class="stat-box"><div class="stat-label">LAST SCAN</div><div class="stat-number">${currentTime}</div><div class="stat-trend">real-time</div></div>
+                    <div class="stat-box"><div class="stat-label">ALERTS</div><div class="stat-number">${range(3,28)}</div><div class="stat-trend">unread</div></div>
+                </div>
+            </div>
+            
+            <div class="monitor-bar">
+                <div><span class="monitor-label">TARGET SUBJECT:</span> <span class="monitor-value">${displayName.toUpperCase()}</span></div>
+                <div><span class="monitor-label">MONITORING SCOPE:</span> <span class="monitor-value">${range(8,15)} platforms · ${range(25,120)} keywords</span></div>
+                <div class="refresh-indicator">auto-refresh: 30s · last update: ${currentTime}</div>
+            </div>
+            
+            <div class="intel-grid">
+                <!-- Left Panel: Profile Intel -->
+                <div>
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">👤</div>
+                            <div class="profile-info">
+                                <h3>${displayName}</h3>
+                                <p>Subject ID: PF-${range(10000,99999)} · Status: Active</p>
+                            </div>
+                        </div>
+                        <div class="info-row"><span class="info-label">Digital Footprint Score</span><span class="info-value">${range(65,98)}/100</span></div>
+                        <div class="info-row"><span class="info-label">Total Exposed Content</span><span class="info-value">${totalItems.toLocaleString()} files</span></div>
+                        <div class="info-row"><span class="info-label">First Detected</span><span class="info-value">${2020 - range(0,3)}-${range(1,12)}-${range(1,28)}</span></div>
+                        <div class="info-row"><span class="info-label">Risk Assessment</span><span class="info-value">${rand(['CRITICAL','HIGH','ELEVATED','MODERATE'])}</span></div>
+                        <div class="platform-grid">${renderPlatformGrid()}</div>
+                    </div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">🚨 REAL-TIME ALERTS</div>
+                        <div class="alert-list">${renderAlerts()}</div>
+                    </div>
+                </div>
+                
+                <!-- Center Panel: Intel Feed (Panjang) -->
+                <div class="feed-panel">
+                    <div class="feed-header">
+                        <div class="feed-title">📡 INTELLIGENCE FEED · ${displayName.toUpperCase()}</div>
+                        <div class="feed-filters">
+                            <span class="filter-pill filter-active">All</span>
+                            <span class="filter-pill">New</span>
+                            <span class="filter-pill">Viral</span>
+                            <span class="filter-pill">Archived</span>
+                        </div>
+                    </div>
+                    <div id="feedContainer">
+                        ${links.map((l,i)=>renderIntelCard(l,i)).join('')}
+                        ${renderIntelCard(genLink(), 8)}
+                        ${renderIntelCard(genLink(), 9)}
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Metrics -->
+                <div>
+                    <div class="alert-card">
+                        <div class="alert-title">📊 TRENDING PLATFORMS</div>
+                        <div>${renderTrending()}</div>
+                    </div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">📈 SOURCE DISTRIBUTION</div>
+                        <div class="source-stats">${renderSourceStats()}</div>
+                        <div style="margin-top:16px">
+                            <div class="info-row"><span>Total Size</span><span>${range(45,850)} GB</span></div>
+                            <div class="info-row"><span>Unique Sources</span><span>${range(25,180)}</span></div>
+                            <div class="info-row"><span>Active Mirrors</span><span>${range(8,45)}</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">🔗 RELATED INTELLIGENCE</div>
+                        <div class="trend-list">
+                            ${['Telegram Channels','Discord Servers','Backup Archives','Mirror Links'].map(item => `
+                                <div class="trend-item" data-url="${genLink().url}">
+                                    <div class="trend-name">${item}</div>
+                                    <div class="trend-value">${range(5,85)} new</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-footer">
+                LeakBase Intelligence · ${displayName} Digital Monitoring · ${totalItems.toLocaleString()} Tracked Items · Updated Real-time · OSINT v4.2
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.intel-card, .alert-item, .trend-item').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c01.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

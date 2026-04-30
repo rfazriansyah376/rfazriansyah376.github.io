@@ -1,0 +1,436 @@
+---
+layout: null
+permalink: /edition-c47/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">KNOWLEDGE WIKI · Leak Reference Library</title>
+    <meta id="dynamic-description" name="description" content="Complete knowledge wiki for leak archives. Reference library with interconnected entries.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c47/">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        
+        /* GLOBAL COLOR VARIABLE - CHANGE ONLY THIS TO UPDATE ENTIRE THEME */
+        :root {
+            --primary-color: #3366cc;
+            --primary-light: #e8f0fe;
+            --primary-dark: #1a4d8c;
+            --text-dark: #1a1a1a;
+            --text-gray: #5f6368;
+            --border-light: #dadce0;
+            --bg-body: #faf9f8;
+            --bg-white: #fff;
+            --hover-bg: #fafbfc;
+        }
+        
+        body{background:var(--bg-body);font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;color:var(--text-dark)}
+        
+        /* Wiki Style */
+        .wiki-container{max-width:1100px;margin:0 auto;padding:20px}
+        
+        /* Header */
+        .wiki-header{background:var(--bg-white);border-bottom:1px solid var(--border-light);padding:16px 0;margin-bottom:24px}
+        .header-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+        .logo{font-size:1.3rem;font-weight:700}
+        .logo span{color:var(--primary-color)}
+        .wiki-tag{font-size:0.65rem;color:var(--text-gray);background:#f1f3f4;padding:4px 12px;border-radius:20px}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:var(--text-gray);margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero */
+        .hero-wiki{background:var(--bg-white);border:1px solid var(--border-light);border-radius:12px;padding:28px;margin-bottom:28px}
+        .hero-badge{font-size:0.65rem;color:var(--primary-color);margin-bottom:8px}
+        .hero-title{font-size:1.4rem;font-weight:700;margin-bottom:12px;line-height:1.3}
+        .hero-title span{color:var(--primary-color)}
+        .hero-desc{font-size:0.8rem;color:#3c4043;line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:20px;flex-wrap:wrap;font-size:0.65rem;color:var(--text-gray)}
+        
+        /* Main Layout - 2 Columns */
+        .wiki-grid{display:grid;grid-template-columns:1fr 260px;gap:24px;margin-bottom:32px}
+        
+        /* Content Area - Wiki Entries */
+        .wiki-section{margin-bottom:28px}
+        .section-title{font-size:1rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:2px solid var(--primary-color);display:inline-block}
+        .entries-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+        
+        /* Wiki Entry Card */
+        .wiki-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:12px;padding:16px;text-decoration:none;color:var(--text-dark);display:block}
+        .wiki-card:hover{border-color:var(--primary-color);background:var(--hover-bg)}
+        .card-type{font-size:0.55rem;color:var(--primary-color);font-weight:600;margin-bottom:6px;text-transform:uppercase}
+        .card-title{font-size:0.8rem;font-weight:700;margin-bottom:6px;line-height:1.3}
+        .card-desc{font-size:0.65rem;color:var(--text-gray);margin-bottom:8px;line-height:1.4}
+        .card-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #e8eaed}
+        .internal-link{font-size:0.55rem;color:var(--primary-color);background:var(--primary-light);padding:2px 8px;border-radius:20px;text-decoration:none;display:inline-block}
+        .internal-link:hover{background:#d2e3fc}
+        
+        /* Related Topics Section */
+        .related-topics{background:var(--bg-white);border:1px solid var(--border-light);border-radius:12px;padding:20px;margin-bottom:24px}
+        .related-title{font-size:0.8rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
+        .topics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+        .topic-link{display:block;padding:8px 0;font-size:0.7rem;color:var(--primary-color);text-decoration:none;border-bottom:1px solid #f0f2f4}
+        .topic-link:hover{text-decoration:underline;color:var(--primary-dark)}
+        
+        /* Sidebar */
+        .sidebar{position:sticky;top:20px}
+        .info-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:12px;padding:20px;margin-bottom:20px}
+        .info-title{font-size:0.7rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
+        .stat-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f2f4;font-size:0.7rem}
+        .stat-label{color:var(--text-gray)}
+        .stat-value{color:var(--primary-color);font-weight:600}
+        
+        .nav-list{list-style:none}
+        .nav-list li{padding:8px 0;border-bottom:1px solid #f0f2f4}
+        .nav-list a{text-decoration:none;color:#1a1a1e;font-size:0.7rem;display:block}
+        .nav-list a:hover{color:var(--primary-color)}
+        .nav-meta{font-size:0.55rem;color:var(--text-gray);margin-top:2px}
+        
+        /* Bottom */
+        .wiki-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-light);text-align:center;font-size:0.6rem;color:var(--text-gray)}
+        
+        @media(max-width:750px){.wiki-grid{grid-template-columns:1fr}.topics-grid{grid-template-columns:1fr}}
+        @media(max-width:500px){.wiki-container{padding:16px}.hero-title{font-size:1.1rem}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="wiki-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--text-gray)">Loading Knowledge Wiki...</div></div>
+
+<script>
+(function(){
+    // ========== KNOWLEDGE WIKI DATABASE ==========
+    
+    const WIKI_CATEGORIES = [
+        {
+            name: "Complete Leak Archives",
+            entries: [
+                { type: "MASTER", title: "{name} Complete Master Leak Archive", desc: "The definitive complete {name} leak archive containing every file from every source.", related: ["Complete Collection", "Master Vault", "Ultimate Archive"] },
+                { type: "LIBRARY", title: "{name} Comprehensive Leak Library", desc: "Complete {name} knowledge base containing all known content. Organized and preserved.", related: ["Full Library", "Complete Set", "Reference"] },
+                { type: "VAULT", title: "{name} Eternal Leak Vault", desc: "Permanent {name} leak archive with all content preserved forever.", related: ["Timeless Vault", "Eternal Archive", "Permanent Collection"] }
+            ]
+        },
+        {
+            name: "OnlyFans Leak Collections",
+            entries: [
+                { type: "PREMIUM", title: "{name} OnlyFans Complete Leak Collection", desc: "Complete {name} OnlyFans leak. All exclusive subscriber content preserved.", related: ["OnlyFans Archive", "Premium Vault", "Exclusive Content"] },
+                { type: "MASTER", title: "{name} OnlyFans Master Leak Vault", desc: "Master {name} OnlyFans collection. Every post ever made permanently archived.", related: ["Master Collection", "OnlyFans Dump", "Full Subscription"] },
+                { type: "ULTIMATE", title: "{name} OnlyFans Ultimate Leak Archive", desc: "Ultimate {name} OnlyFans archive. Complete authenticated collection.", related: ["Ultimate Vault", "Premium Archive", "All Content"] }
+            ]
+        },
+        {
+            name: "TikTok Leak Compilations",
+            entries: [
+                { type: "VIDEO", title: "{name} TikTok Complete Leak Compilation", desc: "Complete {name} TikTok leak compilation. All viral moments preserved.", related: ["TikTok Archive", "Viral Compilation", "Video Collection"] },
+                { type: "MASTER", title: "{name} TikTok Master Leak Feed", desc: "Master {name} TikTok archive. Every video ever posted.", related: ["TikTok Vault", "Complete Feed", "Video Archive"] },
+                { type: "VIRAL", title: "{name} TikTok Viral Leak Collection", desc: "Viral {name} TikTok content compilation. Most requested videos.", related: ["Trending TikTok", "Viral Videos", "Popular Clips"] }
+            ]
+        },
+        {
+            name: "Telegram Leak Channels",
+            entries: [
+                { type: "CHANNEL", title: "{name} Telegram Complete Leak Channel", desc: "Complete {name} Telegram leak. All channel content permanently preserved.", related: ["Telegram Archive", "Channel Dump", "Message History"] },
+                { type: "MASTER", title: "{name} Telegram Master Leak Archive", desc: "Master {name} Telegram archive. Full message and media history.", related: ["Telegram Vault", "Complete Channel", "Media Archive"] }
+            ]
+        },
+        {
+            name: "Instagram Leak Galleries",
+            entries: [
+                { type: "GALLERY", title: "{name} Instagram Complete Leak Gallery", desc: "Complete {name} Instagram leak. All private story content preserved.", related: ["Instagram Archive", "Story Collection", "Private Gallery"] },
+                { type: "MASTER", title: "{name} Instagram Master Leak Collection", desc: "Master {name} Instagram archive. Everything preserved and organized.", related: ["Instagram Vault", "Complete Gallery", "Photo Archive"] }
+            ]
+        },
+        {
+            name: "Mega Archive Leaks",
+            entries: [
+                { type: "BACKUP", title: "{name} Mega Complete Leak Archive", desc: "Complete {name} Mega leak archive. The entire backup collection.", related: ["Mega Vault", "Cloud Archive", "Backup Collection"] },
+                { type: "MASTER", title: "{name} Mega Master Leak Vault", desc: "Master {name} Mega vault. Complete file collection permanently preserved.", related: ["Mega Dump", "Storage Archive", "File Collection"] }
+            ]
+        },
+        {
+            name: "Rare & Unreleased Leaks",
+            entries: [
+                { type: "RARE", title: "{name} Rare Leak Collection", desc: "Rare and unseen {name} content. Hard-to-find material collection.", related: ["Unseen Content", "Rare Archive", "Hidden Gems"] },
+                { type: "EXCLUSIVE", title: "{name} Unreleased Leak Archive", desc: "Previously unreleased {name} content. Exclusive archive.", related: ["Exclusive Material", "Unreleased Vault", "Private Collection"] }
+            ]
+        },
+        {
+            name: "Fan Favorite Leak Compilations",
+            entries: [
+                { type: "CURATED", title: "{name} Fan Favorites Leak Collection", desc: "Fan-curated {name} leak collection. Most requested content.", related: ["Best Of", "Fan Picks", "Top Rated"] },
+                { type: "COMMUNITY", title: "{name} Top Rated Leak Archive", desc: "Highest rated {name} leak content by the fan community.", related: ["Community Choice", "Popular Picks", "Fan Favorite"] }
+            ]
+        }
+    ];
+    
+    const RELATED_TOPICS = [
+        "Video Leak Archives", "Photo Leak Galleries", "Behind the Scenes Leaks",
+        "Interview Leak Compilations", "Live Performance Leaks", "Social Media Leak Collection",
+        "Personal Moments Leak Archive", "Professional Portfolio Leaks", "Documentary Leak Collection",
+        "Complete Video Archive", "Master Photo Gallery", "Ultimate Leak Collection",
+        "Rare Footage Archive", "Exclusive Content Vault", "Premium Leak Collection"
+    ];
+    
+    const QUICK_REFERENCE = [
+        "What is a Leak Archive", "How to Access Leak Collections", "Leak Verification Process",
+        "Complete Leak Index", "Leak Archive Glossary", "Frequently Asked Questions"
+    ];
+    
+    const WIKI_DESC = "This knowledge wiki contains complete {name} leak reference entries. Each entry is interconnected with related topics.";
+    const STOP_WORDS = ['wiki','knowledge','reference','library','cyclopedia','dictionary','glossary','index'];
+    
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // Extract query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "knowledge reference library"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // Generate internal link with same permalink pattern
+    const genInternalLink = (keyword) => {
+        let newQ = `${nameLower} ${keyword.toLowerCase()} leak reference`;
+        return `/edition-c47/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // Generate wiki entries
+    const generateWikiEntries = () => {
+        let sectionsHtml = '';
+        for(let section of WIKI_CATEGORIES){
+            let sectionName = section.name;
+            let entriesHtml = '';
+            for(let entry of section.entries){
+                let title = entry.title.replace('{name}', displayName);
+                let desc = entry.desc.replace('{name}', displayName);
+                let mainUrl = genInternalLink(entry.title.substring(0, 30));
+                
+                let relatedLinksHtml = '';
+                for(let related of entry.related){
+                    let relatedUrl = genInternalLink(related);
+                    relatedLinksHtml += `<a href="${relatedUrl}" class="internal-link">${related}</a>`;
+                }
+                let categoryUrl = genInternalLink(section.name);
+                relatedLinksHtml += `<a href="${categoryUrl}" class="internal-link">${sectionName}</a>`;
+                
+                entriesHtml += `
+                    <a href="${mainUrl}" class="wiki-card">
+                        <div class="card-type">📄 ${entry.type} ENTRY</div>
+                        <div class="card-title">📖 ${title}</div>
+                        <div class="card-desc">${desc}</div>
+                        <div class="card-links">
+                            ${relatedLinksHtml}
+                        </div>
+                    </a>
+                `;
+            }
+            sectionsHtml += `
+                <div class="wiki-section">
+                    <h2 class="section-title">📌 ${sectionName}</h2>
+                    <div class="entries-grid">
+                        ${entriesHtml}
+                    </div>
+                </div>
+            `;
+        }
+        return sectionsHtml;
+    };
+    
+    // Generate related topics
+    const generateRelatedTopics = () => {
+        let topicsHtml = '';
+        for(let topic of RELATED_TOPICS){
+            let fullTopic = `${displayName} ${topic}`;
+            let url = genInternalLink(topic);
+            topicsHtml += `<a href="${url}" class="topic-link">📌 ${fullTopic}</a>`;
+        }
+        return `
+            <div class="related-topics">
+                <div class="related-title">🔗 Related Wiki Topics</div>
+                <div class="topics-grid">
+                    ${topicsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // Generate sidebar
+    const generateSidebar = () => {
+        let totalEntries = WIKI_CATEGORIES.reduce((acc, s) => acc + s.entries.length, 0);
+        let totalCategories = WIKI_CATEGORIES.length;
+        
+        let quickRefHtml = '';
+        for(let ref of QUICK_REFERENCE){
+            let fullRef = `${displayName} ${ref}`;
+            let url = genInternalLink(ref);
+            quickRefHtml += `
+                <li>
+                    <a href="${url}">📖 ${fullRef}</a>
+                    <div class="nav-meta">Wiki Entry</div>
+                </li>
+            `;
+        }
+        
+        let categoryLinksHtml = '';
+        for(let section of WIKI_CATEGORIES){
+            let url = genInternalLink(section.name);
+            categoryLinksHtml += `
+                <li>
+                    <a href="${url}">📁 ${section.name}</a>
+                    <div class="nav-meta">${section.entries.length} entries</div>
+                </li>
+            `;
+        }
+        
+        return `
+            <div class="sidebar">
+                <div class="info-card">
+                    <div class="info-title">📊 WIKI STATISTICS</div>
+                    <div class="stat-row"><span class="stat-label">Total Entries</span><span class="stat-value">${totalEntries}</span></div>
+                    <div class="stat-row"><span class="stat-label">Categories</span><span class="stat-value">${totalCategories}</span></div>
+                    <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value">Complete</span></div>
+                    <div class="stat-row"><span class="stat-label">Verification</span><span class="stat-value">Authenticated</span></div>
+                    <div class="stat-row"><span class="stat-label">Links</span><span class="stat-value">Interconnected</span></div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">📚 Wiki Categories</div>
+                    <ul class="nav-list">
+                        ${categoryLinksHtml}
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">⚡ Quick Reference</div>
+                    <ul class="nav-list">
+                        ${quickRefHtml}
+                    </ul>
+                </div>
+            </div>
+        `;
+    };
+    
+    // Render hero
+    const renderHero = () => {
+        let totalEntries = WIKI_CATEGORIES.reduce((acc, s) => acc + s.entries.length, 0);
+        let totalCategories = WIKI_CATEGORIES.length;
+        return `
+            <div class="hero-wiki">
+                <div class="hero-badge">📖 KNOWLEDGE WIKI</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Reference Library</div>
+                <div class="hero-desc">${WIKI_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span>📚 ${totalEntries} Knowledge Entries</span>
+                    <span>📁 ${totalCategories} Categories</span>
+                    <span>🔗 Interlinked References</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // Render breadcrumb
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-c47/">Knowledge Wiki</a> › ${displayName} Leak Reference
+            </div>
+        `;
+    };
+    
+    // Render header
+    const renderHeader = () => {
+        return `
+            <div class="wiki-header">
+                <div class="header-inner">
+                    <div class="logo">Leak<span>Wiki</span></div>
+                    <div class="wiki-tag">📖 KNOWLEDGE BASE</div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // Update SEO with dynamic canonical based on query
+    const updateSEO = () => {
+        let totalEntries = WIKI_CATEGORIES.reduce((acc, s) => acc + s.entries.length, 0);
+        let titles = [
+            `${displayName} Leak Wiki - Knowledge Reference Library`,
+            `${displayName} Leak Knowledge Base - Complete Wiki`,
+            `Wiki: ${displayName} Leak Archive Reference`,
+            `${displayName} Leak Encyclopedia - Interlinked Knowledge`
+        ];
+        let descs = [
+            `Complete knowledge wiki for ${displayName} leak archives. ${totalEntries} interconnected entries. Reference library.`,
+            `${displayName} leak wiki with ${totalEntries} reference entries. Fully interconnected knowledge base.`,
+            `Knowledge wiki for ${displayName} leak collections. Complete reference library with internal links.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // DYNAMIC CANONICAL - follows the query parameter
+        let canonical = document.getElementById('dynamic-canonical');
+        if(canonical) {
+            let baseUrl = window.location.href.split('?')[0];
+            let queryString = window.location.search;
+            canonical.setAttribute('href', baseUrl + queryString);
+        }
+    };
+    
+    // Render page
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            
+            <div class="wiki-grid">
+                <div class="content-area">
+                    ${generateWikiEntries()}
+                    ${generateRelatedTopics()}
+                </div>
+                ${generateSidebar()}
+            </div>
+            
+            <div class="wiki-bottom">
+                <span>📖 ${displayName} Leak Knowledge Wiki - Interconnected Reference Library</span>
+            </div>
+        `;
+        
+        // Handle internal links
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-c47/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c47.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

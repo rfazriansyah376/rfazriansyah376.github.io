@@ -1,0 +1,413 @@
+---
+layout: null
+permalink: /edition-c48/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">SHOWCASE GALLERY · Leak Portfolio Collection</title>
+    <meta id="dynamic-description" name="description" content="Showcase gallery portfolio for leak collections. Premium grid display. Curated selection.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c49/">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        
+        /* GLOBAL COLOR VARIABLES - Easy to change */
+        :root {
+            --primary-color: #c0392b;
+            --primary-dark: #a93226;
+            --primary-light: #e74c3c;
+            --bg-color: #faf9f8;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --text-muted: #7a6e5e;
+            --border-color: #e8e4e0;
+            --hover-shadow: rgba(0,0,0,0.06);
+        }
+        
+        body{background:var(--bg-color);font-family:'Inter',sans-serif;color:var(--text-color)}
+        
+        /* Showcase Gallery Style - Like Portfolio / Premium Grid */
+        .gallery-container{max-width:1400px;margin:0 auto;padding:20px}
+        
+        /* Header */
+        .gallery-header{background:var(--card-bg);border-radius:24px;padding:24px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);border:1px solid var(--border-color)}
+        .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:12px}
+        .logo{font-size:1.2rem;font-weight:800}
+        .logo span{color:var(--primary-color)}
+        .gallery-cat{background:#f0ede8;padding:6px 16px;border-radius:30px;font-size:0.6rem;font-weight:600;color:var(--primary-color)}
+        .header-desc{font-size:0.65rem;color:var(--text-muted)}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:var(--text-muted);margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero */
+        .hero-gallery{background:var(--card-bg);border-radius:24px;padding:32px;margin-bottom:32px;border:1px solid var(--border-color)}
+        .hero-badge{display:inline-block;background:var(--primary-color);color:#fff;padding:4px 16px;border-radius:30px;font-size:0.65rem;font-weight:700;margin-bottom:12px}
+        .hero-title{font-size:1.4rem;font-weight:800;margin-bottom:12px}
+        .hero-title span{color:var(--primary-color)}
+        .hero-desc{font-size:0.8rem;color:#5a4a38;line-height:1.5;margin-bottom:16px;max-width:700px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;color:var(--text-muted)}
+        
+        /* Category Tabs - Filter Bar */
+        .filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+        .filter-btn{background:var(--card-bg);border:1px solid var(--border-color);padding:8px 20px;border-radius:40px;font-size:0.7rem;font-weight:500;text-decoration:none;color:var(--text-color)}
+        .filter-btn:hover{background:var(--primary-color);color:#fff;border-color:var(--primary-color)}
+        .filter-active{background:var(--text-color);color:#fff;border-color:var(--text-color)}
+        
+        /* Premium Grid - 4 Columns */
+        .premium-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;margin-bottom:40px}
+        
+        /* Gallery Card - Like Portfolio Item */
+        .gallery-card{background:var(--card-bg);border-radius:20px;overflow:hidden;border:1px solid var(--border-color);text-decoration:none;display:block;color:var(--text-color);transition:box-shadow 0s}
+        .gallery-card:hover{box-shadow:0 8px 20px var(--hover-shadow);border-color:var(--primary-color)}
+        .card-media{height:160px;background:linear-gradient(135deg,#f0ede8,#e8e4e0);display:flex;align-items:center;justify-content:center;font-size:36px;position:relative}
+        .card-badge{position:absolute;top:12px;left:12px;background:var(--primary-color);color:#fff;padding:2px 10px;border-radius:20px;font-size:0.55rem;font-weight:600}
+        .card-content{padding:16px}
+        .card-category{font-size:0.55rem;color:var(--primary-color);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+        .card-title{font-size:0.8rem;font-weight:700;margin-bottom:8px;line-height:1.3}
+        .card-desc{font-size:0.65rem;color:var(--text-muted);margin-bottom:10px;line-height:1.4}
+        .card-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #f0ede8}
+        .card-stats{display:flex;gap:12px;font-size:0.55rem;color:#999}
+        .card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+        .card-tag{font-size:0.5rem;color:var(--primary-color);background:#fef5f0;padding:2px 6px;border-radius:4px;text-decoration:none}
+        .card-tag:hover{background:var(--primary-color);color:#fff}
+        
+        /* Featured Section - Large Cards */
+        .featured-section{margin-bottom:40px}
+        .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+        .section-title{font-size:0.9rem;font-weight:800}
+        .section-title span{color:var(--primary-color)}
+        .featured-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+        .featured-card{background:var(--card-bg);border-radius:24px;border:1px solid var(--border-color);padding:24px;text-decoration:none;display:flex;gap:20px;align-items:center}
+        .featured-card:hover{border-color:var(--primary-color)}
+        .featured-icon{font-size:42px}
+        .featured-info{flex:1}
+        .featured-title{font-size:0.9rem;font-weight:800;margin-bottom:6px;color:var(--text-color)}
+        .featured-desc{font-size:0.65rem;color:var(--text-muted);margin-bottom:8px}
+        .featured-meta{font-size:0.55rem;color:var(--primary-color)}
+        
+        /* Bottom Section - Popular Tags */
+        .tags-section{background:var(--card-bg);border-radius:20px;padding:20px;border:1px solid var(--border-color);margin-top:20px}
+        .tags-title{font-size:0.7rem;font-weight:800;margin-bottom:16px;color:var(--primary-color)}
+        .tags-cloud{display:flex;flex-wrap:wrap;gap:10px}
+        .tag-chip{background:#f0ede8;padding:6px 16px;border-radius:30px;font-size:0.6rem;text-decoration:none;color:var(--text-color)}
+        .tag-chip:hover{background:var(--primary-color);color:#fff}
+        
+        /* Clean Bottom */
+        .gallery-bottom{margin-top:32px;padding:16px 0;border-top:1px solid var(--border-color);text-align:center;font-size:0.55rem;color:#999}
+        
+        @media(max-width:1000px){.premium-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}}
+        @media(max-width:800px){.featured-grid{grid-template-columns:1fr}.filter-bar{justify-content:center}}
+        @media(max-width:600px){.premium-grid{grid-template-columns:1fr}.gallery-container{padding:16px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="gallery-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#999">🖼️ LOADING SHOWCASE GALLERY...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE SHOWCASE GALLERY (EVERGREEN, MANY INTERNAL LINKS) ==========
+    
+    // Gallery Items - Setiap heading mengandung "leak" + query
+    const GALLERY_ITEMS = [
+        { category: "COMPLETE", icon: "📚", title: "{name} Complete Master Leak Archive", desc: "The definitive complete archive collection", tags: ["Master", "Complete"], views: "Permanent", size: "Complete" },
+        { category: "COMPLETE", icon: "📖", title: "{name} Comprehensive Leak Library", desc: "Complete knowledge base collection", tags: ["Library", "Reference"], views: "Permanent", size: "Full" },
+        { category: "COMPLETE", icon: "🏛️", title: "{name} Eternal Leak Vault", desc: "Permanent vault collection", tags: ["Eternal", "Vault"], views: "Permanent", size: "Complete" },
+        { category: "PREMIUM", icon: "🔞", title: "{name} OnlyFans Complete Leak", desc: "Full OnlyFans subscription collection", tags: ["OnlyFans", "Premium"], views: "Permanent", size: "Complete" },
+        { category: "PREMIUM", icon: "💎", title: "{name} OnlyFans Master Leak Vault", desc: "Master OnlyFans vault collection", tags: ["OnlyFans", "Master"], views: "Permanent", size: "Master" },
+        { category: "PREMIUM", icon: "👑", title: "{name} OnlyFans Ultimate Leak", desc: "Ultimate OnlyFans archive", tags: ["OnlyFans", "Ultimate"], views: "Permanent", size: "Ultimate" },
+        { category: "VIRAL", icon: "📱", title: "{name} TikTok Complete Leak Compilation", desc: "Complete TikTok compilation", tags: ["TikTok", "Viral"], views: "Permanent", size: "Complete" },
+        { category: "VIRAL", icon: "⚡", title: "{name} TikTok Master Leak Feed", desc: "Master TikTok feed archive", tags: ["TikTok", "Master"], views: "Permanent", size: "Master" },
+        { category: "VIRAL", icon: "🔥", title: "{name} TikTok Viral Leak Collection", desc: "Viral TikTok collection", tags: ["TikTok", "Trending"], views: "Permanent", size: "Viral" },
+        { category: "CHANNEL", icon: "✈️", title: "{name} Telegram Complete Leak Channel", desc: "Complete Telegram channel", tags: ["Telegram", "Channel"], views: "Permanent", size: "Complete" },
+        { category: "CHANNEL", icon: "📡", title: "{name} Telegram Master Leak Archive", desc: "Master Telegram archive", tags: ["Telegram", "Archive"], views: "Permanent", size: "Master" },
+        { category: "GALLERY", icon: "📸", title: "{name} Instagram Complete Leak Gallery", desc: "Complete Instagram gallery", tags: ["Instagram", "Gallery"], views: "Permanent", size: "Complete" },
+        { category: "GALLERY", icon: "🖼️", title: "{name} Instagram Master Leak Collection", desc: "Master Instagram collection", tags: ["Instagram", "Collection"], views: "Permanent", size: "Master" },
+        { category: "STORAGE", icon: "☁️", title: "{name} Mega Complete Leak Archive", desc: "Complete Mega backup archive", tags: ["Mega", "Backup"], views: "Permanent", size: "Complete" },
+        { category: "STORAGE", icon: "🗄️", title: "{name} Mega Master Leak Vault", desc: "Master Mega vault", tags: ["Mega", "Vault"], views: "Permanent", size: "Master" },
+        { category: "RARE", icon: "💎", title: "{name} Rare Leak Collection", desc: "Rare collector's collection", tags: ["Rare", "Collector"], views: "Permanent", size: "Rare" },
+        { category: "RARE", icon: "🔮", title: "{name} Unreleased Leak Archive", desc: "Unreleased exclusive archive", tags: ["Unreleased", "Exclusive"], views: "Permanent", size: "Exclusive" },
+        { category: "FAN", icon: "⭐", title: "{name} Fan Favorites Leak Collection", desc: "Fan-curated favorites", tags: ["Fan", "Favorite"], views: "Permanent", size: "Curated" },
+        { category: "FAN", icon: "🏆", title: "{name} Top Rated Leak Archive", desc: "Top rated community picks", tags: ["Top", "Rated"], views: "Permanent", size: "Top" },
+        { category: "VIDEO", icon: "🎬", title: "{name} Complete Video Leak Archive", desc: "Complete HD video collection", tags: ["Video", "HD"], views: "Permanent", size: "HD" },
+        { category: "VIDEO", icon: "📹", title: "{name} HD Video Leak Collection", desc: "High quality video collection", tags: ["Video", "HD"], views: "Permanent", size: "HD" },
+        { category: "PHOTO", icon: "🖼️", title: "{name} Complete Photo Leak Gallery", desc: "Complete photo gallery", tags: ["Photo", "Gallery"], views: "Permanent", size: "Full" },
+        { category: "PHOTO", icon: "📷", title: "{name} HD Photo Leak Collection", desc: "High resolution photo collection", tags: ["Photo", "HD"], views: "Permanent", size: "HD" }
+    ];
+    
+    // Featured Items (Large Cards)
+    const FEATURED_ITEMS = [
+        { icon: "🏆", title: "Complete Master Leak Archive", desc: "The definitive collection of all content", meta: "⭐ Editor's Choice" },
+        { icon: "💎", title: "OnlyFans Premium Vault", desc: "Complete premium subscriber content", meta: "🔞 Most Requested" },
+        { icon: "🔥", title: "TikTok Viral Compilation", desc: "Trending viral video collection", meta: "📱 Trending Now" },
+        { icon: "⭐", title: "Fan Favorites Collection", desc: "Community curated top picks", meta: "❤️ Fan Choice" }
+    ];
+    
+    // Filter Categories
+    const FILTER_CATEGORIES = ["All", "Complete", "Premium", "Viral", "Channel", "Gallery", "Rare", "Fan", "Video", "Photo"];
+    
+    // Popular Tags (Internal Links)
+    const POPULAR_TAGS = [
+        "Complete Archive", "Master Collection", "Premium Vault", "Rare Content", "Fan Favorites",
+        "Video Archive", "Photo Gallery", "OnlyFans", "TikTok", "Telegram", "Instagram", "Mega Backup",
+        "HD Quality", "Ultimate Collection", "Eternal Vault", "Comprehensive Library"
+    ];
+    
+    // Evergreen description
+    const GALLERY_DESC = "Showcase gallery portfolio for {name} leak collections. Premium grid display. Curated selection.";
+    
+    // Stop Words
+    const STOP_WORDS = ['gallery','showcase','portfolio','grid','display','exhibit','collection','curated'];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // ========== EXTRACT TOPIC FROM QUERY ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "showcase gallery portfolio"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE DYNAMIC CANONICAL URL BASED ON QUERY ==========
+    const getDynamicCanonical = () => {
+        const currentUrl = window.location.href.split('?')[0];
+        const queryParam = urlParams.get('q');
+        if(queryParam && queryParam.trim() !== "") {
+            return `${currentUrl}?q=${encodeURIComponent(queryParam)}`;
+        }
+        return currentUrl;
+    };
+    
+    // ========== GENERATE INTERNAL LINK (AUTOMATIC) ==========
+    const genInternalLink = (keyword) => {
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
+        let newQ = `${nameLower} ${cleanKeyword} showcase`;
+        return `/edition-c48/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== GENERATE FILTER BAR ==========
+    const generateFilterBar = () => {
+        let filtersHtml = '';
+        const currentQuery = urlParams.get('q') || '';
+        
+        for(let i=0; i<FILTER_CATEGORIES.length; i++){
+            let filter = FILTER_CATEGORIES[i];
+            let url = filter === "All" ? `/edition-c48/?q=${encodeURIComponent(displayName)}` : genInternalLink(filter);
+            let isActive = false;
+            
+            if(filter === "All" && (!currentQuery || currentQuery.toLowerCase().includes(displayName.toLowerCase()))) {
+                isActive = true;
+            } else if(currentQuery.toLowerCase().includes(filter.toLowerCase())) {
+                isActive = true;
+            }
+            
+            let activeClass = isActive ? 'filter-active' : '';
+            filtersHtml += `<a href="${url}" class="filter-btn ${activeClass}">${filter}</a>`;
+        }
+        return `<div class="filter-bar">${filtersHtml}</div>`;
+    };
+    
+    // ========== GENERATE GALLERY GRID ==========
+    const generateGalleryGrid = () => {
+        let cardsHtml = '';
+        for(let item of GALLERY_ITEMS){
+            let title = item.title.replace('{name}', displayName);
+            let desc = item.desc;
+            let url = genInternalLink(item.title);
+            let tagsHtml = '';
+            for(let tag of item.tags){
+                let tagUrl = genInternalLink(tag);
+                tagsHtml += `<a href="${tagUrl}" class="card-tag">#${tag}</a>`;
+            }
+            cardsHtml += `
+                <a href="${url}" class="gallery-card">
+                    <div class="card-media">
+                        <div class="card-badge">${item.category}</div>
+                        <span style="font-size:36px">${item.icon}</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-category">${item.category}</div>
+                        <div class="card-title">📌 ${title}</div>
+                        <div class="card-desc">${desc}</div>
+                        <div class="card-meta">
+                            <div class="card-stats">
+                                <span>📌 ${item.views}</span>
+                                <span>✓ Verified</span>
+                            </div>
+                        </div>
+                        <div class="card-tags">${tagsHtml}</div>
+                    </div>
+                </a>
+            `;
+        }
+        return `<div class="premium-grid">${cardsHtml}</div>`;
+    };
+    
+    // ========== GENERATE FEATURED SECTION ==========
+    const generateFeaturedSection = () => {
+        let featuredHtml = '';
+        for(let item of FEATURED_ITEMS){
+            let url = genInternalLink(item.title);
+            featuredHtml += `
+                <a href="${url}" class="featured-card">
+                    <div class="featured-icon">${item.icon}</div>
+                    <div class="featured-info">
+                        <div class="featured-title">${item.title}</div>
+                        <div class="featured-desc">${item.desc}</div>
+                        <div class="featured-meta">${item.meta} →</div>
+                    </div>
+                </a>
+            `;
+        }
+        return `
+            <div class="featured-section">
+                <div class="section-header">
+                    <div class="section-title">⭐ <span>Featured</span> Collections</div>
+                </div>
+                <div class="featured-grid">
+                    ${featuredHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE TAGS SECTION ==========
+    const generateTagsSection = () => {
+        let tagsHtml = '';
+        for(let tag of POPULAR_TAGS){
+            let fullTag = `${displayName} ${tag}`;
+            let url = genInternalLink(tag);
+            tagsHtml += `<a href="${url}" class="tag-chip">🏷️ ${fullTag}</a>`;
+        }
+        return `
+            <div class="tags-section">
+                <div class="tags-title">🏷️ Popular Tags — Browse by Topic</div>
+                <div class="tags-cloud">
+                    ${tagsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        let totalItems = GALLERY_ITEMS.length;
+        let totalCategories = [...new Set(GALLERY_ITEMS.map(i => i.category))].length;
+        return `
+            <div class="hero-gallery">
+                <div class="hero-badge">🖼️ SHOWCASE GALLERY / PORTFOLIO COLLECTION</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Gallery</div>
+                <div class="hero-desc">${GALLERY_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span>🖼️ ${totalItems} Showcase Items</span>
+                    <span>📁 ${totalCategories} Categories</span>
+                    <span>⭐ Curated Selection</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER BREADCRUMB ==========
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-c48/">Gallery</a> › ${displayName} Leak Showcase
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HEADER ==========
+    const renderHeader = () => {
+        let totalItems = GALLERY_ITEMS.length;
+        return `
+            <div class="gallery-header">
+                <div class="header-row">
+                    <div class="logo">Leak<span>Gallery</span></div>
+                    <div class="gallery-cat">🖼️ ${totalItems} COLLECTIONS</div>
+                </div>
+                <div class="header-desc">Showcase Gallery · Portfolio Grid · Curated Collections</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let totalItems = GALLERY_ITEMS.length;
+        let titles = [
+            `${displayName} Leak Gallery — Showcase Portfolio`,
+            `${displayName} Leak Showcase — Premium Gallery Grid`,
+            `Gallery: ${displayName} Leak Collections Showcase`,
+            `${displayName} Leak Gallery — ${totalItems} Curated Items`
+        ];
+        let descs = [
+            `Showcase gallery portfolio for ${displayName} leak collections. ${totalItems} curated items. Premium grid display.`,
+            `${displayName} leak showcase gallery with ${totalItems} collections. Curated selection.`,
+            `Portfolio gallery for ${displayName} leak archives. Premium showcase display.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // Update canonical URL dynamically based on query
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', getDynamicCanonical());
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            ${generateFilterBar()}
+            ${generateFeaturedSection()}
+            ${generateGalleryGrid()}
+            ${generateTagsSection()}
+            
+            <div class="gallery-bottom">
+                <span>🖼️ ${displayName} Leak Gallery · Showcase Portfolio · ${GALLERY_ITEMS.length} Curated Collections</span>
+            </div>
+        `;
+        
+        // Handle internal links (static navigation)
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-c48/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c48.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

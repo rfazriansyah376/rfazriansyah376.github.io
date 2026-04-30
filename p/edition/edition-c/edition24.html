@@ -1,0 +1,384 @@
+---
+layout: null
+permalink: /edition-c24/
+---
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">VISUAL GALLERY � Complete Content Museum</title>
+    <meta id="dynamic-description" name="description" content="Premium visual gallery and content museum. Curated exhibition of complete collections.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c24/">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========== GLOBAL COLOR VARIABLES ========== */
+        :root {
+            --primary-color: #b87c4f;    /* Main theme color - change this to any color */
+            --primary-dark: #8b5a3a;     /* Darker shade for hover states */
+            --primary-light: #e8d5c4;    /* Lighter shade for backgrounds */
+            --bg-color: #f5f2eb;
+            --text-dark: #1a1a1a;
+            --text-muted: #5c5042;
+            --border-color: #e0dcd5;
+            --card-bg: #ffffff;
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg-color);font-family:'Montserrat',sans-serif;color:var(--text-dark)}
+        
+        /* Style Visual Gallery / Museum Exhibition - Elegant, Premium, Artistic */
+        .gallery-container{max-width:1400px;margin:0 auto;padding:0 32px}
+        
+        /* Header Museum */
+        .museum-header{background:var(--card-bg);border-bottom:1px solid var(--border-color);padding:24px 0;margin-bottom:40px}
+        .museum-nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+        .museum-logo{display:flex;align-items:center;gap:12px}
+        .museum-icon{font-size:28px}
+        .museum-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;letter-spacing:1px}
+        .museum-location{font-size:0.65rem;color:var(--text-muted);letter-spacing:2px}
+        .exhibition-badge{background:var(--text-dark);color:var(--bg-color);padding:6px 20px;border-radius:30px;font-size:0.7rem;font-weight:500}
+        
+        /* Hero Exhibition */
+        .exhibition-hero{background:var(--card-bg);border-radius:28px;padding:56px 48px;margin-bottom:48px;box-shadow:0 4px 20px rgba(0,0,0,0.02);border:1px solid var(--border-color)}
+        .hero-caption{font-size:0.7rem;letter-spacing:3px;color:var(--primary-color);text-transform:uppercase;margin-bottom:16px}
+        .hero-title{font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:700;margin-bottom:20px;line-height:1.2}
+        .hero-title span{font-style:italic;color:var(--primary-color)}
+        .hero-desc{font-size:0.9rem;color:var(--text-muted);max-width:700px;margin-bottom:32px;line-height:1.6}
+        .hero-stats{display:flex;gap:48px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--border-color)}
+        .hero-stat .number{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--primary-color)}
+        .hero-stat .label{font-size:0.6rem;text-transform:uppercase;color:var(--text-muted);letter-spacing:1px}
+        
+        /* Curator's Note */
+        .curator-note{background:var(--primary-light);border-left:4px solid var(--primary-color);padding:24px 32px;margin-bottom:48px;border-radius:12px}
+        .curator-text{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-muted);font-style:italic;line-height:1.6}
+        .curator-signature{margin-top:12px;font-size:0.7rem;color:var(--primary-color);text-transform:uppercase}
+        
+        /* Gallery Grid - 3 Columns Exhibition */
+        .exhibition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:56px}
+        
+        /* Gallery Card - Museum Style */
+        .gallery-card{background:var(--card-bg);border-radius:20px;overflow:hidden;transition:all 0.3s;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.03);border:1px solid var(--border-color)}
+        .gallery-card:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(0,0,0,0.08);border-color:var(--primary-color)}
+        .gallery-image{height:200px;background:linear-gradient(135deg,var(--border-color),#d4cfc8);display:flex;align-items:center;justify-content:center;position:relative}
+        .gallery-icon{font-size:56px;opacity:0.6}
+        .gallery-badge{position:absolute;top:16px;right:16px;background:rgba(26,26,26,0.8);backdrop-filter:blur(4px);padding:4px 12px;border-radius:20px;font-size:0.55rem;color:var(--bg-color)}
+        .gallery-info{padding:24px}
+        .gallery-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:12px;line-height:1.3}
+        .gallery-desc{font-size:0.7rem;color:var(--text-muted);margin-bottom:16px;line-height:1.5}
+        .gallery-meta{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border-color)}
+        .gallery-count{font-size:0.6rem;color:var(--primary-color);font-weight:600}
+        .gallery-date{font-size:0.55rem;color:var(--text-muted)}
+        
+        /* Featured Exhibition - 2 Columns */
+        .featured-exhibition{margin-bottom:56px}
+        .featured-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;border-bottom:1px solid var(--border-color);padding-bottom:12px}
+        .featured-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700}
+        .featured-title span{color:var(--primary-color)}
+        .featured-link{font-size:0.7rem;color:var(--primary-color);cursor:pointer}
+        .featured-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+        .featured-card{background:var(--card-bg);border-radius:20px;padding:28px;border:1px solid var(--border-color);cursor:pointer;transition:all 0.3s}
+        .featured-card:hover{transform:translateY(-4px);border-color:var(--primary-color)}
+        .featured-icon{font-size:40px;margin-bottom:16px}
+        .featured-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;margin-bottom:12px}
+        .featured-desc{font-size:0.7rem;color:var(--text-muted);margin-bottom:20px;line-height:1.5}
+        .featured-footer{display:flex;justify-content:space-between;font-size:0.6rem;color:var(--text-muted)}
+        
+        /* Collection Tags */
+        .collection-tags{margin-bottom:48px;padding:28px;background:var(--card-bg);border-radius:20px;border:1px solid var(--border-color)}
+        .tags-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;margin-bottom:20px}
+        .tags-cloud{display:flex;flex-wrap:wrap;gap:12px}
+        .tag-item{background:var(--bg-color);padding:6px 18px;border-radius:30px;font-size:0.65rem;cursor:pointer;transition:all 0.2s;color:var(--text-muted)}
+        .tag-item:hover{background:var(--primary-color);color:var(--card-bg)}
+        
+        /* Footer */
+        .gallery-footer{margin-top:56px;padding:32px 0;border-top:1px solid var(--border-color);text-align:center;font-size:0.65rem;color:var(--text-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+        
+        @media(max-width:1000px){.exhibition-grid{grid-template-columns:repeat(2,1fr)}.featured-grid{grid-template-columns:1fr}.hero-title{font-size:2.4rem}.gallery-container{padding:0 24px}}
+        @media(max-width:700px){.exhibition-grid{grid-template-columns:1fr}.hero-title{font-size:1.8rem}.exhibition-hero{padding:32px 24px}}
+        @media(max-width:500px){.gallery-container{padding:0 16px}}
+    </style>
+{% include head.html %}
+</head>
+<body><div loading="lazy">
+<div class="gallery-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--text-muted)"> Loading Museum Exhibition...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE VISUAL GALLERY / MUSEUM STYLE ==========
+    
+    // Exhibition / Gallery Items
+    const GALLERY_ITEMS = [
+        { icon: "", title: "{name}: The Complete Video Exhibition", desc: "Curated video collection spanning {years} years. Includes rare footage, interviews, and behind-the-scenes material. Preserved in highest quality." },
+        { icon: "", title: "{name}: Master Photography Gallery", desc: "Premium photographic exhibition featuring {count} curated images. From professional shoots to candid moments." },
+        { icon: "", title: "{name}: The Vault Collection", desc: "Exclusive vault exhibition. Limited edition content carefully preserved and authenticated." },
+        { icon: "", title: "{name}: Behind the Curtain", desc: "Intimate exhibition revealing {name}'s personal moments and unguarded captures. Rare and precious." },
+        { icon: "", title: "{name}: Fan Favorite Gallery", desc: "Community-curated exhibition featuring the most requested and beloved {name} content." },
+        { icon: "", title: "{name}: Live & On Stage", desc: "Performance exhibition capturing {name}'s most memorable live moments and public appearances." },
+        { icon: "", title: "{name}: Chronological Archive", desc: "Complete temporal exhibition organized by era and milestone. Historical preservation at its finest." },
+        { icon: "", title: "{name}: Rare & Unseen", desc: "Discovery exhibition featuring previously unknown {name} material. First time publicly displayed." }
+    ];
+    
+    // Featured Exhibitions
+    const FEATURED_ITEMS = [
+        { icon: "", name: "{name}: The Definitive Collection", desc: "The most comprehensive {name} exhibition ever assembled. Over {count} verified pieces. Museum quality presentation." },
+        { icon: "", name: "{name}: Artistic Expression", desc: "Creative exhibition focusing on {name}'s artistic side. Unique perspective and curated selection." },
+        { icon: "", name: "{name}: Digital Archive", desc: "Complete digital preservation of all {name} content. State-of-the-art restoration and cataloging." },
+        { icon: "", name: "{name}: Rising Star", desc: "Career-spanning exhibition from early works to present day. Chronological journey through {name}'s evolution." }
+    ];
+    
+    // Collection Tags
+    const COLLECTION_TAGS = [
+        "Video Archives", "Photo Galleries", "Exclusive Vault", "Rare Material", "Fan Favorites",
+        "Behind Scenes", "Live Performances", "Interviews", "Social Media", "Personal Moments",
+        "Professional Work", "HD Collections", "Complete Series", "Unreleased", "Original Content"
+    ];
+    
+    // Curator notes
+    const CURATOR_NOTES = [
+        "This exhibition represents years of dedicated preservation work. Each piece has been carefully verified, restored, and presented in its original context. We invite you to explore the complete {name} collection.",
+        "The {name} archive is a testament to digital preservation. Our team has worked tirelessly to ensure every item maintains its original integrity while being accessible to enthusiasts worldwide."
+    ];
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'gallery','museum','exhibition','visual','collection','archive','preservation','curated',
+        'leaked','leak','leaks','content','vault','library','compilation','showcase'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const formatNumber = (n) => n.toLocaleString();
+    
+    // ========== EXTRACT TOPIC FROM QUERY ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ 
+        rawQuery = "premium content collection";
+    }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = (title) => {
+        let newQ = `${nameLower} ${title.toLowerCase().substring(0, 50)} exhibition`;
+        return { url:`/edition-c24/?q=${encodeURIComponent(newQ)}` };
+    };
+    
+    // ========== GENERATE GALLERY CARDS ==========
+    const generateGalleryCards = () => {
+        return GALLERY_ITEMS.map(item => {
+            let title = item.title.replace('{name}', displayName);
+            let desc = item.desc
+                .replace('{name}', displayName)
+                .replace('{years}', range(2, 8))
+                .replace('{count}', formatNumber(range(45, 385)));
+            let itemCount = formatNumber(range(85, 1250));
+            let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            let date = `${range(1,28)} ${months[range(0,11)]} ${2023+range(-2,2)}`;
+            return `
+                <div class="gallery-card" data-url="${genLink(item.title).url}">
+                    <div class="gallery-image">
+                        <div class="gallery-icon">${item.icon}</div>
+                        <div class="gallery-badge">PERMANENT EXHIBITION</div>
+                    </div>
+                    <div class="gallery-info">
+                        <div class="gallery-title">${title}</div>
+                        <div class="gallery-desc">${desc.substring(0, 100)}...</div>
+                        <div class="gallery-meta">
+                            <div class="gallery-count"> ${itemCount} pieces</div>
+                            <div class="gallery-date">Added ${date}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    };
+    
+    // ========== GENERATE FEATURED EXHIBITIONS ==========
+    const generateFeaturedExhibitions = () => {
+        return FEATURED_ITEMS.map(item => {
+            let name = item.name.replace('{name}', displayName);
+            let desc = item.desc
+                .replace('{name}', displayName)
+                .replace('{count}', formatNumber(range(125, 850)));
+            let pieces = formatNumber(range(85, 650));
+            let rating = `${range(4,5)}.${range(0,9)}/5`;
+            return `
+                <div class="featured-card" data-url="${genLink(item.name).url}">
+                    <div class="featured-icon">${item.icon}</div>
+                    <div class="featured-name">${name}</div>
+                    <div class="featured-desc">${desc.substring(0, 100)}...</div>
+                    <div class="featured-footer">
+                        <span> ${pieces} pieces</span>
+                        <span> ${rating}</span>
+                        <span> Curated</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    };
+    
+    // ========== GENERATE COLLECTION TAGS ==========
+    const generateCollectionTags = () => {
+        let tags = [];
+        for(let i=0;i<16;i++){
+            let tag = COLLECTION_TAGS[i % COLLECTION_TAGS.length];
+            let enhancedTag = `${displayName} ${tag}`;
+            tags.push(`
+                <div class="tag-item" data-url="${genLink(tag).url}"> ${enhancedTag}</div>
+            `);
+        }
+        return tags.join('');
+    };
+    
+    // ========== GENERATE CURATOR NOTE ==========
+    const generateCuratorNote = () => {
+        let note = rand(CURATOR_NOTES).replace('{name}', displayName);
+        let curators = ['The Curatorial Team','Digital Preservation Society','Archive Foundation'];
+        let curator = curators[range(0,2)];
+        return `
+            <div class="curator-note">
+                <div class="curator-text">"${note}"</div>
+                <div class="curator-signature">� ${curator}</div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        let totalItems = formatNumber(range(18500, 125000));
+        let exhibitions = formatNumber(range(24, 68));
+        let partnerships = formatNumber(range(12, 38));
+        
+        return `
+            <div class="exhibition-hero">
+                <div class="hero-caption">PERMANENT EXHIBITION</div>
+                <div class="hero-title">The Complete<br><span>${displayName}</span> Gallery</div>
+                <div class="hero-desc">Step into the definitive ${displayName} museum experience. This carefully curated exhibition showcases the most comprehensive collection of ${displayName} content ever assembled. Each piece has been verified, preserved, and presented in its original glory.</div>
+                <div class="hero-stats">
+                    <div class="hero-stat"><div class="number">${totalItems}+</div><div class="label">Total Artifacts</div></div>
+                    <div class="hero-stat"><div class="number">${exhibitions}</div><div class="label">Exhibitions</div></div>
+                    <div class="hero-stat"><div class="number">${partnerships}</div><div class="label">Archival Partners</div></div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayName} Visual Gallery � Complete Museum Exhibition`,
+            `${displayName} � The Definitive Content Gallery | Museum Collection`,
+            `The ${displayName} Gallery � Permanent Exhibition & Archive`,
+            `${displayName} Museum Exhibition � Complete Visual Collection`
+        ];
+        let descs = [
+            `The complete ${displayName} visual gallery. ${formatNumber(range(18500, 125000))}+ curated pieces. Premium museum exhibition. Permanent collection.`,
+            `${displayName} museum exhibition featuring comprehensive ${displayName} archives. Curated galleries, verified content, premium presentation.`,
+            `Visit the definitive ${displayName} gallery. Complete visual collection preserved and exhibited. The ultimate ${displayName} museum experience.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', rand(descs));
+        
+        // Dynamic canonical based on current URL with query
+        let canonicalUrl = window.location.href.split('?')[0];
+        if (window.location.search) {
+            canonicalUrl = canonicalUrl + window.location.search;
+        }
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', canonicalUrl);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let totalArtifacts = formatNumber(range(18500, 125000));
+        
+        document.getElementById('app').innerHTML = `
+            <div class="museum-header">
+                <div class="museum-nav">
+                    <div class="museum-logo">
+                        <div class="museum-icon"></div>
+                        <div>
+                            <div class="museum-name">The ${displayName} Museum</div>
+                            <div class="museum-location">PERMANENT GALLERY � EST. ${2020 + range(-3,2)}</div>
+                        </div>
+                    </div>
+                    <div class="exhibition-badge">NOW EXHIBITING</div>
+                </div>
+            </div>
+            
+            ${renderHero()}
+            
+            ${generateCuratorNote()}
+            
+            <div class="exhibition-grid">
+                ${generateGalleryCards()}
+            </div>
+            
+            <div class="featured-exhibition">
+                <div class="featured-header">
+                    <div class="featured-title"> Featured <span>${displayName}</span> Exhibitions</div>
+                    <div class="featured-link">View All Galleries </div>
+                </div>
+                <div class="featured-grid">
+                    ${generateFeaturedExhibitions()}
+                </div>
+            </div>
+            
+            <div class="collection-tags">
+                <div class="tags-title"> Explore ${displayName} Collection by Category</div>
+                <div class="tags-cloud">
+                    ${generateCollectionTags()}
+                </div>
+            </div>
+            
+            <div class="gallery-footer">
+                <span> The ${displayName} Museum � Permanent Collection</span>
+                <span> ${totalArtifacts} preserved artifacts</span>
+                <span> Verified & Authenticated</span>
+                <span> Curated by experts</span>
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                window.location.href = el.getAttribute('data-url'); 
+            });
+        });
+        document.querySelectorAll('.gallery-card, .featured-card, .tag-item, .featured-link').forEach(card => {
+            card.addEventListener('click', () => { 
+                if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url');
+            });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c24.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

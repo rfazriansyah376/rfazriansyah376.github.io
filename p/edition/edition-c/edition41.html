@@ -1,0 +1,518 @@
+---
+layout: null
+permalink: /edition-c41/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">LEAK BROWSER · Category Navigator</title>
+    <meta id="dynamic-description" name="description" content="Leak category browser. Navigate through all leak collections by platform, type, and rating.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c42/">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        
+        /* GLOBAL COLOR VARIABLE - CHANGE THIS ONE COLOR ONLY */
+        :root {
+            --primary-color: #e53935;
+            --primary-dark: #c62828;
+            --primary-light: #ff8a80;
+            --primary-bg: #feeaea;
+        }
+        
+        body{background:#f2f4f8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica Neue,sans-serif;color:#1a1a2e}
+        
+        /* Category Browser Style - Like App Store / Filter Interface */
+        .browser-container{max-width:1200px;margin:0 auto;padding:20px}
+        
+        /* Header */
+        .browser-header{background:#fff;border-radius:24px;padding:20px;margin-bottom:24px;border:1px solid #e8ecf0}
+        .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:12px}
+        .logo{font-size:1.3rem;font-weight:800}
+        .logo span{color:var(--primary-color)}
+        .browser-id{font-family:monospace;font-size:0.65rem;color:#7c8ba0;background:#f0f2f6;padding:4px 12px;border-radius:20px}
+        .header-desc{font-size:0.7rem;color:#7c8ba0}
+        
+        /* Breadcrumb */
+        .breadcrumb{font-size:0.7rem;color:#7c8ba0;margin-bottom:20px}
+        .breadcrumb a{color:var(--primary-color);text-decoration:none}
+        .breadcrumb a:hover{text-decoration:underline}
+        
+        /* Hero */
+        .hero-browser{background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:24px;padding:28px;margin-bottom:28px}
+        .hero-badge{font-size:0.65rem;opacity:0.7;margin-bottom:8px}
+        .hero-title{font-size:1.3rem;font-weight:700;margin-bottom:12px}
+        .hero-title span{color:#f5a623}
+        .hero-desc{font-size:0.8rem;opacity:0.85;line-height:1.5;margin-bottom:14px}
+        .hero-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:0.65rem;opacity:0.7}
+        
+        /* Filter Tabs - Category Navigation */
+        .filter-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;border-bottom:1px solid #e8ecf0;padding-bottom:16px}
+        .filter-tab{background:#fff;border:1px solid #e8ecf0;padding:8px 20px;border-radius:40px;font-size:0.7rem;font-weight:500;text-decoration:none;color:#1a1a2e;transition:none}
+        .filter-tab:hover{background:var(--primary-color);border-color:var(--primary-color);color:#fff}
+        .filter-active{background:var(--primary-color);border-color:var(--primary-color);color:#fff}
+        
+        /* Category Grid - 3 Columns */
+        .category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px}
+        
+        /* Category Card */
+        .category-card{background:#fff;border-radius:20px;border:1px solid #e8ecf0;overflow:hidden}
+        .category-header{background:#fafbfc;padding:16px 20px;border-bottom:1px solid #e8ecf0}
+        .category-name{font-size:0.9rem;font-weight:700}
+        .category-name span{color:var(--primary-color);font-size:0.65rem;font-weight:400;margin-left:6px}
+        .category-desc{font-size:0.6rem;color:#7c8ba0;margin-top:4px}
+        
+        .category-links{padding:12px}
+        .cat-link{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;text-decoration:none;color:#1a1a2e;border-bottom:1px solid #f0f2f6;font-size:0.7rem}
+        .cat-link:hover{background:var(--primary-bg);color:var(--primary-color)}
+        .link-count{font-size:0.6rem;color:#7c8ba0;background:#f0f2f6;padding:2px 8px;border-radius:20px}
+        .view-all{margin-top:8px;padding:10px 12px;text-align:center;border-top:1px solid #f0f2f6}
+        .view-all a{font-size:0.65rem;color:var(--primary-color);text-decoration:none}
+        
+        /* Platform Grid - Horizontal Categories */
+        .platform-section{margin-bottom:32px}
+        .platform-title{font-size:0.9rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--primary-color);display:inline-block}
+        .platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+        .platform-card{background:#fff;border:1px solid #e8ecf0;border-radius:16px;padding:14px;text-decoration:none;display:block}
+        .platform-card:hover{border-color:var(--primary-color);background:var(--primary-bg)}
+        .platform-name{font-size:0.75rem;font-weight:700;margin-bottom:4px;color:#1a1a2e}
+        .platform-name span{color:var(--primary-color)}
+        .platform-desc{font-size:0.6rem;color:#7c8ba0;margin-bottom:6px}
+        .platform-tags{display:flex;flex-wrap:wrap;gap:4px}
+        .platform-tag{font-size:0.55rem;color:var(--primary-color);background:var(--primary-bg);padding:2px 8px;border-radius:20px}
+        
+        /* Rating / Tier Section */
+        .rating-section{margin-bottom:32px}
+        .rating-title{font-size:0.9rem;font-weight:700;margin-bottom:16px}
+        .rating-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+        .rating-card{background:#fff;border:1px solid #e8ecf0;border-radius:16px;padding:16px;text-align:center;text-decoration:none}
+        .rating-card:hover{border-color:var(--primary-color);background:var(--primary-bg)}
+        .rating-level{font-size:1rem;font-weight:800;margin-bottom:4px}
+        .rating-s{color:var(--primary-color)}
+        .rating-a{color:#fb8c00}
+        .rating-b{color:#f9a825}
+        .rating-c{color:#66bb6a}
+        .rating-d{color:#42a5f5}
+        .rating-label{font-size:0.6rem;color:#7c8ba0}
+        
+        /* Quick Access Bar */
+        .quick-access{background:#fff;border:1px solid #e8ecf0;border-radius:20px;padding:20px;margin-bottom:24px}
+        .quick-title{font-size:0.75rem;font-weight:700;margin-bottom:14px}
+        .quick-chips{display:flex;flex-wrap:wrap;gap:10px}
+        .quick-chip{background:#f0f2f6;padding:6px 16px;border-radius:30px;font-size:0.65rem;text-decoration:none;color:#1a1a2e}
+        .quick-chip:hover{background:var(--primary-color);color:#fff}
+        
+        /* Clean Bottom */
+        .browser-bottom{margin-top:32px;padding:16px 0;border-top:1px solid #e8ecf0;text-align:center;font-size:0.6rem;color:#7c8ba0}
+        
+        @media(max-width:900px){.category-grid{grid-template-columns:repeat(2,1fr)}.rating-grid{grid-template-columns:repeat(3,1fr)}}
+        @media(max-width:600px){.browser-container{padding:16px}.category-grid{grid-template-columns:1fr}.rating-grid{grid-template-columns:repeat(2,1fr)}.hero-title{font-size:1.1rem}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="browser-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#7c8ba0">Loading Category Browser...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE CATEGORY BROWSER (EVERGREEN, MANY INTERNAL LINKS) ==========
+    
+    // Main Categories - Setiap heading mengandung "leak" + query
+    const MAIN_CATEGORIES = [
+        {
+            name: "Complete Leak Archives",
+            desc: "Full and complete leak collections",
+            links: [
+                { title: "{name} Complete Master Leak Archive", count: "Master" },
+                { title: "{name} Comprehensive Leak Library", count: "Full" },
+                { title: "{name} Eternal Leak Vault", count: "Permanent" }
+            ]
+        },
+        {
+            name: "OnlyFans Leak Collections",
+            desc: "Premium subscriber content",
+            links: [
+                { title: "{name} OnlyFans Complete Leak", count: "Premium" },
+                { title: "{name} OnlyFans Master Leak Vault", count: "Master" },
+                { title: "{name} OnlyFans Ultimate Leak", count: "Ultimate" }
+            ]
+        },
+        {
+            name: "TikTok Leak Compilations",
+            desc: "Viral video content",
+            links: [
+                { title: "{name} TikTok Complete Leak Compilation", count: "Viral" },
+                { title: "{name} TikTok Master Leak Feed", count: "Master" },
+                { title: "{name} TikTok Viral Leak Collection", count: "Trending" }
+            ]
+        },
+        {
+            name: "Telegram Leak Channels",
+            desc: "Channel and message archives",
+            links: [
+                { title: "{name} Telegram Complete Leak Channel", count: "Channel" },
+                { title: "{name} Telegram Master Leak Archive", count: "Archive" }
+            ]
+        },
+        {
+            name: "Instagram Leak Galleries",
+            desc: "Private story and post content",
+            links: [
+                { title: "{name} Instagram Complete Leak Gallery", count: "Gallery" },
+                { title: "{name} Instagram Master Leak Collection", count: "Collection" }
+            ]
+        },
+        {
+            name: "Mega Archive Leaks",
+            desc: "Cloud backup collections",
+            links: [
+                { title: "{name} Mega Complete Leak Archive", count: "Backup" },
+                { title: "{name} Mega Master Leak Vault", count: "Vault" }
+            ]
+        },
+        {
+            name: "Rare & Unreleased Leaks",
+            desc: "Hard-to-find material",
+            links: [
+                { title: "{name} Rare Leak Collection", count: "Rare" },
+                { title: "{name} Unreleased Leak Archive", count: "Exclusive" }
+            ]
+        },
+        {
+            name: "Fan Favorite Leak Compilations",
+            desc: "Community curated content",
+            links: [
+                { title: "{name} Fan Favorites Leak Collection", count: "Curated" },
+                { title: "{name} Top Rated Leak Archive", count: "Top" }
+            ]
+        },
+        {
+            name: "Video Leak Archives",
+            desc: "Full video collections",
+            links: [
+                { title: "{name} Complete Video Leak Archive", count: "Video" },
+                { title: "{name} HD Video Leak Collection", count: "HD" },
+                { title: "{name} Master Video Leak Set", count: "Master" }
+            ]
+        },
+        {
+            name: "Photo Leak Galleries",
+            desc: "Image and photo collections",
+            links: [
+                { title: "{name} Complete Photo Leak Gallery", count: "Photo" },
+                { title: "{name} HD Photo Leak Collection", count: "HD" },
+                { title: "{name} Master Photo Leak Set", count: "Master" }
+            ]
+        }
+    ];
+    
+    // Platform Categories - Specific Platforms
+    const PLATFORM_CATEGORIES = [
+        { name: "OnlyFans Leaks", desc: "Premium subscription leaks", tags: ["Premium", "Exclusive", "Complete"] },
+        { name: "TikTok Leaks", desc: "Viral video compilations", tags: ["Viral", "Trending", "Video"] },
+        { name: "Telegram Leaks", desc: "Channel message archives", tags: ["Channel", "Archive", "Messages"] },
+        { name: "Instagram Leaks", desc: "Private story galleries", tags: ["Story", "Gallery", "Private"] },
+        { name: "Twitter Leaks", desc: "Social media content", tags: ["Tweet", "Media", "Viral"] },
+        { name: "Discord Leaks", desc: "Server message archives", tags: ["Server", "Chat", "Media"] },
+        { name: "Reddit Leaks", desc: "Community discussions", tags: ["Threads", "Archive", "Posts"] },
+        { name: "YouTube Leaks", desc: "Video content archives", tags: ["Video", "Stream", "Archive"] }
+    ];
+    
+    // Rating Tiers (Internal Links)
+    const RATING_TIERS = [
+        { level: "S", class: "rating-s", label: "Ultimate Tier", desc: "Highest quality collections" },
+        { level: "A", class: "rating-a", label: "Excellent Tier", desc: "Complete collections" },
+        { level: "B", class: "rating-b", label: "Good Tier", desc: "Quality archives" },
+        { level: "C", class: "rating-c", label: "Standard Tier", desc: "Basic collections" },
+        { level: "D", class: "rating-d", label: "Collector Tier", desc: "Rare material" }
+    ];
+    
+    // Quick Access Links (Banyak Internal Link)
+    const QUICK_ACCESS = [
+        "Latest Leak Additions", "Most Popular Leaks", "Highest Rated Leaks", "Complete Collections",
+        "Premium Vault", "Rare Content", "Fan Favorites", "HD Quality", "Verified Archives",
+        "Master Sets", "Ultimate Collections", "Full Libraries", "Video Leaks", "Photo Leaks"
+    ];
+    
+    // Filter Tabs (Category Navigation)
+    const FILTER_TABS = [
+        "All Leaks", "Video Leaks", "Photo Leaks", "Premium Leaks", "Rare Leaks", "Latest Leaks"
+    ];
+    
+    // Evergreen description
+    const BROWSER_DESC = "Browse all {name} leak collections by category, platform, and rating. Filter and navigate through complete archives.";
+    
+    // Stop Words
+    const STOP_WORDS = ['browser','category','navigator','filter','tab','browse','explore','finder'];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ rawQuery = "complete leak browser"; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE INTERNAL LINK ==========
+    const genInternalLink = (keyword) => {
+        let cleanKeyword = keyword.replace(/{name}/g, displayName).toLowerCase().substring(0, 50);
+        let newQ = `${nameLower} ${cleanKeyword} leak browser`;
+        return `/edition-c42/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== GENERATE CATEGORY GRID ==========
+    const generateCategoryGrid = () => {
+        let gridHtml = '';
+        for(let cat of MAIN_CATEGORIES){
+            let catName = cat.name;
+            let catDesc = cat.desc;
+            let categoryUrl = genInternalLink(cat.name);
+            
+            let linksHtml = '';
+            for(let link of cat.links){
+                let title = link.title.replace('{name}', displayName);
+                let linkUrl = genInternalLink(link.title);
+                linksHtml += `
+                    <a href="${linkUrl}" class="cat-link">
+                        <span>📄 ${title}</span>
+                        <span class="link-count">${link.count}</span>
+                    </a>
+                `;
+            }
+            
+            gridHtml += `
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-name">📁 <a href="${categoryUrl}" style="color:#1a1a2e;text-decoration:none">${catName}</a> <span>${cat.desc}</span></div>
+                        <div class="category-desc">${catDesc}</div>
+                    </div>
+                    <div class="category-links">
+                        ${linksHtml}
+                        <div class="view-all"><a href="${categoryUrl}">View all →</a></div>
+                    </div>
+                </div>
+            `;
+        }
+        return gridHtml;
+    };
+    
+    // ========== GENERATE PLATFORM GRID ==========
+    const generatePlatformGrid = () => {
+        let platformsHtml = '';
+        for(let platform of PLATFORM_CATEGORIES){
+            let platformName = platform.name;
+            let platformUrl = genInternalLink(platform.name);
+            let tagsHtml = '';
+            for(let tag of platform.tags){
+                let tagUrl = genInternalLink(tag);
+                tagsHtml += `<a href="${tagUrl}" class="platform-tag">#${tag}</a>`;
+            }
+            platformsHtml += `
+                <a href="${platformUrl}" class="platform-card">
+                    <div class="platform-name">📱 ${platformName} <span>→</span></div>
+                    <div class="platform-desc">${platform.desc}</div>
+                    <div class="platform-tags">${tagsHtml}</div>
+                </a>
+            `;
+        }
+        return `
+            <div class="platform-section">
+                <div class="platform-title">📱 Browse by Platform</div>
+                <div class="platform-grid">
+                    ${platformsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE RATING GRID ==========
+    const generateRatingGrid = () => {
+        let ratingsHtml = '';
+        for(let rating of RATING_TIERS){
+            let ratingUrl = genInternalLink(`${rating.level} Tier Leaks`);
+            ratingsHtml += `
+                <a href="${ratingUrl}" class="rating-card">
+                    <div class="rating-level ${rating.class}">${rating.level}</div>
+                    <div class="rating-label">${rating.label}</div>
+                </a>
+            `;
+        }
+        return `
+            <div class="rating-section">
+                <div class="rating-title">⭐ Browse by Rating / Tier</div>
+                <div class="rating-grid">
+                    ${ratingsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE FILTER TABS ==========
+    const generateFilterTabs = () => {
+        let tabsHtml = '';
+        for(let i=0; i<FILTER_TABS.length; i++){
+            let tab = FILTER_TABS[i];
+            let tabUrl = genInternalLink(tab);
+            let activeClass = i === 0 ? 'filter-active' : '';
+            tabsHtml += `<a href="${tabUrl}" class="filter-tab ${activeClass}">${tab}</a>`;
+        }
+        return `
+            <div class="filter-tabs">
+                ${tabsHtml}
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE QUICK ACCESS ==========
+    const generateQuickAccess = () => {
+        let chipsHtml = '';
+        for(let item of QUICK_ACCESS){
+            let fullItem = `${displayName} ${item}`;
+            let url = genInternalLink(item);
+            chipsHtml += `<a href="${url}" class="quick-chip">📌 ${fullItem}</a>`;
+        }
+        return `
+            <div class="quick-access">
+                <div class="quick-title">⚡ Quick Access − Popular Categories</div>
+                <div class="quick-chips">
+                    ${chipsHtml}
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HERO ==========
+    const renderHero = () => {
+        let totalCategories = MAIN_CATEGORIES.length;
+        let totalPlatforms = PLATFORM_CATEGORIES.length;
+        return `
+            <div class="hero-browser">
+                <div class="hero-badge">🔍 CATEGORY BROWSER / FILTER NAVIGATOR</div>
+                <div class="hero-title"><span>${displayName}</span> Leak Browser</div>
+                <div class="hero-desc">${BROWSER_DESC.replace('{name}', displayName)}</div>
+                <div class="hero-stats">
+                    <span>📁 ${totalCategories} Categories</span>
+                    <span>📱 ${totalPlatforms} Platforms</span>
+                    <span>⭐ 5 Rating Tiers</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER BREADCRUMB ==========
+    const renderBreadcrumb = () => {
+        return `
+            <div class="breadcrumb">
+                <a href="/">Home</a> › <a href="/edition-c42/">Browser</a> › ${displayName} Leak Categories
+            </div>
+        `;
+    };
+    
+    // ========== RENDER HEADER ==========
+    const renderHeader = () => {
+        let totalCategories = MAIN_CATEGORIES.length;
+        return `
+            <div class="browser-header">
+                <div class="header-row">
+                    <div class="logo">Leak<span>Browser</span></div>
+                    <div class="browser-id">BROWSER v2.0</div>
+                </div>
+                <div class="header-desc">Category Navigator · ${totalCategories} Main Categories · Filter by Platform/Rating</div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO WITH DYNAMIC CANONICAL ==========
+    const updateSEO = () => {
+        let totalCategories = MAIN_CATEGORIES.length;
+        let titles = [
+            `${displayName} Leak Browser — Category Navigator`,
+            `${displayName} Leak Categories Browser — Filter Collections`,
+            `Browse ${displayName} Leaks — Category Filter Navigator`,
+            `${displayName} Leak Browser: ${totalCategories} Categories`
+        ];
+        let descs = [
+            `Category browser for ${displayName} leak collections. ${totalCategories} main categories. Filter by platform and rating. Complete navigation.`,
+            `${displayName} leak browser with ${totalCategories} categories and ${PLATFORM_CATEGORIES.length} platform filters.`,
+            `Browse ${displayName} leak archives by category, platform, and rating tier. Complete filter navigation.`
+        ];
+        
+        // Set dynamic title
+        document.title = rand(titles);
+        
+        // Set dynamic description
+        let metaDesc = document.getElementById('dynamic-description');
+        if(metaDesc) metaDesc.setAttribute('content', rand(descs));
+        
+        // Set DYNAMIC CANONICAL based on current URL with query
+        let canonicalLink = document.getElementById('dynamic-canonical');
+        if(canonicalLink) {
+            let currentUrl = window.location.href;
+            let canonicalUrl = currentUrl.split('?')[0];
+            if(rawQuery && rawQuery !== "complete leak browser") {
+                canonicalUrl = currentUrl;
+            }
+            canonicalLink.setAttribute('href', canonicalUrl);
+        }
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        document.getElementById('app').innerHTML = `
+            ${renderHeader()}
+            ${renderBreadcrumb()}
+            ${renderHero()}
+            
+            ${generateFilterTabs()}
+            
+            <div class="category-grid">
+                ${generateCategoryGrid()}
+            </div>
+            
+            ${generatePlatformGrid()}
+            ${generateRatingGrid()}
+            ${generateQuickAccess()}
+            
+            <div class="browser-bottom">
+                <span>🔍 ${displayName} Leak Browser · Complete Category Navigator</span>
+            </div>
+        `;
+        
+        // Handle internal links (static navigation)
+        document.querySelectorAll('a').forEach(link => {
+            if(link.getAttribute('href') && link.getAttribute('href').startsWith('/edition-c42/?q=')){
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            }
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c41.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

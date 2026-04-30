@@ -1,0 +1,483 @@
+---
+layout: null
+permalink: /edition-c15/
+---
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">NETVIEW � Distribution Network Topology</title>
+    <meta id="dynamic-description" name="description" content="Complete distribution network analysis. Node mapping and connection topology visualization.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c16/">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #38bdf8;
+            --color-primary-glow: #38bdf8;
+            --color-secondary: #f59e0b;
+            --color-secondary-glow: #f59e0b;
+            --color-tertiary: #ec489a;
+            --color-tertiary-glow: #ec489a;
+            --color-distribution: #10b981;
+            --color-distribution-glow: #10b981;
+            --color-bg-primary: #0b1120;
+            --color-bg-secondary: #0f172a;
+            --color-bg-tertiary: #1e293b;
+            --color-bg-hover: #2d3a5e;
+            --color-text-primary: #e2e8f0;
+            --color-text-secondary: #94a3b8;
+            --color-text-muted: #64748b;
+            --color-border: #1e293b;
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--color-bg-primary);font-family:'Inter',sans-serif;color:var(--color-text-primary)}
+        
+        /* Style Network Topology / Mind Map - Node Visualization, Graph Theory */
+        .network-container{max-width:1600px;margin:0 auto;padding:24px}
+        
+        /* Header with node stats */
+        .topology-header{background:var(--color-bg-secondary);border:1px solid var(--color-border);border-radius:16px;padding:20px 28px;margin-bottom:24px}
+        .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+        .network-title{display:flex;align-items:center;gap:12px}
+        .network-icon{font-size:24px}
+        .network-name{font-family:'Fira Code',monospace;font-size:0.8rem;color:var(--color-primary)}
+        .network-name::before{content:'#';color:var(--color-primary);margin-right:4px}
+        .graph-stats{display:flex;gap:24px;flex-wrap:wrap}
+        .stat-node{display:flex;align-items:baseline;gap:8px}
+        .stat-value{font-family:'Fira Code',monospace;font-size:1.4rem;font-weight:700;color:var(--color-primary)}
+        .stat-label{font-size:0.65rem;text-transform:uppercase;color:var(--color-text-muted);letter-spacing:1px}
+        
+        /* Legend */
+        .legend{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap}
+        .legend-item{display:flex;align-items:center;gap:8px;font-size:0.65rem}
+        .legend-color{width:12px;height:12px;border-radius:50%}
+        .legend-color.primary{background:var(--color-primary);box-shadow:0 0 8px var(--color-primary-glow)}
+        .legend-color.secondary{background:var(--color-secondary);box-shadow:0 0 8px var(--color-secondary-glow)}
+        .legend-color.tertiary{background:var(--color-tertiary);box-shadow:0 0 8px var(--color-tertiary-glow)}
+        .legend-color.distribution{background:var(--color-distribution);box-shadow:0 0 8px var(--color-distribution-glow)}
+        
+        /* Main Layout - 2 columns */
+        .topology-grid{display:grid;grid-template-columns:1fr 380px;gap:24px}
+        
+        /* Left Panel - Network Visualization Area (Simulated) */
+        .viz-panel{background:var(--color-bg-secondary);border:1px solid var(--color-border);border-radius:16px;overflow:hidden}
+        .viz-header{background:var(--color-bg-tertiary);padding:12px 20px;font-family:'Fira Code',monospace;font-size:0.7rem;color:var(--color-primary);display:flex;justify-content:space-between;align-items:center}
+        .viz-content{min-height:600px;padding:20px;position:relative}
+        
+        /* Node Visualization - CSS Grid Simulation */
+        .graph-canvas{position:relative;min-height:550px;background:radial-gradient(circle at center,var(--color-bg-secondary) 0%,var(--color-bg-primary) 100%)}
+        .central-node{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;background:linear-gradient(135deg,var(--color-primary),#1d4ed8);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 0 20px var(--color-primary-glow);cursor:pointer}
+        .central-node span{font-size:28px}
+        .central-label{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font-size:0.6rem;white-space:nowrap;font-family:'Fira Code',monospace;color:var(--color-primary)}
+        
+        .connected-node{position:absolute;width:50px;height:50px;background:var(--color-bg-tertiary);border:2px solid;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:5;cursor:pointer;transition:all 0.2s}
+        .connected-node:hover{transform:scale(1.1);z-index:20}
+        .node-line{position:absolute;height:2px;background:linear-gradient(90deg,var(--color-primary),var(--color-secondary));transform-origin:0 0;z-index:1}
+        .node-label-small{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:0.5rem;white-space:nowrap;color:var(--color-text-secondary)}
+        
+        /* Node positions for simulation */
+        .node-tiktok{top:15%;left:20%}
+        .node-onlyfans{top:15%;right:20%}
+        .node-instagram{top:40%;left:5%}
+        .node-twitter{top:40%;right:5%}
+        .node-telegram{bottom:20%;left:15%}
+        .node-discord{bottom:20%;right:15%}
+        .node-reddit{bottom:5%;left:35%}
+        .node-youtube{bottom:5%;right:35%}
+        
+        /* Right Panel - Node Details & Connections */
+        .details-panel{display:flex;flex-direction:column;gap:20px}
+        .node-card{background:var(--color-bg-secondary);border:1px solid var(--color-border);border-radius:16px;padding:20px}
+        .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--color-border)}
+        .node-title{font-family:'Fira Code',monospace;font-size:0.8rem;font-weight:600}
+        .node-badge{padding:2px 10px;border-radius:20px;font-size:0.55rem;font-family:'Fira Code',monospace}
+        .badge-primary{background:var(--color-primary);color:var(--color-bg-secondary)}
+        .badge-secondary{background:var(--color-secondary);color:var(--color-bg-secondary)}
+        
+        /* Edge/Connection List */
+        .edge-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+        .edge-item{background:var(--color-bg-tertiary);border-radius:12px;padding:12px;cursor:pointer;transition:background 0.2s}
+        .edge-item:hover{background:var(--color-bg-hover)}
+        .edge-direction{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+        .edge-from{font-size:0.7rem;font-weight:600}
+        .edge-arrow{color:var(--color-primary);font-size:0.8rem}
+        .edge-to{font-size:0.7rem;font-weight:600}
+        .edge-weight{font-size:0.55rem;color:var(--color-text-muted);margin-top:4px}
+        .edge-metrics{display:flex;gap:12px;margin-top:8px;font-size:0.6rem}
+        
+        .connection-stats{display:flex;gap:16px;margin:12px 0;padding:10px;background:var(--color-bg-tertiary);border-radius:12px}
+        .conn-stat{text-align:center;flex:1}
+        .conn-stat-value{font-family:'Fira Code',monospace;font-size:1rem;font-weight:700;color:var(--color-primary)}
+        .conn-stat-label{font-size:0.55rem;color:var(--color-text-muted)}
+        
+        .tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+        .network-tag{background:var(--color-bg-tertiary);padding:4px 12px;border-radius:20px;font-size:0.6rem;color:var(--color-text-secondary)}
+        
+        /* Footer */
+        .network-footer{margin-top:24px;padding:16px 20px;background:var(--color-bg-secondary);border:1px solid var(--color-border);border-radius:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.65rem;color:var(--color-text-muted);font-family:'Fira Code',monospace}
+        
+        @media(max-width:1000px){.topology-grid{grid-template-columns:1fr}.viz-panel{order:2}.details-panel{order:1}}
+        @media(max-width:600px){.network-container{padding:16px}.graph-canvas{min-height:450px}.central-node{width:60px;height:60px}.connected-node{width:40px;height:40px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="network-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--color-text-muted);font-family:'Fira Code',monospace">>_ INITIALIZING NETWORK TOPOLOGY...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE NETWORK TOPOLOGY STYLE ==========
+    
+    // Nodes / Platforms
+    const NODES = [
+        { id: 'TIKTOK', type: 'primary', color: '#38bdf8', icon: '', weight: 95 },
+        { id: 'ONLYFANS', type: 'primary', color: '#ec489a', icon: '', weight: 88 },
+        { id: 'INSTAGRAM', type: 'primary', color: '#f59e0b', icon: '', weight: 82 },
+        { id: 'TWITTER', type: 'secondary', color: '#1da1f2', icon: '', weight: 76 },
+        { id: 'TELEGRAM', type: 'distribution', color: '#10b981', icon: '', weight: 91 },
+        { id: 'DISCORD', type: 'distribution', color: '#5865f2', icon: '', weight: 73 },
+        { id: 'REDDIT', type: 'secondary', color: '#ff4500', icon: '', weight: 58 },
+        { id: 'YOUTUBE', type: 'secondary', color: '#ff0000', icon: '', weight: 62 },
+        { id: 'MEGA', type: 'storage', color: '#00ff88', icon: '', weight: 67 },
+        { id: 'GOOGLEDRIVE', type: 'storage', color: '#4285f4', icon: '', weight: 54 }
+    ];
+    
+    // Edge connections (source, target, weight, content_type)
+    const EDGE_TEMPLATES = [
+        { source: 'TIKTOK', target: 'TELEGRAM', weight: 87, content: 'video_compilation' },
+        { source: 'ONLYFANS', target: 'TELEGRAM', weight: 92, content: 'exclusive_set' },
+        { source: 'INSTAGRAM', target: 'TWITTER', weight: 78, content: 'screenshot_gallery' },
+        { source: 'TWITTER', target: 'DISCORD', weight: 65, content: 'link_sharing' },
+        { source: 'TELEGRAM', target: 'MEGA', weight: 94, content: 'archive_backup' },
+        { source: 'DISCORD', target: 'GOOGLEDRIVE', weight: 71, content: 'file_mirror' },
+        { source: 'TELEGRAM', target: 'REDDIT', weight: 68, content: 'discussion_threads' },
+        { source: 'ONLYFANS', target: 'TWITTER', weight: 59, content: 'preview_clips' },
+        { source: 'TIKTOK', target: 'DISCORD', weight: 52, content: 'cross_promotion' },
+        { source: 'MEGA', target: 'TELEGRAM', weight: 88, content: 'backup_sync' }
+    ];
+    
+    // Edge Details
+    const EDGE_DETAILS = [
+        "Traffic analysis indicates high-volume transfers occurring during off-peak hours. Data packets show consistent patterns suggesting automated synchronization between nodes.",
+        "Connection strength has increased by {percent}% over the past {days} days. New distribution channels have been identified as intermediate relay points.",
+        "Content traveling through this edge primarily consists of {content_type} averaging {size} in size. Transfer frequency estimated at {freq} per hour.",
+        "This bidirectional connection serves as a critical backbone for the distribution network. Disruption would affect {downstream} downstream nodes.",
+        "Encryption protocols observed on this edge match patterns seen in similar distribution networks. Payload analysis confirms content integrity.",
+        "Traffic volume through this connection peaks between {start}-{end} UTC. Multiple independent sources confirm the reliability of this pathway."
+    ];
+    
+    // Node Details
+    const NODE_DETAILS = [
+        "This node serves as a primary distribution hub. Analysis shows {connections} active connections with an average throughput of {throughput} GB/day.",
+        "Node has been operational for {months}+ months. Historical data indicates consistent activity patterns. Redundancy measures confirmed.",
+        "Content stored on this node totals approximately {size} GB across {files} individual files. Access patterns show global distribution.",
+        "Node operator employs sophisticated counter-detection measures. Traffic routing shows multi-hop patterns. Identity remains unconfirmed.",
+        "This node has demonstrated {percent}% uptime over observed period. Response times average {latency}ms with peak loads during {peak_hours}.",
+        "Node contains {archival} archival copies of critical content. Decentralized backup confirmed. Role in network: {role}."
+    ];
+    
+    // Content Tags
+    const CONTENT_TAGS = [
+        "video", "photo", "archive", "compilation", "exclusive", "rare", "complete", "verified",
+        "original", "backup", "mirror", "source", "preserved", "documented", "cataloged"
+    ];
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
+        'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord',
+        'network','topology','graph','node','edge','connection'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    // ========== EXTRACT TOPIC (PUBLIC FIGURE) ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameUpper = displayName.toUpperCase();
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = (nodeId = null) => {
+        let targetNode = nodeId || rand(NODES).id;
+        let newQ = `${nameLower} network node ${targetNode.toLowerCase()} analysis`;
+        return { url:`/edition-c16/?q=${encodeURIComponent(newQ)}`, node: targetNode };
+    };
+    
+    // ========== GENERATE EDGE LIST ==========
+    const generateEdgeList = () => {
+        let edges = [];
+        let selectedEdges = EDGE_TEMPLATES.slice(0, range(5, 9));
+        for(let edge of selectedEdges){
+            let sourceNode = NODES.find(n => n.id === edge.source);
+            let targetNode = NODES.find(n => n.id === edge.target);
+            let detail = rand(EDGE_DETAILS)
+                .replace('{percent}', range(15, 85))
+                .replace('{days}', range(2, 45))
+                .replace('{content_type}', edge.content)
+                .replace('{size}', `${range(45, 850)} MB`)
+                .replace('{freq}', range(4, 58))
+                .replace('{downstream}', range(2, 12))
+                .replace('{start}', `${range(0,12)}:00`)
+                .replace('{end}', `${range(13,23)}:00`);
+            let traffic = range(12, 345);
+            
+            edges.push(`
+                <div class="edge-item" data-url="${genLink(edge.target).url}">
+                    <div class="edge-direction">
+                        <span class="edge-from">${sourceNode.icon} ${edge.source}</span>
+                        <span class="edge-arrow"></span>
+                        <span class="edge-to">${targetNode.icon} ${edge.target}</span>
+                    </div>
+                    <div class="edge-weight">Weight: ${edge.weight} � ${edge.content.replace('_',' ')}</div>
+                    <div class="edge-metrics">
+                        <span> ${traffic.toLocaleString()} GB transferred</span>
+                        <span> ${range(85, 99)}% reliability</span>
+                    </div>
+                    <div class="edge-weight" style="margin-top:6px;font-size:0.55rem;color:var(--color-text-secondary)">${detail.substring(0, 120)}...</div>
+                </div>
+            `);
+        }
+        return edges.join('');
+    };
+    
+    // ========== GENERATE NODE DETAIL ==========
+    const generateNodeDetail = (nodeId) => {
+        let node = NODES.find(n => n.id === nodeId) || NODES[0];
+        let detail = rand(NODE_DETAILS)
+            .replace('{connections}', range(3, 15))
+            .replace('{throughput}', range(12, 98))
+            .replace('{months}', range(3, 28))
+            .replace('{size}', `${range(25, 450)} GB`)
+            .replace('{files}', range(45, 850))
+            .replace('{percent}', range(92, 100))
+            .replace('{latency}', range(45, 280))
+            .replace('{peak_hours}', `${range(18,22)}:00-${range(1,5)}:00`)
+            .replace('{archival}', range(3, 18))
+            .replace('{role}', rand(['primary','secondary','backup','distribution']));
+        
+        let contentTags = [];
+        for(let i=0;i<5;i++) contentTags.push(rand(CONTENT_TAGS));
+        
+        return `
+            <div class="node-card" data-url="${genLink(node.id).url}">
+                <div class="card-header">
+                    <div class="node-title">${node.icon} ${node.id}</div>
+                    <div class="node-badge ${node.type === 'primary' ? 'badge-primary' : 'badge-secondary'}">${node.type.toUpperCase()}_NODE</div>
+                </div>
+                
+                <div class="connection-stats">
+                    <div class="conn-stat"><div class="conn-stat-value">${range(4, 18)}</div><div class="conn-stat-label">CONNECTIONS</div></div>
+                    <div class="conn-stat"><div class="conn-stat-value">${range(85, 99)}%</div><div class="conn-stat-label">UPTIME</div></div>
+                    <div class="conn-stat"><div class="conn-stat-value">${range(45, 280)}</div><div class="conn-stat-label">GB/TRAFFIC</div></div>
+                </div>
+                
+                <div style="font-size:0.7rem;line-height:1.5;color:var(--color-text-secondary);margin-bottom:16px">
+                    ${detail}
+                </div>
+                
+                <div class="tag-list">
+                    ${contentTags.map(tag => `<span class="network-tag">#${tag}</span>`).join('')}
+                    <span class="network-tag">${node.weight}% centrality</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE GRAPH STATISTICS ==========
+    const generateGraphStats = () => {
+        let totalNodes = range(8, 15);
+        let totalEdges = range(24, 58);
+        let density = (totalEdges / (totalNodes * (totalNodes - 1)) * 100).toFixed(1);
+        let diameter = range(2, 5);
+        
+        return `
+            <div class="stat-node"><span class="stat-value">${totalNodes}</span><span class="stat-label">NODES</span></div>
+            <div class="stat-node"><span class="stat-value">${totalEdges}</span><span class="stat-label">EDGES</span></div>
+            <div class="stat-node"><span class="stat-value">${density}%</span><span class="stat-label">DENSITY</span></div>
+            <div class="stat-node"><span class="stat-value">${diameter}</span><span class="stat-label">DIAMETER</span></div>
+        `;
+    };
+    
+    // ========== GENERATE CONNECTION SUMMARY ==========
+    const generateConnectionSummary = () => {
+        let centralConnections = range(5, 12);
+        let totalVolume = range(245, 1850);
+        let avgLatency = range(45, 280);
+        
+        return `
+            <div class="node-card">
+                <div class="card-header">
+                    <div class="node-title"> NETWORK_SUMMARY</div>
+                    <div class="node-badge badge-primary">LIVE</div>
+                </div>
+                <div class="edge-item" style="background:transparent;padding:8px 0">
+                    <div class="edge-direction"><span>Centrality Score</span><span style="margin-left:auto;color:var(--color-primary)">${range(68, 94)}/100</span></div>
+                    <div class="edge-direction"><span>Active Connections</span><span style="margin-left:auto;color:var(--color-primary)">${centralConnections}</span></div>
+                    <div class="edge-direction"><span>Total Transfer Volume</span><span style="margin-left:auto;color:var(--color-primary)">${totalVolume} GB</span></div>
+                    <div class="edge-direction"><span>Avg. Response Time</span><span style="margin-left:auto;color:var(--color-primary)">${avgLatency} ms</span></div>
+                </div>
+                <div class="tag-list" style="margin-top:8px">
+                    <span class="network-tag">Graph Type: Directed</span>
+                    <span class="network-tag">Topology: Hub-and-Spoke</span>
+                    <span class="network-tag">Weighted: True</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayName} � Distribution Network Topology | NETVIEW`,
+            `${displayName} � Node Connection Analysis | NETVIEW`,
+            `${displayName} � Content Flow Network Graph | NETVIEW`,
+            `${displayName} � Digital Distribution Mapping | NETVIEW`
+        ];
+        let descs = [
+            `Complete ${displayName} distribution network topology. ${range(8,15)} nodes, ${range(24,58)} edges. Real-time connection mapping and traffic analysis.`,
+            `${displayName} content distribution network analysis. Node centrality, edge weights, and traffic flow visualization. Updated continuously.`,
+            `Network topology visualization for ${displayName} digital content. Track distribution pathways across ${range(6,12)} platforms.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0] + window.location.search);
+    };
+    
+    // ========== RENDER VISUALIZATION NODES ==========
+    const renderVisualization = () => {
+        let nodePositions = {
+            'TIKTOK': 'node-tiktok', 'ONLYFANS': 'node-onlyfans', 'INSTAGRAM': 'node-instagram',
+            'TWITTER': 'node-twitter', 'TELEGRAM': 'node-telegram', 'DISCORD': 'node-discord',
+            'REDDIT': 'node-reddit', 'YOUTUBE': 'node-youtube'
+        };
+        
+        let nodesHtml = '';
+        for(let node of NODES.slice(0,8)){
+            let position = nodePositions[node.id] || 'node-telegram';
+            nodesHtml += `
+                <div class="connected-node ${position}" data-url="${genLink(node.id).url}" style="border-color:${node.color};box-shadow:0 0 10px ${node.color}40">
+                    <span style="font-size:20px">${node.icon}</span>
+                    <div class="node-label-small">${node.id}</div>
+                </div>
+            `;
+        }
+        
+        return `
+            <div class="graph-canvas">
+                <div class="central-node" data-url="${genLink('CENTRAL').url}">
+                    <span>${displayName.substring(0, 2).toUpperCase()}</span>
+                    <div class="central-label">${displayName.substring(0, 12)}</div>
+                </div>
+                ${nodesHtml}
+            </div>
+        `;
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let graphStats = generateGraphStats();
+        let currentTime = new Date().toLocaleTimeString();
+        
+        document.getElementById('app').innerHTML = `
+            <div class="topology-header">
+                <div class="header-row">
+                    <div class="network-title">
+                        <div class="network-icon"></div>
+                        <div class="network-name">DISTRIBUTION_NETWORK_TOPOLOGY</div>
+                    </div>
+                    <div class="graph-stats">
+                        ${graphStats}
+                    </div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item"><div class="legend-color primary"></div><span>PRIMARY_SOURCE</span></div>
+                    <div class="legend-item"><div class="legend-color secondary"></div><span>SECONDARY_NODE</span></div>
+                    <div class="legend-item"><div class="legend-color tertiary"></div><span>STORAGE_NODE</span></div>
+                    <div class="legend-item"><div class="legend-color distribution"></div><span>DISTRIBUTION_HUB</span></div>
+                    <div class="legend-item"><div></div><span>ACTIVE_TRANSFER</span></div>
+                </div>
+            </div>
+            
+            <div class="topology-grid">
+                <!-- Left Panel: Network Visualization -->
+                <div class="viz-panel">
+                    <div class="viz-header">
+                        <span>[GRAPH_VIZ] � TARGET: ${nameUpper}</span>
+                        <span>last_updated: ${currentTime}</span>
+                    </div>
+                    <div class="viz-content">
+                        ${renderVisualization()}
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Node Details & Connections -->
+                <div class="details-panel">
+                    ${generateNodeDetail('TELEGRAM')}
+                    ${generateNodeDetail('ONLYFANS')}
+                    
+                    <div class="node-card">
+                        <div class="card-header">
+                            <div class="node-title"> CRITICAL_EDGES</div>
+                            <div class="node-badge badge-secondary">${range(5, 12)} ACTIVE</div>
+                        </div>
+                        <div class="edge-list" id="edgeList">
+                            ${generateEdgeList()}
+                        </div>
+                    </div>
+                    
+                    ${generateConnectionSummary()}
+                </div>
+            </div>
+            
+            <div class="network-footer">
+                <span>NETVIEW_v${range(1,3)}.${range(0,9)}</span>
+                <span> TOPOLOGY_HASH: 0x${Array(8).fill(0).map(() => range(0,15).toString(16)).join('').toUpperCase()}</span>
+                <span> ${range(8, 24)} ACTIVE_SOURCES</span>
+                <span> SUBJECT: ${nameUpper}</span>
+                <span> REFRESH: ${range(15, 45)}s</span>
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.connected-node, .central-node, .edge-item, .node-card').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c15.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div>
+{% include /kw/p/edition-c/edition-c15.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

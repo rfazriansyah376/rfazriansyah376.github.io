@@ -1,0 +1,466 @@
+---
+layout: null
+permalink: /edition-c04/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">WAR ROOM · Tactical Intelligence Command</title>
+    <meta id="dynamic-description" name="description" content="Tactical intelligence command center. Real-time strategic monitoring and threat assessment.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-c05/">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff88;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0a0a0a;font-family:'Inter',sans-serif;color:#e0e0e0}
+        
+        /* Style War Room / Command Center - Tactical, Terminal, Military Grade */
+        .warroom{max-width:1600px;margin:0 auto;padding:20px;background:#0a0a0a}
+        
+        /* Header Terminal */
+        .terminal-header{background:#0f0f0f;border:1px solid #1f1f1f;border-radius:8px;padding:16px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+        .terminal-badge{display:flex;align-items:center;gap:12px}
+        .terminal-prompt{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--primary-color)}
+        .terminal-prompt::before{content:'>_';color:var(--primary-color);margin-right:8px}
+        .command-title{font-family:'Space Mono',monospace;font-size:0.7rem;color:#888}
+        .connection-status{display:flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:0.65rem}
+        .status-led{width:10px;height:10px;border-radius:50%;background:var(--primary-color);box-shadow:0 0 5px var(--primary-color);animation:blink 1.5s infinite}
+        @keyframes blink{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}
+        
+        /* Main Grid - 4 Columns Military Dashboard */
+        .tactical-grid{display:grid;grid-template-columns:320px 1fr 320px;gap:20px}
+        
+        /* Left Panel - Threat Matrix */
+        .threat-panel{background:#0f0f0f;border:1px solid #1f1f1f;border-radius:8px;overflow:hidden}
+        .panel-header{background:#141414;padding:14px 20px;border-bottom:1px solid #1f1f1f;font-family:'Space Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px}
+        .threat-list{display:flex;flex-direction:column}
+        .threat-item{padding:16px 20px;border-bottom:1px solid #1f1f1f;cursor:pointer;transition:background 0.2s}
+        .threat-item:hover{background:#141414}
+        .threat-level{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.55rem;font-weight:700;margin-bottom:8px}
+        .level-critical{background:#ff0000;color:#fff}
+        .level-high{background:#ff4400;color:#fff}
+        .level-medium{background:#ffaa00;color:#000}
+        .level-low{background:#00aa44;color:#fff}
+        .threat-title{font-size:0.8rem;font-weight:600;margin-bottom:4px}
+        .threat-meta{font-size:0.6rem;color:#666}
+        .threat-progress{margin-top:8px;height:3px;background:#1f1f1f;border-radius:3px;overflow:hidden}
+        .threat-progress-fill{height:3px;background:#ff0000;border-radius:3px}
+        
+        /* Center Panel - Intel Feed (Panjang) */
+        .intel-panel{background:#0f0f0f;border:1px solid #1f1f1f;border-radius:8px;overflow:hidden}
+        .intel-header{background:#141414;padding:14px 20px;border-bottom:1px solid #1f1f1f;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .intel-title{font-family:'Space Mono',monospace;font-size:0.7rem;text-transform:uppercase}
+        .intel-filters{display:flex;gap:8px}
+        .tactical-chip{background:#1a1a1a;padding:4px 12px;border-radius:4px;font-size:0.6rem;cursor:pointer;font-family:'Space Mono',monospace}
+        .tactical-chip-active{background:var(--primary-color);color:#000}
+        
+        /* Intel Card - Tactical Style (Panjang) */
+        .intel-card{border-bottom:1px solid #1f1f1f;padding:20px;cursor:pointer;transition:background 0.2s}
+        .intel-card:hover{background:#121212}
+        .card-timestamp{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--primary-color);margin-bottom:8px}
+        .card-badge-line{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+        .tactical-badge{padding:2px 8px;border-radius:4px;font-size:0.55rem;font-family:'Space Mono',monospace}
+        .badge-source{background:#1f1f1f;color:#aaa}
+        .badge-priority{background:#ff0000;color:#fff}
+        .card-title{font-size:0.95rem;font-weight:700;margin-bottom:8px;line-height:1.4}
+        .card-summary{font-size:0.7rem;color:#aaa;line-height:1.5;margin-bottom:12px}
+        
+        /* Detail Intel (Panjang) */
+        .intel-details{background:#121212;border-left:2px solid var(--primary-color);padding:12px;margin:12px 0}
+        .detail-section{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--primary-color);margin-bottom:6px}
+        .detail-text{font-size:0.7rem;color:#ccc;margin-bottom:8px;line-height:1.5}
+        
+        .platform-tag{display:inline-flex;align-items:center;gap:4px;background:#1a1a1a;padding:2px 8px;border-radius:4px;font-size:0.55rem;margin-right:6px;margin-bottom:6px}
+        
+        /* Action Buttons */
+        .tactical-actions{display:flex;gap:12px;margin-top:12px}
+        .action-btn{background:transparent;border:1px solid #333;padding:4px 12px;border-radius:4px;font-size:0.6rem;cursor:pointer;font-family:'Space Mono',monospace}
+        .action-btn-primary{border-color:var(--primary-color);color:var(--primary-color)}
+        
+        /* Right Panel - Metrics & Assets */
+        .metrics-panel{display:flex;flex-direction:column;gap:20px}
+        .metric-card{background:#0f0f0f;border:1px solid #1f1f1f;border-radius:8px;padding:20px}
+        .metric-title{font-family:'Space Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;color:#888}
+        
+        .radar-value{font-size:1.8rem;font-weight:800;font-family:'Space Mono',monospace;color:var(--primary-color)}
+        .radar-label{font-size:0.6rem;color:#666}
+        
+        .asset-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1f1f1f;cursor:pointer}
+        .asset-name{font-size:0.7rem;font-family:'Space Mono',monospace}
+        .asset-status{width:8px;height:8px;border-radius:50%;background:var(--primary-color)}
+        
+        .progress-item{margin-bottom:12px}
+        .progress-label{display:flex;justify-content:space-between;font-size:0.65rem;margin-bottom:4px}
+        .progress-bar-bg{background:#1f1f1f;height:4px;border-radius:2px;overflow:hidden}
+        .progress-bar-fill{height:4px;background:var(--primary-color);border-radius:2px}
+        
+        /* Footer */
+        .warroom-footer{margin-top:20px;padding:16px 20px;background:#0f0f0f;border:1px solid #1f1f1f;border-radius:8px;text-align:center;font-family:'Space Mono',monospace;font-size:0.6rem;color:#666;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+        
+        @media(max-width:1100px){.tactical-grid{grid-template-columns:1fr}.threat-panel{order:3}.metrics-panel{order:2}.intel-panel{order:1}}
+        @media(max-width:600px){.warroom{padding:12px}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="warroom" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#666;font-family:'Space Mono',monospace">>_ INITIALIZING COMMAND PROTOCOL...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE WAR ROOM STYLE (PANJANG & TACTICAL) ==========
+    
+    // Platforms
+    const PLATFORMS = ['TIKTOK','ONLYFANS','INSTAGRAM','TWITTER','TELEGRAM','DISCORD','REDDIT','YOUTUBE','SNAPCHAT','MEGA','GOOGLEDRIVE'];
+    const PLATFORM_ICONS = {'TIKTOK':'📱','ONLYFANS':'🔞','INSTAGRAM':'📸','TWITTER':'🐦','TELEGRAM':'✈️','DISCORD':'🎮','REDDIT':'🤖','YOUTUBE':'▶️','SNAPCHAT':'👻','MEGA':'🔒','GOOGLEDRIVE':'☁️'};
+    
+    // 50 Threat Types
+    const THREAT_TYPES = [
+        "DATA EXFILTRATION","CONTENT PROPAGATION","ARCHIVAL PRESERVATION","MIRROR DEPLOYMENT","PLATFORM CIRCUMVENTION",
+        "SOURCE COMPROMISE","CHAIN DISTRIBUTION","CROSS-POLINATION","VECTOR EXPANSION","SURFACE WIDENING",
+        "DEEP ARCHIVING","REDUNDANT BACKUP","DECENTRALIZED HOSTING","TORRENT SEEDING","P2P DISTRIBUTION"
+    ];
+    
+    // 60 Intel Headlines
+    const HEADLINES = [
+        "New content package detected in wild",
+        "Distribution vector expanded to {platform}",
+        "Archival redundancy increased by {percent}%",
+        "Source attribution partially compromised",
+        "Mirror deployment detected on {count} nodes",
+        "Content surface area widening rapidly",
+        "Preservation protocol initiated by third party",
+        "Chain distribution pattern identified",
+        "Cross-platform propagation confirmed",
+        "Vector analysis reveals new threat pathways"
+    ];
+    
+    // 50 Paragraph Details (Panjang)
+    const DETAIL_PARAGRAPHS = [
+        "Digital forensics indicates the material originated from a primary source before being distributed through multiple secondary channels. The propagation pattern suggests coordinated release rather than organic spread. Metadata analysis confirms file integrity and original timestamps remain intact.",
+        "Threat assessment indicates this content has achieved critical mass across {count} independent platforms. Decentralized hosting makes complete removal virtually impossible. Archival groups have already preserved multiple redundant copies using distributed storage systems.",
+        "Intelligence suggests the source channel has implemented advanced operational security measures. Traffic analysis reveals connections to at least {count} previously unknown distribution nodes. Geotagging attempts have been obfuscated through multi-hop routing.",
+        "The current threat vector shows signs of automated distribution through bot networks. Analysis of download patterns indicates coordinated access from multiple geographic regions simultaneously. Peak activity detected during off-peak hours suggests international coordination.",
+        "Content preservation efforts have successfully mirrored material across {count} independent storage solutions. Blockchain timestamps confirm creation dates with cryptographic certainty. Multiple hash matches verify content authenticity across all known copies."
+    ];
+    
+    // 40 Tactical Recommendations
+    const TACTICAL_RECS = [
+        "Monitor {count} additional distribution channels",
+        "Deploy automated takedown requests to {platform}",
+        "Flag source accounts for enhanced surveillance",
+        "Coordinate with platform security teams",
+        "Initiate counter-narrative deployment",
+        "Expand keyword monitoring parameters",
+        "Increase scanning frequency on priority platforms"
+    ];
+    
+    // 30 Asset Names
+    const ASSET_NAMES = [
+        "PRIMARY_SOURCE_TRACKER","MIRROR_DETECTION_ENGINE","ARCHIVAL_SCANNER","DISTRIBUTION_MAPPER","THREAT_ANALYZER",
+        "VECTOR_TRACER","NODE_DISCOVERY","SURFACE_CALCULATOR","PROPAGATION_MODEL","REDUNDANCY_CHECKER"
+    ];
+    
+    // Threat levels
+    const THREAT_LEVELS = ['CRITICAL','HIGH','MEDIUM','LOW'];
+    const THREAT_CLASS = { CRITICAL:'level-critical', HIGH:'level-high', MEDIUM:'level-medium', LOW:'level-low' };
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
+        'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord',
+        'command','warroom','tactical','intel','threat'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    // ========== EKSTRAK TOPIK (PUBLIC FIGURE) ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameUpper = displayName.toUpperCase();
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = () => {
+        let platform = rand(PLATFORMS);
+        let newQ = `${nameLower} ${rand(['distribution','propagation','archive','source'])} ${platform}`;
+        return { url:`/edition-c05/?q=${encodeURIComponent(newQ)}`, platform: platform };
+    };
+    
+    // ========== GENERATE THREAT LEVEL ==========
+    const genThreatLevel = () => {
+        let randNum = Math.random();
+        if(randNum < 0.25) return 'CRITICAL';
+        if(randNum < 0.5) return 'HIGH';
+        if(randNum < 0.75) return 'MEDIUM';
+        return 'LOW';
+    };
+    
+    // ========== GENERATE TIMESTAMP ==========
+    const genTimestamp = () => {
+        let hours = range(0,23);
+        let minutes = range(0,59);
+        let seconds = range(0,59);
+        return `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')} UTC`;
+    };
+    
+    // ========== GENERATE THREAT ITEMS ==========
+    const generateThreatItems = () => {
+        let threats = [];
+        for(let i=0;i<5;i++){
+            let threatType = rand(THREAT_TYPES);
+            let level = genThreatLevel();
+            let progress = range(15,95);
+            threats.push(`
+                <div class="threat-item" data-url="${genLink().url}">
+                    <div class="threat-level ${THREAT_CLASS[level]}">${level}</div>
+                    <div class="threat-title">${threatType}</div>
+                    <div class="threat-meta">Vector: ${rand(PLATFORMS)} · Impact: ${range(45,380)}K</div>
+                    <div class="threat-progress"><div class="threat-progress-fill" style="width:${progress}%"></div></div>
+                </div>
+            `);
+        }
+        return threats.join('');
+    };
+    
+    // ========== GENERATE INTEL CARD (PANJANG) ==========
+    const generateIntelCard = (link, idx) => {
+        let timestamp = genTimestamp();
+        let platform = link.platform;
+        let platformIcon = PLATFORM_ICONS[platform] || '🖥️';
+        let headline = rand(HEADLINES)
+            .replace('{platform}', platform)
+            .replace('{percent}', range(15,85))
+            .replace('{count}', range(3,24));
+        let detail = rand(DETAIL_PARAGRAPHS)
+            .replace('{count}', range(2,18));
+        let tacticalRec = rand(TACTICAL_RECS)
+            .replace('{count}', range(2,12))
+            .replace('{platform}', platform);
+        let priority = Math.random() > 0.7 ? 'PRIORITY_ALPHA' : 'ROUTINE';
+        let views = range(15000, 8500000);
+        
+        let fmt = (n) => n.toLocaleString();
+        
+        return `
+            <div class="intel-card" data-url="${link.url}">
+                <div class="card-timestamp">[${timestamp}]</div>
+                <div class="card-badge-line">
+                    <div>
+                        <span class="tactical-badge badge-source">${platformIcon} ${platform}</span>
+                        <span class="tactical-badge badge-source">CHAIN: ${range(2,8)}</span>
+                    </div>
+                    <div class="tactical-badge badge-priority">${priority}</div>
+                </div>
+                
+                <div class="card-title">${headline}</div>
+                <div class="card-summary">Target: ${nameUpper} · Severity: ${genThreatLevel()} · Confidence: ${range(65,98)}%</div>
+                
+                <div class="intel-details">
+                    <div class="detail-section">[INTEL_ANALYSIS]</div>
+                    <div class="detail-text">${detail}</div>
+                    <div class="detail-section" style="margin-top:8px">[SITUATION_ASSESSMENT]</div>
+                    <div class="detail-text">Current distribution metrics indicate approximately ${fmt(views)} confirmed access events across ${range(3,15)} independent nodes. Content integrity verification complete. ${range(45,98)}% of material remains accessible despite active countermeasures.</div>
+                    <div class="detail-section" style="margin-top:8px">[TACTICAL_RECOMMENDATION]</div>
+                    <div class="detail-text">${tacticalRec}. Recommended action priority: ${rand(['IMMEDIATE','HIGH','STANDARD','MONITOR_ONLY'])}.</div>
+                </div>
+                
+                <div class="platform-tags" style="margin:12px 0">
+                    <span class="platform-tag">${platformIcon} ${platform}</span>
+                    <span class="platform-tag">🔗 ${range(3,18)} active mirrors</span>
+                    <span class="platform-tag">📊 ${fmt(views)} access events</span>
+                    <span class="platform-tag">💾 ${range(1,8)} archival copies</span>
+                </div>
+                
+                <div class="tactical-actions">
+                    <div class="action-btn action-btn-primary">DEPLOY_COUNTERMEASURE</div>
+                    <div class="action-btn">ANALYZE_FURTHER</div>
+                    <div class="action-btn">FLAG_AS_INTEL</div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE ASSETS ==========
+    const generateAssets = () => {
+        let assets = [];
+        for(let i=0;i<6;i++){
+            let asset = rand(ASSET_NAMES);
+            let status = Math.random() > 0.2;
+            assets.push(`
+                <div class="asset-item" data-url="${genLink().url}">
+                    <div class="asset-name">${asset}</div>
+                    <div class="asset-status" style="background:${status ? 'var(--primary-color)' : '#ff4400'}"></div>
+                </div>
+            `);
+        }
+        return assets.join('');
+    };
+    
+    // ========== GENERATE METRICS ==========
+    const generateMetrics = () => {
+        let surfaceArea = range(125, 850);
+        let propagationSpeed = range(15, 95);
+        let archivalScore = range(45, 98);
+        let takedownEffectiveness = range(12, 67);
+        
+        return `
+            <div class="metric-card">
+                <div class="metric-title">[THREAT_METRICS]</div>
+                <div style="margin-bottom:16px">
+                    <div class="progress-item"><div class="progress-label"><span>SURFACE_AREA</span><span>${surfaceArea}K</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${Math.min(surfaceArea/10,100)}%"></div></div></div>
+                    <div class="progress-item"><div class="progress-label"><span>PROPAGATION_SPEED</span><span>${propagationSpeed}/100</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${propagationSpeed}%"></div></div></div>
+                    <div class="progress-item"><div class="progress-label"><span>ARCHIVAL_REDUNDANCY</span><span>${archivalScore}%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${archivalScore}%"></div></div></div>
+                    <div class="progress-item"><div class="progress-label"><span>TAKEDOWN_EFFECT</span><span>${takedownEffectiveness}%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="background:#ff4400;width:${takedownEffectiveness}%"></div></div></div>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">[RADAR_ANALYSIS]</div>
+                <div style="text-align:center">
+                    <div class="radar-value">${range(65,98)}</div>
+                    <div class="radar-label">THREAT_INDEX</div>
+                    <div style="margin-top:10px;font-size:0.65rem;color:#888">ACTIVE_VECTORS: ${range(4,12)}</div>
+                    <div style="font-size:0.65rem;color:#888">NODE_COUNT: ${range(15,85)}</div>
+                    <div style="font-size:0.65rem;color:#888">COMPROMISE_LEVEL: ${range(25,75)}%</div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayName} · Tactical Intelligence Command | WAR ROOM`,
+            `${displayName} · Threat Assessment Dashboard | WAR ROOM`,
+            `${displayName} · Real-time Intel Monitoring | WAR ROOM`,
+            `${displayName} · Strategic Command Center | WAR ROOM`
+        ];
+        let descs = [
+            `Tactical intelligence command center for ${displayName}. Real-time threat monitoring across ${range(6,12)} platforms. Strategic assessment dashboard.`,
+            `${displayName} threat assessment and monitoring. ${range(24,68)} active vectors. ${range(12,45)} intelligence sources. Real-time updates.`,
+            `Command center for ${displayName} digital intelligence. Priority threat tracking and tactical recommendations.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let links = [];
+        for(let i=0;i<8;i++){
+            links.push(genLink());
+        }
+        
+        let sessionId = `CMD-${range(10000,99999)}`;
+        let threatIndex = range(65, 94);
+        
+        document.getElementById('app').innerHTML = `
+            <div class="terminal-header">
+                <div class="terminal-badge">
+                    <div class="terminal-prompt">WAR_ROOM_TERMINAL</div>
+                    <div class="command-title">TACTICAL INTELLIGENCE COMMAND</div>
+                </div>
+                <div class="connection-status">
+                    <div class="status-led"></div>
+                    <span>SECURE_CHANNEL_${range(1,9)} · ${new Date().toLocaleTimeString()} UTC</span>
+                </div>
+            </div>
+            
+            <div class="tactical-grid">
+                <!-- Left Panel: Threat Matrix -->
+                <div class="threat-panel">
+                    <div class="panel-header">[THREAT_MATRIX] · ACTIVE_VECTORS</div>
+                    <div class="threat-list" id="threatList">
+                        ${generateThreatItems()}
+                    </div>
+                    <div class="panel-header" style="border-top:1px solid #1f1f1f">[INTEL_SOURCES] · ${range(8,24)} ACTIVE</div>
+                </div>
+                
+                <!-- Center Panel: Intel Feed -->
+                <div class="intel-panel">
+                    <div class="intel-header">
+                        <div class="intel-title">[INTEL_FEED] · TARGET: ${nameUpper}</div>
+                        <div class="intel-filters">
+                            <span class="tactical-chip tactical-chip-active">ALL</span>
+                            <span class="tactical-chip">PRIORITY</span>
+                            <span class="tactical-chip">NEW</span>
+                            <span class="tactical-chip">ARCHIVED</span>
+                        </div>
+                    </div>
+                    <div id="feedContainer">
+                        ${links.map((l,i)=>generateIntelCard(l,i)).join('')}
+                        ${generateIntelCard(genLink(), 8)}
+                        ${generateIntelCard(genLink(), 9)}
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Metrics & Assets -->
+                <div class="metrics-panel">
+                    ${generateMetrics()}
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">[ACTIVE_ASSETS]</div>
+                        ${generateAssets()}
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">[SESSION_INFO]</div>
+                        <div style="font-family:'Space Mono',monospace;font-size:0.65rem">
+                            <div class="asset-item" style="padding:6px 0"><span>SESS_ID</span><span>${sessionId}</span></div>
+                            <div class="asset-item" style="padding:6px 0"><span>THREAT_INDEX</span><span>${threatIndex}/100</span></div>
+                            <div class="asset-item" style="padding:6px 0"><span>PRIORITY_LEVEL</span><span>${rand(['ALPHA','BRAVO','CHARLIE','DELTA'])}</span></div>
+                            <div class="asset-item" style="padding:6px 0"><span>SCAN_CYCLE</span><span>${range(15,45)}s</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warroom-footer">
+                <span>⛁ WAR_ROOM_v${range(1,5)}.${range(0,9)}</span>
+                <span>🔒 ENCRYPTED_CHANNEL · ACTIVE_OPERATORS: ${range(2,8)}</span>
+                <span>📡 LAST_SCAN: ${new Date().toLocaleTimeString()} UTC</span>
+                <span>🎯 TARGET: ${nameUpper}</span>
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.intel-card, .threat-item, .asset-item').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c04.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

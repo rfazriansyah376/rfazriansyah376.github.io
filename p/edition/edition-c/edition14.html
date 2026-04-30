@@ -1,0 +1,352 @@
+---
+layout: null
+permalink: /edition-c14/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">EVIDENCE BOARD · Forensic Intelligence Portal</title>
+    <meta id="dynamic-description" name="description" content="Forensic evidence board. Digital investigation portal with chain-of-custody tracking.">
+    <link id="dynamic-canonical" rel="canonical" href="">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-hue: 25;
+            --primary-saturation: 45%;
+            --primary-lightness: 45%;
+            --bg-dark: #1a1410;
+            --bg-card: #0f0c0a;
+            --bg-darker: #080604;
+            --bg-tag: #1a1410;
+            --bg-hover: #2a1f18;
+            --border-color: #3a2e28;
+            --text-primary: #e8e0d8;
+            --text-secondary: #c8c0b8;
+            --text-muted: #7a6050;
+            --text-meta: #a08060;
+            --accent: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+            --accent-light: hsl(var(--primary-hue), var(--primary-saturation), 70%);
+            --accent-glow: hsla(var(--primary-hue), var(--primary-saturation), 70%, 0.6);
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg-dark);font-family:'Inter',sans-serif;color:var(--text-primary)}
+        
+        /* Style Evidence Board / Forensics - Case File, Crime Board, Police Evidence */
+        .evidence-container{max-width:1600px;margin:0 auto;padding:24px}
+        
+        /* Header Case File */
+        .case-header{background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;padding:20px 28px;margin-bottom:24px}
+        .case-number{font-family:'Special Elite',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:2px;margin-bottom:8px}
+        .case-title{font-family:'Special Elite',monospace;font-size:1.6rem;font-weight:400;margin-bottom:12px}
+        .case-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px dashed var(--border-color)}
+        .meta-item{font-size:0.65rem;color:var(--text-meta)}
+        .confidential-stamp{font-family:'Special Elite',monospace;font-size:0.7rem;color:var(--accent);border:1px solid var(--accent);padding:4px 12px;display:inline-block}
+        
+        /* Evidence Grid - Masonry Style */
+        .evidence-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px;margin-bottom:32px}
+        
+        /* Evidence Card - Like Physical Evidence on Board */
+        .evidence-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;overflow:hidden;cursor:pointer;transition:all 0.2s}
+        .evidence-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+        .card-pin{height:8px;background:linear-gradient(135deg,var(--accent),hsl(var(--primary-hue),var(--primary-saturation),30%));width:100%}
+        .card-content{padding:20px}
+        
+        /* Evidence Badge */
+        .evidence-badge{display:inline-block;background:var(--bg-hover);padding:4px 12px;border-radius:2px;font-family:'Special Elite',monospace;font-size:0.55rem;color:var(--accent);margin-bottom:12px}
+        .evidence-type{font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px}
+        
+        /* Chain of Custody */
+        .chain-custody{background:var(--bg-darker);padding:12px;margin:16px 0;border-left:3px solid var(--accent);font-family:'Special Elite',monospace;font-size:0.6rem;color:var(--text-meta)}
+        .custody-line{display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.55rem}
+        
+        /* Evidence Tags */
+        .evidence-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+        .evidence-tag{background:var(--bg-tag);border:1px solid var(--border-color);padding:2px 8px;border-radius:2px;font-size:0.55rem;font-family:'Special Elite',monospace}
+        
+        /* Description (Long) */
+        .evidence-desc{font-size:0.7rem;line-height:1.5;color:var(--text-secondary);margin:12px 0}
+        .forensic-note{background:var(--bg-tag);padding:12px;margin:12px 0;border-left:2px solid var(--accent);font-size:0.65rem;font-style:italic;color:var(--text-meta)}
+        
+        /* Connection Lines (Simulated) */
+        .connections{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:12px;border-top:1px dashed var(--border-color)}
+        .connection{display:inline-flex;align-items:center;gap:6px;background:var(--bg-tag);padding:4px 10px;border-radius:2px;font-size:0.55rem;cursor:pointer}
+        .connection:hover{background:var(--bg-hover);color:var(--accent)}
+        
+        /* Right Sidebar - Evidence Log */
+        .sidebar-evidence{display:none}
+        
+        /* Timeline Bar */
+        .timeline-bar{background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;padding:16px 20px;margin-bottom:24px}
+        .timeline-label{font-family:'Special Elite',monospace;font-size:0.6rem;color:var(--accent);margin-bottom:12px}
+        .timeline-steps{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+        .timeline-step{font-size:0.6rem;color:var(--text-muted);position:relative;padding-left:12px}
+        .timeline-step::before{content:'●';position:absolute;left:0;color:var(--accent);font-size:8px}
+        .timeline-step.active{color:var(--accent-light)}
+        .timeline-step.active::before{color:var(--accent-light);text-shadow:0 0 4px var(--accent-glow)}
+        
+        /* Footer */
+        .evidence-footer{margin-top:24px;padding:16px 20px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:4px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.55rem;color:var(--text-muted);font-family:'Special Elite',monospace}
+        
+        @media(max-width:800px){.evidence-grid{grid-template-columns:1fr}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="evidence-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:var(--text-muted);font-family:'Special Elite',monospace">>_ LOADING EVIDENCE BOARD...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE FORENSIC EVIDENCE STYLE ==========
+    
+    // Evidence Types
+    const EVIDENCE_TYPES = ['DIGITAL_FORENSICS','METADATA_ANALYSIS','TIMESTAMP_VERIFICATION','SOURCE_ATTRIBUTION','CHAIN_CUSTODY','HASH_VERIFICATION'];
+    
+    // 60 Evidence Descriptions (long like forensic reports)
+    const EVIDENCE_DESCS = [
+        "Digital forensic analysis of the recovered files revealed consistent metadata patterns across {count} separate instances. File creation timestamps show correlation within {seconds} seconds, suggesting batch processing from a single source.",
+        "Examination of the data structure indicates the material was originally captured on {device_type} devices. EXIF data analysis confirms {confidence}% probability of authentic origin with no signs of post-processing manipulation.",
+        "Network traffic analysis traced the initial distribution to {location} region. Packet inspection revealed encryption patterns consistent with {protocol} protocol. Source IP addresses were routed through {hops} intermediate nodes.",
+        "Hash value comparison across {sources} independent sources shows 100% match ratio, confirming identical file integrity. SHA-256 verification complete. No bit-level corruption detected in any examined sample.",
+        "Temporal analysis of the release pattern reveals coordinated timing across {platforms} platforms. The timestamps show synchronization suggesting automated distribution rather than organic spreading.",
+        "Forensic watermarking analysis indicates the material originated from a {source_type} source. Digital fingerprints match previously documented samples from {correlation_date}, establishing chain of custody.",
+        "Memory forensics on recovered cache files suggests the content was accessed approximately {times} times prior to public release. Access logs show a pattern consistent with internal source distribution.",
+        "Cross-referencing against known databases reveals {matches} partial matches with previously documented material. Unique identifiers suggest the content belongs to a previously unidentified batch."
+    ];
+    
+    // 40 Forensic Notes (long)
+    const FORENSIC_NOTES = [
+        "Chain of custody verified through cryptographic signatures. Each transfer point has been documented with timestamps and digital fingerprints. No breaks in the chain detected.",
+        "Metadata analysis confirms the files were created on {date} using {software} software. Geolocation data indicates the original device was located within {region} region.",
+        "Comparative analysis with reference samples shows {similarity}% structural similarity. Unique identifiers suggest this is previously undocumented material from the same source.",
+        "Digital watermarking detected in {percent}% of examined files. The watermark pattern matches known source {source_id}, establishing probable source attribution.",
+        "File system analysis reveals the material was stored on {storage_type} prior to distribution. Deleted file recovery techniques successfully extracted {recovered} additional fragments.",
+        "Encryption analysis shows the files were protected using {encryption} before distribution. The decryption key appears to have been deliberately exposed by the source."
+    ];
+    
+    // 30 Chain of Custody templates
+    const CHAIN_TEMPLATES = [
+        "ORIGIN → {source} → {intermediate1} → {intermediate2} → PUBLIC_DOMAIN",
+        "SOURCE_DEVICE → EXFILTRATION → STAGING_SERVER → DISTRIBUTION_NODE → END_USER",
+        "PRIMARY_CAPTURE → ENCRYPTION → TRANSFER → DECRYPTION → PROPAGATION",
+        "RECORDING_DEVICE → LOCAL_STORAGE → CLOUD_BACKUP → SHARED_LINK → PUBLIC_ACCESS"
+    ];
+    
+    // 30 Platform Sources
+    const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter','Telegram','Discord','Reddit','Snapchat','YouTube','Mega','GoogleDrive','Dropbox'];
+    
+    // 40 Tags
+    const TAGS = ['verified','authentic','chain_of_custody','timestamped','hashed','metadata','exif','forensic','evidence','corroborated','documented','preserved'];
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
+        'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord',
+        'evidence','forensic','board','investigation','case','file'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const formatNumber = (n) => n.toLocaleString();
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameUpper = displayName.toUpperCase();
+    const nameLower = displayName.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = () => {
+        let evidenceType = rand(EVIDENCE_TYPES);
+        let newQ = `${nameLower} evidence ${evidenceType.toLowerCase().replace(/_/g,' ')}`;
+        return { url:`/edition-c15/?q=${encodeURIComponent(newQ)}`, type: evidenceType };
+    };
+    
+    // ========== GENERATE EVIDENCE CARD (LONG) ==========
+    const generateEvidenceCard = (idx) => {
+        let evidenceId = `E-${new Date().getFullYear()}-${String(range(1000,9999))}`;
+        let evidenceType = rand(EVIDENCE_TYPES);
+        let platform = rand(PLATFORMS);
+        let desc = rand(EVIDENCE_DESCS)
+            .replace('{count}', range(2, 18))
+            .replace('{seconds}', range(1, 45))
+            .replace('{device_type}', rand(['iOS','Android','Windows','macOS','Linux','professional']))
+            .replace('{confidence}', range(82, 99))
+            .replace('{location}', rand(['NORTH_AMERICA','EUROPE','ASIA_PACIFIC','EASTERN_EUROPE','UNKNOWN']))
+            .replace('{protocol}', rand(['SSL/TLS','SSH','HTTPS','SFTP','TOR']))
+            .replace('{hops}', range(2, 12))
+            .replace('{sources}', range(3, 15))
+            .replace('{platforms}', range(2, 8))
+            .replace('{source_type}', rand(['PRIMARY','SECONDARY','DERIVATIVE','ORIGINAL']))
+            .replace('{correlation_date}', `${2020+range(-2,4)}-${range(1,12)}-${range(1,28)}`)
+            .replace('{times}', range(5, 45))
+            .replace('{matches}', range(2, 12));
+        
+        let forensicNote = rand(FORENSIC_NOTES)
+            .replace('{date}', `${2020+range(-2,4)}-${range(1,12)}-${range(1,28)}`)
+            .replace('{software}', rand(['Adobe Premiere','Final Cut Pro','DaVinci Resolve','OBS Studio','Mobile Native']))
+            .replace('{region}', rand(['WESTERN','EASTERN','NORTHERN','SOUTHERN','CENTRAL']))
+            .replace('{similarity}', range(65, 98))
+            .replace('{percent}', range(35, 95))
+            .replace('{source_id}', `SRC-${range(100,999)}`)
+            .replace('{storage_type}', rand(['NETWORK_ATTACHED','EXTERNAL_DRIVE','CLOUD_STORAGE','LOCAL_SSD']))
+            .replace('{recovered}', range(8, 68))
+            .replace('{encryption}', rand(['AES-256','RSA-2048','ChaCha20','None']));
+        
+        let chain = rand(CHAIN_TEMPLATES)
+            .replace('{source}', rand(['PRIMARY_DEVICE','CAPTURE_SYSTEM','RECORDING_EQUIPMENT']))
+            .replace('{intermediate1}', rand(['STAGING_SERVER','ENCRYPTION_NODE','TRANSFER_POINT']))
+            .replace('{intermediate2}', rand(['DISTRIBUTION_HUB','MIRROR_SERVER','CACHE_NODE']));
+        
+        let tags = [];
+        for(let i=0;i<4;i++) tags.push(rand(TAGS));
+        tags.push(platform.toLowerCase());
+        tags.push(evidenceType.toLowerCase().replace(/_/g,''));
+        
+        let fileSize = range(45, 850);
+        let fileCount = range(8, 245);
+        let verificationScore = range(85, 100);
+        
+        return `
+            <div class="evidence-card" data-url="${genLink().url}">
+                <div class="card-pin"></div>
+                <div class="card-content">
+                    <div class="evidence-badge">EVIDENCE ${evidenceId}</div>
+                    <div class="evidence-type">${evidenceType.replace(/_/g,' · ')} · ${platform.toUpperCase()}</div>
+                    <div class="evidence-desc">${desc}</div>
+                    
+                    <div class="forensic-note">
+                        🔬 FORENSIC_NOTE: ${forensicNote}
+                    </div>
+                    
+                    <div class="chain-custody">
+                        <div style="margin-bottom:6px;color:var(--accent)">📋 CHAIN_OF_CUSTODY</div>
+                        <div class="custody-line"><span>➤ ${chain}</span></div>
+                        <div class="custody-line" style="margin-top:6px"><span>🔒 SIGNED: ${range(3,8)} verifications · ${verificationScore}% integrity</span></div>
+                    </div>
+                    
+                    <div class="evidence-tags">
+                        ${tags.map(t => `<span class="evidence-tag">#${t}</span>`).join('')}
+                    </div>
+                    
+                    <div class="connections">
+                        <span class="connection">🔗 CONNECTED_TO: E-${range(1000,9999)}</span>
+                        <span class="connection">🔗 CONNECTED_TO: E-${range(1000,9999)}</span>
+                        <span class="connection">📁 ${fileSize} MB · ${fileCount} files</span>
+                        <span class="connection">✅ ${verificationScore}% VERIFIED</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== GENERATE TIMELINE STEPS ==========
+    const generateTimelineSteps = () => {
+        let steps = [
+            "FIRST_DETECTION",
+            "SOURCE_ATTRIBUTION",
+            "CHAIN_CUSTODY",
+            "FORENSIC_ANALYSIS",
+            "VERIFICATION",
+            "ARCHIVAL"
+        ];
+        let activeIndex = range(2, 5);
+        return steps.map((step, idx) => 
+            `<div class="timeline-step ${idx <= activeIndex ? 'active' : ''}">${step.replace(/_/g,' ')}</div>`
+        ).join('');
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayName} · Forensic Evidence Board | EVIDENCE PORTAL`,
+            `${displayName} · Digital Forensics Investigation | EVIDENCE PORTAL`,
+            `${displayName} · Chain of Custody Evidence | EVIDENCE PORTAL`,
+            `${displayName} · Complete Forensic Documentation | EVIDENCE PORTAL`
+        ];
+        let descs = [
+            `Complete forensic evidence board for ${displayName}. ${range(12,35)} evidence items with full chain of custody documentation. Digital forensics analysis.`,
+            `${displayName} digital investigation portal. Verified evidence with cryptographic signatures. ${range(85,100)}% integrity verification.`,
+            `Forensic evidence collection for ${displayName}. Chain of custody tracking. Metadata analysis complete.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        let can = document.getElementById('dynamic-canonical'); if(can) can.setAttribute('href', window.location.href.split('?')[0]);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let caseNumber = `${new Date().getFullYear()}-${String(range(1000,9999))}-EVID`;
+        let evidenceCount = range(18, 42);
+        let verifiedCount = range(12, 38);
+        let pendingCount = evidenceCount - verifiedCount;
+        let currentDate = new Date().toLocaleDateString();
+        
+        document.getElementById('app').innerHTML = `
+            <div class="case-header">
+                <div class="case-number">CASE FILE · CONFIDENTIAL</div>
+                <div class="case-title">${displayName}</div>
+                <div class="case-meta">
+                    <div class="meta-item">📁 CASE_NUMBER: ${caseNumber}</div>
+                    <div class="meta-item">📅 OPENED: ${currentDate}</div>
+                    <div class="meta-item">🔬 LEAD_INVESTIGATOR: FORENSIC_UNIT_${range(1,8)}</div>
+                    <div class="confidential-stamp">CLASSIFIED · EVIDENCE LOCKED</div>
+                </div>
+            </div>
+            
+            <div class="timeline-bar">
+                <div class="timeline-label">📋 EVIDENCE_TIMELINE · CHAIN_OF_CUSTODY</div>
+                <div class="timeline-steps">
+                    ${generateTimelineSteps()}
+                </div>
+            </div>
+            
+            <div class="evidence-grid" id="evidenceGrid">
+                ${Array.from({length:9}, (_,i) => generateEvidenceCard(i)).join('')}
+            </div>
+            
+            <div class="evidence-footer">
+                <span>📋 TOTAL_EVIDENCE: ${evidenceCount} items</span>
+                <span>✅ VERIFIED: ${verifiedCount}</span>
+                <span>⏳ PENDING_REVIEW: ${pendingCount}</span>
+                <span>🔒 CHAIN_CUSTODY: INTACT ${range(95,100)}%</span>
+                <span>📡 LAST_UPDATE: ${new Date().toLocaleTimeString()}</span>
+                <span>🎯 SUBJECT: ${nameUpper}</span>
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.evidence-card, .connection').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c14.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>

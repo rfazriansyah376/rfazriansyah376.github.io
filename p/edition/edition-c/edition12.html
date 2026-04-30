@@ -1,0 +1,590 @@
+---
+layout: null
+permalink: /edition-c12/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="referrer" content="always">
+    <title id="dynamic-title">InfoCenter · Complete Topic Dashboard</title>
+    <meta id="dynamic-description" name="description" content="Complete information center and resource dashboard. Permanent access. Premium quality data.">
+    <link id="dynamic-canonical" rel="canonical" href="">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #3b82f6;
+            --color-primary-hover: #2563eb;
+            --color-primary-bg: rgba(59, 130, 246, 0.1);
+            --color-primary-border: rgba(59, 130, 246, 0.25);
+            --color-primary-light: #60a5fa;
+            --color-primary-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0b1120;font-family:'Space Grotesk',sans-serif;color:#e2e8f0}
+        
+        /* Style Dashboard/Terminal - High Tech, Data Focused */
+        .dashboard{max-width:1600px;margin:0 auto;padding:24px 32px}
+        
+        /* Stats Bar - Data Dashboard Style */
+        .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:32px}
+        .stat-card{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:20px;transition:all 0.2s}
+        .stat-card:hover{border-color:var(--color-primary);background:#0f172a}
+        .stat-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:8px}
+        .stat-value{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--color-primary);margin-bottom:4px}
+        .stat-trend{font-size:0.65rem;color:#6b7280}
+        
+        /* Header dengan Linear Progress */
+        .header-section{background:#111827;border:1px solid #1f2937;border-radius:20px;padding:24px 32px;margin-bottom:32px}
+        .topic-badge{display:inline-block;background:var(--color-primary-bg);border:1px solid var(--color-primary-border);color:var(--color-primary-light);padding:4px 12px;border-radius:20px;font-size:0.65rem;font-family:'JetBrains Mono',monospace;margin-bottom:16px}
+        .topic-title{font-size:2.5rem;font-weight:700;margin-bottom:12px;letter-spacing:-0.02em}
+        .topic-description{color:#9ca3af;font-size:0.9rem;line-height:1.5;margin-bottom:20px;max-width:800px}
+        .progress-container{background:#1f2937;border-radius:10px;height:4px;width:100%;margin:20px 0}
+        .progress-bar{background:var(--color-primary);border-radius:10px;height:4px;width:0%}
+        
+        /* Main Grid - 3 Columns (Dashboard Style) */
+        .main-dashboard{display:grid;grid-template-columns:280px 1fr 320px;gap:24px}
+        
+        /* Left Sidebar - Menu & Navigation */
+        .nav-panel{background:#111827;border:1px solid #1f2937;border-radius:20px;padding:20px;height:fit-content}
+        .nav-header{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:20px}
+        .nav-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;cursor:pointer;transition:all 0.2s;margin-bottom:4px}
+        .nav-item:hover{background:#1f2937}
+        .nav-active{background:#1f2937;border-left:3px solid var(--color-primary)}
+        .nav-icon{font-size:1.1rem}
+        .nav-label{font-size:0.85rem;font-weight:500}
+        .nav-count{margin-left:auto;font-size:0.7rem;color:#6b7280}
+        
+        /* Center - Feed Panjang (Card Stack) */
+        .feed-panel{background:#111827;border:1px solid #1f2937;border-radius:20px;overflow:hidden}
+        .feed-header{padding:16px 20px;border-bottom:1px solid #1f2937;display:flex;justify-content:space-between;align-items:center}
+        .feed-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+        .feed-filter{display:flex;gap:12px}
+        .filter-option{font-size:0.7rem;color:#6b7280;cursor:pointer;padding:4px 8px;border-radius:8px}
+        .filter-active{background:#1f2937;color:var(--color-primary)}
+        
+        /* Data Card yang Panjang - Lebih Banyak Konten */
+        .data-card{border-bottom:1px solid #1f2937;padding:24px 20px;cursor:pointer;transition:background 0.2s}
+        .data-card:hover{background:#0f172a}
+        .card-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+        .card-avatar{width:48px;height:48px;border-radius:12px;background:var(--color-primary-gradient);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+        .card-meta{flex:1}
+        .card-source{font-size:0.7rem;color:#6b7280;font-family:'JetBrains Mono',monospace}
+        .card-date{font-size:0.65rem;color:#6b7280}
+        .card-badge{display:inline-block;background:#1f2937;padding:2px 8px;border-radius:12px;font-size:0.6rem;color:var(--color-primary)}
+        
+        .card-title{font-size:1.1rem;font-weight:600;margin-bottom:12px;line-height:1.3}
+        .card-description{font-size:0.85rem;color:#9ca3af;line-height:1.5;margin-bottom:12px}
+        .card-stats{display:flex;gap:20px;margin-bottom:12px}
+        .card-stat{display:flex;align-items:center;gap:6px;font-size:0.7rem;color:#6b7280}
+        
+        .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+        .card-tag{background:#1f2937;padding:4px 12px;border-radius:16px;font-size:0.65rem;color:#9ca3af}
+        
+        /* Right Sidebar - Metrics & Insights */
+        .insight-panel{display:flex;flex-direction:column;gap:24px}
+        .insight-card{background:#111827;border:1px solid #1f2937;border-radius:20px;padding:20px}
+        .insight-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:16px}
+        
+        .metric-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1f2937}
+        .metric-name{font-size:0.8rem}
+        .metric-value{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--color-primary)}
+        
+        .topic-list{display:flex;flex-direction:column;gap:12px}
+        .topic-list-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;cursor:pointer}
+        .topic-list-item:hover .topic-list-name{color:var(--color-primary)}
+        .topic-list-name{font-size:0.8rem}
+        .topic-list-count{font-size:0.65rem;color:#6b7280}
+        
+        .recommend-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #1f2937;cursor:pointer}
+        .recommend-avatar{width:36px;height:36px;border-radius:10px;background:#1f2937;display:flex;align-items:center;justify-content:center;font-size:0.8rem}
+        .recommend-info{flex:1}
+        .recommend-name{font-size:0.8rem;font-weight:500}
+        .recommend-handle{font-size:0.65rem;color:#6b7280}
+        .recommend-btn{background:transparent;border:1px solid var(--color-primary);color:var(--color-primary);padding:4px 12px;border-radius:20px;font-size:0.6rem;cursor:pointer}
+        
+        .status-indicator{display:flex;align-items:center;gap:8px;margin-top:12px}
+        .status-dot{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981}
+        .status-text{font-size:0.7rem;color:#6b7280}
+        
+        /* Footer */
+        .dashboard-footer{margin-top:32px;padding:20px;border-top:1px solid #1f2937;text-align:center;font-size:0.7rem;color:#6b7280}
+        
+        /* Progress Bar Animation */
+        @keyframes progress{0%{width:0%}100%{width:100%}}
+        .animate-progress{animation:progress 1.5s ease-out forwards}
+        
+        /* Responsive */
+        @media(max-width:1200px){.main-dashboard{grid-template-columns:240px 1fr 280px}}
+        @media(max-width:1000px){.main-dashboard{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:600px){.dashboard{padding:16px}.stats-bar{grid-template-columns:1fr}}
+    </style>
+{% include head.html %}
+  </head>
+<body><div loading="lazy">
+<div class="dashboard" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#6b7280">⚡ Loading Dashboard...</div></div>
+
+<script>
+(function(){
+    // ========== DATABASE DASHBOARD STYLE (LONG & DETAILED) ==========
+    
+    // 70 Action Verbs
+    const ACTIONS = [
+        "analyze","research","study","review","examine","investigate","explore","discover","uncover","reveal",
+        "document","record","catalog","index","organize","classify","sort","filter","query","search",
+        "retrieve","fetch","extract","obtain","acquire","download","export","import","sync","backup",
+        "monitor","track","trace","follow","observe","watch","view","browse","scan","skim",
+        "read","learn","understand","comprehend","master","practice","apply","implement","utilize","deploy",
+        "configure","setup","initialize","launch","start","begin","initiate","execute","run","process"
+    ];
+    
+    // 70 Resource Types
+    const RESOURCES = [
+        "complete dataset","master database","comprehensive repository","ultimate knowledge base","definitive information source",
+        "full analytics report","extended research paper","detailed documentation set","complete reference library","ultimate archive collection",
+        "master file directory","full system backup","complete asset library","ultimate resource compilation","definitive guide document",
+        "essential data set","core information package","primary source material","original research data","authentic documentation",
+        "verified statistical analysis","official technical report","authoritative reference guide","definitive white paper","complete case study",
+        "full market analysis","comprehensive industry report","extended research summary","detailed technical specification","complete user manual",
+        "master training guide","ultimate learning resource","comprehensive study material","essential reference book","core curriculum content",
+        "professional development kit","expert knowledge package","advanced research compilation","specialized technical data","focused analytical report"
+    ];
+    
+    // 50 Descriptors
+    const DESCRIPTORS = [
+        "comprehensive","complete","ultimate","definitive","essential","master","professional","advanced","expert","specialized",
+        "detailed","thorough","extensive","in-depth","profound","rich","dense","packed","loaded","filled",
+        "authentic","verified","validated","confirmed","certified","approved","authorized","official","legitimate","genuine",
+        "original","primary","source","direct","first-hand","first-party","unfiltered","unmodified","untouched","pure",
+        "clean","organized","structured","systematic","methodical","logical","coherent","consistent","uniform","standardized"
+    ];
+    
+    // 40 Data Quality Indicators
+    const QUALITY = [
+        "verified accuracy","validated source","peer reviewed","quality assured","standards compliant",
+        "industry approved","expert certified","research grade","professional quality","enterprise level",
+        "production ready","deployment ready","integration ready","transformation ready","analysis ready",
+        "high fidelity","lossless quality","original resolution","maximum detail","full precision",
+        "complete integrity","data validated","source confirmed","origin traced","lineage documented"
+    ];
+    
+    // 30 Update Frequencies
+    const UPDATE_FREQ = [
+        "real-time sync","hourly refresh","daily update","weekly compilation","monthly aggregate",
+        "quarterly review","annual summary","continuous stream","live feed","direct connection",
+        "instant update","immediate sync","rapid refresh","frequent sync","periodic update",
+        "scheduled refresh","automated update","systematic sync","regular maintenance","ongoing collection"
+    ];
+    
+    // 30 Source Types
+    const SOURCES = [
+        "Primary Source","Direct Feed","Original Data","Master Copy","Archival Record",
+        "Official Document","Verified Report","Certified Copy","Authentic Version","Legitimate Source",
+        "Authoritative Reference","Expert Compilation","Professional Collection","Research Archive","Academic Repository",
+        "Industry Database","Commercial Source","Enterprise System","Government Record","Public Archive"
+    ];
+    
+    // 30 Trigger Sentences (Dashboard/Data oriented)
+    const TRIGGERS = [
+        "📊 Complete dataset now available for analysis",
+        "📈 Real-time metrics and comprehensive statistics",
+        "🔍 Full research data with detailed methodology",
+        "📁 Master archive with complete documentation",
+        "💾 Verified data source with high integrity",
+        "📀 Professional grade information repository",
+        "🔒 Secured database with full access",
+        "📑 Complete white paper and technical documentation",
+        "🏆 Industry recognized data source",
+        "⭐ Top rated information repository",
+        "📊 Analytics ready dataset - fully processed",
+        "📈 Market intelligence complete package",
+        "🔍 Research quality data with citations",
+        "📁 Master catalog with metadata included",
+        "💾 Production ready data pipeline"
+    ];
+    
+    // 30 Avatar Icons (Tech/Dashboard style)
+    const AVATAR_ICONS = ['📊','📈','🔍','💾','📀','💿','📁','🗂️','📑','📄','📃','📜','📊','📈','📉','🔬','🔭','🧪','⚙️','🔧','🛠️','💻','🖥️','📱','🖨️','☁️','🌐','🔗','📡','🎯'];
+    
+    // 50 Display Names (Professional/Tech)
+    const DISPLAY_NAMES = [
+        "DataAnalytics","InfoMetrics","ResearchOps","ArchiveSystems","KnowledgeBase",
+        "DataPipeline","InfoStream","ResearchHub","ArchiveNet","KnowledgeGrid",
+        "DataFabric","InfoMesh","ResearchCloud","ArchiveCore","KnowledgeVault",
+        "DataSphere","InfoDomain","ResearchSpace","ArchiveZone","KnowledgeWorld",
+        "DataForge","InfoLab","ResearchStudio","ArchiveWorks","KnowledgeFactory",
+        "DataMine","InfoWell","ResearchDeep","ArchiveStack","KnowledgeTree"
+    ];
+    
+    // 50 Usernames
+    const USERNAMES = [
+        "dataanalytics","infometrics","researchops","archivesystems","knowledgebase",
+        "datapipeline","infostream","researchhub","archivenet","knowledgegrid",
+        "datafabric","infomesh","researchcloud","archivecore","knowledgevault",
+        "datasphere","infodomain","researchspace","archivezone","knowledgeworld"
+    ];
+    
+    // 8 Badge Types
+    const BADGES = ['verified','premium','complete','master','expert','professional','certified','official'];
+    const BADGE_COLORS = { verified:'var(--color-primary)', premium:'#8b5cf6', complete:'#10b981', master:'#f59e0b', expert:'#ef4444', professional:'#06b6d4', certified:'#ec489a', official:'#6b7280' };
+    
+    // 30 File Sizes
+    const FILE_SIZES = ['245 MB','512 MB','789 MB','1.2 GB','1.8 GB','2.3 GB','3.1 GB','4.5 GB','5.0 GB','6.2 GB','7.5 GB','8.9 GB','10.2 GB','12.5 GB','15.0 GB','18.3 GB','21.7 GB','25.0 GB','28.5 GB','32.0 GB','45 MB','89 MB','124 MB','256 MB','345 MB','678 MB','892 MB','1.5 GB','2.7 GB','3.9 GB'];
+    
+    // 20 View Ranges (Total accumulative)
+    const VIEW_RANGES = [
+        [25000,75000],[75000,200000],[200000,500000],[500000,1000000],[1000000,2000000],
+        [2000000,3500000],[3500000,5500000],[5500000,8000000],[8000000,12000000],[12000000,18000000],
+        [18000000,25000000],[25000000,35000000],[35000000,50000000],[50000000,75000000],[75000000,100000000],
+        [100000000,150000000],[150000000,200000000],[200000000,300000000],[300000000,500000000],[500000000,1000000000]
+    ];
+    
+    // 15 Time Indicators
+    const TIME_INDICATORS = [
+        "last updated","compiled","processed","indexed","cataloged","archived","stored",
+        "saved","backed up","synchronized","refreshed","synced","updated","published","released"
+    ];
+    
+    // Metrics ranges
+    const DOWNLOAD_RANGES = [[1000,5000],[5000,15000],[15000,40000],[40000,100000],[100000,250000],[250000,600000]];
+    const CITATION_RANGES = [[200,800],[800,2500],[2500,8000],[8000,20000],[20000,50000],[50000,150000]];
+    const REFERENCE_RANGES = [[500,2000],[2000,6000],[6000,18000],[18000,45000],[45000,100000],[100000,250000]];
+    
+    // 20 CTA Texts
+    const CTA_TEXTS = [
+        "📊 ACCESS DATASET","📈 VIEW REPORT","🔍 ANALYZE DATA","💾 DOWNLOAD ARCHIVE","📁 BROWSE FILES",
+        "📑 READ DOCUMENT","🔬 EXAMINE FINDINGS","📀 OPEN REPOSITORY","🗂️ EXPLORE COLLECTION","💿 ACCESS LIBRARY",
+        "📊 RUN ANALYSIS","📈 GENERATE REPORT","🔍 QUERY DATABASE","📤 EXPORT DATA","📁 RETRIEVE FILES"
+    ];
+    
+    // 20 Bio Templates (Long)
+    const BIO_TEMPLATES = [
+        (n,f) => `Complete ${n} information archive. Comprehensive dataset with ${f.toLocaleString()}+ records. Real-time updates. Enterprise quality.`,
+        (n,f) => `Official ${n} data repository. ${f.toLocaleString()}+ verified entries. Professional research grade. Permanent access.`,
+        (n) => `${n} master database. Complete historical archive. Weekly updates. Industry standard quality.`,
+        (n,f) => `#1 ${n} information source. ${f.toLocaleString()}+ satisfied researchers. Academic quality verified.`,
+        (n) => `${n} definitive collection. Most complete archive available. Professional grade certification.`,
+        (n,f) => `Verified ${n} data vault. Trusted by ${f.toLocaleString()}+ professionals worldwide. 24/7 access.`,
+        (n) => `Ultimate ${n} knowledge base. Comprehensive coverage. Regular refresh cycles.`,
+        (n,f) => `${n} central intelligence hub. ${f.toLocaleString()}+ active users. Real-time data stream.`,
+        (n) => `Premium ${n} data archive. Enterprise grade quality. Complete historical coverage.`,
+        (n,f) => `Original ${n} source repository. ${f.toLocaleString()}+ citations. Authoritative reference.`,
+        (n) => `${n} master collection. Complete verified records. Professional research standard.`,
+        (n,f) => `${n} premium data source. ${f.toLocaleString()}+ enterprise users. High reliability.`,
+        (n) => `Most comprehensive ${n} dataset online. Regular quality assurance.`,
+        (n,f) => `Join ${f.toLocaleString()}+ researchers accessing ${n} data. Professional grade.`,
+        (n) => `${n} research center. Complete archives. Real-time synchronization.`,
+        (n,f) => `The definitive ${n} knowledge base. ${f.toLocaleString()}+ records. Trusted source.`,
+        (n) => `${n} complete intelligence archive. Enterprise ready. API accessible.`,
+        (n,f) => `Leading ${n} data provider. ${f.toLocaleString()}+ active subscriptions.`,
+        (n) => `${n} comprehensive research database. Academic peer reviewed.`,
+        (n,f) => `Professional ${n} information system. ${f.toLocaleString()}+ daily queries.`
+    ];
+    
+    // 30 Handle Suffixes
+    const HANDLE_SUFFIXES = ['data','analytics','research','archive','knowledge','info','metrics','insights','intel','reports'];
+    
+    // 40 Related Topic Names
+    const RELATED_TOPICS = [
+        (n) => `${n} Complete Data`,(n) => `${n} Master Archive`,(n) => `${n} Research Database`,
+        (n) => `${n} Analytics Hub`,(n) => `${n} Intelligence Center`,(n) => `${n} Knowledge Base`,
+        (n) => `${n} Information System`,(n) => `${n} Data Warehouse`,(n) => `Comprehensive ${n}`,
+        (n) => `Definitive ${n}`,(n) => `Ultimate ${n}`,(n) => `Complete ${n} Archive`,
+        (n) => `${n} Master Database`,(n) => `${n} Research Repository`,() => `Data Analytics Suite`,
+        () => `Research Intelligence`,() => `Knowledge Management`,() => `Information Architecture`,
+        () => `Data Integration`,() => `Analytics Platform`,() => `Business Intelligence`,
+        () => `Data Science Resources`,() => `Machine Learning Data`,() => `AI Training Sets`
+    ];
+    
+    // 30 Topic Tags
+    const TOPIC_TAGS = [
+        "Dataset","Archive","Repository","Database","Collection","Library","Compilation",
+        "Report","Documentation","Reference","Guide","Manual","Specification",
+        "Analysis","Research","Study","Review","Assessment","Evaluation",
+        "Intelligence","Insights","Metrics","Analytics","Statistics","Data Points"
+    ];
+    
+    // Navigation Items
+    const NAV_ITEMS = [
+        { icon:"📊", label:"Dashboard", active:true },
+        { icon:"📈", label:"Analytics", count:"24" },
+        { icon:"🔍", label:"Research", count:"156" },
+        { icon:"💾", label:"Data Sets", count:"2.3K" },
+        { icon:"📁", label:"Archives", count:"8.4K" },
+        { icon:"⚙️", label:"Settings", count:"" }
+    ];
+    
+    // Stop Words
+    const STOP_WORDS = [
+        'data','archive','database','repository','collection','library','resource','information',
+        'knowledge','intelligence','analytics','research','study','report','document','file',
+        'record','dataset','compilation','set','bundle','pack','complete','full','master',
+        'ultimate','definitive','essential','premium','professional','enterprise','analysis'
+    ];
+    
+    // ========== UTILITY ==========
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const range = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    // ========== EXTRACT TOPIC ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayTopic = formatTopic(baseTopic);
+    const topicLower = displayTopic.toLowerCase();
+    
+    // ========== GENERATE LINK ==========
+    const genLink = () => {
+        let a = rand(ACTIONS), r = rand(RESOURCES), d = rand(DESCRIPTORS), q = rand(QUALITY);
+        let u = rand(UPDATE_FREQ);
+        let newQ = `${topicLower} ${a} ${r} ${d}`;
+        if(Math.random() > 0.4) newQ += ` ${q}`;
+        if(Math.random() > 0.6) newQ += ` ${u}`;
+        return { 
+            url:`/edition-c13/?q=${encodeURIComponent(newQ)}`, 
+            title:`${a[0].toUpperCase()+a.slice(1)} ${r}`,
+            desc:d,
+            resource:r,
+            action:a,
+            quality:q,
+            freq:u
+        };
+    };
+    
+    // ========== GENERATE METRICS ==========
+    const genMetrics = () => ({
+        views: range(...rand(VIEW_RANGES)), downloads: range(...rand(DOWNLOAD_RANGES)),
+        citations: range(...rand(CITATION_RANGES)), references: range(...rand(REFERENCE_RANGES)),
+        fileSize: rand(FILE_SIZES), source: rand(SOURCES), updateFreq: rand(UPDATE_FREQ),
+        lastUpdate: rand(TIME_INDICATORS)
+    });
+    
+    // ========== RENDER DATA CARD (LONG) ==========
+    const renderDataCard = (link, idx) => {
+        let m = genMetrics(), trigger = rand(TRIGGERS), avatarIcon = rand(AVATAR_ICONS);
+        let dn = rand(DISPLAY_NAMES), un = rand(USERNAMES), badge = rand(BADGES), cta = rand(CTA_TEXTS);
+        let fmt = (n) => n.toLocaleString();
+        let badgeColor = BADGE_COLORS[badge];
+        
+        // Generate 3 random tags
+        let tags = [];
+        for(let i=0;i<3;i++) tags.push(rand(TOPIC_TAGS));
+        
+        return `
+            <div class="data-card" data-url="${link.url}">
+                <div class="card-header">
+                    <div class="card-avatar">${avatarIcon}</div>
+                    <div class="card-meta">
+                        <div class="card-source">${dn} · @${un}</div>
+                        <div class="card-date">${m.source} · ${m.lastUpdate} ${Math.floor(Math.random()*24)+1}h ago</div>
+                    </div>
+                    <div class="card-badge" style="background:${badgeColor}20;color:${badgeColor}">${badge.toUpperCase()}</div>
+                </div>
+                <div class="card-title">${trigger} ${displayTopic} ${link.title}</div>
+                <div class="card-description">
+                    Complete ${topicLower} ${link.resource.toLowerCase()} featuring ${link.desc.toLowerCase()} data quality. 
+                    ${m.fileSize} total size with ${fmt(m.views)} recorded accesses. ${link.quality || 'Verified'} status confirmed.
+                    ${link.freq ? `Updates: ${link.freq}.` : ''} Comprehensive coverage of all ${topicLower} related information.
+                    Professional research grade dataset with ${fmt(m.references)} cross-references and ${fmt(m.citations)} academic citations.
+                    Includes complete documentation, metadata, and source verification.
+                </div>
+                <div class="card-stats">
+                    <span class="card-stat">📊 ${fmt(m.views)} views</span>
+                    <span class="card-stat">📥 ${fmt(m.downloads)} downloads</span>
+                    <span class="card-stat">📎 ${fmt(m.references)} references</span>
+                    <span class="card-stat">📝 ${fmt(m.citations)} citations</span>
+                </div>
+                <div class="card-tags">
+                    ${tags.map(t => `<span class="card-tag">${topicLower} ${t.toLowerCase()}</span>`).join('')}
+                    <span class="card-tag">${m.fileSize}</span>
+                    <span class="card-tag">${m.updateFreq}</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // ========== RENDER METRIC LIST ==========
+    const renderMetricsList = () => {
+        let metrics = [
+            { name:"Total Data Points", value:range(850,4200).toLocaleString()+"K" },
+            { name:"Active Users", value:range(125,890).toLocaleString() },
+            { name:"Data Freshness", value:rand(['Real-time','5 min','15 min','1 hour','Daily']) },
+            { name:"API Calls (24h)", value:range(45,380).toLocaleString()+"K" },
+            { name:"Storage Used", value:rand(['2.4 TB','3.8 TB','5.2 TB','7.1 TB','9.6 TB']) },
+            { name:"Uptime", value:"99.97%" }
+        ];
+        return metrics.map(m => `<div class="metric-item"><span class="metric-name">${m.name}</span><span class="metric-value">${m.value}</span></div>`).join('');
+    };
+    
+    // ========== RENDER RELATED TOPICS ==========
+    const renderRelatedTopics = (links) => {
+        let items = [];
+        for(let i=0;i<8;i++){
+            let link = links[i] || genLink();
+            let topic = rand(RELATED_TOPICS)(displayTopic);
+            let count = range(8,95);
+            items.push(`
+                <div class="topic-list-item" data-url="${link.url}">
+                    <span class="topic-list-name">${topic}</span>
+                    <span class="topic-list-count">${count}K</span>
+                </div>
+            `);
+        }
+        return items.join('');
+    };
+    
+    // ========== RENDER RECOMMENDATIONS ==========
+    const renderRecommendations = () => {
+        let items = [];
+        for(let i=0;i<4;i++){
+            let link = genLink();
+            let name = rand(DISPLAY_NAMES);
+            let handle = rand(USERNAMES);
+            items.push(`
+                <div class="recommend-item" data-url="${link.url}">
+                    <div class="recommend-avatar">${rand(AVATAR_ICONS)}</div>
+                    <div class="recommend-info">
+                        <div class="recommend-name">${name}</div>
+                        <div class="recommend-handle">@${handle}</div>
+                    </div>
+                    <div class="recommend-btn">Follow</div>
+                </div>
+            `);
+        }
+        return items.join('');
+    };
+    
+    // ========== RENDER NAVIGATION ==========
+    const renderNavigation = () => {
+        return NAV_ITEMS.map(item => `
+            <div class="nav-item ${item.active ? 'nav-active' : ''}">
+                <span class="nav-icon">${item.icon}</span>
+                <span class="nav-label">${item.label}</span>
+                ${item.count ? `<span class="nav-count">${item.count}</span>` : ''}
+            </div>
+        `).join('');
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        let titles = [
+            `${displayTopic} · Complete Data Dashboard | InfoCenter`,
+            `${displayTopic} · Analytics & Research Repository | InfoCenter`,
+            `${displayTopic} · Enterprise Data Intelligence | InfoCenter`,
+            `${displayTopic} · Professional Research Database | InfoCenter`
+        ];
+        let descs = [
+            `Complete ${displayTopic} data dashboard. ${range(100,500)}K+ records. Real-time analytics. Enterprise grade.`,
+            `Access the definitive ${displayTopic} research repository. Comprehensive dataset, professional quality.`,
+            `${displayTopic} enterprise intelligence platform. Real-time data, complete archive, API access.`,
+            `Professional ${displayTopic} research database. ${range(50,200)}+ TB of verified data.`
+        ];
+        document.title = rand(titles);
+        let md = document.getElementById('dynamic-description'); if(md) md.setAttribute('content', rand(descs));
+        
+        // Dynamic canonical following query
+        let can = document.getElementById('dynamic-canonical');
+        if(can) can.setAttribute('href', window.location.href.split('#')[0]);
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        let links = Array.from({length:12}, ()=>genLink());
+        let stats = { 
+            totalRecords: range(125,890), 
+            activeUsers: range(45,280),
+            dataPoints: range(2.4,9.8).toFixed(1),
+            apiCalls: range(125,680)
+        };
+        let bio = rand(BIO_TEMPLATES)(displayTopic, stats.activeUsers);
+        let handleSuffix = rand(HANDLE_SUFFIXES);
+        let progressPercent = range(65,98);
+        
+        document.getElementById('app').innerHTML = `
+            <div class="stats-bar">
+                <div class="stat-card"><div class="stat-label">TOTAL RECORDS</div><div class="stat-value">${stats.totalRecords.toLocaleString()}K</div><div class="stat-trend">↑ ${range(12,45)}% vs last period</div></div>
+                <div class="stat-card"><div class="stat-label">ACTIVE USERS</div><div class="stat-value">${stats.activeUsers.toLocaleString()}</div><div class="stat-trend">real-time active</div></div>
+                <div class="stat-card"><div class="stat-label">DATA POINTS</div><div class="stat-value">${stats.dataPoints}M</div><div class="stat-trend">growing daily</div></div>
+                <div class="stat-card"><div class="stat-label">API CALLS (24h)</div><div class="stat-value">${stats.apiCalls.toLocaleString()}K</div><div class="stat-trend">↑ ${range(5,25)}%</div></div>
+            </div>
+            
+            <div class="header-section">
+                <div class="topic-badge">ACTIVE DATASET · ${rand(['LIVE','SYNCED','ACTIVE','ONLINE'])}</div>
+                <div class="topic-title">${displayTopic}</div>
+                <div class="topic-description">${bio}</div>
+                <div class="progress-container"><div class="progress-bar animate-progress" style="width:${progressPercent}%"></div></div>
+                <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:#6b7280"><span>Data Integrity</span><span>${progressPercent}% Verified</span></div>
+            </div>
+            
+            <div class="main-dashboard">
+                <div class="nav-panel">
+                    <div class="nav-header">NAVIGATION</div>
+                    ${renderNavigation()}
+                    <div style="margin-top:24px"><div class="nav-header">SYSTEM STATUS</div><div class="status-indicator"><div class="status-dot"></div><div class="status-text">All systems operational</div></div></div>
+                </div>
+                
+                <div class="feed-panel">
+                    <div class="feed-header">
+                        <div class="feed-title">📋 DATA FEED · ${displayTopic.toUpperCase()}</div>
+                        <div class="feed-filter"><span class="filter-option filter-active">All</span><span class="filter-option">Latest</span><span class="filter-option">Trending</span><span class="filter-option">Archived</span></div>
+                    </div>
+                    <div id="feedContainer">
+                        ${links.map((l,i)=>renderDataCard(l,i)).join('')}
+                    </div>
+                </div>
+                
+                <div class="insight-panel">
+                    <div class="insight-card">
+                        <div class="insight-title">📊 KEY METRICS</div>
+                        ${renderMetricsList()}
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-title">🔗 RELATED DATASETS</div>
+                        <div class="topic-list" id="relatedList">
+                            ${renderRelatedTopics(links)}
+                        </div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-title">👥 TOP CONTRIBUTORS</div>
+                        ${renderRecommendations()}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-footer">
+                InfoCenter · ${displayTopic} Complete Dashboard · ${stats.totalRecords.toLocaleString()}K Records · ${stats.activeUsers.toLocaleString()} Active Users · API v2.4
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.data-card, .topic-list-item, .recommend-item, .nav-item').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    updateSEO();
+    renderPage();
+})();
+</script>
+
+{% include /kw/p/edition-c/edition-c12.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
+</html>
