@@ -47,13 +47,13 @@ permalink: /name/
         .related-labels a:hover{text-decoration:underline}
         h1{font-size:20px;margin-bottom:4px;color:#fff}
         .desc{font-size:12px;color:#888;margin-bottom:16px}
-        .post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+        .post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;grid-auto-flow:dense;grid-auto-rows:8px}
         @media(min-width:500px){.post-grid{grid-template-columns:repeat(3,1fr)}}
         @media(min-width:768px){body{max-width:900px;padding-left:12px;padding-right:12px}.post-grid{grid-template-columns:repeat(3,1fr);gap:10px}}
         @media(min-width:1024px){body{max-width:1100px}.post-grid{grid-template-columns:repeat(4,1fr);gap:12px}}
-        .post-card{background:#111;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:transform 0.2s,box-shadow 0.2s;content-visibility:auto;contain-intrinsic-size:auto 250px}
+        .post-card{background:#111;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:transform 0.2s,box-shadow 0.2s;content-visibility:auto;contain-intrinsic-size:auto 250px;grid-row-end:span var(--row-span,20)}
         .post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.5)}
-        .post-card-img{width:100%;height:auto;display:block;aspect-ratio:2/3;object-fit:cover}
+        .post-card-img{width:100%;height:auto;display:block;object-fit:contain}
         .post-card-info{padding:8px 10px}
         .post-card h2{font-size:12px;font-weight:600;line-height:1.3;margin:0}
         .post-card h2 a{color:#e0e0e0;text-decoration:none}
@@ -103,7 +103,7 @@ permalink: /name/
     {% include verif.html %}
 </head>
 <body>
-<div loading="lazy">
+
     <header class="header">
         <div class="header-brand">
             <svg class="header-svg" viewBox="0 0 100 100" aria-hidden="true">
@@ -179,11 +179,7 @@ permalink: /name/
         (function(){var hue=0;for(var i=0;i<host.length;i++){hue=((hue<<5)-hue)+host.charCodeAt(i);hue=hue&hue;}hue=Math.abs(hue)%360;var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="80" fill="hsl('+hue+',60%,45%)"/><text x="256" y="340" text-anchor="middle" fill="#fff" font-size="280" font-weight="800" font-family="system-ui,-apple-system,sans-serif">'+letters+'</text></svg>';$('favicon').href='data:image/svg+xml,'+encodeURIComponent(svg);})();
         
         // CONFIG
-        var BLOG_ID='3849070220815751744',MAX_POSTS_PER_PAGE=24,
-DEFAULT_START_INDEX=1,
-DEFAULT_LABEL='',
-BASE_PATH='/name/'
-,CACHE_EXPIRE=30*60*1000;
+        var BLOG_ID='3849070220815751744',MAX_POSTS_PER_PAGE=24,DEFAULT_START_INDEX=1,DEFAULT_LABEL='',BASE_PATH='/name/',CACHE_EXPIRE=30*60*1000;
         function hashDomain(h){var hash=0;for(var i=0;i<h.length;i++){hash=((hash<<5)-hash)+h.charCodeAt(i);hash=hash&hash;}return Math.abs(hash);}
         var seed=hashDomain(host);
         
@@ -212,7 +208,13 @@ BASE_PATH='/name/'
         $('lbClose').onclick=closeLightbox;$('lbNext').onclick=nextImage;$('lbPrev').onclick=prevImage;lb.onclick=function(e){if(e.target===lb)closeLightbox();};
         document.onkeydown=function(e){if(!lb.classList.contains('active'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')nextImage();if(e.key==='ArrowLeft')prevImage();};
         var touchStartX=0;lb.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;});lb.addEventListener('touchend',function(e){var diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50){if(diff>0)nextImage();else prevImage();}});
-        function attachLightbox(){var allImages=document.querySelectorAll('.post-card-img, .post-body img');var images=[];allImages.forEach(function(img){if(img.src&&!img.src.includes('data:image/svg+xml')){var alt=img.getAttribute('data-alt')||img.getAttribute('alt')||'Photo';images.push({src:img.src,alt:alt});img.style.cursor='pointer';var idx=images.length-1;img.onclick=function(e){e.preventDefault();e.stopPropagation();openLightbox(images,idx);};}});}
+        function attachLightbox(){var allImages=document.querySelectorAll('.post-card-img, .post-body img');var images=[];allImages.forEach(function(img){if(img.src&&!img.src.includes('data:image/svg+xml')){var alt=img.getAttribute('data-alt')||img.getAttribute('alt')||'Photo';images.push({src:img.src,alt:alt});img.style.cursor='pointer';var idx=images.length-1;img.onclick=function(e){e.preventDefault();e.stopPropagation();openLightbox(images,idx);}
+            // Pinterest masonry: hitung row-span dari rasio asli gambar
+            if(img.classList.contains('post-card-img')){
+                var setSpan=function(){var ratio=img.naturalHeight/img.naturalWidth;var span=Math.ceil(ratio*12);if(span<12)span=12;if(span>40)span=40;img.closest('.post-card').style.setProperty('--row-span',span);};
+                if(img.complete&&img.naturalWidth>0){setSpan();}else{img.onload=setSpan;}
+            }
+        }});}
         
         // RENDER CARD
         function renderCard(e){var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var content=e.content?.$t||e.summary?.$t||'';var thumb=hd(e.media$thumbnail?.url)||(function(c){if(!c)return null;var d=document.createElement('div');d.innerHTML=c;var i=d.querySelector('img');return i?hd(i.src):null;})(content);var cats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var imgAlt=altText(t,cats);var imgAltSafe=imgAlt.replace(/"/g,'&quot;').replace(/'/g,'&#39;');var html='<article class="post-card">';if(thumb){html+='<img class="post-card-img" src="'+thumb+'" alt="'+imgAltSafe+'" title="'+imgAltSafe+'" data-alt="'+imgAltSafe+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">';html+='<div class="no-img">No Image</div>';}else{html+='<div class="no-img" style="display:flex">No Image</div>';}html+='<div class="post-card-info"><h2><a href="'+link+'">'+t+'</a></h2></div></article>';return html;}
@@ -254,22 +256,17 @@ BASE_PATH='/name/'
                 
                 container.innerHTML=html;$('pagination').innerHTML='';setTimeout(function(){attachLightbox();},100);
                 
-                // RELATED POSTS
                 if(cats.length){
-                    var relatedUrl=base+'?alt=json-in-script&callback=rp&max-results=5000';
+                    var relatedUrl=base+'?alt=json-in-script&callback=rp&max-results=50';
                     window.rp=function(rdata){var rfeed=rdata.feed;if(!rfeed||!rfeed.entry)return;var rentries=Array.isArray(rfeed.entry)?rfeed.entry:[rfeed.entry];
-                        var filtered=rentries.filter(function(e){var eCats=(e.category||[]).map(function(c){return c.term;});return cats.some(function(c){return eCats.indexOf(c)!==-1;});}).slice(0,50);
+                        var filtered=rentries.filter(function(e){var eCats=(e.category||[]).map(function(c){return c.term;});return cats.some(function(c){return eCats.indexOf(c)!==-1;});}).slice(0,10);
                         if(!filtered.length)return;
                         var rhtml='<div class="related-section"><h3>More Photos</h3><div class="related-grid">';
                         filtered.forEach(function(e){var t=e.title?.$t||'Untitled';var rlink=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url);var eCats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var rAlt=altText(t,eCats);
-                            rhtml+='<a href="'+rlink+'" class="related-card">';
-                            if(thumb)rhtml+='<img class="related-card-img" src="'+thumb+'" alt="'+rAlt+'" loading="lazy" onerror="this.style.display=\'none\'">';
+                            rhtml+='<a href="'+rlink+'" class="related-card">';if(thumb)rhtml+='<img class="related-card-img" src="'+thumb+'" alt="'+rAlt+'" loading="lazy" onerror="this.style.display=\'none\'">';
                             rhtml+='<span class="related-card-title">'+t+'</span>';
-                            if(eCats.length){rhtml+='<div class="related-card-labels">';eCats.forEach(function(c){rhtml+='<a href="'+labelLink(c)+'" class="related-card-label-link">'+c+'</a>';});rhtml+='</div>';}
-                            rhtml+='</a>';
-                        });
-                        rhtml+='</div></div>';container.innerHTML+=rhtml;
-                    };
+                            if(eCats.length){rhtml+='<div class="related-card-labels">';eCats.forEach(function(c){rhtml+='<a href="'+labelLink(c)+'" class="related-card-label-link">'+c+'</a>';});rhtml+='</div>';}rhtml+='</a>';
+                        });rhtml+='</div></div>';container.innerHTML+=rhtml;};
                     var rs=document.createElement('script');rs.src=relatedUrl;rs.async=true;document.head.appendChild(rs);
                 }
             };
@@ -279,7 +276,6 @@ BASE_PATH='/name/'
         // GRID MODE
         var si=$('searchInput');if(si&&LABEL)si.value=LABEL;
         if(LABEL)$('searchHint').textContent='Showing results for: '+LABEL;else $('searchHint').textContent='Try: name leaked, viral, latest, exclusive';
-        
         if(LABEL){var il2=/leak|viral|latest|exclusive|hot|new/i.test(LABEL);var pt,pd;if(il2){pt=LABEL+' — '+dn;pd='View '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'.';}else{pt=LABEL+' Leaked Photos & Viral Updates — '+dn;pd='View latest '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'. Browse the full collection.';}document.title=pt;$('pageHeading').textContent=LABEL;$('siteDesc').textContent=pd;var md2=document.createElement('meta');md2.name='description';md2.content=pd;document.head.appendChild(md2);$('filterBar').style.display='flex';$('filterBar').innerHTML='Category: <strong>'+LABEL+'</strong> <a href="'+BASE_PATH+'">Clear</a>';$('labelDesc').style.display='block';$('labelDesc').innerHTML='Browse <strong>'+LABEL+'</strong> leaked photos, viral content, and exclusive updates on '+dn+'. Find the latest '+LABEL+' images in this collection.';}else{document.title=dn+' — Leaked Photos & Viral Collection';$('pageHeading').textContent=dn;$('siteDesc').textContent='Latest leaked photos, viral content, and exclusive updates. Browse the full collection.';var md3=document.createElement('meta');md3.name='description';md3.content='Latest leaked photos, viral content, and exclusive updates on '+dn+'. New photos added regularly.';document.head.appendChild(md3);}
         
         var cacheKey=getCacheKey();var cachedData=getCache(cacheKey);
@@ -300,19 +296,12 @@ BASE_PATH='/name/'
                         var html='<p class="count-bar">Showing '+fbPosts.length+' latest leaked photos</p><div class="post-grid">';for(var k=0;k<fbPosts.length;k++){html+=renderCard(fbPosts[k]);}html+='</div>';container.innerHTML=html;attachLightbox();};
                     var fbScript=document.createElement('script');fbScript.src=base+'?'+fb.toString();fbScript.async=true;document.head.appendChild(fbScript);return;}
                 container.innerHTML='<p class="empty">No posts found.</p>';return;}
-                
             var display=posts.slice(0,MAX);var allLabels=[];for(var i=0;i<display.length;i++){var cats=(display[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}buildBreadcrumb(allLabels);
-            
             if(LABEL){var labelFreq={};for(var i=0;i<allLabels.length;i++){var l=allLabels[i];if(l!==LABEL){labelFreq[l]=(labelFreq[l]||0)+1;}}var sortedLabels=Object.keys(labelFreq).sort(function(a,b){return labelFreq[b]-labelFreq[a];}).slice(0,8);if(sortedLabels.length){$('relatedLabels').style.display='block';var rlHtml='Related: ';sortedLabels.forEach(function(l,i){rlHtml+='<a href="'+labelLink(l)+'">'+l+'</a>';if(i<sortedLabels.length-1)rlHtml+=', ';});$('relatedLabels').innerHTML=rlHtml;}}
-            
             var html='<p class="count-bar">Showing '+display.length+' leaked photos</p><div class="post-grid">';for(var k=0;k<display.length;k++){html+=renderCard(display[k]);}html+='</div>';container.innerHTML=html;attachLightbox();
-            
             var structuredPosts=[];for(var m=0;m<display.length;m++){var e=display[m];var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url)||'';var cats2=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);structuredPosts.push({'@type':'ImageObject','name':t,'url':link,'thumbnailUrl':thumb,'caption':altText(t,cats2),'keywords':cats2.join(', ')});}
             $('structuredData').textContent=JSON.stringify({'@context':'https://schema.org','@type':'CollectionPage','name':document.title,'description':$('siteDesc').textContent,'url':location.href,'mainEntity':{'@type':'ImageGallery','image':structuredPosts}},null,2);}
     })();
     </script>
-    {% include /ads/gobloggugel/sosmed.html %}
-    </div>
-    
 </body>
 </html>
