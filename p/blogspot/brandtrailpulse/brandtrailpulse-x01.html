@@ -243,9 +243,9 @@ CACHE_EXPIRE=30*60*1000;
                 
                 var breadHtml='<a href="'+BASE_PATH+'">Home</a>';
                 if(cats.length){breadHtml+=' <span style="color:#666">&rsaquo;</span> ';cats.slice(0,3).forEach(function(c,i){breadHtml+='<a href="'+labelLink(c)+'">'+c+'</a>';if(i<cats.slice(0,3).length-1)breadHtml+=', ';});}
-                breadHtml+=' <span style="color:#666">&rsaquo;</span> <span>'+title+'</span>';$('breadcrumb').innerHTML=breadHtml;
+                breadHtml+=' <span style="color:#666">&rsaquo;</span> <span>'+title+' on '+dn+'</span>';$('breadcrumb').innerHTML=breadHtml;
                 
-                var html='<article class="single-post-view"><h1 class="post-title">'+title+'</h1>';
+                var html='<article class="single-post-view"><h1 class="post-title">'+title+'  on '+dn+'</h1>';
                 if(cats.length){html+='<div class="single-post-labels">';cats.forEach(function(c){html+='<a href="'+labelLink(c)+'" class="single-post-label">'+c+'</a>';});html+='</div>';}
                 var snippet=content.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().substring(0,200);
                 html+='<p class="single-post-desc">View latest leaked photos and viral updates of <strong>'+title+'</strong> on '+dn+'. '+(snippet?(' — '+snippet+'...'):'')+'</p>';
