@@ -261,7 +261,7 @@ CACHE_EXPIRE=30*60*1000;
                     window.rp=function(rdata){var rfeed=rdata.feed;if(!rfeed||!rfeed.entry)return;var rentries=Array.isArray(rfeed.entry)?rfeed.entry:[rfeed.entry];
                         var filtered=rentries.filter(function(e){var eCats=(e.category||[]).map(function(c){return c.term;});return cats.some(function(c){return eCats.indexOf(c)!==-1;});}).slice(0,50);
                         if(!filtered.length)return;
-                        var rhtml='<div class="related-section"><h3>More Photos</h3><div class="related-grid">';
+                        var rhtml='<div class="related-section"><h3>More Photos of '+title+' on '+dn+'</h3><div class="related-grid">';
                         filtered.forEach(function(e){var t=e.title?.$t||'Untitled';var rlink=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url);var eCats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var rAlt=altText(t,eCats);
                             rhtml+='<a href="'+rlink+'" class="related-card">';if(thumb)rhtml+='<img class="related-card-img" src="'+thumb+'" alt="'+rAlt+'" loading="lazy" onerror="this.style.display=\'none\'">';
                             rhtml+='<span class="related-card-title">'+t+'</span>';
