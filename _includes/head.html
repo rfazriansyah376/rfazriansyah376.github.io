@@ -1,14 +1,13 @@
 <!-- ============================================ -->
-<!-- GOOGLE BOT FRIENDLY - DYNAMIC FAVICON        -->
+<!-- FAVICON 500px HD - TEKS CENTER SEMPURNA      -->
 <!-- ============================================ -->
 <script>
 (function() {
     // HAPUS FAVICON LAMA
-    document.querySelectorAll("link[rel*='icon'], link[rel='shortcut icon']").forEach(function(icon) {
+    document.querySelectorAll("link[rel*='icon'], link[rel='shortcut icon'], link[rel='apple-touch-icon']").forEach(function(icon) {
         icon.remove();
     });
 
-    // GENERATE WARNA DARI DOMAIN
     var hostname = window.location.hostname;
     var parts = hostname.split(".");
     var tldParts = 2;
@@ -69,7 +68,7 @@
     }
     if (initials.length < 3) initials = initials.padEnd(3, 'X');
 
-    // THEME COLOR (Google Bot baca ini)
+    // THEME COLOR
     var metaTheme = document.querySelector("meta[name='theme-color']");
     if (!metaTheme) {
         metaTheme = document.createElement("meta");
@@ -78,17 +77,30 @@
     }
     metaTheme.content = themeColor;
 
-    // FAVICON STANDAR GOOGLE (32x32 wajib)
-    var svgString = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">' +
+    // ============================================
+    // PERHITUNGAN POSISI TEKS YANG PRESISI
+    // ============================================
+    // viewBox 0 0 500 500
+    // Teks perlu center sempurna:
+    // - Posisi X: 250 (tengah horizontal)
+    // - Posisi Y: 285 (bukan 340, karena 3 huruf lebih besar)
+    // - Font size: 220 (lebih kecil dari 280 agar muat)
+    // - Letter spacing: 8px (agar 3 huruf tidak terlalu renggang)
+    
+    var svgString = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">' +
+        '<defs>' +
+            '<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">' +
+                '<stop offset="0%" stop-color="' + gradStart + '"/>' +
+                '<stop offset="100%" stop-color="' + gradEnd + '"/>' +
+            '</linearGradient>' +
+        '</defs>' +
         '<rect width="500" height="500" rx="110" fill="url(#g)"/>' +
-        '<text x="250" y="340" text-anchor="middle" fill="#ffffff" font-size="280" font-weight="900" font-family="Arial, sans-serif" letter-spacing="12">' + initials + '</text>' +
-        '<defs><linearGradient id="g"><stop offset="0%" stop-color="' + gradStart + '"/><stop offset="100%" stop-color="' + gradEnd + '"/></linearGradient></defs>' +
+        '<text x="250" y="310" text-anchor="middle" fill="#ffffff" font-size="230" font-weight="900" font-family="Arial, sans-serif" letter-spacing="6">' + initials + '</text>' +
         '</svg>';
 
     var encodedSvg = 'data:image/svg+xml,' + encodeURIComponent(svgString);
 
-    // UKURAN YANG GOOGLE REKOMENDASIKAN
-    // 32x32 adalah ukuran yang Google tampilkan di SERP
+    // PASANG FAVICON
     var link32 = document.createElement("link");
     link32.rel = "icon";
     link32.type = "image/svg+xml";
@@ -96,11 +108,15 @@
     link32.href = encodedSvg;
     document.head.appendChild(link32);
 
-    // Shortcut icon untuk fallback
     var shortcut = document.createElement("link");
     shortcut.rel = "shortcut icon";
     shortcut.href = encodedSvg;
     document.head.appendChild(shortcut);
+
+    var appleIcon = document.createElement("link");
+    appleIcon.rel = "apple-touch-icon";
+    appleIcon.href = encodedSvg;
+    document.head.appendChild(appleIcon);
 })();
 </script>
 
