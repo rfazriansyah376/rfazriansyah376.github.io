@@ -1,25 +1,10 @@
 <!-- ============================================ -->
-<!-- COMPLETE DYNAMIC FAVICON + MANIFEST + THEME  -->
-<!-- 500px HD - 3 huruf - Konsisten per domain    -->
+<!-- GOOGLE BOT FRIENDLY - DYNAMIC FAVICON        -->
 <!-- ============================================ -->
 <script>
 (function() {
-    // HAPUS SEMUA FAVICON LAMA
-    var semuaLink = document.querySelectorAll("link");
-    for (var i = 0; i < semuaLink.length; i++) {
-        var link = semuaLink[i];
-        var rel = link.getAttribute("rel") || "";
-        if (rel === "icon" || 
-            rel === "shortcut icon" || 
-            rel === "apple-touch-icon" ||
-            rel === "apple-touch-icon-precomposed" ||
-            rel.indexOf("icon") !== -1) {
-            link.remove();
-            i--;
-        }
-    }
-
-    document.querySelectorAll("link[rel*='icon'], link[rel='shortcut icon'], link[rel='apple-touch-icon']").forEach(function(icon) {
+    // HAPUS FAVICON LAMA
+    document.querySelectorAll("link[rel*='icon'], link[rel='shortcut icon']").forEach(function(icon) {
         icon.remove();
     });
 
@@ -65,12 +50,8 @@
     }
 
     var themeColor = hslToHex(hue, 70, 45);
-    var bgColor = hslToHex(hue, 75, 55);
     var gradStart = hslToHex(hue, 75, 58);
     var gradEnd = hslToHex((hue + 45) % 360, 85, 48);
-    var shadowColor = hslToHex(hue, 70, 20);
-    var highlightColor = hslToHex(hue, 80, 75);
-    var textColor = "#ffffff";
 
     // INISIAL 3 HURUF
     var words = fullName.split("-");
@@ -88,7 +69,7 @@
     }
     if (initials.length < 3) initials = initials.padEnd(3, 'X');
 
-    // THEME COLOR (browser mobile)
+    // THEME COLOR (Google Bot baca ini)
     var metaTheme = document.querySelector("meta[name='theme-color']");
     if (!metaTheme) {
         metaTheme = document.createElement("meta");
@@ -97,136 +78,31 @@
     }
     metaTheme.content = themeColor;
 
-    var msTile = document.querySelector("meta[name='msapplication-TileColor']");
-    if (!msTile) {
-        msTile = document.createElement("meta");
-        msTile.name = "msapplication-TileColor";
-        document.head.appendChild(msTile);
-    }
-    msTile.content = themeColor;
-
-    var msNavColor = document.querySelector("meta[name='msapplication-navbutton-color']");
-    if (!msNavColor) {
-        msNavColor = document.createElement("meta");
-        msNavColor.name = "msapplication-navbutton-color";
-        document.head.appendChild(msNavColor);
-    }
-    msNavColor.content = themeColor;
-
-    var mobileColor = document.querySelector("meta[name='mobile-web-app-capable']");
-    if (!mobileColor) {
-        mobileColor = document.createElement("meta");
-        mobileColor.name = "mobile-web-app-capable";
-        mobileColor.content = "yes";
-        document.head.appendChild(mobileColor);
-    }
-
-    // FAVICON SVG 500px
-    var svgString = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">' +
-        '<defs>' +
-            '<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">' +
-                '<stop offset="0%" stop-color="' + gradStart + '"/>' +
-                '<stop offset="100%" stop-color="' + gradEnd + '"/>' +
-            '</linearGradient>' +
-            '<linearGradient id="s" x1="0%" y1="0%" x2="100%" y2="100%">' +
-                '<stop offset="0%" stop-color="' + highlightColor + '" stop-opacity="0.3"/>' +
-                '<stop offset="100%" stop-color="' + highlightColor + '" stop-opacity="0"/>' +
-            '</linearGradient>' +
-            '<filter id="d">' +
-                '<feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="' + shadowColor + '" flood-opacity="0.5"/>' +
-            '</filter>' +
-        '</defs>' +
-        '<rect x="8" y="12" width="484" height="484" rx="110" fill="' + shadowColor + '" opacity="0.3"/>' +
-        '<rect width="500" height="500" rx="110" fill="url(#g)" filter="url(#d)"/>' +
-        '<rect width="500" height="250" rx="110" fill="url(#s)"/>' +
-        '<rect x="6" y="6" width="488" height="488" rx="104" fill="none" stroke="' + highlightColor + '" stroke-width="3" opacity="0.4"/>' +
-        '<text x="250" y="340" text-anchor="middle" fill="' + textColor + '" font-size="280" font-weight="900" font-family="Arial, sans-serif" letter-spacing="12">' + initials + '</text>' +
+    // FAVICON STANDAR GOOGLE (32x32 wajib)
+    var svgString = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">' +
+        '<rect width="500" height="500" rx="110" fill="url(#g)"/>' +
+        '<text x="250" y="340" text-anchor="middle" fill="#ffffff" font-size="280" font-weight="900" font-family="Arial, sans-serif" letter-spacing="12">' + initials + '</text>' +
+        '<defs><linearGradient id="g"><stop offset="0%" stop-color="' + gradStart + '"/><stop offset="100%" stop-color="' + gradEnd + '"/></linearGradient></defs>' +
         '</svg>';
 
     var encodedSvg = 'data:image/svg+xml,' + encodeURIComponent(svgString);
 
-    // REGULAR ICON (berbagai ukuran)
-    var ukuran = ["16x16", "32x32", "64x64", "96x96", "128x128", "192x192", "256x256", "512x512"];
-    for (var u = 0; u < ukuran.length; u++) {
-        var linkBaru = document.createElement("link");
-        linkBaru.rel = "icon";
-        linkBaru.type = "image/svg+xml";
-        linkBaru.sizes = ukuran[u];
-        linkBaru.href = encodedSvg;
-        document.head.appendChild(linkBaru);
-    }
+    // UKURAN YANG GOOGLE REKOMENDASIKAN
+    // 32x32 adalah ukuran yang Google tampilkan di SERP
+    var link32 = document.createElement("link");
+    link32.rel = "icon";
+    link32.type = "image/svg+xml";
+    link32.sizes = "32x32";
+    link32.href = encodedSvg;
+    document.head.appendChild(link32);
 
-    // SHORTCUT ICON
-    var shortcutBaru = document.createElement("link");
-    shortcutBaru.rel = "shortcut icon";
-    shortcutBaru.href = encodedSvg;
-    document.head.appendChild(shortcutBaru);
-
-    // APPLE TOUCH ICON
-    var appleSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">' +
-        '<rect width="500" height="500" rx="110" fill="' + gradStart + '"/>' +
-        '<text x="250" y="340" text-anchor="middle" fill="' + textColor + '" font-size="280" font-weight="900" font-family="Arial, sans-serif" letter-spacing="12">' + initials + '</text>' +
-        '</svg>';
-    
-    var appleBaru = document.createElement("link");
-    appleBaru.rel = "apple-touch-icon";
-    appleBaru.sizes = "180x180";
-    appleBaru.href = 'data:image/svg+xml,' + encodeURIComponent(appleSvg);
-    document.head.appendChild(appleBaru);
-
-    var applePad = document.createElement("link");
-    applePad.rel = "apple-touch-icon";
-    applePad.sizes = "167x167";
-    applePad.href = 'data:image/svg+xml,' + encodeURIComponent(appleSvg);
-    document.head.appendChild(applePad);
-
-    var applePhone = document.createElement("link");
-    applePhone.rel = "apple-touch-icon";
-    applePhone.sizes = "120x120";
-    applePhone.href = 'data:image/svg+xml,' + encodeURIComponent(appleSvg);
-    document.head.appendChild(applePhone);
-
-    // MANIFEST.JSON DINAMIS
-    var manifestJson = {
-        name: fullName,
-        short_name: initials,
-        description: fullName + " - Dynamic Content",
-        start_url: "/",
-        display: "standalone",
-        theme_color: themeColor,
-        background_color: bgColor,
-        icons: [
-            { src: encodedSvg, sizes: "16x16", type: "image/svg+xml", purpose: "any" },
-            { src: encodedSvg, sizes: "32x32", type: "image/svg+xml", purpose: "any" },
-            { src: encodedSvg, sizes: "64x64", type: "image/svg+xml", purpose: "any" },
-            { src: encodedSvg, sizes: "128x128", type: "image/svg+xml", purpose: "any" },
-            { src: encodedSvg, sizes: "192x192", type: "image/svg+xml", purpose: "any" },
-            { src: encodedSvg, sizes: "256x256", type: "image/svg+xml", purpose: "any" },
-            { src: encodedSvg, sizes: "512x512", type: "image/svg+xml", purpose: "any" }
-        ]
-    };
-
-    var manifestBlob = new Blob([JSON.stringify(manifestJson)], {type: "application/json"});
-    var manifestUrl = URL.createObjectURL(manifestBlob);
-
-    var oldManifest = document.querySelector("link[rel='manifest']");
-    if (oldManifest) oldManifest.remove();
-
-    var manifestLink = document.createElement("link");
-    manifestLink.rel = "manifest";
-    manifestLink.href = manifestUrl;
-    document.head.appendChild(manifestLink);
-
-    // MASK ICON (Safari)
-    var maskIcon = document.createElement("link");
-    maskIcon.rel = "mask-icon";
-    maskIcon.href = encodedSvg;
-    maskIcon.setAttribute("color", themeColor);
-    document.head.appendChild(maskIcon);
+    // Shortcut icon untuk fallback
+    var shortcut = document.createElement("link");
+    shortcut.rel = "shortcut icon";
+    shortcut.href = encodedSvg;
+    document.head.appendChild(shortcut);
 })();
 </script>
-
-
 
 
 
@@ -266,5 +142,3 @@
 
 
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-
-
