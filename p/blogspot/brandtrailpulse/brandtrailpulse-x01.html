@@ -185,7 +185,7 @@ permalink: /brandtrailpulse-x01/
         (function(){var hue=0;for(var i=0;i<host.length;i++){hue=((hue<<5)-hue)+host.charCodeAt(i);hue=hue&hue;}hue=Math.abs(hue)%360;var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="80" fill="hsl('+hue+',60%,45%)"/><text x="256" y="340" text-anchor="middle" fill="#fff" font-size="280" font-weight="800" font-family="system-ui,-apple-system,sans-serif">'+letters+'</text></svg>';$('favicon').href='data:image/svg+xml,'+encodeURIComponent(svg);})();
         
         // CONFIG
-        var BLOG_ID='868720620397212677',MAX_POSTS_PER_PAGE=30,
+        var BLOG_ID='868720620397212677',MAX_POSTS_PER_PAGE=300,
 DEFAULT_START_INDEX=1,
 DEFAULT_LABEL='blog',
 BASE_PATH='/brandtrailpulse-x01/';
@@ -280,71 +280,12 @@ BASE_PATH='/brandtrailpulse-x01/';
         // GRID MODE
         var si=$('searchInput');if(si&&LABEL&&LABEL!==DEFAULT_LABEL)si.value=LABEL;
         if(LABEL&&LABEL!==DEFAULT_LABEL){$('searchHint').textContent='Showing results for: '+LABEL;}else{$('searchHint').textContent='Try: name leaked, viral, latest, exclusive';}
+        if(LABEL&&LABEL!==DEFAULT_LABEL){var il2=/leak|viral|latest|exclusive|hot|new/i.test(LABEL);var pt,pd;if(il2){pt=LABEL+' — '+dn;pd='View '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'.';}else{pt=LABEL+' Leaked Photos & Viral Updates — '+dn;pd='View latest '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'. Browse the full collection.';}document.title=pt;$('pageHeading').textContent=LABEL;$('siteDesc').textContent=pd;var md2=document.createElement('meta');md2.name='description';md2.content=pd;document.head.appendChild(md2);$('filterBar').style.display='flex';$('filterBar').innerHTML='Category: <strong>'+LABEL+'</strong> <a href="'+BASE_PATH+'">Clear</a>';$('labelDesc').style.display='block';$('labelDesc').innerHTML='Browse <strong>'+LABEL+'</strong> leaked photos, viral content, and exclusive updates on '+dn+'. Find the latest '+LABEL+' images in this collection.';}else{document.title=dn+' — Leaked Photos & Viral Collection';$('pageHeading').textContent=dn;$('siteDesc').textContent='Latest leaked photos, viral content, and exclusive updates. Browse the full collection.';var md3=document.createElement('meta');md3.name='description';md3.content='Latest leaked photos, viral content, and exclusive updates on '+dn+'. New photos added regularly.';document.head.appendChild(md3);}
         
-        if(LABEL&&LABEL!==DEFAULT_LABEL){
-            var il2=/leak|viral|latest|exclusive|hot|new/i.test(LABEL);var pt,pd;
-            if(il2){pt=LABEL+' — '+dn;pd='View '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'.';}
-            else{pt=LABEL+' Leaked Photos & Viral Updates — '+dn;pd='View latest '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'. Browse the full collection.';}
-            document.title=pt;$('pageHeading').textContent=LABEL;$('siteDesc').textContent=pd;
-            var md2=document.createElement('meta');md2.name='description';md2.content=pd;document.head.appendChild(md2);
-            $('filterBar').style.display='flex';$('filterBar').innerHTML='Category: <strong>'+LABEL+'</strong> <a href="'+BASE_PATH+'">Clear</a>';
-            $('labelDesc').style.display='block';$('labelDesc').innerHTML='Browse <strong>'+LABEL+'</strong> leaked photos, viral content, and exclusive updates on '+dn+'. Find the latest '+LABEL+' images in this collection.';
-        }else{
-            document.title=dn+' — Leaked Photos & Viral Collection';$('pageHeading').textContent=dn;
-            $('siteDesc').textContent='Latest leaked photos, viral content, and exclusive updates. Browse the full collection.';
-            var md3=document.createElement('meta');md3.name='description';md3.content='Latest leaked photos, viral content, and exclusive updates on '+dn+'. New photos added regularly.';document.head.appendChild(md3);
-        }
+        function fetchPosts(callback){var fp=new URLSearchParams();fp.set('alt','json-in-script');fp.set('callback','hp');fp.set('max-results',MAX);fp.set('start-index',START);if(LABEL&&LABEL!==DEFAULT_LABEL){fp.set('category',LABEL);}window.hp=function(data){var feed=data.feed;if(!feed||!feed.entry){callback([],0);return;}var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];var totalResults=feed.openSearch$totalResults?.$t||entries.length;callback(entries,parseInt(totalResults));};var s=document.createElement('script');s.src=base+'?'+fp.toString();s.async=true;s.onerror=function(){callback([],0);};document.head.appendChild(s);}
+        fetchPosts(function(posts,totalResults){renderGrid(posts,totalResults);});
         
-        function fetchPosts(callback,useLabel){
-            var fp=new URLSearchParams();
-            fp.set('alt','json-in-script');
-            fp.set('callback','hp');
-            fp.set('max-results',MAX);
-            fp.set('start-index',START);
-            if(useLabel&&LABEL&&LABEL!==DEFAULT_LABEL){fp.set('category',LABEL);}
-            window.hp=function(data){var feed=data.feed;if(!feed||!feed.entry){callback([],0);return;}var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];var totalResults=feed.openSearch$totalResults?.$t||entries.length;callback(entries,parseInt(totalResults));};
-            var s=document.createElement('script');s.src=base+'?'+fp.toString();s.async=true;s.onerror=function(){callback([],0);};document.head.appendChild(s);
-        }
-        
-        // First try: fetch dengan label
-        fetchPosts(function(posts,totalResults){
-            if(posts.length>0||LABEL===DEFAULT_LABEL||!LABEL){
-                // Ada hasil atau memang tidak pakai label khusus
-                renderGrid(posts,totalResults);
-            }else{
-                // Tidak ada hasil dengan label ini, coba fallback
-                var fb=new URLSearchParams();
-                fb.set('alt','json-in-script');
-                fb.set('callback','hpfb');
-                fb.set('max-results','10');
-                fb.set('start-index','1');
-                
-                window.hpfb=function(data){var feed=data.feed;var fbPosts=[];if(feed&&feed.entry){fbPosts=Array.isArray(feed.entry)?feed.entry:[feed.entry];}
-                    if(!fbPosts.length){$('mainContent').innerHTML='<p class="empty">No posts found.</p>';return;}
-                    var infoBar=document.createElement('div');infoBar.className='info-msg';
-                    infoBar.innerHTML='No results for "<strong>'+LABEL+'</strong>". Showing latest posts instead.';
-                    $('mainContent').parentNode.insertBefore(infoBar,$('mainContent'));
-                    $('filterBar').style.display='none';$('pageHeading').textContent=dn;
-                    document.title=dn+' — Leaked Photos & Viral Collection';
-                    $('labelDesc').style.display='none';$('relatedLabels').style.display='none';
-                    var allLabels=[];for(var i=0;i<fbPosts.length;i++){var cats=(fbPosts[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}
-                    buildBreadcrumb(allLabels);
-                    var html='<p class="count-bar">Showing '+fbPosts.length+' latest leaked photos</p><div class="post-grid">';
-                    for(var k=0;k<fbPosts.length;k++){html+=renderCard(fbPosts[k]);}
-                    html+='</div>';$('mainContent').innerHTML=html;attachLightbox();
-                };
-                var fbScript=document.createElement('script');fbScript.src=base+'?'+fb.toString();fbScript.async=true;document.head.appendChild(fbScript);
-            }
-        },true);
-        
-        function renderGrid(posts,totalResults){var container=$('mainContent');
-            if(!posts.length){container.innerHTML='<p class="empty">No posts found.</p>';return;}
-            var display=posts.slice(0,MAX);var allLabels=[];for(var i=0;i<display.length;i++){var cats=(display[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}buildBreadcrumb(allLabels);
-            if(LABEL&&LABEL!==DEFAULT_LABEL){var labelFreq={};for(var i=0;i<allLabels.length;i++){var l=allLabels[i];if(l!==LABEL){labelFreq[l]=(labelFreq[l]||0)+1;}}var sortedLabels=Object.keys(labelFreq).sort(function(a,b){return labelFreq[b]-labelFreq[a];}).slice(0,8);if(sortedLabels.length){$('relatedLabels').style.display='block';var rlHtml='Related: ';sortedLabels.forEach(function(l,i){rlHtml+='<a href="'+labelLink(l)+'">'+l+'</a>';if(i<sortedLabels.length-1)rlHtml+=', ';});$('relatedLabels').innerHTML=rlHtml;}}
-            var showingText='Showing '+display.length+' leaked photos';if(totalResults>display.length){showingText+=' (of '+totalResults+' total)';}
-            var html='<p class="count-bar">'+showingText+'</p><div class="post-grid">';for(var k=0;k<display.length;k++){html+=renderCard(display[k]);}html+='</div>';container.innerHTML=html;attachLightbox();buildPagination(totalResults);
-            var structuredPosts=[];for(var m=0;m<display.length;m++){var e=display[m];var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url)||'';var cats2=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);structuredPosts.push({'@type':'ImageObject','name':t,'url':link,'thumbnailUrl':thumb,'caption':altText(t,cats2),'keywords':cats2.join(', ')});}
-            $('structuredData').textContent=JSON.stringify({'@context':'https://schema.org','@type':'CollectionPage','name':document.title,'description':$('siteDesc').textContent,'url':location.href,'mainEntity':{'@type':'ImageGallery','image':structuredPosts}},null,2);}
+        function renderGrid(posts,totalResults){var container=$('mainContent');if(!posts.length){if(LABEL&&LABEL!==DEFAULT_LABEL){container.innerHTML='<p class="empty">No posts found for "<strong>'+LABEL+'</strong>". <a href="'+BASE_PATH+'" style="color:#e94560">Back to home</a></p>';$('relatedLabels').style.display='none';return;}container.innerHTML='<p class="empty">No posts found.</p>';return;}var display=posts.slice(0,MAX);var allLabels=[];for(var i=0;i<display.length;i++){var cats=(display[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}buildBreadcrumb(allLabels);if(LABEL&&LABEL!==DEFAULT_LABEL){var labelFreq={};for(var i=0;i<allLabels.length;i++){var l=allLabels[i];if(l!==LABEL){labelFreq[l]=(labelFreq[l]||0)+1;}}var sortedLabels=Object.keys(labelFreq).sort(function(a,b){return labelFreq[b]-labelFreq[a];}).slice(0,8);if(sortedLabels.length){$('relatedLabels').style.display='block';var rlHtml='Related: ';sortedLabels.forEach(function(l,i){rlHtml+='<a href="'+labelLink(l)+'">'+l+'</a>';if(i<sortedLabels.length-1)rlHtml+=', ';});$('relatedLabels').innerHTML=rlHtml;}}var showingText='Showing '+display.length+' leaked photos';if(totalResults>display.length){showingText+=' (of '+totalResults+' total)';}var html='<p class="count-bar">'+showingText+'</p><div class="post-grid">';for(var k=0;k<display.length;k++){html+=renderCard(display[k]);}html+='</div>';container.innerHTML=html;attachLightbox();buildPagination(totalResults);var structuredPosts=[];for(var m=0;m<display.length;m++){var e=display[m];var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url)||'';var cats2=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);structuredPosts.push({'@type':'ImageObject','name':t,'url':link,'thumbnailUrl':thumb,'caption':altText(t,cats2),'keywords':cats2.join(', ')});}$('structuredData').textContent=JSON.stringify({'@context':'https://schema.org','@type':'CollectionPage','name':document.title,'description':$('siteDesc').textContent,'url':location.href,'mainEntity':{'@type':'ImageGallery','image':structuredPosts}},null,2);}
     })();
     </script>
         {% include /ads/gobloggugel/sosmed.html %}
