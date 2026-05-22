@@ -16,7 +16,8 @@ permalink: /brandtrailpulse-x01/
     <link rel="alternate" type="application/atom+xml" title="RSS Feed" id="rssFeed" href="">
     <link rel="icon" type="image/svg+xml" id="favicon" href="">
     <style>
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        *,*::before,*::after{box-sizing:border-box}
+        body,h1,h2,p,.header,.search-wrap,.filter-bar,.post-grid,.post-card,.post-card h2{margin:0;padding:0}
         body{font-family:system-ui,-apple-system,sans-serif;max-width:100%;margin:0 auto;padding:70px 8px 20px;background:#0a0a0a;color:#e0e0e0;line-height:1.5}
         .header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#111;box-shadow:0 1px 4px rgba(0,0,0,.5);position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid #222}
         .header-brand{display:flex;align-items:center;gap:10px;min-width:0}
@@ -84,6 +85,11 @@ permalink: /brandtrailpulse-x01/
         .error{color:#e94560}
         footer{margin-top:32px;padding-top:16px;border-top:1px solid #222;text-align:center;font-size:11px;color:#666}
         .count-bar{font-size:11px;color:#666;margin-bottom:12px}
+        .pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:20px;flex-wrap:wrap}
+        .pagination a,.pagination span{display:inline-block;padding:8px 14px;background:#1a1a1a;color:#ccc;text-decoration:none;border-radius:6px;font-size:13px;border:1px solid #333}
+        .pagination a:hover{background:#e94560;color:#fff;border-color:#e94560}
+        .pagination .current{background:#e94560;color:#fff;border-color:#e94560;font-weight:600}
+        .pagination .disabled{opacity:0.4;pointer-events:none}
         .lightbox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);z-index:9999;touch-action:pan-x;animation:lbFadeIn 0.2s ease}
         .lightbox.active{display:flex;align-items:center;justify-content:center}
         @keyframes lbFadeIn{from{opacity:0}to{opacity:1}}
@@ -179,7 +185,7 @@ permalink: /brandtrailpulse-x01/
         (function(){var hue=0;for(var i=0;i<host.length;i++){hue=((hue<<5)-hue)+host.charCodeAt(i);hue=hue&hue;}hue=Math.abs(hue)%360;var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="80" fill="hsl('+hue+',60%,45%)"/><text x="256" y="340" text-anchor="middle" fill="#fff" font-size="280" font-weight="800" font-family="system-ui,-apple-system,sans-serif">'+letters+'</text></svg>';$('favicon').href='data:image/svg+xml,'+encodeURIComponent(svg);})();
         
         // CONFIG
-        var BLOG_ID='868720620397212677',MAX_POSTS_PER_PAGE=5555,
+        var BLOG_ID='868720620397212677',MAX_POSTS_PER_PAGE=30,
 DEFAULT_START_INDEX=1,
 DEFAULT_LABEL='blog',
 BASE_PATH='/brandtrailpulse-x01/';
@@ -194,6 +200,7 @@ BASE_PATH='/brandtrailpulse-x01/';
         function altText(t,c){var p=[t];if(c&&c.length)p.push(c.join(', '));return p.filter(Boolean).join(' - ');}
         function il(u){if(!u)return'#';try{var ur=new URL(u);var slug=ur.pathname.split('/').pop().replace('.html','');return BASE_PATH+'?p='+slug;}catch(e){}return u;}
         function labelLink(label){return BASE_PATH+'?label='+label;}
+        function pageLink(start){var params=new URLSearchParams(location.search);params.set('start-index',start);params.set('max-results',MAX);return BASE_PATH+'?'+params.toString();}
         var base='https://www.blogger.com/feeds/'+BLOG_ID+'/posts/default';
         
         // LIGHTBOX
@@ -210,11 +217,14 @@ BASE_PATH='/brandtrailpulse-x01/';
             if(img.classList.contains('post-card-img')){var setSpan=function(){var ratio=img.naturalHeight/img.naturalWidth;var span=Math.ceil(ratio*12);if(span<14)span=14;if(span>40)span=40;img.closest('.post-card').style.setProperty('--row-span',span);};if(img.complete&&img.naturalWidth>0){setSpan();}else{img.onload=setSpan;}}
         }});}
         
-        // RENDER CARD - OVERLAY
+        // RENDER CARD
         function renderCard(e){var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var content=e.content?.$t||e.summary?.$t||'';var thumb=hd(e.media$thumbnail?.url)||(function(c){if(!c)return null;var d=document.createElement('div');d.innerHTML=c;var i=d.querySelector('img');return i?hd(i.src):null;})(content);var cats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var imgAlt=altText(t,cats);var imgAltSafe=imgAlt.replace(/"/g,'&quot;').replace(/'/g,'&#39;');var html='<article class="post-card">';if(thumb){html+='<img class="post-card-img" src="'+thumb+'" alt="'+imgAltSafe+'" title="'+imgAltSafe+'" data-alt="'+imgAltSafe+'" loading="lazy" onerror="this.style.display=\'none\'">';}html+='<div class="post-card-info"><h2><a href="'+link+'">'+t+'</a></h2></div></article>';return html;}
         
         // BREADCRUMB
         function buildBreadcrumb(allLabels){var html='<ul class="spo">';var uniqueLabels=[];for(var i=0;i<allLabels.length;i++){if(uniqueLabels.indexOf(allLabels[i])===-1)uniqueLabels.push(allLabels[i]);}for(var j=0;j<uniqueLabels.length;j++){var lbl=uniqueLabels[j];var link=labelLink(lbl);html+='<li><a href="'+link+'">'+lbl+'</a></li>';}html+='</ul>';$('breadcrumb').innerHTML=html;var schemaItems=[{'@type':'ListItem','position':1,'name':'Home','item':location.origin+BASE_PATH}];for(var k=0;k<uniqueLabels.length;k++){schemaItems.push({'@type':'ListItem','position':k+2,'name':uniqueLabels[k],'item':location.origin+labelLink(uniqueLabels[k])});}$('breadcrumbSchema').textContent=JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':schemaItems},null,2);}
+        
+        // BUILD PAGINATION
+        function buildPagination(totalResults){var totalPages=Math.ceil(totalResults/MAX);if(totalPages<=1){$('pagination').innerHTML='';return;}var currentPage=Math.ceil(START/MAX);var html='';if(currentPage>1){html+='<a href="'+pageLink(START-MAX)+'">&laquo; Prev</a>';}else{html+='<span class="disabled">&laquo; Prev</span>';}for(var i=1;i<=totalPages;i++){var pageStart=(i-1)*MAX+1;if(i===currentPage){html+='<span class="current">'+i+'</span>';}else{html+='<a href="'+pageLink(pageStart)+'">'+i+'</a>';}}if(currentPage<totalPages){html+='<a href="'+pageLink(START+MAX)+'">Next &raquo;</a>';}else{html+='<span class="disabled">Next &raquo;</span>';}$('pagination').innerHTML=html;}
         
         // SINGLE POST MODE
         if(POST_SLUG){
@@ -239,7 +249,7 @@ BASE_PATH='/brandtrailpulse-x01/';
                 if(cats.length){breadHtml+=' <span style="color:#666">&rsaquo;</span> ';cats.slice(0,3).forEach(function(c,i){breadHtml+='<a href="'+labelLink(c)+'">'+c+'</a>';if(i<cats.slice(0,3).length-1)breadHtml+=', ';});}
                 breadHtml+=' <span style="color:#666">&rsaquo;</span> <span>'+title+' on '+dn+'</span>';$('breadcrumb').innerHTML=breadHtml;
                 
-                var html='<article class="single-post-view"><h1 class="post-title">'+title+'  on '+dn+'</h1>';
+                var html='<article class="single-post-view"><h1 class="post-title">'+title+' on '+dn+'</h1>';
                 if(cats.length){html+='<div class="single-post-labels">';cats.forEach(function(c){html+='<a href="'+labelLink(c)+'" class="single-post-label">'+c+'</a>';});html+='</div>';}
                 var snippet=content.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().substring(0,200);
                 html+='<p class="single-post-desc">View latest leaked photos and viral updates of <strong>'+title+'</strong> on '+dn+'. '+(snippet?(' — '+snippet+'...'):'')+'</p>';
@@ -251,9 +261,9 @@ BASE_PATH='/brandtrailpulse-x01/';
                 container.innerHTML=html;$('pagination').innerHTML='';setTimeout(function(){attachLightbox();},100);
                 
                 if(cats.length){
-                    var relatedUrl=base+'?alt=json-in-script&callback=rp&max-results=50';
+                    var relatedUrl=base+'?alt=json-in-script&callback=rp&max-results=50&category='+encodeURIComponent(cats[0]);
                     window.rp=function(rdata){var rfeed=rdata.feed;if(!rfeed||!rfeed.entry)return;var rentries=Array.isArray(rfeed.entry)?rfeed.entry:[rfeed.entry];
-                        var filtered=rentries.filter(function(e){var eCats=(e.category||[]).map(function(c){return c.term;});return cats.some(function(c){return eCats.indexOf(c)!==-1;});}).slice(0,50);
+                        var filtered=rentries.filter(function(e){var elink=(e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'';var eslug=elink.split('/').pop().replace('.html','');return eslug!==POST_SLUG;}).slice(0,20);
                         if(!filtered.length)return;
                         var rhtml='<div class="related-section"><h3>More Photos of '+title+' on '+dn+'</h3><div class="related-grid">';
                         filtered.forEach(function(e){var t=e.title?.$t||'Untitled';var rlink=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url);var eCats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var rAlt=altText(t,eCats);
@@ -272,14 +282,21 @@ BASE_PATH='/brandtrailpulse-x01/';
         if(LABEL)$('searchHint').textContent='Showing results for: '+LABEL;else $('searchHint').textContent='Try: name leaked, viral, latest, exclusive';
         if(LABEL){var il2=/leak|viral|latest|exclusive|hot|new/i.test(LABEL);var pt,pd;if(il2){pt=LABEL+' — '+dn;pd='View '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'.';}else{pt=LABEL+' Leaked Photos & Viral Updates — '+dn;pd='View latest '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'. Browse the full collection.';}document.title=pt;$('pageHeading').textContent=LABEL;$('siteDesc').textContent=pd;var md2=document.createElement('meta');md2.name='description';md2.content=pd;document.head.appendChild(md2);$('filterBar').style.display='flex';$('filterBar').innerHTML='Category: <strong>'+LABEL+'</strong> <a href="'+BASE_PATH+'">Clear</a>';$('labelDesc').style.display='block';$('labelDesc').innerHTML='Browse <strong>'+LABEL+'</strong> leaked photos, viral content, and exclusive updates on '+dn+'. Find the latest '+LABEL+' images in this collection.';}else{document.title=dn+' — Leaked Photos & Viral Collection';$('pageHeading').textContent=dn;$('siteDesc').textContent='Latest leaked photos, viral content, and exclusive updates. Browse the full collection.';var md3=document.createElement('meta');md3.name='description';md3.content='Latest leaked photos, viral content, and exclusive updates on '+dn+'. New photos added regularly.';document.head.appendChild(md3);}
         
-        function fetchPosts(callback){var fp=new URLSearchParams();fp.set('alt','json-in-script');fp.set('callback','hp');fp.set('max-results',MAX);fp.set('start-index',START);
-            window.hp=function(data){var feed=data.feed;if(!feed||!feed.entry){callback([]);return;}var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];if(LABEL){entries=entries.filter(function(post){var cats=(post.category||[]).map(function(c){return c.term;});return cats.indexOf(LABEL)!==-1;});}callback(entries);};
-            var s=document.createElement('script');s.src=base+'?'+fp.toString();s.async=true;s.onerror=function(){callback([]);};document.head.appendChild(s);}
+        function fetchPosts(callback){
+            var fp=new URLSearchParams();
+            fp.set('alt','json-in-script');
+            fp.set('callback','hp');
+            fp.set('max-results',MAX);
+            fp.set('start-index',START);
+            if(LABEL&&LABEL!==DEFAULT_LABEL){fp.set('category',LABEL);}
+            window.hp=function(data){var feed=data.feed;if(!feed||!feed.entry){callback([],0);return;}var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];var totalResults=feed.openSearch$totalResults?.$t||entries.length;callback(entries,parseInt(totalResults));};
+            var s=document.createElement('script');s.src=base+'?'+fp.toString();s.async=true;s.onerror=function(){callback([],0);};document.head.appendChild(s);
+        }
         
-        fetchPosts(function(posts){renderGrid(posts);});
+        fetchPosts(function(posts,totalResults){renderGrid(posts,totalResults);});
         
-        function renderGrid(posts){var container=$('mainContent');
-            if(!posts.length){if(LABEL){var fb=new URLSearchParams();fb.set('alt','json-in-script');fb.set('callback','hpfb');fb.set('max-results','10');fb.set('start-index','1');
+        function renderGrid(posts,totalResults){var container=$('mainContent');
+            if(!posts.length){if(LABEL&&LABEL!==DEFAULT_LABEL){var fb=new URLSearchParams();fb.set('alt','json-in-script');fb.set('callback','hpfb');fb.set('max-results','10');fb.set('start-index','1');
                     window.hpfb=function(data){var feed=data.feed;var fbPosts=[];if(feed&&feed.entry){fbPosts=Array.isArray(feed.entry)?feed.entry:[feed.entry];}if(!fbPosts.length){container.innerHTML='<p class="empty">No posts found.</p>';return;}
                         var infoBar=document.createElement('div');infoBar.className='info-msg';infoBar.innerHTML='No results for "<strong>'+LABEL+'</strong>". Showing latest posts instead.';container.parentNode.insertBefore(infoBar,container);
                         $('filterBar').style.display='none';$('pageHeading').textContent=dn;document.title=dn+' — Leaked Photos & Viral Collection';$('labelDesc').style.display='none';$('relatedLabels').style.display='none';
@@ -288,8 +305,9 @@ BASE_PATH='/brandtrailpulse-x01/';
                     var fbScript=document.createElement('script');fbScript.src=base+'?'+fb.toString();fbScript.async=true;document.head.appendChild(fbScript);return;}
                 container.innerHTML='<p class="empty">No posts found.</p>';return;}
             var display=posts.slice(0,MAX);var allLabels=[];for(var i=0;i<display.length;i++){var cats=(display[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}buildBreadcrumb(allLabels);
-            if(LABEL){var labelFreq={};for(var i=0;i<allLabels.length;i++){var l=allLabels[i];if(l!==LABEL){labelFreq[l]=(labelFreq[l]||0)+1;}}var sortedLabels=Object.keys(labelFreq).sort(function(a,b){return labelFreq[b]-labelFreq[a];}).slice(0,8);if(sortedLabels.length){$('relatedLabels').style.display='block';var rlHtml='Related: ';sortedLabels.forEach(function(l,i){rlHtml+='<a href="'+labelLink(l)+'">'+l+'</a>';if(i<sortedLabels.length-1)rlHtml+=', ';});$('relatedLabels').innerHTML=rlHtml;}}
-            var html='<p class="count-bar">Showing '+display.length+' leaked photos</p><div class="post-grid">';for(var k=0;k<display.length;k++){html+=renderCard(display[k]);}html+='</div>';container.innerHTML=html;attachLightbox();
+            if(LABEL&&LABEL!==DEFAULT_LABEL){var labelFreq={};for(var i=0;i<allLabels.length;i++){var l=allLabels[i];if(l!==LABEL){labelFreq[l]=(labelFreq[l]||0)+1;}}var sortedLabels=Object.keys(labelFreq).sort(function(a,b){return labelFreq[b]-labelFreq[a];}).slice(0,8);if(sortedLabels.length){$('relatedLabels').style.display='block';var rlHtml='Related: ';sortedLabels.forEach(function(l,i){rlHtml+='<a href="'+labelLink(l)+'">'+l+'</a>';if(i<sortedLabels.length-1)rlHtml+=', ';});$('relatedLabels').innerHTML=rlHtml;}}
+            var showingText='Showing '+display.length+' leaked photos';if(totalResults>display.length){showingText+=' (of '+totalResults+' total)';}
+            var html='<p class="count-bar">'+showingText+'</p><div class="post-grid">';for(var k=0;k<display.length;k++){html+=renderCard(display[k]);}html+='</div>';container.innerHTML=html;attachLightbox();buildPagination(totalResults);
             var structuredPosts=[];for(var m=0;m<display.length;m++){var e=display[m];var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url)||'';var cats2=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);structuredPosts.push({'@type':'ImageObject','name':t,'url':link,'thumbnailUrl':thumb,'caption':altText(t,cats2),'keywords':cats2.join(', ')});}
             $('structuredData').textContent=JSON.stringify({'@context':'https://schema.org','@type':'CollectionPage','name':document.title,'description':$('siteDesc').textContent,'url':location.href,'mainEntity':{'@type':'ImageGallery','image':structuredPosts}},null,2);}
     })();
