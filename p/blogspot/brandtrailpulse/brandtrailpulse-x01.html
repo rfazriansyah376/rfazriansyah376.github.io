@@ -14,7 +14,7 @@ permalink: /brandtrailpulse-x01/
     <link rel="dns-prefetch" href="https://www.blogger.com">
     <link rel="canonical" id="canonicalUrl" href="">
     <link rel="alternate" type="application/atom+xml" title="RSS Feed" id="rssFeed" href="">
-    <link rel="icon" type="image/svg+xml" id="favicon" href="">
+    <!-- Favicon akan Anda handle sendiri -->
     <style>
         *,*::before,*::after{box-sizing:border-box}
         body,h1,h2,p,.header,.search-wrap,.filter-bar,.post-grid,.post-card,.post-card h2{margin:0;padding:0}
@@ -180,9 +180,6 @@ permalink: /brandtrailpulse-x01/
         var menu=$('menuPanel'),im=$('iconMenu'),ic=$('iconClose');var mo=false;
         $('menuToggle').onclick=function(e){e.stopPropagation();mo=!mo;menu.style.display=mo?'block':'none';im.style.display=mo?'none':'';ic.style.display=mo?'':'none';if(mo){var r=this.getBoundingClientRect();menu.style.top=(r.bottom+4)+'px';menu.style.right=(innerWidth-r.right)+'px';}};
         document.onclick=function(e){if(mo&&!menu.contains(e.target)){mo=false;menu.style.display='none';im.style.display='';ic.style.display='none';}};
-        
-        // FAVICON HD
-        (function(){var hue=0;for(var i=0;i<host.length;i++){hue=((hue<<5)-hue)+host.charCodeAt(i);hue=hue&hue;}hue=Math.abs(hue)%360;var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="80" fill="hsl('+hue+',60%,45%)"/><text x="256" y="340" text-anchor="middle" fill="#fff" font-size="280" font-weight="800" font-family="system-ui,-apple-system,sans-serif">'+letters+'</text></svg>';$('favicon').href='data:image/svg+xml,'+encodeURIComponent(svg);})();
         
         // CONFIG
         var BLOG_ID='868720620397212677',MAX_POSTS_PER_PAGE=50,
