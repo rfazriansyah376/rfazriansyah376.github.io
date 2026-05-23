@@ -1,40 +1,127 @@
- <!-- preconnect adsterra -->
+<!-- preconnect adsterra -->
 <link href='https://crazylatchdisturbance.com' rel='preconnect'/>
     <link href='https://crazylatchdisturbance.com' rel='dns-prefetch'/>
 
+
+<!-- ============================================ -->
+<!-- FAVICON 500px HD - TEKS CENTER SEMPURNA      -->
+<!-- ============================================ -->
 <script>
 (function() {
-    const FAVICON_FORCE_NS = "favforce500";
-
-    // HAPUS SEMUA FAVICON LAIN
-    document.querySelectorAll(
-        "link[rel*='icon'], link[rel='shortcut icon'], link[rel='apple-touch-icon']"
-    ).forEach(function(el) {
-        el.remove();
+    // HAPUS FAVICON LAMA
+    document.querySelectorAll("link[rel*='icon'], link[rel='shortcut icon'], link[rel='apple-touch-icon']").forEach(function(icon) {
+        icon.remove();
     });
 
-    // ... kode Anda ...
+    var hostname = window.location.hostname;
+    var parts = hostname.split(".");
+    var tldParts = 2;
+    var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
+    if (rawName.toLowerCase() === "www") {
+        rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
+    }
+    var fullName = rawName;
 
-    var svgString =
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">' +
+    function hashString(str) {
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash);
+    }
+    var domainHash = hashString(fullName);
+    var hue = domainHash % 360;
+
+    function hslToHex(h, s, l) {
+        h = h % 360;
+        s = s / 100;
+        l = l / 100;
+        var c = (1 - Math.abs(2 * l - 1)) * s;
+        var x = c * (1 - Math.abs((h / 60) % 2 - 1));
+        var m = l - c / 2;
+        var r, g, b;
+        if (h < 60) { r = c; g = x; b = 0; }
+        else if (h < 120) { r = x; g = c; b = 0; }
+        else if (h < 180) { r = 0; g = c; b = x; }
+        else if (h < 240) { r = 0; g = x; b = c; }
+        else if (h < 300) { r = x; g = 0; b = c; }
+        else { r = c; g = 0; b = x; }
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    var themeColor = hslToHex(hue, 70, 45);
+    var gradStart = hslToHex(hue, 75, 58);
+    var gradEnd = hslToHex((hue + 45) % 360, 85, 48);
+
+    // INISIAL 3 HURUF
+    var words = fullName.split("-");
+    var initials = "";
+    for (var w = 0; w < Math.min(words.length, 3); w++) {
+        if (words[w].length > 0) {
+            initials += words[w].charAt(0).toUpperCase();
+        }
+    }
+    if (initials.length < 3) {
+        var rawUpper = fullName.toUpperCase().replace(/[^A-Z]/g, '');
+        for (var i = 0; i < rawUpper.length && initials.length < 3; i++) {
+            if (!initials.includes(rawUpper[i])) initials += rawUpper[i];
+        }
+    }
+    if (initials.length < 3) initials = initials.padEnd(3, 'X');
+
+    // THEME COLOR
+    var metaTheme = document.querySelector("meta[name='theme-color']");
+    if (!metaTheme) {
+        metaTheme = document.createElement("meta");
+        metaTheme.name = "theme-color";
+        document.head.appendChild(metaTheme);
+    }
+    metaTheme.content = themeColor;
+
+    // ============================================
+    // PERHITUNGAN POSISI TEKS YANG PRESISI
+    // ============================================
+    // viewBox 0 0 500 500
+    // Teks perlu center sempurna:
+    // - Posisi X: 250 (tengah horizontal)
+    // - Posisi Y: 285 (bukan 340, karena 3 huruf lebih besar)
+    // - Font size: 220 (lebih kecil dari 280 agar muat)
+    // - Letter spacing: 8px (agar 3 huruf tidak terlalu renggang)
+    
+    var svgString = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">' +
         '<defs>' +
-        '<linearGradient id="' + FAVICON_FORCE_NS + '-gradient" x1="0%" y1="0%" x2="100%" y2="100%">' +
-        '<stop offset="0%" stop-color="' + gradStart + '"/>' +
-        '<stop offset="100%" stop-color="' + gradEnd + '"/>' +
-        '</linearGradient>' +
+            '<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">' +
+                '<stop offset="0%" stop-color="' + gradStart + '"/>' +
+                '<stop offset="100%" stop-color="' + gradEnd + '"/>' +
+            '</linearGradient>' +
         '</defs>' +
-        '<rect width="500" height="500" rx="110" fill="url(#' + FAVICON_FORCE_NS + '-gradient)"/>' +
-        '<text x="250" y="310" text-anchor="middle" fill="#fff" font-size="230" font-weight="900">' +
-        initials +
-        '</text>' +
+        '<rect width="500" height="500" rx="110" fill="url(#g)"/>' +
+        '<text x="250" y="310" text-anchor="middle" fill="#ffffff" font-size="230" font-weight="900" font-family="Arial, sans-serif" letter-spacing="6">' + initials + '</text>' +
         '</svg>';
 
+    var encodedSvg = 'data:image/svg+xml,' + encodeURIComponent(svgString);
+
+    // PASANG FAVICON
     var link32 = document.createElement("link");
     link32.rel = "icon";
+    link32.type = "image/svg+xml";
+    link32.sizes = "32x32";
     link32.href = encodedSvg;
-    link32.setAttribute("data-" + FAVICON_FORCE_NS, "1");
     document.head.appendChild(link32);
 
+    var shortcut = document.createElement("link");
+    shortcut.rel = "shortcut icon";
+    shortcut.href = encodedSvg;
+    document.head.appendChild(shortcut);
+
+    var appleIcon = document.createElement("link");
+    appleIcon.rel = "apple-touch-icon";
+    appleIcon.href = encodedSvg;
+    document.head.appendChild(appleIcon);
 })();
 </script>
 
@@ -69,6 +156,7 @@
   text-decoration: none; /* opsional, hilangkan garis bawah */
 }
 </style>
+
 
 
 
