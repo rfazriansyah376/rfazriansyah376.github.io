@@ -1,290 +1,306 @@
 ---
 layout: null
-permalink: /tar/
 ---
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title id="dynamic-title">Loading...</title>  
-    <meta name="robots" content="index, follow, max-image-preview:large">  
-    <link rel="preconnect" href="https://www.blogger.com">  
-    <link rel="preconnect" href="https://blogger.googleusercontent.com">  
-    <link rel="dns-prefetch" href="https://www.blogger.com">  
-    <link rel="canonical" id="canonicalUrl" href="">  
-    <link rel="alternate" type="application/atom+xml" title="RSS Feed" id="rssFeed" href="">  
-    <!-- Favicon akan Anda handle sendiri -->  
-    <style>  
-        *,*::before,*::after{box-sizing:border-box}  
-        body,h1,h2,p,.header,.search-wrap,.filter-bar,.post-grid,.post-card,.post-card h2{margin:0;padding:0}  
-        body{font-family:system-ui,-apple-system,sans-serif;max-width:100%;margin:0 auto;padding:70px 8px 20px;background:#0a0a0a;color:#e0e0e0;line-height:1.5}  
-        .header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#111;box-shadow:0 1px 4px rgba(0,0,0,.5);position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid #222}  
-        .header-brand{display:flex;align-items:center;gap:10px;min-width:0}  
-        .header-svg{width:32px;height:32px;flex-shrink:0}  
-        .header-title{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}  
-        .header-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:none;border:none;cursor:pointer;border-radius:6px;color:#ccc}  
-        .header-btn:active{background:rgba(255,255,255,.05)}  
-        .header-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}  
-        aside.menu{display:none;position:fixed;z-index:99;background:#1a1a1a;border:1px solid #333;padding:12px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.5)}  
-        aside.menu a{display:block;padding:8px 12px;color:#ccc;text-decoration:none;border-radius:4px;font-size:13px;font-weight:500}  
-        aside.menu a:active{background:rgba(255,255,255,.05)}  
-        .back-link{display:inline-flex;align-items:center;gap:4px;color:#e94560;text-decoration:none;font-size:13px;font-weight:500;margin-bottom:16px}  
-        .back-link svg{width:16px;height:16px}  
-        .search-wrap{display:flex;gap:8px;margin-bottom:6px}  
-        .search-input{flex:1;padding:10px 14px;border:1px solid #333;border-radius:8px;font-size:14px;font-family:inherit;outline:none;background:#1a1a1a;color:#fff}  
-        .search-input:focus{border-color:#e94560}  
-        .search-input::placeholder{color:#666}  
-        .search-btn{padding:10px 20px;background:#e94560;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}  
-        .search-btn:active{background:#c0392b}  
-        .search-hint{font-size:11px;color:#666;margin-bottom:16px}  
-        .filter-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#1a1a1a;border-radius:8px;margin-bottom:12px;font-size:12px;color:#888}  
-        .filter-bar a{margin-left:auto;color:#e94560;text-decoration:none;font-weight:600}  
-        .info-msg{padding:8px 12px;background:#2a1a1a;border:1px solid #e94560;border-radius:8px;margin-bottom:12px;font-size:12px;color:#e0a0a0}  
-        .label-desc{font-size:12px;color:#888;margin-bottom:12px;line-height:1.5;background:#111;padding:10px 12px;border-radius:6px}  
-        .label-desc strong{color:#e94560}  
-        .related-labels{margin-bottom:16px;font-size:11px;color:#888}  
-        .related-labels a{color:#e94560;text-decoration:none;margin:0 4px}  
-        .related-labels a:hover{text-decoration:underline}  
-        h1{font-size:20px;margin-bottom:4px;color:#fff}  
-        .desc{font-size:12px;color:#888;margin-bottom:16px}  
-        .post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;grid-auto-flow:dense;grid-auto-rows:8px}  
-        @media(min-width:500px){.post-grid{grid-template-columns:repeat(3,1fr)}}  
-        @media(min-width:768px){body{max-width:900px;padding-left:12px;padding-right:12px}.post-grid{grid-template-columns:repeat(3,1fr);gap:10px}}  
-        @media(min-width:1024px){body{max-width:1100px}.post-grid{grid-template-columns:repeat(4,1fr);gap:12px}}  
-        .post-card{position:relative;background:#111;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:transform 0.2s,box-shadow 0.2s;content-visibility:auto;contain-intrinsic-size:auto 250px;grid-row-end:span var(--row-span,20)}  
-        .post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.5)}  
-        .post-card-img{width:100%;height:100%;display:block;object-fit:cover;position:absolute;top:0;left:0}  
-        .post-card-info{position:absolute;bottom:0;left:0;right:0;padding:20px 10px 8px;background:linear-gradient(transparent,rgba(0,0,0,0.85));z-index:1}  
-        .post-card h2{font-size:12px;font-weight:600;line-height:1.3;margin:0}  
-        .post-card h2 a{color:#fff;text-decoration:none}  
-        .post-card h2 a:hover{color:#e94560}  
-        .single-post-view{background:#111;padding:16px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.3)}  
-        .single-post-view h1.post-title{font-size:20px;line-height:1.3;margin-bottom:10px;color:#fff}  
-        .single-post-view .post-meta{font-size:11px;color:#888;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #222;display:flex;flex-wrap:wrap;gap:6px;align-items:center}  
-        .single-post-view .post-body{font-size:14px;line-height:1.7;color:#ccc}  
-        .single-post-view .post-body img{max-width:100%;height:auto;border-radius:6px;margin:8px 0;display:block;cursor:pointer}  
-        .single-post-view .post-body a{color:#e94560;text-decoration:underline}  
-        .single-post-labels{margin:12px 0;display:flex;flex-wrap:wrap;gap:6px}  
-        .single-post-label{display:inline-block;background:#1a1a1a;padding:3px 10px;border-radius:12px;font-size:11px;color:#999;text-decoration:none}  
-        .single-post-label:hover{background:#333;color:#fff}  
-        .single-post-desc{font-size:12px;color:#888;margin-bottom:12px;line-height:1.5;background:#111;padding:10px 12px;border-radius:6px}  
-        .related-section{margin-top:20px}  
-        .related-section h3{font-size:15px;margin-bottom:10px;color:#fff}  
-        .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}  
-        @media(min-width:500px){.related-grid{grid-template-columns:repeat(5,1fr)}}  
-        .related-card{background:#1a1a1a;border-radius:6px;overflow:hidden;text-decoration:none;display:block;transition:transform 0.2s}  
-        .related-card:hover{transform:translateY(-2px)}  
-        .related-card-img{width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;display:block}  
-        .related-card-title{font-size:10px;font-weight:600;color:#ccc;padding:6px 8px 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}  
-        .related-card-labels{padding:0 8px 6px;display:flex;flex-wrap:wrap;gap:3px}  
-        .related-card-label-link{font-size:8px;color:#e94560;text-decoration:none}  
-        .related-card-label-link:hover{text-decoration:underline}  
-        .no-img{display:none}  
-        .loading,.error,.empty{text-align:center;padding:40px 20px;color:#888;font-size:14px}  
-        .error{color:#e94560}  
-        footer{margin-top:32px;padding-top:16px;border-top:1px solid #222;text-align:center;font-size:11px;color:#666}  
-        .count-bar{font-size:11px;color:#666;margin-bottom:12px}  
-        .pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:20px;flex-wrap:wrap}  
-        .pagination a,.pagination span{display:inline-block;padding:8px 14px;background:#1a1a1a;color:#ccc;text-decoration:none;border-radius:6px;font-size:13px;border:1px solid #333}  
-        .pagination a:hover{background:#e94560;color:#fff;border-color:#e94560}  
-        .pagination .current{background:#e94560;color:#fff;border-color:#e94560;font-weight:600}  
-        .pagination .disabled{opacity:0.4;pointer-events:none}  
-        .lightbox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);z-index:9999;touch-action:pan-x;animation:lbFadeIn 0.2s ease}  
-        .lightbox.active{display:flex;align-items:center;justify-content:center}  
-        @keyframes lbFadeIn{from{opacity:0}to{opacity:1}}  
-        .lightbox-close{position:absolute;top:16px;right:16px;z-index:10;width:40px;height:40px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px}  
-        .lightbox-close:active{background:rgba(255,255,255,0.2)}  
-        .lightbox-counter{position:absolute;top:16px;left:16px;z-index:10;color:#fff;font-size:13px;background:rgba(0,0,0,0.5);padding:6px 12px;border-radius:16px}  
-        .lightbox-track{display:flex;align-items:center;transition:transform 0.3s ease;height:100%;width:100%;touch-action:pan-x}  
-        .lightbox-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:60px 16px}  
-        .lightbox-slide img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:4px;user-select:none;-webkit-user-select:none}  
-        .lightbox-prev,.lightbox-next{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}  
-        .lightbox-prev{left:8px}.lightbox-next{right:8px}  
-        .lightbox-prev:active,.lightbox-next:active{background:rgba(255,255,255,0.2)}  
-        .lightbox-caption{position:absolute;bottom:16px;left:16px;right:16px;text-align:center;color:#ccc;font-size:12px;background:rgba(0,0,0,0.6);padding:8px 12px;border-radius:8px;line-height:1.3}  
-        .post-card-img,.post-body img{cursor:pointer}  
-    </style>  
-    {% include head.html %}  
-    {% include verif.html %}  
-</head>  
-<body>  
-<div loading="lazy">  
-    <header class="header">  
-        <div class="header-brand">  
-            <svg class="header-svg" viewBox="0 0 100 100" aria-hidden="true">  
-                <rect x="8" y="8" width="84" height="84" rx="16" fill="#e94560"/>  
-                <text id="brandSvgText" x="50" y="65" text-anchor="middle" fill="#fff" font-size="40" font-weight="700" font-family="system-ui">A</text>  
-            </svg>  
-            <span class="header-title" id="blogTitle"></span>  
-        </div>  
-        <button class="header-btn" id="menuToggle" aria-label="Menu">  
-            <svg id="iconMenu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>  
-            <svg id="iconClose" viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>  
-        </button>  
-    </header>  <aside class="menu" id="menuPanel" aria-label="Sidebar menu">  
-    <a href="/tar/">Home</a>  
-    <a href="/contact/">Contact</a>  
-    <a href="/privacy-policy/">Privacy Policy</a>  
-    <a href="/terms-and-conditions/">Terms &amp; Conditions</a>  
-</aside>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="dynamic-title">Loading...</title>
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="preconnect" href="https://www.blogger.com">
+    <link rel="preconnect" href="https://blogger.googleusercontent.com">
+    <link rel="dns-prefetch" href="https://www.blogger.com">
+    <link rel="canonical" id="canonicalUrl" href="">
+    <link rel="alternate" type="application/atom+xml" title="RSS Feed" id="rssFeed" href="">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:system-ui,-apple-system,sans-serif;max-width:100%;margin:0 auto;padding:70px 8px 20px;background:#0a0a0a;color:#e0e0e0;line-height:1.5}
+        .header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#111;box-shadow:0 1px 4px rgba(0,0,0,.5);position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid #222}
+        .header-brand{display:flex;align-items:center;gap:10px;min-width:0}
+        .header-svg{width:32px;height:32px;flex-shrink:0}
+        .header-title{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
+        .header-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:none;border:none;cursor:pointer;border-radius:6px;color:#ccc}
+        .header-btn:active{background:rgba(255,255,255,.05)}
+        .header-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+        aside.menu{display:none;position:fixed;z-index:99;background:#1a1a1a;border:1px solid #333;padding:12px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+        aside.menu a{display:block;padding:8px 12px;color:#ccc;text-decoration:none;border-radius:4px;font-size:13px;font-weight:500}
+        aside.menu a:active{background:rgba(255,255,255,.05)}
+        .back-link{display:inline-flex;align-items:center;gap:4px;color:#e94560;text-decoration:none;font-size:13px;font-weight:500;margin-bottom:16px}
+        .back-link svg{width:16px;height:16px}
+        .search-wrap{display:flex;gap:8px;margin-bottom:6px}
+        .search-input{flex:1;padding:10px 14px;border:1px solid #333;border-radius:8px;font-size:14px;font-family:inherit;outline:none;background:#1a1a1a;color:#fff}
+        .search-input:focus{border-color:#e94560}
+        .search-input::placeholder{color:#666}
+        .search-btn{padding:10px 20px;background:#e94560;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+        .search-btn:active{background:#c0392b}
+        .search-hint{font-size:11px;color:#666;margin-bottom:16px}
+        .filter-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#1a1a1a;border-radius:8px;margin-bottom:12px;font-size:12px;color:#888}
+        .filter-bar a{margin-left:auto;color:#e94560;text-decoration:none;font-weight:600}
+        .info-msg{padding:8px 12px;background:#2a1a1a;border:1px solid #e94560;border-radius:8px;margin-bottom:12px;font-size:12px;color:#e0a0a0}
+        .label-desc{font-size:12px;color:#888;margin-bottom:12px;line-height:1.5;background:#111;padding:10px 12px;border-radius:6px}
+        .label-desc strong{color:#e94560}
+        .related-labels{margin-bottom:16px;font-size:11px;color:#888}
+        .related-labels a{color:#e94560;text-decoration:none;margin:0 4px}
+        .related-labels a:hover{text-decoration:underline}
+        h1{font-size:20px;margin-bottom:4px;color:#fff}
+        .desc{font-size:12px;color:#888;margin-bottom:16px}
+        .post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;grid-auto-flow:dense;grid-auto-rows:8px}
+        @media(min-width:500px){.post-grid{grid-template-columns:repeat(3,1fr)}}
+        @media(min-width:768px){body{max-width:900px;padding-left:12px;padding-right:12px}.post-grid{grid-template-columns:repeat(3,1fr);gap:10px}}
+        @media(min-width:1024px){body{max-width:1100px}.post-grid{grid-template-columns:repeat(4,1fr);gap:12px}}
+        .post-card{position:relative;background:#111;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:transform 0.2s,box-shadow 0.2s;content-visibility:auto;contain-intrinsic-size:auto 250px;grid-row-end:span var(--row-span,20)}
+        .post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.5)}
+        .post-card-img{width:100%;height:100%;display:block;object-fit:cover;position:absolute;top:0;left:0}
+        .post-card-info{position:absolute;bottom:0;left:0;right:0;padding:20px 10px 8px;background:linear-gradient(transparent,rgba(0,0,0,0.85));z-index:1}
+        .post-card h2{font-size:12px;font-weight:600;line-height:1.3;margin:0}
+        .post-card h2 a{color:#fff;text-decoration:none}
+        .post-card h2 a:hover{color:#e94560}
+        .single-post-view{background:#111;padding:16px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+        .single-post-view h1.post-title{font-size:20px;line-height:1.3;margin-bottom:10px;color:#fff}
+        .single-post-view .post-meta{font-size:11px;color:#888;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #222;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+        .single-post-view .post-body{font-size:14px;line-height:1.7;color:#ccc}
+        .single-post-view .post-body img{max-width:100%;height:auto;border-radius:6px;margin:8px 0;display:block;cursor:pointer}
+        .single-post-view .post-body a{color:#e94560;text-decoration:underline}
+        .single-post-labels{margin:12px 0;display:flex;flex-wrap:wrap;gap:6px}
+        .single-post-label{display:inline-block;background:#1a1a1a;padding:3px 10px;border-radius:12px;font-size:11px;color:#999;text-decoration:none}
+        .single-post-label:hover{background:#333;color:#fff}
+        .single-post-desc{font-size:12px;color:#888;margin-bottom:12px;line-height:1.5;background:#111;padding:10px 12px;border-radius:6px}
+        .related-section{margin-top:20px}
+        .related-section h3{font-size:15px;margin-bottom:10px;color:#fff}
+        .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+        @media(min-width:500px){.related-grid{grid-template-columns:repeat(5,1fr)}}
+        .related-card{background:#1a1a1a;border-radius:6px;overflow:hidden;text-decoration:none;display:block;transition:transform 0.2s}
+        .related-card:hover{transform:translateY(-2px)}
+        .related-card-img{width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;display:block}
+        .related-card-title{font-size:10px;font-weight:600;color:#ccc;padding:6px 8px 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .related-card-labels{padding:0 8px 6px;display:flex;flex-wrap:wrap;gap:3px}
+        .related-card-label-link{font-size:8px;color:#e94560;text-decoration:none}
+        .related-card-label-link:hover{text-decoration:underline}
+        .no-img{display:none}
+        .loading,.error,.empty{text-align:center;padding:40px 20px;color:#888;font-size:14px}
+        .error{color:#e94560}
+        footer{margin-top:32px;padding-top:16px;border-top:1px solid #222;text-align:center;font-size:11px;color:#666}
+        .count-bar{font-size:11px;color:#666;margin-bottom:12px}
+        .lightbox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);z-index:9999;touch-action:pan-x;animation:lbFadeIn 0.2s ease}
+        .lightbox.active{display:flex;align-items:center;justify-content:center}
+        @keyframes lbFadeIn{from{opacity:0}to{opacity:1}}
+        .lightbox-close{position:absolute;top:16px;right:16px;z-index:10;width:40px;height:40px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px}
+        .lightbox-close:active{background:rgba(255,255,255,0.2)}
+        .lightbox-counter{position:absolute;top:16px;left:16px;z-index:10;color:#fff;font-size:13px;background:rgba(0,0,0,0.5);padding:6px 12px;border-radius:16px}
+        .lightbox-track{display:flex;align-items:center;transition:transform 0.3s ease;height:100%;width:100%;touch-action:pan-x}
+        .lightbox-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:60px 16px}
+        .lightbox-slide img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:4px;user-select:none;-webkit-user-select:none}
+        .lightbox-prev,.lightbox-next{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+        .lightbox-prev{left:8px}.lightbox-next{right:8px}
+        .lightbox-prev:active,.lightbox-next:active{background:rgba(255,255,255,0.2)}
+        .lightbox-caption{position:absolute;bottom:16px;left:16px;right:16px;text-align:center;color:#ccc;font-size:12px;background:rgba(0,0,0,0.6);padding:8px 12px;border-radius:8px;line-height:1.3}
+        .post-card-img,.post-body img{cursor:pointer}
+    </style>
+    {% include head.html %}
+    {% include verif.html %}
+</head>
+<body>
+<div loading="lazy">
+    <header class="header">
+        <div class="header-brand">
+            <svg class="header-svg" viewBox="0 0 100 100" aria-hidden="true">
+                <rect x="8" y="8" width="84" height="84" rx="16" fill="#e94560"/>
+                <text id="brandSvgText" x="50" y="65" text-anchor="middle" fill="#fff" font-size="40" font-weight="700" font-family="system-ui">A</text>
+            </svg>
+            <span class="header-title" id="blogTitle"></span>
+        </div>
+        <button class="header-btn" id="menuToggle" aria-label="Menu">
+            <svg id="iconMenu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            <svg id="iconClose" viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
+        </button>
+    </header>
 
-<a class="back-link" id="backLink" style="display:none" href="/tar/">  
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>  
-    Back  
-</a>  
+    <aside class="menu" id="menuPanel" aria-label="Sidebar menu">
+        <a href="/name/">Home</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms-and-conditions/">Terms &amp; Conditions</a>
+    </aside>
 
-<nav id="breadcrumb" aria-label="Breadcrumb"></nav>  
+    <a class="back-link" id="backLink" style="display:none" href="/name/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+    </a>
 
-<form class="search-wrap" id="searchForm" action="/tar/" method="get">  
-    <input class="search-input" type="search" name="label" id="searchInput" placeholder="Search name + leaked..." aria-label="Search">  
-    <button class="search-btn" type="submit">Search</button>  
-</form>  
-<p class="search-hint" id="searchHint">Try: name leaked, viral, latest, exclusive</p>  
+    <nav id="breadcrumb" aria-label="Breadcrumb"></nav>
 
-<h1 id="pageHeading">Loading...</h1>  
-<p class="desc" id="siteDesc"></p>  
-<div class="filter-bar" id="filterBar" style="display:none"></div>  
-  
-<div class="label-desc" id="labelDesc" style="display:none"></div>  
-<div class="related-labels" id="relatedLabels" style="display:none"></div>  
-  
-<div id="mainContent"><p class="loading">Loading...</p></div>  
-<div class="pagination" id="pagination"></div>  
+    <form class="search-wrap" id="searchForm" action="/name/" method="get">
+        <input class="search-input" type="search" name="label" id="searchInput" placeholder="Search name + leaked..." aria-label="Search">
+        <button class="search-btn" type="submit">Search</button>
+    </form>
+    <p class="search-hint" id="searchHint">Try: name leaked, viral, latest, exclusive</p>
 
-<footer>{% include footer.html %}</footer>  
+    <h1 id="pageHeading">Loading...</h1>
+    <p class="desc" id="siteDesc"></p>
+    <div class="filter-bar" id="filterBar" style="display:none"></div>
+    
+    <div class="label-desc" id="labelDesc" style="display:none"></div>
+    <div class="related-labels" id="relatedLabels" style="display:none"></div>
+    
+    <div id="mainContent"><p class="loading">Loading...</p></div>
+    <div class="pagination" id="pagination"></div>
 
-<div class="lightbox" id="lightbox">  
-    <button class="lightbox-close" id="lbClose">&times;</button>  
-    <span class="lightbox-counter" id="lbCounter"></span>  
-    <button class="lightbox-prev" id="lbPrev">&lsaquo;</button>  
-    <button class="lightbox-next" id="lbNext">&rsaquo;</button>  
-    <div class="lightbox-track" id="lbTrack"></div>  
-    <div class="lightbox-caption" id="lbCaption"></div>  
-</div>  
+    <footer>{% include footer.html %}</footer>
 
-<script type="application/ld+json" id="structuredData"></script>  
-<script type="application/ld+json" id="breadcrumbSchema"></script>  
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lbClose">&times;</button>
+        <span class="lightbox-counter" id="lbCounter"></span>
+        <button class="lightbox-prev" id="lbPrev">&lsaquo;</button>
+        <button class="lightbox-next" id="lbNext">&rsaquo;</button>
+        <div class="lightbox-track" id="lbTrack"></div>
+        <div class="lightbox-caption" id="lbCaption"></div>
+    </div>
 
-<script>  
-(function(){  
-    var $=function(id){return document.getElementById(id);};  
-    var host=location.hostname;var parts=host.split('.');var dn=parts[0];  
-    if(parts.length>2&&parts[0]==='www')dn=parts[1];  
-    dn=dn.replace(/[\.-]/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});  
-    var letters=dn.replace(/[^a-zA-Z0-9]/g,'').toUpperCase().substring(0,3)||'G';  
-    $('brandSvgText').textContent=letters;$('blogTitle').textContent=dn;  
-      
-    var menu=$('menuPanel'),im=$('iconMenu'),ic=$('iconClose');var mo=false;  
-    $('menuToggle').onclick=function(e){e.stopPropagation();mo=!mo;menu.style.display=mo?'block':'none';im.style.display=mo?'none':'';ic.style.display=mo?'':'none';if(mo){var r=this.getBoundingClientRect();menu.style.top=(r.bottom+4)+'px';menu.style.right=(innerWidth-r.right)+'px';}};  
-    document.onclick=function(e){if(mo&&!menu.contains(e.target)){mo=false;menu.style.display='none';im.style.display='';ic.style.display='none';}};  
-      
-    // CONFIG  
-    var BLOG_ID='3849070220815751744',
-MAX_POSTS_PER_PAGE=30,
-DEFAULT_START_INDEX=1,
+    <script type="application/ld+json" id="structuredData"></script>
+    <script type="application/ld+json" id="breadcrumbSchema"></script>
+
+    <script>
+    (function(){
+        var $=function(id){return document.getElementById(id);};
+        var host=location.hostname;var parts=host.split('.');var dn=parts[0];
+        if(parts.length>2&&parts[0]==='www')dn=parts[1];
+        dn=dn.replace(/[\.-]/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+        var letters=dn.replace(/[^a-zA-Z0-9]/g,'').toUpperCase().substring(0,3)||'G';
+        $('brandSvgText').textContent=letters;$('blogTitle').textContent=dn;
+        
+        var menu=$('menuPanel'),im=$('iconMenu'),ic=$('iconClose');var mo=false;
+        $('menuToggle').onclick=function(e){e.stopPropagation();mo=!mo;menu.style.display=mo?'block':'none';im.style.display=mo?'none':'';ic.style.display=mo?'':'none';if(mo){var r=this.getBoundingClientRect();menu.style.top=(r.bottom+4)+'px';menu.style.right=(innerWidth-r.right)+'px';}};
+        document.onclick=function(e){if(mo&&!menu.contains(e.target)){mo=false;menu.style.display='none';im.style.display='';ic.style.display='none';}};
+        
+        // CONFIG
+        var BLOG_ID='3849070220815751744',MAX_POSTS_PER_PAGE=5,
+DEFAULT_START_INDEX=250,
 DEFAULT_LABEL='',
-BASE_PATH='/tar/';
-function hashDomain(h){var hash=0;for(var i=0;i<h.length;i++){hash=((hash<<5)-hash)+h.charCodeAt(i);hash=hash&hash;}return Math.abs(hash);}
-var seed=hashDomain(host);
-
-var p=new URLSearchParams(location.search);var POST_SLUG=p.get('p')||'',START=parseInt(p.get('start-index'))||DEFAULT_START_INDEX,MAX=parseInt(p.get('max-results'))||MAX_POSTS_PER_PAGE,LABEL=p.get('label')||DEFAULT_LABEL;  
-    $('canonicalUrl').href=location.href;$('rssFeed').href='https://www.blogger.com/feeds/'+BLOG_ID+'/posts/default?alt=rss';  
-      
-    function hd(u){return u&&u.includes('googleusercontent.com')?u.replace(/\/s\d+(-c)?\//,'/s1600/'):u;}  
-    function fd(d){try{return new Date(d).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});}catch(e){return d;}}  
-    function altText(t,c){var p=[t];if(c&&c.length)p.push(c.join(', '));return p.filter(Boolean).join(' - ');}  
-    function il(u){if(!u)return'#';try{var ur=new URL(u);var slug=ur.pathname.split('/').pop().replace('.html','');return BASE_PATH+'?p='+slug;}catch(e){}return u;}  
-    function labelLink(label){return BASE_PATH+'?label='+label;}  
-    function pageLink(start){var params=new URLSearchParams(location.search);params.set('start-index',start);params.set('max-results',MAX);return BASE_PATH+'?'+params.toString();}  
-    var base='https://www.blogger.com/feeds/'+BLOG_ID+'/posts/default';  
-      
-    // LIGHTBOX  
-    var lbImages=[],lbIndex=0,lb=$('lightbox'),lbTrack=$('lbTrack'),lbCounter=$('lbCounter'),lbCaption=$('lbCaption');  
-    function openLightbox(images,index){lbImages=images;lbIndex=index;renderLightbox();lb.classList.add('active');document.body.style.overflow='hidden';}  
-    function closeLightbox(){lb.classList.remove('active');document.body.style.overflow='';lbImages=[];}  
-    function renderLightbox(){lbTrack.innerHTML=lbImages.map(function(img,i){var src=hd(img.src)||img.src;var alt=img.alt||'Photo '+(i+1);return'<div class="lightbox-slide"><img src="'+src+'" alt="'+alt+'" loading="lazy"></div>';}).join('');lbTrack.style.transform='translateX(-'+lbIndex*100+'%)';lbCounter.textContent=(lbIndex+1)+' / '+lbImages.length;lbCaption.textContent=lbImages[lbIndex]?lbImages[lbIndex].alt:'';}  
-    function nextImage(){if(lbIndex<lbImages.length-1){lbIndex++;renderLightbox();}}  
-    function prevImage(){if(lbIndex>0){lbIndex--;renderLightbox();}}  
-    $('lbClose').onclick=closeLightbox;$('lbNext').onclick=nextImage;$('lbPrev').onclick=prevImage;lb.onclick=function(e){if(e.target===lb)closeLightbox();};  
-    document.onkeydown=function(e){if(!lb.classList.contains('active'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')nextImage();if(e.key==='ArrowLeft')prevImage();};  
-    var touchStartX=0;lb.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;});lb.addEventListener('touchend',function(e){var diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50){if(diff>0)nextImage();else prevImage();}});  
-    function attachLightbox(){var allImages=document.querySelectorAll('.post-card-img, .post-body img');var images=[];allImages.forEach(function(img){if(img.src&&!img.src.includes('data:image/svg+xml')){var alt=img.getAttribute('data-alt')||img.getAttribute('alt')||'Photo';images.push({src:img.src,alt:alt});img.style.cursor='pointer';var idx=images.length-1;img.onclick=function(e){e.preventDefault();e.stopPropagation();openLightbox(images,idx);}  
-        if(img.classList.contains('post-card-img')){var setSpan=function(){var ratio=img.naturalHeight/img.naturalWidth;var span=Math.ceil(ratio*12);if(span<14)span=14;if(span>40)span=40;img.closest('.post-card').style.setProperty('--row-span',span);};if(img.complete&&img.naturalWidth>0){setSpan();}else{img.onload=setSpan;}}  
-    }});}  
-      
-    // RENDER CARD  
-    function renderCard(e){var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var content=e.content?.$t||e.summary?.$t||'';var thumb=hd(e.media$thumbnail?.url)||(function(c){if(!c)return null;var d=document.createElement('div');d.innerHTML=c;var i=d.querySelector('img');return i?hd(i.src):null;})(content);var cats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var imgAlt=altText(t,cats);var imgAltSafe=imgAlt.replace(/"/g,'&quot;').replace(/'/g,'&#39;');var html='<article class="post-card">';if(thumb){html+='<img class="post-card-img" src="'+thumb+'" alt="'+imgAltSafe+'" title="'+imgAltSafe+'" data-alt="'+imgAltSafe+'" loading="lazy" onerror="this.style.display=\'none\'">';}html+='<div class="post-card-info"><h2><a href="'+link+'">'+t+'</a></h2></div></article>';return html;}  
-      
-    // BREADCRUMB  
-    function buildBreadcrumb(allLabels){var html='<ul class="spo">';var uniqueLabels=[];for(var i=0;i<allLabels.length;i++){if(uniqueLabels.indexOf(allLabels[i])===-1)uniqueLabels.push(allLabels[i]);}for(var j=0;j<uniqueLabels.length;j++){var lbl=uniqueLabels[j];var link=labelLink(lbl);html+='<li><a href="'+link+'">'+lbl+'</a></li>';}html+='</ul>';$('breadcrumb').innerHTML=html;var schemaItems=[{'@type':'ListItem','position':1,'name':'Home','item':location.origin+BASE_PATH}];for(var k=0;k<uniqueLabels.length;k++){schemaItems.push({'@type':'ListItem','position':k+2,'name':uniqueLabels[k],'item':location.origin+labelLink(uniqueLabels[k])});}$('breadcrumbSchema').textContent=JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':schemaItems},null,2);}  
-      
-    // BUILD PAGINATION  
-    function buildPagination(totalResults){var totalPages=Math.ceil(totalResults/MAX);if(totalPages<=1){$('pagination').innerHTML='';return;}var currentPage=Math.ceil(START/MAX);var html='';if(currentPage>1){html+='<a href="'+pageLink(START-MAX)+'">&laquo; Prev</a>';}else{html+='<span class="disabled">&laquo; Prev</span>';}for(var i=1;i<=totalPages;i++){var pageStart=(i-1)*MAX+1;if(i===currentPage){html+='<span class="current">'+i+'</span>';}else{html+='<a href="'+pageLink(pageStart)+'">'+i+'</a>';}}if(currentPage<totalPages){html+='<a href="'+pageLink(START+MAX)+'">Next &raquo;</a>';}else{html+='<span class="disabled">Next &raquo;</span>';}$('pagination').innerHTML=html;}  
-      
-    // SINGLE POST MODE  
-    if(POST_SLUG){  
-        $('searchForm').style.display='none';$('searchHint').style.display='none';$('backLink').style.display='inline-flex';  
-        if(document.referrer&&document.referrer.includes(host))$('backLink').href=document.referrer;$('pagination').style.display='none';  
-        var pageId=POST_SLUG.replace(/-/g,' ');$('pageHeading').textContent=pageId;$('siteDesc').textContent='Loading post...';  
-        var feedUrl=base+'?alt=json-in-script&callback=sp&max-results=150';  
-          
-        window.sp=function(data){var feed=data.feed;var container=$('mainContent');  
-            if(!feed||!feed.entry){container.innerHTML='<p class="error">Post not found.</p>';return;}  
-            var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];  
-            var post=entries.find(function(e){var link=(e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'';var slug=link.split('/').pop().replace('.html','');return slug===POST_SLUG;});  
-            if(!post){container.innerHTML='<p class="error">Post not found. <a href="'+BASE_PATH+'" style="color:#e94560">Back to home</a></p>';return;}  
-              
-            var title=post.title?.$t||'Untitled';var date=fd(post.published?.$t);var content=post.content?.$t||post.summary?.$t||'';var cats=(post.category||[]).map(function(c){return c.term;}).filter(Boolean);var author=post.author?.[0]?.name?.$t||'';var imgAlt=altText(title,cats);  
-              
-            var leakedTerms=['leaked','leak','viral','latest','exclusive','hot','new'];var hasLeaked=leakedTerms.some(function(t){return title.toLowerCase().includes(t);});var seoTitle=title;if(!hasLeaked)seoTitle=title+' Leaked Photos';  
-            document.title=seoTitle+' — '+dn;$('pageHeading').textContent=title;$('siteDesc').textContent='View latest leaked photos of '+title+' on '+dn+'.';  
-            var md=document.createElement('meta');md.name='description';md.content='View latest leaked photos, viral content, and exclusive updates of '+title+' on '+dn+'.';document.head.appendChild(md);  
-              
-            var breadHtml='<a href="'+BASE_PATH+'">Home</a>';  
-            if(cats.length){breadHtml+=' <span style="color:#666">&rsaquo;</span> ';cats.slice(0,3).forEach(function(c,i){breadHtml+='<a href="'+labelLink(c)+'">'+c+'</a>';if(i<cats.slice(0,3).length-1)breadHtml+=', ';});}  
-            breadHtml+=' <span style="color:#666">&rsaquo;</span> <span>'+title+' on '+dn+'</span>';$('breadcrumb').innerHTML=breadHtml;  
-              
-            var html='<article class="single-post-view"><h1 class="post-title">'+title+' on '+dn+'</h1>';  
-            if(cats.length){html+='<div class="single-post-labels">';cats.forEach(function(c){html+='<a href="'+labelLink(c)+'" class="single-post-label">'+c+'</a>';});html+='</div>';}  
-            var snippet=content.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().substring(0,200);  
-            html+='<p class="single-post-desc">View latest leaked photos and viral updates of <strong>'+title+'</strong> on '+dn+'. '+(snippet?(' — '+snippet+'...'):'')+'</p>';  
-            html+='<div class="post-meta">';if(author)html+='<span>'+author+'</span>';if(date)html+='<time datetime="'+(post.published?.$t||'')+'">'+date+'</time>';html+='</div>';  
-              
-            var fixedContent=content;fixedContent=fixedContent.replace(/<img([^>]*)alt="([^"]*)"([^>]*)>/gi,function(match,before,oldAlt,after){return'<img'+before+'alt="'+imgAlt+'" title="'+imgAlt+'"'+after+'>';});fixedContent=fixedContent.replace(/<img((?:(?!alt=)[^>])*)>/gi,function(match,attrs){return'<img'+attrs+' alt="'+imgAlt+'" title="'+imgAlt+'">';});  
-            html+='<div class="post-body">'+fixedContent+'</div></article>';  
-              
-            container.innerHTML=html;$('pagination').innerHTML='';setTimeout(function(){attachLightbox();},100);  
-              
-            if(cats.length){  
-                var relatedUrl=base+'?alt=json-in-script&callback=rp&max-results=50&category='+encodeURIComponent(cats[0]);  
-                window.rp=function(rdata){var rfeed=rdata.feed;if(!rfeed||!rfeed.entry)return;var rentries=Array.isArray(rfeed.entry)?rfeed.entry:[rfeed.entry];  
-                    var filtered=rentries.filter(function(e){var elink=(e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'';var eslug=elink.split('/').pop().replace('.html','');return eslug!==POST_SLUG;}).slice(0,20);  
-                    if(!filtered.length)return;  
-                    var rhtml='<div class="related-section"><h3>More Photos of '+title+' on '+dn+'</h3><div class="related-grid">';  
-                    filtered.forEach(function(e){var t=e.title?.$t||'Untitled';var rlink=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url);var eCats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var rAlt=altText(t,eCats);  
-                        rhtml+='<a href="'+rlink+'" class="related-card">';if(thumb)rhtml+='<img class="related-card-img" src="'+thumb+'" alt="'+rAlt+'" loading="lazy" onerror="this.style.display=\'none\'">';  
-                        rhtml+='<span class="related-card-title">'+t+'</span>';  
-                        if(eCats.length){rhtml+='<div class="related-card-labels">';eCats.forEach(function(c){rhtml+='<a href="'+labelLink(c)+'" class="related-card-label-link">'+c+'</a>';});rhtml+='</div>';}rhtml+='</a>';  
-                    });rhtml+='</div></div>';container.innerHTML+=rhtml;};  
-                var rs=document.createElement('script');rs.src=relatedUrl;rs.async=true;document.head.appendChild(rs);  
-            }  
-        };  
-        var s=document.createElement('script');s.src=feedUrl;s.async=true;s.onerror=function(){$('mainContent').innerHTML='<p class="error">Failed to load.</p>';};document.head.appendChild(s);return;  
-    }  
-      
-    // GRID MODE  
-    var si=$('searchInput');if(si&&LABEL&&LABEL!==DEFAULT_LABEL)si.value=LABEL;  
-    if(LABEL&&LABEL!==DEFAULT_LABEL){$('searchHint').textContent='Showing results for: '+LABEL;}else{$('searchHint').textContent='Try: name leaked, viral, latest, exclusive';}  
-    if(LABEL&&LABEL!==DEFAULT_LABEL){var il2=/leak|viral|latest|exclusive|hot|new/i.test(LABEL);var pt,pd;if(il2){pt=LABEL+' — '+dn;pd='View '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'.';}else{pt=LABEL+' Leaked Photos & Viral Updates — '+dn;pd='View latest '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'. Browse the full collection.';}document.title=pt;$('pageHeading').textContent=LABEL;$('siteDesc').textContent=pd;var md2=document.createElement('meta');md2.name='description';md2.content=pd;document.head.appendChild(md2);$('filterBar').style.display='flex';$('filterBar').innerHTML='Category: <strong>'+LABEL+'</strong> <a href="'+BASE_PATH+'">Clear</a>';$('labelDesc').style.display='block';$('labelDesc').innerHTML='Browse <strong>'+LABEL+'</strong> leaked photos, viral content, and exclusive updates on '+dn+'. Find the latest '+LABEL+' images in this collection.';}else{document.title=dn+' — Leaked Photos & Viral Collection';$('pageHeading').textContent=dn;$('siteDesc').textContent='Latest leaked photos, viral content, and exclusive updates. Browse the full collection.';var md3=document.createElement('meta');md3.name='description';md3.content='Latest leaked photos, viral content, and exclusive updates on '+dn+'. New photos added regularly.';document.head.appendChild(md3);}  
-      
-    function fetchPosts(callback){var fp=new URLSearchParams();fp.set('alt','json-in-script');fp.set('callback','hp');fp.set('max-results',MAX);fp.set('start-index',START);if(LABEL&&LABEL!==DEFAULT_LABEL){fp.set('category',LABEL);}window.hp=function(data){var feed=data.feed;if(!feed||!feed.entry){callback([],0);return;}var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];var totalResults=feed.openSearch$totalResults?.$t||entries.length;callback(entries,parseInt(totalResults));};var s=document.createElement('script');s.src=base+'?'+fp.toString();s.async=true;s.onerror=function(){callback([],0);};document.head.appendChild(s);}  
-    fetchPosts(function(posts,totalResults){renderGrid(posts,totalResults);});  
-      
-    function renderGrid(posts,totalResults){var container=$('mainContent');if(!posts.length){if(LABEL&&LABEL!==DEFAULT_LABEL){container.innerHTML='<p class="empty">No posts found for "<strong>'+LABEL+'</strong>". <a href="'+BASE_PATH+'" style="color:#e94560">Back to home</a></p>';$('relatedLabels').style.display='none';return;}container.innerHTML='<p class="empty">No posts found.</p>';return;}var display=posts.slice(0,MAX);var allLabels=[];for(var i=0;i<display.length;i++){var cats=(display[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}buildBreadcrumb(allLabels);if(LABEL&&LABEL!==DEFAULT_LABEL){var labelFreq={};for(var i=0;i<allLabels.length;i++){var l=allLabels[i];if(l!==LABEL){labelFreq[l]=(labelFreq[l]||0)+1;}}var sortedLabels=Object.keys(labelFreq).sort(function(a,b){return labelFreq[b]-labelFreq[a];}).slice(0,8);if(sortedLabels.length){$('relatedLabels').style.display='block';var rlHtml='Related: ';sortedLabels.forEach(function(l,i){rlHtml+='<a href="'+labelLink(l)+'">'+l+'</a>';if(i<sortedLabels.length-1)rlHtml+=', ';});$('relatedLabels').innerHTML=rlHtml;}}var showingText='Showing '+display.length+' leaked photos';if(totalResults>display.length){showingText+=' (of '+totalResults+' total)';}var html='<p class="count-bar">'+showingText+'</p><div class="post-grid">';for(var k=0;k<display.length;k++){html+=renderCard(display[k]);}html+='</div>';container.innerHTML=html;attachLightbox();buildPagination(totalResults);var structuredPosts=[];for(var m=0;m<display.length;m++){var e=display[m];var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url)||'';var cats2=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);structuredPosts.push({'@type':'ImageObject','name':t,'url':link,'thumbnailUrl':thumb,'caption':altText(t,cats2),'keywords':cats2.join(', ')});}$('structuredData').textContent=JSON.stringify({'@context':'https://schema.org','@type':'CollectionPage','name':document.title,'description':$('siteDesc').textContent,'url':location.href,'mainEntity':{'@type':'ImageGallery','image':structuredPosts}},null,2);}  
-})();  
-</script>  
-    {% include /ads/gobloggugel/sosmed.html %}  
-</div>
-
-</body>  
+BASE_PATH='/name/',
+CACHE_EXPIRE=30*60*1000;
+        function hashDomain(h){var hash=0;for(var i=0;i<h.length;i++){hash=((hash<<5)-hash)+h.charCodeAt(i);hash=hash&hash;}return Math.abs(hash);}
+        var seed=hashDomain(host);
+        
+        
+        var p=new URLSearchParams(location.search);var POST_SLUG=p.get('p')||'',START=parseInt(p.get('start-index'))||DEFAULT_START_INDEX,MAX=parseInt(p.get('max-results'))||MAX_POSTS_PER_PAGE,LABEL=p.get('label')||DEFAULT_LABEL;
+        $('canonicalUrl').href=location.href;$('rssFeed').href='https://www.blogger.com/feeds/'+BLOG_ID+'/posts/default?alt=rss';
+        
+        function hd(u){return u&&u.includes('googleusercontent.com')?u.replace(/\/s\d+(-c)?\//,'/s1600/'):u;}
+        function fd(d){try{return new Date(d).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});}catch(e){return d;}}
+        function altText(t,c){var p=[t];if(c&&c.length)p.push(c.join(', '));return p.filter(Boolean).join(' - ');}
+        function il(u){if(!u)return'#';try{var ur=new URL(u);var slug=ur.pathname.split('/').pop().replace('.html','');return BASE_PATH+'?p='+slug;}catch(e){}return u;}
+        function labelLink(label){return BASE_PATH+'?label='+label;}
+        var base='https://www.blogger.com/feeds/'+BLOG_ID+'/posts/default';
+        
+        // CACHE
+        function getCacheKey(){return 'cache_'+location.pathname+'_'+(LABEL||'home')+'_'+START;}
+        function getCache(key){try{var data=localStorage.getItem(key);if(!data)return null;var parsed=JSON.parse(data);if(Date.now()-parsed.time>CACHE_EXPIRE){localStorage.removeItem(key);return null;}return parsed.value;}catch(e){return null;}}
+        function setCache(key,value){try{localStorage.setItem(key,JSON.stringify({value:value,time:Date.now()}));}catch(e){}}
+        
+        // LIGHTBOX
+        var lbImages=[],lbIndex=0,lb=$('lightbox'),lbTrack=$('lbTrack'),lbCounter=$('lbCounter'),lbCaption=$('lbCaption');
+        function openLightbox(images,index){lbImages=images;lbIndex=index;renderLightbox();lb.classList.add('active');document.body.style.overflow='hidden';}
+        function closeLightbox(){lb.classList.remove('active');document.body.style.overflow='';lbImages=[];}
+        function renderLightbox(){lbTrack.innerHTML=lbImages.map(function(img,i){var src=hd(img.src)||img.src;var alt=img.alt||'Photo '+(i+1);return'<div class="lightbox-slide"><img src="'+src+'" alt="'+alt+'" loading="lazy"></div>';}).join('');lbTrack.style.transform='translateX(-'+lbIndex*100+'%)';lbCounter.textContent=(lbIndex+1)+' / '+lbImages.length;lbCaption.textContent=lbImages[lbIndex]?lbImages[lbIndex].alt:'';}
+        function nextImage(){if(lbIndex<lbImages.length-1){lbIndex++;renderLightbox();}}
+        function prevImage(){if(lbIndex>0){lbIndex--;renderLightbox();}}
+        $('lbClose').onclick=closeLightbox;$('lbNext').onclick=nextImage;$('lbPrev').onclick=prevImage;lb.onclick=function(e){if(e.target===lb)closeLightbox();};
+        document.onkeydown=function(e){if(!lb.classList.contains('active'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')nextImage();if(e.key==='ArrowLeft')prevImage();};
+        var touchStartX=0;lb.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;});lb.addEventListener('touchend',function(e){var diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50){if(diff>0)nextImage();else prevImage();}});
+        function attachLightbox(){var allImages=document.querySelectorAll('.post-card-img, .post-body img');var images=[];allImages.forEach(function(img){if(img.src&&!img.src.includes('data:image/svg+xml')){var alt=img.getAttribute('data-alt')||img.getAttribute('alt')||'Photo';images.push({src:img.src,alt:alt});img.style.cursor='pointer';var idx=images.length-1;img.onclick=function(e){e.preventDefault();e.stopPropagation();openLightbox(images,idx);}
+            if(img.classList.contains('post-card-img')){var setSpan=function(){var ratio=img.naturalHeight/img.naturalWidth;var span=Math.ceil(ratio*12);if(span<14)span=14;if(span>40)span=40;img.closest('.post-card').style.setProperty('--row-span',span);};if(img.complete&&img.naturalWidth>0){setSpan();}else{img.onload=setSpan;}}
+        }});}
+        
+        // RENDER CARD - OVERLAY
+        function renderCard(e){var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var content=e.content?.$t||e.summary?.$t||'';var thumb=hd(e.media$thumbnail?.url)||(function(c){if(!c)return null;var d=document.createElement('div');d.innerHTML=c;var i=d.querySelector('img');return i?hd(i.src):null;})(content);var cats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var imgAlt=altText(t,cats);var imgAltSafe=imgAlt.replace(/"/g,'&quot;').replace(/'/g,'&#39;');var html='<article class="post-card">';if(thumb){html+='<img class="post-card-img" src="'+thumb+'" alt="'+imgAltSafe+'" title="'+imgAltSafe+'" data-alt="'+imgAltSafe+'" loading="lazy" onerror="this.style.display=\'none\'">';}html+='<div class="post-card-info"><h2><a href="'+link+'">'+t+'</a></h2></div></article>';return html;}
+        
+        // BREADCRUMB
+        function buildBreadcrumb(allLabels){var html='<ul class="spo">';var uniqueLabels=[];for(var i=0;i<allLabels.length;i++){if(uniqueLabels.indexOf(allLabels[i])===-1)uniqueLabels.push(allLabels[i]);}for(var j=0;j<uniqueLabels.length;j++){var lbl=uniqueLabels[j];var link=labelLink(lbl);html+='<li><a href="'+link+'">'+lbl+'</a></li>';}html+='</ul>';$('breadcrumb').innerHTML=html;var schemaItems=[{'@type':'ListItem','position':1,'name':'Home','item':location.origin+BASE_PATH}];for(var k=0;k<uniqueLabels.length;k++){schemaItems.push({'@type':'ListItem','position':k+2,'name':uniqueLabels[k],'item':location.origin+labelLink(uniqueLabels[k])});}$('breadcrumbSchema').textContent=JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':schemaItems},null,2);}
+        
+        // SINGLE POST MODE
+        if(POST_SLUG){
+            $('searchForm').style.display='none';$('searchHint').style.display='none';$('backLink').style.display='inline-flex';
+            if(document.referrer&&document.referrer.includes(host))$('backLink').href=document.referrer;$('pagination').style.display='none';
+            var pageId=POST_SLUG.replace(/-/g,' ');$('pageHeading').textContent=pageId;$('siteDesc').textContent='Loading post...';
+            var feedUrl=base+'?alt=json-in-script&callback=sp&max-results=150';
+            
+            window.sp=function(data){var feed=data.feed;var container=$('mainContent');
+                if(!feed||!feed.entry){container.innerHTML='<p class="error">Post not found.</p>';return;}
+                var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];
+                var post=entries.find(function(e){var link=(e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'';var slug=link.split('/').pop().replace('.html','');return slug===POST_SLUG;});
+                if(!post){container.innerHTML='<p class="error">Post not found. <a href="'+BASE_PATH+'" style="color:#e94560">Back to home</a></p>';return;}
+                
+                var title=post.title?.$t||'Untitled';var date=fd(post.published?.$t);var content=post.content?.$t||post.summary?.$t||'';var cats=(post.category||[]).map(function(c){return c.term;}).filter(Boolean);var author=post.author?.[0]?.name?.$t||'';var imgAlt=altText(title,cats);
+                
+                var leakedTerms=['leaked','leak','viral','latest','exclusive','hot','new'];var hasLeaked=leakedTerms.some(function(t){return title.toLowerCase().includes(t);});var seoTitle=title;if(!hasLeaked)seoTitle=title+' Leaked Photos';
+                document.title=seoTitle+' — '+dn;$('pageHeading').textContent=title;$('siteDesc').textContent='View latest leaked photos of '+title+' on '+dn+'.';
+                var md=document.createElement('meta');md.name='description';md.content='View latest leaked photos, viral content, and exclusive updates of '+title+' on '+dn+'.';document.head.appendChild(md);
+                
+                var breadHtml='<a href="'+BASE_PATH+'">Home</a>';
+                if(cats.length){breadHtml+=' <span style="color:#666">&rsaquo;</span> ';cats.slice(0,3).forEach(function(c,i){breadHtml+='<a href="'+labelLink(c)+'">'+c+'</a>';if(i<cats.slice(0,3).length-1)breadHtml+=', ';});}
+                breadHtml+=' <span style="color:#666">&rsaquo;</span> <span>'+title+' on '+dn+'</span>';$('breadcrumb').innerHTML=breadHtml;
+                
+                var html='<article class="single-post-view"><h1 class="post-title">'+title+'  on '+dn+'</h1>';
+                if(cats.length){html+='<div class="single-post-labels">';cats.forEach(function(c){html+='<a href="'+labelLink(c)+'" class="single-post-label">'+c+'</a>';});html+='</div>';}
+                var snippet=content.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().substring(0,200);
+                html+='<p class="single-post-desc">View latest leaked photos and viral updates of <strong>'+title+'</strong> on '+dn+'. '+(snippet?(' — '+snippet+'...'):'')+'</p>';
+                html+='<div class="post-meta">';if(author)html+='<span>'+author+'</span>';if(date)html+='<time datetime="'+(post.published?.$t||'')+'">'+date+'</time>';html+='</div>';
+                
+                var fixedContent=content;fixedContent=fixedContent.replace(/<img([^>]*)alt="([^"]*)"([^>]*)>/gi,function(match,before,oldAlt,after){return'<img'+before+'alt="'+imgAlt+'" title="'+imgAlt+'"'+after+'>';});fixedContent=fixedContent.replace(/<img((?:(?!alt=)[^>])*)>/gi,function(match,attrs){return'<img'+attrs+' alt="'+imgAlt+'" title="'+imgAlt+'">';});
+                html+='<div class="post-body">'+fixedContent+'</div></article>';
+                
+                container.innerHTML=html;$('pagination').innerHTML='';setTimeout(function(){attachLightbox();},100);
+                
+                if(cats.length){
+                    var relatedUrl=base+'?alt=json-in-script&callback=rp&max-results=50';
+                    window.rp=function(rdata){var rfeed=rdata.feed;if(!rfeed||!rfeed.entry)return;var rentries=Array.isArray(rfeed.entry)?rfeed.entry:[rfeed.entry];
+                        var filtered=rentries.filter(function(e){var eCats=(e.category||[]).map(function(c){return c.term;});return cats.some(function(c){return eCats.indexOf(c)!==-1;});}).slice(0,50);
+                        if(!filtered.length)return;
+                        var rhtml='<div class="related-section"><h3>More Photos of '+title+' on '+dn+'</h3><div class="related-grid">';
+                        filtered.forEach(function(e){var t=e.title?.$t||'Untitled';var rlink=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url);var eCats=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);var rAlt=altText(t,eCats);
+                            rhtml+='<a href="'+rlink+'" class="related-card">';if(thumb)rhtml+='<img class="related-card-img" src="'+thumb+'" alt="'+rAlt+'" loading="lazy" onerror="this.style.display=\'none\'">';
+                            rhtml+='<span class="related-card-title">'+t+'</span>';
+                            if(eCats.length){rhtml+='<div class="related-card-labels">';eCats.forEach(function(c){rhtml+='<a href="'+labelLink(c)+'" class="related-card-label-link">'+c+'</a>';});rhtml+='</div>';}rhtml+='</a>';
+                        });rhtml+='</div></div>';container.innerHTML+=rhtml;};
+                    var rs=document.createElement('script');rs.src=relatedUrl;rs.async=true;document.head.appendChild(rs);
+                }
+            };
+            var s=document.createElement('script');s.src=feedUrl;s.async=true;s.onerror=function(){$('mainContent').innerHTML='<p class="error">Failed to load.</p>';};document.head.appendChild(s);return;
+        }
+        
+        // GRID MODE
+        var si=$('searchInput');if(si&&LABEL)si.value=LABEL;
+        if(LABEL)$('searchHint').textContent='Showing results for: '+LABEL;else $('searchHint').textContent='Try: name leaked, viral, latest, exclusive';
+        if(LABEL){var il2=/leak|viral|latest|exclusive|hot|new/i.test(LABEL);var pt,pd;if(il2){pt=LABEL+' — '+dn;pd='View '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'.';}else{pt=LABEL+' Leaked Photos & Viral Updates — '+dn;pd='View latest '+LABEL+' leaked photos, viral content, and exclusive updates on '+dn+'. Browse the full collection.';}document.title=pt;$('pageHeading').textContent=LABEL;$('siteDesc').textContent=pd;var md2=document.createElement('meta');md2.name='description';md2.content=pd;document.head.appendChild(md2);$('filterBar').style.display='flex';$('filterBar').innerHTML='Category: <strong>'+LABEL+'</strong> <a href="'+BASE_PATH+'">Clear</a>';$('labelDesc').style.display='block';$('labelDesc').innerHTML='Browse <strong>'+LABEL+'</strong> leaked photos, viral content, and exclusive updates on '+dn+'. Find the latest '+LABEL+' images in this collection.';}else{document.title=dn+' — Leaked Photos & Viral Collection';$('pageHeading').textContent=dn;$('siteDesc').textContent='Latest leaked photos, viral content, and exclusive updates. Browse the full collection.';var md3=document.createElement('meta');md3.name='description';md3.content='Latest leaked photos, viral content, and exclusive updates on '+dn+'. New photos added regularly.';document.head.appendChild(md3);}
+        
+        var cacheKey=getCacheKey();var cachedData=getCache(cacheKey);
+        if(cachedData){renderGrid(cachedData);return;}
+        
+        function fetchPosts(callback){var fp=new URLSearchParams();fp.set('alt','json-in-script');fp.set('callback','hp');fp.set('max-results',MAX);fp.set('start-index',START);
+            window.hp=function(data){var feed=data.feed;if(!feed||!feed.entry){callback([]);return;}var entries=Array.isArray(feed.entry)?feed.entry:[feed.entry];if(LABEL){entries=entries.filter(function(post){var cats=(post.category||[]).map(function(c){return c.term;});return cats.indexOf(LABEL)!==-1;});}callback(entries);};
+            var s=document.createElement('script');s.src=base+'?'+fp.toString();s.async=true;s.onerror=function(){callback([]);};document.head.appendChild(s);}
+        
+        fetchPosts(function(posts){setCache(cacheKey,posts);renderGrid(posts);});
+        
+        function renderGrid(posts){var container=$('mainContent');
+            if(!posts.length){if(LABEL){var fb=new URLSearchParams();fb.set('alt','json-in-script');fb.set('callback','hpfb');fb.set('max-results','10');fb.set('start-index','1');
+                    window.hpfb=function(data){var feed=data.feed;var fbPosts=[];if(feed&&feed.entry){fbPosts=Array.isArray(feed.entry)?feed.entry:[feed.entry];}if(!fbPosts.length){container.innerHTML='<p class="empty">No posts found.</p>';return;}
+                        var infoBar=document.createElement('div');infoBar.className='info-msg';infoBar.innerHTML='No results for "<strong>'+LABEL+'</strong>". Showing latest posts instead.';container.parentNode.insertBefore(infoBar,container);
+                        $('filterBar').style.display='none';$('pageHeading').textContent=dn;document.title=dn+' — Leaked Photos & Viral Collection';$('labelDesc').style.display='none';$('relatedLabels').style.display='none';
+                        var allLabels=[];for(var i=0;i<fbPosts.length;i++){var cats=(fbPosts[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}buildBreadcrumb(allLabels);
+                        var html='<p class="count-bar">Showing '+fbPosts.length+' latest leaked photos</p><div class="post-grid">';for(var k=0;k<fbPosts.length;k++){html+=renderCard(fbPosts[k]);}html+='</div>';container.innerHTML=html;attachLightbox();};
+                    var fbScript=document.createElement('script');fbScript.src=base+'?'+fb.toString();fbScript.async=true;document.head.appendChild(fbScript);return;}
+                container.innerHTML='<p class="empty">No posts found.</p>';return;}
+            var display=posts.slice(0,MAX);var allLabels=[];for(var i=0;i<display.length;i++){var cats=(display[i].category||[]).map(function(c){return c.term;}).filter(Boolean);for(var j=0;j<cats.length;j++){allLabels.push(cats[j]);}}buildBreadcrumb(allLabels);
+            if(LABEL){var labelFreq={};for(var i=0;i<allLabels.length;i++){var l=allLabels[i];if(l!==LABEL){labelFreq[l]=(labelFreq[l]||0)+1;}}var sortedLabels=Object.keys(labelFreq).sort(function(a,b){return labelFreq[b]-labelFreq[a];}).slice(0,8);if(sortedLabels.length){$('relatedLabels').style.display='block';var rlHtml='Related: ';sortedLabels.forEach(function(l,i){rlHtml+='<a href="'+labelLink(l)+'">'+l+'</a>';if(i<sortedLabels.length-1)rlHtml+=', ';});$('relatedLabels').innerHTML=rlHtml;}}
+            var html='<p class="count-bar">Showing '+display.length+' leaked photos</p><div class="post-grid">';for(var k=0;k<display.length;k++){html+=renderCard(display[k]);}html+='</div>';container.innerHTML=html;attachLightbox();
+            var structuredPosts=[];for(var m=0;m<display.length;m++){var e=display[m];var t=e.title?.$t||'Untitled';var link=il((e.link||[]).find(function(l){return l.rel==='alternate';})?.href||'#');var thumb=hd(e.media$thumbnail?.url)||'';var cats2=(e.category||[]).map(function(c){return c.term;}).filter(Boolean);structuredPosts.push({'@type':'ImageObject','name':t,'url':link,'thumbnailUrl':thumb,'caption':altText(t,cats2),'keywords':cats2.join(', ')});}
+            $('structuredData').textContent=JSON.stringify({'@context':'https://schema.org','@type':'CollectionPage','name':document.title,'description':$('siteDesc').textContent,'url':location.href,'mainEntity':{'@type':'ImageGallery','image':structuredPosts}},null,2);}
+    })();
+    </script>
+        {% include /ads/gobloggugel/sosmed.html %}
+    </div>
+    
+</body>
 </html>
