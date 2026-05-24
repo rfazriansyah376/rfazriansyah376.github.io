@@ -1,7 +1,3 @@
----
-layout: null
-permalink: /deuis/
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,14 +19,14 @@ permalink: /deuis/
     <link rel="next" id="link-next" href="">
 
     <style id="dynamic-style"></style>
-    
+
     {% include head.html %}
 {% include verif.html %}
 </head>
 <body>
 <div loading="lazy">
 
-    <!-- Lightbox -->
+
     <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
         <span class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</span>
         <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
@@ -47,9 +43,9 @@ permalink: /deuis/
         <p class="subtitle" id="header-subtitle"></p>
     </header>
 
+    <nav id="breadcrumb" aria-label="Breadcrumb"></nav>
+
     <main id="posts"></main>
-    <div id="error" class="error">No posts found.</div>
-    <div id="no-results" class="no-results">No posts found with this label.</div>
 
     <nav id="pagination" class="pagination">
         <button id="prev">← Previous</button>
@@ -60,13 +56,9 @@ permalink: /deuis/
     <script>
     (function() {
 
-        // ====================================
-        // KONFIGURASI — HANYA EDIT DI SINI
-        // ====================================
         var BLOG_ID = '3849070220815751744';
-        var POSTS_PER_PAGE = 6;
-        var START_AT = 1;
-        // ====================================
+        var POSTS_PER_PAGE = 10;
+        var START_AT = 50;
 
         var totalPosts = 0;
         var currentStart = START_AT;
@@ -107,7 +99,6 @@ permalink: /deuis/
 
         var subdomain = getSubdomain();
         var domainHash = hashCode(subdomain);
-
         var subdomainName = subdomain.replace(/-/g, ' ').replace(/\b\w/g, function(l){ return l.toUpperCase(); });
 
         function pick(arr, hash, offset) {
@@ -151,9 +142,6 @@ permalink: /deuis/
         var headerStyles = ['centered', 'left', 'bordered', 'minimal'];
         var headerStyle = pick(headerStyles, domainHash, 6);
 
-        var labelStyles = ['pill', 'square', 'outline', 'underline'];
-        var labelStyle = pick(labelStyles, domainHash, 7);
-
         var titleSizes = ['18px', '20px', '22px', '24px', '26px', '28px'];
         var titleSize = pick(titleSizes, domainHash, 8);
 
@@ -164,6 +152,35 @@ permalink: /deuis/
             if (page > 1) params.push('page=' + page);
             if (params.length) url += '?' + params.join('&');
             return window.location.origin + url;
+        }
+
+        function updateBreadcrumb(page, posts) {
+            var base = window.location.pathname;
+            var html = '<ul class="spo">';
+
+            if (posts && posts.length > 0) {
+                var allLabels = [];
+                for (var i = 0; i < posts.length; i++) {
+                    if (posts[i].category) {
+                        for (var j = 0; j < posts[i].category.length; j++) {
+                            var lbl = posts[i].category[j].term;
+                            if (allLabels.indexOf(lbl) === -1) {
+                                allLabels.push(lbl);
+                            }
+                        }
+                    }
+                }
+                for (var k = 0; k < allLabels.length; k++) {
+                    html += '<li><a href="' + base + '?label=' + encodeURIComponent(allLabels[k]) + '">' + allLabels[k] + '</a></li>';
+                }
+            }
+
+            if (page > 1) {
+                html += '<li>Page ' + page + '</li>';
+            }
+
+            html += '</ul>';
+            document.getElementById('breadcrumb').innerHTML = html;
         }
 
         function updateMeta(page, totalPages, label, posts) {
@@ -196,6 +213,7 @@ permalink: /deuis/
             document.getElementById('link-next').href = (page < totalPages) ? buildUrl(page + 1, label) : '';
 
             updateFeeds(label);
+            updateBreadcrumb(page, posts);
         }
 
         function updateFeeds(label) {
@@ -207,14 +225,6 @@ permalink: /deuis/
         }
 
         function generateCSS() {
-            var labelCSS = '';
-            switch(labelStyle) {
-                case 'pill': labelCSS = 'background:' + primary + ';color:#fff;padding:4px 12px;border-radius:20px;'; break;
-                case 'square': labelCSS = 'background:' + primary + ';color:#fff;padding:4px 8px;border-radius:2px;'; break;
-                case 'outline': labelCSS = 'background:transparent;color:' + primary + ';padding:3px 10px;border-radius:4px;border:1.5px solid ' + primary + ';'; break;
-                case 'underline': labelCSS = 'background:transparent;color:' + primary + ';padding:2px 4px;border-radius:0;border-bottom:2px solid ' + primary + ';'; break;
-            }
-
             var headerCSS = 'text-align:center;';
             switch(headerStyle) {
                 case 'left': headerCSS = 'text-align:left;padding-left:30px;'; break;
@@ -228,6 +238,13 @@ permalink: /deuis/
                 .header{background:${cardBg};padding:30px 20px 20px;margin-bottom:${gap};box-shadow:${shadow};${headerCSS}}
                 .header h1{font-size:32px;margin:0;color:${primary}}
                 .subtitle{font-size:13px;color:${textMuted};margin-top:6px}
+                #breadcrumb{padding:0 20px;margin-bottom:${gap}}
+                #breadcrumb ul{list-style:none;display:flex;flex-wrap:wrap;gap:4px;padding:0;margin:0}
+                #breadcrumb li{font-size:13px;color:${textMuted}}
+                #breadcrumb li a{color:${primary};text-decoration:none}
+                #breadcrumb li a:hover{text-decoration:underline}
+                #breadcrumb li::after{content:'>';margin:0 6px;color:${textMuted}}
+                #breadcrumb li:last-child::after{content:'';margin:0}
                 #posts{margin:0 auto;max-width:1200px;padding:0 20px 50px}
                 .post-card{background:${cardBg};margin-bottom:${gap};box-shadow:${shadow};border-radius:${radius};overflow:hidden;border:${borderStyle === 'none' ? 'none' : borderWidth + 'px ' + borderStyle + ' ' + borderColor};transition:transform .2s,box-shadow .2s}
                 .post-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
@@ -237,11 +254,7 @@ permalink: /deuis/
                 .post-info h2{margin:0 0 8px;font-size:${titleSize};line-height:1.3}
                 .post-info h2 a{color:#222;text-decoration:none}
                 .post-info h2 a:hover{color:${primary}}
-                .post-meta{color:${textMuted};font-size:13px;margin-bottom:12px}
-                .label-list{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0}
-                .label-list li{margin:0}
-                .label-tag{display:inline-block;${labelCSS}font-size:12px;text-decoration:none;transition:opacity .2s}
-                .label-tag:hover{opacity:.8}
+                .post-meta{color:${textMuted};font-size:13px}
                 .pagination{display:none;justify-content:center;align-items:center;gap:15px;padding:30px 20px 50px;flex-wrap:wrap}
                 .pagination.show{display:flex}
                 .pagination button{padding:10px 24px;font-size:14px;background:${primary};color:#fff;border:none;border-radius:${radius};cursor:pointer;transition:background .2s}
@@ -249,9 +262,6 @@ permalink: /deuis/
                 .pagination button:disabled{background:#ccc;cursor:not-allowed}
                 .pagination span{font-size:14px;color:${textMuted}}
                 .loading{text-align:center;padding:60px;font-size:18px;color:${textMuted}}
-                .error{text-align:center;padding:60px;color:#dc2626;display:none}
-                .no-results{text-align:center;padding:60px;color:${textMuted};font-size:16px;display:none}
-
                 .lightbox{display:none;position:fixed;z-index:9999;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);flex-direction:column;justify-content:center;align-items:center}
                 .lightbox.show{display:flex}
                 .lightbox-content{display:flex;flex-direction:column;align-items:center;max-width:90%;max-height:85%}
@@ -264,19 +274,16 @@ permalink: /deuis/
                 .lightbox-prev:hover,.lightbox-next:hover{background:rgba(255,255,255,0.3)}
                 .lightbox-prev{left:20px}
                 .lightbox-next{right:20px}
-
                 ${layout === 'grid' || layout === 'grid-3' ? `
                 #posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(${layout === 'grid-3' ? '250px' : '300px'},1fr));gap:${gap}}
                 .post-card{margin-bottom:0}
                 ` : ''}
-
                 ${layout === 'compact' ? `
                 .post-info{padding:10px 14px}
                 .post-info h2{font-size:16px;margin:0 0 4px}
-                .post-meta{margin-bottom:6px;font-size:11px}
+                .post-meta{font-size:11px}
                 .post-thumb{max-height:200px;object-fit:cover}
                 ` : ''}
-
                 @media(max-width:768px){
                     .header h1{font-size:26px}
                     ${layout === 'grid-3' ? '#posts{grid-template-columns:repeat(2,1fr)}' : ''}
@@ -289,12 +296,12 @@ permalink: /deuis/
                     .header h1{font-size:22px}
                     .post-info h2{font-size:${parseInt(titleSize) > 20 ? '18px' : titleSize}}
                     .post-meta{font-size:12px}
-                    .label-tag{padding:3px 10px;font-size:11px}
                     .pagination button{padding:8px 16px;font-size:13px}
                     #posts{padding:0 10px 30px}
                     ${layout === 'grid' || layout === 'grid-3' ? '#posts{grid-template-columns:1fr}' : ''}
                     .lightbox-close{top:10px;right:15px;font-size:30px}
                     .lightbox-prev,.lightbox-next{font-size:18px;padding:8px 10px}
+                    #breadcrumb{padding:0 10px}
                 }
             `;
             document.getElementById('dynamic-style').textContent = css;
@@ -303,8 +310,6 @@ permalink: /deuis/
         generateCSS();
 
         var $posts = document.getElementById('posts');
-        var $error = document.getElementById('error');
-        var $noResults = document.getElementById('no-results');
         var $pagination = document.getElementById('pagination');
         var $prev = document.getElementById('prev');
         var $next = document.getElementById('next');
@@ -382,8 +387,6 @@ permalink: /deuis/
 
         function load(start, label) {
             $posts.innerHTML = '<p class="loading">Loading posts...</p>';
-            $error.style.display = 'none';
-            $noResults.style.display = 'none';
             $pagination.classList.remove('show');
 
             var old = document.querySelector('script[data-feed]');
@@ -394,16 +397,11 @@ permalink: /deuis/
                 delete window[cbName];
 
                 if (!data.feed || !data.feed.entry) {
-                    $posts.innerHTML = '';
-                    if (label) {
-                        $noResults.style.display = 'block';
-                        $noResults.textContent = 'No posts with label "' + label + '".';
+                    if (label || start > 1) {
+                        window.location.href = window.location.pathname;
                     } else {
-                        $error.style.display = 'block';
-                        $error.textContent = 'No posts found.';
+                        $posts.innerHTML = '<p class="loading">Loading posts...</p>';
                     }
-                    $pagination.classList.remove('show');
-                    updateMeta(1, 1, label, null);
                     return;
                 }
 
@@ -445,7 +443,6 @@ permalink: /deuis/
 
         function render(entries) {
             lightboxImages = [];
-
             var html = '';
             for (var i = 0; i < entries.length; i++) {
                 var e = entries[i];
@@ -463,20 +460,12 @@ permalink: /deuis/
                 }
 
                 var labelNames = [];
-                var labelsHtml = '';
                 if (e.category) {
-                    labelsHtml = '<ul class="spo">';
                     for (var j = 0; j < e.category.length; j++) {
-                        var labelName = e.category[j].term;
-                        labelNames.push(labelName);
-                        // Link ke halaman sendiri (internal)
-                        var labelUrl = window.location.pathname + '?label=' + encodeURIComponent(labelName);
-                        labelsHtml += '<li><a href="' + labelUrl + '" class="label-tag">' + labelName + '</a></li>';
+                        labelNames.push(e.category[j].term);
                     }
-                    labelsHtml += '</ul>';
                 }
 
-                // Alt dinamis: Judul - Label1, Label2 | SubdomainName
                 var altText = title;
                 if (labelNames.length > 0) altText += ' - ' + labelNames.join(', ');
                 altText += ' | ' + subdomainName;
@@ -496,19 +485,13 @@ permalink: /deuis/
                 html += '<div class="post-info">';
                 html += '<h2><a href="' + link + '" target="_blank" rel="noopener">' + title + '</a></h2>';
                 html += '<p class="post-meta">By: ' + author + ' | <time datetime="' + e.published.$t + '">' + date + '</time></p>';
-                if (labelsHtml) html += labelsHtml;
                 html += '</div></article>';
             }
             $posts.innerHTML = html;
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        window.blogLightbox = {
-            open: openLightbox,
-            close: closeLightbox,
-            prev: lightboxPrev,
-            next: lightboxNext
-        };
+        window.blogLightbox = { open: openLightbox, close: closeLightbox, prev: lightboxPrev, next: lightboxNext };
 
         function paginate(start) {
             var page = Math.ceil(start / POSTS_PER_PAGE);
@@ -544,7 +527,7 @@ permalink: /deuis/
 
     })();
     </script>
-    {% include footer.html %}
+{% include footer.html %}
 </div>
 {% include /ads/gobloggugel/sosmed.html %}
 </body>
