@@ -241,13 +241,7 @@ layout: null
                 .header{background:${cardBg};padding:30px 20px 20px;margin-bottom:${gap};box-shadow:${shadow};${headerCSS}}
                 .header h1{font-size:32px;margin:0;color:${primary}}
                 .subtitle{font-size:13px;color:${textMuted};margin-top:6px}
-                #breadcrumb{padding:0 20px;margin-bottom:${gap}}
-                #breadcrumb ul{list-style:none;display:flex;flex-wrap:wrap;gap:4px;padding:0;margin:0}
-                #breadcrumb li{font-size:13px;color:${textMuted}}
-                #breadcrumb li a{color:${primary};text-decoration:none}
-                #breadcrumb li a:hover{text-decoration:underline}
-                #breadcrumb li::after{content:'>';margin:0 6px;color:${textMuted}}
-                #breadcrumb li:last-child::after{content:'';margin:0}
+                
                 #posts{margin:0 auto;max-width:1200px;padding:0 20px 50px}
                 .post-card{background:${cardBg};margin-bottom:${gap};box-shadow:${shadow};border-radius:${radius};overflow:hidden;border:${borderStyle === 'none' ? 'none' : borderWidth + 'px ' + borderStyle + ' ' + borderColor};transition:transform .2s,box-shadow .2s}
                 .post-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
@@ -304,7 +298,7 @@ layout: null
                     ${layout === 'grid' || layout === 'grid-3' ? '#posts{grid-template-columns:1fr}' : ''}
                     .lightbox-close{top:10px;right:15px;font-size:30px}
                     .lightbox-prev,.lightbox-next{font-size:18px;padding:8px 10px}
-                    #breadcrumb{padding:0 10px}
+                    
                 }
             `;
             document.getElementById('dynamic-style').textContent = css;
