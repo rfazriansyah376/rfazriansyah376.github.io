@@ -1,3 +1,7 @@
+---
+layout: null
+permalink: /deuis/
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -461,8 +465,9 @@
                     for (var j = 0; j < e.category.length; j++) {
                         var labelName = e.category[j].term;
                         labelNames.push(labelName);
-                        var labelUrl = blogUrl + '/search/label/' + encodeURIComponent(labelName);
-                        labelsHtml += '<li><a href="' + labelUrl + '" class="label-tag" target="_blank" rel="noopener">' + labelName + '</a></li>';
+                        // Link ke halaman sendiri (internal)
+                        var labelUrl = window.location.pathname + '?label=' + encodeURIComponent(labelName);
+                        labelsHtml += '<li><a href="' + labelUrl + '" class="label-tag">' + labelName + '</a></li>';
                     }
                     labelsHtml += '</ul>';
                 }
