@@ -15,10 +15,24 @@
     <link rel="alternate" type="application/atom+xml" id="feed-atom" href="">
     <link rel="alternate" type="application/rss+xml" id="feed-rss" href="">
     <link rel="canonical" id="canonical" href="">
+    <link rel="prev" id="link-prev" href="">
+    <link rel="next" id="link-next" href="">
 
     <style id="dynamic-style"></style>
 </head>
 <body>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <span class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</span>
+        <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#10095;</button>
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightbox-img" src="" alt="">
+            <p class="lightbox-caption" id="lightbox-caption"></p>
+            <p class="lightbox-counter" id="lightbox-counter"></p>
+        </div>
+    </div>
 
     <header class="header" id="header">
         <h1 id="header-title">Latest Posts</h1>
@@ -34,10 +48,6 @@
         <span id="info"></span>
         <button id="next">Next →</button>
     </nav>
-
-    <footer class="footer">
-        <p id="footer-text">Powered by Blogger</p>
-    </footer>
 
     <script>
     (function() {
@@ -55,6 +65,9 @@
         var currentLabel = '';
         var blogUrl = '';
 
+        var lightboxImages = [];
+        var lightboxIndex = 0;
+
         var urlParams = new URLSearchParams(window.location.search);
         var urlPage = urlParams.get('page');
         var urlLabel = urlParams.get('label');
@@ -64,9 +77,6 @@
             currentStart = (parseInt(urlPage) - 1) * POSTS_PER_PAGE + 1;
         }
 
-        // ========================
-        // HASH & IDENTITAS UNIK
-        // ========================
         function hashCode(str) {
             var hash = 0;
             for (var i = 0; i < str.length; i++) {
@@ -77,25 +87,26 @@
         }
 
         function getSubdomain() {
-            var parts = window.location.hostname.split('.');
-            if (parts.length >= 3) return parts[0];
-            return 'default';
+            var host = window.location.hostname;
+            var parts = host.split('.');
+            if (parts.length >= 3) {
+                var sub = parts[0];
+                if (sub === 'www') return parts[1];
+                return sub;
+            }
+            return parts[0];
         }
 
         var subdomain = getSubdomain();
         var domainHash = hashCode(subdomain);
 
-        // Nama subdomain yang sudah di-format
-        var subdomainName = (subdomain !== 'default') 
-            ? subdomain.replace(/-/g, ' ').replace(/\b\w/g, function(l){ return l.toUpperCase(); })
-            : 'Latest Posts';
+        var subdomainName = subdomain.replace(/-/g, ' ').replace(/\b\w/g, function(l){ return l.toUpperCase(); });
 
         function pick(arr, hash, offset) {
             offset = offset || 0;
             return arr[(hash + offset) % arr.length];
         }
 
-        // Warna
         var hue = Math.floor((domainHash * 137.508) % 360);
         var sat = 50 + (domainHash % 40);
         var light = 40 + (domainHash % 20);
@@ -106,96 +117,87 @@
         var accent = 'hsl(' + hue + ', 30%, 88%)';
         var textMuted = 'hsl(' + hue + ', 5%, 50%)';
 
-        // Font
         var fonts = ['Arial, sans-serif','Georgia, "Times New Roman", serif','Verdana, Geneva, sans-serif','"Segoe UI", Tahoma, sans-serif','"Trebuchet MS", Helvetica, sans-serif','Cambria, "Palatino Linotype", serif','"Lucida Sans", "Lucida Grande", sans-serif','Gill Sans, "Gill Sans MT", sans-serif'];
         var font = pick(fonts, domainHash);
 
-        // Layout
         var layouts = ['list', 'grid', 'grid-3', 'compact'];
         var layout = pick(layouts, domainHash);
 
-        // Border
         var borderStyles = ['none', 'solid', 'dashed', 'dotted', 'double'];
         var borderStyle = pick(borderStyles, domainHash, 1);
         var borderWidth = (domainHash % 4) + 1;
         var borderColor = 'hsl(' + hue + ', 30%, 80%)';
 
-        // Radius
         var radiuses = ['0px', '4px', '8px', '12px', '16px', '20px', '24px', '32px'];
         var radius = pick(radiuses, domainHash, 2);
 
-        // Padding
         var paddingSizes = ['10px', '14px', '18px', '22px', '26px', '30px'];
         var padding = pick(paddingSizes, domainHash, 3);
 
-        // Shadow
         var shadows = ['none','0 1px 3px rgba(0,0,0,0.08)','0 2px 8px rgba(0,0,0,0.1)','0 4px 16px rgba(0,0,0,0.12)','0 8px 24px rgba(0,0,0,0.15)','2px 2px 0 ' + primary,'4px 4px 0 ' + accent,'inset 0 0 0 1px ' + borderColor];
         var shadow = pick(shadows, domainHash, 4);
 
-        // Gap
         var gaps = ['10px', '16px', '20px', '24px', '30px', '40px'];
         var gap = pick(gaps, domainHash, 5);
 
-        // Header style
         var headerStyles = ['centered', 'left', 'bordered', 'minimal'];
         var headerStyle = pick(headerStyles, domainHash, 6);
 
-        // Label style
         var labelStyles = ['pill', 'square', 'outline', 'underline'];
         var labelStyle = pick(labelStyles, domainHash, 7);
 
-        // Title size
         var titleSizes = ['18px', '20px', '22px', '24px', '26px', '28px'];
         var titleSize = pick(titleSizes, domainHash, 8);
 
-        // ========================
-        // DYNAMIC META UPDATER
-        // ========================
+        function buildUrl(page, label) {
+            var url = window.location.pathname;
+            var params = [];
+            if (label) params.push('label=' + encodeURIComponent(label));
+            if (page > 1) params.push('page=' + page);
+            if (params.length) url += '?' + params.join('&');
+            return window.location.origin + url;
+        }
+
         function updateMeta(page, totalPages, label, posts) {
-            // H1
             var h1 = subdomainName;
             if (label) h1 = label + ' — ' + subdomainName;
+            if (page > 1) h1 += ' — Page ' + page;
             document.getElementById('header-title').textContent = h1;
+            document.title = h1;
 
-            // Subtitle
             var subtitle = '';
             if (posts && posts.length > 0) {
-                var postCount = totalPosts;
-                subtitle = postCount + ' posts';
+                subtitle = totalPosts + ' posts';
                 if (label) subtitle += ' in ' + label;
                 subtitle += ' · Page ' + page + ' of ' + totalPages;
             }
             document.getElementById('header-subtitle').textContent = subtitle;
 
-            // Title tag
-            var title = h1;
-            if (page > 1) title += ' — Page ' + page;
-            document.title = title;
-
-            // Meta description
-            var desc = 'Browse ';
-            if (label) {
-                desc += 'articles about ' + label;
-            } else {
-                desc += 'the latest posts';
-            }
+            var desc = 'Page ' + page + ' — ';
+            if (label) desc += 'Articles about ' + label;
+            else desc += 'Latest posts';
             desc += ' on ' + subdomainName + '. ';
             if (posts && posts.length > 0) {
-                var titles = posts.slice(0, 3).map(function(p){ return p.title.$t; }).join(', ');
-                desc += 'Featuring: ' + titles + '...';
+                var titles = posts.slice(0, 3).map(function(p){ return p.title.$t; }).join(' | ');
+                desc += 'Featuring: ' + titles + '.';
             }
-            desc += ' Page ' + page + ' of ' + totalPages + '.';
+            desc += ' Total ' + totalPosts + ' posts.';
             document.querySelector('meta[name="description"]').content = desc;
 
-            // Footer
-            var footer = '© ' + new Date().getFullYear() + ' ' + subdomainName;
-            if (totalPosts > 0) footer += ' · ' + totalPosts + ' posts';
-            document.getElementById('footer-text').textContent = footer;
+            document.getElementById('link-prev').href = (page > 1) ? buildUrl(page - 1, label) : '';
+            document.getElementById('link-next').href = (page < totalPages) ? buildUrl(page + 1, label) : '';
+
+            updateFeeds(label);
         }
 
-        // ========================
-        // GENERATE CSS
-        // ========================
+        function updateFeeds(label) {
+            if (!blogUrl) return;
+            var base = blogUrl + '/feeds/posts/default';
+            if (label) base += '/-/' + encodeURIComponent(label);
+            document.getElementById('feed-atom').href = base;
+            document.getElementById('feed-rss').href = base + '?alt=rss';
+        }
+
         function generateCSS() {
             var labelCSS = '';
             switch(labelStyle) {
@@ -218,9 +220,10 @@
                 .header{background:${cardBg};padding:30px 20px 20px;margin-bottom:${gap};box-shadow:${shadow};${headerCSS}}
                 .header h1{font-size:32px;margin:0;color:${primary}}
                 .subtitle{font-size:13px;color:${textMuted};margin-top:6px}
-                #posts{margin:0 auto;max-width:1200px;padding:0 20px}
+                #posts{margin:0 auto;max-width:1200px;padding:0 20px 50px}
                 .post-card{background:${cardBg};margin-bottom:${gap};box-shadow:${shadow};border-radius:${radius};overflow:hidden;border:${borderStyle === 'none' ? 'none' : borderWidth + 'px ' + borderStyle + ' ' + borderColor};transition:transform .2s,box-shadow .2s}
                 .post-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
+                .post-thumb-link{display:block;cursor:pointer}
                 .post-thumb{width:100%;height:auto;display:block;background:${accent}}
                 .post-info{padding:${padding}}
                 .post-info h2{margin:0 0 8px;font-size:${titleSize};line-height:1.3}
@@ -240,7 +243,19 @@
                 .loading{text-align:center;padding:60px;font-size:18px;color:${textMuted}}
                 .error{text-align:center;padding:60px;color:#dc2626;display:none}
                 .no-results{text-align:center;padding:60px;color:${textMuted};font-size:16px;display:none}
-                .footer{text-align:center;padding:20px;color:${textMuted};font-size:12px;border-top:1px solid ${accent};margin-top:${gap}}
+
+                .lightbox{display:none;position:fixed;z-index:9999;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);flex-direction:column;justify-content:center;align-items:center}
+                .lightbox.show{display:flex}
+                .lightbox-content{display:flex;flex-direction:column;align-items:center;max-width:90%;max-height:85%}
+                .lightbox-img{max-width:100%;max-height:70vh;object-fit:contain;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+                .lightbox-caption{color:#fff;font-size:15px;margin-top:12px;text-align:center;max-width:600px;line-height:1.4}
+                .lightbox-counter{color:#aaa;font-size:12px;margin-top:4px}
+                .lightbox-close{position:absolute;top:20px;right:30px;color:#fff;font-size:40px;font-weight:bold;cursor:pointer;transition:opacity .2s;z-index:1}
+                .lightbox-close:hover{opacity:.7}
+                .lightbox-prev,.lightbox-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);color:#fff;border:none;font-size:30px;padding:15px 20px;cursor:pointer;transition:background .2s;border-radius:4px;z-index:1}
+                .lightbox-prev:hover,.lightbox-next:hover{background:rgba(255,255,255,0.3)}
+                .lightbox-prev{left:20px}
+                .lightbox-next{right:20px}
 
                 ${layout === 'grid' || layout === 'grid-3' ? `
                 #posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(${layout === 'grid-3' ? '250px' : '300px'},1fr));gap:${gap}}
@@ -257,6 +272,9 @@
                 @media(max-width:768px){
                     .header h1{font-size:26px}
                     ${layout === 'grid-3' ? '#posts{grid-template-columns:repeat(2,1fr)}' : ''}
+                    .lightbox-prev,.lightbox-next{font-size:22px;padding:10px 14px}
+                    .lightbox-prev{left:8px}
+                    .lightbox-next{right:8px}
                 }
                 @media(max-width:480px){
                     .header{padding:20px 15px 15px}
@@ -265,8 +283,10 @@
                     .post-meta{font-size:12px}
                     .label-tag{padding:3px 10px;font-size:11px}
                     .pagination button{padding:8px 16px;font-size:13px}
-                    #posts{padding:0 10px}
+                    #posts{padding:0 10px 30px}
                     ${layout === 'grid' || layout === 'grid-3' ? '#posts{grid-template-columns:1fr}' : ''}
+                    .lightbox-close{top:10px;right:15px;font-size:30px}
+                    .lightbox-prev,.lightbox-next{font-size:18px;padding:8px 10px}
                 }
             `;
             document.getElementById('dynamic-style').textContent = css;
@@ -274,9 +294,6 @@
 
         generateCSS();
 
-        // ========================
-        // DOM
-        // ========================
         var $posts = document.getElementById('posts');
         var $error = document.getElementById('error');
         var $noResults = document.getElementById('no-results');
@@ -284,22 +301,75 @@
         var $prev = document.getElementById('prev');
         var $next = document.getElementById('next');
         var $info = document.getElementById('info');
-        var $feedAtom = document.getElementById('feed-atom');
-        var $feedRss = document.getElementById('feed-rss');
         var $canonical = document.getElementById('canonical');
+        var $lightbox = document.getElementById('lightbox');
+        var $lightboxImg = document.getElementById('lightbox-img');
+        var $lightboxCaption = document.getElementById('lightbox-caption');
+        var $lightboxCounter = document.getElementById('lightbox-counter');
+        var $lightboxClose = document.getElementById('lightbox-close');
+        var $lightboxPrev = document.getElementById('lightbox-prev');
+        var $lightboxNext = document.getElementById('lightbox-next');
 
         $canonical.href = window.location.href;
         updateMeta(1, 1, currentLabel, null);
 
+        function openLightbox(index) {
+            lightboxIndex = index;
+            updateLightbox();
+            $lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            $lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightbox() {
+            var item = lightboxImages[lightboxIndex];
+            $lightboxImg.src = item.src;
+            $lightboxImg.alt = item.alt;
+            $lightboxCaption.textContent = item.alt;
+            $lightboxCounter.textContent = (lightboxIndex + 1) + ' / ' + lightboxImages.length;
+            $lightboxPrev.style.display = lightboxImages.length <= 1 ? 'none' : '';
+            $lightboxNext.style.display = lightboxImages.length <= 1 ? 'none' : '';
+        }
+
+        function lightboxPrev() {
+            lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+            updateLightbox();
+        }
+
+        function lightboxNext() {
+            lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+            updateLightbox();
+        }
+
+        $lightboxClose.onclick = closeLightbox;
+        $lightbox.onclick = function(e) { if (e.target === $lightbox) closeLightbox(); };
+        $lightboxPrev.onclick = function(e) { e.stopPropagation(); lightboxPrev(); };
+        $lightboxNext.onclick = function(e) { e.stopPropagation(); lightboxNext(); };
+
+        document.addEventListener('keydown', function(e) {
+            if (!$lightbox.classList.contains('show')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') lightboxPrev();
+            if (e.key === 'ArrowRight') lightboxNext();
+        });
+
+        var touchStartX = 0;
+        $lightbox.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+        $lightbox.addEventListener('touchend', function(e) {
+            var diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) lightboxNext();
+                else lightboxPrev();
+            }
+        });
+
         function extractBlogUrl(link) {
             var match = link.match(/^(https?:\/\/[^\/]+)/);
             return match ? match[1] : '';
-        }
-
-        function updateHeadFeeds() {
-            if (!blogUrl) return;
-            $feedAtom.href = blogUrl + '/feeds/posts/default';
-            $feedRss.href = blogUrl + '/feeds/posts/default?alt=rss';
         }
 
         function load(start, label) {
@@ -333,10 +403,7 @@
 
                 if (!blogUrl && data.feed.entry.length > 0) {
                     var firstLink = data.feed.entry[0].link.find(function(l){ return l.rel === 'alternate'; });
-                    if (firstLink) {
-                        blogUrl = extractBlogUrl(firstLink.href);
-                        updateHeadFeeds();
-                    }
+                    if (firstLink) blogUrl = extractBlogUrl(firstLink.href);
                 }
 
                 var page = Math.ceil(start / POSTS_PER_PAGE);
@@ -369,6 +436,8 @@
         }
 
         function render(entries) {
+            lightboxImages = [];
+
             var html = '';
             for (var i = 0; i < entries.length; i++) {
                 var e = entries[i];
@@ -398,11 +467,23 @@
                     labelsHtml += '</ul>';
                 }
 
+                // Alt dinamis: Judul - Label1, Label2 | SubdomainName
                 var altText = title;
                 if (labelNames.length > 0) altText += ' - ' + labelNames.join(', ');
+                altText += ' | ' + subdomainName;
+
+                if (img) {
+                    lightboxImages.push({ src: img, alt: altText, title: title });
+                }
+
+                var imgIndex = lightboxImages.length - 1;
 
                 html += '<article class="post-card">';
-                if (img) html += '<img class="post-thumb" src="' + img + '" alt="' + altText.replace(/"/g, '&quot;') + '" loading="lazy">';
+                if (img) {
+                    html += '<a href="' + img + '" class="post-thumb-link" aria-label="View full image: ' + altText.replace(/"/g, '&quot;') + '" onclick="event.preventDefault();window.blogLightbox.open(' + imgIndex + ');">';
+                    html += '<img class="post-thumb" src="' + img + '" alt="' + altText.replace(/"/g, '&quot;') + '" loading="lazy">';
+                    html += '</a>';
+                }
                 html += '<div class="post-info">';
                 html += '<h2><a href="' + link + '" target="_blank" rel="noopener">' + title + '</a></h2>';
                 html += '<p class="post-meta">By: ' + author + ' | <time datetime="' + e.published.$t + '">' + date + '</time></p>';
@@ -412,6 +493,13 @@
             $posts.innerHTML = html;
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
+
+        window.blogLightbox = {
+            open: openLightbox,
+            close: closeLightbox,
+            prev: lightboxPrev,
+            next: lightboxNext
+        };
 
         function paginate(start) {
             var page = Math.ceil(start / POSTS_PER_PAGE);
