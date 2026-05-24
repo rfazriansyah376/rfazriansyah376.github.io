@@ -23,8 +23,12 @@ permalink: /deuis/
     <link rel="next" id="link-next" href="">
 
     <style id="dynamic-style"></style>
+    
+    {% include head.html %}
+{% include verif.html %}
 </head>
 <body>
+<div loading="lazy">
 
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
@@ -461,7 +465,7 @@ permalink: /deuis/
                 var labelNames = [];
                 var labelsHtml = '';
                 if (e.category) {
-                    labelsHtml = '<ul class="label-list">';
+                    labelsHtml = '<ul class="spo">';
                     for (var j = 0; j < e.category.length; j++) {
                         var labelName = e.category[j].term;
                         labelNames.push(labelName);
@@ -540,6 +544,8 @@ permalink: /deuis/
 
     })();
     </script>
-
+    {% include footer.html %}
+</div>
+{% include /ads/gobloggugel/sosmed.html %}
 </body>
 </html>
