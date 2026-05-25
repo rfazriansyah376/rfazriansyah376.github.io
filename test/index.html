@@ -1,3 +1,9 @@
+---
+layout: null
+permalink: /test/
+---
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,8 +33,12 @@
     <script type="application/ld+json" id="schema-images"></script>
 
     <style id="dynamic-style"></style>
+
+{% include head.html %}
+{% include verif.html %}
 </head>
 <body>
+<div loading="lazy">
 
     <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
         <span class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</span>
@@ -159,8 +169,8 @@
 
         function updateBreadcrumb(page, posts) {
             var base = window.location.pathname;
-            var html = '<ul>';
-            html += '<li><a href="' + base + '">Home</a></li>';
+            var html = '<ul class="spo">';
+            html += '<li><a href="' + base + '">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</a></li>';
 
             if (posts && posts.length > 0) {
                 var allLabels = [];
@@ -602,6 +612,11 @@
 
     })();
     </script>
+    
+
+{% include footer.html %}
+</div>
+{% include /ads/gobloggugel/sosmed.html %}
 
 </body>
 </html>
