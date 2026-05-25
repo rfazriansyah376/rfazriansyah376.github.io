@@ -3,7 +3,6 @@ layout: null
 permalink: /test/
 ---
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,6 @@ permalink: /test/
     <script type="application/ld+json" id="schema-images"></script>
 
     <style id="dynamic-style"></style>
-
 {% include head.html %}
 {% include verif.html %}
 </head>
@@ -170,7 +168,11 @@ permalink: /test/
         function updateBreadcrumb(page, posts) {
             var base = window.location.pathname;
             var html = '<ul class="spo">';
-            html += '<li><a href="' + base + '">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</a></li>';
+            html += '<li><a href="' + base + '">Leaked</a></li>';
+
+            if (currentLabel) {
+                html += '<li><a href="' + base + '?label=' + encodeURIComponent(currentLabel) + '">' + currentLabel + '</a></li>';
+            }
 
             if (posts && posts.length > 0) {
                 var allLabels = [];
@@ -178,7 +180,7 @@ permalink: /test/
                     if (posts[i].category) {
                         for (var j = 0; j < posts[i].category.length; j++) {
                             var lbl = posts[i].category[j].term;
-                            if (allLabels.indexOf(lbl) === -1) {
+                            if (lbl !== currentLabel && allLabels.indexOf(lbl) === -1) {
                                 allLabels.push(lbl);
                             }
                         }
@@ -197,33 +199,27 @@ permalink: /test/
             document.getElementById('breadcrumb').innerHTML = html;
         }
 
-        function updateSchemas(page, posts, label) {
+        function updateSchemas(page, posts) {
             var base = window.location.origin + window.location.pathname;
 
-            // Schema BreadcrumbList
             var breadcrumbItems = [];
-            breadcrumbItems.push({
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": base
-            });
+            breadcrumbItems.push({ "@type": "ListItem", "position": 1, "name": "Home", "item": base });
 
             var position = 2;
+            if (currentLabel) {
+                breadcrumbItems.push({ "@type": "ListItem", "position": position, "name": currentLabel, "item": base + '?label=' + encodeURIComponent(currentLabel) });
+                position++;
+            }
+
             if (posts && posts.length > 0) {
                 var allLabels = [];
                 for (var i = 0; i < posts.length; i++) {
                     if (posts[i].category) {
                         for (var j = 0; j < posts[i].category.length; j++) {
                             var lbl = posts[i].category[j].term;
-                            if (allLabels.indexOf(lbl) === -1) {
+                            if (lbl !== currentLabel && allLabels.indexOf(lbl) === -1) {
                                 allLabels.push(lbl);
-                                breadcrumbItems.push({
-                                    "@type": "ListItem",
-                                    "position": position,
-                                    "name": lbl,
-                                    "item": base + '?label=' + encodeURIComponent(lbl)
-                                });
+                                breadcrumbItems.push({ "@type": "ListItem", "position": position, "name": lbl, "item": base + '?label=' + encodeURIComponent(lbl) });
                                 position++;
                             }
                         }
@@ -232,11 +228,7 @@ permalink: /test/
             }
 
             if (page > 1) {
-                breadcrumbItems.push({
-                    "@type": "ListItem",
-                    "position": position,
-                    "name": "Page " + page
-                });
+                breadcrumbItems.push({ "@type": "ListItem", "position": position, "name": "Page " + page });
             }
 
             document.getElementById('schema-breadcrumb').textContent = JSON.stringify({
@@ -245,7 +237,6 @@ permalink: /test/
                 "itemListElement": breadcrumbItems
             });
 
-            // Schema ImageObject
             var images = [];
             for (var m = 0; m < lightboxImages.length; m++) {
                 images.push({
@@ -260,9 +251,9 @@ permalink: /test/
             document.getElementById('schema-images').textContent = JSON.stringify(images);
         }
 
-        function updateMeta(page, totalPages, label, posts) {
+        function updateMeta(page, totalPages, posts) {
             var h1 = subdomainName;
-            if (label) h1 = label + ' — ' + subdomainName;
+            if (currentLabel) h1 = currentLabel + ' — ' + subdomainName;
             if (page > 1) h1 += ' — Page ' + page;
             document.getElementById('header-title').textContent = h1;
             document.title = h1;
@@ -270,13 +261,13 @@ permalink: /test/
             var subtitle = '';
             if (posts && posts.length > 0) {
                 subtitle = totalPosts + ' posts';
-                if (label) subtitle += ' in ' + label;
+                if (currentLabel) subtitle += ' in ' + currentLabel;
                 subtitle += ' · Page ' + page + ' of ' + totalPages;
             }
             document.getElementById('header-subtitle').textContent = subtitle;
 
             var desc = 'Page ' + page + ' — ';
-            if (label) desc += 'Articles about ' + label;
+            if (currentLabel) desc += 'Articles about ' + currentLabel;
             else desc += 'Latest posts';
             desc += ' on ' + subdomainName + '. ';
             if (posts && posts.length > 0) {
@@ -286,24 +277,20 @@ permalink: /test/
             desc += ' Total ' + totalPosts + ' posts.';
             document.querySelector('meta[name="description"]').content = desc;
 
-            document.getElementById('link-prev').href = (page > 1) ? buildUrl(page - 1, label) : '';
-            document.getElementById('link-next').href = (page < totalPages) ? buildUrl(page + 1, label) : '';
+            document.getElementById('link-prev').href = (page > 1) ? buildUrl(page - 1, currentLabel) : '';
+            document.getElementById('link-next').href = (page < totalPages) ? buildUrl(page + 1, currentLabel) : '';
 
-            updateFeeds(label);
+            updateFeeds(currentLabel);
             updateBreadcrumb(page, posts);
-            updateSchemas(page, posts, label);
+            updateSchemas(page, posts);
         }
 
         function updateFeeds(label) {
             var labelPath = label ? '/-/' + encodeURIComponent(label) : '';
-
-            // Blogspot
             if (blogUrl) {
                 document.getElementById('feed-blogspot-atom').href = blogUrl + '/feeds/posts/default' + labelPath;
                 document.getElementById('feed-blogspot-rss').href = blogUrl + '/feeds/posts/default' + labelPath + '?alt=rss';
             }
-
-            // Blogger API
             var bloggerBase = 'https://www.blogger.com/feeds/' + BLOG_ID + '/posts/default';
             document.getElementById('feed-blogger-atom').href = bloggerBase + labelPath;
             document.getElementById('feed-blogger-json').href = bloggerBase + labelPath + '?alt=json-in-script';
@@ -323,8 +310,7 @@ permalink: /test/
                 .header{background:${cardBg};padding:30px 20px 20px;margin-bottom:${gap};box-shadow:${shadow};${headerCSS}}
                 .header h1{font-size:32px;margin:0;color:${primary}}
                 .subtitle{font-size:13px;color:${textMuted};margin-top:6px}
-                
-                #posts{margin:0 auto;max-width:1200px;padding:0 20px 50px}
+                 #posts{margin:0 auto;max-width:1200px;padding:0 20px 50px}
                 .post-card{background:${cardBg};margin-bottom:${gap};box-shadow:${shadow};border-radius:${radius};overflow:hidden;border:${borderStyle === 'none' ? 'none' : borderWidth + 'px ' + borderStyle + ' ' + borderColor};transition:transform .2s,box-shadow .2s}
                 .post-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
                 .post-thumb-link{display:block;cursor:pointer}
@@ -403,7 +389,7 @@ permalink: /test/
         var $lightboxNext = document.getElementById('lightbox-next');
 
         $canonical.href = window.location.href;
-        updateMeta(1, 1, currentLabel, null);
+        updateMeta(1, 1, null);
 
         function openLightbox(index) {
             lightboxIndex = index;
@@ -475,12 +461,24 @@ permalink: /test/
             window[cbName] = function(data) {
                 delete window[cbName];
 
-                if (!data.feed || !data.feed.entry) {
-                    if (label || start > 1) {
-                        window.location.href = window.location.pathname;
-                    } else {
-                        $posts.innerHTML = '<p class="loading">Loading posts...</p>';
+                // Fallback: jika feed kosong, coba tanpa filter
+                if ((!data.feed || !data.feed.entry) && (label || start > 1)) {
+                    // Coba fallback: label tidak ada → tampilkan semua
+                    if (label) {
+                        currentLabel = label; // URL tetap, label tetap di UI
+                        load(start, ''); // Fetch tanpa filter
+                        return;
                     }
+                    // Halaman tidak ada → tampilkan halaman 1
+                    if (start > 1) {
+                        load(1, label);
+                        return;
+                    }
+                }
+
+                // Fallback gagal total → loading state
+                if (!data.feed || !data.feed.entry) {
+                    $posts.innerHTML = '<p class="loading">Loading posts...</p>';
                     return;
                 }
 
@@ -496,23 +494,24 @@ permalink: /test/
 
                 render(data.feed.entry);
                 paginate(start);
-                updateMeta(page, totalPages, label, data.feed.entry);
+                updateMeta(page, totalPages, data.feed.entry);
                 currentStart = start;
 
                 var url = window.location.pathname;
                 var params = [];
-                if (label) params.push('label=' + encodeURIComponent(label));
+                if (currentLabel) params.push('label=' + encodeURIComponent(currentLabel));
                 if (page > 1) params.push('page=' + page);
                 if (params.length) url += '?' + params.join('&');
-                history.pushState({start: start, page: page, label: label}, '', url);
+                history.pushState({start: start, page: page, label: currentLabel}, '', url);
                 $canonical.href = window.location.href;
             };
 
+            var fetchLabel = (label === '') ? '' : label; // '' = tanpa filter, string kosong = fallback
             var feedUrl = 'https://www.blogger.com/feeds/' + BLOG_ID + '/posts/default?alt=json-in-script'
                         + '&callback=' + cbName
                         + '&max-results=' + POSTS_PER_PAGE
                         + '&start-index=' + start;
-            if (label) feedUrl += '&category=' + encodeURIComponent(label);
+            if (fetchLabel) feedUrl += '&category=' + encodeURIComponent(fetchLabel);
 
             var s = document.createElement('script');
             s.setAttribute('data-feed', '1');
@@ -606,8 +605,6 @@ permalink: /test/
 
     })();
     </script>
-    
-
 {% include footer.html %}
 </div>
 {% include /ads/gobloggugel/sosmed.html %}
