@@ -1,6 +1,3 @@
----
-layout: null
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,20 +12,23 @@ layout: null
     <link rel="preconnect" href="https://www.blogger.com" crossorigin>
     <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin>
 
-    <link rel="alternate" type="application/atom+xml" id="feed-atom" href="">
-    <link rel="alternate" type="application/rss+xml" id="feed-rss" href="">
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" id="feed-blogspot-atom" href="">
+    <link rel="alternate" type="application/rss+xml" id="feed-blogspot-rss" href="">
+    <link rel="alternate" type="application/atom+xml" id="feed-blogger-atom" href="">
+    <link rel="alternate" type="application/json" id="feed-blogger-json" href="">
+
     <link rel="canonical" id="canonical" href="">
     <link rel="prev" id="link-prev" href="">
     <link rel="next" id="link-next" href="">
 
-    <style id="dynamic-style"></style>
+    <!-- Schema -->
+    <script type="application/ld+json" id="schema-breadcrumb"></script>
+    <script type="application/ld+json" id="schema-images"></script>
 
-    {% include head.html %}
-{% include verif.html %}
+    <style id="dynamic-style"></style>
 </head>
 <body>
-<div loading="lazy">
-
 
     <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
         <span class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</span>
@@ -60,8 +60,8 @@ layout: null
     (function() {
 
         var BLOG_ID = '3849070220815751744';
-        var POSTS_PER_PAGE = 10;
-        var START_AT = 50;
+        var POSTS_PER_PAGE = 6;
+        var START_AT = 1;
 
         var totalPosts = 0;
         var currentStart = START_AT;
@@ -159,7 +159,8 @@ layout: null
 
         function updateBreadcrumb(page, posts) {
             var base = window.location.pathname;
-            var html = '<ul class="spo">';
+            var html = '<ul>';
+            html += '<li><a href="' + base + '">Home</a></li>';
 
             if (posts && posts.length > 0) {
                 var allLabels = [];
@@ -184,6 +185,69 @@ layout: null
 
             html += '</ul>';
             document.getElementById('breadcrumb').innerHTML = html;
+        }
+
+        function updateSchemas(page, posts, label) {
+            var base = window.location.origin + window.location.pathname;
+
+            // Schema BreadcrumbList
+            var breadcrumbItems = [];
+            breadcrumbItems.push({
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": base
+            });
+
+            var position = 2;
+            if (posts && posts.length > 0) {
+                var allLabels = [];
+                for (var i = 0; i < posts.length; i++) {
+                    if (posts[i].category) {
+                        for (var j = 0; j < posts[i].category.length; j++) {
+                            var lbl = posts[i].category[j].term;
+                            if (allLabels.indexOf(lbl) === -1) {
+                                allLabels.push(lbl);
+                                breadcrumbItems.push({
+                                    "@type": "ListItem",
+                                    "position": position,
+                                    "name": lbl,
+                                    "item": base + '?label=' + encodeURIComponent(lbl)
+                                });
+                                position++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (page > 1) {
+                breadcrumbItems.push({
+                    "@type": "ListItem",
+                    "position": position,
+                    "name": "Page " + page
+                });
+            }
+
+            document.getElementById('schema-breadcrumb').textContent = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": breadcrumbItems
+            });
+
+            // Schema ImageObject
+            var images = [];
+            for (var m = 0; m < lightboxImages.length; m++) {
+                images.push({
+                    "@context": "https://schema.org",
+                    "@type": "ImageObject",
+                    "url": lightboxImages[m].src,
+                    "caption": lightboxImages[m].alt,
+                    "description": lightboxImages[m].alt,
+                    "name": lightboxImages[m].title
+                });
+            }
+            document.getElementById('schema-images').textContent = JSON.stringify(images);
         }
 
         function updateMeta(page, totalPages, label, posts) {
@@ -217,14 +281,22 @@ layout: null
 
             updateFeeds(label);
             updateBreadcrumb(page, posts);
+            updateSchemas(page, posts, label);
         }
 
         function updateFeeds(label) {
-            if (!blogUrl) return;
-            var base = blogUrl + '/feeds/posts/default';
-            if (label) base += '/-/' + encodeURIComponent(label);
-            document.getElementById('feed-atom').href = base;
-            document.getElementById('feed-rss').href = base + '?alt=rss';
+            var labelPath = label ? '/-/' + encodeURIComponent(label) : '';
+
+            // Blogspot
+            if (blogUrl) {
+                document.getElementById('feed-blogspot-atom').href = blogUrl + '/feeds/posts/default' + labelPath;
+                document.getElementById('feed-blogspot-rss').href = blogUrl + '/feeds/posts/default' + labelPath + '?alt=rss';
+            }
+
+            // Blogger API
+            var bloggerBase = 'https://www.blogger.com/feeds/' + BLOG_ID + '/posts/default';
+            document.getElementById('feed-blogger-atom').href = bloggerBase + labelPath;
+            document.getElementById('feed-blogger-json').href = bloggerBase + labelPath + '?alt=json-in-script';
         }
 
         function generateCSS() {
@@ -241,7 +313,13 @@ layout: null
                 .header{background:${cardBg};padding:30px 20px 20px;margin-bottom:${gap};box-shadow:${shadow};${headerCSS}}
                 .header h1{font-size:32px;margin:0;color:${primary}}
                 .subtitle{font-size:13px;color:${textMuted};margin-top:6px}
-                
+                #breadcrumb{padding:0 20px;margin-bottom:${gap}}
+                #breadcrumb ul{list-style:none;display:flex;flex-wrap:wrap;gap:4px;padding:0;margin:0}
+                #breadcrumb li{font-size:13px;color:${textMuted}}
+                #breadcrumb li a{color:${primary};text-decoration:none}
+                #breadcrumb li a:hover{text-decoration:underline}
+                #breadcrumb li::after{content:'>';margin:0 6px;color:${textMuted}}
+                #breadcrumb li:last-child::after{content:'';margin:0}
                 #posts{margin:0 auto;max-width:1200px;padding:0 20px 50px}
                 .post-card{background:${cardBg};margin-bottom:${gap};box-shadow:${shadow};border-radius:${radius};overflow:hidden;border:${borderStyle === 'none' ? 'none' : borderWidth + 'px ' + borderStyle + ' ' + borderColor};transition:transform .2s,box-shadow .2s}
                 .post-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
@@ -298,7 +376,7 @@ layout: null
                     ${layout === 'grid' || layout === 'grid-3' ? '#posts{grid-template-columns:1fr}' : ''}
                     .lightbox-close{top:10px;right:15px;font-size:30px}
                     .lightbox-prev,.lightbox-next{font-size:18px;padding:8px 10px}
-                    
+                    #breadcrumb{padding:0 10px}
                 }
             `;
             document.getElementById('dynamic-style').textContent = css;
@@ -524,8 +602,6 @@ layout: null
 
     })();
     </script>
-{% include footer.html %}
-</div>
-{% include /ads/gobloggugel/sosmed.html %}
+
 </body>
 </html>
