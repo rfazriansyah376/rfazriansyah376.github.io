@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 
-gem "jekyll"
-gem "jekyll-sitemap"
+gem "jekyll", "~> 4.3"
 
 group :jekyll_plugins do
-  gem 'kramdown'
-  gem 'rouge'
+  gem "jekyll-sitemap"
+  gem "kramdown"
+  gem "rouge"
 end
