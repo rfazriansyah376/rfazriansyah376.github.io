@@ -1,0 +1,616 @@
+---
+layout: null
+permailnk: /raiska-latest20/
+---
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="dynamic-title">Latest Posts</title>
+    <meta name="description" id="dynamic-description" content="Read our latest blog posts and articles.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="dns-prefetch" href="//www.blogger.com">
+    <link rel="dns-prefetch" href="//blogger.googleusercontent.com">
+    <link rel="preconnect" href="https://www.blogger.com" crossorigin>
+    <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin>
+
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" id="feed-blogspot-atom" href="">
+    <link rel="alternate" type="application/rss+xml" id="feed-blogspot-rss" href="">
+    <link rel="alternate" type="application/atom+xml" id="feed-blogger-atom" href="">
+    <link rel="alternate" type="application/json" id="feed-blogger-json" href="">
+
+    <link rel="canonical" id="canonical" href="">
+    <link rel="prev" id="link-prev" href="">
+    <link rel="next" id="link-next" href="">
+
+    <!-- Schema -->
+    <script type="application/ld+json" id="schema-breadcrumb"></script>
+    <script type="application/ld+json" id="schema-images"></script>
+
+    <style id="dynamic-style"></style>
+{% include head.html %}
+{% include verif.html %}
+</head>
+<body>
+<div loading="lazy">
+
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <span class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</span>
+        <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#10095;</button>
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightbox-img" src="" alt="">
+            <p class="lightbox-caption" id="lightbox-caption"></p>
+            <p class="lightbox-counter" id="lightbox-counter"></p>
+        </div>
+    </div>
+
+    <header class="header" id="header">
+        <h1 id="header-title">Latest Posts</h1>
+        <p class="subtitle" id="header-subtitle"></p>
+    </header>
+
+    <nav id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+    <main id="posts"></main>
+
+    <nav id="pagination" class="pagination">
+        <button id="prev">← Previous</button>
+        <span id="info"></span>
+        <button id="next">Next →</button>
+    </nav>
+
+    <script>
+    (function() {
+
+        var BLOG_ID = '3878198361264397837';
+        var POSTS_PER_PAGE = 20;
+        var START_AT = 1;
+
+        var totalPosts = 0;
+        var currentStart = START_AT;
+        var currentLabel = '';
+        var blogUrl = '';
+
+        var lightboxImages = [];
+        var lightboxIndex = 0;
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var urlPage = urlParams.get('page');
+        var urlLabel = urlParams.get('label');
+
+        if (urlLabel !== null) currentLabel = urlLabel;
+        if (urlPage && parseInt(urlPage) > 1) {
+            currentStart = (parseInt(urlPage) - 1) * POSTS_PER_PAGE + 1;
+        }
+
+        function hashCode(str) {
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash = hash & hash;
+            }
+            return Math.abs(hash);
+        }
+
+        function getSubdomain() {
+            var host = window.location.hostname;
+            var parts = host.split('.');
+            if (parts.length >= 3) {
+                var sub = parts[0];
+                if (sub === 'www') return parts[1];
+                return sub;
+            }
+            return parts[0];
+        }
+
+        var subdomain = getSubdomain();
+        var domainHash = hashCode(subdomain);
+        var subdomainName = subdomain.replace(/-/g, ' ').replace(/\b\w/g, function(l){ return l.toUpperCase(); });
+
+        function pick(arr, hash, offset) {
+            offset = offset || 0;
+            return arr[(hash + offset) % arr.length];
+        }
+
+        var hue = Math.floor((domainHash * 137.508) % 360);
+        var sat = 50 + (domainHash % 40);
+        var light = 40 + (domainHash % 20);
+        var primary = 'hsl(' + hue + ', ' + sat + '%, ' + light + '%)';
+        var primaryDark = 'hsl(' + hue + ', ' + sat + '%, ' + (light - 12) + '%)';
+        var bg = 'hsl(' + hue + ', 20%, 96%)';
+        var cardBg = 'hsl(' + hue + ', 10%, 99%)';
+        var accent = 'hsl(' + hue + ', 30%, 88%)';
+        var textMuted = 'hsl(' + hue + ', 5%, 50%)';
+
+        var fonts = ['Arial, sans-serif','Georgia, "Times New Roman", serif','Verdana, Geneva, sans-serif','"Segoe UI", Tahoma, sans-serif','"Trebuchet MS", Helvetica, sans-serif','Cambria, "Palatino Linotype", serif','"Lucida Sans", "Lucida Grande", sans-serif','Gill Sans, "Gill Sans MT", sans-serif'];
+        var font = pick(fonts, domainHash);
+
+        var layouts = ['list', 'grid', 'grid-3', 'compact'];
+        var layout = pick(layouts, domainHash);
+
+        var borderStyles = ['none', 'solid', 'dashed', 'dotted', 'double'];
+        var borderStyle = pick(borderStyles, domainHash, 1);
+        var borderWidth = (domainHash % 4) + 1;
+        var borderColor = 'hsl(' + hue + ', 30%, 80%)';
+
+        var radiuses = ['0px', '4px', '8px', '12px', '16px', '20px', '24px', '32px'];
+        var radius = pick(radiuses, domainHash, 2);
+
+        var paddingSizes = ['10px', '14px', '18px', '22px', '26px', '30px'];
+        var padding = pick(paddingSizes, domainHash, 3);
+
+        var shadows = ['none','0 1px 3px rgba(0,0,0,0.08)','0 2px 8px rgba(0,0,0,0.1)','0 4px 16px rgba(0,0,0,0.12)','0 8px 24px rgba(0,0,0,0.15)','2px 2px 0 ' + primary,'4px 4px 0 ' + accent,'inset 0 0 0 1px ' + borderColor];
+        var shadow = pick(shadows, domainHash, 4);
+
+        var gaps = ['10px', '16px', '20px', '24px', '30px', '40px'];
+        var gap = pick(gaps, domainHash, 5);
+
+        var headerStyles = ['centered', 'left', 'bordered', 'minimal'];
+        var headerStyle = pick(headerStyles, domainHash, 6);
+
+        var titleSizes = ['18px', '20px', '22px', '24px', '26px', '28px'];
+        var titleSize = pick(titleSizes, domainHash, 8);
+
+        function buildUrl(page, label) {
+            var url = window.location.pathname;
+            var params = [];
+            if (label) params.push('label=' + encodeURIComponent(label));
+            if (page > 1) params.push('page=' + page);
+            if (params.length) url += '?' + params.join('&');
+            return window.location.origin + url;
+        }
+
+        function updateBreadcrumb(page, posts) {
+            var base = window.location.pathname;
+            var html = '<ul class="spo">';
+            html += '<li><a href="' + base + '">Leaked</a></li>';
+
+            if (currentLabel) {
+                html += '<li><a href="' + base + '?label=' + encodeURIComponent(currentLabel) + '">' + currentLabel + '</a></li>';
+            }
+
+            if (posts && posts.length > 0) {
+                var allLabels = [];
+                for (var i = 0; i < posts.length; i++) {
+                    if (posts[i].category) {
+                        for (var j = 0; j < posts[i].category.length; j++) {
+                            var lbl = posts[i].category[j].term;
+                            if (lbl !== currentLabel && allLabels.indexOf(lbl) === -1) {
+                                allLabels.push(lbl);
+                            }
+                        }
+                    }
+                }
+                for (var k = 0; k < allLabels.length; k++) {
+                    html += '<li><a href="' + base + '?label=' + encodeURIComponent(allLabels[k]) + '">' + allLabels[k] + '</a></li>';
+                }
+            }
+
+            if (page > 1) {
+                html += '<li>Page ' + page + '</li>';
+            }
+
+            html += '</ul>';
+            document.getElementById('breadcrumb').innerHTML = html;
+        }
+
+        function updateSchemas(page, posts) {
+            var base = window.location.origin + window.location.pathname;
+
+            var breadcrumbItems = [];
+            breadcrumbItems.push({ "@type": "ListItem", "position": 1, "name": "Home", "item": base });
+
+            var position = 2;
+            if (currentLabel) {
+                breadcrumbItems.push({ "@type": "ListItem", "position": position, "name": currentLabel, "item": base + '?label=' + encodeURIComponent(currentLabel) });
+                position++;
+            }
+
+            if (posts && posts.length > 0) {
+                var allLabels = [];
+                for (var i = 0; i < posts.length; i++) {
+                    if (posts[i].category) {
+                        for (var j = 0; j < posts[i].category.length; j++) {
+                            var lbl = posts[i].category[j].term;
+                            if (lbl !== currentLabel && allLabels.indexOf(lbl) === -1) {
+                                allLabels.push(lbl);
+                                breadcrumbItems.push({ "@type": "ListItem", "position": position, "name": lbl, "item": base + '?label=' + encodeURIComponent(lbl) });
+                                position++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (page > 1) {
+                breadcrumbItems.push({ "@type": "ListItem", "position": position, "name": "Page " + page });
+            }
+
+            document.getElementById('schema-breadcrumb').textContent = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": breadcrumbItems
+            });
+
+            var images = [];
+            for (var m = 0; m < lightboxImages.length; m++) {
+                images.push({
+                    "@context": "https://schema.org",
+                    "@type": "ImageObject",
+                    "url": lightboxImages[m].src,
+                    "caption": lightboxImages[m].alt,
+                    "description": lightboxImages[m].alt,
+                    "name": lightboxImages[m].title
+                });
+            }
+            document.getElementById('schema-images').textContent = JSON.stringify(images);
+        }
+
+        function updateMeta(page, totalPages, posts) {
+            var h1 = subdomainName;
+            if (currentLabel) h1 = currentLabel + ' — ' + subdomainName;
+            if (page > 1) h1 += ' — Page ' + page;
+            document.getElementById('header-title').textContent = h1;
+            document.title = h1;
+
+            var subtitle = '';
+            if (posts && posts.length > 0) {
+                subtitle = totalPosts + ' posts';
+                if (currentLabel) subtitle += ' in ' + currentLabel;
+                subtitle += ' · Page ' + page + ' of ' + totalPages;
+            }
+            document.getElementById('header-subtitle').textContent = subtitle;
+
+            var desc = 'Page ' + page + ' — ';
+            if (currentLabel) desc += 'Articles about ' + currentLabel;
+            else desc += 'Latest posts';
+            desc += ' on ' + subdomainName + '. ';
+            if (posts && posts.length > 0) {
+                var titles = posts.slice(0, 3).map(function(p){ return p.title.$t; }).join(' | ');
+                desc += 'Featuring: ' + titles + '.';
+            }
+            desc += ' Total ' + totalPosts + ' posts.';
+            document.querySelector('meta[name="description"]').content = desc;
+
+            document.getElementById('link-prev').href = (page > 1) ? buildUrl(page - 1, currentLabel) : '';
+            document.getElementById('link-next').href = (page < totalPages) ? buildUrl(page + 1, currentLabel) : '';
+
+            updateFeeds(currentLabel);
+            updateBreadcrumb(page, posts);
+            updateSchemas(page, posts);
+        }
+
+        function updateFeeds(label) {
+            var labelPath = label ? '/-/' + encodeURIComponent(label) : '';
+            if (blogUrl) {
+                document.getElementById('feed-blogspot-atom').href = blogUrl + '/feeds/posts/default' + labelPath;
+                document.getElementById('feed-blogspot-rss').href = blogUrl + '/feeds/posts/default' + labelPath + '?alt=rss';
+            }
+            var bloggerBase = 'https://www.blogger.com/feeds/' + BLOG_ID + '/posts/default';
+            document.getElementById('feed-blogger-atom').href = bloggerBase + labelPath;
+            document.getElementById('feed-blogger-json').href = bloggerBase + labelPath + '?alt=json-in-script';
+        }
+
+        function generateCSS() {
+            var headerCSS = 'text-align:center;';
+            switch(headerStyle) {
+                case 'left': headerCSS = 'text-align:left;padding-left:30px;'; break;
+                case 'bordered': headerCSS = 'text-align:center;border-bottom:3px solid ' + primary + ';'; break;
+                case 'minimal': headerCSS = 'text-align:center;padding:15px 20px;box-shadow:none;'; break;
+            }
+
+            var css = `
+                *{box-sizing:border-box;margin:0;padding:0}
+                body{font-family:${font};background:${bg};color:#222;line-height:1.6}
+                .header{background:${cardBg};padding:30px 20px 20px;margin-bottom:${gap};box-shadow:${shadow};${headerCSS}}
+                .header h1{font-size:32px;margin:0;color:${primary}}
+                .subtitle{font-size:13px;color:${textMuted};margin-top:6px}
+                 #posts{margin:0 auto;max-width:1200px;padding:0 20px 50px}
+                .post-card{background:${cardBg};margin-bottom:${gap};box-shadow:${shadow};border-radius:${radius};overflow:hidden;border:${borderStyle === 'none' ? 'none' : borderWidth + 'px ' + borderStyle + ' ' + borderColor};transition:transform .2s,box-shadow .2s}
+                .post-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
+                .post-thumb-link{display:block;cursor:pointer}
+                .post-thumb{width:100%;height:auto;display:block;background:${accent}}
+                .post-info{padding:${padding}}
+                .post-info h2{margin:0 0 8px;font-size:${titleSize};line-height:1.3}
+                .post-info h2 a{color:#222;text-decoration:none}
+                .post-info h2 a:hover{color:${primary}}
+                .post-meta{color:${textMuted};font-size:13px}
+                .pagination{display:none;justify-content:center;align-items:center;gap:15px;padding:30px 20px 50px;flex-wrap:wrap}
+                .pagination.show{display:flex}
+                .pagination button{padding:10px 24px;font-size:14px;background:${primary};color:#fff;border:none;border-radius:${radius};cursor:pointer;transition:background .2s}
+                .pagination button:hover:not(:disabled){background:${primaryDark}}
+                .pagination button:disabled{background:#ccc;cursor:not-allowed}
+                .pagination span{font-size:14px;color:${textMuted}}
+                .loading{text-align:center;padding:60px;font-size:18px;color:${textMuted}}
+                .lightbox{display:none;position:fixed;z-index:9999;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);flex-direction:column;justify-content:center;align-items:center}
+                .lightbox.show{display:flex}
+                .lightbox-content{display:flex;flex-direction:column;align-items:center;max-width:90%;max-height:85%}
+                .lightbox-img{max-width:100%;max-height:70vh;object-fit:contain;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+                .lightbox-caption{color:#fff;font-size:15px;margin-top:12px;text-align:center;max-width:600px;line-height:1.4}
+                .lightbox-counter{color:#aaa;font-size:12px;margin-top:4px}
+                .lightbox-close{position:absolute;top:20px;right:30px;color:#fff;font-size:40px;font-weight:bold;cursor:pointer;transition:opacity .2s;z-index:1}
+                .lightbox-close:hover{opacity:.7}
+                .lightbox-prev,.lightbox-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);color:#fff;border:none;font-size:30px;padding:15px 20px;cursor:pointer;transition:background .2s;border-radius:4px;z-index:1}
+                .lightbox-prev:hover,.lightbox-next:hover{background:rgba(255,255,255,0.3)}
+                .lightbox-prev{left:20px}
+                .lightbox-next{right:20px}
+                ${layout === 'grid' || layout === 'grid-3' ? `
+                #posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(${layout === 'grid-3' ? '250px' : '300px'},1fr));gap:${gap}}
+                .post-card{margin-bottom:0}
+                ` : ''}
+                ${layout === 'compact' ? `
+                .post-info{padding:10px 14px}
+                .post-info h2{font-size:16px;margin:0 0 4px}
+                .post-meta{font-size:11px}
+                .post-thumb{max-height:200px;object-fit:cover}
+                ` : ''}
+                @media(max-width:768px){
+                    .header h1{font-size:26px}
+                    ${layout === 'grid-3' ? '#posts{grid-template-columns:repeat(2,1fr)}' : ''}
+                    .lightbox-prev,.lightbox-next{font-size:22px;padding:10px 14px}
+                    .lightbox-prev{left:8px}
+                    .lightbox-next{right:8px}
+                }
+                @media(max-width:480px){
+                    .header{padding:20px 15px 15px}
+                    .header h1{font-size:22px}
+                    .post-info h2{font-size:${parseInt(titleSize) > 20 ? '18px' : titleSize}}
+                    .post-meta{font-size:12px}
+                    .pagination button{padding:8px 16px;font-size:13px}
+                    #posts{padding:0 10px 30px}
+                    ${layout === 'grid' || layout === 'grid-3' ? '#posts{grid-template-columns:1fr}' : ''}
+                    .lightbox-close{top:10px;right:15px;font-size:30px}
+                    .lightbox-prev,.lightbox-next{font-size:18px;padding:8px 10px}
+                    #breadcrumb{padding:0 10px}
+                }
+            `;
+            document.getElementById('dynamic-style').textContent = css;
+        }
+
+        generateCSS();
+
+        var $posts = document.getElementById('posts');
+        var $pagination = document.getElementById('pagination');
+        var $prev = document.getElementById('prev');
+        var $next = document.getElementById('next');
+        var $info = document.getElementById('info');
+        var $canonical = document.getElementById('canonical');
+        var $lightbox = document.getElementById('lightbox');
+        var $lightboxImg = document.getElementById('lightbox-img');
+        var $lightboxCaption = document.getElementById('lightbox-caption');
+        var $lightboxCounter = document.getElementById('lightbox-counter');
+        var $lightboxClose = document.getElementById('lightbox-close');
+        var $lightboxPrev = document.getElementById('lightbox-prev');
+        var $lightboxNext = document.getElementById('lightbox-next');
+
+        $canonical.href = window.location.href;
+        updateMeta(1, 1, null);
+
+        function openLightbox(index) {
+            lightboxIndex = index;
+            updateLightbox();
+            $lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            $lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightbox() {
+            var item = lightboxImages[lightboxIndex];
+            $lightboxImg.src = item.src;
+            $lightboxImg.alt = item.alt;
+            $lightboxCaption.textContent = item.alt;
+            $lightboxCounter.textContent = (lightboxIndex + 1) + ' / ' + lightboxImages.length;
+            $lightboxPrev.style.display = lightboxImages.length <= 1 ? 'none' : '';
+            $lightboxNext.style.display = lightboxImages.length <= 1 ? 'none' : '';
+        }
+
+        function lightboxPrev() {
+            lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+            updateLightbox();
+        }
+
+        function lightboxNext() {
+            lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+            updateLightbox();
+        }
+
+        $lightboxClose.onclick = closeLightbox;
+        $lightbox.onclick = function(e) { if (e.target === $lightbox) closeLightbox(); };
+        $lightboxPrev.onclick = function(e) { e.stopPropagation(); lightboxPrev(); };
+        $lightboxNext.onclick = function(e) { e.stopPropagation(); lightboxNext(); };
+
+        document.addEventListener('keydown', function(e) {
+            if (!$lightbox.classList.contains('show')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') lightboxPrev();
+            if (e.key === 'ArrowRight') lightboxNext();
+        });
+
+        var touchStartX = 0;
+        $lightbox.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+        $lightbox.addEventListener('touchend', function(e) {
+            var diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) lightboxNext();
+                else lightboxPrev();
+            }
+        });
+
+        function extractBlogUrl(link) {
+            var match = link.match(/^(https?:\/\/[^\/]+)/);
+            return match ? match[1] : '';
+        }
+
+        function load(start, label) {
+            $posts.innerHTML = '<p class="loading">Loading posts...</p>';
+            $pagination.classList.remove('show');
+
+            var old = document.querySelector('script[data-feed]');
+            if (old) old.remove();
+
+            var cbName = 'feed_' + Date.now();
+            window[cbName] = function(data) {
+                delete window[cbName];
+
+                // Fallback: jika feed kosong, coba tanpa filter
+                if ((!data.feed || !data.feed.entry) && (label || start > 1)) {
+                    // Coba fallback: label tidak ada → tampilkan semua
+                    if (label) {
+                        currentLabel = label; // URL tetap, label tetap di UI
+                        load(start, ''); // Fetch tanpa filter
+                        return;
+                    }
+                    // Halaman tidak ada → tampilkan halaman 1
+                    if (start > 1) {
+                        load(1, label);
+                        return;
+                    }
+                }
+
+                // Fallback gagal total → loading state
+                if (!data.feed || !data.feed.entry) {
+                    $posts.innerHTML = '<p class="loading">Loading posts...</p>';
+                    return;
+                }
+
+                totalPosts = parseInt(data.feed.openSearch$totalResults.$t) || 0;
+
+                if (!blogUrl && data.feed.entry.length > 0) {
+                    var firstLink = data.feed.entry[0].link.find(function(l){ return l.rel === 'alternate'; });
+                    if (firstLink) blogUrl = extractBlogUrl(firstLink.href);
+                }
+
+                var page = Math.ceil(start / POSTS_PER_PAGE);
+                var totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE) || 1;
+
+                render(data.feed.entry);
+                paginate(start);
+                updateMeta(page, totalPages, data.feed.entry);
+                currentStart = start;
+
+                var url = window.location.pathname;
+                var params = [];
+                if (currentLabel) params.push('label=' + encodeURIComponent(currentLabel));
+                if (page > 1) params.push('page=' + page);
+                if (params.length) url += '?' + params.join('&');
+                history.pushState({start: start, page: page, label: currentLabel}, '', url);
+                $canonical.href = window.location.href;
+            };
+
+            var fetchLabel = (label === '') ? '' : label; // '' = tanpa filter, string kosong = fallback
+            var feedUrl = 'https://www.blogger.com/feeds/' + BLOG_ID + '/posts/default?alt=json-in-script'
+                        + '&callback=' + cbName
+                        + '&max-results=' + POSTS_PER_PAGE
+                        + '&start-index=' + start;
+            if (fetchLabel) feedUrl += '&category=' + encodeURIComponent(fetchLabel);
+
+            var s = document.createElement('script');
+            s.setAttribute('data-feed', '1');
+            s.src = feedUrl;
+            document.body.appendChild(s);
+        }
+
+        function render(entries) {
+            lightboxImages = [];
+            var html = '';
+            for (var i = 0; i < entries.length; i++) {
+                var e = entries[i];
+                var title = e.title.$t;
+                var link = e.link.find(function(l){ return l.rel === 'alternate'; }).href;
+                var author = e.author[0].name.$t;
+                var date = e.published.$t.substring(0, 10);
+
+                var img = '';
+                if (e.media$thumbnail && e.media$thumbnail.url) {
+                    img = e.media$thumbnail.url.replace(/\/s72-c/, '/s0');
+                } else if (e.content) {
+                    var m = e.content.$t.match(/<img[^>]+src="([^"]+)"/);
+                    if (m) img = m[1].replace(/\/s[0-9]+/, '/s0');
+                }
+
+                var labelNames = [];
+                if (e.category) {
+                    for (var j = 0; j < e.category.length; j++) {
+                        labelNames.push(e.category[j].term);
+                    }
+                }
+
+                var altText = title;
+                if (labelNames.length > 0) altText += ' - ' + labelNames.join(', ');
+                altText += ' | ' + subdomainName;
+
+                if (img) {
+                    lightboxImages.push({ src: img, alt: altText, title: title });
+                }
+
+                var imgIndex = lightboxImages.length - 1;
+
+                html += '<article class="post-card">';
+                if (img) {
+                    html += '<a href="' + img + '" class="post-thumb-link" aria-label="View full image: ' + altText.replace(/"/g, '&quot;') + '" onclick="event.preventDefault();window.blogLightbox.open(' + imgIndex + ');">';
+                    html += '<img class="post-thumb" src="' + img + '" alt="' + altText.replace(/"/g, '&quot;') + '" loading="lazy">';
+                    html += '</a>';
+                }
+                html += '<div class="post-info">';
+                html += '<h2><a href="' + link + '" target="_blank" rel="noopener">' + title + '</a></h2>';
+                html += '<p class="post-meta">By: ' + author + ' | <time datetime="' + e.published.$t + '">' + date + '</time></p>';
+                html += '</div></article>';
+            }
+            $posts.innerHTML = html;
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        window.blogLightbox = { open: openLightbox, close: closeLightbox, prev: lightboxPrev, next: lightboxNext };
+
+        function paginate(start) {
+            var page = Math.ceil(start / POSTS_PER_PAGE);
+            var totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE) || 1;
+            $info.textContent = 'Page ' + page + ' of ' + totalPages + ' (' + totalPosts + ' posts)';
+            $prev.disabled = (start <= 1);
+            $next.disabled = (start + POSTS_PER_PAGE > totalPosts);
+            $pagination.classList.add('show');
+        }
+
+        $prev.onclick = function() {
+            var s = currentStart - POSTS_PER_PAGE;
+            if (s < 1) s = 1;
+            load(s, currentLabel);
+        };
+
+        $next.onclick = function() {
+            var s = currentStart + POSTS_PER_PAGE;
+            if (s > totalPosts) s = totalPosts - POSTS_PER_PAGE + 1;
+            load(s, currentLabel);
+        };
+
+        window.onpopstate = function(e) {
+            if (e.state && e.state.start !== undefined) {
+                currentLabel = e.state.label || '';
+                currentStart = e.state.start;
+                load(currentStart, currentLabel);
+            }
+            $canonical.href = window.location.href;
+        };
+
+        load(currentStart, currentLabel);
+
+    })();
+    </script>
+{% include footer.html %}
+</div>
+{% include /ads/gobloggugel/sosmed.html %}
+
+</body>
+</html>
