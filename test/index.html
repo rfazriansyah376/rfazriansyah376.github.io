@@ -171,6 +171,8 @@ layout: null
             #blogMenuPanel a:hover{background:#3a3a3a}
             .home-grid-card{background:#252525;border-color:rgba(255,255,255,.06)}
             .home-grid-card:hover{box-shadow:0 12px 32px rgba(0,0,0,.3)}
+            .card-tag-badge{background:rgba(255,255,255,.1)!important;color:rgba(255,255,255,.8)!important}
+            .card-tag-badge:hover{background:rgba(255,255,255,.2)!important}
         }
 
         /* ===== HEADER ===== */
@@ -281,6 +283,7 @@ layout: null
             display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
             overflow:hidden
         }
+        .home-featured-main .card-tags,
         .home-featured-main .excerpt.spo{display:none}
 
         /* ===== GRID CARDS ===== */
@@ -326,7 +329,28 @@ layout: null
             overflow:hidden;opacity:.6
         }
 
-        /* ===== VARIAN GRID LAYOUT (diterapkan via JS) ===== */
+        /* ===== CARD TAGS ===== */
+        .card-tags{
+            display:flex;flex-wrap:wrap;gap:5px;
+            margin:8px 0 0;align-items:center
+        }
+        .card-tag-badge{
+            display:inline-block;padding:4px 10px;border-radius:14px;
+            font-size:10.5px;font-weight:500;text-decoration:none;
+            background:var(--tag-bg,rgba(0,0,0,.06));
+            color:var(--tag-color,inherit);
+            transition:all .2s ease;letter-spacing:.1px;
+            line-height:1.3
+        }
+        .card-tag-badge:hover{
+            opacity:.8;transform:translateY(-1px);
+            background:var(--tag-hover-bg,rgba(0,0,0,.1))
+        }
+        .card-tag-badge:focus-visible{
+            outline:2px solid currentColor;outline-offset:2px
+        }
+
+        /* ===== VARIAN GRID LAYOUT ===== */
         .home-featured-grid.grid-2{grid-template-columns:repeat(2,1fr)}
         .home-featured-grid.grid-3{grid-template-columns:repeat(3,1fr)}
         .home-featured-grid.grid-4{grid-template-columns:repeat(4,1fr)}
@@ -407,6 +431,13 @@ layout: null
         .home-grid-card .excerpt.spo.excerpt-2line{-webkit-line-clamp:2}
         .home-grid-card .excerpt.spo.excerpt-3line{-webkit-line-clamp:3}
 
+        /* ===== VARIAN TAGS ===== */
+        .home-grid-card .card-tags.tags-pill .card-tag-badge{border-radius:20px;padding:4px 12px}
+        .home-grid-card .card-tags.tags-square .card-tag-badge{border-radius:4px}
+        .home-grid-card .card-tags.tags-outline .card-tag-badge{background:transparent!important;border:1px solid currentColor}
+        .home-grid-card .card-tags.tags-small .card-tag-badge{font-size:9px;padding:2px 7px}
+        .home-grid-card .card-tags.tags-large .card-tag-badge{font-size:12px;padding:5px 12px}
+
         /* ===== VARIAN SECTION TITLE ===== */
         .section-heading.sec-centered{justify-content:center;text-align:center}
         .section-heading.sec-centered::after{display:none}
@@ -470,6 +501,7 @@ layout: null
             .home-grid-content{padding:10px 12px 12px}
             .home-grid-title{font-size:13px}
             .home-grid-desc{font-size:11px}
+            .card-tag-badge{font-size:9px;padding:3px 8px}
             #welcomePara,#footerPara{padding:16px 18px;font-size:13.5px;border-radius:14px}
             #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:50px}
             .section-heading{font-size:1.1rem}
@@ -486,6 +518,8 @@ layout: null
             .home-grid-title{font-size:12px}
             .home-grid-desc{font-size:10.5px;-webkit-line-clamp:2}
             .home-grid-card .excerpt.spo:not(.excerpt-hide){display:none}
+            .card-tag-badge{font-size:8px;padding:2px 6px;border-radius:10px}
+            .card-tags{gap:3px;margin-top:5px}
             #welcomePara,#footerPara{padding:14px 14px;font-size:12.5px;border-radius:12px}
             #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:40px}
             .blog-title-main{font-size:16px}
@@ -716,6 +750,7 @@ layout: null
         var titleWeightList = ["title-bold","title-semibold","title-bold","title-semibold","title-bold","title-normal","title-bold","title-semibold","title-bold","title-semibold"];
         var titleSizeList = ["title-md","title-sm","title-lg","title-md","title-xs","title-md","title-lg","title-sm","title-md","title-xl"];
         var excerptList = ["excerpt-2line","excerpt-1line","excerpt-3line","excerpt-2line","excerpt-hide","excerpt-2line","excerpt-1line","excerpt-3line","excerpt-2line","excerpt-1line"];
+        var tagStyleList = ["tags-pill","tags-square","tags-outline","tags-small","tags-large","tags-pill","tags-outline","tags-small","tags-pill","tags-square"];
 
         document.querySelectorAll(".home-grid-card").forEach(function(card, idx) {
             var cardHash = (domainHash + idx * 7) % 10;
@@ -736,39 +771,76 @@ layout: null
                 excerptEl.classList.add(excerptList[(cardHash + 7) % 10]);
             }
 
+            // Varian tag style
+            var tagContainer = card.querySelector(".card-tags");
+            if (tagContainer) {
+                tagContainer.classList.add(tagStyleList[(cardHash + 8) % 10]);
+            }
+
             // Warna card per item
             var cardBg = genColor(120 + idx * 30, 45 + (idx % 3) * 10, 85 - idx * 3);
             var cardTxt = textColorFor(cardBg);
+            var tagBg = cardTxt === "#ffffff" ? "rgba(255,255,255,.18)" : "rgba(0,0,0,.07)";
+            var tagColor = cardTxt === "#ffffff" ? "rgba(255,255,255,.9)" : "rgba(0,0,0,.65)";
+            var tagHoverBg = cardTxt === "#ffffff" ? "rgba(255,255,255,.28)" : "rgba(0,0,0,.12)";
+
             card.style.setProperty("--card-bg", cardBg);
             card.style.setProperty("--card-text", cardTxt);
             card.style.setProperty("--card-gradient", "linear-gradient(135deg, " + cardBg + ", " + genColor(140 + idx * 30, 50, 80) + ")");
             card.style.setProperty("--card-soft", genColor(120 + idx * 30, 20, 92));
             card.style.setProperty("--card-border", cardBg);
+            card.style.setProperty("--tag-bg", tagBg);
+            card.style.setProperty("--tag-color", tagColor);
+            card.style.setProperty("--tag-hover-bg", tagHoverBg);
 
-            if (bgList[(cardHash + 3) % 10] === "bg-solid" || bgList[(cardHash + 3) % 10] === "bg-gradient" || bgList[(cardHash + 3) % 10] === "bg-soft") {
+            var currentBgClass = bgList[(cardHash + 3) % 10];
+
+            if (currentBgClass === "bg-solid" || currentBgClass === "bg-gradient" || currentBgClass === "bg-soft") {
                 card.style.background = cardBg;
                 card.style.color = cardTxt;
                 card.querySelectorAll("a").forEach(function(a) { a.style.color = cardTxt; });
                 card.querySelectorAll(".home-grid-desc, .excerpt.spo").forEach(function(e) {
                     e.style.color = cardTxt === "#ffffff" ? "rgba(255,255,255,.75)" : "rgba(0,0,0,.6)";
                 });
+                if (currentBgClass === "bg-solid" || currentBgClass === "bg-soft") {
+                    card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                        tag.style.background = tagBg;
+                        tag.style.color = tagColor;
+                    });
+                }
             }
 
-            if (bgList[(cardHash + 3) % 10] === "bg-gradient") {
+            if (currentBgClass === "bg-gradient") {
                 card.style.background = "linear-gradient(135deg, " + cardBg + ", " + genColor(140 + idx * 30, 50, 80) + ")";
             }
 
-            if (bgList[(cardHash + 3) % 10] === "bg-soft") {
+            if (currentBgClass === "bg-soft") {
                 card.style.background = genColor(120 + idx * 30, 20, 92);
                 card.style.color = "#1a1a1a";
                 card.querySelectorAll("a").forEach(function(a) { a.style.color = cardBg; });
+                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                    tag.style.background = cardBg + "20";
+                    tag.style.color = cardBg;
+                });
             }
 
-            if (bgList[(cardHash + 3) % 10] === "bg-outline") {
+            if (currentBgClass === "bg-outline") {
                 card.style.background = "transparent";
                 card.style.borderColor = cardBg;
                 card.style.color = "#1a1a1a";
                 card.querySelectorAll("a").forEach(function(a) { a.style.color = cardBg; });
+                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                    tag.style.background = "transparent";
+                    tag.style.color = cardBg;
+                    tag.style.border = "1px solid " + cardBg + "40";
+                });
+            }
+
+            if (currentBgClass === "bg-glass") {
+                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                    tag.style.background = "rgba(0,0,0,.06)";
+                    tag.style.color = "#1a1a1a";
+                });
             }
         });
 
@@ -830,13 +902,20 @@ layout: null
             </div>
             {% endif %}
             <div class="home-featured-grid">
-                {% for post in site.categories.pisah01 limit:99 offset:1 %}
+                {% for post in site.categories.pisah01 limit:6 offset:1 %}
                 <div class="home-grid-card">
                     {% if post.image %}<div class="home-grid-thumb"><a href="{{ post.url }}" aria-label="{{ post.title }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" decoding="async"></a></div>{% endif %}
                     <div class="home-grid-content">
                         <h3 class="home-grid-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
                         {% if post.description %}<p class="home-grid-desc">{{ post.description }}</p>{% endif %}
                         {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                        {% if page.tags %}
+                        <div class="card-tags">
+                            {% for tag in page.tags %}
+                            <a href="/tags/{{ tag | slugify }}/" class="card-tag-badge">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
