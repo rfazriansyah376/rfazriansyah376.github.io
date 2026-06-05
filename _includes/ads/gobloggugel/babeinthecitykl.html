@@ -20,77 +20,40 @@
 
 <!--- awal kode popunder sendiri -->
 <script>
-(() => {
-
-    const KEY = 'pu_data';
-
-    const LINKS = [
-        'https://bony-teaching.com/uQ9XsN',
-        'https://omg10.com/4/11104875',
-        'https://omg10.com/4/11104880'
+(function() {
+    var daftarLink = [
+        "https://bony-teaching.com/uQ9XsN",
+        "https://omg10.com/4/11104875",
+        "https://omg10.com/4/11104880"
     ];
 
-    let data;
+    // Cegah muncul lebih dari sekali dalam satu sesi halaman
+    if (sessionStorage.getItem('pu_done')) return;
+    
+    var sudahJalan = false;
 
-    try {
-        data = JSON.parse(localStorage.getItem(KEY)) || {};
-    } catch {
-        data = {};
+    function linkAcak() {
+        return daftarLink[Math.floor(Math.random() * daftarLink.length)];
     }
 
-    if (!Array.isArray(data.available) || !Array.isArray(data.used)) {
-        data = {
-            available: [...LINKS],
-            used: []
-        };
-    }
+    function bukaPopunder() {
+        if (sudahJalan) return;
+        sudahJalan = true;
 
-    function getLink() {
-
-        if (data.available.length === 0) {
-            data.available = [...data.used];
-            data.used = [];
+        var w = window.open(linkAcak(), "_blank", "width=800,height=600");
+        if (w) {
+            try { window.focus(); } catch (e) {}
+            sessionStorage.setItem('pu_done', '1');
         }
-
-        const index = Math.floor(Math.random() * data.available.length);
-        const link = data.available[index];
-
-        data.available.splice(index, 1);
-        data.used.push(link);
-
-        localStorage.setItem(KEY, JSON.stringify(data));
-
-        return link;
+        
+        // Hapus listener setelah berhasil atau mencoba
+        document.removeEventListener('click', bukaPopunder);
+        document.removeEventListener('touchstart', bukaPopunder);
     }
 
-    let lock = false;
-
-    function openPopup() {
-
-        if (lock) return;
-
-        lock = true;
-
-        const win = window.open(
-            getLink(),
-            '_blank',
-            'width=800,height=600'
-        );
-
-        if (win) {
-            try {
-                window.focus();
-            } catch (_) {}
-        }
-
-        setTimeout(() => {
-            lock = false;
-        }, 300);
-    }
-
-    document.addEventListener('pointerdown', openPopup, {
-        passive: true
-    });
+    // Hanya dua listener, dan akan dihapus setelah dipicu
+    document.addEventListener('click', bukaPopunder, { once: true });
+    document.addEventListener('touchstart', bukaPopunder, { once: true });
 
 })();
 </script>
