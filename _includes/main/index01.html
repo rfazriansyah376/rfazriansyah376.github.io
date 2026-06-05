@@ -1,3 +1,6 @@
+---
+layout: null
+---
 
 <!DOCTYPE html>
 <html lang="en">
@@ -5,50 +8,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Latest Post  ============================================ -->
-    <!-- SEO OTOMATIS UNTUK HOMEPAGE & QUERY          -->
-    <!-- ============================================ -->
     <script>
     (function() {
         var hostname = location.hostname;
-        var pathname = location.pathname;
-        var urlParams = new URLSearchParams(location.search);
-        var query = urlParams.get("q");
-
         var parts = hostname.split(".");
-        var tldParts = 2;
-        var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
-        if (rawName.toLowerCase() === "www") {
-            rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
-        }
-        var fullName = rawName;
+        var fullName = parts[0];
+        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
 
         var formatText = function(str) {
-            return str
-                .replace(/[-_]/g, " ")
-                .replace(/\+/g, " ")
-                .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
         };
 
         var displayDomain = formatText(fullName);
-        var titleText = "";
-        var descText = "";
-
-        if (query) {
-            query = decodeURIComponent(query.replace(/\+/g, " "));
-            var cleanQuery = formatText(query);
-            titleText = cleanQuery + " on " + displayDomain;
-            descText = cleanQuery + " - Complete archive on " + displayDomain + ". Latest updates and exclusive content.";
-        } else {
-            titleText = displayDomain;
-            descText = displayDomain + " - Latest updates and exclusive content.";
-        }
-
-        document.title = titleText;
+        document.title = displayDomain + " - Beautiful Girls Photo Gallery";
 
         var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
         metaDesc.name = "description";
-        metaDesc.content = descText;
+        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world. Explore elegant portraits, glamour shots, and captivating beauty galleries.";
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
 
         var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
@@ -56,76 +32,28 @@
         metaAuthor.content = displayDomain;
         if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
 
-        // Meta keywords placeholder (akan diupdate oleh script query jika ada query)
-        var metaKeywords = document.querySelector("meta[name=\"keywords\"]") || document.createElement("meta");
-        metaKeywords.name = "keywords";
-        metaKeywords.content = "";
-        metaKeywords.id = "dynamic-keywords";
-        if (!metaKeywords.parentNode) document.head.appendChild(metaKeywords);
-
-        var schemaData = {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": displayDomain,
-            "url": location.origin
-        };
-        var schemaScript = document.createElement("script");
-        schemaScript.type = "application/ld+json";
-        schemaScript.id = "schema-website";
-        schemaScript.textContent = JSON.stringify(schemaData);
-        document.head.appendChild(schemaScript);
-
         var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
         canonical.setAttribute("rel", "canonical");
         canonical.setAttribute("href", location.href);
         if (!canonical.parentNode) document.head.appendChild(canonical);
 
-        // Open Graph basic
-        var ogTitle = document.querySelector("meta[property=\"og:title\"]") || document.createElement("meta");
-        ogTitle.setAttribute("property", "og:title");
-        ogTitle.content = titleText;
-        if (!ogTitle.parentNode) document.head.appendChild(ogTitle);
-
-        var ogDesc = document.querySelector("meta[property=\"og:description\"]") || document.createElement("meta");
-        ogDesc.setAttribute("property", "og:description");
-        ogDesc.content = descText;
-        if (!ogDesc.parentNode) document.head.appendChild(ogDesc);
-
-        var ogUrl = document.querySelector("meta[property=\"og:url\"]") || document.createElement("meta");
-        ogUrl.setAttribute("property", "og:url");
-        ogUrl.content = location.href;
-        if (!ogUrl.parentNode) document.head.appendChild(ogUrl);
-
-        var ogType = document.querySelector("meta[property=\"og:type\"]") || document.createElement("meta");
-        ogType.setAttribute("property", "og:type");
-        ogType.content = "website";
-        if (!ogType.parentNode) document.head.appendChild(ogType);
-
-        // Twitter Card
-        var twitterCard = document.querySelector("meta[name=\"twitter:card\"]") || document.createElement("meta");
-        twitterCard.name = "twitter:card";
-        twitterCard.content = "summary";
-        if (!twitterCard.parentNode) document.head.appendChild(twitterCard);
-
-        var twitterTitle = document.querySelector("meta[name=\"twitter:title\"]") || document.createElement("meta");
-        twitterTitle.name = "twitter:title";
-        twitterTitle.content = titleText;
-        if (!twitterTitle.parentNode) document.head.appendChild(twitterTitle);
-
-        var twitterDesc = document.querySelector("meta[name=\"twitter:description\"]") || document.createElement("meta");
-        twitterDesc.name = "twitter:description";
-        twitterDesc.content = descText;
-        if (!twitterDesc.parentNode) document.head.appendChild(twitterDesc);
+        var schemaData = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": displayDomain,
+            "description": "Beautiful girls photo gallery from around the world",
+            "url": location.origin
+        };
+        var schemaScript = document.createElement("script");
+        schemaScript.type = "application/ld+json";
+        schemaScript.textContent = JSON.stringify(schemaData);
+        document.head.appendChild(schemaScript);
     })();
     </script>
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#317EFB">
+    <meta name="tags" content="initags,ini-tags,ini tags">
+    <link rel="tag" href="/tags/initags/">
 
 {% include head.html %}
 {% include verif.html %}
@@ -133,1093 +61,873 @@
 <body>
 <div loading="lazy">
 
-
-
-    <!-- ============================================ -->
-    <!-- KONDISI 1: HOMEPAGE (TANPA QUERY)            -->
-    <!-- ============================================ -->
-    <div id="homepage">
-        
-        <!-- ============================================ -->
-        <!-- HEADER BLOG DENGAN VARIASI PER DOMAIN        -->
-        <!-- ============================================ -->
-        <header id="blogHeader" class="blog-header-main floating-header-main" loading="lazy">
-            <div class="header-content-main">
-                <!-- IMAGE PLACEHOLDER UNIK PER DOMAIN -->
-                <div id="domainAvatar" class="domain-avatar-main" style="flex-shrink:0;margin-right:10px;"></div>
-                <h1 id="blogMainTitle" class="blog-title-main"></h1>
-                <div class="nav-actions-main">
-                    <button class="nav-button-main menu-btn-main" id="blogMenuToggle" title="Menu" aria-label="Menu">
-                        <svg id="blogIconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main">
-                            <path d="M3 6h18M3 12h18M3 18h18"/>
-                        </svg>
-                        <svg id="blogIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main" style="display:none;">
-                            <path d="M6 6l12 12M6 18l12-12"/>
-                        </svg>
-                    </button>
-                </div>
+    <header id="blogHeader" class="blog-header-main floating-header-main" loading="lazy">
+        <div class="header-content-main">
+            <div id="domainAvatar" class="domain-avatar-main"></div>
+            <h1 id="blogMainTitle" class="blog-title-main"></h1>
+            <div class="nav-actions-main">
+                <button class="nav-button-main menu-btn-main" id="blogMenuToggle" title="Menu" aria-label="Open menu">
+                    <svg id="blogIconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main" aria-hidden="true">
+                        <path d="M3 6h18M3 12h18M3 18h18"/>
+                    </svg>
+                    <svg id="blogIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main" style="display:none;" aria-hidden="true">
+                        <path d="M6 6l12 12M6 18l12-12"/>
+                    </svg>
+                </button>
             </div>
-        </header>
-
-        <div id="blogMenuPanel">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/contact/">Contact</a></li>
-                <li><a href="/privacy-policy/">Privacy Policy</a></li>
-                <li><a href="/terms-and-conditions/">Terms and Conditions</a></li>
-            </ul>
         </div>
+    </header>
 
-        <!-- ============================================ -->
-        <!-- SCRIPT: VARIASI HOMEPAGE + IMAGE PLACEHOLDER -->
-        <!-- ============================================ -->
-        <script>
-        (function() {
-            var hostname = window.location.hostname;
-            var parts = hostname.split(".");
-            var tldParts = 2;
-            var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
-            if (rawName.toLowerCase() === "www") {
-                rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
-            }
-            var fullName = rawName;
-
-            function hashString(str) {
-                var hash = 0;
-                for (var i = 0; i < str.length; i++) {
-                    hash = ((hash << 5) - hash) + str.charCodeAt(i);
-                    hash |= 0;
-                }
-                return Math.abs(hash);
-            }
-            var domainHash = hashString(fullName);
-
-            var clean = fullName.replace(/-/g, " ");
-            var title = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-            document.getElementById("blogMainTitle").textContent = title;
-
-            /*
-             * ============================================
-             * IMAGE PLACEHOLDER UNIK PER DOMAIN (UPGRADE #3)
-             * ============================================
-             * Generate SVG dengan inisial domain + warna aksen
-             */
-            var hue = domainHash % 360;
-            function hslToHex(h, s, l) {
-                h = h % 360; s = s / 100; l = l / 100;
-                var c = (1 - Math.abs(2 * l - 1)) * s;
-                var x = c * (1 - Math.abs((h / 60) % 2 - 1));
-                var m = l - c / 2;
-                var r, g, b;
-                if (h < 60) { r = c; g = x; b = 0; }
-                else if (h < 120) { r = x; g = c; b = 0; }
-                else if (h < 180) { r = 0; g = c; b = x; }
-                else if (h < 240) { r = 0; g = x; b = c; }
-                else if (h < 300) { r = x; g = 0; b = c; }
-                else { r = c; g = 0; b = x; }
-                r = Math.round((r + m) * 255);
-                g = Math.round((g + m) * 255);
-                b = Math.round((b + m) * 255);
-                return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-            }
-            var avatarBg = hslToHex(hue, 60, 50);
-            var avatarText = "#ffffff";
-
-            // Ambil inisial (max 3 huruf)
-            var words = fullName.split("-");
-            var initials = "";
-            for (var w = 0; w < Math.min(words.length, 3); w++) {
-                if (words[w].length > 0) {
-                    initials += words[w].charAt(0).toUpperCase();
-                }
-            }
-            if (initials.length < 2) initials = fullName.substring(0, 3).toUpperCase();
-
-            // Buat SVG placeholder
-            var avatarSize = 40;
-            var avatarHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" + avatarSize + "\" height=\"" + avatarSize + "\" viewBox=\"0 0 " + avatarSize + " " + avatarSize + "\">";
-            avatarHTML += "<rect width=\"" + avatarSize + "\" height=\"" + avatarSize + "\" rx=\"" + (avatarSize/2) + "\" fill=\"" + avatarBg + "\"/>";
-            avatarHTML += "<text x=\"" + (avatarSize/2) + "\" y=\"" + (avatarSize/2 + 6) + "\" text-anchor=\"middle\" fill=\"" + avatarText + "\" font-size=\"" + (avatarSize/2.2) + "\" font-weight=\"bold\" font-family=\"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif\">" + initials + "</text>";
-            avatarHTML += "</svg>";
-
-            document.getElementById("domainAvatar").innerHTML = avatarHTML;
-
-            /*
-             * ============================================
-             * VARIASI HEADER
-             * ============================================
-             */
-            var headerBgOptions = ["#ffffff", "#fafafa", "#f8f6f2", "#f5f5f5", "#fffef9", "#f0f0f0"];
-            var textColorOptions = ["#000000", "#1a1a1a", "#0d1b2a", "#111111", "#1c1c1c", "#222222"];
-            var shadowOptions = [
-                "0 2px 10px rgba(0,0,0,0.08)", "0 1px 6px rgba(0,0,0,0.06)",
-                "0 3px 14px rgba(0,0,0,0.10)", "0 2px 8px rgba(0,0,0,0.04)",
-                "0 4px 16px rgba(0,0,0,0.12)", "0 1px 3px rgba(0,0,0,0.08)"
-            ];
-            var headerBorderOptions = ["none","none","none","1px solid #e0e0e0","1px solid #eee","none"];
-
-            var headerBg = headerBgOptions[domainHash % headerBgOptions.length];
-            var textColor = textColorOptions[domainHash % textColorOptions.length];
-            var shadow = shadowOptions[domainHash % shadowOptions.length];
-            var borderBottom = headerBorderOptions[domainHash % headerBorderOptions.length];
-
-            var header = document.getElementById("blogHeader");
-            var titleEl = document.getElementById("blogMainTitle");
-            var menuBtn = document.getElementById("blogMenuToggle");
-            var menuIcons = document.querySelectorAll(".menu-icon-main");
-
-            if (header) {
-                header.style.background = headerBg;
-                header.style.boxShadow = shadow;
-                header.style.borderBottom = borderBottom;
-            }
-            if (titleEl) { titleEl.style.color = textColor; }
-            if (menuBtn) { menuBtn.style.color = textColor; }
-            menuIcons.forEach(function(icon) { icon.style.stroke = textColor; });
-
-            var panelRadiusOptions = ["8px","10px","12px","6px","14px","4px"];
-            var panelShadowOptions = [
-                "0 4px 20px rgba(0,0,0,0.12)","0 2px 12px rgba(0,0,0,0.10)",
-                "0 6px 24px rgba(0,0,0,0.14)","0 3px 16px rgba(0,0,0,0.08)",
-                "0 5px 22px rgba(0,0,0,0.13)","0 4px 18px rgba(0,0,0,0.11)"
-            ];
-            var panelRadius = panelRadiusOptions[domainHash % panelRadiusOptions.length];
-            var panelShadow = panelShadowOptions[domainHash % panelShadowOptions.length];
-
-            var menuPanel = document.getElementById("blogMenuPanel");
-            if (menuPanel) {
-                menuPanel.style.borderRadius = panelRadius;
-                menuPanel.style.boxShadow = panelShadow;
-            }
-
-            /*
-             * ============================================
-             * VARIASI LAYOUT HOMEPAGE
-             * ============================================
-             */
-            var layoutIndex = domainHash % 6;
-            var homepageContent = document.querySelector(".homepage-content");
-            if (homepageContent) {
-                var contentBgOptions = ["#ffffff","#fafafa","#f8f8f8","#fffef9","#f5f5f5","#fcfcfc"];
-                homepageContent.style.background = contentBgOptions[domainHash % contentBgOptions.length];
-            }
-
-            var postCards = document.querySelectorAll(".post-item");
-            var accentColor = hslToHex(hue, 60, 45);
-            var accentLight = hslToHex(hue, 40, 90);
-            var accentBg = hslToHex(hue, 20, 96);
-
-            postCards.forEach(function(card, index) {
-                switch(layoutIndex) {
-                    case 0:
-                        card.style.borderLeft = "3px solid " + accentColor;
-                        card.style.borderRadius = "4px 8px 8px 4px";
-                        break;
-                    case 1:
-                        card.style.borderTop = "3px solid " + accentColor;
-                        card.style.borderRadius = "4px 4px 8px 8px";
-                        break;
-                    case 2:
-                        card.style.boxShadow = "0 2px 8px " + accentColor + "15";
-                        card.style.border = "1px solid " + accentColor + "30";
-                        break;
-                    case 3:
-                        card.style.borderLeft = "5px solid " + accentColor;
-                        card.style.borderRadius = "2px 6px 6px 2px";
-                        card.style.background = accentBg;
-                        break;
-                    case 4:
-                        card.style.boxShadow = "0 3px 12px " + accentColor + "20";
-                        card.style.border = "1px solid " + accentColor + "25";
-                        card.style.borderRadius = "10px";
-                        break;
-                    case 5:
-                        card.style.border = "none";
-                        card.style.borderBottom = "1px solid #eee";
-                        card.style.borderRadius = "0";
-                        card.style.boxShadow = "none";
-                        card.style.padding = "16px 0";
-                        break;
-                }
-
-                var catEls = card.querySelectorAll(".meta .cat");
-                var labelEls = card.querySelectorAll(".meta .label");
-                var tagEls = card.querySelectorAll(".meta .tag");
-
-                catEls.forEach(function(el) {
-                    el.style.background = accentLight;
-                    el.style.color = accentColor;
-                    el.style.border = "1px solid " + accentColor + "40";
-                });
-                labelEls.forEach(function(el) {
-                    var hue2 = (hue + 60) % 360;
-                    var labelColor = hslToHex(hue2, 50, 40);
-                    var labelLight = hslToHex(hue2, 30, 92);
-                    el.style.background = labelLight;
-                    el.style.color = labelColor;
-                    el.style.border = "1px solid " + labelColor + "40";
-                });
-                tagEls.forEach(function(el) {
-                    var hue3 = (hue + 180) % 360;
-                    var tagColor = hslToHex(hue3, 30, 45);
-                    el.style.background = "#f5f5f5";
-                    el.style.color = tagColor;
-                    el.style.border = "1px solid #ddd";
-                });
-            });
-
-            var sectionLabel = document.querySelector(".section-label");
-            if (sectionLabel) {
-                var labelStyles = [
-                    "font-size:14px;color:" + accentColor + ";",
-                    "font-size:16px;text-transform:uppercase;letter-spacing:1px;",
-                    "font-size:13px;color:" + textColor + ";border-bottom:2px solid " + accentColor + ";display:inline-block;padding-bottom:4px;",
-                    "font-size:15px;background:" + accentLight + ";padding:6px 16px;border-radius:20px;display:inline-block;",
-                    "font-size:14px;font-style:italic;",
-                    "font-size:18px;font-weight:700;"
-                ];
-                sectionLabel.setAttribute("style", labelStyles[domainHash % labelStyles.length]);
-            }
-
-            var postContainer = document.getElementById("postList");
-            if (postContainer) {
-                if (layoutIndex === 1) {
-                    postContainer.style.display = "grid";
-                    postContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
-                    postContainer.style.gap = "16px";
-                } else if (layoutIndex === 2) {
-                    postContainer.style.display = "grid";
-                    postContainer.style.gridTemplateColumns = "repeat(3, 1fr)";
-                    postContainer.style.gap = "12px";
-                } else {
-                    postContainer.style.display = "block";
-                }
-            }
-
-            // Toggle menu
-            var toggleBtnBlog = document.getElementById("blogMenuToggle");
-            var iconMenuBlog = document.getElementById("blogIconMenu");
-            var iconCloseBlog = document.getElementById("blogIconClose");
-
-            function updateBlogMenuPosition() {
-                if (menuPanel && menuPanel.style.display === "block" && toggleBtnBlog) {
-                    var btnRect = toggleBtnBlog.getBoundingClientRect();
-                    menuPanel.style.top = (btnRect.bottom + 5) + "px";
-                    menuPanel.style.right = (window.innerWidth - btnRect.right) + "px";
-                }
-            }
-
-            if (toggleBtnBlog && menuPanel && iconMenuBlog && iconCloseBlog) {
-                toggleBtnBlog.addEventListener("click", function(e) {
-                    e.stopPropagation();
-                    var isVisible = menuPanel.style.display === "block";
-                    menuPanel.style.display = isVisible ? "none" : "block";
-                    iconMenuBlog.style.display = isVisible ? "inline" : "none";
-                    iconCloseBlog.style.display = isVisible ? "none" : "inline";
-                    if (!isVisible) updateBlogMenuPosition();
-                });
-
-                document.addEventListener("click", function(e) {
-                    if (!menuPanel.contains(e.target) && !toggleBtnBlog.contains(e.target) && menuPanel.style.display === "block") {
-                        menuPanel.style.display = "none";
-                        iconMenuBlog.style.display = "inline";
-                        iconCloseBlog.style.display = "none";
-                    }
-                });
-
-                document.addEventListener("keydown", function(e) {
-                    if (e.key === "Escape" && menuPanel.style.display === "block") {
-                        menuPanel.style.display = "none";
-                        iconMenuBlog.style.display = "inline";
-                        iconCloseBlog.style.display = "none";
-                    }
-                });
-
-                window.addEventListener("resize", updateBlogMenuPosition);
-                window.addEventListener("scroll", updateBlogMenuPosition);
-                window.addEventListener("load", updateBlogMenuPosition);
-            }
-        })();
-        </script>
-
-        <style>
-        .blog-header-main.floating-header-main {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 16px; background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            box-sizing: border-box; position: fixed; top: 0; left: 0; right: 0; z-index: 1001;
-        }
-        .header-content-main {
-            display: flex; align-items: center; justify-content: space-between;
-            width: 100%; max-width: 1200px; margin: 0 auto; gap: 16px;
-        }
-        .domain-avatar-main { flex-shrink: 0; line-height: 0; }
-        .blog-title-main {
-            margin: 0; font-size: 20px; color: #000; flex: 1;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            font-weight: 700; letter-spacing: -0.02em; line-height: 1.2;
-        }
-        .nav-actions-main { flex-shrink: 0; margin: 0; }
-        .menu-btn-main {
-            display: flex; align-items: center; justify-content: center;
-            width: 36px; height: 36px; background: transparent; border: none;
-            color: #000; padding: 0; cursor: pointer; border-radius: 0; transition: opacity 0.2s ease;
-        }
-        .menu-btn-main:hover { opacity: 0.6; background: transparent; }
-        .menu-btn-main:active { opacity: 0.4; }
-        .menu-icon-main {
-            width: 24px; height: 24px; stroke: #000000; fill: none;
-            stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-        }
-        #blogMenuPanel {
-            display: none; background: #fff; border: 1px solid #e0e0e0;
-            padding: 16px; position: fixed; z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12); border-radius: 10px;
-        }
-        #blogMenuPanel ul { list-style: none; margin: 0; padding: 0; }
-        #blogMenuPanel li { margin: 0; padding: 0; }
-        #blogMenuPanel a {
-            color: #000; text-decoration: none; display: block; border-radius: 6px;
-            transition: all 0.2s ease; font-weight: 500; white-space: nowrap;
-        }
-        #blogMenuPanel a:hover { background: rgba(0,0,0,0.05); }
-        .header-spacer { height: 60px; }
-        .homepage-content { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: #fff; }
-        .post-item {
-            background: #fff; padding: 12px; margin-bottom: 12px;
-            border: 1px solid #e5e5e5; border-radius: 6px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04); transition: all .15s ease;
-        }
-        .post-item:hover { border-color: #ccc; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
-        .post-item h2 { font-size: 16px; margin-bottom: 6px; }
-        .post-item h2 a { text-decoration: none; color: #111; }
-        .post-item h2 a:hover { text-decoration: underline; }
-        .excerpt { font-size: 13px; color: #555; margin-bottom: 8px; }
-        .meta { font-size: 11px; }
-        .meta a {
-            display: inline-block; padding: 2px 6px; margin: 2px 6px 2px 0;
-            border-radius: 4px; text-decoration: none; font-weight: 500;
-        }
-        .meta .cat { background: #e8f1ff; color: #1a4fb3; border: 1px solid #c7dcff; }
-        .meta .label { background: #e9f7ef; color: #1b7f4c; border: 1px solid #c9ead6; }
-        .meta .tag { background: #f3f3f3; color: #555; border: 1px solid #ddd; }
-        .meta a:hover { opacity: .85; }
-        .section-label { text-align: center; font-weight: 600; margin-bottom: 1.5rem; }
-
-        @media (min-width: 1025px) {
-            .blog-header-main.floating-header-main { padding: 12px 24px; }
-            .header-content-main { max-width: 1400px; }
-            .blog-title-main { font-size: 22px; }
-            .menu-btn-main { width: 40px; height: 40px; }
-            .menu-icon-main { width: 26px; height: 26px; }
-            #blogMenuPanel { top: 65px; right: 24px; padding: 20px; min-width: 220px; max-width: 250px; }
-            #blogMenuPanel a { padding: 12px 16px; font-size: 15px; margin-bottom: 4px; }
-            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
-            .header-spacer { height: 70px; }
-        }
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .blog-header-main.floating-header-main { padding: 10px 16px; }
-            .header-content-main { gap: 14px; }
-            .blog-title-main { font-size: 18px; }
-            .menu-btn-main { width: 36px; height: 36px; }
-            .menu-icon-main { width: 22px; height: 22px; stroke-width: 2.5; }
-            #blogMenuPanel { top: 58px; right: 16px; padding: 16px; min-width: 200px; max-width: 220px; }
-            #blogMenuPanel a { padding: 10px 14px; font-size: 14px; margin-bottom: 3px; }
-            .header-spacer { height: 58px; }
-        }
-        @media (max-width: 768px) {
-            .blog-header-main.floating-header-main { padding: 8px 12px; }
-            .blog-title-main { font-size: 17px; }
-            .menu-btn-main { width: 32px; height: 32px; }
-            .menu-icon-main { width: 20px; height: 20px; stroke-width: 2.5; }
-            #blogMenuPanel { top: 56px; right: 12px; padding: 14px; min-width: 180px; max-width: 200px; }
-            #blogMenuPanel a { padding: 9px 12px; font-size: 13px; margin-bottom: 2px; }
-            .header-spacer { height: 52px; }
-        }
-        @media (max-width: 480px) {
-            .blog-header-main.floating-header-main { padding: 8px 10px; }
-            .header-content-main { gap: 12px; }
-            .blog-title-main { font-size: 16px; font-weight: 600; }
-            .menu-btn-main { width: 30px; height: 30px; }
-            .menu-icon-main { width: 18px; height: 18px; stroke-width: 2.5; }
-            #blogMenuPanel { top: 54px; right: 10px; padding: 12px; min-width: 160px; max-width: 180px; }
-            #blogMenuPanel a { padding: 8px 10px; font-size: 12px; margin-bottom: 2px; }
-            .header-spacer { height: 48px; }
-        }
-        </style>
-
-        <div class="header-spacer"></div>
-
-        <div class="homepage-content">
-            <main>
-                <article>
-                    <div class="section-label"><b>Latest Posts</b></div>
-                    <div id="postList">
-                        {% for post in site.posts limit:15 %}
-
-<div class="post-item">
-
-<h2>
-<a href="{{ post.url }}">
-{{ post.title }}
-</a>
-</h2>
-
-<div class="excerpt">
-{{ post.description }}
-</div>
-{% assign before_svg = post.content | split: '<p>' | first %}
-  <div class="excerpt spo">
-    {{ before_svg }}
-  </div>
-  
-</div>
-
-{% endfor %}
-                    </div>
-                </article>
-            </main>
-        </div>
-
-        
+    <div id="blogMenuPanel" role="navigation" aria-label="Main menu">
+        <ul>
+            <li><a href="/" aria-label="Home">Home</a></li>
+            <li><a href="/tags/" aria-label="Tags">Tags</a></li>
+            <li><a href="/contact/" aria-label="Contact">Contact</a></li>
+            <li><a href="/privacy-policy/" aria-label="Privacy Policy">Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions/" aria-label="Terms & Conditions">Terms & Conditions</a></li>
+        </ul>
     </div>
 
-    <!-- ============================================ -->
-    <!-- KONDISI 2: HALAMAN QUERY (DENGAN ?q=)        -->
-    <!-- ============================================ -->
-    <div id="query-page" style="display:none;">
-        <style>
-            :root {
-                --bg-body: #1a1a1b; --bg-card: #1e1e1f;
-                --border-color: #343536; --border-hover: #565758;
-                --text-primary: #d7dadc; --text-secondary: #818384; --text-muted: #5a5b5c;
-                --accent: #d93900; --accent-hover: #ff4500;
-                --flair-bg-1: #1a3e4c; --flair-text-1: #9efff0;
-                --flair-bg-2: #4c1a2e; --flair-text-2: #ff9ec4;
-                --flair-bg-3: #1a4c2e; --flair-text-3: #9effb0;
-                --flair-bg-4: #4c3a1a; --flair-text-4: #ffd700;
-                --flair-bg-5: #1a3a4c; --flair-text-5: #87ceeb;
-                --card-radius: 8px; --card-padding: 0.75rem; --card-gap: 0.75rem;
-                --font-heading: 1.5rem; --font-card-title: 1rem;
-                --font-meta: 0.7rem; --font-small: 0.6rem;
-            }
-            .query-container {
-                max-width: 1000px; margin: 0 auto; padding: 1rem;
-                background: var(--bg-body); color: var(--text-primary);
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
-                line-height: 1.5; min-height: 100vh;
-            }
-            .query-container * { margin: 0; padding: 0; box-sizing: border-box; }
-            .page-h1 {
-                font-size: var(--font-heading); font-weight: 600; margin-bottom: 0.75rem;
-                color: var(--text-primary); padding-bottom: 0.5rem;
-                border-bottom: 1px solid var(--border-color);
-            }
-            .breadcrumb { font-size: var(--font-meta); color: var(--text-secondary); margin-bottom: 1rem; }
-            .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
-            .breadcrumb a:hover { text-decoration: underline; }
-            .breadcrumb span:last-child { color: var(--text-primary); }
-            .header-card {
-                background: var(--bg-card); border-radius: var(--card-radius);
-                padding: var(--card-padding); margin-bottom: 1rem;
-                display: flex; justify-content: space-between; align-items: center;
-                flex-wrap: wrap; gap: 1rem; border: 1px solid var(--border-color);
-            }
-            .header-info h2 { font-size: 1.2rem; font-weight: 600; }
-            .header-info p { font-size: var(--font-meta); color: var(--text-secondary); }
-            .header-action {
-                background: var(--accent); padding: 0.4rem 1rem; border-radius: 20px;
-                font-size: var(--font-meta); font-weight: 600; color: #fff;
-                cursor: pointer; transition: background 0.2s; text-decoration: none; display: inline-block;
-            }
-            .header-action:hover { background: var(--accent-hover); }
-            .sort-bar {
-                display: flex; gap: 1rem; border-bottom: 1px solid var(--border-color);
-                padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 0.75rem;
-            }
-            .sort-active { color: var(--accent); font-weight: 600; }
-            .sort-inactive { cursor: pointer; color: var(--text-secondary); }
-            .sort-inactive:hover { color: var(--text-primary); }
-            .two-col { display: grid; grid-template-columns: 1fr 280px; gap: 1rem; }
-            .post-feed { display: flex; flex-direction: column; gap: var(--card-gap); }
-            .post-feed.grid { display: grid; grid-template-columns: repeat(2, 1fr); }
-            .post-feed.gallery { display: grid; grid-template-columns: repeat(3, 1fr); }
-            .post-card {
-                background: var(--bg-card); border: 1px solid var(--border-color);
-                border-radius: var(--card-radius); padding: var(--card-padding); transition: all 0.1s;
-            }
-            .post-card:hover { border-color: var(--border-hover); }
-            .post-card-header {
-                display: flex; align-items: center; gap: 0.5rem;
-                font-size: var(--font-meta); color: var(--text-secondary);
-                margin-bottom: 0.5rem; flex-wrap: wrap;
-            }
-            .post-card-community { color: var(--accent); font-weight: 600; }
-            .post-card-author { font-weight: 500; }
-            .post-card-time { font-size: var(--font-small); }
-            .post-card-title {
-                font-size: var(--font-card-title); font-weight: 500;
-                margin-bottom: 0.5rem; color: var(--text-primary);
-            }
-            .post-card-title a { color: var(--text-primary); text-decoration: none; display: block; }
-            .post-card-title a:hover { text-decoration: underline; color: var(--accent-hover); }
-            .post-card-meta {
-                display: flex; gap: 0.5rem; font-size: var(--font-small);
-                color: var(--text-secondary); margin-bottom: 0.5rem; flex-wrap: wrap;
-            }
-            .flair {
-                display: inline-block; padding: 0.15rem 0.5rem; border-radius: 12px;
-                font-size: var(--font-small); font-weight: 600; text-transform: uppercase;
-            }
-            .flair-1 { background: var(--flair-bg-1); color: var(--flair-text-1); }
-            .flair-2 { background: var(--flair-bg-2); color: var(--flair-text-2); }
-            .flair-3 { background: var(--flair-bg-3); color: var(--flair-text-3); }
-            .flair-4 { background: var(--flair-bg-4); color: var(--flair-text-4); }
-            .flair-5 { background: var(--flair-bg-5); color: var(--flair-text-5); }
-            .vote-section {
-                display: flex; align-items: center; gap: 0.5rem;
-                font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);
-            }
-            .vote-btn {
-                font-size: 1rem; cursor: pointer; transition: color 0.2s;
-                background: none; border: none; color: var(--text-secondary); padding: 0;
-            }
-            .vote-btn:hover { color: var(--accent); }
-            .action-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; font-size: var(--font-small); }
-            .action-link { color: var(--text-secondary); text-decoration: none; }
-            .action-link:hover { color: var(--text-primary); text-decoration: underline; }
-            .sidebar-card {
-                background: var(--bg-card); border: 1px solid var(--border-color);
-                border-radius: var(--card-radius); padding: var(--card-padding);
-                margin-bottom: 1rem; position: sticky; top: 1rem;
-            }
-            .sidebar-title {
-                font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem;
-                border-bottom: 1px solid var(--border-color); padding-bottom: 0.25rem;
-                color: var(--text-primary);
-            }
-            .sidebar-item { padding: 0.4rem 0; border-bottom: 1px solid #2a2a2b; font-size: var(--font-meta); }
-            .sidebar-item a { color: var(--text-primary); text-decoration: none; display: block; transition: color 0.2s; }
-            .sidebar-item a:hover { color: var(--accent-hover); text-decoration: underline; }
-            .sidebar-number { color: var(--accent); font-weight: 700; margin-right: 0.25rem; }
-            .query-footer { font-size: var(--font-small); color: var(--text-muted); text-align: center; margin-top: 2rem; }
-            .footer-links { display: flex; gap: 1rem; justify-content: center; margin-bottom: 0.5rem; flex-wrap: wrap; }
-            .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: var(--font-small); }
-            .footer-links a:hover { text-decoration: underline; }
-            hr { border: none; border-top: 1px solid var(--border-color); margin: 1rem 0; }
-            @media (max-width: 768px) {
-                .two-col { grid-template-columns: 1fr; }
-                .query-container { padding: 0.5rem; }
-                .sidebar-card { position: static; }
-                .post-feed.grid { grid-template-columns: 1fr; }
-                .post-feed.gallery { grid-template-columns: repeat(2, 1fr); }
-            }
-            @media (max-width: 480px) {
-                .post-feed.gallery { grid-template-columns: 1fr; }
-            }
-        </style>
+    <script>
+    (function(){
+        var host = window.location.hostname.split(".");
+        var sub = host[0];
+        if (sub.toLowerCase() === "www") sub = host[1] || "";
+        var clean = sub.replace(/-/g, " ");
+        var title = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        document.getElementById("blogMainTitle").textContent = title;
+    })();
 
-        <div class="query-container">
-            <h1 id="page-h1" class="page-h1"></h1>
-            <div class="breadcrumb">
-                <a href="/">Home</a> / <span id="breadcrumb-domain"></span> / search: <span id="breadcrumb-query"></span>
-            </div>
-            <div class="header-card">
-                <div class="header-info">
-                    <h2 id="header-title"></h2>
-                    <p id="header-subtitle"></p>
+    var toggleBtnBlog = document.getElementById("blogMenuToggle");
+    var menuPanelBlog = document.getElementById("blogMenuPanel");
+    var iconMenuBlog = document.getElementById("blogIconMenu");
+    var iconCloseBlog = document.getElementById("blogIconClose");
+
+    toggleBtnBlog.addEventListener("click", function(e) {
+        e.stopPropagation();
+        var isVisible = menuPanelBlog.style.display === "block";
+        menuPanelBlog.style.display = isVisible ? "none" : "block";
+        iconMenuBlog.style.display = isVisible ? "inline" : "none";
+        iconCloseBlog.style.display = isVisible ? "none" : "inline";
+        toggleBtnBlog.setAttribute("aria-label", isVisible ? "Open menu" : "Close menu");
+        if (!isVisible) {
+            var btnRect = toggleBtnBlog.getBoundingClientRect();
+            menuPanelBlog.style.top = (btnRect.bottom + 5) + "px";
+            menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + "px";
+        }
+    });
+
+    document.addEventListener("click", function(e) {
+        if (!menuPanelBlog.contains(e.target) && !toggleBtnBlog.contains(e.target) && menuPanelBlog.style.display === "block") {
+            menuPanelBlog.style.display = "none";
+            iconMenuBlog.style.display = "inline";
+            iconCloseBlog.style.display = "none";
+            toggleBtnBlog.setAttribute("aria-label", "Open menu");
+        }
+    });
+
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape" && menuPanelBlog.style.display === "block") {
+            menuPanelBlog.style.display = "none";
+            iconMenuBlog.style.display = "inline";
+            iconCloseBlog.style.display = "none";
+            toggleBtnBlog.setAttribute("aria-label", "Open menu");
+            toggleBtnBlog.focus();
+        }
+    });
+
+    function updateBlogMenuPosition() {
+        if (menuPanelBlog.style.display === "block") {
+            var btnRect = toggleBtnBlog.getBoundingClientRect();
+            menuPanelBlog.style.top = (btnRect.bottom + 5) + "px";
+            menuPanelBlog.style.right = (window.innerWidth - btnRect.right) + "px";
+        }
+    }
+    window.addEventListener("resize", updateBlogMenuPosition);
+    window.addEventListener("scroll", updateBlogMenuPosition);
+    window.addEventListener("load", updateBlogMenuPosition);
+    </script>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        *,*::before,*::after{box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        @media(prefers-reduced-motion:reduce){
+            html{scroll-behavior:auto}
+            *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+        }
+        body{
+            margin:0;padding:0;background:#f8f9fa;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            color:#1a1a1a;line-height:1.5;-webkit-font-smoothing:antialiased
+        }
+        @media(prefers-color-scheme:dark){
+            body{background:#1a1a1a;color:#e0e0e0}
+            .blog-header-main.floating-header-main{background:rgba(30,30,30,.95);border-bottom-color:rgba(255,255,255,.06)}
+            .blog-title-main{color:#f0f0f0}
+            .menu-btn-main{color:#ddd}
+            .menu-icon-main{stroke:#ddd}
+            #blogMenuPanel{background:#2a2a2a;border-color:#3a3a3a}
+            #blogMenuPanel a{color:#ddd}
+            #blogMenuPanel a:hover{background:#3a3a3a}
+            .home-grid-card{background:#252525;border-color:rgba(255,255,255,.06)}
+            .home-grid-card:hover{box-shadow:0 12px 32px rgba(0,0,0,.3)}
+            .card-tag-badge{background:rgba(255,255,255,.1)!important;color:rgba(255,255,255,.8)!important}
+            .card-tag-badge:hover{background:rgba(255,255,255,.2)!important}
+        }
+
+        /* ===== HEADER ===== */
+        .blog-header-main.floating-header-main{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:10px 20px;background:rgba(255,255,255,.95);
+            backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            box-shadow:0 1px 3px rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.04);
+            position:fixed;top:0;left:0;right:0;z-index:1001
+        }
+        .header-content-main{
+            display:flex;align-items:center;justify-content:space-between;
+            width:100%;max-width:1300px;margin:0 auto;gap:14px
+        }
+        .blog-title-main{
+            margin:0;font-size:19px;color:#1a1a1a;flex:1;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+            font-weight:700;letter-spacing:-.3px;line-height:1.2
+        }
+        .domain-avatar-main{flex-shrink:0;line-height:0;margin-right:8px}
+        .nav-actions-main{flex-shrink:0;margin:0}
+        .menu-btn-main{
+            display:flex;align-items:center;justify-content:center;
+            width:38px;height:38px;background:transparent;border:none;
+            color:#333;padding:0;cursor:pointer;border-radius:50%;
+            transition:background .2s ease
+        }
+        .menu-btn-main:hover{background:rgba(0,0,0,.04)}
+        .menu-icon-main{
+            width:22px;height:22px;stroke:#333;fill:none;
+            stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round
+        }
+        #blogMenuPanel{
+            display:none;background:#fff;border:1px solid #eee;
+            padding:12px;position:fixed;z-index:1000;
+            box-shadow:0 8px 30px rgba(0,0,0,.1);border-radius:14px;min-width:200px
+        }
+        #blogMenuPanel ul{list-style:none;margin:0;padding:0}
+        #blogMenuPanel li{margin:0;padding:0}
+        #blogMenuPanel a{
+            color:#1a1a1a;text-decoration:none;display:block;border-radius:10px;
+            transition:all .15s ease;font-weight:500;white-space:nowrap;
+            padding:10px 14px;font-size:14px
+        }
+        #blogMenuPanel a:hover,#blogMenuPanel a:focus-visible{background:#f5f5f5;outline:none}
+        #blogMenuPanel a:focus-visible{box-shadow:0 0 0 2px rgba(0,0,0,.15)}
+
+        /* ===== SPACER ===== */
+        .header-spacer{height:62px}
+
+        /* ===== CONTAINER ===== */
+        .homepage-container{
+            max-width:1300px;margin:0 auto;padding:1.2rem 1.2rem 2rem
+        }
+
+        /* ===== WELCOME & FOOTER PARAGRAPH ===== */
+        #welcomePara,#footerPara{
+            border-radius:16px;padding:20px 24px;margin-bottom:1.2rem;
+            font-size:15px;line-height:1.7;text-align:center;
+            font-weight:450;letter-spacing:-.1px
+        }
+        #footerPara{margin-top:1.2rem;margin-bottom:0;font-size:14px}
+
+        /* ===== SECTION HEADING ===== */
+        .section-heading{
+            font-size:1.25rem;font-weight:700;margin-bottom:1rem;
+            padding-bottom:.6rem;letter-spacing:-.3px;
+            display:flex;align-items:center;gap:8px
+        }
+        .section-heading::after{
+            content:'';flex:1;height:2px;
+            background:linear-gradient(to right,currentColor,transparent);
+            opacity:.2;border-radius:2px
+        }
+
+        /* ===== FEATURED MAIN (HERO) ===== */
+        #homeFeaturedWrap{margin-top:0}
+        #homeFeaturedWrap .section-heading{margin-bottom:1rem}
+        .home-featured-main{
+            position:relative;border-radius:20px;overflow:hidden;
+            margin-bottom:28px;box-shadow:0 4px 24px rgba(0,0,0,.1);
+            background:#000
+        }
+        .home-featured-main .home-featured-thumb{
+            width:100%;overflow:hidden;line-height:0
+        }
+        .home-featured-main .home-featured-thumb img{
+            width:100%;height:auto;display:block;
+            transition:transform .4s ease
+        }
+        .home-featured-main:hover .home-featured-thumb img{transform:scale(1.02)}
+        .home-featured-content{
+            position:absolute;bottom:0;left:0;right:0;
+            padding:40px 32px 32px;
+            background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.35) 50%,transparent 100%);
+            color:#fff;z-index:2;pointer-events:none
+        }
+        .home-featured-content a{pointer-events:auto}
+        .home-featured-title{
+            font-size:30px;line-height:1.25;margin:0 0 8px;font-weight:700;
+            letter-spacing:-.5px;text-shadow:0 2px 8px rgba(0,0,0,.3)
+        }
+        .home-featured-title a{color:#fff;text-decoration:none}
+        .home-featured-title a:hover{text-decoration:underline;text-underline-offset:4px}
+        .home-featured-desc{
+            font-size:15px;line-height:1.6;margin:0;opacity:.9;
+            text-shadow:0 1px 4px rgba(0,0,0,.3);
+            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+            overflow:hidden
+        }
+        .home-featured-main .card-tags,
+        .home-featured-main .excerpt.spo{display:none}
+
+        /* ===== GRID CARDS ===== */
+        .home-featured-grid{
+            display:grid;gap:18px
+        }
+        .home-grid-card{
+            border-radius:16px;overflow:hidden;
+            box-shadow:0 2px 12px rgba(0,0,0,.05);
+            transition:all .3s cubic-bezier(.25,.46,.45,.94);
+            background:#fff;border:1px solid rgba(0,0,0,.04);
+            display:flex;flex-direction:column
+        }
+        .home-grid-card:hover{
+            box-shadow:0 12px 32px rgba(0,0,0,.1)
+        }
+        .home-grid-thumb{
+            overflow:hidden;line-height:0
+        }
+        .home-grid-thumb img{
+            width:100%;height:auto;display:block;
+            transition:transform .4s ease
+        }
+        .home-grid-card:hover .home-grid-thumb img{transform:scale(1.04)}
+        .home-grid-content{
+            padding:14px 16px 16px;flex:1;
+            display:flex;flex-direction:column
+        }
+        .home-grid-title{
+            font-size:15px;line-height:1.35;margin:0 0 6px;font-weight:600;
+            letter-spacing:-.2px
+        }
+        .home-grid-title a{color:inherit;text-decoration:none}
+        .home-grid-title a:hover{text-decoration:underline;text-underline-offset:3px;opacity:.85}
+        .home-grid-desc{
+            font-size:12.5px;line-height:1.55;margin:0;flex:1;
+            display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+            overflow:hidden;opacity:.75
+        }
+        .home-grid-card .excerpt.spo{
+            font-size:12px;line-height:1.5;margin-top:6px;
+            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+            overflow:hidden;opacity:.6
+        }
+
+        /* ===== CARD TAGS ===== */
+        .card-tags{
+            display:flex;flex-wrap:wrap;gap:5px;
+            margin:8px 0 0;align-items:center
+        }
+        .card-tag-badge{
+            display:inline-block;padding:4px 10px;border-radius:14px;
+            font-size:10.5px;font-weight:500;text-decoration:none;
+            background:var(--tag-bg,rgba(0,0,0,.06));
+            color:var(--tag-color,inherit);
+            transition:all .2s ease;letter-spacing:.1px;
+            line-height:1.3
+        }
+        .card-tag-badge:hover{
+            opacity:.8;transform:translateY(-1px);
+            background:var(--tag-hover-bg,rgba(0,0,0,.1))
+        }
+        .card-tag-badge:focus-visible{
+            outline:2px solid currentColor;outline-offset:2px
+        }
+
+        /* ===== VARIAN GRID LAYOUT ===== */
+        .home-featured-grid.grid-2{grid-template-columns:repeat(2,1fr)}
+        .home-featured-grid.grid-3{grid-template-columns:repeat(3,1fr)}
+        .home-featured-grid.grid-4{grid-template-columns:repeat(4,1fr)}
+        .home-featured-grid.grid-5{grid-template-columns:repeat(5,1fr)}
+        .home-featured-grid.masonry-3{columns:3;display:block;gap:18px}
+        .home-featured-grid.masonry-3 .home-grid-card{break-inside:avoid;margin-bottom:18px;display:block}
+        .home-featured-grid.masonry-4{columns:4;display:block;gap:18px}
+        .home-featured-grid.masonry-4 .home-grid-card{break-inside:avoid;margin-bottom:18px;display:block}
+        .home-featured-grid.list-row{grid-template-columns:1fr}
+        .home-featured-grid.list-row .home-grid-card{flex-direction:row}
+        .home-featured-grid.list-row .home-grid-thumb{width:280px;flex-shrink:0}
+        .home-featured-grid.list-compact{grid-template-columns:1fr;gap:10px}
+        .home-featured-grid.list-compact .home-grid-thumb{display:none}
+        .home-featured-grid.list-compact .home-grid-content{padding:12px 14px}
+
+        /* ===== VARIAN CARD RADIUS ===== */
+        .home-grid-card.radius-sm{border-radius:8px}
+        .home-grid-card.radius-md{border-radius:12px}
+        .home-grid-card.radius-lg{border-radius:16px}
+        .home-grid-card.radius-xl{border-radius:20px}
+        .home-grid-card.radius-2xl{border-radius:24px}
+        .home-grid-card.radius-mixed{border-radius:20px 20px 8px 8px}
+
+        /* ===== VARIAN SHADOW ===== */
+        .home-grid-card.shadow-none{box-shadow:none;border:2px solid rgba(0,0,0,.08)}
+        .home-grid-card.shadow-sm{box-shadow:0 1px 4px rgba(0,0,0,.04)}
+        .home-grid-card.shadow-md{box-shadow:0 4px 12px rgba(0,0,0,.06)}
+        .home-grid-card.shadow-lg{box-shadow:0 8px 24px rgba(0,0,0,.08)}
+        .home-grid-card.shadow-xl{box-shadow:0 12px 36px rgba(0,0,0,.1)}
+        .home-grid-card.shadow-inner{box-shadow:inset 0 2px 8px rgba(0,0,0,.06)}
+
+        /* ===== VARIAN HOVER ===== */
+        .home-grid-card.hover-lift:hover{transform:translateY(-4px)}
+        .home-grid-card.hover-lift-more:hover{transform:translateY(-8px)}
+        .home-grid-card.hover-scale:hover{transform:scale(1.02)}
+        .home-grid-card.hover-scale-img:hover .home-grid-thumb img{transform:scale(1.08)}
+        .home-grid-card.hover-shadow:hover{box-shadow:0 12px 32px rgba(0,0,0,.12)}
+        .home-grid-card.hover-glow:hover{box-shadow:0 0 24px rgba(0,0,0,.15)}
+        .home-grid-card.hover-border:hover{border-color:currentColor}
+        .home-grid-card.hover-brightness:hover .home-grid-thumb img{filter:brightness(1.1)}
+
+        /* ===== VARIAN BACKGROUND ===== */
+        .home-grid-card.bg-solid{background:var(--card-bg,#fff);color:var(--card-text,#1a1a1a)}
+        .home-grid-card.bg-gradient{background:var(--card-gradient,#fff)}
+        .home-grid-card.bg-outline{background:transparent;border:2px solid var(--card-border,#ddd)}
+        .home-grid-card.bg-soft{background:var(--card-soft,#f5f5f5)}
+        .home-grid-card.bg-dark{background:#1a1a1a;color:#e0e0e0}
+        .home-grid-card.bg-dark .home-grid-title a{color:#fff}
+        .home-grid-card.bg-dark .home-grid-desc,
+        .home-grid-card.bg-dark .excerpt.spo{color:rgba(255,255,255,.7)}
+        .home-grid-card.bg-glass{
+            background:rgba(255,255,255,.6);
+            backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+            border:1px solid rgba(255,255,255,.3)
+        }
+
+        /* ===== VARIAN PADDING ===== */
+        .home-grid-card.pad-xs .home-grid-content{padding:8px 10px 10px}
+        .home-grid-card.pad-sm .home-grid-content{padding:10px 12px 12px}
+        .home-grid-card.pad-md .home-grid-content{padding:14px 16px 16px}
+        .home-grid-card.pad-lg .home-grid-content{padding:18px 20px 20px}
+        .home-grid-card.pad-xl .home-grid-content{padding:22px 24px 24px}
+        .home-grid-card.pad-mixed .home-grid-content{padding:12px 18px 16px}
+
+        /* ===== VARIAN TITLE ===== */
+        .home-grid-card .home-grid-title.title-bold{font-weight:700}
+        .home-grid-card .home-grid-title.title-semibold{font-weight:600}
+        .home-grid-card .home-grid-title.title-normal{font-weight:400}
+        .home-grid-card .home-grid-title.title-xs{font-size:12px}
+        .home-grid-card .home-grid-title.title-sm{font-size:13px}
+        .home-grid-card .home-grid-title.title-md{font-size:15px}
+        .home-grid-card .home-grid-title.title-lg{font-size:17px}
+        .home-grid-card .home-grid-title.title-xl{font-size:20px}
+
+        /* ===== VARIAN EXCERPT ===== */
+        .home-grid-card .excerpt.spo.excerpt-hide{display:none}
+        .home-grid-card .excerpt.spo.excerpt-1line{-webkit-line-clamp:1}
+        .home-grid-card .excerpt.spo.excerpt-2line{-webkit-line-clamp:2}
+        .home-grid-card .excerpt.spo.excerpt-3line{-webkit-line-clamp:3}
+
+        /* ===== VARIAN TAGS ===== */
+        .home-grid-card .card-tags.tags-pill .card-tag-badge{border-radius:20px;padding:4px 12px}
+        .home-grid-card .card-tags.tags-square .card-tag-badge{border-radius:4px}
+        .home-grid-card .card-tags.tags-outline .card-tag-badge{background:transparent!important;border:1px solid currentColor}
+        .home-grid-card .card-tags.tags-small .card-tag-badge{font-size:9px;padding:2px 7px}
+        .home-grid-card .card-tags.tags-large .card-tag-badge{font-size:12px;padding:5px 12px}
+
+        /* ===== VARIAN SECTION TITLE ===== */
+        .section-heading.sec-centered{justify-content:center;text-align:center}
+        .section-heading.sec-centered::after{display:none}
+        .section-heading.sec-gradient{
+            background:var(--hue-gradient,linear-gradient(135deg,#667eea,#764ba2));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text
+        }
+        .section-heading.sec-badge::before{
+            content:'✦';font-size:.8rem;opacity:.7
+        }
+
+        /* ===== VARIAN WELCOME & FOOTER ===== */
+        #welcomePara.welcome-card,#footerPara.footer-card{
+            box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)
+        }
+        #welcomePara.welcome-gradient,#footerPara.footer-gradient{
+            color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.2)
+        }
+        #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:999px}
+        #welcomePara.welcome-inline,#footerPara.footer-inline{
+            background:transparent;padding:10px 0;border-radius:0;box-shadow:none
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media(min-width:1200px){
+            .homepage-container{max-width:1300px;padding:1.5rem 1.5rem 2.5rem}
+            .home-featured-grid.grid-4{grid-template-columns:repeat(4,1fr)}
+            .home-featured-grid.grid-5{grid-template-columns:repeat(5,1fr)}
+            .home-featured-grid.masonry-4{columns:4}
+            .home-featured-title{font-size:34px}
+            .home-featured-content{padding:48px 36px 36px}
+            .header-spacer{height:66px}
+            .blog-title-main{font-size:21px}
+        }
+        @media(min-width:1025px) and (max-width:1199px){
+            .homepage-container{max-width:1100px}
+            .home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(3,1fr)}
+            .home-featured-grid.masonry-4{columns:3}
+        }
+        @media(max-width:1024px) and (min-width:769px){
+            .home-featured-grid.grid-3,.home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(3,1fr)}
+            .home-featured-grid.masonry-3,.home-featured-grid.masonry-4{columns:2}
+            .home-featured-title{font-size:26px}
+            .home-featured-content{padding:32px 24px 24px}
+            .home-grid-title{font-size:14px}
+            .home-grid-content{padding:12px 14px 14px}
+            .header-spacer{height:58px}
+        }
+        @media(max-width:768px){
+            .homepage-container{padding:1rem 1rem 1.5rem}
+            .home-featured-grid.grid-2,.home-featured-grid.grid-3,.home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(2,1fr);gap:12px}
+            .home-featured-grid.masonry-3,.home-featured-grid.masonry-4{columns:2;gap:12px}
+            .home-featured-grid.list-row .home-grid-card{flex-direction:column}
+            .home-featured-grid.list-row .home-grid-thumb{width:100%}
+            .home-featured-main{border-radius:16px;margin-bottom:20px}
+            .home-featured-content{padding:24px 18px 18px}
+            .home-featured-title{font-size:20px}
+            .home-featured-desc{font-size:13px;-webkit-line-clamp:2}
+            .home-grid-card{border-radius:14px}
+            .home-grid-content{padding:10px 12px 12px}
+            .home-grid-title{font-size:13px}
+            .home-grid-desc{font-size:11px}
+            .card-tag-badge{font-size:9px;padding:3px 8px}
+            #welcomePara,#footerPara{padding:16px 18px;font-size:13.5px;border-radius:14px}
+            #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:50px}
+            .section-heading{font-size:1.1rem}
+            .header-spacer{height:54px}
+        }
+        @media(max-width:480px){
+            .home-featured-grid.grid-2,.home-featured-grid.grid-3,.home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(2,1fr);gap:10px}
+            .home-featured-grid.masonry-3,.home-featured-grid.masonry-4{columns:2;gap:10px}
+            .home-featured-content{padding:20px 14px 14px}
+            .home-featured-title{font-size:17px}
+            .home-featured-desc{font-size:12px;-webkit-line-clamp:1}
+            .home-grid-card{border-radius:12px}
+            .home-grid-content{padding:8px 10px 10px}
+            .home-grid-title{font-size:12px}
+            .home-grid-desc{font-size:10.5px;-webkit-line-clamp:2}
+            .home-grid-card .excerpt.spo:not(.excerpt-hide){display:none}
+            .card-tag-badge{font-size:8px;padding:2px 6px;border-radius:10px}
+            .card-tags{gap:3px;margin-top:5px}
+            #welcomePara,#footerPara{padding:14px 14px;font-size:12.5px;border-radius:12px}
+            #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:40px}
+            .blog-title-main{font-size:16px}
+            .header-spacer{height:50px}
+        }
+    </style>
+
+    <script>
+    (function() {
+        var hostname = window.location.hostname;
+        var parts = hostname.split(".");
+        var fullName = parts[0];
+        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
+
+        function hashString(str) {
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) { hash = ((hash << 5) - hash) + str.charCodeAt(i); hash |= 0; }
+            return Math.abs(hash);
+        }
+        var domainHash = hashString(fullName);
+        var hue = domainHash % 360;
+
+        function hslToHex(h, s, l) {
+            h = h % 360; s = s / 100; l = l / 100;
+            var c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c / 2, r, g, b;
+            if (h < 60) { r = c; g = x; b = 0; }
+            else if (h < 120) { r = x; g = c; b = 0; }
+            else if (h < 180) { r = 0; g = c; b = x; }
+            else if (h < 240) { r = 0; g = x; b = c; }
+            else if (h < 300) { r = x; g = 0; b = c; }
+            else { r = c; g = 0; b = x; }
+            r = Math.round((r + m) * 255); g = Math.round((g + m) * 255); b = Math.round((b + m) * 255);
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+
+        function textColorFor(bgHex) {
+            var r = parseInt(bgHex.slice(1,3), 16), g = parseInt(bgHex.slice(3,5), 16), b = parseInt(bgHex.slice(5,7), 16);
+            var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            return lum > 0.55 ? "#1a1a1a" : "#ffffff";
+        }
+
+        function genColor(offset, sat, light) { return hslToHex((hue + offset) % 360, sat, light); }
+
+        function SeededRandom(seed) { this.seed = seed; this.next = function() { this.seed = (this.seed * 1103515245 + 12345) & 0x7fffffff; return this.seed / 0x7fffffff; }; }
+
+        // Avatar
+        var avatarBg = genColor(0, 60, 50);
+        var clean = fullName.replace(/-/g, " ");
+        var words = clean.split(" "), initials = "";
+        for (var w = 0; w < Math.min(words.length, 3); w++) { if (words[w].length > 0) initials += words[w].charAt(0).toUpperCase(); }
+        if (initials.length < 2) initials = fullName.substring(0, 3).toUpperCase();
+        document.getElementById("domainAvatar").innerHTML = "<svg width=\"38\" height=\"38\" viewBox=\"0 0 38 38\" aria-hidden=\"true\"><rect width=\"38\" height=\"38\" rx=\"19\" fill=\"" + avatarBg + "\"/><text x=\"19\" y=\"25\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"16\" font-weight=\"bold\" font-family=\"sans-serif\">" + initials + "</text></svg>";
+
+        var displayDomain = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        var rng = new SeededRandom(domainHash);
+
+        // ===== 50 VARIAN WELCOME =====
+        var welcomeVariants = [
+            "Welcome to " + displayDomain + " — your curated gallery of beautiful girls from every corner of the world. Explore stunning portraits, elegant photoshoots, and captivating beauty collections.",
+            "Step into " + displayDomain + " where we showcase the most gorgeous girls from across the globe. Our carefully selected photo collections highlight elegance, style, and unique allure.",
+            "Discover breathtaking portraits at " + displayDomain + ". Our gallery brings together an exclusive collection of beautiful girls, capturing the essence of charm and natural beauty.",
+            "Immerse yourself in " + displayDomain + "'s handpicked collection of the world's most beautiful girls. From professional shoots to candid elegance, every photo tells a story of grace.",
+            "Welcome to " + displayDomain + " — the ultimate destination for beauty photography enthusiasts. Browse stunning photos of gorgeous girls from every nation.",
+            "Explore the beauty of diversity at " + displayDomain + ". We bring you the most beautiful girls from Asia, Europe, Africa, Americas, and beyond.",
+            "Your journey into global beauty starts at " + displayDomain + ". Our gallery features curated photos of elegant girls and fashion models that captivate the imagination.",
+            "Experience international beauty through " + displayDomain + "'s exclusive gallery. From delicate portraits to glamorous photoshoots, discover stunning girls worldwide.",
+            "Welcome to " + displayDomain + " — a sanctuary of beauty and elegance. Our collection showcases the finest photography of beautiful girls from diverse cultures.",
+            "Prepare to be mesmerized by " + displayDomain + "'s gallery of captivating girls. Every photo highlights the natural beauty and style of each stunning woman.",
+            "Dive into feminine beauty at " + displayDomain + ". Our curated gallery brings you closer to the most gorgeous faces and elegant forms the world has to offer.",
+            "Beauty knows no borders at " + displayDomain + ". Explore stunning photos of beautiful girls from every continent — a testament to diversity and feminine charm.",
+            "Your daily dose of global beauty — " + displayDomain + ". We scout the world to bring you stunning girls in moments of pure elegance and natural allure.",
+            "Open the door to captivating beauty at " + displayDomain + ". Our exclusive collections feature gorgeous girls from fashion runways to exotic beaches worldwide.",
+            "Celebrate beauty photography with " + displayDomain + "'s handpicked gallery. Every image showcases elegance and magnetic charm from diverse cultural backgrounds.",
+            "Welcome to " + displayDomain + " where beauty meets artistry. Our gallery presents exquisite photos of stunning girls, chosen for their unique photogenic presence.",
+            "From timeless elegance to modern glamour — " + displayDomain + " captures it all. Explore beautiful girls from around the world in breathtaking portraits.",
+            "Indulge your eyes at " + displayDomain + " — the world's most beautiful collection of girl photography. Charm, elegance, and stunning visuals await.",
+            "Every photo at " + displayDomain + " tells a story of beauty and confidence. Discover gorgeous girls captured in moments that define timeless feminine allure.",
+            "Welcome to " + displayDomain + " — your premier destination for global beauty inspiration. Browse stunning photos of elegant girls from every corner of the world.",
+            "The world is filled with beautiful girls, and " + displayDomain + " has gathered the best for you. A true celebration of global feminine charm.",
+            "Let beauty transport you across continents at " + displayDomain + ". Our exclusive collection features stunning portraits of gorgeous girls from diverse cultures.",
+            "Experience beauty without boundaries at " + displayDomain + ". From romantic portraits to bold fashion statements, discover stunning girls worldwide.",
+            "Welcome to " + displayDomain + " — a visual celebration of feminine beauty. Gorgeous faces from around the world, radiating confidence and undeniable charm.",
+            "Prepare for a journey through global beauty at " + displayDomain + ". Stunning girls captured by talented photographers, showcasing elegance in its purest form.",
+            "Beauty comes in many forms, and " + displayDomain + " celebrates them all. Gorgeous girls from diverse backgrounds, each radiating unique feminine allure.",
+            "Your gateway to international beauty — " + displayDomain + ". Browse our extensive gallery where every click reveals a new face and a new definition of elegance.",
+            "Step into " + displayDomain + "'s world of curated beauty photography. Captivating girls from across the globe, each image a masterpiece of feminine grace.",
+            "Discover the faces that define global beauty at " + displayDomain + ". Stunning girls from every continent, celebrating the diversity of true feminine charm.",
+            "Welcome to " + displayDomain + " where every photo inspires. Explore beautiful girls from around the world, each portrait capturing elegance and natural allure.",
+            "Beauty enthusiasts, rejoice — " + displayDomain + " features the world's most gorgeous girls in stunning photographs highlighting unique charm and captivating presence.",
+            "From Paris runways to tropical beaches, " + displayDomain + " brings you stunning girls from diverse locations captured in moments of pure elegance.",
+            "Immerse yourself in " + displayDomain + "'s world of photographic beauty. Gorgeous girls from every culture, celebrating timeless feminine grace and sophistication.",
+            "Welcome to " + displayDomain + " — your daily escape into beauty. Curated portraits of elegant girls from around the world, a feast for the eyes.",
+            "The pursuit of beauty leads across continents at " + displayDomain + ". The world's most beautiful girls, each photograph a testament to feminine charm.",
+            "Let your eyes wander through " + displayDomain + "'s collection of global beauties. From delicate features to bold expressions, every photo captures unique essence.",
+            "Beauty has no language, no border — and " + displayDomain + " proves it. Gorgeous girls from every nation, united by elegance in breathtaking photography.",
+            "Welcome to " + displayDomain + " — the intersection of art and beauty. Captivating girls from around the world, each image selected for visual impact.",
+            "Discover a world where beauty reigns supreme at " + displayDomain + ". Stunning girls from diverse cultures that redefine your appreciation for feminine elegance.",
+            "Every culture defines beauty differently, and " + displayDomain + " celebrates them all. Gorgeous girls from every corner radiating unique charm.",
+            "Prepare to be enchanted by " + displayDomain + "'s global beauty collection. From sultry gazes to radiant smiles, pure unfiltered elegance.",
+            "Your visual journey through international beauty begins at " + displayDomain + ". Stunning photos of gorgeous girls from Asia, Europe, Americas, and beyond.",
+            "Welcome to " + displayDomain + " — celebrating feminine beauty across borders. Handpicked photos of the world's most stunning girls, a tribute to grace.",
+            "Indulge in beauty photography at " + displayDomain + ". Gorgeous girls from around the world, captured in settings that enhance their natural elegance.",
+            "The world's most beautiful faces are at " + displayDomain + ". Exclusive gallery of stunning portraits, each selected for unique appeal and photogenic quality.",
+            "Beauty is universal, and " + displayDomain + " proves it. Captivating photos of gorgeous girls from diverse backgrounds radiating confidence and charm.",
+            "Welcome to " + displayDomain + " — your premier source for beauty photography. The most stunning girls from across the globe in every single frame.",
+            "Let the beauty of the world inspire you at " + displayDomain + ". Gorgeous girls in breathtaking portraits, a window into diverse feminine grace.",
+            "From classic beauty to modern sophistication — " + displayDomain + " has it all. Stunning girls from every continent highlighting unique timeless elegance.",
+            "Embark on a visual journey at " + displayDomain + " celebrating the world's most beautiful women. Elegance, diversity, and captivating charm from every nation."
+        ];
+
+        // ===== 50 VARIAN FOOTER =====
+        var footerVariants = [
+            "Discover the world's most beautiful women through " + displayDomain + "'s exclusive photo collections. From fashion models to natural beauties, every image captures unique elegance.",
+            "Thank you for visiting " + displayDomain + ". We hope our collection of stunning girls from around the world has inspired you. Come back for fresh additions.",
+            displayDomain + " is constantly updated with new faces from across the globe. Bookmark us and return often to discover the latest stunning additions.",
+            "Beauty is everywhere, and " + displayDomain + " brings the finest examples directly to you. Explore regularly for new photos of elegant, breathtakingly beautiful girls.",
+            "We believe every woman possesses unique beauty worth celebrating. " + displayDomain + " honors that diversity by showcasing stunning girls from all cultures and backgrounds.",
+            "The world of beauty is vast and ever-changing. Stay connected with " + displayDomain + " for regular updates featuring the most gorgeous faces globally.",
+            "Thank you for exploring " + displayDomain + "'s curated collection. We're passionate about bringing you the finest beauty photography — return for more stunning portraits.",
+            "From all of us at " + displayDomain + ", thank you for appreciating global beauty. Continue browsing to discover why these stunning girls have captured hearts worldwide.",
+            "Beauty transcends borders, languages, and cultures. " + displayDomain + " is proof of that universal truth, showcasing gorgeous girls whose elegance speaks to the heart.",
+            "We're dedicated to curating the world's most beautiful photography at " + displayDomain + ". Each image is selected with care for the finest visual experience.",
+            "Your journey through global beauty doesn't end here. Explore " + displayDomain + "'s archives for more stunning photos and check back for new gorgeous faces.",
+            "The pursuit of beauty is endless, and so is " + displayDomain + ". We continuously search the world for the most captivating girls to feature.",
+            "Thank you for being part of " + displayDomain + "'s beauty community. Share our gallery and help us celebrate stunning diversity from every corner of the world.",
+            "Every photo at " + displayDomain + " represents artistic effort and natural beauty combined. We're proud to showcase these stunning girls — return for more visual treasures.",
+            "Beauty inspires, uplifts, and connects us all. " + displayDomain + " aims to do exactly that with gorgeous girls from diverse cultures in breathtaking portraits.",
+            "The world is full of beautiful faces, and " + displayDomain + " brings them to you one stunning portrait at a time. Keep exploring for your next favorite beauty.",
+            "We take pride in " + displayDomain + "'s carefully curated selection of global beauties. Each girl represents the finest in feminine elegance captured by skilled photographers.",
+            "Thank you for letting " + displayDomain + " share these beautiful moments. Our gallery grows every week with new stunning portraits — visit often.",
+            "From classic beauty to contemporary charm, " + displayDomain + " spans the full spectrum of feminine elegance. Continue browsing to discover stunning girls worldwide.",
+            "Beauty is our passion, and sharing it is " + displayDomain + "'s purpose. We hope our gallery of gorgeous girls has brightened your day with fresh inspiration.",
+            "Every visit to " + displayDomain + " is a new adventure in beauty. With stunning girls from every continent, there's always something fresh and captivating.",
+            "We scour the globe to find the most photogenic girls for " + displayDomain + ". Bookmark us and join this endless journey through worldwide feminine beauty.",
+            "The beauty you've seen at " + displayDomain + " is just the beginning. Our archives hold thousands more stunning portraits — fresh content added regularly.",
+            "Thank you for appreciating the art of beauty photography at " + displayDomain + ". Our gallery exists to showcase the world's most stunning girls.",
+            "Let the beauty linger and bring you back to " + displayDomain + ". Our gallery of gorgeous girls is always growing and always ready to captivate anew.",
+            "We're honored that " + displayDomain + " is your source for global beauty inspiration. From delicate smiles to powerful gazes, something for every admirer.",
+            "The diversity of beauty across our planet never ceases to amaze. " + displayDomain + " captures that wonder through portraits of gorgeous girls worldwide.",
+            "Your support fuels " + displayDomain + "'s passion for beauty photography. We'll continue bringing stunning girls from around the world in moments of pure elegance.",
+            "Beauty is a gift meant to be shared, and " + displayDomain + " does exactly that. Explore, enjoy, and return for more gorgeous faces from across the globe.",
+            "From runway stars to everyday elegance, " + displayDomain + " celebrates beauty in all its forms. Thank you for visiting — see you again for more stunning portraits.",
+            "Our commitment to quality beauty photography is unwavering at " + displayDomain + ". Each stunning girl represents our dedication to the finest visual experiences.",
+            "The world of beauty is infinite, and " + displayDomain + " grows with it. Stay tuned for exciting new collections featuring gorgeous girls from emerging talents.",
+            "Thank you for spending time with " + displayDomain + "'s curated beauties. We update frequently with fresh faces and stunning photos — always something new.",
+            "Beauty connects hearts across cultures, and " + displayDomain + " is a bridge to that connection. Gorgeous girls whose elegance transcends all boundaries.",
+            "Every stunning portrait at " + displayDomain + " has a story of beauty behind it. Keep exploring and celebrating the gorgeous diversity of girls worldwide.",
+            "Your appreciation keeps " + displayDomain + " thriving. We promise to continue delivering captivating photos of stunning girls from every corner of the planet.",
+            "From first click to last scroll, we hope " + displayDomain + " has filled your screen with beauty. Return anytime for your daily dose of elegance.",
+            "Beauty photography is an art, and " + displayDomain + " is the canvas. Each stunning girl adds to a masterpiece celebrating feminine charm and global diversity.",
+            "The search for beauty never ends at " + displayDomain + ". Come back often to discover new faces, fresh photos, and the latest stunning global additions.",
+            "We believe every woman's beauty deserves celebration. " + displayDomain + " does exactly that — gorgeous girls from diverse backgrounds in portraits honoring unique charm.",
+            "Thank you for making " + displayDomain + " part of your day. We're committed to curating only the finest beauty photography featuring stunning girls worldwide.",
+            "The world is rich with beautiful faces, and " + displayDomain + " captures the best. Continue exploring and let the elegance of stunning girls inspire you daily.",
+            "Our passion for beauty drives " + displayDomain + " to find gorgeous girls worldwide. We hope our gallery has delighted your eyes and sparked appreciation.",
+            "From sunrise to sunset, beauty surrounds us. " + displayDomain + " captures that truth through stunning portraits of gorgeous girls whose charm illuminates every photo.",
+            "Every culture contributes unique beauty to our global tapestry. " + displayDomain + " weaves these threads together — stunning girls whose diversity makes our collection special.",
+            "Thank you for joining " + displayDomain + " on this visual celebration. Our gallery continues to grow with fresh content featuring gorgeous girls from global talent.",
+            "The elegance you've witnessed at " + displayDomain + " is just a preview. We're constantly curating new collections of stunning girls that will take your breath away.",
+            "Beauty is timeless, and " + displayDomain + " captures that timelessness. Each stunning portrait is a moment frozen in elegant perfection for you to enjoy.",
+            "We hope " + displayDomain + " has been a feast for your eyes. Return often as we expand our collection with more stunning faces from every nation on Earth.",
+            "From our gallery to your screen — thank you for appreciating the beauty at " + displayDomain + ". The world is filled with gorgeous girls, and we'll keep bringing their elegance to you."
+        ];
+
+        // ===== 50 VARIAN SECTION TITLE =====
+        var sectionTitleVariants = [
+            "Featured Gallery", "Editor's Pick", "Top Collections", "Must See Photos", "Spotlight",
+            "Curated Beauty", "Weekly Highlights", "Best of the Best", "Premium Selection", "Trending Now",
+            "Most Popular", "Fan Favorites", "Top Picks This Week", "Exclusive Collection", "Handpicked Gallery",
+            "Stunning Selections", "Beauty Spotlight", "Photo of Excellence", "The Finest Collection", "Grace & Glamour",
+            "Irresistible Charm", "Visual Masterpieces", "Captivating Portraits", "Beauty Worth Seeing", "Alluring Collection",
+            "Eyes on These", "Pure Elegance", "Radiant Beauties", "Picture Perfect", "Global Gems",
+            "Dazzling Selection", "Timeless Beauty", "Simply Gorgeous", "Beyond Beautiful", "Heart Stealers",
+            "Breathtaking Views", "Beauty Icons", "Style & Grace", "Mesmerizing Shots", "The A-List Gallery",
+            "Chic & Charming", "Elegance Defined", "Beauty in Focus", "Stunning Faces", "Glamour Highlights",
+            "World Class Beauty", "Signature Collection", "The Beauty Edit", "Captured Elegance", "Divine Portraits"
+        ];
+
+        // Pilih varian berdasarkan domain
+        var welcomeIdx = domainHash % welcomeVariants.length;
+        var footerIdx = (domainHash + 17) % footerVariants.length;
+        var titleIdx = (domainHash + 31) % sectionTitleVariants.length;
+
+        document.getElementById("welcomePara").textContent = welcomeVariants[welcomeIdx];
+        document.getElementById("footerPara").textContent = footerVariants[footerIdx];
+
+        var sectionHeading = document.querySelector("#homeFeaturedWrap .section-heading");
+        if (sectionHeading) sectionHeading.textContent = sectionTitleVariants[titleIdx];
+
+        // Warna section
+        var sections = [
+            { el: document.getElementById("welcomePara"), bg: genColor(30, 60, 55), pad: true },
+            { el: document.getElementById("footerPara"), bg: genColor(180, 20, 22), pad: true }
+        ];
+
+        sections.forEach(function(sec) {
+            if (!sec.el) return;
+            var bg = sec.bg, txt = textColorFor(bg);
+            sec.el.style.background = bg;
+            sec.el.style.color = txt;
+            if (sec.pad) { sec.el.style.padding = "20px 24px"; sec.el.style.borderRadius = "16px"; }
+            sec.el.querySelectorAll("a").forEach(function(a) { a.style.color = txt; });
+        });
+
+        // Varian welcome & footer style
+        var welcomeStyle = ["welcome-card","welcome-gradient","welcome-pill","welcome-inline","welcome-card","welcome-gradient"][domainHash % 6];
+        var footerStyle = ["footer-card","footer-gradient","footer-pill","footer-inline","footer-card","footer-gradient"][(domainHash + 3) % 6];
+        document.getElementById("welcomePara").classList.add(welcomeStyle);
+        document.getElementById("footerPara").classList.add(footerStyle);
+
+        // Section heading style
+        var secHeadingStyle = ["sec-centered","sec-gradient","sec-badge","sec-centered","sec-gradient"][domainHash % 5];
+        if (sectionHeading) sectionHeading.classList.add(secHeadingStyle);
+
+        // ===== VARIAN FEED GRID =====
+        var gridLayouts = ["grid-3","grid-4","grid-2","masonry-3","grid-3","list-row","grid-4","grid-2","masonry-3","grid-3"];
+        var gridEl = document.querySelector(".home-featured-grid");
+        if (gridEl) {
+            gridEl.classList.add(gridLayouts[domainHash % gridLayouts.length]);
+        }
+
+        // ===== VARIAN CARD STYLE =====
+        var radiusList = ["radius-md","radius-lg","radius-xl","radius-sm","radius-2xl","radius-lg","radius-md","radius-xl","radius-mixed","radius-lg"];
+        var shadowList = ["shadow-md","shadow-lg","shadow-sm","shadow-md","shadow-xl","shadow-md","shadow-lg","shadow-none","shadow-md","shadow-lg"];
+        var hoverList = ["hover-lift","hover-scale-img","hover-glow","hover-lift","hover-shadow","hover-lift-more","hover-scale","hover-brightness","hover-border","hover-lift"];
+        var bgList = ["bg-solid","bg-gradient","bg-outline","bg-soft","bg-glass","bg-solid","bg-gradient","bg-outline","bg-soft","bg-solid"];
+        var padList = ["pad-md","pad-sm","pad-lg","pad-md","pad-xs","pad-md","pad-lg","pad-sm","pad-md","pad-mixed"];
+        var titleWeightList = ["title-bold","title-semibold","title-bold","title-semibold","title-bold","title-normal","title-bold","title-semibold","title-bold","title-semibold"];
+        var titleSizeList = ["title-md","title-sm","title-lg","title-md","title-xs","title-md","title-lg","title-sm","title-md","title-xl"];
+        var excerptList = ["excerpt-2line","excerpt-1line","excerpt-3line","excerpt-2line","excerpt-hide","excerpt-2line","excerpt-1line","excerpt-3line","excerpt-2line","excerpt-1line"];
+        var tagStyleList = ["tags-pill","tags-square","tags-outline","tags-small","tags-large","tags-pill","tags-outline","tags-small","tags-pill","tags-square"];
+
+        document.querySelectorAll(".home-grid-card").forEach(function(card, idx) {
+            var cardHash = (domainHash + idx * 7) % 10;
+            card.classList.add(radiusList[cardHash]);
+            card.classList.add(shadowList[(cardHash + 1) % 10]);
+            card.classList.add(hoverList[(cardHash + 2) % 10]);
+            card.classList.add(bgList[(cardHash + 3) % 10]);
+            card.classList.add(padList[(cardHash + 4) % 10]);
+
+            var titleEl = card.querySelector(".home-grid-title");
+            if (titleEl) {
+                titleEl.classList.add(titleWeightList[(cardHash + 5) % 10]);
+                titleEl.classList.add(titleSizeList[(cardHash + 6) % 10]);
+            }
+
+            var excerptEl = card.querySelector(".excerpt.spo");
+            if (excerptEl) {
+                excerptEl.classList.add(excerptList[(cardHash + 7) % 10]);
+            }
+
+            // Varian tag style
+            var tagContainer = card.querySelector(".card-tags");
+            if (tagContainer) {
+                tagContainer.classList.add(tagStyleList[(cardHash + 8) % 10]);
+            }
+
+            // Warna card per item
+            var cardBg = genColor(120 + idx * 30, 45 + (idx % 3) * 10, 85 - idx * 3);
+            var cardTxt = textColorFor(cardBg);
+            var tagBg = cardTxt === "#ffffff" ? "rgba(255,255,255,.18)" : "rgba(0,0,0,.07)";
+            var tagColor = cardTxt === "#ffffff" ? "rgba(255,255,255,.9)" : "rgba(0,0,0,.65)";
+            var tagHoverBg = cardTxt === "#ffffff" ? "rgba(255,255,255,.28)" : "rgba(0,0,0,.12)";
+
+            card.style.setProperty("--card-bg", cardBg);
+            card.style.setProperty("--card-text", cardTxt);
+            card.style.setProperty("--card-gradient", "linear-gradient(135deg, " + cardBg + ", " + genColor(140 + idx * 30, 50, 80) + ")");
+            card.style.setProperty("--card-soft", genColor(120 + idx * 30, 20, 92));
+            card.style.setProperty("--card-border", cardBg);
+            card.style.setProperty("--tag-bg", tagBg);
+            card.style.setProperty("--tag-color", tagColor);
+            card.style.setProperty("--tag-hover-bg", tagHoverBg);
+
+            var currentBgClass = bgList[(cardHash + 3) % 10];
+
+            if (currentBgClass === "bg-solid" || currentBgClass === "bg-gradient" || currentBgClass === "bg-soft") {
+                card.style.background = cardBg;
+                card.style.color = cardTxt;
+                card.querySelectorAll("a").forEach(function(a) { a.style.color = cardTxt; });
+                card.querySelectorAll(".home-grid-desc, .excerpt.spo").forEach(function(e) {
+                    e.style.color = cardTxt === "#ffffff" ? "rgba(255,255,255,.75)" : "rgba(0,0,0,.6)";
+                });
+                if (currentBgClass === "bg-solid" || currentBgClass === "bg-soft") {
+                    card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                        tag.style.background = tagBg;
+                        tag.style.color = tagColor;
+                    });
+                }
+            }
+
+            if (currentBgClass === "bg-gradient") {
+                card.style.background = "linear-gradient(135deg, " + cardBg + ", " + genColor(140 + idx * 30, 50, 80) + ")";
+            }
+
+            if (currentBgClass === "bg-soft") {
+                card.style.background = genColor(120 + idx * 30, 20, 92);
+                card.style.color = "#1a1a1a";
+                card.querySelectorAll("a").forEach(function(a) { a.style.color = cardBg; });
+                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                    tag.style.background = cardBg + "20";
+                    tag.style.color = cardBg;
+                });
+            }
+
+            if (currentBgClass === "bg-outline") {
+                card.style.background = "transparent";
+                card.style.borderColor = cardBg;
+                card.style.color = "#1a1a1a";
+                card.querySelectorAll("a").forEach(function(a) { a.style.color = cardBg; });
+                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                    tag.style.background = "transparent";
+                    tag.style.color = cardBg;
+                    tag.style.border = "1px solid " + cardBg + "40";
+                });
+            }
+
+            if (currentBgClass === "bg-glass") {
+                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                    tag.style.background = "rgba(0,0,0,.06)";
+                    tag.style.color = "#1a1a1a";
+                });
+            }
+        });
+
+        // ===== IMAGE OBJECT SCHEMA =====
+        var mainPostImg = document.querySelector(".home-featured-main .home-featured-thumb img");
+        if (mainPostImg) {
+            var imgSchema = {
+                "@context": "https://schema.org",
+                "@type": "ImageObject",
+                "contentUrl": mainPostImg.src,
+                "name": (mainPostImg.alt || displayDomain) + " - " + displayDomain,
+                "description": "Beautiful girl photo gallery at " + displayDomain,
+                "creditText": displayDomain
+            };
+            var imgScript = document.createElement("script");
+            imgScript.type = "application/ld+json";
+            imgScript.textContent = JSON.stringify(imgSchema);
+            document.head.appendChild(imgScript);
+        }
+
+        // Update alt text semua gambar dengan domain
+        document.querySelectorAll(".home-grid-thumb img, .home-featured-thumb img").forEach(function(img) {
+            if (img.alt && img.alt.trim() !== "") {
+                img.alt = img.alt + " - " + displayDomain;
+            }
+        });
+
+        // Section order
+        var container = document.querySelector(".homepage-container");
+        if (container) {
+            container.style.display = "flex"; container.style.flexDirection = "column";
+            var secs = container.querySelectorAll(".section-order");
+            var rng2 = new SeededRandom(domainHash + 999);
+            var orders = Array.from({length: secs.length}, function(_, i) { return i; });
+            orders.sort(function() { return rng2.next() - 0.5; });
+            secs.forEach(function(sec, idx) { sec.style.order = orders[idx]; });
+        }
+    })();
+    </script>
+
+    <div class="header-spacer"></div>
+    <div class="homepage-container">
+
+        <p id="welcomePara" class="section-order"></p>
+
+        <div id="homeFeaturedWrap" class="section-order">
+            <div class="section-heading"></div>
+            {% assign main_post = site.posts | first %}
+            {% if main_post %}
+            <div class="home-featured-main">
+                <a href="{{ main_post.url }}" aria-label="{{ main_post.title }}">
+                    {% if main_post.image %}<div class="home-featured-thumb"><img src="{{ main_post.image | relative_url }}" alt="{{ main_post.title }}" loading="lazy" decoding="async"></div>{% endif %}
+                </a>
+                <div class="home-featured-content">
+                    <h2 class="home-featured-title"><a href="{{ main_post.url }}">{{ main_post.title }}</a></h2>
+                    {% if main_post.description %}<p class="home-featured-desc">{{ main_post.description }}</p>{% endif %}
+                    {% assign before_svg = main_post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                 </div>
-                <span class="header-action" id="header-action-label"></span>
             </div>
-            <div class="sort-bar">
-                <span class="sort-active" id="sort-label"></span>
-                <span class="sort-inactive">Newest</span>
-                <span class="sort-inactive">Most upvoted</span>
-            </div>
-            <div class="two-col">
-                <div class="post-feed" id="post-feed"></div>
-                <div>
-                    <div class="sidebar-card">
-                        <div class="sidebar-title"><h3 id="sidebar-heading" style="font-size:0.75rem;font-weight:600;margin:0;"></h3></div>
-                        <div id="sidebar-links"></div>
+            {% endif %}
+            <div class="home-featured-grid">
+                {% for post in site.posts limit:50 offset:1 %}
+                <div class="home-grid-card">
+                    {% if post.image %}<div class="home-grid-thumb"><a href="{{ post.url }}" aria-label="{{ post.title }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" decoding="async"></a></div>{% endif %}
+                    <div class="home-grid-content">
+                        <h3 class="home-grid-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                        {% if post.description %}<p class="home-grid-desc">{{ post.description }}</p>{% endif %}
+                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                        {% if post.tags %}
+                        <div class="card-tags">
+                            {% for tag in post.tags %}
+                            <a href="/tags/{{ tag | slugify }}/" class="card-tag-badge">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
-            </div>
-            <hr />
-            <div class="query-footer">
-                <div class="footer-links" id="footer-links"></div>
-                <span id="footer-text"></span> - <span id="footer-status"></span>
+                {% endfor %}
             </div>
         </div>
+
+        <p id="footerPara" class="section-order"></p>
+
     </div>
 
 {% include footer.html %}
-
-
-
-<!-- ============================================ -->
-<!-- JAVASCRIPT: DNA FULL HOSTNAME + QUERY LOGIC   -->
-<!-- ============================================ -->
-<script>
-(function() {
-
-    var hostname = window.location.hostname;
-    var parts = hostname.split(".");
-    var tldParts = 2;
-    var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
-    if (rawName.toLowerCase() === "www") {
-        rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
-    }
-    var fullName = rawName;
-
-    function hashString(str) {
-        var hash = 0;
-        for (var i = 0; i < str.length; i++) {
-            hash = ((hash << 5) - hash) + str.charCodeAt(i);
-            hash |= 0;
-        }
-        return Math.abs(hash);
-    }
-
-    var domainHash = hashString(fullName);
-
-    var urlParams = new URLSearchParams(window.location.search);
-    var query = urlParams.get("q");
-    var homepage = document.getElementById("homepage");
-    var queryPage = document.getElementById("query-page");
-
-    if (!query) {
-        if (homepage) homepage.style.display = "block";
-        if (queryPage) queryPage.style.display = "none";
-        return;
-    }
-
-    if (homepage) homepage.style.display = "none";
-    if (queryPage) queryPage.style.display = "block";
-
-    query = decodeURIComponent(query.replace(/\+/g, " "));
-    var combinedSeed = hashString(fullName + "|||" + query);
-
-    function SeededRandom(seed) {
-        this.seed = seed;
-        this.next = function() {
-            this.seed = (this.seed * 1103515245 + 12345) & 0x7fffffff;
-            return this.seed / 0x7fffffff;
-        };
-    }
-
-    function pickFromArray(arr, seed, index) {
-        return arr[(seed + index) % arr.length];
-    }
-
-    function shuffleArray(arr, seed) {
-        var shuffled = arr.slice();
-        var rng = new SeededRandom(seed);
-        for (var i = shuffled.length - 1; i > 0; i--) {
-            var j = Math.floor(rng.next() * (i + 1));
-            var temp = shuffled[i];
-            shuffled[i] = shuffled[j];
-            shuffled[j] = temp;
-        }
-        return shuffled;
-    }
-
-    var hue = domainHash % 360;
-    function hslToHex(h, s, l) {
-        h = h % 360; s = s / 100; l = l / 100;
-        var c = (1 - Math.abs(2 * l - 1)) * s;
-        var x = c * (1 - Math.abs((h / 60) % 2 - 1));
-        var m = l - c / 2;
-        var r, g, b;
-        if (h < 60) { r = c; g = x; b = 0; }
-        else if (h < 120) { r = x; g = c; b = 0; }
-        else if (h < 180) { r = 0; g = c; b = x; }
-        else if (h < 240) { r = 0; g = x; b = c; }
-        else if (h < 300) { r = x; g = 0; b = c; }
-        else { r = c; g = 0; b = x; }
-        r = Math.round((r + m) * 255);
-        g = Math.round((g + m) * 255);
-        b = Math.round((b + m) * 255);
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-    }
-
-    var accentColor = hslToHex(hue, 70, 50);
-    var accentHover = hslToHex(hue, 80, 60);
-
-    var queryContainer = document.querySelector(".query-container");
-    if (queryContainer) {
-        queryContainer.style.setProperty("--accent", accentColor);
-        queryContainer.style.setProperty("--accent-hover", accentHover);
-        queryContainer.style.setProperty("--flair-bg-1", hslToHex(hue, 30, 15));
-        queryContainer.style.setProperty("--flair-text-1", hslToHex(hue, 60, 75));
-        queryContainer.style.setProperty("--flair-bg-2", hslToHex((hue+60)%360, 30, 15));
-        queryContainer.style.setProperty("--flair-text-2", hslToHex((hue+60)%360, 60, 75));
-        queryContainer.style.setProperty("--flair-bg-3", hslToHex((hue+120)%360, 30, 15));
-        queryContainer.style.setProperty("--flair-text-3", hslToHex((hue+120)%360, 60, 75));
-        queryContainer.style.setProperty("--flair-bg-4", hslToHex((hue+180)%360, 30, 15));
-        queryContainer.style.setProperty("--flair-text-4", hslToHex((hue+180)%360, 60, 75));
-        queryContainer.style.setProperty("--flair-bg-5", hslToHex((hue+240)%360, 30, 15));
-        queryContainer.style.setProperty("--flair-text-5", hslToHex((hue+240)%360, 60, 75));
-    }
-
-    var layoutIndex = domainHash % 3;
-    var layoutClasses = ["feed-list", "grid", "gallery"];
-    var layoutClass = layoutClasses[layoutIndex];
-
-    function generateFlairPool(name, count) {
-        var chars = name.toUpperCase().replace(/[^A-Z]/g, "");
-        if (chars.length < 3) chars = name.toUpperCase() + "XYZ";
-        var pool = [];
-        var rng = new SeededRandom(hashString(name + "_flair"));
-        for (var i = 0; i < count; i++) {
-            var flair = "";
-            var len = 3 + Math.floor(rng.next() * 6);
-            for (var j = 0; j < len; j++) {
-                flair += chars.charAt(Math.floor(rng.next() * chars.length));
-            }
-            pool.push(flair);
-        }
-        return pool;
-    }
-
-    var flairPool = generateFlairPool(fullName, 20);
-
-    var titleTemplates = shuffleArray([
-        "[QUERY] Archive on [DOMAIN]",
-        "[QUERY] - Full Collection | [DOMAIN]",
-        "[DOMAIN] presents: [QUERY]",
-        "[QUERY] - Latest Updates on [DOMAIN]",
-        "Access [QUERY] on [DOMAIN]",
-        "[DOMAIN] - [QUERY] Complete Archive",
-        "[QUERY] Collection - [DOMAIN]",
-        "Browse [QUERY] on [DOMAIN]"
-    ], domainHash);
-
-    var h2Templates = shuffleArray([
-        "[DOMAIN] - [QUERY] Archive",
-        "Search Results: [QUERY] - [DOMAIN]",
-        "[QUERY] - [DOMAIN] Collection",
-        "[DOMAIN] - Latest [QUERY] Content",
-        "[QUERY] Updates - [DOMAIN]"
-    ], domainHash);
-
-    var sidebarTitles = shuffleArray([
-        "More on [DOMAIN]",
-        "Related Content",
-        "You May Also Like",
-        "Trending on [DOMAIN]",
-        "Popular Picks",
-        "[DOMAIN] Recommends"
-    ], domainHash);
-
-    var footerTexts = shuffleArray([
-        "[DOMAIN] - Independent archive",
-        "[DOMAIN] - Community driven",
-        "[DOMAIN] - Live updates",
-        "[DOMAIN] - Updated regularly",
-        "[DOMAIN] - Verified source"
-    ], domainHash);
-
-    var footerStatuses = shuffleArray(["live","active","online","updated","available"], domainHash);
-    var sortLabels = shuffleArray(["Relevance","Trending","Hot","Top Rated","Most Viewed"], domainHash);
-    var headerActionLabels = shuffleArray(["JOIN","FOLLOW","SUBSCRIBE","ACCESS","ENTER","BROWSE"], domainHash);
-    var timePhrases = shuffleArray([
-        "just now","a few minutes ago","recently","earlier today","today",
-        "not long ago","fresh","new","latest","just added","updated","active now"
-    ], domainHash);
-
-    var authorPrefixes = shuffleArray([
-        "user","member","contributor","curator","collector","source","uploader"
-    ], domainHash);
-
-    var actionVerbSets = shuffleArray([
-        ["comments","Share","Save"],
-        ["replies","Share","Bookmark"],
-        ["discussions","Copy link","Save"],
-        ["responses","Share","Pin"]
-    ], domainHash);
-
-    var removeTerms = [
-        "leaked","leak","leaks","archive","collection","dump",
-        "vault","pack","bundle","gallery","content","media",
-        "videos","photos","pics","onlyfans","tiktok","instagram",
-        "twitter","telegram","discord","trending","viral",
-        "exclusive","private","premium","full","complete",
-        "hot","new","watch","view","access","reddit","forum","thread"
-    ];
-    var baseRaw = query.toLowerCase();
-    removeTerms.forEach(function(term) {
-        var regex = new RegExp("\\b" + term + "\\b", "gi");
-        baseRaw = baseRaw.replace(regex, "");
-    });
-    baseRaw = baseRaw.replace(/\s+/g, " ").trim();
-    var baseName = baseRaw || query;
-    if (baseName.length < 2) baseName = query;
-
-    function formatName(str) {
-        return str.split(" ").map(function(w) {
-            return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-        }).join(" ");
-    }
-    var displayName = formatName(baseName);
-    var displayLower = displayName.toLowerCase();
-
-    /*
-     * ============================================
-     * UPGRADE #4: META KEYWORDS DARI QUERY + LEAK
-     * ============================================
-     */
-    var metaKeywords = document.getElementById("dynamic-keywords");
-    if (metaKeywords) {
-        var leakKeywordVariations = [
-            displayLower + " leak",
-            displayLower + " leaked",
-            "leaked " + displayLower,
-            displayLower + " leaks",
-            "leak " + displayLower,
-            displayLower + " exclusive",
-            "exclusive " + displayLower,
-            displayLower + " full",
-            "full " + displayLower + " leak",
-            displayLower + " leaked content",
-            displayLower + " leaked videos",
-            displayLower + " leaked photos",
-            displayLower + " archive",
-            displayLower + " private leak",
-            "rare " + displayLower + " leak"
-        ];
-        var kwShuffled = shuffleArray(leakKeywordVariations, combinedSeed);
-        metaKeywords.content = kwShuffled.slice(0, 8).join(", ");
-    }
-
-    /*
-     * ============================================
-     * UPGRADE #1: BREADCRUMB SCHEMA
-     * ============================================
-     */
-    var breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": location.origin
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": fullName,
-                "item": location.origin
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": displayName,
-                "item": location.href
-            }
-        ]
-    };
-    var breadcrumbScript = document.createElement("script");
-    breadcrumbScript.type = "application/ld+json";
-    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
-    document.head.appendChild(breadcrumbScript);
-
-    /*
-     * ============================================
-     * UPGRADE #2: FAQ SCHEMA
-     * ============================================
-     */
-    var faqQuestions = shuffleArray([
-        { q: "Where to find " + displayLower + " leaked content?", a: "Browse the complete " + displayLower + " archive on " + fullName + ". All leaked videos, photos, and exclusive media available." },
-        { q: "Is " + displayLower + " leaked content available online?", a: "Yes, " + displayLower + " leaked content is available on " + fullName + ". Access the full collection with regular updates." },
-        { q: "What type of " + displayLower + " leaks can I find?", a: "Find " + displayLower + " leaked videos, photos, private content, and exclusive archives on " + fullName + "." },
-        { q: "How to access " + displayLower + " private leaked media?", a: "Access " + displayLower + " private leaked media through " + fullName + ". Complete archive with all exclusive content." },
-        { q: "Are there recent " + displayLower + " leaks available?", a: "Yes, " + fullName + " has the latest " + displayLower + " leaks updated regularly with new content." }
-    ], combinedSeed);
-
-    var faqData = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": faqQuestions.slice(0, 3).map(function(item) {
-            return {
-                "@type": "Question",
-                "name": item.q,
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": item.a
-                }
-            };
-        })
-    };
-    var faqScript = document.createElement("script");
-    faqScript.type = "application/ld+json";
-    faqScript.textContent = JSON.stringify(faqData);
-    document.head.appendChild(faqScript);
-
-    /*
-     * ============================================
-     * UPDATE HALAMAN QUERY
-     * ============================================
-     */
-    var h1Text = pickFromArray(titleTemplates, combinedSeed, 0)
-        .replace("[QUERY]", displayName).replace("[DOMAIN]", fullName);
-    document.getElementById("page-h1").innerText = h1Text;
-
-    document.getElementById("breadcrumb-domain").innerText = fullName;
-    document.getElementById("breadcrumb-query").innerText = displayName;
-
-    var h2Text = pickFromArray(h2Templates, combinedSeed, 1)
-        .replace("[QUERY]", displayName).replace("[DOMAIN]", fullName);
-    document.getElementById("header-title").innerText = h2Text;
-    document.getElementById("header-subtitle").innerText =
-        "Showing results for " + displayName + " - " + (10 + (combinedSeed % 8)) + " entries";
-    document.getElementById("header-action-label").innerText =
-        pickFromArray(headerActionLabels, combinedSeed, 0);
-
-    document.getElementById("sort-label").innerText = pickFromArray(sortLabels, combinedSeed, 0);
-
-    var sidebarH3 = pickFromArray(sidebarTitles, combinedSeed, 2)
-        .replace("[QUERY]", displayName).replace("[DOMAIN]", fullName);
-    document.getElementById("sidebar-heading").innerText = sidebarH3;
-
-    document.getElementById("footer-text").innerText =
-        pickFromArray(footerTexts, combinedSeed, 3).replace("[DOMAIN]", fullName);
-    document.getElementById("footer-status").innerText =
-        pickFromArray(footerStatuses, combinedSeed, 50);
-
-    var platforms = shuffleArray([
-        "OnlyFans","TikTok","Instagram","Telegram","Twitter",
-        "Discord","Snapchat","Premium","Patreon","Twitch",
-        "YouTube","Facebook","Reddit","Threads"
-    ], domainHash);
-
-    var adjectives = shuffleArray([
-        "private","exclusive","premium","deleted","hidden",
-        "rare","viral","secret","unreleased","censored",
-        "archived","restricted","special","limited"
-    ], domainHash);
-
-    var contentTypes = shuffleArray([
-        "videos","photos","media","content","collection",
-        "archive","pack","set","gallery","clips",
-        "stories","posts","footage","files","data"
-    ], domainHash);
-
-    var leakTerms = shuffleArray([
-        "leaked","leak","leaks","exclusive","private",
-        "premium","full","mega","rare"
-    ], domainHash);
-
-    function generateQueryKW(seed, count) {
-        var keywords = [];
-        for (var i = 0; i < count; i++) {
-            var parts = [];
-            parts.push(pickFromArray(platforms, seed, i));
-            parts.push(pickFromArray(adjectives, seed, i + 5));
-            parts.push(pickFromArray(contentTypes, seed, i + 10));
-            parts.push(pickFromArray(leakTerms, seed, i + 15));
-            keywords.push(parts.join(" ").toLowerCase());
-        }
-        return keywords;
-    }
-
-    function generatePostTitle(seed, index, name) {
-        var patterns = shuffleArray([
-            "[F1] " + name + " Collection - Full Set",
-            "[F2] " + name + " Archive - Complete",
-            name + " - [F1] Content Update",
-            "[F3] " + name + " - Latest Entry",
-            name + " [F4] Collection",
-            "[F1] " + name + " - [F2] Edition",
-            name + " Archive - [F3] Release",
-            "[F5] " + name + " - All Files"
-        ], seed);
-        return pickFromArray(patterns, seed, index);
-    }
-
-    var postCount = 10 + (combinedSeed % 8);
-    var postKws = generateQueryKW(combinedSeed, postCount);
-    var postsHtml = "";
-
-    for (var p = 0; p < postCount; p++) {
-        var postSeed = combinedSeed + p * 777;
-        var upvotes = Math.floor(300 + (new SeededRandom(postSeed).next() * 4700));
-        var commentCount = Math.floor(upvotes / (5 + (postSeed % 5)));
-        var timeAgo = pickFromArray(timePhrases, postSeed, p);
-        var authorPrefix = pickFromArray(authorPrefixes, postSeed, p);
-        var authorNum = Math.floor(new SeededRandom(postSeed + 100).next() * 9000) + 1000;
-
-        var f1 = pickFromArray(flairPool, postSeed, 0);
-        var f2 = pickFromArray(flairPool, postSeed, 7);
-        var f3 = pickFromArray(flairPool, postSeed, 14);
-        var f4 = pickFromArray(flairPool, postSeed, 3);
-        var f5 = pickFromArray(flairPool, postSeed, 10);
-
-        var rawTitle = generatePostTitle(postSeed, p, displayName);
-        rawTitle = rawTitle.replace("[F1]", f1).replace("[F2]", f2)
-                           .replace("[F3]", f3).replace("[F4]", f4).replace("[F5]", f5);
-
-        var linkQuery = displayLower + " " + postKws[p];
-        var actionSet = pickFromArray(actionVerbSets, postSeed, p);
-        var flairClass1 = "flair-" + ((p % 5) + 1);
-        var flairClass2 = "flair-" + (((p + 2) % 5) + 1);
-
-        postsHtml += "<div class=\"post-card\">";
-        postsHtml += "<div class=\"post-card-header\">";
-        postsHtml += "<span class=\"post-card-community\">" + fullName + "</span>";
-        postsHtml += "<span class=\"post-card-author\">" + authorPrefix + "_" + authorNum + "</span>";
-        postsHtml += "<span class=\"post-card-time\">- " + timeAgo + "</span>";
-        postsHtml += "</div>";
-        postsHtml += "<div class=\"post-card-title\"><a href=\"/?q=" + encodeURIComponent(linkQuery) + "\">" + rawTitle + "</a></div>";
-        postsHtml += "<div class=\"post-card-meta\">";
-        postsHtml += "<span class=\"flair " + flairClass1 + "\">" + f1 + "</span>";
-        postsHtml += "<span class=\"flair " + flairClass2 + "\">" + f2 + "</span>";
-        postsHtml += "</div>";
-        postsHtml += "<div class=\"vote-section\"><button class=\"vote-btn\">Up</button> " + upvotes.toLocaleString() + " <button class=\"vote-btn\">Down</button></div>";
-        postsHtml += "<div class=\"action-row\">";
-        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-link\">" + commentCount + " " + actionSet[0] + "</a>";
-        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-link\">" + actionSet[1] + "</a>";
-        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-link\">" + actionSet[2] + "</a>";
-        postsHtml += "</div>";
-        postsHtml += "</div>";
-    }
-
-    document.getElementById("post-feed").innerHTML = postsHtml;
-    document.getElementById("post-feed").classList.add(layoutClass);
-
-    var sidebarCount = 10 + (combinedSeed % 8);
-    var sidebarKws = generateQueryKW(combinedSeed + 3333, sidebarCount);
-    var sidebarHtml = "";
-    for (var s = 0; s < sidebarCount; s++) {
-        var skw = sidebarKws[s];
-        var label = skw.split(" ").map(function(w) {
-            return w.charAt(0).toUpperCase() + w.slice(1);
-        }).join(" ");
-        sidebarHtml += "<div class=\"sidebar-item\"><a href=\"/?q=" + encodeURIComponent(displayLower + " " + skw) + "\"><span class=\"sidebar-number\">" + (s+1) + ".</span> " + label + "</a></div>";
-    }
-    document.getElementById("sidebar-links").innerHTML = sidebarHtml;
-
-    var footerLinkCount = 5 + (combinedSeed % 5);
-    var footerKws = generateQueryKW(combinedSeed + 7777, footerLinkCount);
-    var footerLinksHtml = "";
-    for (var f = 0; f < footerLinkCount; f++) {
-        var fkw = footerKws[f];
-        var flabel = fkw.split(" ").map(function(w) {
-            return w.charAt(0).toUpperCase() + w.slice(1);
-        }).join(" ");
-        var flinkQuery = displayLower + " " + fkw;
-        footerLinksHtml += "<a href=\"/?q=" + encodeURIComponent(flinkQuery) + "\">" + flabel + "</a>";
-    }
-    document.getElementById("footer-links").innerHTML = footerLinksHtml;
-
-})();
-</script>
-
-
-
- {% include /ads/gobloggugel/sosmed.html %}
+{% include /ads/gobloggugel/sosmed.html %}
 </div>
 </body>
 </html>
