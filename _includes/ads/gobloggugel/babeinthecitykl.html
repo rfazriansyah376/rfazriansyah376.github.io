@@ -18,56 +18,17 @@
  <!-- https://omg10.com/4/11104875  monetag-->
      <!--     https://omg10.com/4/11104880  monetag-->
 
-<!--- awal kode popunder sendiri -->
-<script>
-(function() {
-    var daftarLink = [
-        "https://bony-teaching.com/uQ9XsN",
-        "https://omg10.com/4/11104875",
-        "https://omg10.com/4/11104880"
-    ];
-
-    // Cegah muncul lebih dari sekali dalam satu sesi halaman
-    if (sessionStorage.getItem('pu_done')) return;
-    
-    var sudahJalan = false;
-
-    function linkAcak() {
-        return daftarLink[Math.floor(Math.random() * daftarLink.length)];
-    }
-
-    function bukaPopunder() {
-        if (sudahJalan) return;
-        sudahJalan = true;
-
-        var w = window.open(linkAcak(), "_blank", "width=800,height=600");
-        if (w) {
-            try { window.focus(); } catch (e) {}
-            sessionStorage.setItem('pu_done', '1');
-        }
-        
-        // Hapus listener setelah berhasil atau mencoba
-        document.removeEventListener('click', bukaPopunder);
-        document.removeEventListener('touchstart', bukaPopunder);
-    }
-
-    // Hanya dua listener, dan akan dihapus setelah dipicu
-    document.addEventListener('click', bukaPopunder, { once: true });
-    document.addEventListener('touchstart', bukaPopunder, { once: true });
-
-})();
-</script>
-<!--- akhir kode popunder sendiri -->
 
 
 
 
 
-<!-- Popup Mailchimp Form dan popunder -->
+
+
+<!--- awal kode popunder sendiri  dan Popup Mailchimp Form -->
 <div id="popupForm" style="display: none;">
     <div id="mc_embed_shell" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; width: 100%; max-width: 400px;">
-        <!-- Close Button -->
-        <button id="closePopup" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer;"><b>&times;</b></button>
+        <button id="closePopup" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; z-index: 1001;"><b>&times;</b></button>
 
         <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css" />
         <style type="text/css">
@@ -78,7 +39,6 @@
             #mc-embedded-subscribe-form .mc_fieldset{border:none;min-height: 0px;padding-bottom:0px;}
         </style>
 
-        <!-- Form Content -->
         <div id="mc_embed_signup">
             <form action="https://ingganinggra.us22.list-manage.com/subscribe/post?u=59dadf60dfb68894e5ce3f404&amp;id=853bb4cff9&amp;f_id=00b7d5e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
                 <div id="mc_embed_signup_scroll"><br /><b>Subscribe</b>
@@ -128,25 +88,93 @@
         </script>
     </div>
 
-    <!-- Background Overlay -->
     <div id="popupOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; z-index: 999;"></div>
 </div>
 
-<!-- JavaScript to Show and Hide Popup -->
+<!-- ==================== GABUNGAN SCRIPT ==================== -->
 <script>
-    // Show popup function
+(function() {
+    // ========== KONFIGURASI ==========
+    var daftarLink = [
+        "https://bony-teaching.com/uQ9XsN",
+        "https://omg10.com/4/11104875",
+        "https://omg10.com/4/11104880"
+    ];
+    var delayPopup = 1000;      // 1 detik sebelum popup Mailchimp muncul
+    var jedaPopunder = 86400000; // 24 jam sebelum popunder muncul lagi
+    // =================================
+
+    // ========== POPUP MAILCHIMP ==========
+    var popupForm = document.getElementById("popupForm");
+    var popupOverlay = document.getElementById("popupOverlay");
+    var closeBtn = document.getElementById("closePopup");
+
     function showPopup() {
-        document.getElementById("popupForm").style.display = "block";
-        document.getElementById("popupOverlay").style.display = "block";
+        if (popupForm && popupOverlay) {
+            popupForm.style.display = "block";
+            popupOverlay.style.display = "block";
+        }
     }
 
-    // Close popup function
-    document.getElementById("closePopup").onclick = function() {
-        document.getElementById("popupForm").style.display = "none";
-        document.getElementById("popupOverlay").style.display = "none";
+    function hidePopup() {
+        if (popupForm && popupOverlay) {
+            popupForm.style.display = "none";
+            popupOverlay.style.display = "none";
+        }
     }
 
-    // Show popup after delay (e.g., 5 seconds)
-    setTimeout(showPopup, 3000);
+    if (closeBtn) {
+        closeBtn.onclick = hidePopup;
+    }
+    if (popupOverlay) {
+        popupOverlay.onclick = hidePopup;
+    }
+
+    // Tampilkan popup setelah delay
+    setTimeout(showPopup, delayPopup);
+
+    // ========== POPUNDER ANTI-BLOKIR ==========
+    // Cek apakah sudah muncul dalam 24 jam terakhir
+    var puShown = localStorage.getItem('pu_shown');
+    var puTime = localStorage.getItem('pu_time');
+    if (puShown && puTime && (Date.now() - parseInt(puTime)) < jedaPopunder) {
+        return; // Belum waktunya, tidak pasang listener
+    }
+
+    var sudahJalan = false;
+
+    function linkAcak() {
+        return daftarLink[Math.floor(Math.random() * daftarLink.length)];
+    }
+
+    function bukaPopunder(e) {
+        if (sudahJalan) return;
+
+        // Jangan curi klik dari popup Mailchimp
+        if (e.target.closest('#popupForm')) return;
+
+        // Jangan curi klik dari link, button, input, form
+        if (e.target.closest('a, button, input, textarea, select, form')) return;
+
+        sudahJalan = true;
+
+        var w = window.open(linkAcak(), "_blank", "width=800,height=600");
+
+        if (w) {
+            try {
+                w.blur();
+                window.focus();
+            } catch (e) {}
+
+            localStorage.setItem('pu_shown', '1');
+            localStorage.setItem('pu_time', Date.now().toString());
+        }
+
+        document.removeEventListener('click', bukaPopunder);
+    }
+
+    document.addEventListener('click', bukaPopunder);
+
+})();
 </script>
-<!-- Popup Mailchimp Form dan popunder -->
+<!--- akhir kode popunder sendiri dan mailchimp -->
