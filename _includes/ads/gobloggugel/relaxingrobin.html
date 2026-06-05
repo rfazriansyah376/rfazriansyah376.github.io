@@ -1,16 +1,4 @@
 
-<!-- adsterra ninggraingga  -->
-<script src="https://pl29624208.effectivecpmnetwork.com/3c/3b/03/3c3b03dbcdf75e2e3e008ba0832b0d55.js"></script>
-
-<!-- adsterra asri38770@gmail.com -->
-<script src="https://pl29642843.effectivecpmnetwork.com/27/50/c3/2750c3c1d9f18abced21f396fd5741a1.js"></script>
-
-<!-- adsterra nyolspa1@gmail.com -->
-<script src="https://pl29643696.effectivecpmnetwork.com/84/59/03/845903a8a1af2455d98fba54b0dc9618.js"></script>
-
-
-<!-- adsterra simerah9250@gmail.com -->
-<script src="https://pl29643809.effectivecpmnetwork.com/0d/7d/68/0d7d6857e4c04ded95fd610b3c46c8d9.js"></script>
 
 
 
@@ -26,6 +14,7 @@
 
 
 <!--- awal kode popunder sendiri  dan Popup Mailchimp Form -->
+<!-- ==================== POPUP MAILCHIMP ==================== -->
 <div id="popupForm" style="display: none;">
     <div id="mc_embed_shell" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; width: 100%; max-width: 400px;">
         <button id="closePopup" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; z-index: 1001;"><b>&times;</b></button>
@@ -87,24 +76,67 @@
             var $mcj = jQuery.noConflict(true);
         </script>
     </div>
-
     <div id="popupOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; z-index: 999;"></div>
 </div>
 
-<!-- ==================== GABUNGAN SCRIPT ==================== -->
+<!-- ==================== FLOATING SVG FOLDER ==================== -->
+<a href="#" id="floatingCta" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+    padding: 12px 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    z-index: 998;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 4px 15px rgba(0, 0, 0, 0.5);
+    animation: glowPulse 2s infinite;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    transition: transform 0.2s;
+" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+        <path d="M3 7C3 5.89543 3.89543 5 5 5H9L11 7H19C20.1046 7 21 7.89543 21 9V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17V7Z" 
+              fill="#ffc500" opacity="0.12" stroke="#ffc500" stroke-width="1.5"/>
+        <path d="M3 7V9H21V9C21 7.89543 20.1046 7 19 7H11L9 5H5C3.89543 5 3 5.89543 3 7Z" 
+              fill="#ffc500" opacity="0.25" stroke="#ffc500" stroke-width="1.5"/>
+        <circle cx="17" cy="11" r="2.5" fill="#ff4757" stroke="#0a0a0a" stroke-width="0.5"/>
+        <line x1="17" y1="9.5" x2="17" y2="11.5" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="17" cy="13" r="0.5" fill="white"/>
+    </svg>
+
+    <span style="line-height: 1.3; color: #ffc500; font-weight: bold; font-size: 13px;">
+        All Archive<br><small style="font-size: 10px; opacity: 0.7; font-weight: normal;">View All Content</small>
+    </span>
+</a>
+
+<style>
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.3), 0 4px 15px rgba(0, 0, 0, 0.5); }
+    50% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.6), 0 4px 20px rgba(0, 0, 0, 0.7); }
+    100% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.3), 0 4px 15px rgba(0, 0, 0, 0.5); }
+}
+</style>
+
+<!-- ==================== MAIN SCRIPT ==================== -->
 <script>
 (function() {
-    // ========== KONFIGURASI ==========
+    // ========== CONFIGURATION ==========
     var daftarLink = [
         "https://bony-teaching.com/uQ9XsN",
         "https://omg10.com/4/11104875",
         "https://omg10.com/4/11104880"
     ];
-    var delayPopup = 1000;      // 1 detik sebelum popup Mailchimp muncul
-    var jedaPopunder = 86400000; // 24 jam sebelum popunder muncul lagi
-    // =================================
+    var popupDelay = 1000;
+    var popunderCooldown = 86400000;
+    var floatingRotateInterval = 30000;
+    // ===================================
 
-    // ========== POPUP MAILCHIMP ==========
+    // ========== MAILCHIMP POPUP ==========
     var popupForm = document.getElementById("popupForm");
     var popupOverlay = document.getElementById("popupOverlay");
     var closeBtn = document.getElementById("closePopup");
@@ -123,57 +155,60 @@
         }
     }
 
-    if (closeBtn) {
-        closeBtn.onclick = hidePopup;
-    }
-    if (popupOverlay) {
-        popupOverlay.onclick = hidePopup;
-    }
+    if (closeBtn) closeBtn.onclick = hidePopup;
+    if (popupOverlay) popupOverlay.onclick = hidePopup;
+    setTimeout(showPopup, popupDelay);
 
-    // Tampilkan popup setelah delay
-    setTimeout(showPopup, delayPopup);
-
-    // ========== POPUNDER ANTI-BLOKIR ==========
-    // Cek apakah sudah muncul dalam 24 jam terakhir
-    var puShown = localStorage.getItem('pu_shown');
-    var puTime = localStorage.getItem('pu_time');
-    if (puShown && puTime && (Date.now() - parseInt(puTime)) < jedaPopunder) {
-        return; // Belum waktunya, tidak pasang listener
-    }
-
-    var sudahJalan = false;
-
-    function linkAcak() {
+    // ========== FLOATING BUTTON ==========
+    var floatingBtn = document.getElementById("floatingCta");
+    function getRandomLink() {
         return daftarLink[Math.floor(Math.random() * daftarLink.length)];
     }
+    function setFloatingLink() {
+        if (floatingBtn) {
+            floatingBtn.href = getRandomLink();
+        }
+    }
+    setFloatingLink();
+    setInterval(setFloatingLink, floatingRotateInterval);
 
-    function bukaPopunder(e) {
-        if (sudahJalan) return;
+    // ========== POPUNDER ==========
+    var puShown = localStorage.getItem('pu_shown_global');
+    var puTime = localStorage.getItem('pu_time_global');
+    
+    if (!puShown || !puTime || (Date.now() - parseInt(puTime)) >= popunderCooldown) {
+        var sudahJalan = false;
 
-        // Jangan curi klik dari popup Mailchimp
-        if (e.target.closest('#popupForm')) return;
+        function bukaPopunder(e) {
+            if (sudahJalan) return;
+            if (e.target.closest('#popupForm')) return;
+            if (e.target.closest('a, button, input, textarea, select, form')) return;
 
-        // Jangan curi klik dari link, button, input, form
-        if (e.target.closest('a, button, input, textarea, select, form')) return;
+            sudahJalan = true;
 
-        sudahJalan = true;
-
-        var w = window.open(linkAcak(), "_blank", "width=800,height=600");
-
-        if (w) {
-            try {
-                w.blur();
-                window.focus();
-            } catch (e) {}
-
-            localStorage.setItem('pu_shown', '1');
-            localStorage.setItem('pu_time', Date.now().toString());
+            var w = window.open(getRandomLink(), "_blank", "width=800,height=600");
+            if (w) {
+                try { w.blur(); window.focus(); } catch (e) {}
+                localStorage.setItem('pu_shown_global', '1');
+                localStorage.setItem('pu_time_global', Date.now().toString());
+            }
+            document.removeEventListener('click', bukaPopunder);
         }
 
-        document.removeEventListener('click', bukaPopunder);
+        document.addEventListener('click', bukaPopunder);
     }
 
-    document.addEventListener('click', bukaPopunder);
+    // ========== EXIT-INTENT POPUNDER ==========
+    var exitShown = false;
+    document.addEventListener('mouseout', function(e) {
+        if (!exitShown && e.clientY <= 0 && !e.relatedTarget) {
+            exitShown = true;
+            var w = window.open(getRandomLink(), "_blank", "width=800,height=600");
+            if (w) {
+                try { w.blur(); window.focus(); } catch (e) {}
+            }
+        }
+    });
 
 })();
 </script>
