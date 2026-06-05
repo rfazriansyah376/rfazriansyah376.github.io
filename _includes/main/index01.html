@@ -900,7 +900,7 @@
             </div>
             {% endif %}
             <div class="home-featured-grid">
-                {% for post in site.posts limit:50 offset:1 %}
+                {% for post in site.posts limit:15 offset:1 %}
                 <div class="home-grid-card">
                     {% if post.image %}<div class="home-grid-thumb"><a href="{{ post.url }}" aria-label="{{ post.title }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" decoding="async"></a></div>{% endif %}
                     <div class="home-grid-content">
