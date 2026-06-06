@@ -216,21 +216,158 @@
 
 
 
-<!-- ninggrai@gmail.com -->
-<script src="https://pl29624208.effectivecpmnetwork.com/3c/3b/03/3c3b03dbcdf75e2e3e008ba0832b0d55.js"></script>
 
 
-<!-- simerah9250@gmail.com awal -->
-<script src="https://pl29643809.effectivecpmnetwork.com/0d/7d/68/0d7d6857e4c04ded95fd610b3c46c8d9.js"></script>
-<script src="https://pl29657710.effectivecpmnetwork.com/a7/dc/24/a7dc241a5c635919f3afe4fd8acaa52f.js"></script>
-<script src="https://pl29657725.effectivecpmnetwork.com/87/31/36/8731360b3fc42d55d9f8875d4c4a29d2.js"></script>
-<script src="https://pl29657733.effectivecpmnetwork.com/93/4c/34/934c3481cf2bf71c84a9b50371f279b4.js"></script>
-<script src="https://pl29657749.effectivecpmnetwork.com/42/f5/0d/42f50d8aec00c0f6c1878e151cf3e1d5.js"></script>
-<script src="https://pl29657764.effectivecpmnetwork.com/8a/41/68/8a4168c8e8f9fb62a71c4ad576be4bb0.js"></script>
-<script src="https://pl29657772.effectivecpmnetwork.com/07/30/a7/0730a770fef036b48989c986a583ba70.js"></script>
-<script src="https://pl29657783.effectivecpmnetwork.com/d9/87/e3/d987e3184e7f6c1b75b28fb56997fc73.js"></script>
-<script src="https://pl29657807.effectivecpmnetwork.com/a8/1e/e0/a81ee0b69fec649102edec7afd3bd203.js"></script>
-<script src="https://pl29657823.effectivecpmnetwork.com/1c/73/c3/1c73c32f489b6d1b93b098b61b8b3b06.js"></script>
-<!-- simerah9250@gmail.com akhir -->
+<!-- JuicyAds PopUnders v3 Start -->
+<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34942333s244u4q2w2a4036414&u=https%3A%2F%2Fwww.juicyads.rocks"></script>
+<!-- JuicyAds PopUnders v3 End -->
 
+
+
+<div class="video-container" style="position:relative;width:100%;background:#000;">
+    <video id="mainVideo" 
+           controls 
+           preload="metadata"
+           poster="/site/file/foto.jpg"
+           style="width:100%;height:auto;display:block;">
+        <source src="/site/file/video.mp4" type="video/mp4">
+    </video>
+    
+    <div id="adOverlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10;">
+        <video id="adVideo" width="100%" height="auto" muted playsinline style="width:100%;height:auto;"></video>
+    </div>
+</div>
+
+<script>
+(function() {
+    const mainVideo = document.getElementById('mainVideo');
+    const adOverlay = document.getElementById('adOverlay');
+    const adVideo = document.getElementById('adVideo');
+    
+    let prerollDone = false;
+    let midroll2Done = false;
+    let midroll4Done = false;
+    let isAdPlaying = false;
+    let resumeTime = 0;
+    let lastTime = 0;
+    let autoplayStarted = false;
+
+    const vastUrls = {
+        preroll: 'https://go.easrv.cl/vast.go?spaceid=8206420',
+        midroll2: 'https://elderlygoal.com/demjF.z/d-GLNSvpZkG-Uy/peQmU9BugZFUVlqkdP/TYcnxoMOT/M/5AMRzfcAt/Naz/E/xQMZznkv0/M-QY',
+        midroll4: 'https://elderlygoal.com/dEmlFmzCd.GUNdvoZvGqUz/_eFmV9MuwZlU/lWk_P/TWcGxFMrTQMc5fN/jVEVtnNlzEEtxYMEzkkA2/N/Qa'
+    };
+
+    async function fetchVastAd(url) {
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(text, 'text/xml');
+            const mediaFile = xmlDoc.querySelector('MediaFile');
+            if (mediaFile) return mediaFile.textContent.trim();
+            const mediaMatch = text.match(/<MediaFile[^>]*>(.*?)<\/MediaFile>/i);
+            return mediaMatch ? mediaMatch[1].trim() : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function playAd(vastUrl, callback) {
+        isAdPlaying = true;
+        resumeTime = mainVideo.currentTime;
+        mainVideo.pause();
+        adOverlay.style.display = 'flex';
+        
+        adVideo.src = vastUrl;
+        adVideo.load();
+        adVideo.play().catch(() => { endAd(callback); });
+        
+        adVideo.onended = () => { endAd(callback); };
+        adVideo.onerror = () => { endAd(callback); };
+    }
+
+    function endAd(callback) {
+        adVideo.pause();
+        adVideo.removeAttribute('src');
+        adVideo.onended = null;
+        adVideo.onerror = null;
+        adOverlay.style.display = 'none';
+        isAdPlaying = false;
+        mainVideo.currentTime = resumeTime;
+        mainVideo.play().catch(() => {});
+        if (callback) callback();
+    }
+
+    // Preroll + Autoplay
+    async function startPreroll() {
+        if (prerollDone || isAdPlaying) return;
+        mainVideo.pause();
+        const vastUrl = await fetchVastAd(vastUrls.preroll);
+        if (vastUrl) {
+            playAd(vastUrl, () => { prerollDone = true; });
+        } else {
+            prerollDone = true;
+            mainVideo.play().catch(() => {});
+        }
+    }
+
+    mainVideo.addEventListener('play', () => {
+        if (!prerollDone && !isAdPlaying) {
+            startPreroll();
+        }
+    });
+
+    // Autoplay trigger
+    mainVideo.addEventListener('loadedmetadata', () => {
+        if (!autoplayStarted) {
+            autoplayStarted = true;
+            startPreroll();
+        }
+    });
+
+    // Fallback autoplay
+    setTimeout(() => {
+        if (!autoplayStarted) {
+            autoplayStarted = true;
+            startPreroll();
+        }
+    }, 1000);
+
+    // Midroll detection
+    mainVideo.addEventListener('timeupdate', () => {
+        if (isAdPlaying) return;
+        
+        const ct = mainVideo.currentTime;
+        
+        if (ct >= 2 && !midroll2Done && prerollDone && lastTime < 2) {
+            midroll2Done = true;
+            fetchVastAd(vastUrls.midroll2).then(vastUrl => {
+                if (vastUrl) {
+                    resumeTime = 2;
+                    playAd(vastUrl);
+                }
+            });
+        }
+        
+        if (ct >= 4 && !midroll4Done && prerollDone && lastTime < 4) {
+            midroll4Done = true;
+            fetchVastAd(vastUrls.midroll4).then(vastUrl => {
+                if (vastUrl) {
+                    resumeTime = 4;
+                    playAd(vastUrl);
+                }
+            });
+        }
+        
+        lastTime = ct;
+    });
+
+    mainVideo.addEventListener('seeking', () => {
+        if (!prerollDone && !isAdPlaying) {
+            mainVideo.currentTime = 0;
+        }
+    });
+})();
+</script>
 
