@@ -5,8 +5,8 @@
 <!-- https://bony-teaching.com/uQ9XsN hilltopads direk -->
  <!-- https://omg10.com/4/11104875  monetag-->
      <!--     https://omg10.com/4/11104880  monetag-->
-
-
+<!-- exoclik web pop https://s.pemsrv.com/v1/link.php?cat=&idzone=5944444&type=8 -->
+<!-- exoclik  mobile popunder. -->
 
 
 
@@ -127,6 +127,8 @@
 (function() {
     // ========== CONFIGURATION ==========
     var daftarLink = [
+    "https://s.pemsrv.com/v1/link.php?cat=&idzone=5944446&type=8",
+    "https://s.pemsrv.com/v1/link.php?cat=&idzone=5944444&type=8",
         "https://bony-teaching.com/uQ9XsN",
         "https://omg10.com/4/11104875",
         "https://omg10.com/4/11104880"
@@ -224,150 +226,59 @@
 
 
 
-<div class="video-container" style="position:relative;width:100%;background:#000;">
-    <video id="mainVideo" 
-           controls 
-           preload="metadata"
-           poster="/site/file/foto.jpg"
-           style="width:100%;height:auto;display:block;">
-        <source src="/site/file/video.mp4" type="video/mp4">
-    </video>
-    
-    <div id="adOverlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10;">
-        <video id="adVideo" width="100%" height="auto" muted playsinline style="width:100%;height:auto;"></video>
-    </div>
-</div>
 
-<script>
-(function() {
-    const mainVideo = document.getElementById('mainVideo');
-    const adOverlay = document.getElementById('adOverlay');
-    const adVideo = document.getElementById('adVideo');
-    
-    let prerollDone = false;
-    let midroll2Done = false;
-    let midroll4Done = false;
-    let isAdPlaying = false;
-    let resumeTime = 0;
-    let lastTime = 0;
-    let autoplayStarted = false;
 
-    const vastUrls = {
-        preroll: 'https://go.easrv.cl/vast.go?spaceid=8206420',
-        midroll2: 'https://elderlygoal.com/demjF.z/d-GLNSvpZkG-Uy/peQmU9BugZFUVlqkdP/TYcnxoMOT/M/5AMRzfcAt/Naz/E/xQMZznkv0/M-QY',
-        midroll4: 'https://elderlygoal.com/dEmlFmzCd.GUNdvoZvGqUz/_eFmV9MuwZlU/lWk_P/TWcGxFMrTQMc5fN/jVEVtnNlzEEtxYMEzkkA2/N/Qa'
-    };
+<!-- clickadu inpagepush -->
+<script async data-cfasync="false" data-clipid="2121757" src="//bartererfaxtingling.com/in.js"></script>
+<script async data-cfasync="false" data-clipid="2121759" src="//deductgreedyheadroom.com/in.js"></script>
 
-    async function fetchVastAd(url) {
-        try {
-            const response = await fetch(url);
-            const text = await response.text();
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(text, 'text/xml');
-            const mediaFile = xmlDoc.querySelector('MediaFile');
-            if (mediaFile) return mediaFile.textContent.trim();
-            const mediaMatch = text.match(/<MediaFile[^>]*>(.*?)<\/MediaFile>/i);
-            return mediaMatch ? mediaMatch[1].trim() : null;
-        } catch (e) {
-            return null;
-        }
-    }
+<!-- clickadu instan text message -->
+<script data-cfasync="false" async="async" type="text/javascript" src="//setyourtape.com/q/tdl/95/dnt/1938317/kep.js"></script>
 
-    function playAd(vastUrl, callback) {
-        isAdPlaying = true;
-        resumeTime = mainVideo.currentTime;
-        mainVideo.pause();
-        adOverlay.style.display = 'flex';
-        
-        adVideo.src = vastUrl;
-        adVideo.load();
-        adVideo.play().catch(() => { endAd(callback); });
-        
-        adVideo.onended = () => { endAd(callback); };
-        adVideo.onerror = () => { endAd(callback); };
-    }
-
-    function endAd(callback) {
-        adVideo.pause();
-        adVideo.removeAttribute('src');
-        adVideo.onended = null;
-        adVideo.onerror = null;
-        adOverlay.style.display = 'none';
-        isAdPlaying = false;
-        mainVideo.currentTime = resumeTime;
-        mainVideo.play().catch(() => {});
-        if (callback) callback();
-    }
-
-    // Preroll + Autoplay
-    async function startPreroll() {
-        if (prerollDone || isAdPlaying) return;
-        mainVideo.pause();
-        const vastUrl = await fetchVastAd(vastUrls.preroll);
-        if (vastUrl) {
-            playAd(vastUrl, () => { prerollDone = true; });
-        } else {
-            prerollDone = true;
-            mainVideo.play().catch(() => {});
-        }
-    }
-
-    mainVideo.addEventListener('play', () => {
-        if (!prerollDone && !isAdPlaying) {
-            startPreroll();
-        }
-    });
-
-    // Autoplay trigger
-    mainVideo.addEventListener('loadedmetadata', () => {
-        if (!autoplayStarted) {
-            autoplayStarted = true;
-            startPreroll();
-        }
-    });
-
-    // Fallback autoplay
-    setTimeout(() => {
-        if (!autoplayStarted) {
-            autoplayStarted = true;
-            startPreroll();
-        }
-    }, 1000);
-
-    // Midroll detection
-    mainVideo.addEventListener('timeupdate', () => {
-        if (isAdPlaying) return;
-        
-        const ct = mainVideo.currentTime;
-        
-        if (ct >= 2 && !midroll2Done && prerollDone && lastTime < 2) {
-            midroll2Done = true;
-            fetchVastAd(vastUrls.midroll2).then(vastUrl => {
-                if (vastUrl) {
-                    resumeTime = 2;
-                    playAd(vastUrl);
-                }
-            });
-        }
-        
-        if (ct >= 4 && !midroll4Done && prerollDone && lastTime < 4) {
-            midroll4Done = true;
-            fetchVastAd(vastUrls.midroll4).then(vastUrl => {
-                if (vastUrl) {
-                    resumeTime = 4;
-                    playAd(vastUrl);
-                }
-            });
-        }
-        
-        lastTime = ct;
-    });
-
-    mainVideo.addEventListener('seeking', () => {
-        if (!prerollDone && !isAdPlaying) {
-            mainVideo.currentTime = 0;
-        }
-    });
-})();
-</script>
-
+<!-- exoclick vid slider -->
+<script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e31" data-zoneid="5944412"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+ 
+ <!-- exoclick vid slider 2 -->
+ <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e31" data-zoneid="5944414"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+ 
+ 
+  <!-- exoclick Desktop Fullpage Interstitial -->
+ <script async type="application/javascript" src="https://a.pemsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e35" data-zoneid="5944422"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+ 
+ 
+<!-- exoclick  Mobile Fullpage Interstitial -->
+<script async type="application/javascript" src="https://a.pemsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e33" data-zoneid="5944426"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+ 
+ 
+ <!-- exoclick inpagepush notif -->
+ <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e42" data-zoneid="5944430"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+ 
+ 
+ <!-- exoclick Mobile Instant Message -->
+ <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e14" data-zoneid="5944438"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+ 
+ <!-- exoclick dekstop instant message -->
+ <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e6" data-zoneid="5944440"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+ 
+ 
+ <!-- exoclick multi (banner) -->
+<center><script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e38" data-zoneid="5944466"></ins> 
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script></center>
+ 
+ 
+ 
