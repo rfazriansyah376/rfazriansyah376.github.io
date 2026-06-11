@@ -11,8 +11,7 @@
 -->
 
 
-<!--- awal kode popunder sendiri  dan Popup Mailchimp Form -->
-<!-- ==================== POPUP MAILCHIMP ==================== -->
+<!--- awal kode popunder sendiri  dan Popup Mailchimp Form --
 <div id="popupForm" style="display: none;">
     <div id="mc_embed_shell" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; width: 100%; max-width: 400px;">
         <button id="closePopup" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; z-index: 1001;"><b>&times;</b></button>
@@ -77,7 +76,7 @@
     <div id="popupOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; z-index: 999;"></div>
 </div>
 
-<!-- ==================== FLOATING SVG FOLDER ==================== -->
+
 <a href="#" id="floatingCta" style="
     position: fixed;
     bottom: 20px;
@@ -120,10 +119,10 @@
 }
 </style>
 
-<!-- ==================== MAIN SCRIPT ==================== -->
+
 <script>
 (function() {
-    // ========== CONFIGURATION ==========
+    
     var daftarLink = [
     "https://omg10.com/4/11104875",
 "https://omg10.com/4/11110216",
@@ -133,9 +132,7 @@
     var popupDelay = 1000;
     var popunderCooldown = 86400000;
     var floatingRotateInterval = 30000;
-    // ===================================
-
-    // ========== MAILCHIMP POPUP ==========
+    
     var popupForm = document.getElementById("popupForm");
     var popupOverlay = document.getElementById("popupOverlay");
     var closeBtn = document.getElementById("closePopup");
@@ -158,7 +155,7 @@
     if (popupOverlay) popupOverlay.onclick = hidePopup;
     setTimeout(showPopup, popupDelay);
 
-    // ========== FLOATING BUTTON ==========
+    
     var floatingBtn = document.getElementById("floatingCta");
     function getRandomLink() {
         return daftarLink[Math.floor(Math.random() * daftarLink.length)];
@@ -171,7 +168,7 @@
     setFloatingLink();
     setInterval(setFloatingLink, floatingRotateInterval);
 
-    // ========== POPUNDER ==========
+    
     var puShown = localStorage.getItem('pu_shown_global');
     var puTime = localStorage.getItem('pu_time_global');
     
@@ -197,7 +194,7 @@
         document.addEventListener('click', bukaPopunder);
     }
 
-    // ========== EXIT-INTENT POPUNDER ==========
+    
     var exitShown = false;
     document.addEventListener('mouseout', function(e) {
         if (!exitShown && e.clientY <= 0 && !e.relatedTarget) {
@@ -211,21 +208,13 @@
 
 })();
 </script>
-<!--- akhir kode popunder sendiri dan mailchimp -->
+ akhir kode popunder sendiri dan mailchimp -->
 
 
 
 
 
-<!-- JuicyAds PopUnders v3 Start -->
-<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34942333s244u4q2w2a4036414&u=https%3A%2F%2Fwww.juicyads.rocks"></script>
-<!-- JuicyAds PopUnders v3 End -->
-<!-- JuicyAds v3.2P Start -->
-<script type="text/javascript">
-var juicy_tags = ['a', 'img'];
-</script>
-<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34942333s244u4q2v2e433e444&u=https%3A%2F%2Fwww.juicyads.rocks"></script>
-<!-- JuicyAds v3.2P End -->
+
 <!-- JuicyAds v3.2P Start -->
 <script type="text/javascript">
 var juicy_tags = ['a', 'img'];
@@ -246,21 +235,10 @@ if (typeof eaCtrl =="undefined"){
 	document.head.appendChild(js);
 }
 
-eaCtrl.add({"plugin":"videoslider","sid":8206336,"advertise":"Advertisement"});
+eaCtrl.add({"plugin":"videoslider","sid":8206336,"advertise":""});
 </script>
 
-<!-- eroadvertising Native WebPush -->
-<script charset="utf-8">
-if (typeof eaCtrl =="undefined"){ 
-	var eaCtrlRecs=[];
-	var eaCtrl = {add:function(ag){eaCtrlRecs.push(ag)}};
-	var js = document.createElement('script');
-	js.setAttribute("src","//go.easrv.cl/loadeactrl.go?pid=132089&spaceid=8206338&ctrlid=799796");
-	document.head.appendChild(js);
-}
 
-eaCtrl.add({"plugin":"native_webpush","sid":8206338});
-</script>
  
 <!-- eroadvertising Native Bar -->
 <script charset="utf-8">
@@ -287,33 +265,7 @@ if (typeof eaCtrl =="undefined"){
 
 eaCtrl.add({"plugin":"im","sid":8206346});
 </script>
-<!-- eroadvertising InPage Video -->
-<div id="sp_8206347_node" style="max-width:100%;height:auto;display:none">&nbsp;</div>
 
-<script charset="utf-8">
-if (typeof eaCtrl =="undefined"){ 
-	var eaCtrlRecs=[];
-	var eaCtrl = {add:function(ag){eaCtrlRecs.push(ag)}};
-	var js = document.createElement('script');
-	js.setAttribute("src","//go.easrv.cl/loadeactrl.go?pid=132089&spaceid=8206347&ctrlid=799796");
-	document.head.appendChild(js);
-}
-
-eaCtrl.add({"plugin":"inpage_video","sid":8206347,"display":"sp_8206347_node","skip_btn":true,"skip_after_sec":5,"show_countdown":true,"skip_position":"top_right","auto_hide":true,"controls":false,"muted":true,"autoplay":true,"loop":true,"advertise":"Advertisement"});
-</script>
-
-<!-- eroadvertising Floating Banner -->
-<script charset="utf-8">
-if (typeof eaCtrl =="undefined"){ 
-	var eaCtrlRecs=[];
-	var eaCtrl = {add:function(ag){eaCtrlRecs.push(ag)}};
-	var js = document.createElement('script');
-	js.setAttribute("src","//go.easrv.cl/loadeactrl.go?pid=132089&spaceid=8206350&ctrlid=799796");
-	document.head.appendChild(js);
-}
-
-eaCtrl.add({"plugin":"floater","sid":8206350,"advertise":"Advertisement"});
-</script>
 <!-- eroadvertising Fixed Instant Messenger Banner -->
 <script charset="utf-8">
 if (typeof eaCtrl =="undefined"){ 
