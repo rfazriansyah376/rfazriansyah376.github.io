@@ -1,2 +1,2 @@
-3ZWqmX.js dan e5fthr.js --> onclicka.com
+sw.hs --> monetag
 <hr /><br />
