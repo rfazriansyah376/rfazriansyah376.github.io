@@ -1,2 +1,2 @@
-sw.hs --> monetag
+sw.js --> monetag
 <hr /><br />
