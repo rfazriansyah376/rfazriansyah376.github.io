@@ -1,14 +1,17 @@
 <div id="clx9-content-lock" role="presentation" aria-hidden="true">
 <div id="clx9-card" class="clx9-lock-card">
+<div id="clx9-top-section">
 <div class="clx9-icon" id="clx9-icon-wrap">
 <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--clx9-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
 </div>
 <div id="clx9-title" class="clx9-title">Exclusive Content</div>
 <div id="clx9-desc" class="clx9-desc">This content is locked. Complete the verification steps below to reveal.</div>
 <div id="clx9-info" class="clx9-info"><span id="clx9-step">Step 0 of <span id="clx9-total-steps">10</span></span><span id="clx9-status">0% Verified</span></div>
-<div id="clx9-ad-box">
-<div data-banner-id="6121051"></div>
 </div>
+<div id="clx9-ad-box">
+<div id="clx9-ad-inner"></div>
+</div>
+<div id="clx9-bottom-section">
 <div id="clx9-traffic" class="clx9-traffic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--clx9-traffic-color)" stroke-width="2" style="vertical-align:middle;margin-right:5px;display:inline-block;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2" fill="var(--clx9-traffic-color)"/></svg><span id="clx9-traffic-text">Loading...</span></div>
 <div id="clx9-hint" class="clx9-hint">Complete verification to continue</div>
 <div class="clx9-progress" id="clx9-progress-wrap"><div id="clx9-bar"></div></div>
@@ -16,181 +19,82 @@
 <button id="clx9-next-btn" onclick="clx9NextStep()" type="button">Verify and Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-left:6px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
 <button id="clx9-skip-btn" onclick="clx9FakeSkip()" type="button">Skip verification</button>
 <div id="clx9-finish"></div>
+</div>
 <div id="clx9-skip-popup" class="clx9-skip-popup" style="display:none;">Verification required. Please complete all steps.</div>
 </div></div>
 
-<style>
-html.clx9-no-scroll,body.clx9-no-scroll{overflow:hidden!important}
-#clx9-content-lock{position:fixed;top:0;left:0;width:100vw;height:100vh;height:100dvh;overflow:hidden;background:var(--clx9-overlay-bg);z-index:2147483647;display:flex;align-items:center;justify-content:center;font-family:Arial,Helvetica,sans-serif}
-.clx9-lock-card{width:90%;max-width:440px;background:var(--clx9-card-bg);padding:30px 25px;border-radius:24px;text-align:center;box-shadow:0 20px 60px var(--clx9-shadow);border:1px solid var(--clx9-card-border);color:var(--clx9-text-primary);position:relative}
-.clx9-title{color:var(--clx9-title-color);margin:10px 0 6px;font-size:22px;font-weight:bold;letter-spacing:.3px;transition:color .4s}
-.clx9-icon{margin-bottom:5px}.clx9-icon svg{display:inline-block}
-.clx9-desc{color:var(--clx9-desc-color);font-size:14px;margin-bottom:18px;line-height:1.5}
-.clx9-info{display:flex;justify-content:space-between;background:var(--clx9-info-bg);padding:12px 16px;border-radius:12px;font-size:13px;color:var(--clx9-info-text);border:1px solid var(--clx9-info-border)}
-#clx9-ad-box{height:150px;margin:20px 0;border:2px dashed var(--clx9-ad-border);border-radius:15px;display:flex;align-items:center;justify-content:center;color:var(--clx9-ad-text);overflow:hidden;background:var(--clx9-ad-bg);transition:all .3s}
-.clx9-traffic{font-size:13px;color:var(--clx9-traffic-color);margin-top:6px;margin-bottom:4px;font-weight:500}
-.clx9-hint{font-size:13px;color:var(--clx9-hint-color);margin-top:-2px;margin-bottom:10px}
-.clx9-progress{height:20px;background:var(--clx9-progress-bg);border-radius:20px;overflow:hidden;border:1px solid var(--clx9-progress-border);margin-bottom:4px}
-#clx9-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--clx9-accent),var(--clx9-accent-light));transition:.4s;border-radius:20px}
-#clx9-next-btn{margin-top:20px;padding:14px 40px;border:0;border-radius:14px;cursor:pointer;font-size:15px;font-weight:600;background:linear-gradient(135deg,var(--clx9-accent),var(--clx9-accent-dark));color:var(--clx9-btn-text);display:inline-flex;align-items:center;justify-content:center;transition:all .2s;letter-spacing:.4px;width:100%}
-#clx9-next-btn:hover:not(:disabled){background:linear-gradient(135deg,var(--clx9-accent-light),var(--clx9-accent));transform:translateY(-1px);box-shadow:0 8px 25px var(--clx9-accent-glow)}
-#clx9-next-btn:disabled{opacity:.6;cursor:not-allowed}
-#clx9-skip-btn{background:none;border:none;color:var(--clx9-skip-color);font-size:12px;cursor:pointer;margin-top:12px;text-decoration:underline;transition:color .2s;padding:6px}
-#clx9-skip-btn:hover{color:var(--clx9-skip-hover)}
-.clx9-skip-popup{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);background:#ef4444;color:#fff;font-size:12px;padding:8px 18px;border-radius:20px;font-weight:bold;animation:clx9FadeInOut 2.5s ease forwards;white-space:nowrap;z-index:10}
-@keyframes clx9FadeInOut{0%{opacity:0;transform:translateX(-50%) translateY(10px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}75%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-10px)}}
-#clx9-finish{font-weight:bold;margin-top:15px;color:var(--clx9-traffic-color);font-size:16px}
-#clx9-percent{color:var(--clx9-percent-color);font-size:15px;margin:8px 0 0;font-weight:500;transition:all .3s}
-@media(max-width:480px){.clx9-lock-card{padding:22px 18px}.clx9-title{font-size:19px}.clx9-icon svg{width:52px;height:52px}#clx9-ad-box{height:130px}}
-</style>
+<style>html.clx9-no-scroll,body.clx9-no-scroll{overflow:hidden!important;height:100%}#clx9-content-lock{position:fixed;top:0;left:0;width:100vw;height:100vh;height:100dvh;overflow-y:auto;overflow-x:hidden;background:var(--clx9-overlay-bg);z-index:2147483647;font-family:Arial,Helvetica,sans-serif;padding:10px;-webkit-overflow-scrolling:touch;display:flex;align-items:flex-start;justify-content:center}.clx9-lock-card{width:100%;max-width:440px;background:var(--clx9-card-bg);padding:20px 16px;border-radius:20px;text-align:center;box-shadow:0 20px 60px var(--clx9-shadow);border:1px solid var(--clx9-card-border);color:var(--clx9-text-primary);position:relative;margin-top:auto;margin-bottom:auto}#clx9-top-section{flex-shrink:0}#clx9-bottom-section{flex-shrink:0}.clx9-title{color:var(--clx9-title-color);margin:8px 0 4px;font-size:clamp(16px,5vw,22px);font-weight:bold;letter-spacing:.3px;transition:color .4s}.clx9-icon{margin-bottom:4px}.clx9-icon svg{display:inline-block;width:clamp(40px,10vw,64px);height:clamp(40px,10vw,64px)}.clx9-desc{color:var(--clx9-desc-color);font-size:clamp(11px,3vw,14px);margin-bottom:12px;line-height:1.4}.clx9-info{display:flex;justify-content:space-between;background:var(--clx9-info-bg);padding:10px 12px;border-radius:10px;font-size:clamp(10px,2.8vw,13px);color:var(--clx9-info-text);border:1px solid var(--clx9-info-border)}#clx9-ad-box{margin:14px 0;border:2px dashed var(--clx9-ad-border);border-radius:12px;overflow:hidden;background:var(--clx9-ad-bg);display:flex;align-items:center;justify-content:center;height:300px;flex-shrink:0}#clx9-ad-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center}#clx9-ad-inner iframe{width:100%!important;max-width:100%!important;border:0;display:block;height:300px!important}.clx9-traffic{font-size:clamp(10px,2.8vw,13px);color:var(--clx9-traffic-color);margin-top:4px;margin-bottom:2px;font-weight:500}.clx9-hint{font-size:clamp(10px,2.8vw,13px);color:var(--clx9-hint-color);margin-top:0;margin-bottom:8px}.clx9-progress{height:clamp(14px,3.5vw,20px);background:var(--clx9-progress-bg);border-radius:20px;overflow:hidden;border:1px solid var(--clx9-progress-border);margin-bottom:4px}#clx9-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--clx9-accent),var(--clx9-accent-light));transition:.4s;border-radius:20px}#clx9-next-btn{margin-top:14px;padding:clamp(10px,2.5vw,14px) clamp(24px,6vw,40px);border:0;border-radius:12px;cursor:pointer;font-size:clamp(12px,3vw,15px);font-weight:600;background:linear-gradient(135deg,var(--clx9-accent),var(--clx9-accent-dark));color:var(--clx9-btn-text);display:inline-flex;align-items:center;justify-content:center;transition:all .2s;letter-spacing:.4px;width:100%}#clx9-next-btn:hover:not(:disabled){background:linear-gradient(135deg,var(--clx9-accent-light),var(--clx9-accent));transform:translateY(-1px);box-shadow:0 8px 25px var(--clx9-accent-glow)}#clx9-next-btn:disabled{opacity:.6;cursor:not-allowed}#clx9-skip-btn{background:none;border:none;color:var(--clx9-skip-color);font-size:clamp(10px,2.3vw,12px);cursor:pointer;margin-top:8px;text-decoration:underline;transition:color .2s;padding:4px}#clx9-skip-btn:hover{color:var(--clx9-skip-hover)}.clx9-skip-popup{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#ef4444;color:#fff;font-size:clamp(9px,2.2vw,12px);padding:6px 14px;border-radius:16px;font-weight:bold;animation:clx9FadeInOut 2.5s ease forwards;white-space:nowrap;z-index:10}@keyframes clx9FadeInOut{0%{opacity:0;transform:translateX(-50%) translateY(10px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}75%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-10px)}}#clx9-finish{font-weight:bold;margin-top:10px;color:var(--clx9-traffic-color);font-size:clamp(13px,3vw,16px)}#clx9-percent{color:var(--clx9-percent-color);font-size:clamp(11px,2.8vw,15px);margin:6px 0 0;font-weight:500;transition:all .3s}</style>
 
 <script>
-(function(){
-document.documentElement.classList.add("clx9-no-scroll");
-document.body.classList.add("clx9-no-scroll");
+var ADS_LIST = [
+'(function(mlex){var d=document,s=d.createElement(\'script\'),l=d.getElementsByTagName(\'script\')[0];s.settings=mlex||{};s.src="//untimely-hello.com/bSXnV.s/d/GUla0/YYWvcy/Ferme9RumZmUtlCkQPWTacwxNMNzoUH4/M/j-kCtHN-zvEmz/NhTHgzzhMMwW";s.async=true;s.referrerPolicy=\'no-referrer-when-downgrade\';l.parentNode.insertBefore(s,l)})({})',
+'(function(mlex){var d=document,s=d.createElement(\'script\'),l=d.getElementsByTagName(\'script\')[0];s.settings=mlex||{};s.src="//untimely-hello.com/bwXuV.s-d/Gpl/0_YTWbcB/reoms9lucZzUZl-k/PjTjYv3lMiDUcr0kMmjWUdtxNajFcZwkNhzKQPyjN/gf";s.async=true;s.referrerPolicy=\'no-referrer-when-downgrade\';l.parentNode.insertBefore(s,l)})({})',
+'(function(ajj){var d=document,s=d.createElement(\'script\'),l=d.getElementsByTagName(\'script\')[0];s.settings=ajj||{};s.src="//untimely-hello.com/b.XSV/sBdTGvlX0WYJWZcI/GeGmS9vuEZSUHlPkQPDTyc/xaMIzLYRx/OJTkcutXN/zjEvzUNfjhImwAMrQc";s.async=true;s.referrerPolicy=\'no-referrer-when-downgrade\';l.parentNode.insertBefore(s,l)})({})'
+];
+var adIndex = 0;
 
-function H(d){let h=0;for(let i=0;i<d.length;i++){h=((h<<5)-h)+d.charCodeAt(i);h|=0}return Math.abs(h)}
-function hsl(h,s,l){const a=s*Math.min(l,1-l);const f=n=>{const k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1))};return"#"+[f(0),f(8),f(4)].map(x=>{const hx=Math.round(x*255).toString(16);return hx.length===1?"0"+hx:hx}).join("")}
+(function(){document.documentElement.classList.add("clx9-no-scroll");document.body.classList.add("clx9-no-scroll");
+
+function insertAd(){
+var adCode = ADS_LIST[adIndex % ADS_LIST.length];
+adIndex++;
+var inner = document.getElementById("clx9-ad-inner");
+inner.innerHTML = '<iframe sandbox="allow-scripts allow-popups allow-same-origin" style="width:100%;border:0;display:block;height:300px;"></iframe>';
+var iframe = inner.querySelector("iframe");
+var doc = iframe.contentDocument || iframe.contentWindow.document;
+doc.open();
+doc.write('<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{margin:0;padding:0;box-sizing:border-box}body{display:flex;align-items:center;justify-content:center;background:transparent;overflow:hidden;height:300px}img,svg,video,iframe,ins,.adsbygoogle{max-width:100%!important;max-height:300px!important;height:auto!important;width:auto!important;display:block;margin:0 auto}</style></head><body>');
+doc.write('<script>'+adCode+'<\/script>');
+doc.write('</body></html>');
+doc.close();
+}
+
+function H(d){var h=0;for(var i=0;i<d.length;i++){h=((h<<5)-h)+d.charCodeAt(i);h|=0}return Math.abs(h)}
+function hsl(h,s,l){var a=s*Math.min(l,1-l);var f=function(n){var k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1))};return"#"+[f(0),f(8),f(4)].map(function(x){var hx=Math.round(x*255).toString(16);return hx.length===1?"0"+hx:hx}).join("")}
 function rgb(h){return[Math.round(parseInt(h.slice(1,3),16)),Math.round(parseInt(h.slice(3,5),16)),Math.round(parseInt(h.slice(5,7),16))]}
-function lum(h){const r=parseInt(h.slice(1,3),16)/255,g=parseInt(h.slice(3,5),16)/255,b=parseInt(h.slice(5,7),16)/255;const tl=c=>c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);return 0.2126*tl(r)+0.7152*tl(g)+0.0722*tl(b)}
-function cr(a,b){const l1=lum(a),l2=lum(b);return(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05)}
-function alc(h,s,tl,bg,mr){let bl=tl,br=0;for(let l=5;l<=95;l++){const tc=hsl(h,s,l/100);const r=cr(tc,bg);if(r>=mr&&Math.abs(l-tl)<Math.abs(bl-tl)){bl=l;br=r}}if(br<mr)return tl>50?"#ffffff":"#000000";return hsl(h,s,bl/100)}
-
-const D=window.location.hostname||"default",DH=H(D),HU=DH%360;
-
-function tb(h){const R=[{min:800,max:2500},{min:2500,max:5000},{min:5000,max:8000},{min:8000,max:11000},{min:11000,max:14000},{min:14000,max:18000}];const ri=Math.floor(h/60),r=R[Math.min(ri,5)],p=(h%60)/60;return Math.round(r.min+(p*(r.max-r.min)))}
-const TFB=tb(HU);
-
-const ov=hsl(HU,0.15,0.04),cb=hsl(HU,0.1,0.1),cbr=hsl(HU,0.08,0.18),cRGB=rgb(cb),sh="rgba("+cRGB[0]+","+cRGB[1]+","+cRGB[2]+",0.5)";
-const ib=hsl(HU,0.08,0.14),ibr=hsl(HU,0.06,0.2),it=alc(HU,0.05,80,ib,4.5);
-const abg=hsl(HU,0.06,0.12),abr=hsl(HU,0.05,0.22),at=alc(HU,0.03,65,abg,4.5);
-const pbg=hsl(HU,0.08,0.14),pbr=hsl(HU,0.06,0.2);
-const tc=alc(HU,0.03,95,cb,7),dc=alc(HU,0.04,70,cb,4.5),hc=alc(HU,0.03,55,cb,4.5),pc=alc(HU,0.03,90,cb,4.5),skc=alc(HU,0.02,35,cb,3),skh=alc(HU,0.02,50,cb,3),tp=alc(HU,0.03,90,cb,4.5);
-const ac=hsl(HU,0.75,0.45),acl=hsl(HU,0.8,0.58),acd=hsl(HU,0.7,0.32),acRGB=rgb(ac),ag="rgba("+acRGB[0]+","+acRGB[1]+","+acRGB[2]+",0.4)";
-const bt=cr(ac,"#ffffff")>cr(ac,"#000000")?"#ffffff":"#000000";
-function ftc(){let bc="#4ade80",br=0;for(let o=-40;o<=40;o+=5){const th=((HU+120+o)+360)%360;for(let l=55;l<=75;l+=5){const tc=hsl(th,0.75,l/100);const r=cr(tc,cb);if(r>br){br=r;bc=tc}}}return bc}
-const trc=ftc();
-
-const rt=document.documentElement;
+function lum(h){var r=parseInt(h.slice(1,3),16)/255,g=parseInt(h.slice(3,5),16)/255,b=parseInt(h.slice(5,7),16)/255;var tl=function(c){return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)};return 0.2126*tl(r)+0.7152*tl(g)+0.0722*tl(b)}
+function cr(a,b){var l1=lum(a),l2=lum(b);return(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05)}
+function alc(h,s,tl,bg,mr){var bl=tl,br=0;for(var l=5;l<=95;l++){var tc=hsl(h,s,l/100);var r=cr(tc,bg);if(r>=mr&&Math.abs(l-tl)<Math.abs(bl-tl)){bl=l;br=r}}if(br<mr)return tl>50?"#ffffff":"#000000";return hsl(h,s,bl/100)}
+var D=window.location.hostname||"default",DH=H(D),HU=DH%360;
+function tb(h){var R=[{min:800,max:2500},{min:2500,max:5000},{min:5000,max:8000},{min:8000,max:11000},{min:11000,max:14000},{min:14000,max:18000}];var ri=Math.floor(h/60),r=R[Math.min(ri,5)],p=(h%60)/60;return Math.round(r.min+(p*(r.max-r.min)))}
+var TFB=tb(HU);
+var ov=hsl(HU,0.15,0.04),cb=hsl(HU,0.1,0.1),cbr=hsl(HU,0.08,0.18),cRGB=rgb(cb),sh="rgba("+cRGB[0]+","+cRGB[1]+","+cRGB[2]+",0.5)";
+var ib=hsl(HU,0.08,0.14),ibr=hsl(HU,0.06,0.2),it=alc(HU,0.05,80,ib,4.5);
+var abg=hsl(HU,0.06,0.12),abr=hsl(HU,0.05,0.22),at=alc(HU,0.03,65,abg,4.5);
+var pbg=hsl(HU,0.08,0.14),pbr=hsl(HU,0.06,0.2);
+var tc=alc(HU,0.03,95,cb,7),dc=alc(HU,0.04,70,cb,4.5),hc=alc(HU,0.03,55,cb,4.5),pc=alc(HU,0.03,90,cb,4.5),skc=alc(HU,0.02,35,cb,3),skh=alc(HU,0.02,50,cb,3),tp=alc(HU,0.03,90,cb,4.5);
+var ac=hsl(HU,0.75,0.45),acl=hsl(HU,0.8,0.58),acd=hsl(HU,0.7,0.32),acRGB=rgb(ac),ag="rgba("+acRGB[0]+","+acRGB[1]+","+acRGB[2]+",0.4)";
+var bt=cr(ac,"#ffffff")>cr(ac,"#000000")?"#ffffff":"#000000";
+function ftc(){var bc="#4ade80",br=0;for(var o=-40;o<=40;o+=5){var th=((HU+120+o)+360)%360;for(var l=55;l<=75;l+=5){var tc=hsl(th,0.75,l/100);var r=cr(tc,cb);if(r>br){br=r;bc=tc}}}return bc}
+var trc=ftc();
+var rt=document.documentElement;
 rt.style.setProperty("--clx9-overlay-bg",ov);rt.style.setProperty("--clx9-card-bg",cb);rt.style.setProperty("--clx9-card-border",cbr);rt.style.setProperty("--clx9-shadow",sh);rt.style.setProperty("--clx9-title-color",tc);rt.style.setProperty("--clx9-desc-color",dc);rt.style.setProperty("--clx9-text-primary",tp);rt.style.setProperty("--clx9-info-bg",ib);rt.style.setProperty("--clx9-info-border",ibr);rt.style.setProperty("--clx9-info-text",it);rt.style.setProperty("--clx9-ad-bg",abg);rt.style.setProperty("--clx9-ad-border",abr);rt.style.setProperty("--clx9-ad-text",at);rt.style.setProperty("--clx9-progress-bg",pbg);rt.style.setProperty("--clx9-progress-border",pbr);rt.style.setProperty("--clx9-hint-color",hc);rt.style.setProperty("--clx9-percent-color",pc);rt.style.setProperty("--clx9-skip-color",skc);rt.style.setProperty("--clx9-skip-hover",skh);rt.style.setProperty("--clx9-accent",ac);rt.style.setProperty("--clx9-accent-light",acl);rt.style.setProperty("--clx9-accent-dark",acd);rt.style.setProperty("--clx9-accent-glow",ag);rt.style.setProperty("--clx9-btn-text",bt);rt.style.setProperty("--clx9-traffic-color",trc);
-
-const TI=["Exclusive Content","Premium Content Locked","Private Content","Restricted Access","Members Only","Confidential Content"];
-const DE=["This content is locked. Complete the verification steps below to reveal.","Complete verification to access this exclusive material.","This premium content requires verification. Follow the steps below.","Restricted area. Verify to unlock this content.","Members-only content. Please verify to continue.","Confidential material locked. Verify below to gain access."];
-const HI=["Complete verification to continue","Finish all steps to unlock","Verify to proceed","Complete the steps below","Finish verification to access","Please complete all steps"];
+var TI=["Exclusive Content","Premium Content Locked","Private Content","Restricted Access","Members Only","Confidential Content"];
+var DE=["This content is locked. Complete the verification steps below to reveal.","Complete verification to access this exclusive material.","This premium content requires verification. Follow the steps below.","Restricted area. Verify to unlock this content.","Members-only content. Please verify to continue.","Confidential material locked. Verify below to gain access."];
+var HI=["Complete verification to continue","Finish all steps to unlock","Verify to proceed","Complete the steps below","Finish verification to access","Please complete all steps"];
 document.getElementById("clx9-title").textContent=TI[DH%TI.length];
 document.getElementById("clx9-desc").textContent=DE[DH%DE.length];
 document.getElementById("clx9-hint").textContent=HI[DH%HI.length];
-
-const SK="clx9_session_data",EX=24;
-function gsd(){try{const r=localStorage.getItem(SK);if(!r)return null;const d=JSON.parse(r);if(Date.now()-d.timestamp>EX*60*60*1000){localStorage.removeItem(SK);return null}return d}catch(e){return null}}
+var SK="clx9_session_data",EX=24;
+function gsd(){try{var r=localStorage.getItem(SK);if(!r)return null;var d=JSON.parse(r);if(Date.now()-d.timestamp>EX*60*60*1000){localStorage.removeItem(SK);return null}return d}catch(e){return null}}
 function ssd(d){try{d.timestamp=Date.now();localStorage.setItem(SK,JSON.stringify(d))}catch(e){}}
-let ses=gsd();
+var ses=gsd();
 if(!ses){ses={totalSteps:Math.floor(Math.random()*6)+7,trafficBase:TFB,timestamp:Date.now()};ssd(ses)}
-const TS=ses.totalSteps;
+var TS=ses.totalSteps;
 document.getElementById("clx9-total-steps").textContent=TS;
-let st=0,prc=false;
-
-const RW=["Initializing connection...","Scanning database...","Content detected...","Bypassing restriction...","Decrypting files...","Almost unlocked...","Preparing content...","Final verification...","Content ready!","Access Granted"];
-function grw(s,t){if(s===t)return"Access Granted";const i=Math.min(Math.floor((s/t)*9),8);return RW[i]}
-
-const TT=["users are viewing this content","users unlocking right now","active viewers online","users in queue"];
-let ctc=ses.trafficBase;
+var st=0,prc=false;
+var RW=["Initializing connection...","Scanning database...","Content detected...","Bypassing restriction...","Decrypting files...","Almost unlocked...","Preparing content...","Final verification...","Content ready!","Access Granted"];
+function grw(s,t){if(s===t)return"Access Granted";var i=Math.min(Math.floor((s/t)*9),8);return RW[i]}
+var TT=["users are viewing this content","users unlocking right now","active viewers online","users in queue"];
+var ctc=ses.trafficBase;
 document.getElementById("clx9-traffic-text").textContent=ctc.toLocaleString()+" "+TT[DH%TT.length];
-
-function us(){const r=TS-st;if(r<=3&&r>0)document.getElementById("clx9-traffic-text").textContent="Only "+r+" slot"+(r>1?"s":"")+" remaining"}
-
-// ============================================
-// 12 SLOT IKLAN MANUAL - GANTI DI SINI
-// ============================================
-let ADS=[
-
-`<div data-banner-id="6121049"></div>`,
-
-`<div data-banner-id="6121053"></div>`,
-
-`<div data-banner-id="6121054"></div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 4</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 5</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 6</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 7</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 8</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 9</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 10</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 11</div>`,
-
-`<div style="text-align:center;font-size:13px;padding:20px;color:#999;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" style="margin-bottom:8px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><br>Sponsored Content<br>Step 12</div>`
-
-];
-
-function ns(){
-if(prc||st>=TS)return;prc=true;
-const b=document.getElementById("clx9-next-btn");b.disabled=true;b.innerHTML='Processing...';
-setTimeout(function(){
-st++;
-document.getElementById("clx9-step").innerHTML="Step "+st+" of "+TS;
-const p=Math.round((st/TS)*100);
-document.getElementById("clx9-status").innerHTML=p+"% Verified";
-document.getElementById("clx9-bar").style.width=p+"%";
-document.getElementById("clx9-percent").innerHTML=grw(st,TS);
-document.getElementById("clx9-ad-box").innerHTML=ADS[st-1];
-us();
-if(navigator.vibrate)navigator.vibrate(12);
-if(st>=TS){fs();return}
-b.disabled=false;b.innerHTML='Verify and Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-left:6px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
-prc=false;
-},Math.floor(Math.random()*1000)+500);
-}
-
-function fs(){
-document.getElementById("clx9-traffic-text").textContent="Thank you for verifying";
-document.getElementById("clx9-percent").innerHTML="Access Granted";
-document.getElementById("clx9-skip-btn").style.display="none";
-document.getElementById("clx9-next-btn").style.display="none";
-document.getElementById("clx9-ad-box").style.display="none";
-document.getElementById("clx9-hint").style.display="none";
-document.getElementById("clx9-progress-wrap").style.display="none";
-document.getElementById("clx9-info").style.display="none";
-document.getElementById("clx9-traffic").style.display="none";
-document.getElementById("clx9-desc").style.display="none";
-document.getElementById("clx9-icon-wrap").style.display="none";
-document.getElementById("clx9-title").textContent="Thank You!";
-document.getElementById("clx9-title").style.color="var(--clx9-traffic-color)";
-document.getElementById("clx9-title").style.fontSize="26px";
-const f=document.getElementById("clx9-finish");
-f.innerHTML='<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--clx9-traffic-color)" stroke-width="2" style="margin-bottom:10px;"><circle cx="12" cy="12" r="10"/><polyline points="16 10 11 15 8 12"/></svg><br><span style="color:var(--clx9-desc-color);font-size:14px;font-weight:normal;">Verification complete. You may now access the private content.</span><br><br><button id="clx9-enjoy-btn" onclick="clx9Unlock()" style="padding:14px 40px;border:0;border-radius:14px;cursor:pointer;font-size:15px;font-weight:600;background:linear-gradient(135deg,var(--clx9-accent),var(--clx9-accent-dark));color:var(--clx9-btn-text);display:inline-flex;align-items:center;justify-content:center;transition:all .2s;letter-spacing:.4px;">Continue to Content<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-left:8px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>';
-const eb=document.getElementById("clx9-enjoy-btn");
-eb.addEventListener("mouseenter",function(){this.style.background="linear-gradient(135deg,var(--clx9-accent-light),var(--clx9-accent))";this.style.transform="translateY(-1px)";this.style.boxShadow="0 8px 25px var(--clx9-accent-glow)"});
-eb.addEventListener("mouseleave",function(){this.style.background="linear-gradient(135deg,var(--clx9-accent),var(--clx9-accent-dark))";this.style.transform="none";this.style.boxShadow="none"});
-if(navigator.vibrate)navigator.vibrate([15,50,15]);
-}
-
-function fsk(){
-const p=document.getElementById("clx9-skip-popup");
-p.style.display="block";p.style.animation="none";p.offsetHeight;p.style.animation="clx9FadeInOut 2.5s ease forwards";
-if(navigator.vibrate)navigator.vibrate([10,30,10]);
-setTimeout(function(){p.style.display="none"},2500);
-}
-
-function ul(){
-document.getElementById("clx9-content-lock").remove();
-document.documentElement.classList.remove("clx9-no-scroll");
-document.body.classList.remove("clx9-no-scroll");
-}
-
-window.clx9NextStep=ns;window.clx9FakeSkip=fsk;window.clx9Unlock=ul;
-})();
+function us(){var r=TS-st;if(r<=3&&r>0)document.getElementById("clx9-traffic-text").textContent="Only "+r+" slot"+(r>1?"s":"")+" remaining"}
+function ns(){if(prc||st>=TS)return;prc=true;var b=document.getElementById("clx9-next-btn");b.disabled=true;b.innerHTML='Processing...';setTimeout(function(){st++;document.getElementById("clx9-step").innerHTML="Step "+st+" of "+TS;var p=Math.round((st/TS)*100);document.getElementById("clx9-status").innerHTML=p+"% Verified";document.getElementById("clx9-bar").style.width=p+"%";document.getElementById("clx9-percent").innerHTML=grw(st,TS);insertAd();us();if(navigator.vibrate)navigator.vibrate(12);if(st>=TS){fs();return}b.disabled=false;b.innerHTML='Verify and Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-left:6px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';prc=false},Math.floor(Math.random()*1000)+500)}
+function fs(){document.getElementById("clx9-traffic-text").textContent="Thank you for verifying";document.getElementById("clx9-percent").innerHTML="Access Granted";document.getElementById("clx9-skip-btn").style.display="none";document.getElementById("clx9-next-btn").style.display="none";document.getElementById("clx9-ad-box").style.display="none";document.getElementById("clx9-hint").style.display="none";document.getElementById("clx9-progress-wrap").style.display="none";document.getElementById("clx9-info").style.display="none";document.getElementById("clx9-traffic").style.display="none";document.getElementById("clx9-desc").style.display="none";document.getElementById("clx9-icon-wrap").style.display="none";document.getElementById("clx9-title").textContent="Thank You!";document.getElementById("clx9-title").style.color="var(--clx9-traffic-color)";document.getElementById("clx9-title").style.fontSize="26px";var f=document.getElementById("clx9-finish");f.innerHTML='<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--clx9-traffic-color)" stroke-width="2" style="margin-bottom:10px;"><circle cx="12" cy="12" r="10"/><polyline points="16 10 11 15 8 12"/></svg><br><span style="color:var(--clx9-desc-color);font-size:14px;font-weight:normal;">Verification complete. You may now access the private content.</span><br><br><button id="clx9-enjoy-btn" onclick="clx9Unlock()" style="padding:14px 40px;border:0;border-radius:14px;cursor:pointer;font-size:15px;font-weight:600;background:linear-gradient(135deg,var(--clx9-accent),var(--clx9-accent-dark));color:var(--clx9-btn-text);display:inline-flex;align-items:center;justify-content:center;transition:all .2s;letter-spacing:.4px;">Continue to Content<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-left:8px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>';var eb=document.getElementById("clx9-enjoy-btn");eb.addEventListener("mouseenter",function(){this.style.background="linear-gradient(135deg,var(--clx9-accent-light),var(--clx9-accent))";this.style.transform="translateY(-1px)";this.style.boxShadow="0 8px 25px var(--clx9-accent-glow)"});eb.addEventListener("mouseleave",function(){this.style.background="linear-gradient(135deg,var(--clx9-accent),var(--clx9-accent-dark))";this.style.transform="none";this.style.boxShadow="none"});if(navigator.vibrate)navigator.vibrate([15,50,15])}
+function fsk(){var p=document.getElementById("clx9-skip-popup");p.style.display="block";p.style.animation="none";p.offsetHeight;p.style.animation="clx9FadeInOut 2.5s ease forwards";if(navigator.vibrate)navigator.vibrate([10,30,10]);setTimeout(function(){p.style.display="none"},2500)}
+function ul(){document.getElementById("clx9-content-lock").remove();document.documentElement.classList.remove("clx9-no-scroll");document.body.classList.remove("clx9-no-scroll")}
+window.clx9NextStep=ns;window.clx9FakeSkip=fsk;window.clx9Unlock=ul})();
 </script>
-
-
-
 
 <!-- JuicyAds PopUnders v3 Start -->
 <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34942333s244u4q2w2a4036414&u=https%3A%2F%2Fwww.juicyads.rocks"></script>
