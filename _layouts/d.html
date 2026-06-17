@@ -356,10 +356,18 @@ layout: null
         </div>
 
         
-            {% assign related = site.categories[page.categories] | where_exp: "post", "post.url != page.url" %}
+   {% assign related = "" | split: "" %}
+
+{% for cat in page.categories %}
+  {% assign cat_posts = site.categories[cat] | where_exp: "post", "post.url != page.url" %}
+  {% assign related = related | concat: cat_posts %}
+{% endfor %}
+
+{% assign related = related | uniq %}
+
 {% if related.size > 0 %}
 <div class="related-section">
-    <h3>Related Posts</h3>
+<h3>Related Posts For {{ post.title }}}</h3>
     <div class="related-grid">
         {% for post in related %}
         <a href="{{ post.url }}" class="related-card">
@@ -374,7 +382,8 @@ layout: null
         {% endfor %}
     </div>
 </div>
-{% endif %}        
+{% endif %}         
+        
         
     </div>
 
