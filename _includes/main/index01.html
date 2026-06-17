@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -720,6 +718,35 @@
             sec.el.style.color = txt;
             if (sec.pad) { sec.el.style.padding = "20px 24px"; sec.el.style.borderRadius = "16px"; }
             sec.el.querySelectorAll("a").forEach(function(a) { a.style.color = txt; });
+            
+            // PERBAIKAN KONTRAS: Pastikan teks selalu kontras dengan background
+            // Jika teks terlalu gelap di background gelap, atau terlalu terang di background terang
+            var currentBg = sec.el.style.background || bg;
+            var currentColor = sec.el.style.color || txt;
+            
+            // Hitung luminance background untuk memastikan kontras yang cukup
+            var bgHex = currentBg.startsWith('#') ? currentBg : bg;
+            var r = parseInt(bgHex.slice(1,3), 16), g = parseInt(bgHex.slice(3,5), 16), b = parseInt(bgHex.slice(5,7), 16);
+            var bgLum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            
+            // Jika background terang (lum > 0.6), pastikan teks sangat gelap
+            if (bgLum > 0.6) {
+                sec.el.style.color = '#111111';
+                sec.el.style.textShadow = 'none';
+                sec.el.querySelectorAll("a").forEach(function(a) { a.style.color = '#111111'; });
+            } 
+            // Jika background gelap (lum < 0.4), pastikan teks sangat terang
+            else if (bgLum < 0.4) {
+                sec.el.style.color = '#ffffff';
+                sec.el.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+                sec.el.querySelectorAll("a").forEach(function(a) { a.style.color = '#ffffff'; });
+            }
+            // Untuk background menengah, gunakan warna yang kontras
+            else {
+                sec.el.style.color = bgLum > 0.5 ? '#111111' : '#ffffff';
+                sec.el.style.textShadow = bgLum > 0.5 ? 'none' : '0 1px 3px rgba(0,0,0,0.3)';
+                sec.el.querySelectorAll("a").forEach(function(a) { a.style.color = bgLum > 0.5 ? '#111111' : '#ffffff'; });
+            }
         });
 
         // Varian welcome & footer style
@@ -806,6 +833,24 @@
                         tag.style.color = tagColor;
                     });
                 }
+                
+                // PERBAIKAN KONTRAS UNTUK CARD: Pastikan teks selalu kontras dengan background card
+                var r = parseInt(cardBg.slice(1,3), 16), g = parseInt(cardBg.slice(3,5), 16), b = parseInt(cardBg.slice(5,7), 16);
+                var cardLum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                
+                if (cardLum > 0.6) {
+                    card.style.color = '#111111';
+                    card.querySelectorAll("a").forEach(function(a) { a.style.color = '#111111'; });
+                    card.querySelectorAll(".home-grid-desc, .excerpt.spo").forEach(function(e) {
+                        e.style.color = 'rgba(0,0,0,0.7)';
+                    });
+                } else if (cardLum < 0.4) {
+                    card.style.color = '#ffffff';
+                    card.querySelectorAll("a").forEach(function(a) { a.style.color = '#ffffff'; });
+                    card.querySelectorAll(".home-grid-desc, .excerpt.spo").forEach(function(e) {
+                        e.style.color = 'rgba(255,255,255,0.85)';
+                    });
+                }
             }
 
             if (currentBgClass === "bg-gradient") {
@@ -838,6 +883,25 @@
                 card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
                     tag.style.background = "rgba(0,0,0,.06)";
                     tag.style.color = "#1a1a1a";
+                });
+                // PERBAIKAN KONTRAS UNTUK BG-GLASS: Pastikan teks jelas di background glass
+                card.style.color = '#111111';
+                card.querySelectorAll("a").forEach(function(a) { a.style.color = '#111111'; });
+                card.querySelectorAll(".home-grid-desc, .excerpt.spo").forEach(function(e) {
+                    e.style.color = 'rgba(0,0,0,0.75)';
+                });
+            }
+            
+            // PERBAIKAN KONTRAS UNTUK BG-DARK: Pastikan teks terang di background gelap
+            if (currentBgClass === "bg-dark") {
+                card.style.color = '#ffffff';
+                card.querySelectorAll("a").forEach(function(a) { a.style.color = '#ffffff'; });
+                card.querySelectorAll(".home-grid-desc, .excerpt.spo").forEach(function(e) {
+                    e.style.color = 'rgba(255,255,255,0.85)';
+                });
+                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
+                    tag.style.background = 'rgba(255,255,255,0.2)';
+                    tag.style.color = '#ffffff';
                 });
             }
         });
@@ -876,6 +940,136 @@
             orders.sort(function() { return rng2.next() - 0.5; });
             secs.forEach(function(sec, idx) { sec.style.order = orders[idx]; });
         }
+        
+        // ===== PERBAIKAN: FEATURED POST HARUS MUNCUL =====
+        // Pastikan featured post terlihat dengan menghapus display:none yang mungkin ada
+        var featuredMain = document.querySelector(".home-featured-main");
+        if (featuredMain) {
+            featuredMain.style.display = "block";
+            featuredMain.style.visibility = "visible";
+            featuredMain.style.opacity = "1";
+            
+            // Pastikan semua child elements juga terlihat
+            var featuredThumb = featuredMain.querySelector(".home-featured-thumb");
+            var featuredContent = featuredMain.querySelector(".home-featured-content");
+            var featuredTitle = featuredMain.querySelector(".home-featured-title");
+            var featuredDesc = featuredMain.querySelector(".home-featured-desc");
+            
+            if (featuredThumb) {
+                featuredThumb.style.display = "block";
+                featuredThumb.style.visibility = "visible";
+                featuredThumb.style.opacity = "1";
+            }
+            if (featuredContent) {
+                featuredContent.style.display = "block";
+                featuredContent.style.visibility = "visible";
+                featuredContent.style.opacity = "1";
+            }
+            if (featuredTitle) {
+                featuredTitle.style.display = "block";
+                featuredTitle.style.visibility = "visible";
+                featuredTitle.style.opacity = "1";
+            }
+            if (featuredDesc) {
+                featuredDesc.style.display = "-webkit-box";
+                featuredDesc.style.visibility = "visible";
+                featuredDesc.style.opacity = "1";
+            }
+        }
+        
+        // ===== PERBAIKAN: STYLE FEED POSTINGAN LAINNYA SEPERTI FEATURED POST =====
+        // Ubah style card grid menjadi mirip featured post (overlay style)
+        document.querySelectorAll(".home-grid-card").forEach(function(card) {
+            // Hapus class lama yang mungkin mengganggu
+            card.classList.remove("bg-solid", "bg-gradient", "bg-outline", "bg-soft", "bg-glass", "bg-dark");
+            
+            // Terapkan style seperti featured post
+            card.style.position = "relative";
+            card.style.borderRadius = "20px";
+            card.style.overflow = "hidden";
+            card.style.boxShadow = "0 4px 24px rgba(0,0,0,.1)";
+            card.style.background = "#000";
+            card.style.border = "none";
+            card.style.display = "block";
+            
+            // Style untuk thumbnail
+            var thumb = card.querySelector(".home-grid-thumb");
+            if (thumb) {
+                thumb.style.width = "100%";
+                thumb.style.overflow = "hidden";
+                thumb.style.lineHeight = "0";
+                
+                var img = thumb.querySelector("img");
+                if (img) {
+                    img.style.width = "100%";
+                    img.style.height = "auto";
+                    img.style.display = "block";
+                    img.style.transition = "transform .4s ease";
+                }
+            }
+            
+            // Style untuk content (overlay di bagian bawah)
+            var content = card.querySelector(".home-grid-content");
+            if (content) {
+                content.style.position = "absolute";
+                content.style.bottom = "0";
+                content.style.left = "0";
+                content.style.right = "0";
+                content.style.padding = "24px 20px 20px";
+                content.style.background = "linear-gradient(to top, rgba(0,0,0,.8) 0%, rgba(0,0,0,.35) 50%, transparent 100%)";
+                content.style.color = "#fff";
+                content.style.zIndex = "2";
+                content.style.display = "flex";
+                content.style.flexDirection = "column";
+                
+                // Style untuk judul
+                var title = content.querySelector(".home-grid-title");
+                if (title) {
+                    title.style.fontSize = "20px";
+                    title.style.lineHeight = "1.25";
+                    title.style.margin = "0 0 8px";
+                    title.style.fontWeight = "700";
+                    title.style.letterSpacing = "-.5px";
+                    title.style.textShadow = "0 2px 8px rgba(0,0,0,.3)";
+                    
+                    var titleLink = title.querySelector("a");
+                    if (titleLink) {
+                        titleLink.style.color = "#fff";
+                        titleLink.style.textDecoration = "none";
+                        titleLink.style.pointerEvents = "auto";
+                    }
+                }
+                
+                // Style untuk deskripsi
+                var desc = content.querySelector(".home-grid-desc");
+                if (desc) {
+                    desc.style.fontSize = "14px";
+                    desc.style.lineHeight = "1.6";
+                    desc.style.margin = "0";
+                    desc.style.opacity = ".9";
+                    desc.style.textShadow = "0 1px 4px rgba(0,0,0,.3)";
+                    desc.style.display = "-webkit-box";
+                    desc.style.webkitLineClamp = "2";
+                    desc.style.webkitBoxOrient = "vertical";
+                    desc.style.overflow = "hidden";
+                    desc.style.color = "rgba(255,255,255,.9)";
+                }
+                
+                // Sembunyikan excerpt dan tags untuk tampilan bersih seperti featured post
+                var excerpt = content.querySelector(".excerpt.spo");
+                if (excerpt) {
+                    excerpt.style.display = "none";
+                }
+                
+                var tags = content.querySelector(".card-tags");
+                if (tags) {
+                    tags.style.display = "none";
+                }
+            }
+            
+            // Hapus padding classes
+            card.classList.remove("pad-xs", "pad-sm", "pad-md", "pad-lg", "pad-xl", "pad-mixed");
+        });
     })();
     </script>
 
@@ -923,9 +1117,9 @@
         <p id="footerPara" class="section-order"></p>
 
     </div>
-
-{% include footer.html %}
 {% include /ads/gobloggugel/sosmed.html %}
+{% include footer.html %}
+
 </div>
 </body>
 </html>
