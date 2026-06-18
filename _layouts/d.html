@@ -354,7 +354,6 @@ layout: null
         <div class="post-content">
             {{ content }}
         </div>
-
         
    {% assign related = "" | split: "" %}
 
@@ -367,7 +366,7 @@ layout: null
 
 {% if related.size > 0 %}
 <div class="related-section">
-<br /><hr /><h3>Related Posts</h3>
+<br /><h3>Related Posts</h3>
     <div class="related-grid">
         {% for post in related %}
         <a href="{{ post.url }}" class="related-card">
@@ -379,6 +378,7 @@ layout: null
                 <p>{{ post.description }}</p>
             </div>
         </a>
+        {% include /ads/banner/02.html %}
         {% endfor %}
     </div>
 </div>
