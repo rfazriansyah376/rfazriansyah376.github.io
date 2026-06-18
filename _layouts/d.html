@@ -367,7 +367,9 @@ layout: null
 
 {% if related.size > 0 %}
 <div class="related-section">
-<h3>Related Posts For <b>{{ post.title }}</b></h3>
+{% for post in related %}
+    <h3>Related Posts For <b>{{ post.title }}</b></h3>
+    {% endfor %}
     <div class="related-grid">
         {% for post in related %}
         <a href="{{ post.url }}" class="related-card">
