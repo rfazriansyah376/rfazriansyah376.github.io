@@ -229,7 +229,7 @@
             border-bottom:2px solid rgba(0,0,0,.08)
         }
 
-        /* ===== GRID CARDS - SEMUA POSTINGAN DIPERLAKUKAN SAMA ===== */
+        /* ===== GRID CARDS ===== */
         .home-featured-grid{
             display:grid;gap:20px;
             grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
@@ -297,6 +297,23 @@
             overflow:hidden;
         }
 
+        /* ===== BANNER CARD STYLE ===== */
+        .home-grid-banner{
+            border-radius:20px;overflow:hidden;
+            box-shadow:0 4px 20px rgba(0,0,0,.08);
+            transition:all .4s cubic-bezier(.25,.46,.45,.94);
+            background:#fff;
+            display:flex;align-items:center;justify-content:center;
+            min-height:200px;
+        }
+        .home-grid-banner:hover{
+            box-shadow:0 8px 28px rgba(0,0,0,.15);
+            transform:translateY(-2px);
+        }
+        @media(prefers-color-scheme:dark){
+            .home-grid-banner{background:#161b22}
+        }
+
         /* Sembunyikan elemen yang tidak diperlukan */
         .home-grid-card .excerpt.spo,
         .home-grid-card .card-tags,
@@ -331,6 +348,7 @@
             .homepage-container{padding:1rem 1rem 1.5rem}
             .home-featured-grid{grid-template-columns:repeat(2,1fr);gap:14px}
             .home-grid-card{border-radius:16px}
+            .home-grid-banner{border-radius:16px;min-height:150px}
             .home-grid-title{font-size:16px}
             .home-grid-desc{font-size:12px;-webkit-line-clamp:2}
             .home-grid-content{padding:28px 16px 16px}
@@ -340,6 +358,7 @@
         @media(max-width:480px){
             .home-featured-grid{grid-template-columns:1fr;gap:12px}
             .home-grid-card{aspect-ratio:16/9;border-radius:14px}
+            .home-grid-banner{border-radius:14px;min-height:120px}
             .home-grid-title{font-size:17px}
             .home-grid-desc{font-size:13px}
             .home-grid-content{padding:24px 14px 14px}
@@ -448,15 +467,74 @@
         <div id="homeFeaturedWrap" class="section-order">
             <div class="section-heading"></div>
             <div class="home-featured-grid">
-                {% for post in site.posts limit:16 %}
-                <div class="home-grid-card">
-                    {% if post.image %}<div class="home-grid-thumb"><a href="{{ post.url }}" aria-label="{{ post.title }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" decoding="async"></a></div>{% endif %}
-                    <div class="home-grid-content">
-                        <h2 class="home-grid-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
-                        {% if post.description %}<p class="home-grid-desc">{{ post.description }}</p>{% endif %}
+                
+                {% assign total_posts = 50 %}
+                {% assign banner_spacing = total_posts | divided_by: 8 %}
+                {% assign remainder = total_posts | modulo: 8 %}
+                
+                {% assign banner_counter = 0 %}
+                {% assign next_banner_at = banner_spacing | plus: 1 %}
+                {% assign offset_counter = 0 %}
+                
+                {% for post in site.posts limit:50 %}
+                
+                    <!-- ===== CARD POSTINGAN ===== -->
+                    <div class="home-grid-card">
+                        {% if post.image %}
+                        <div class="home-grid-thumb">
+                            <a href="{{ post.url }}" aria-label="{{ post.title }}">
+                                <img src="{{ post.image | relative_url }}" 
+                                     alt="{{ post.title }}" 
+                                     loading="lazy" 
+                                     decoding="async">
+                            </a>
+                        </div>
+                        {% endif %}
+                        <div class="home-grid-content">
+                            <h2 class="home-grid-title">
+                                <a href="{{ post.url }}">{{ post.title }}</a>
+                            </h2>
+                            {% if post.description %}
+                            <p class="home-grid-desc">{{ post.description }}</p>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                    
+                    <!-- ===== SISIPKAN BANNER DENGAN OFFSET PROPORSIONAL ===== -->
+                    {% if forloop.index == next_banner_at and banner_counter < 8 %}
+                        {% assign banner_counter = banner_counter | plus: 1 %}
+                        
+                        <div class="home-grid-banner">
+                            {% if banner_counter == 1 %}
+                                {% include /ads/banner/01.html %}
+                            {% elsif banner_counter == 2 %}
+                                {% include /ads/banner/02.html %}
+                            {% elsif banner_counter == 3 %}
+                                {% include /ads/banner/03.html %}
+                            {% elsif banner_counter == 4 %}
+                                {% include /ads/banner/04.html %}
+                            {% elsif banner_counter == 5 %}
+                                {% include /ads/banner/05.html %}
+                            {% elsif banner_counter == 6 %}
+                                {% include /ads/banner/06.html %}
+                            {% elsif banner_counter == 7 %}
+                                {% include /ads/banner/07.html %}
+                            {% elsif banner_counter == 8 %}
+                                {% include /ads/banner/08.html %}
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Hitung jarak berikutnya dengan offset -->
+                        {% assign offset_counter = offset_counter | plus: 1 %}
+                        {% if offset_counter <= remainder %}
+                            {% assign next_banner_at = next_banner_at | plus: banner_spacing | plus: 1 %}
+                        {% else %}
+                            {% assign next_banner_at = next_banner_at | plus: banner_spacing %}
+                        {% endif %}
+                    {% endif %}
+                    
                 {% endfor %}
+                
             </div>
         </div>
 
