@@ -1,6 +1,7 @@
 ---
 layout: null
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -232,7 +233,7 @@ layout: null
             border-bottom:2px solid rgba(0,0,0,.08)
         }
 
-        /* ===== GRID CARDS - SEMUA POSTINGAN DIPERLAKUKAN SAMA ===== */
+        /* ===== GRID CARDS ===== */
         .home-featured-grid{
             display:grid;gap:20px;
             grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
@@ -471,7 +472,7 @@ layout: null
             <div class="section-heading"></div>
             <div class="home-featured-grid">
                 
-                {% assign total_posts = site.posts.size %}
+                {% assign total_posts = 50 %}
                 {% assign banner_spacing = total_posts | divided_by: 8 %}
                 {% assign remainder = total_posts | modulo: 8 %}
                 
@@ -479,7 +480,7 @@ layout: null
                 {% assign next_banner_at = banner_spacing | plus: 1 %}
                 {% assign offset_counter = 0 %}
                 
-                {% for post in site.posts %}
+                {% for post in site.posts limit:50 %}
                 
                     <!-- ===== CARD POSTINGAN ===== -->
                     <div class="home-grid-card">
