@@ -1,7 +1,6 @@
 ---
 layout: null
 ---
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,8 +51,6 @@ layout: null
     </script>
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="tags" content="initags,ini-tags,ini tags">
-    <link rel="tag" href="/tags/initags/">
 
 {% include head.html %}
 {% include verif.html %}
@@ -161,24 +158,22 @@ layout: null
             color:#1a1a1a;line-height:1.5;-webkit-font-smoothing:antialiased
         }
         @media(prefers-color-scheme:dark){
-            body{background:#1a1a1a;color:#e0e0e0}
-            .blog-header-main.floating-header-main{background:rgba(30,30,30,.95);border-bottom-color:rgba(255,255,255,.06)}
-            .blog-title-main{color:#f0f0f0}
-            .menu-btn-main{color:#ddd}
-            .menu-icon-main{stroke:#ddd}
-            #blogMenuPanel{background:#2a2a2a;border-color:#3a3a3a}
-            #blogMenuPanel a{color:#ddd}
-            #blogMenuPanel a:hover{background:#3a3a3a}
-            .home-grid-card{background:#252525;border-color:rgba(255,255,255,.06)}
-            .home-grid-card:hover{box-shadow:0 12px 32px rgba(0,0,0,.3)}
-            .card-tag-badge{background:rgba(255,255,255,.1)!important;color:rgba(255,255,255,.8)!important}
-            .card-tag-badge:hover{background:rgba(255,255,255,.2)!important}
+            body{background:#0d1117;color:#e6edf3}
+            .blog-header-main.floating-header-main{background:rgba(13,17,23,.95);border-bottom-color:rgba(255,255,255,.08)}
+            .blog-title-main{color:#e6edf3}
+            .menu-btn-main{color:#e6edf3}
+            .menu-icon-main{stroke:#e6edf3}
+            #blogMenuPanel{background:#161b22;border-color:#30363d}
+            #blogMenuPanel a{color:#e6edf3}
+            #blogMenuPanel a:hover{background:#21262d}
+            .section-heading{color:#e6edf3}
+            .section-heading::after{background:linear-gradient(to right,#58a6ff,transparent)}
         }
 
         /* ===== HEADER ===== */
         .blog-header-main.floating-header-main{
             display:flex;align-items:center;justify-content:space-between;
-            padding:10px 20px;background:rgba(255,255,255,.95);
+            padding:12px 20px;background:rgba(255,255,255,.95);
             backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
             box-shadow:0 1px 3px rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.04);
             position:fixed;top:0;left:0;right:0;z-index:1001
@@ -221,307 +216,155 @@ layout: null
         #blogMenuPanel a:focus-visible{box-shadow:0 0 0 2px rgba(0,0,0,.15)}
 
         /* ===== SPACER ===== */
-        .header-spacer{height:62px}
+        .header-spacer{height:66px}
 
         /* ===== CONTAINER ===== */
         .homepage-container{
-            max-width:1300px;margin:0 auto;padding:1.2rem 1.2rem 2rem
+            max-width:1300px;margin:0 auto;padding:1.5rem 1.5rem 2.5rem
         }
-
-        /* ===== WELCOME & FOOTER PARAGRAPH ===== */
-        #welcomePara,#footerPara{
-            border-radius:16px;padding:20px 24px;margin-bottom:1.2rem;
-            font-size:15px;line-height:1.7;text-align:center;
-            font-weight:450;letter-spacing:-.1px
-        }
-        #footerPara{margin-top:1.2rem;margin-bottom:0;font-size:14px}
 
         /* ===== SECTION HEADING ===== */
         .section-heading{
-            font-size:1.25rem;font-weight:700;margin-bottom:1rem;
-            padding-bottom:.6rem;letter-spacing:-.3px;
-            display:flex;align-items:center;gap:8px
-        }
-        .section-heading::after{
-            content:'';flex:1;height:2px;
-            background:linear-gradient(to right,currentColor,transparent);
-            opacity:.2;border-radius:2px
+            font-size:1.5rem;font-weight:800;margin-bottom:1.5rem;
+            padding-bottom:.8rem;letter-spacing:-.4px;
+            display:flex;align-items:center;gap:10px;
+            color:#1a1a1a;
+            border-bottom:2px solid rgba(0,0,0,.08)
         }
 
-        /* ===== FEATURED MAIN (HERO) ===== */
-        #homeFeaturedWrap{margin-top:0}
-        #homeFeaturedWrap .section-heading{margin-bottom:1rem}
-        .home-featured-main{
-            position:relative;border-radius:20px;overflow:hidden;
-            margin-bottom:28px;box-shadow:0 4px 24px rgba(0,0,0,.1);
-            background:#000
-        }
-        .home-featured-main .home-featured-thumb{
-            width:100%;overflow:hidden;line-height:0
-        }
-        .home-featured-main .home-featured-thumb img{
-            width:100%;height:auto;display:block;
-            transition:transform .4s ease
-        }
-        .home-featured-main:hover .home-featured-thumb img{transform:scale(1.02)}
-        .home-featured-content{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:40px 32px 32px;
-            background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.35) 50%,transparent 100%);
-            color:#fff;z-index:2;pointer-events:none
-        }
-        .home-featured-content a{pointer-events:auto}
-        .home-featured-title{
-            font-size:30px;line-height:1.25;margin:0 0 8px;font-weight:700;
-            letter-spacing:-.5px;text-shadow:0 2px 8px rgba(0,0,0,.3)
-        }
-        .home-featured-title a{color:#fff;text-decoration:none}
-        .home-featured-title a:hover{text-decoration:underline;text-underline-offset:4px}
-        .home-featured-desc{
-            font-size:15px;line-height:1.6;margin:0;opacity:.9;
-            text-shadow:0 1px 4px rgba(0,0,0,.3);
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
-            overflow:hidden
-        }
-        .home-featured-main .card-tags,
-        .home-featured-main .excerpt.spo{display:none}
-
-        /* ===== GRID CARDS ===== */
+        /* ===== GRID CARDS - SEMUA POSTINGAN DIPERLAKUKAN SAMA ===== */
         .home-featured-grid{
-            display:grid;gap:18px
+            display:grid;gap:20px;
+            grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
         }
+        
         .home-grid-card{
-            border-radius:16px;overflow:hidden;
-            box-shadow:0 2px 12px rgba(0,0,0,.05);
-            transition:all .3s cubic-bezier(.25,.46,.45,.94);
-            background:#fff;border:1px solid rgba(0,0,0,.04);
-            display:flex;flex-direction:column
+            position:relative;border-radius:20px;overflow:hidden;
+            box-shadow:0 4px 20px rgba(0,0,0,.12);
+            transition:all .4s cubic-bezier(.25,.46,.45,.94);
+            background:#000;border:none;
+            display:flex;flex-direction:column;
+            aspect-ratio:3/4;
         }
         .home-grid-card:hover{
-            box-shadow:0 12px 32px rgba(0,0,0,.1)
+            box-shadow:0 12px 36px rgba(0,0,0,.25);
+            transform:translateY(-4px);
         }
         .home-grid-thumb{
+            position:absolute;top:0;left:0;right:0;bottom:0;
             overflow:hidden;line-height:0
         }
         .home-grid-thumb img{
-            width:100%;height:auto;display:block;
-            transition:transform .4s ease
+            width:100%;height:100%;object-fit:cover;display:block;
+            transition:transform .6s ease
         }
-        .home-grid-card:hover .home-grid-thumb img{transform:scale(1.04)}
+        .home-grid-card:hover .home-grid-thumb img{transform:scale(1.06)}
+        
         .home-grid-content{
-            padding:14px 16px 16px;flex:1;
-            display:flex;flex-direction:column
+            position:absolute;bottom:0;left:0;right:0;
+            padding:40px 24px 24px;
+            background:linear-gradient(to top,
+                rgba(0,0,0,.95) 0%,
+                rgba(0,0,0,.7) 40%,
+                rgba(0,0,0,.3) 70%,
+                transparent 100%);
+            color:#ffffff;z-index:2;
+            display:flex;flex-direction:column;
+            justify-content:flex-end;
+            min-height:50%;
         }
+        
         .home-grid-title{
-            font-size:15px;line-height:1.35;margin:0 0 6px;font-weight:600;
-            letter-spacing:-.2px
+            font-size:20px;line-height:1.3;margin:0 0 8px;
+            font-weight:700;letter-spacing:-.3px;
+            text-shadow:0 2px 8px rgba(0,0,0,.6);
+            color:#ffffff;
         }
-        .home-grid-title a{color:inherit;text-decoration:none}
-        .home-grid-title a:hover{text-decoration:underline;text-underline-offset:3px;opacity:.85}
+        .home-grid-title a{
+            color:#ffffff;text-decoration:none;
+            transition:all .2s ease;
+        }
+        .home-grid-title a:hover{
+            text-decoration:underline;
+            text-underline-offset:4px;
+            opacity:.9;
+        }
+        
         .home-grid-desc{
-            font-size:12.5px;line-height:1.55;margin:0;flex:1;
-            display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
-            overflow:hidden;opacity:.75
-        }
-        .home-grid-card .excerpt.spo{
-            font-size:12px;line-height:1.5;margin-top:6px;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
-            overflow:hidden;opacity:.6
-        }
-
-        /* ===== CARD TAGS ===== */
-        .card-tags{
-            display:flex;flex-wrap:wrap;gap:5px;
-            margin:8px 0 0;align-items:center
-        }
-        .card-tag-badge{
-            display:inline-block;padding:4px 10px;border-radius:14px;
-            font-size:10.5px;font-weight:500;text-decoration:none;
-            background:var(--tag-bg,rgba(0,0,0,.06));
-            color:var(--tag-color,inherit);
-            transition:all .2s ease;letter-spacing:.1px;
-            line-height:1.3
-        }
-        .card-tag-badge:hover{
-            opacity:.8;transform:translateY(-1px);
-            background:var(--tag-hover-bg,rgba(0,0,0,.1))
-        }
-        .card-tag-badge:focus-visible{
-            outline:2px solid currentColor;outline-offset:2px
+            font-size:14px;line-height:1.6;margin:0;
+            opacity:.92;color:rgba(255,255,255,.92);
+            text-shadow:0 1px 4px rgba(0,0,0,.5);
+            display:-webkit-box;
+            -webkit-line-clamp:2;
+            -webkit-box-orient:vertical;
+            overflow:hidden;
         }
 
-        /* ===== VARIAN GRID LAYOUT ===== */
-        .home-featured-grid.grid-2{grid-template-columns:repeat(2,1fr)}
-        .home-featured-grid.grid-3{grid-template-columns:repeat(3,1fr)}
-        .home-featured-grid.grid-4{grid-template-columns:repeat(4,1fr)}
-        .home-featured-grid.grid-5{grid-template-columns:repeat(5,1fr)}
-        .home-featured-grid.masonry-3{columns:3;display:block;gap:18px}
-        .home-featured-grid.masonry-3 .home-grid-card{break-inside:avoid;margin-bottom:18px;display:block}
-        .home-featured-grid.masonry-4{columns:4;display:block;gap:18px}
-        .home-featured-grid.masonry-4 .home-grid-card{break-inside:avoid;margin-bottom:18px;display:block}
-        .home-featured-grid.list-row{grid-template-columns:1fr}
-        .home-featured-grid.list-row .home-grid-card{flex-direction:row}
-        .home-featured-grid.list-row .home-grid-thumb{width:280px;flex-shrink:0}
-        .home-featured-grid.list-compact{grid-template-columns:1fr;gap:10px}
-        .home-featured-grid.list-compact .home-grid-thumb{display:none}
-        .home-featured-grid.list-compact .home-grid-content{padding:12px 14px}
-
-        /* ===== VARIAN CARD RADIUS ===== */
-        .home-grid-card.radius-sm{border-radius:8px}
-        .home-grid-card.radius-md{border-radius:12px}
-        .home-grid-card.radius-lg{border-radius:16px}
-        .home-grid-card.radius-xl{border-radius:20px}
-        .home-grid-card.radius-2xl{border-radius:24px}
-        .home-grid-card.radius-mixed{border-radius:20px 20px 8px 8px}
-
-        /* ===== VARIAN SHADOW ===== */
-        .home-grid-card.shadow-none{box-shadow:none;border:2px solid rgba(0,0,0,.08)}
-        .home-grid-card.shadow-sm{box-shadow:0 1px 4px rgba(0,0,0,.04)}
-        .home-grid-card.shadow-md{box-shadow:0 4px 12px rgba(0,0,0,.06)}
-        .home-grid-card.shadow-lg{box-shadow:0 8px 24px rgba(0,0,0,.08)}
-        .home-grid-card.shadow-xl{box-shadow:0 12px 36px rgba(0,0,0,.1)}
-        .home-grid-card.shadow-inner{box-shadow:inset 0 2px 8px rgba(0,0,0,.06)}
-
-        /* ===== VARIAN HOVER ===== */
-        .home-grid-card.hover-lift:hover{transform:translateY(-4px)}
-        .home-grid-card.hover-lift-more:hover{transform:translateY(-8px)}
-        .home-grid-card.hover-scale:hover{transform:scale(1.02)}
-        .home-grid-card.hover-scale-img:hover .home-grid-thumb img{transform:scale(1.08)}
-        .home-grid-card.hover-shadow:hover{box-shadow:0 12px 32px rgba(0,0,0,.12)}
-        .home-grid-card.hover-glow:hover{box-shadow:0 0 24px rgba(0,0,0,.15)}
-        .home-grid-card.hover-border:hover{border-color:currentColor}
-        .home-grid-card.hover-brightness:hover .home-grid-thumb img{filter:brightness(1.1)}
-
-        /* ===== VARIAN BACKGROUND ===== */
-        .home-grid-card.bg-solid{background:var(--card-bg,#fff);color:var(--card-text,#1a1a1a)}
-        .home-grid-card.bg-gradient{background:var(--card-gradient,#fff)}
-        .home-grid-card.bg-outline{background:transparent;border:2px solid var(--card-border,#ddd)}
-        .home-grid-card.bg-soft{background:var(--card-soft,#f5f5f5)}
-        .home-grid-card.bg-dark{background:#1a1a1a;color:#e0e0e0}
-        .home-grid-card.bg-dark .home-grid-title a{color:#fff}
-        .home-grid-card.bg-dark .home-grid-desc,
-        .home-grid-card.bg-dark .excerpt.spo{color:rgba(255,255,255,.7)}
-        .home-grid-card.bg-glass{
-            background:rgba(255,255,255,.6);
-            backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-            border:1px solid rgba(255,255,255,.3)
+        /* ===== BANNER CARD STYLE ===== */
+        .home-grid-banner{
+            border-radius:20px;overflow:hidden;
+            box-shadow:0 4px 20px rgba(0,0,0,.08);
+            transition:all .4s cubic-bezier(.25,.46,.45,.94);
+            background:#fff;
+            display:flex;align-items:center;justify-content:center;
+            min-height:200px;
+        }
+        .home-grid-banner:hover{
+            box-shadow:0 8px 28px rgba(0,0,0,.15);
+            transform:translateY(-2px);
+        }
+        @media(prefers-color-scheme:dark){
+            .home-grid-banner{background:#161b22}
         }
 
-        /* ===== VARIAN PADDING ===== */
-        .home-grid-card.pad-xs .home-grid-content{padding:8px 10px 10px}
-        .home-grid-card.pad-sm .home-grid-content{padding:10px 12px 12px}
-        .home-grid-card.pad-md .home-grid-content{padding:14px 16px 16px}
-        .home-grid-card.pad-lg .home-grid-content{padding:18px 20px 20px}
-        .home-grid-card.pad-xl .home-grid-content{padding:22px 24px 24px}
-        .home-grid-card.pad-mixed .home-grid-content{padding:12px 18px 16px}
-
-        /* ===== VARIAN TITLE ===== */
-        .home-grid-card .home-grid-title.title-bold{font-weight:700}
-        .home-grid-card .home-grid-title.title-semibold{font-weight:600}
-        .home-grid-card .home-grid-title.title-normal{font-weight:400}
-        .home-grid-card .home-grid-title.title-xs{font-size:12px}
-        .home-grid-card .home-grid-title.title-sm{font-size:13px}
-        .home-grid-card .home-grid-title.title-md{font-size:15px}
-        .home-grid-card .home-grid-title.title-lg{font-size:17px}
-        .home-grid-card .home-grid-title.title-xl{font-size:20px}
-
-        /* ===== VARIAN EXCERPT ===== */
-        .home-grid-card .excerpt.spo.excerpt-hide{display:none}
-        .home-grid-card .excerpt.spo.excerpt-1line{-webkit-line-clamp:1}
-        .home-grid-card .excerpt.spo.excerpt-2line{-webkit-line-clamp:2}
-        .home-grid-card .excerpt.spo.excerpt-3line{-webkit-line-clamp:3}
-
-        /* ===== VARIAN TAGS ===== */
-        .home-grid-card .card-tags.tags-pill .card-tag-badge{border-radius:20px;padding:4px 12px}
-        .home-grid-card .card-tags.tags-square .card-tag-badge{border-radius:4px}
-        .home-grid-card .card-tags.tags-outline .card-tag-badge{background:transparent!important;border:1px solid currentColor}
-        .home-grid-card .card-tags.tags-small .card-tag-badge{font-size:9px;padding:2px 7px}
-        .home-grid-card .card-tags.tags-large .card-tag-badge{font-size:12px;padding:5px 12px}
-
-        /* ===== VARIAN SECTION TITLE ===== */
-        .section-heading.sec-centered{justify-content:center;text-align:center}
-        .section-heading.sec-centered::after{display:none}
-        .section-heading.sec-gradient{
-            background:var(--hue-gradient,linear-gradient(135deg,#667eea,#764ba2));
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-            background-clip:text
-        }
-        .section-heading.sec-badge::before{
-            content:'✦';font-size:.8rem;opacity:.7
-        }
-
-        /* ===== VARIAN WELCOME & FOOTER ===== */
-        #welcomePara.welcome-card,#footerPara.footer-card{
-            box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)
-        }
-        #welcomePara.welcome-gradient,#footerPara.footer-gradient{
-            color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.2)
-        }
-        #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:999px}
-        #welcomePara.welcome-inline,#footerPara.footer-inline{
-            background:transparent;padding:10px 0;border-radius:0;box-shadow:none
+        /* Sembunyikan elemen yang tidak diperlukan */
+        .home-grid-card .excerpt.spo,
+        .home-grid-card .card-tags,
+        #homeFeaturedWrap .home-featured-main,
+        #welcomePara,
+        #footerPara {
+            display:none!important;
         }
 
         /* ===== RESPONSIVE ===== */
-        @media(min-width:1200px){
-            .homepage-container{max-width:1300px;padding:1.5rem 1.5rem 2.5rem}
-            .home-featured-grid.grid-4{grid-template-columns:repeat(4,1fr)}
-            .home-featured-grid.grid-5{grid-template-columns:repeat(5,1fr)}
-            .home-featured-grid.masonry-4{columns:4}
-            .home-featured-title{font-size:34px}
-            .home-featured-content{padding:48px 36px 36px}
-            .header-spacer{height:66px}
-            .blog-title-main{font-size:21px}
+        @media(min-width:1400px){
+            .home-featured-grid{grid-template-columns:repeat(4,1fr)}
+            .home-grid-title{font-size:22px}
+            .home-grid-content{padding:48px 28px 28px}
+        }
+        @media(min-width:1200px) and (max-width:1399px){
+            .home-featured-grid{grid-template-columns:repeat(3,1fr)}
+            .homepage-container{max-width:1200px}
         }
         @media(min-width:1025px) and (max-width:1199px){
-            .homepage-container{max-width:1100px}
-            .home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(3,1fr)}
-            .home-featured-grid.masonry-4{columns:3}
+            .home-featured-grid{grid-template-columns:repeat(3,1fr)}
+            .homepage-container{max-width:1100px;padding:1.2rem 1.2rem 2rem}
+            .home-grid-title{font-size:18px}
         }
         @media(max-width:1024px) and (min-width:769px){
-            .home-featured-grid.grid-3,.home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(3,1fr)}
-            .home-featured-grid.masonry-3,.home-featured-grid.masonry-4{columns:2}
-            .home-featured-title{font-size:26px}
-            .home-featured-content{padding:32px 24px 24px}
-            .home-grid-title{font-size:14px}
-            .home-grid-content{padding:12px 14px 14px}
-            .header-spacer{height:58px}
+            .home-featured-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+            .home-grid-title{font-size:18px}
+            .home-grid-content{padding:32px 20px 20px}
+            .header-spacer{height:60px}
         }
         @media(max-width:768px){
             .homepage-container{padding:1rem 1rem 1.5rem}
-            .home-featured-grid.grid-2,.home-featured-grid.grid-3,.home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(2,1fr);gap:12px}
-            .home-featured-grid.masonry-3,.home-featured-grid.masonry-4{columns:2;gap:12px}
-            .home-featured-grid.list-row .home-grid-card{flex-direction:column}
-            .home-featured-grid.list-row .home-grid-thumb{width:100%}
-            .home-featured-main{border-radius:16px;margin-bottom:20px}
-            .home-featured-content{padding:24px 18px 18px}
-            .home-featured-title{font-size:20px}
-            .home-featured-desc{font-size:13px;-webkit-line-clamp:2}
-            .home-grid-card{border-radius:14px}
-            .home-grid-content{padding:10px 12px 12px}
-            .home-grid-title{font-size:13px}
-            .home-grid-desc{font-size:11px}
-            .card-tag-badge{font-size:9px;padding:3px 8px}
-            #welcomePara,#footerPara{padding:16px 18px;font-size:13.5px;border-radius:14px}
-            #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:50px}
-            .section-heading{font-size:1.1rem}
-            .header-spacer{height:54px}
+            .home-featured-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+            .home-grid-card{border-radius:16px}
+            .home-grid-banner{border-radius:16px;min-height:150px}
+            .home-grid-title{font-size:16px}
+            .home-grid-desc{font-size:12px;-webkit-line-clamp:2}
+            .home-grid-content{padding:28px 16px 16px}
+            .section-heading{font-size:1.3rem;margin-bottom:1rem}
+            .header-spacer{height:56px}
         }
         @media(max-width:480px){
-            .home-featured-grid.grid-2,.home-featured-grid.grid-3,.home-featured-grid.grid-4,.home-featured-grid.grid-5{grid-template-columns:repeat(2,1fr);gap:10px}
-            .home-featured-grid.masonry-3,.home-featured-grid.masonry-4{columns:2;gap:10px}
-            .home-featured-content{padding:20px 14px 14px}
-            .home-featured-title{font-size:17px}
-            .home-featured-desc{font-size:12px;-webkit-line-clamp:1}
-            .home-grid-card{border-radius:12px}
-            .home-grid-content{padding:8px 10px 10px}
-            .home-grid-title{font-size:12px}
-            .home-grid-desc{font-size:10.5px;-webkit-line-clamp:2}
-            .home-grid-card .excerpt.spo:not(.excerpt-hide){display:none}
-            .card-tag-badge{font-size:8px;padding:2px 6px;border-radius:10px}
-            .card-tags{gap:3px;margin-top:5px}
-            #welcomePara,#footerPara{padding:14px 14px;font-size:12.5px;border-radius:12px}
-            #welcomePara.welcome-pill,#footerPara.footer-pill{border-radius:40px}
+            .home-featured-grid{grid-template-columns:1fr;gap:12px}
+            .home-grid-card{aspect-ratio:16/9;border-radius:14px}
+            .home-grid-banner{border-radius:14px;min-height:120px}
+            .home-grid-title{font-size:17px}
+            .home-grid-desc{font-size:13px}
+            .home-grid-content{padding:24px 14px 14px}
             .blog-title-main{font-size:16px}
             .header-spacer{height:50px}
         }
@@ -576,114 +419,6 @@ layout: null
         var displayDomain = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
         var rng = new SeededRandom(domainHash);
 
-        // ===== 50 VARIAN WELCOME =====
-        var welcomeVariants = [
-            "Welcome to " + displayDomain + " — your curated gallery of beautiful girls from every corner of the world. Explore stunning portraits, elegant photoshoots, and captivating beauty collections.",
-            "Step into " + displayDomain + " where we showcase the most gorgeous girls from across the globe. Our carefully selected photo collections highlight elegance, style, and unique allure.",
-            "Discover breathtaking portraits at " + displayDomain + ". Our gallery brings together an exclusive collection of beautiful girls, capturing the essence of charm and natural beauty.",
-            "Immerse yourself in " + displayDomain + "'s handpicked collection of the world's most beautiful girls. From professional shoots to candid elegance, every photo tells a story of grace.",
-            "Welcome to " + displayDomain + " — the ultimate destination for beauty photography enthusiasts. Browse stunning photos of gorgeous girls from every nation.",
-            "Explore the beauty of diversity at " + displayDomain + ". We bring you the most beautiful girls from Asia, Europe, Africa, Americas, and beyond.",
-            "Your journey into global beauty starts at " + displayDomain + ". Our gallery features curated photos of elegant girls and fashion models that captivate the imagination.",
-            "Experience international beauty through " + displayDomain + "'s exclusive gallery. From delicate portraits to glamorous photoshoots, discover stunning girls worldwide.",
-            "Welcome to " + displayDomain + " — a sanctuary of beauty and elegance. Our collection showcases the finest photography of beautiful girls from diverse cultures.",
-            "Prepare to be mesmerized by " + displayDomain + "'s gallery of captivating girls. Every photo highlights the natural beauty and style of each stunning woman.",
-            "Dive into feminine beauty at " + displayDomain + ". Our curated gallery brings you closer to the most gorgeous faces and elegant forms the world has to offer.",
-            "Beauty knows no borders at " + displayDomain + ". Explore stunning photos of beautiful girls from every continent — a testament to diversity and feminine charm.",
-            "Your daily dose of global beauty — " + displayDomain + ". We scout the world to bring you stunning girls in moments of pure elegance and natural allure.",
-            "Open the door to captivating beauty at " + displayDomain + ". Our exclusive collections feature gorgeous girls from fashion runways to exotic beaches worldwide.",
-            "Celebrate beauty photography with " + displayDomain + "'s handpicked gallery. Every image showcases elegance and magnetic charm from diverse cultural backgrounds.",
-            "Welcome to " + displayDomain + " where beauty meets artistry. Our gallery presents exquisite photos of stunning girls, chosen for their unique photogenic presence.",
-            "From timeless elegance to modern glamour — " + displayDomain + " captures it all. Explore beautiful girls from around the world in breathtaking portraits.",
-            "Indulge your eyes at " + displayDomain + " — the world's most beautiful collection of girl photography. Charm, elegance, and stunning visuals await.",
-            "Every photo at " + displayDomain + " tells a story of beauty and confidence. Discover gorgeous girls captured in moments that define timeless feminine allure.",
-            "Welcome to " + displayDomain + " — your premier destination for global beauty inspiration. Browse stunning photos of elegant girls from every corner of the world.",
-            "The world is filled with beautiful girls, and " + displayDomain + " has gathered the best for you. A true celebration of global feminine charm.",
-            "Let beauty transport you across continents at " + displayDomain + ". Our exclusive collection features stunning portraits of gorgeous girls from diverse cultures.",
-            "Experience beauty without boundaries at " + displayDomain + ". From romantic portraits to bold fashion statements, discover stunning girls worldwide.",
-            "Welcome to " + displayDomain + " — a visual celebration of feminine beauty. Gorgeous faces from around the world, radiating confidence and undeniable charm.",
-            "Prepare for a journey through global beauty at " + displayDomain + ". Stunning girls captured by talented photographers, showcasing elegance in its purest form.",
-            "Beauty comes in many forms, and " + displayDomain + " celebrates them all. Gorgeous girls from diverse backgrounds, each radiating unique feminine allure.",
-            "Your gateway to international beauty — " + displayDomain + ". Browse our extensive gallery where every click reveals a new face and a new definition of elegance.",
-            "Step into " + displayDomain + "'s world of curated beauty photography. Captivating girls from across the globe, each image a masterpiece of feminine grace.",
-            "Discover the faces that define global beauty at " + displayDomain + ". Stunning girls from every continent, celebrating the diversity of true feminine charm.",
-            "Welcome to " + displayDomain + " where every photo inspires. Explore beautiful girls from around the world, each portrait capturing elegance and natural allure.",
-            "Beauty enthusiasts, rejoice — " + displayDomain + " features the world's most gorgeous girls in stunning photographs highlighting unique charm and captivating presence.",
-            "From Paris runways to tropical beaches, " + displayDomain + " brings you stunning girls from diverse locations captured in moments of pure elegance.",
-            "Immerse yourself in " + displayDomain + "'s world of photographic beauty. Gorgeous girls from every culture, celebrating timeless feminine grace and sophistication.",
-            "Welcome to " + displayDomain + " — your daily escape into beauty. Curated portraits of elegant girls from around the world, a feast for the eyes.",
-            "The pursuit of beauty leads across continents at " + displayDomain + ". The world's most beautiful girls, each photograph a testament to feminine charm.",
-            "Let your eyes wander through " + displayDomain + "'s collection of global beauties. From delicate features to bold expressions, every photo captures unique essence.",
-            "Beauty has no language, no border — and " + displayDomain + " proves it. Gorgeous girls from every nation, united by elegance in breathtaking photography.",
-            "Welcome to " + displayDomain + " — the intersection of art and beauty. Captivating girls from around the world, each image selected for visual impact.",
-            "Discover a world where beauty reigns supreme at " + displayDomain + ". Stunning girls from diverse cultures that redefine your appreciation for feminine elegance.",
-            "Every culture defines beauty differently, and " + displayDomain + " celebrates them all. Gorgeous girls from every corner radiating unique charm.",
-            "Prepare to be enchanted by " + displayDomain + "'s global beauty collection. From sultry gazes to radiant smiles, pure unfiltered elegance.",
-            "Your visual journey through international beauty begins at " + displayDomain + ". Stunning photos of gorgeous girls from Asia, Europe, Americas, and beyond.",
-            "Welcome to " + displayDomain + " — celebrating feminine beauty across borders. Handpicked photos of the world's most stunning girls, a tribute to grace.",
-            "Indulge in beauty photography at " + displayDomain + ". Gorgeous girls from around the world, captured in settings that enhance their natural elegance.",
-            "The world's most beautiful faces are at " + displayDomain + ". Exclusive gallery of stunning portraits, each selected for unique appeal and photogenic quality.",
-            "Beauty is universal, and " + displayDomain + " proves it. Captivating photos of gorgeous girls from diverse backgrounds radiating confidence and charm.",
-            "Welcome to " + displayDomain + " — your premier source for beauty photography. The most stunning girls from across the globe in every single frame.",
-            "Let the beauty of the world inspire you at " + displayDomain + ". Gorgeous girls in breathtaking portraits, a window into diverse feminine grace.",
-            "From classic beauty to modern sophistication — " + displayDomain + " has it all. Stunning girls from every continent highlighting unique timeless elegance.",
-            "Embark on a visual journey at " + displayDomain + " celebrating the world's most beautiful women. Elegance, diversity, and captivating charm from every nation."
-        ];
-
-        // ===== 50 VARIAN FOOTER =====
-        var footerVariants = [
-            "Discover the world's most beautiful women through " + displayDomain + "'s exclusive photo collections. From fashion models to natural beauties, every image captures unique elegance.",
-            "Thank you for visiting " + displayDomain + ". We hope our collection of stunning girls from around the world has inspired you. Come back for fresh additions.",
-            displayDomain + " is constantly updated with new faces from across the globe. Bookmark us and return often to discover the latest stunning additions.",
-            "Beauty is everywhere, and " + displayDomain + " brings the finest examples directly to you. Explore regularly for new photos of elegant, breathtakingly beautiful girls.",
-            "We believe every woman possesses unique beauty worth celebrating. " + displayDomain + " honors that diversity by showcasing stunning girls from all cultures and backgrounds.",
-            "The world of beauty is vast and ever-changing. Stay connected with " + displayDomain + " for regular updates featuring the most gorgeous faces globally.",
-            "Thank you for exploring " + displayDomain + "'s curated collection. We're passionate about bringing you the finest beauty photography — return for more stunning portraits.",
-            "From all of us at " + displayDomain + ", thank you for appreciating global beauty. Continue browsing to discover why these stunning girls have captured hearts worldwide.",
-            "Beauty transcends borders, languages, and cultures. " + displayDomain + " is proof of that universal truth, showcasing gorgeous girls whose elegance speaks to the heart.",
-            "We're dedicated to curating the world's most beautiful photography at " + displayDomain + ". Each image is selected with care for the finest visual experience.",
-            "Your journey through global beauty doesn't end here. Explore " + displayDomain + "'s archives for more stunning photos and check back for new gorgeous faces.",
-            "The pursuit of beauty is endless, and so is " + displayDomain + ". We continuously search the world for the most captivating girls to feature.",
-            "Thank you for being part of " + displayDomain + "'s beauty community. Share our gallery and help us celebrate stunning diversity from every corner of the world.",
-            "Every photo at " + displayDomain + " represents artistic effort and natural beauty combined. We're proud to showcase these stunning girls — return for more visual treasures.",
-            "Beauty inspires, uplifts, and connects us all. " + displayDomain + " aims to do exactly that with gorgeous girls from diverse cultures in breathtaking portraits.",
-            "The world is full of beautiful faces, and " + displayDomain + " brings them to you one stunning portrait at a time. Keep exploring for your next favorite beauty.",
-            "We take pride in " + displayDomain + "'s carefully curated selection of global beauties. Each girl represents the finest in feminine elegance captured by skilled photographers.",
-            "Thank you for letting " + displayDomain + " share these beautiful moments. Our gallery grows every week with new stunning portraits — visit often.",
-            "From classic beauty to contemporary charm, " + displayDomain + " spans the full spectrum of feminine elegance. Continue browsing to discover stunning girls worldwide.",
-            "Beauty is our passion, and sharing it is " + displayDomain + "'s purpose. We hope our gallery of gorgeous girls has brightened your day with fresh inspiration.",
-            "Every visit to " + displayDomain + " is a new adventure in beauty. With stunning girls from every continent, there's always something fresh and captivating.",
-            "We scour the globe to find the most photogenic girls for " + displayDomain + ". Bookmark us and join this endless journey through worldwide feminine beauty.",
-            "The beauty you've seen at " + displayDomain + " is just the beginning. Our archives hold thousands more stunning portraits — fresh content added regularly.",
-            "Thank you for appreciating the art of beauty photography at " + displayDomain + ". Our gallery exists to showcase the world's most stunning girls.",
-            "Let the beauty linger and bring you back to " + displayDomain + ". Our gallery of gorgeous girls is always growing and always ready to captivate anew.",
-            "We're honored that " + displayDomain + " is your source for global beauty inspiration. From delicate smiles to powerful gazes, something for every admirer.",
-            "The diversity of beauty across our planet never ceases to amaze. " + displayDomain + " captures that wonder through portraits of gorgeous girls worldwide.",
-            "Your support fuels " + displayDomain + "'s passion for beauty photography. We'll continue bringing stunning girls from around the world in moments of pure elegance.",
-            "Beauty is a gift meant to be shared, and " + displayDomain + " does exactly that. Explore, enjoy, and return for more gorgeous faces from across the globe.",
-            "From runway stars to everyday elegance, " + displayDomain + " celebrates beauty in all its forms. Thank you for visiting — see you again for more stunning portraits.",
-            "Our commitment to quality beauty photography is unwavering at " + displayDomain + ". Each stunning girl represents our dedication to the finest visual experiences.",
-            "The world of beauty is infinite, and " + displayDomain + " grows with it. Stay tuned for exciting new collections featuring gorgeous girls from emerging talents.",
-            "Thank you for spending time with " + displayDomain + "'s curated beauties. We update frequently with fresh faces and stunning photos — always something new.",
-            "Beauty connects hearts across cultures, and " + displayDomain + " is a bridge to that connection. Gorgeous girls whose elegance transcends all boundaries.",
-            "Every stunning portrait at " + displayDomain + " has a story of beauty behind it. Keep exploring and celebrating the gorgeous diversity of girls worldwide.",
-            "Your appreciation keeps " + displayDomain + " thriving. We promise to continue delivering captivating photos of stunning girls from every corner of the planet.",
-            "From first click to last scroll, we hope " + displayDomain + " has filled your screen with beauty. Return anytime for your daily dose of elegance.",
-            "Beauty photography is an art, and " + displayDomain + " is the canvas. Each stunning girl adds to a masterpiece celebrating feminine charm and global diversity.",
-            "The search for beauty never ends at " + displayDomain + ". Come back often to discover new faces, fresh photos, and the latest stunning global additions.",
-            "We believe every woman's beauty deserves celebration. " + displayDomain + " does exactly that — gorgeous girls from diverse backgrounds in portraits honoring unique charm.",
-            "Thank you for making " + displayDomain + " part of your day. We're committed to curating only the finest beauty photography featuring stunning girls worldwide.",
-            "The world is rich with beautiful faces, and " + displayDomain + " captures the best. Continue exploring and let the elegance of stunning girls inspire you daily.",
-            "Our passion for beauty drives " + displayDomain + " to find gorgeous girls worldwide. We hope our gallery has delighted your eyes and sparked appreciation.",
-            "From sunrise to sunset, beauty surrounds us. " + displayDomain + " captures that truth through stunning portraits of gorgeous girls whose charm illuminates every photo.",
-            "Every culture contributes unique beauty to our global tapestry. " + displayDomain + " weaves these threads together — stunning girls whose diversity makes our collection special.",
-            "Thank you for joining " + displayDomain + " on this visual celebration. Our gallery continues to grow with fresh content featuring gorgeous girls from global talent.",
-            "The elegance you've witnessed at " + displayDomain + " is just a preview. We're constantly curating new collections of stunning girls that will take your breath away.",
-            "Beauty is timeless, and " + displayDomain + " captures that timelessness. Each stunning portrait is a moment frozen in elegant perfection for you to enjoy.",
-            "We hope " + displayDomain + " has been a feast for your eyes. Return often as we expand our collection with more stunning faces from every nation on Earth.",
-            "From our gallery to your screen — thank you for appreciating the beauty at " + displayDomain + ". The world is filled with gorgeous girls, and we'll keep bringing their elegance to you."
-        ];
-
         // ===== 50 VARIAN SECTION TITLE =====
         var sectionTitleVariants = [
             "Featured Gallery", "Editor's Pick", "Top Collections", "Must See Photos", "Spotlight",
@@ -698,160 +433,19 @@ layout: null
             "World Class Beauty", "Signature Collection", "The Beauty Edit", "Captured Elegance", "Divine Portraits"
         ];
 
-        // Pilih varian berdasarkan domain
-        var welcomeIdx = domainHash % welcomeVariants.length;
-        var footerIdx = (domainHash + 17) % footerVariants.length;
         var titleIdx = (domainHash + 31) % sectionTitleVariants.length;
-
-        document.getElementById("welcomePara").textContent = welcomeVariants[welcomeIdx];
-        document.getElementById("footerPara").textContent = footerVariants[footerIdx];
-
         var sectionHeading = document.querySelector("#homeFeaturedWrap .section-heading");
         if (sectionHeading) sectionHeading.textContent = sectionTitleVariants[titleIdx];
 
-        // Warna section
-        var sections = [
-            { el: document.getElementById("welcomePara"), bg: genColor(30, 60, 55), pad: true },
-            { el: document.getElementById("footerPara"), bg: genColor(180, 20, 22), pad: true }
-        ];
-
-        sections.forEach(function(sec) {
-            if (!sec.el) return;
-            var bg = sec.bg, txt = textColorFor(bg);
-            sec.el.style.background = bg;
-            sec.el.style.color = txt;
-            if (sec.pad) { sec.el.style.padding = "20px 24px"; sec.el.style.borderRadius = "16px"; }
-            sec.el.querySelectorAll("a").forEach(function(a) { a.style.color = txt; });
-        });
-
-        // Varian welcome & footer style
-        var welcomeStyle = ["welcome-card","welcome-gradient","welcome-pill","welcome-inline","welcome-card","welcome-gradient"][domainHash % 6];
-        var footerStyle = ["footer-card","footer-gradient","footer-pill","footer-inline","footer-card","footer-gradient"][(domainHash + 3) % 6];
-        document.getElementById("welcomePara").classList.add(welcomeStyle);
-        document.getElementById("footerPara").classList.add(footerStyle);
-
-        // Section heading style
-        var secHeadingStyle = ["sec-centered","sec-gradient","sec-badge","sec-centered","sec-gradient"][domainHash % 5];
-        if (sectionHeading) sectionHeading.classList.add(secHeadingStyle);
-
-        // ===== VARIAN FEED GRID =====
-        var gridLayouts = ["grid-3","grid-4","grid-2","masonry-3","grid-3","list-row","grid-4","grid-2","masonry-3","grid-3"];
-        var gridEl = document.querySelector(".home-featured-grid");
-        if (gridEl) {
-            gridEl.classList.add(gridLayouts[domainHash % gridLayouts.length]);
-        }
-
-        // ===== VARIAN CARD STYLE =====
-        var radiusList = ["radius-md","radius-lg","radius-xl","radius-sm","radius-2xl","radius-lg","radius-md","radius-xl","radius-mixed","radius-lg"];
-        var shadowList = ["shadow-md","shadow-lg","shadow-sm","shadow-md","shadow-xl","shadow-md","shadow-lg","shadow-none","shadow-md","shadow-lg"];
-        var hoverList = ["hover-lift","hover-scale-img","hover-glow","hover-lift","hover-shadow","hover-lift-more","hover-scale","hover-brightness","hover-border","hover-lift"];
-        var bgList = ["bg-solid","bg-gradient","bg-outline","bg-soft","bg-glass","bg-solid","bg-gradient","bg-outline","bg-soft","bg-solid"];
-        var padList = ["pad-md","pad-sm","pad-lg","pad-md","pad-xs","pad-md","pad-lg","pad-sm","pad-md","pad-mixed"];
-        var titleWeightList = ["title-bold","title-semibold","title-bold","title-semibold","title-bold","title-normal","title-bold","title-semibold","title-bold","title-semibold"];
-        var titleSizeList = ["title-md","title-sm","title-lg","title-md","title-xs","title-md","title-lg","title-sm","title-md","title-xl"];
-        var excerptList = ["excerpt-2line","excerpt-1line","excerpt-3line","excerpt-2line","excerpt-hide","excerpt-2line","excerpt-1line","excerpt-3line","excerpt-2line","excerpt-1line"];
-        var tagStyleList = ["tags-pill","tags-square","tags-outline","tags-small","tags-large","tags-pill","tags-outline","tags-small","tags-pill","tags-square"];
-
-        document.querySelectorAll(".home-grid-card").forEach(function(card, idx) {
-            var cardHash = (domainHash + idx * 7) % 10;
-            card.classList.add(radiusList[cardHash]);
-            card.classList.add(shadowList[(cardHash + 1) % 10]);
-            card.classList.add(hoverList[(cardHash + 2) % 10]);
-            card.classList.add(bgList[(cardHash + 3) % 10]);
-            card.classList.add(padList[(cardHash + 4) % 10]);
-
-            var titleEl = card.querySelector(".home-grid-title");
-            if (titleEl) {
-                titleEl.classList.add(titleWeightList[(cardHash + 5) % 10]);
-                titleEl.classList.add(titleSizeList[(cardHash + 6) % 10]);
-            }
-
-            var excerptEl = card.querySelector(".excerpt.spo");
-            if (excerptEl) {
-                excerptEl.classList.add(excerptList[(cardHash + 7) % 10]);
-            }
-
-            // Varian tag style
-            var tagContainer = card.querySelector(".card-tags");
-            if (tagContainer) {
-                tagContainer.classList.add(tagStyleList[(cardHash + 8) % 10]);
-            }
-
-            // Warna card per item
-            var cardBg = genColor(120 + idx * 30, 45 + (idx % 3) * 10, 85 - idx * 3);
-            var cardTxt = textColorFor(cardBg);
-            var tagBg = cardTxt === "#ffffff" ? "rgba(255,255,255,.18)" : "rgba(0,0,0,.07)";
-            var tagColor = cardTxt === "#ffffff" ? "rgba(255,255,255,.9)" : "rgba(0,0,0,.65)";
-            var tagHoverBg = cardTxt === "#ffffff" ? "rgba(255,255,255,.28)" : "rgba(0,0,0,.12)";
-
-            card.style.setProperty("--card-bg", cardBg);
-            card.style.setProperty("--card-text", cardTxt);
-            card.style.setProperty("--card-gradient", "linear-gradient(135deg, " + cardBg + ", " + genColor(140 + idx * 30, 50, 80) + ")");
-            card.style.setProperty("--card-soft", genColor(120 + idx * 30, 20, 92));
-            card.style.setProperty("--card-border", cardBg);
-            card.style.setProperty("--tag-bg", tagBg);
-            card.style.setProperty("--tag-color", tagColor);
-            card.style.setProperty("--tag-hover-bg", tagHoverBg);
-
-            var currentBgClass = bgList[(cardHash + 3) % 10];
-
-            if (currentBgClass === "bg-solid" || currentBgClass === "bg-gradient" || currentBgClass === "bg-soft") {
-                card.style.background = cardBg;
-                card.style.color = cardTxt;
-                card.querySelectorAll("a").forEach(function(a) { a.style.color = cardTxt; });
-                card.querySelectorAll(".home-grid-desc, .excerpt.spo").forEach(function(e) {
-                    e.style.color = cardTxt === "#ffffff" ? "rgba(255,255,255,.75)" : "rgba(0,0,0,.6)";
-                });
-                if (currentBgClass === "bg-solid" || currentBgClass === "bg-soft") {
-                    card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
-                        tag.style.background = tagBg;
-                        tag.style.color = tagColor;
-                    });
-                }
-            }
-
-            if (currentBgClass === "bg-gradient") {
-                card.style.background = "linear-gradient(135deg, " + cardBg + ", " + genColor(140 + idx * 30, 50, 80) + ")";
-            }
-
-            if (currentBgClass === "bg-soft") {
-                card.style.background = genColor(120 + idx * 30, 20, 92);
-                card.style.color = "#1a1a1a";
-                card.querySelectorAll("a").forEach(function(a) { a.style.color = cardBg; });
-                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
-                    tag.style.background = cardBg + "20";
-                    tag.style.color = cardBg;
-                });
-            }
-
-            if (currentBgClass === "bg-outline") {
-                card.style.background = "transparent";
-                card.style.borderColor = cardBg;
-                card.style.color = "#1a1a1a";
-                card.querySelectorAll("a").forEach(function(a) { a.style.color = cardBg; });
-                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
-                    tag.style.background = "transparent";
-                    tag.style.color = cardBg;
-                    tag.style.border = "1px solid " + cardBg + "40";
-                });
-            }
-
-            if (currentBgClass === "bg-glass") {
-                card.querySelectorAll(".card-tag-badge").forEach(function(tag) {
-                    tag.style.background = "rgba(0,0,0,.06)";
-                    tag.style.color = "#1a1a1a";
-                });
-            }
-        });
-
         // ===== IMAGE OBJECT SCHEMA =====
-        var mainPostImg = document.querySelector(".home-featured-main .home-featured-thumb img");
-        if (mainPostImg) {
+        var allImages = document.querySelectorAll(".home-grid-thumb img");
+        if (allImages.length > 0) {
+            var firstImg = allImages[0];
             var imgSchema = {
                 "@context": "https://schema.org",
                 "@type": "ImageObject",
-                "contentUrl": mainPostImg.src,
-                "name": (mainPostImg.alt || displayDomain) + " - " + displayDomain,
+                "contentUrl": firstImg.src,
+                "name": (firstImg.alt || displayDomain) + " - " + displayDomain,
                 "description": "Beautiful girl photo gallery at " + displayDomain,
                 "creditText": displayDomain
             };
@@ -862,72 +456,95 @@ layout: null
         }
 
         // Update alt text semua gambar dengan domain
-        document.querySelectorAll(".home-grid-thumb img, .home-featured-thumb img").forEach(function(img) {
+        document.querySelectorAll(".home-grid-thumb img").forEach(function(img) {
             if (img.alt && img.alt.trim() !== "") {
                 img.alt = img.alt + " - " + displayDomain;
             }
         });
-
-        // Section order
-        var container = document.querySelector(".homepage-container");
-        if (container) {
-            container.style.display = "flex"; container.style.flexDirection = "column";
-            var secs = container.querySelectorAll(".section-order");
-            var rng2 = new SeededRandom(domainHash + 999);
-            var orders = Array.from({length: secs.length}, function(_, i) { return i; });
-            orders.sort(function() { return rng2.next() - 0.5; });
-            secs.forEach(function(sec, idx) { sec.style.order = orders[idx]; });
-        }
     })();
     </script>
 
     <div class="header-spacer"></div>
     <div class="homepage-container">
 
-        <p id="welcomePara" class="section-order"></p>
-
         <div id="homeFeaturedWrap" class="section-order">
             <div class="section-heading"></div>
-            {% assign main_post = site.categories.pisah01 | first %}
-            {% if main_post %}
-            <div class="home-featured-main">
-                <a href="{{ main_post.url }}" aria-label="{{ main_post.title }}">
-                    {% if main_post.image %}<div class="home-featured-thumb"><img src="{{ main_post.image | relative_url }}" alt="{{ main_post.title }}" loading="lazy" decoding="async"></div>{% endif %}
-                </a>
-                <div class="home-featured-content">
-                    <h2 class="home-featured-title"><a href="{{ main_post.url }}">{{ main_post.title }}</a></h2>
-                    {% if main_post.description %}<p class="home-featured-desc">{{ main_post.description }}</p>{% endif %}
-                    {% assign before_svg = main_post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-            </div>
-            {% endif %}
             <div class="home-featured-grid">
-                {% for post in site.categories.pisah01 limit:99 offset:1 %}
-                <div class="home-grid-card">
-                    {% if post.image %}<div class="home-grid-thumb"><a href="{{ post.url }}" aria-label="{{ post.title }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" decoding="async"></a></div>{% endif %}
-                    <div class="home-grid-content">
-                        <h3 class="home-grid-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
-                        {% if post.description %}<p class="home-grid-desc">{{ post.description }}</p>{% endif %}
-                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                        {% if post.tags %}
-                        <div class="card-tags">
-                            {% for tag in post.tags %}
-                            <a href="/tags/{{ tag | slugify }}/" class="card-tag-badge">{{ tag }}</a>
-                            {% endfor %}
+                
+                {% assign total_posts = site.posts.size %}
+                {% assign banner_spacing = total_posts | divided_by: 8 %}
+                {% assign remainder = total_posts | modulo: 8 %}
+                
+                {% assign banner_counter = 0 %}
+                {% assign next_banner_at = banner_spacing | plus: 1 %}
+                {% assign offset_counter = 0 %}
+                
+                {% for post in site.posts %}
+                
+                    <!-- ===== CARD POSTINGAN ===== -->
+                    <div class="home-grid-card">
+                        {% if post.image %}
+                        <div class="home-grid-thumb">
+                            <a href="{{ post.url }}" aria-label="{{ post.title }}">
+                                <img src="{{ post.image | relative_url }}" 
+                                     alt="{{ post.title }}" 
+                                     loading="lazy" 
+                                     decoding="async">
+                            </a>
                         </div>
                         {% endif %}
+                        <div class="home-grid-content">
+                            <h2 class="home-grid-title">
+                                <a href="{{ post.url }}">{{ post.title }}</a>
+                            </h2>
+                            {% if post.description %}
+                            <p class="home-grid-desc">{{ post.description }}</p>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                    
+                    <!-- ===== SISIPKAN BANNER DENGAN OFFSET PROPORSIONAL ===== -->
+                    {% if forloop.index == next_banner_at and banner_counter < 8 %}
+                        {% assign banner_counter = banner_counter | plus: 1 %}
+                        
+                        <div class="home-grid-banner">
+                            {% if banner_counter == 1 %}
+                                {% include /ads/banner/01.html %}
+                            {% elsif banner_counter == 2 %}
+                                {% include /ads/banner/02.html %}
+                            {% elsif banner_counter == 3 %}
+                                {% include /ads/banner/03.html %}
+                            {% elsif banner_counter == 4 %}
+                                {% include /ads/banner/04.html %}
+                            {% elsif banner_counter == 5 %}
+                                {% include /ads/banner/05.html %}
+                            {% elsif banner_counter == 6 %}
+                                {% include /ads/banner/06.html %}
+                            {% elsif banner_counter == 7 %}
+                                {% include /ads/banner/07.html %}
+                            {% elsif banner_counter == 8 %}
+                                {% include /ads/banner/08.html %}
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Hitung jarak berikutnya dengan offset -->
+                        {% assign offset_counter = offset_counter | plus: 1 %}
+                        {% if offset_counter <= remainder %}
+                            {% assign next_banner_at = next_banner_at | plus: banner_spacing | plus: 1 %}
+                        {% else %}
+                            {% assign next_banner_at = next_banner_at | plus: banner_spacing %}
+                        {% endif %}
+                    {% endif %}
+                    
                 {% endfor %}
+                
             </div>
         </div>
 
-        <p id="footerPara" class="section-order"></p>
-
     </div>
-
-{% include footer.html %}
 {% include /ads/gobloggugel/sosmed.html %}
+{% include footer.html %}
+
 </div>
 </body>
 </html>
