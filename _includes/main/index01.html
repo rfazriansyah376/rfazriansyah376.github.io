@@ -146,10 +146,6 @@
     <style>
         *,*::before,*::after{box-sizing:border-box}
         html{scroll-behavior:smooth}
-        @media(prefers-reduced-motion:reduce){
-            html{scroll-behavior:auto}
-            *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-        }
         body{
             margin:0;padding:0;background:#000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased
@@ -176,8 +172,7 @@
         .menu-btn-main{
             display:flex;align-items:center;justify-content:center;
             width:32px;height:32px;background:transparent;border:none;
-            color:#fff;padding:0;cursor:pointer;border-radius:50%;
-            transition:background .2s ease
+            color:#fff;padding:0;cursor:pointer;border-radius:50%
         }
         .menu-btn-main:hover{background:rgba(255,255,255,.08)}
         .menu-icon-main{
@@ -190,49 +185,33 @@
             box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:12px;min-width:180px
         }
         #blogMenuPanel ul{list-style:none;margin:0;padding:0}
-        #blogMenuPanel li{margin:0;padding:0}
         #blogMenuPanel a{
             color:#ddd;text-decoration:none;display:block;border-radius:8px;
-            transition:all .15s ease;font-weight:500;white-space:nowrap;
             padding:8px 12px;font-size:13px
         }
-        #blogMenuPanel a:hover,#blogMenuPanel a:focus-visible{background:#333;color:#fff;outline:none}
+        #blogMenuPanel a:hover{background:#333;color:#fff}
 
         .header-spacer{height:48px}
         .homepage-container{max-width:100%;margin:0;padding:0}
         .section-heading{display:none}
 
-        /* ===== FLEX MASONRY ===== */
+        /* MASONRY */
         .masonry-grid{
-            display:flex;
-            flex-wrap:nowrap;
-            align-items:flex-start;
-            gap:0;
+            display:flex;flex-wrap:nowrap;align-items:flex-start;gap:0;
         }
         .masonry-column{
-            flex:1;
-            min-width:0;
-            display:flex;
-            flex-direction:column;
-            gap:0;
+            flex:1;min-width:0;display:flex;flex-direction:column;gap:0;
         }
-        .masonry-item{
-            width:100%;
-            overflow:hidden;
+        .masonry-item,.masonry-banner-inline{
+            width:100%;overflow:hidden;
         }
         .home-grid-card{
             position:relative;overflow:hidden;
-            background:#0a0a0a;border:none;
-            display:block;
-            line-height:0;
-            transition:all .3s ease;
+            background:#0a0a0a;border:none;display:block;line-height:0;
         }
         .home-grid-card:hover{z-index:2}
         .home-grid-card:hover .home-grid-content{opacity:1}
-        .home-grid-thumb{
-            position:relative;width:100%;
-            overflow:hidden;line-height:0
-        }
+        .home-grid-thumb{position:relative;width:100%;overflow:hidden;line-height:0}
         .home-grid-thumb img{
             width:100%;height:auto;display:block;
             transition:transform .5s ease
@@ -242,115 +221,36 @@
             position:absolute;bottom:0;left:0;right:0;
             padding:20px 10px 8px;
             background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.3) 70%,transparent 100%);
-            color:#fff;z-index:2;
-            display:flex;flex-direction:column;
-            justify-content:flex-end;
-            opacity:0;
-            transition:opacity .3s ease;
-            pointer-events:none;
+            color:#fff;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
+            opacity:0;transition:opacity .3s ease;pointer-events:none;
         }
-        .home-grid-card:hover .home-grid-content,
-        .home-grid-card:focus-within .home-grid-content{opacity:1}
+        .home-grid-card:hover .home-grid-content{opacity:1}
         .home-grid-content a{pointer-events:auto}
         .home-grid-title{
-            font-size:13px;line-height:1.2;margin:0 0 2px;
-            font-weight:600;letter-spacing:-.1px;color:#fff;
+            font-size:13px;line-height:1.2;margin:0 0 2px;font-weight:600;color:#fff;
         }
-        .home-grid-title a{
-            color:#fff;text-decoration:none;
-            transition:all .15s ease;
-        }
+        .home-grid-title a{color:#fff;text-decoration:none;}
         .home-grid-title a:hover{text-decoration:underline;text-underline-offset:3px}
         .home-grid-desc{
-            font-size:10px;line-height:1.3;margin:0;
-            opacity:.75;color:rgba(255,255,255,.75);
-            display:-webkit-box;
-            -webkit-line-clamp:1;
-            -webkit-box-orient:vertical;
-            overflow:hidden;
+            font-size:10px;line-height:1.3;margin:0;opacity:.75;color:rgba(255,255,255,.75);
+            display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
         }
 
-        /* ===== FULL-WIDTH BANNER BREAK ===== */
-        .banner-break{
-            width:100%;
-            overflow:hidden;
-            background:#0a0a0a;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+        /* BANNER FULL WIDTH */
+        .banner-fullwidth{
+            width:100%;overflow:hidden;
+            background:#0a0a0a;display:flex;align-items:center;justify-content:center;
             padding:12px 0;
         }
-        .banner-break-inner{
-            width:100%;
-            max-width:100%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            overflow:hidden;
-        }
-        .banner-break-inner ins{
-            display:block!important;
-            margin:0 auto!important;
-        }
-        .banner-break-inner ins img,
-        .banner-break-inner img,
-        .banner-break-inner iframe{
-            max-width:100%!important;
-            height:auto!important;
+        .banner-fullwidth-inner{
+            width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;
         }
 
-        /* ===== IN-COLUMN BANNER ===== */
-        .masonry-banner-item{
-            width:100%;
-            overflow:hidden;
-        }
-        .home-grid-banner{
-            width:100%;
-            overflow:hidden;
-            background:#111;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+        /* BANNER INLINE */
+        .banner-inline-wrapper{
+            width:100%;overflow:hidden;
+            background:#111;display:flex;align-items:center;justify-content:center;
             padding:8px;
-        }
-        .home-grid-banner ins{
-            display:block!important;
-            margin:0 auto!important;
-            overflow:hidden!important;
-        }
-        .home-grid-banner ins img,
-        .home-grid-banner img,
-        .home-grid-banner iframe{
-            max-width:100%!important;
-            height:auto!important;
-            display:block!important;
-        }
-
-        /* ===== VERTICAL BANNER ===== */
-        .masonry-banner-vertical{
-            width:100%;
-            overflow:hidden;
-        }
-        .home-grid-banner-vertical{
-            width:100%;
-            overflow:hidden;
-            background:#111;
-            display:flex;
-            align-items:flex-start;
-            justify-content:center;
-            padding:8px;
-        }
-        .home-grid-banner-vertical ins{
-            display:block!important;
-            margin:0 auto!important;
-            overflow:hidden!important;
-        }
-        .home-grid-banner-vertical ins img,
-        .home-grid-banner-vertical img,
-        .home-grid-banner-vertical iframe{
-            max-width:100%!important;
-            height:auto!important;
-            display:block!important;
         }
 
         .home-grid-card .excerpt.spo,
@@ -360,18 +260,13 @@
         #footerPara{display:none!important}
 
         @media(max-width:768px){
-            .home-grid-title{font-size:11px}
-            .home-grid-desc{font-size:9px}
+            .home-grid-title{font-size:11px}.home-grid-desc{font-size:9px}
             .home-grid-content{padding:14px 6px 6px}
-            .banner-break{padding:8px 0}
         }
         @media(max-width:480px){
-            .home-grid-title{font-size:10px}
-            .home-grid-desc{font-size:8px}
+            .home-grid-title{font-size:10px}.home-grid-desc{font-size:8px}
             .home-grid-content{padding:10px 4px 4px}
-            .blog-title-main{font-size:13px}
-            .header-spacer{height:42px}
-            .banner-break{padding:6px 0}
+            .blog-title-main{font-size:13px}.header-spacer{height:42px}
         }
     </style>
 
@@ -381,7 +276,6 @@
         var parts = hostname.split(".");
         var fullName = parts[0];
         if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-
         function hashString(str) {
             var hash = 0;
             for (var i = 0; i < str.length; i++) { hash = ((hash << 5) - hash) + str.charCodeAt(i); hash |= 0; }
@@ -417,27 +311,25 @@
         <div id="homeFeaturedWrap" class="section-order">
             <div class="section-heading"></div>
             
-            {% assign total_posts = 50 %}
-            
-            {% assign banner_positions = "7,14,21,28,35,42,49,56" | split: "," %}
-            {% assign banner_types = "full,column,column,column,vertical,full,full,column" | split: "," %}
-            {% assign banner_files = "01,02,03,04,05,06,07,08" | split: "," %}
-            
-            {% assign post_count = 0 %}
-            {% assign banner_idx = 0 %}
+            <!-- ===== BANNER 01 - FULL WIDTH (728x102) ===== -->
+            <div class="banner-fullwidth">
+                <div class="banner-fullwidth-inner">
+                    {% include /ads/banner/01.html %}
+                </div>
+            </div>
             
             <div class="masonry-grid" id="masonryGrid">
                 {% for col in (0..5) %}
                 <div class="masonry-column" id="masonryCol{{ col }}">
-                    {% assign idx = 0 %}
-                    {% assign item_counter = 0 %}
+                    
+                    {% assign counter = 0 %}
                     
                     {% for post in site.posts limit:50 %}
-                        {% assign target_col = item_counter | modulo: 6 %}
+                        {% assign mod = counter | modulo: 6 %}
                         
-                        {% if target_col == col %}
-                            {% assign item_counter = item_counter | plus: 1 %}
+                        {% if mod == col %}
                             
+                            <!-- CARD -->
                             <div class="masonry-item">
                                 <div class="home-grid-card">
                                     {% if post.image %}
@@ -448,72 +340,74 @@
                                     </div>
                                     {% endif %}
                                     <div class="home-grid-content">
-                                        <h2 class="home-grid-title">
-                                            <a href="{{ post.url }}">{{ post.title }}</a>
-                                        </h2>
-                                        {% if post.description %}
-                                        <p class="home-grid-desc">{{ post.description }}</p>
-                                        {% endif %}
+                                        <h2 class="home-grid-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                                        {% if post.description %}<p class="home-grid-desc">{{ post.description }}</p>{% endif %}
                                     </div>
                                 </div>
                             </div>
                             
-                            {% assign global_pos = item_counter | times: 6 | minus: 6 | plus: col | plus: 1 %}
+                            <!-- BANNER 02 di card ke-12 (308x298) -->
+                            {% if counter == 12 %}
+                            <div class="masonry-banner-inline">
+                                <div class="banner-inline-wrapper">
+                                    {% include /ads/banner/02.html %}
+                                </div>
+                            </div>
+                            {% endif %}
                             
-                            {% for bp in banner_positions %}
-                                {% assign bp_int = bp | plus: 0 %}
-                                {% if global_pos == bp_int and banner_idx < 8 %}
-                                    {% assign btype = banner_types[banner_idx] %}
-                                    {% assign bfile = banner_files[banner_idx] %}
-                                    
-                                    {% if btype == "full" %}
-                                        </div></div>
-                                        <div class="banner-break">
-                                            <div class="banner-break-inner">
-                                                {% if bfile == "01" %}{% include /ads/banner/01.html %}
-                                                {% elsif bfile == "02" %}{% include /ads/banner/02.html %}
-                                                {% elsif bfile == "03" %}{% include /ads/banner/03.html %}
-                                                {% elsif bfile == "04" %}{% include /ads/banner/04.html %}
-                                                {% elsif bfile == "05" %}{% include /ads/banner/05.html %}
-                                                {% elsif bfile == "06" %}{% include /ads/banner/06.html %}
-                                                {% elsif bfile == "07" %}{% include /ads/banner/07.html %}
-                                                {% elsif bfile == "08" %}{% include /ads/banner/08.html %}
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="masonry-grid"><div class="masonry-column">
-                                    
-                                    {% elsif btype == "vertical" %}
-                                        </div></div>
-                                        <div class="banner-break">
-                                            <div class="banner-break-inner" style="max-width:200px;">
-                                                {% if bfile == "05" %}{% include /ads/banner/05.html %}{% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="masonry-grid"><div class="masonry-column">
-                                    
-                                    {% else %}
-                                        <div class="masonry-banner-item">
-                                            <div class="home-grid-banner">
-                                                {% if bfile == "02" %}{% include /ads/banner/02.html %}
-                                                {% elsif bfile == "03" %}{% include /ads/banner/03.html %}
-                                                {% elsif bfile == "04" %}{% include /ads/banner/04.html %}
-                                                {% elsif bfile == "08" %}{% include /ads/banner/08.html %}
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    
-                                    {% assign banner_idx = banner_idx | plus: 1 %}
-                                {% endif %}
-                            {% endfor %}
+                            <!-- BANNER 03 di card ke-18 (250x262) -->
+                            {% if counter == 18 %}
+                            <div class="masonry-banner-inline">
+                                <div class="banner-inline-wrapper">
+                                    {% include /ads/banner/03.html %}
+                                </div>
+                            </div>
+                            {% endif %}
                             
-                        {% else %}
-                            {% assign item_counter = item_counter | plus: 1 %}
+                            <!-- BANNER 04 di card ke-24 (300x262) -->
+                            {% if counter == 24 %}
+                            <div class="masonry-banner-inline">
+                                <div class="banner-inline-wrapper">
+                                    {% include /ads/banner/04.html %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
                         {% endif %}
+                        
+                        {% assign counter = counter | plus: 1 %}
                     {% endfor %}
+                    
                 </div>
                 {% endfor %}
+            </div>
+            
+            <!-- ===== BANNER 05 - FULL WIDTH (160x612) ===== -->
+            <div class="banner-fullwidth">
+                <div class="banner-fullwidth-inner" style="max-width:200px;">
+                    {% include /ads/banner/05.html %}
+                </div>
+            </div>
+            
+            <!-- ===== BANNER 06 - FULL WIDTH (908x270) ===== -->
+            <div class="banner-fullwidth">
+                <div class="banner-fullwidth-inner">
+                    {% include /ads/banner/06.html %}
+                </div>
+            </div>
+            
+            <!-- ===== BANNER 07 - FULL WIDTH (468x72) ===== -->
+            <div class="banner-fullwidth">
+                <div class="banner-fullwidth-inner">
+                    {% include /ads/banner/07.html %}
+                </div>
+            </div>
+            
+            <!-- ===== BANNER 08 - INLINE (308x352) ===== -->
+            <div class="banner-fullwidth">
+                <div class="banner-fullwidth-inner" style="max-width:350px;">
+                    {% include /ads/banner/08.html %}
+                </div>
             </div>
             
         </div>
@@ -522,71 +416,45 @@
 
     <script>
     (function() {
-        function fixAllBanners() {
-            document.querySelectorAll('.banner-break-inner ins, .home-grid-banner ins, .home-grid-banner-vertical ins').forEach(function(ins) {
-                var parent = ins.parentElement;
-                if (!parent) return;
-                var maxW = parent.offsetWidth - 16;
-                if (maxW < 300 && maxW > 0) {
-                    ins.style.width = maxW + 'px';
-                    ins.style.maxWidth = maxW + 'px';
-                }
-                var iframe = ins.querySelector('iframe') || parent.querySelector('iframe');
-                if (iframe && maxW < 300 && maxW > 0) {
-                    var scale = maxW / 300;
-                    iframe.style.transform = 'scale(' + scale + ')';
-                    iframe.style.transformOrigin = 'top left';
-                }
-            });
-        }
-        
         function redistributeMasonry() {
-            var allGrids = document.querySelectorAll('.masonry-grid');
-            allGrids.forEach(function(grid) {
-                var cols = grid.querySelectorAll('.masonry-column');
-                if (!cols.length) return;
-                var allItems = [];
-                cols.forEach(function(col) {
-                    var items = col.querySelectorAll('.masonry-item, .masonry-banner-item, .masonry-banner-vertical');
-                    items.forEach(function(item) { allItems.push(item); });
-                });
-                if (!allItems.length) return;
-                cols.forEach(function(col) { col.innerHTML = ''; });
-                allItems.forEach(function(item) {
-                    var shortestCol = cols[0];
-                    var shortestHeight = shortestCol.offsetHeight;
-                    for (var i = 1; i < cols.length; i++) {
-                        if (cols[i].offsetHeight < shortestHeight) {
-                            shortestHeight = cols[i].offsetHeight;
-                            shortestCol = cols[i];
-                        }
+            var grid = document.getElementById('masonryGrid');
+            if (!grid) return;
+            var cols = grid.querySelectorAll('.masonry-column');
+            if (!cols.length) return;
+            
+            var allItems = [];
+            cols.forEach(function(col) {
+                var items = col.querySelectorAll('.masonry-item, .masonry-banner-inline');
+                items.forEach(function(item) { allItems.push(item); });
+            });
+            
+            if (!allItems.length) return;
+            
+            cols.forEach(function(col) { col.innerHTML = ''; });
+            
+            allItems.forEach(function(item) {
+                var shortestCol = cols[0];
+                var shortestHeight = shortestCol.offsetHeight;
+                for (var i = 1; i < cols.length; i++) {
+                    if (cols[i].offsetHeight < shortestHeight) {
+                        shortestHeight = cols[i].offsetHeight;
+                        shortestCol = cols[i];
                     }
-                    shortestCol.appendChild(item);
-                });
+                }
+                shortestCol.appendChild(item);
             });
         }
         
-        if (document.readyState === 'complete') {
-            setTimeout(redistributeMasonry, 300);
-            setTimeout(fixAllBanners, 1000);
-            setTimeout(fixAllBanners, 3000);
-            setTimeout(fixAllBanners, 6000);
-        } else {
-            window.addEventListener('load', function() {
-                setTimeout(redistributeMasonry, 300);
-                setTimeout(fixAllBanners, 1000);
-                setTimeout(fixAllBanners, 3000);
-                setTimeout(fixAllBanners, 6000);
-            });
-        }
+        window.addEventListener('load', function() {
+            setTimeout(redistributeMasonry, 500);
+            setTimeout(redistributeMasonry, 1500);
+            setTimeout(redistributeMasonry, 3000);
+        });
         
         var resizeTimeout;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-                redistributeMasonry();
-                fixAllBanners();
-            }, 500);
+            resizeTimeout = setTimeout(redistributeMasonry, 500);
         });
     })();
     </script>
