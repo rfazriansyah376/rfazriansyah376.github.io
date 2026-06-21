@@ -195,14 +195,16 @@
         .homepage-container{max-width:100%;margin:0;padding:0}
         .section-heading{display:none}
 
-        /* MASONRY */
+        /* ===== MASONRY ===== */
         .masonry-grid{
             display:flex;flex-wrap:nowrap;align-items:flex-start;gap:0;
         }
         .masonry-column{
             flex:1;min-width:0;display:flex;flex-direction:column;gap:0;
         }
-        .masonry-item,.masonry-banner-inline{
+
+        /* ===== CARD ===== */
+        .masonry-item{
             width:100%;overflow:hidden;
         }
         .home-grid-card{
@@ -236,18 +238,8 @@
             display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
         }
 
-        /* BANNER FULL WIDTH */
-        .banner-fullwidth{
-            width:100%;overflow:hidden;
-            background:#0a0a0a;display:flex;align-items:center;justify-content:center;
-            padding:12px 0;
-        }
-        .banner-fullwidth-inner{
-            width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;
-        }
-
-        /* BANNER INLINE */
-        .banner-inline-wrapper{
+        /* ===== BANNER INLINE ===== */
+        .masonry-banner{
             width:100%;overflow:hidden;
             background:#111;display:flex;align-items:center;justify-content:center;
             padding:8px;
@@ -311,13 +303,6 @@
         <div id="homeFeaturedWrap" class="section-order">
             <div class="section-heading"></div>
             
-            <!-- ===== BANNER 01 - FULL WIDTH (728x102) ===== -->
-            <div class="banner-fullwidth">
-                <div class="banner-fullwidth-inner">
-                    {% include /ads/banner/01.html %}
-                </div>
-            </div>
-            
             <div class="masonry-grid" id="masonryGrid">
                 {% for col in (0..5) %}
                 <div class="masonry-column" id="masonryCol{{ col }}">
@@ -329,7 +314,7 @@
                         
                         {% if mod == col %}
                             
-                            <!-- CARD -->
+                            <!-- === CARD === -->
                             <div class="masonry-item">
                                 <div class="home-grid-card">
                                     {% if post.image %}
@@ -346,29 +331,74 @@
                                 </div>
                             </div>
                             
-                            <!-- BANNER 02 di card ke-12 (308x298) -->
+                            <!-- === BANNER 01 (728x102) di card ke-6 === -->
+                            {% if counter == 6 %}
+                            <div class="masonry-item">
+                                <div class="masonry-banner">
+                                    {% include /ads/banner/01.html %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- === BANNER 02 (308x298) di card ke-12 === -->
                             {% if counter == 12 %}
-                            <div class="masonry-banner-inline">
-                                <div class="banner-inline-wrapper">
+                            <div class="masonry-item">
+                                <div class="masonry-banner">
                                     {% include /ads/banner/02.html %}
                                 </div>
                             </div>
                             {% endif %}
                             
-                            <!-- BANNER 03 di card ke-18 (250x262) -->
+                            <!-- === BANNER 03 (250x262) di card ke-18 === -->
                             {% if counter == 18 %}
-                            <div class="masonry-banner-inline">
-                                <div class="banner-inline-wrapper">
+                            <div class="masonry-item">
+                                <div class="masonry-banner">
                                     {% include /ads/banner/03.html %}
                                 </div>
                             </div>
                             {% endif %}
                             
-                            <!-- BANNER 04 di card ke-24 (300x262) -->
+                            <!-- === BANNER 04 (300x262) di card ke-24 === -->
                             {% if counter == 24 %}
-                            <div class="masonry-banner-inline">
-                                <div class="banner-inline-wrapper">
+                            <div class="masonry-item">
+                                <div class="masonry-banner">
                                     {% include /ads/banner/04.html %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- === BANNER 05 (160x612) di card ke-30 === -->
+                            {% if counter == 30 %}
+                            <div class="masonry-item">
+                                <div class="masonry-banner" style="padding:4px;">
+                                    {% include /ads/banner/05.html %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- === BANNER 06 (908x270) di card ke-36 === -->
+                            {% if counter == 36 %}
+                            <div class="masonry-item">
+                                <div class="masonry-banner">
+                                    {% include /ads/banner/06.html %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- === BANNER 07 (468x72) di card ke-42 === -->
+                            {% if counter == 42 %}
+                            <div class="masonry-item">
+                                <div class="masonry-banner">
+                                    {% include /ads/banner/07.html %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- === BANNER 08 (308x352) di card ke-48 === -->
+                            {% if counter == 48 %}
+                            <div class="masonry-item">
+                                <div class="masonry-banner">
+                                    {% include /ads/banner/08.html %}
                                 </div>
                             </div>
                             {% endif %}
@@ -380,34 +410,6 @@
                     
                 </div>
                 {% endfor %}
-            </div>
-            
-            <!-- ===== BANNER 05 - FULL WIDTH (160x612) ===== -->
-            <div class="banner-fullwidth">
-                <div class="banner-fullwidth-inner" style="max-width:200px;">
-                    {% include /ads/banner/05.html %}
-                </div>
-            </div>
-            
-            <!-- ===== BANNER 06 - FULL WIDTH (908x270) ===== -->
-            <div class="banner-fullwidth">
-                <div class="banner-fullwidth-inner">
-                    {% include /ads/banner/06.html %}
-                </div>
-            </div>
-            
-            <!-- ===== BANNER 07 - FULL WIDTH (468x72) ===== -->
-            <div class="banner-fullwidth">
-                <div class="banner-fullwidth-inner">
-                    {% include /ads/banner/07.html %}
-                </div>
-            </div>
-            
-            <!-- ===== BANNER 08 - INLINE (308x352) ===== -->
-            <div class="banner-fullwidth">
-                <div class="banner-fullwidth-inner" style="max-width:350px;">
-                    {% include /ads/banner/08.html %}
-                </div>
             </div>
             
         </div>
@@ -424,7 +426,7 @@
             
             var allItems = [];
             cols.forEach(function(col) {
-                var items = col.querySelectorAll('.masonry-item, .masonry-banner-inline');
+                var items = col.querySelectorAll('.masonry-item');
                 items.forEach(function(item) { allItems.push(item); });
             });
             
@@ -446,9 +448,9 @@
         }
         
         window.addEventListener('load', function() {
-            setTimeout(redistributeMasonry, 500);
-            setTimeout(redistributeMasonry, 1500);
-            setTimeout(redistributeMasonry, 3000);
+            setTimeout(redistributeMasonry, 300);
+            setTimeout(redistributeMasonry, 800);
+            setTimeout(redistributeMasonry, 2000);
         });
         
         var resizeTimeout;
