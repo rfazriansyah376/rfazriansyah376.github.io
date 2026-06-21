@@ -17,7 +17,7 @@
         document.title = displayDomain + " - Beautiful Girls Photo Gallery";
         var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
         metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world. Explore elegant portraits, glamour shots, and captivating beauty galleries.";
+        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world.";
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
         var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
         metaAuthor.name = "author";
@@ -43,7 +43,6 @@
 </head>
 <body>
 
-    <!-- ========== HEADER ========== -->
     <header id="blogHeader" class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
@@ -95,10 +94,9 @@
     })();
     </script>
 
-    <!-- ========== BILLBOARD (Banner 01) ========== -->
+    <!-- BILLBOARD -->
     <div class="ad-billboard">{% include /ads/banner/01.html %}</div>
 
-    <!-- ========== MAIN LAYOUT ========== -->
     <div class="main-layout">
 
         <aside class="sidebar sidebar-left">
@@ -108,33 +106,33 @@
         <main class="content-area">
 
             <!-- ========================================== -->
-            <!-- SECTION 1: HERO SPOTLIGHT (post 1-5) -->
+            <!-- HERO MASONRY (post 1-5) -->
             <!-- ========================================== -->
-            <div class="section-spotlight">
-                {% assign spotlight_posts = site.posts | slice: 0, 5 %}
-                {% if spotlight_posts[0] %}
-                {% assign hero = spotlight_posts[0] %}
-                <div class="hero-card">
-                    {% if hero.image %}
-                    <a href="{{ hero.url }}" class="hero-img">
-                        <img src="{{ hero.image | relative_url }}" alt="{{ hero.title }}" loading="eager">
+            <div class="hero-masonry">
+                {% assign hero_posts = site.posts | slice: 0, 5 %}
+                
+                <!-- Hero besar -->
+                {% if hero_posts[0] %}
+                {% assign h = hero_posts[0] %}
+                <div class="hero-main">
+                    <a href="{{ h.url }}" class="hero-main-link">
+                        {% if h.image %}<img src="{{ h.image | relative_url }}" alt="{{ h.title }}">{% endif %}
+                        <div class="hero-main-body">
+                            <h2>{{ h.title }}</h2>
+                            {% if h.description %}<p>{{ h.description }}</p>{% endif %}
+                        </div>
                     </a>
-                    {% endif %}
-                    <div class="hero-body">
-                        <h2 class="hero-title"><a href="{{ hero.url }}">{{ hero.title }}</a></h2>
-                        {% if hero.description %}<p class="hero-desc">{{ hero.description }}</p>{% endif %}
-                    </div>
                 </div>
                 {% endif %}
-                <div class="spotlight-grid">
-                    {% for post in spotlight_posts offset:1 %}
-                    <div class="spotlight-item">
-                        {% if post.image %}
-                        <a href="{{ post.url }}" class="spotlight-img">
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                
+                <!-- 4 kecil -->
+                <div class="hero-side">
+                    {% for post in hero_posts offset:1 %}
+                    <div class="hero-side-item">
+                        <a href="{{ post.url }}">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}">{% endif %}
+                            <span class="hero-side-label">{{ post.title }}</span>
                         </a>
-                        {% endif %}
-                        <div class="spotlight-label">{{ post.title }}</div>
                     </div>
                     {% endfor %}
                 </div>
@@ -147,27 +145,21 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- SECTION 2: MASONRY (post 6-21 = 16 post) -->
+            <!-- PURE MASONRY FEED (post 6-35 = 30 post) -->
             <!-- ========================================== -->
-            <div class="section-title">Latest Galleries</div>
+            <div class="section-title">Latest Updates</div>
             <div class="masonry-grid" id="masonryGrid">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign counter = 0 %}
-                    {% for post in site.posts limit:16 offset:5 %}
+                    {% for post in site.posts limit:30 offset:5 %}
                         {% assign mod = counter | modulo: 4 %}
                         {% if mod == col %}
                             <div class="masonry-item">
-                                <div class="photo-card">
-                                    {% if post.image %}
-                                    <div class="photo-thumb">
-                                        <a href="{{ post.url }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy"></a>
-                                    </div>
-                                    {% endif %}
-                                    <div class="photo-overlay">
-                                        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-                                    </div>
-                                </div>
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                    <span class="masonry-label">{{ post.title }}</span>
+                                </a>
                             </div>
                         {% endif %}
                         {% assign counter = counter | plus: 1 %}
@@ -176,58 +168,33 @@
                 {% endfor %}
             </div>
 
-            <!-- BANNER 06 (Leaderboard) -->
+            <!-- LEADERBOARD -->
             <div class="ad-leaderboard">{% include /ads/banner/06.html %}</div>
 
             <!-- ========================================== -->
-            <!-- SECTION 3: HORIZONTAL SCROLL (post 22-29 = 8 post) -->
+            <!-- FEATURED SLIDER (post 36-50 = 15 post) -->
             <!-- ========================================== -->
-            <div class="section-title">Trending Now</div>
-            <div class="scroll-row" id="scrollRow">
-                {% for post in site.posts limit:8 offset:21 %}
-                <div class="scroll-card">
-                    {% if post.image %}
-                    <a href="{{ post.url }}" class="scroll-img">
-                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+            <div class="section-title">Featured Collections</div>
+            <div class="slider-row">
+                {% for post in site.posts limit:15 offset:35 %}
+                <div class="slider-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <div class="slider-body">
+                            <strong>{{ post.title }}</strong>
+                            {% if post.description %}<span>{{ post.description }}</span>{% endif %}
+                        </div>
                     </a>
-                    {% endif %}
-                    <div class="scroll-info">
-                        <a href="{{ post.url }}">{{ post.title }}</a>
-                    </div>
                 </div>
                 {% endfor %}
             </div>
 
-            <!-- BANNER 04 + 08 -->
-            <div class="ad-twin">
-                <div class="ad-twin-item">{% include /ads/banner/04.html %}</div>
-                <div class="ad-twin-item">{% include /ads/banner/08.html %}</div>
+            <!-- BANNER 04 + 08 + 07 -->
+            <div class="ad-triple">
+                <div class="ad-triple-item">{% include /ads/banner/04.html %}</div>
+                <div class="ad-triple-item">{% include /ads/banner/08.html %}</div>
+                <div class="ad-triple-item">{% include /ads/banner/07.html %}</div>
             </div>
-
-            <!-- ========================================== -->
-            <!-- SECTION 4: CLASSIC GRID (post 30-50 = 21 post) -->
-            <!-- ========================================== -->
-            <div class="section-title">More to Explore</div>
-            <div class="classic-grid">
-                {% for post in site.posts limit:21 offset:29 %}
-                <div class="classic-item">
-                    <div class="photo-card">
-                        {% if post.image %}
-                        <div class="photo-thumb">
-                            <a href="{{ post.url }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy"></a>
-                        </div>
-                        {% endif %}
-                        <div class="photo-overlay">
-                            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-                            {% if post.description %}<p class="photo-desc">{{ post.description }}</p>{% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- BANNER 07 -->
-            <div class="ad-footer-single">{% include /ads/banner/07.html %}</div>
 
         </main>
 
@@ -235,12 +202,9 @@
             <div class="sticky-ad">
                 <div class="ad-placeholder">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.25">
-                        <rect x="3" y="3" width="18" height="18" rx="3"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <path d="M21 15l-5-5L5 21"/>
+                        <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
                     </svg>
-                    <span>Ad Space</span>
-                    <span>300 x 250</span>
+                    <span>Ad Space</span><span>300 x 250</span>
                     <span class="available-tag">Available</span>
                 </div>
             </div>
@@ -260,11 +224,9 @@
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;overflow-x:visible;
         }
 
-        /* ===== HEADER ===== */
         .site-header{
             width:1200px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
-            background:rgba(0,0,0,.97);backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(255,255,255,.05);padding:10px 20px;
+            background:rgba(0,0,0,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:10px 20px;
         }
         .header-inner{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
@@ -279,76 +241,61 @@
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px;transition:all .15s}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        /* ===== AD SECTIONS ===== */
+        /* ===== AD ===== */
         .ad-billboard{margin-top:52px;padding:18px 0 14px;background:#0d0d0d;border-bottom:1px solid rgba(255,255,255,.03);display:flex;justify-content:center}
         .ad-leaderboard{padding:18px 0;background:#0d0d0d;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03);display:flex;justify-content:center;margin:8px 0}
         .ad-twin{display:flex;gap:12px;padding:16px 0;max-width:620px;margin:0 auto}
         .ad-twin-item{flex:1;background:#111;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.03)}
-        .ad-footer-single{padding:18px 0;background:#0d0d0d;border-top:1px solid rgba(255,255,255,.03);display:flex;justify-content:center;margin-top:8px}
+        .ad-triple{display:flex;gap:10px;padding:16px 0 20px}
+        .ad-triple-item{flex:1;background:#111;border-radius:8px;padding:14px 10px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.03);min-height:100px}
 
-        /* ===== MAIN LAYOUT ===== */
+        /* ===== LAYOUT ===== */
         .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
         .sidebar{width:180px;flex-shrink:0;padding:16px 8px;position:relative}
         .sidebar-left{border-right:1px solid rgba(255,255,255,.03)}
         .sidebar-right{border-left:1px solid rgba(255,255,255,.03)}
         .sticky-ad{position:sticky;top:70px;display:flex;flex-direction:column;align-items:center}
         .content-area{flex:1;min-width:0;padding:8px 0}
+        .section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#777;padding:18px 0 10px 0;margin:0}
 
-        /* ===== SECTION TITLE ===== */
-        .section-title{
-            font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
-            color:#888;padding:16px 0 10px 0;margin:0;
-        }
-
-        /* ===== HERO SPOTLIGHT ===== */
-        .section-spotlight{display:flex;gap:8px;margin-bottom:4px}
-        .hero-card{flex:0 0 55%;position:relative;overflow:hidden;border-radius:6px;background:#0a0a0a;line-height:0}
-        .hero-img{display:block;line-height:0}
-        .hero-img img{width:100%;height:420px;object-fit:cover;display:block;transition:transform .5s ease}
-        .hero-card:hover .hero-img img{transform:scale(1.03)}
-        .hero-body{position:absolute;bottom:0;left:0;right:0;padding:30px 20px 18px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,transparent 100%);color:#fff}
-        .hero-title{font-size:22px;font-weight:700;margin:0 0 6px;line-height:1.2}
-        .hero-title a{color:#fff;text-decoration:none}
-        .hero-desc{font-size:12px;opacity:.75;margin:0;line-height:1.4}
-        .spotlight-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px}
-        .spotlight-item{position:relative;overflow:hidden;border-radius:6px;background:#0a0a0a;line-height:0}
-        .spotlight-img{display:block;line-height:0}
-        .spotlight-img img{width:100%;height:206px;object-fit:cover;display:block;transition:transform .5s ease}
-        .spotlight-item:hover .spotlight-img img{transform:scale(1.04)}
-        .spotlight-label{position:absolute;bottom:0;left:0;right:0;padding:12px 10px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        /* ===== HERO MASONRY ===== */
+        .hero-masonry{display:flex;gap:8px;margin-bottom:4px}
+        .hero-main{flex:0 0 56%;border-radius:6px;overflow:hidden;background:#0a0a0a}
+        .hero-main-link{display:block;position:relative;line-height:0}
+        .hero-main-link img{width:100%;height:440px;object-fit:cover;object-position:center top;display:block;transition:transform .6s ease}
+        .hero-main:hover img{transform:scale(1.03)}
+        .hero-main-body{position:absolute;bottom:0;left:0;right:0;padding:30px 20px 18px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.2) 80%,transparent 100%);color:#fff}
+        .hero-main-body h2{font-size:20px;font-weight:700;margin:0 0 4px;line-height:1.2}
+        .hero-main-body p{font-size:12px;opacity:.75;margin:0;line-height:1.4}
+        .hero-side{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px}
+        .hero-side-item{border-radius:6px;overflow:hidden;background:#0a0a0a;position:relative}
+        .hero-side-item a{display:block;position:relative;line-height:0}
+        .hero-side-item img{width:100%;height:216px;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+        .hero-side-item:hover img{transform:scale(1.04)}
+        .hero-side-label{position:absolute;bottom:0;left:0;right:0;padding:12px 10px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
         /* ===== MASONRY ===== */
-        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:0}
-        .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:0}
-        .masonry-item{width:100%;overflow:hidden}
+        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:3px}
+        .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+        .masonry-item{overflow:hidden;border-radius:4px;background:#0a0a0a}
+        .masonry-link{display:block;position:relative;line-height:0}
+        .masonry-link img{width:100%;height:auto;display:block;transition:transform .5s ease}
+        .masonry-item:hover img{transform:scale(1.03)}
+        .masonry-label{position:absolute;bottom:0;left:0;right:0;padding:12px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:10px;font-weight:600;opacity:0;transition:opacity .3s ease;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .masonry-item:hover .masonry-label{opacity:1}
 
-        /* ===== PHOTO CARD ===== */
-        .photo-card{position:relative;overflow:hidden;background:#0a0a0a;display:block;line-height:0}
-        .photo-card:hover{z-index:2}
-        .photo-card:hover .photo-overlay{opacity:1}
-        .photo-thumb{position:relative;width:100%;overflow:hidden;line-height:0}
-        .photo-thumb img{width:100%;height:auto;display:block;transition:transform .5s ease}
-        .photo-card:hover .photo-thumb img{transform:scale(1.03)}
-        .photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,transparent 100%);color:#fff;z-index:2;opacity:0;transition:opacity .3s ease;pointer-events:none}
-        .photo-card:hover .photo-overlay{opacity:1}
-        .photo-overlay a{pointer-events:auto;color:#fff;text-decoration:none;font-size:11px;font-weight:600}
-        .photo-desc{font-size:9px;opacity:.65;margin:2px 0 0;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
-
-        /* ===== HORIZONTAL SCROLL ===== */
-        .scroll-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
-        .scroll-row::-webkit-scrollbar{height:3px}
-        .scroll-row::-webkit-scrollbar-track{background:#111}
-        .scroll-row::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
-        .scroll-card{flex:0 0 200px;border-radius:6px;overflow:hidden;background:#0a0a0a}
-        .scroll-img{display:block;line-height:0}
-        .scroll-img img{width:100%;height:260px;object-fit:cover;display:block;transition:transform .5s ease}
-        .scroll-card:hover .scroll-img img{transform:scale(1.04)}
-        .scroll-info{padding:10px 8px}
-        .scroll-info a{color:#fff;text-decoration:none;font-size:11px;font-weight:600;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-
-        /* ===== CLASSIC GRID ===== */
-        .classic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-        .classic-item{overflow:hidden;border-radius:4px}
+        /* ===== SLIDER ===== */
+        .slider-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+        .slider-row::-webkit-scrollbar{height:3px}
+        .slider-row::-webkit-scrollbar-track{background:#111}
+        .slider-row::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+        .slider-card{flex:0 0 210px;border-radius:6px;overflow:hidden;background:#0a0a0a}
+        .slider-card a{display:block}
+        .slider-card img{width:100%;height:280px;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+        .slider-card:hover img{transform:scale(1.04)}
+        .slider-body{padding:12px 10px}
+        .slider-body strong{display:block;font-size:12px;line-height:1.3;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .slider-body span{display:block;font-size:10px;color:#888;margin-top:4px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 
         /* ===== PLACEHOLDER ===== */
         .ad-placeholder{background:#111;border-radius:8px;padding:20px 14px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#444;font-size:11px;text-align:center;border:1px dashed rgba(255,255,255,.05)}
