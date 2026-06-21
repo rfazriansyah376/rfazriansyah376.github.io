@@ -202,11 +202,12 @@
         .homepage-container{max-width:100%;margin:0;padding:0}
         .section-heading{display:none}
 
-        /* ===== MASONRY GRID ===== */
+        /* ===== FLEX COLUMN MASONRY ===== */
         .masonry-grid{
             display:flex;
-            flex-wrap:wrap;
+            flex-wrap:nowrap;
             align-items:flex-start;
+            gap:0;
         }
         
         .masonry-column{
@@ -214,6 +215,7 @@
             min-width:0;
             display:flex;
             flex-direction:column;
+            gap:0;
         }
         
         .masonry-item{
@@ -223,7 +225,7 @@
         
         .home-grid-card{
             position:relative;overflow:hidden;
-            background:#111;border:none;
+            background:#0a0a0a;border:none;
             display:block;
             line-height:0;
             transition:all .3s ease;
@@ -252,6 +254,8 @@
             transition:opacity .3s ease;
             pointer-events:none;
         }
+        .home-grid-card:hover .home-grid-content,
+        .home-grid-card:focus-within .home-grid-content{opacity:1}
         .home-grid-content a{pointer-events:auto}
         
         .home-grid-title{
@@ -295,13 +299,7 @@
             display:none!important;
         }
 
-        @media(min-width:769px) and (max-width:1099px){
-            .home-grid-title{font-size:11px}
-            .home-grid-desc{font-size:9px}
-            .home-grid-content{padding:14px 6px 6px}
-            .home-grid-banner{min-height:80px}
-        }
-        @media(min-width:481px) and (max-width:768px){
+        @media(max-width:768px){
             .home-grid-title{font-size:11px}
             .home-grid-desc{font-size:9px}
             .home-grid-content{padding:14px 6px 6px}
@@ -372,155 +370,191 @@
 
         <div id="homeFeaturedWrap" class="section-order">
             <div class="section-heading"></div>
+            
+            {% comment %}===== KUMPULKAN SEMUA ITEM ====={% endcomment %}
+            {% assign total_posts = 50 %}
+            {% assign banner_spacing = total_posts | divided_by: 8 %}
+            {% assign remainder = total_posts | modulo: 8 %}
+            {% assign banner_counter = 0 %}
+            {% assign next_banner_at = banner_spacing | plus: 1 %}
+            {% assign offset_counter = 0 %}
+            
+            {% assign items = "" | split: "" %}
+            
+            {% for post in site.posts limit:50 %}
+                {% assign item_type = "card" %}
+                {% assign item_data = post.url | append: "|||" | append: post.title | append: "|||" | append: post.image | append: "|||" | append: post.description %}
+                {% assign item_entry = item_type | append: ":::" | append: item_data %}
+                {% assign items = items | push: item_entry %}
+                
+                {% if forloop.index == next_banner_at and banner_counter < 8 %}
+                    {% assign banner_counter = banner_counter | plus: 1 %}
+                    {% assign banner_num = banner_counter %}
+                    {% if banner_num < 10 %}
+                        {% assign banner_num = "0" | append: banner_num %}
+                    {% endif %}
+                    {% assign item_entry = "banner:::" | append: banner_num %}
+                    {% assign items = items | push: item_entry %}
+                    
+                    {% assign offset_counter = offset_counter | plus: 1 %}
+                    {% if offset_counter <= remainder %}
+                        {% assign next_banner_at = next_banner_at | plus: banner_spacing | plus: 1 %}
+                    {% else %}
+                        {% assign next_banner_at = next_banner_at | plus: banner_spacing %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            
+            {% comment %}===== DISTRIBUSI KE KOLOM (ROUND-ROBIN) ====={% endcomment %}
+            {% assign col_count = 6 %}
+            {% assign columns = "" | split: "" %}
+            {% for i in (1..col_count) %}
+                {% assign columns = columns | push: "" %}
+            {% endfor %}
+            
+            {% assign item_count = items | size %}
+            {% for i in (0..item_count) %}
+                {% if i < item_count %}
+                    {% assign col_index = i | modulo: col_count %}
+                    {% assign item = items[i] %}
+                    {% assign parts = item | split: ":::" %}
+                    {% assign type = parts[0] %}
+                    
+                    {% if type == "card" %}
+                        {% assign data_parts = parts[1] | split: "|||" %}
+                        {% assign post_url = data_parts[0] %}
+                        {% assign post_title = data_parts[1] %}
+                        {% assign post_image = data_parts[2] %}
+                        {% assign post_desc = data_parts[3] %}
+                        
+                        {% capture card_html %}
+                        <div class="masonry-item">
+                            <div class="home-grid-card">
+                                {% if post_image and post_image != "" %}
+                                <div class="home-grid-thumb">
+                                    <a href="{{ post_url }}" aria-label="{{ post_title }}">
+                                        <img src="{{ post_image | relative_url }}" alt="{{ post_title }}" loading="lazy" decoding="async">
+                                    </a>
+                                </div>
+                                {% endif %}
+                                <div class="home-grid-content">
+                                    <h2 class="home-grid-title">
+                                        <a href="{{ post_url }}">{{ post_title }}</a>
+                                    </h2>
+                                    {% if post_desc and post_desc != "" %}
+                                    <p class="home-grid-desc">{{ post_desc }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endcapture %}
+                        
+                    {% elsif type == "banner" %}
+                        {% assign banner_num = parts[1] %}
+                        {% capture card_html %}
+                        <div class="masonry-banner-item">
+                            <div class="home-grid-banner">
+                                {% if banner_num == "01" %}
+                                    {% include /ads/banner/01.html %}
+                                {% elsif banner_num == "02" %}
+                                    {% include /ads/banner/02.html %}
+                                {% elsif banner_num == "03" %}
+                                    {% include /ads/banner/03.html %}
+                                {% elsif banner_num == "04" %}
+                                    {% include /ads/banner/04.html %}
+                                {% elsif banner_num == "05" %}
+                                    {% include /ads/banner/05.html %}
+                                {% elsif banner_num == "06" %}
+                                    {% include /ads/banner/06.html %}
+                                {% elsif banner_num == "07" %}
+                                    {% include /ads/banner/07.html %}
+                                {% elsif banner_num == "08" %}
+                                    {% include /ads/banner/08.html %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endcapture %}
+                    {% endif %}
+                    
+                    {% assign columns = columns | push: card_html %}
+                {% endif %}
+            {% endfor %}
+            
+            {% comment %}===== RENDER KOLOM ====={% endcomment %}
             <div class="masonry-grid" id="masonryGrid">
-                <!-- Kolom akan diisi oleh JavaScript -->
+                {% for col in (0..5) %}
+                <div class="masonry-column" id="masonryCol{{ col }}">
+                    {% assign col_items = "" | split: "" %}
+                    {% assign idx = 0 %}
+                    {% for item in columns %}
+                        {% assign target_col = idx | modulo: 6 %}
+                        {% if target_col == col %}
+                            {{ item }}
+                        {% endif %}
+                        {% assign idx = idx | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
             </div>
+            
         </div>
 
     </div>
-
+    
     <script>
+    // Redistribusi item ke shortest column setelah gambar load
     (function() {
-        var allItems = [];
-        
-        {% assign total_posts = 50 %}
-        {% assign banner_spacing = total_posts | divided_by: 8 %}
-        {% assign remainder = total_posts | modulo: 8 %}
-        
-        {% assign banner_counter = 0 %}
-        {% assign next_banner_at = banner_spacing | plus: 1 %}
-        {% assign offset_counter = 0 %}
-        
-        {% for post in site.posts limit:50 %}
-            allItems.push({
-                type: 'card',
-                image: '{{ post.image | relative_url }}',
-                url: '{{ post.url }}',
-                title: '{{ post.title | escape }}',
-                description: '{{ post.description | default: "" | escape }}',
-                alt: '{{ post.title | escape }}'
-            });
-            
-            {% if forloop.index == next_banner_at and banner_counter < 8 %}
-                {% assign banner_counter = banner_counter | plus: 1 %}
-                allItems.push({
-                    type: 'banner',
-                    bannerNum: {{ banner_counter }}
-                });
-                
-                {% assign offset_counter = offset_counter | plus: 1 %}
-                {% if offset_counter <= remainder %}
-                    {% assign next_banner_at = next_banner_at | plus: banner_spacing | plus: 1 %}
-                {% else %}
-                    {% assign next_banner_at = next_banner_at | plus: banner_spacing %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-        
-        // Fungsi untuk membuat elemen card
-        function createCard(item) {
-            var wrapper = document.createElement('div');
-            wrapper.className = 'masonry-item';
-            wrapper.innerHTML = 
-                '<div class="home-grid-card">' +
-                    (item.image ? 
-                    '<div class="home-grid-thumb">' +
-                        '<a href="' + item.url + '" aria-label="' + item.alt + '">' +
-                            '<img src="' + item.image + '" alt="' + item.alt + '" loading="lazy" decoding="async">' +
-                        '</a>' +
-                    '</div>' : '') +
-                    '<div class="home-grid-content">' +
-                        '<h2 class="home-grid-title">' +
-                            '<a href="' + item.url + '">' + item.title + '</a>' +
-                        '</h2>' +
-                        (item.description ? '<p class="home-grid-desc">' + item.description + '</p>' : '') +
-                    '</div>' +
-                '</div>';
-            return wrapper;
-        }
-        
-        // Fungsi untuk membuat elemen banner
-        function createBanner(bannerNum) {
-            var wrapper = document.createElement('div');
-            wrapper.className = 'masonry-banner-item';
-            wrapper.innerHTML = 
-                '<div class="home-grid-banner">' +
-                    '<!-- {% include /ads/banner/' + String(bannerNum).padStart(2, '0') + '.html %} -->' +
-                    '<span style="color:#555;font-size:12px">Ad Banner ' + String(bannerNum).padStart(2, '0') + '</span>' +
-                '</div>';
-            return wrapper;
-        }
-        
-        // Fungsi dapatkan jumlah kolom
-        function getColumnCount() {
-            var w = window.innerWidth;
-            if (w >= 1800) return 8;
-            if (w >= 1400) return 7;
-            if (w >= 1100) return 6;
-            if (w >= 769) return 5;
-            if (w >= 481) return 3;
-            return 2;
-        }
-        
-        // Fungsi distribusi item ke kolom
-        function distributeItems() {
+        function redistributeMasonry() {
             var grid = document.getElementById('masonryGrid');
-            var colCount = getColumnCount();
+            if (!grid) return;
             
-            // Hapus semua kolom lama
-            grid.innerHTML = '';
+            var cols = grid.querySelectorAll('.masonry-column');
+            if (!cols.length) return;
             
-            // Buat kolom baru
-            var columns = [];
-            for (var i = 0; i < colCount; i++) {
-                var col = document.createElement('div');
-                col.className = 'masonry-column';
-                grid.appendChild(col);
-                columns.push(col);
-            }
+            // Kumpulkan semua item
+            var allItems = [];
+            cols.forEach(function(col) {
+                var items = col.querySelectorAll('.masonry-item, .masonry-banner-item');
+                items.forEach(function(item) {
+                    allItems.push(item);
+                });
+                col.innerHTML = '';
+            });
             
-            // Distribusi item — pakai shortest column
-            var colHeights = new Array(colCount).fill(0);
-            
-            allItems.forEach(function(item, index) {
-                var shortestCol = colHeights.indexOf(Math.min.apply(null, colHeights));
-                var element;
+            // Distribusi ulang ke shortest column
+            allItems.forEach(function(item) {
+                var shortestCol = cols[0];
+                var shortestHeight = shortestCol.offsetHeight;
                 
-                if (item.type === 'banner') {
-                    element = createBanner(item.bannerNum);
-                } else {
-                    element = createCard(item);
+                for (var i = 1; i < cols.length; i++) {
+                    if (cols[i].offsetHeight < shortestHeight) {
+                        shortestHeight = cols[i].offsetHeight;
+                        shortestCol = cols[i];
+                    }
                 }
-                
-                columns[shortestCol].appendChild(element);
-                
-                // Estimasi tinggi — banner selalu lebih pendek dari gambar
-                var estimatedHeight;
-                if (item.type === 'banner') {
-                    estimatedHeight = 100;
-                } else {
-                    estimatedHeight = 250 + (Math.random() * 200);
-                }
-                colHeights[shortestCol] += estimatedHeight;
+                shortestCol.appendChild(item);
             });
         }
         
-        // Inisialisasi
-        distributeItems();
+        // Jalankan setelah load
+        if (document.readyState === 'complete') {
+            setTimeout(redistributeMasonry, 300);
+            setTimeout(redistributeMasonry, 800);
+            setTimeout(redistributeMasonry, 2000);
+        } else {
+            window.addEventListener('load', function() {
+                setTimeout(redistributeMasonry, 300);
+                setTimeout(redistributeMasonry, 800);
+                setTimeout(redistributeMasonry, 2000);
+            });
+        }
         
-        // Re-layout saat resize
+        // Re-distribute saat resize
         var resizeTimeout;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(distributeItems, 200);
+            resizeTimeout = setTimeout(redistributeMasonry, 300);
         });
-        
-        // Re-layout setelah gambar load
-        window.addEventListener('load', function() {
-            setTimeout(distributeItems, 500);
-            setTimeout(distributeItems, 1500);
-        });
-        
     })();
     </script>
 
