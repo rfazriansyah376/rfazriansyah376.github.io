@@ -278,6 +278,7 @@
             overflow:hidden;
         }
 
+        /* ===== BANNER ITEM ===== */
         .masonry-banner-item{
             width:100%;
             overflow:hidden;
@@ -287,8 +288,22 @@
             width:100%;
             overflow:hidden;
             background:#111;
-            display:flex;align-items:center;justify-content:center;
-            min-height:100px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:10px;
+            min-height:280px;
+        }
+        .home-grid-banner center{
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .home-grid-banner ins,
+        .home-grid-banner ins img{
+            max-width:100%!important;
+            height:auto!important;
         }
 
         .home-grid-card .excerpt.spo,
@@ -303,13 +318,19 @@
             .home-grid-title{font-size:11px}
             .home-grid-desc{font-size:9px}
             .home-grid-content{padding:14px 6px 6px}
-            .home-grid-banner{min-height:80px}
+            .home-grid-banner{
+                min-height:200px;
+                padding:6px;
+            }
         }
         @media(max-width:480px){
             .home-grid-title{font-size:10px}
             .home-grid-desc{font-size:8px}
             .home-grid-content{padding:10px 4px 4px}
-            .home-grid-banner{min-height:60px}
+            .home-grid-banner{
+                min-height:160px;
+                padding:4px;
+            }
             .blog-title-main{font-size:13px}
             .header-spacer{height:42px}
         }
@@ -371,7 +392,6 @@
         <div id="homeFeaturedWrap" class="section-order">
             <div class="section-heading"></div>
             
-            {% comment %}===== KUMPULKAN SEMUA ITEM ====={% endcomment %}
             {% assign total_posts = 50 %}
             {% assign banner_spacing = total_posts | divided_by: 8 %}
             {% assign remainder = total_posts | modulo: 8 %}
@@ -405,91 +425,69 @@
                 {% endif %}
             {% endfor %}
             
-            {% comment %}===== DISTRIBUSI KE KOLOM (ROUND-ROBIN) ====={% endcomment %}
             {% assign col_count = 6 %}
-            {% assign columns = "" | split: "" %}
-            {% for i in (1..col_count) %}
-                {% assign columns = columns | push: "" %}
-            {% endfor %}
             
-            {% assign item_count = items | size %}
-            {% for i in (0..item_count) %}
-                {% if i < item_count %}
-                    {% assign col_index = i | modulo: col_count %}
-                    {% assign item = items[i] %}
-                    {% assign parts = item | split: ":::" %}
-                    {% assign type = parts[0] %}
-                    
-                    {% if type == "card" %}
-                        {% assign data_parts = parts[1] | split: "|||" %}
-                        {% assign post_url = data_parts[0] %}
-                        {% assign post_title = data_parts[1] %}
-                        {% assign post_image = data_parts[2] %}
-                        {% assign post_desc = data_parts[3] %}
-                        
-                        {% capture card_html %}
-                        <div class="masonry-item">
-                            <div class="home-grid-card">
-                                {% if post_image and post_image != "" %}
-                                <div class="home-grid-thumb">
-                                    <a href="{{ post_url }}" aria-label="{{ post_title }}">
-                                        <img src="{{ post_image | relative_url }}" alt="{{ post_title }}" loading="lazy" decoding="async">
-                                    </a>
-                                </div>
-                                {% endif %}
-                                <div class="home-grid-content">
-                                    <h2 class="home-grid-title">
-                                        <a href="{{ post_url }}">{{ post_title }}</a>
-                                    </h2>
-                                    {% if post_desc and post_desc != "" %}
-                                    <p class="home-grid-desc">{{ post_desc }}</p>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        {% endcapture %}
-                        
-                    {% elsif type == "banner" %}
-                        {% assign banner_num = parts[1] %}
-                        {% capture card_html %}
-                        <div class="masonry-banner-item">
-                            <div class="home-grid-banner">
-                                {% if banner_num == "01" %}
-                                    {% include /ads/banner/01.html %}
-                                {% elsif banner_num == "02" %}
-                                    {% include /ads/banner/02.html %}
-                                {% elsif banner_num == "03" %}
-                                    {% include /ads/banner/03.html %}
-                                {% elsif banner_num == "04" %}
-                                    {% include /ads/banner/04.html %}
-                                {% elsif banner_num == "05" %}
-                                    {% include /ads/banner/05.html %}
-                                {% elsif banner_num == "06" %}
-                                    {% include /ads/banner/06.html %}
-                                {% elsif banner_num == "07" %}
-                                    {% include /ads/banner/07.html %}
-                                {% elsif banner_num == "08" %}
-                                    {% include /ads/banner/08.html %}
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% endcapture %}
-                    {% endif %}
-                    
-                    {% assign columns = columns | push: card_html %}
-                {% endif %}
-            {% endfor %}
-            
-            {% comment %}===== RENDER KOLOM ====={% endcomment %}
             <div class="masonry-grid" id="masonryGrid">
                 {% for col in (0..5) %}
                 <div class="masonry-column" id="masonryCol{{ col }}">
-                    {% assign col_items = "" | split: "" %}
                     {% assign idx = 0 %}
-                    {% for item in columns %}
+                    {% for item in items %}
                         {% assign target_col = idx | modulo: 6 %}
                         {% if target_col == col %}
-                            {{ item }}
+                            {% assign parts = item | split: ":::" %}
+                            {% assign type = parts[0] %}
+                            
+                            {% if type == "card" %}
+                                {% assign data_parts = parts[1] | split: "|||" %}
+                                {% assign post_url = data_parts[0] %}
+                                {% assign post_title = data_parts[1] %}
+                                {% assign post_image = data_parts[2] %}
+                                {% assign post_desc = data_parts[3] %}
+                                
+                                <div class="masonry-item">
+                                    <div class="home-grid-card">
+                                        {% if post_image and post_image != "" %}
+                                        <div class="home-grid-thumb">
+                                            <a href="{{ post_url }}" aria-label="{{ post_title }}">
+                                                <img src="{{ post_image | relative_url }}" alt="{{ post_title }}" loading="lazy" decoding="async">
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                        <div class="home-grid-content">
+                                            <h2 class="home-grid-title">
+                                                <a href="{{ post_url }}">{{ post_title }}</a>
+                                            </h2>
+                                            {% if post_desc and post_desc != "" %}
+                                            <p class="home-grid-desc">{{ post_desc }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            {% elsif type == "banner" %}
+                                {% assign banner_num = parts[1] %}
+                                <div class="masonry-banner-item">
+                                    <div class="home-grid-banner">
+                                        {% if banner_num == "01" %}
+                                            {% include /ads/banner/01.html %}
+                                        {% elsif banner_num == "02" %}
+                                            {% include /ads/banner/02.html %}
+                                        {% elsif banner_num == "03" %}
+                                            {% include /ads/banner/03.html %}
+                                        {% elsif banner_num == "04" %}
+                                            {% include /ads/banner/04.html %}
+                                        {% elsif banner_num == "05" %}
+                                            {% include /ads/banner/05.html %}
+                                        {% elsif banner_num == "06" %}
+                                            {% include /ads/banner/06.html %}
+                                        {% elsif banner_num == "07" %}
+                                            {% include /ads/banner/07.html %}
+                                        {% elsif banner_num == "08" %}
+                                            {% include /ads/banner/08.html %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
                         {% endif %}
                         {% assign idx = idx | plus: 1 %}
                     {% endfor %}
@@ -502,7 +500,6 @@
     </div>
     
     <script>
-    // Redistribusi item ke shortest column setelah gambar load
     (function() {
         function redistributeMasonry() {
             var grid = document.getElementById('masonryGrid');
@@ -511,17 +508,15 @@
             var cols = grid.querySelectorAll('.masonry-column');
             if (!cols.length) return;
             
-            // Kumpulkan semua item
             var allItems = [];
             cols.forEach(function(col) {
                 var items = col.querySelectorAll('.masonry-item, .masonry-banner-item');
                 items.forEach(function(item) {
                     allItems.push(item);
+                    item.parentNode.removeChild(item);
                 });
-                col.innerHTML = '';
             });
             
-            // Distribusi ulang ke shortest column
             allItems.forEach(function(item) {
                 var shortestCol = cols[0];
                 var shortestHeight = shortestCol.offsetHeight;
@@ -536,24 +531,22 @@
             });
         }
         
-        // Jalankan setelah load
         if (document.readyState === 'complete') {
-            setTimeout(redistributeMasonry, 300);
-            setTimeout(redistributeMasonry, 800);
-            setTimeout(redistributeMasonry, 2000);
+            setTimeout(redistributeMasonry, 500);
+            setTimeout(redistributeMasonry, 1500);
+            setTimeout(redistributeMasonry, 3000);
         } else {
             window.addEventListener('load', function() {
-                setTimeout(redistributeMasonry, 300);
-                setTimeout(redistributeMasonry, 800);
-                setTimeout(redistributeMasonry, 2000);
+                setTimeout(redistributeMasonry, 500);
+                setTimeout(redistributeMasonry, 1500);
+                setTimeout(redistributeMasonry, 3000);
             });
         }
         
-        // Re-distribute saat resize
         var resizeTimeout;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(redistributeMasonry, 300);
+            resizeTimeout = setTimeout(redistributeMasonry, 500);
         });
     })();
     </script>
