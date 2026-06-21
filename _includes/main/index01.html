@@ -95,105 +95,142 @@
     })();
     </script>
 
-    <!-- ========== BILLBOARD (Banner 01: 728x102) ========== -->
-    <div class="ad-billboard">
-        {% include /ads/banner/01.html %}
-    </div>
+    <!-- ========== BILLBOARD (Banner 01) ========== -->
+    <div class="ad-billboard">{% include /ads/banner/01.html %}</div>
 
     <!-- ========== MAIN LAYOUT ========== -->
     <div class="main-layout">
 
-        <!-- ========== SIDEBAR KIRI (Banner 05: 160x612) ========== -->
         <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
-        <!-- ========== KONTEN ========== -->
         <main class="content-area">
 
-            <!-- MASONRY 1 (post 1-25) -->
-            <div class="masonry-grid" id="masonryGrid1">
-                {% for col in (0..4) %}
-                <div class="masonry-column">
-                    {% assign counter = 0 %}
-                    {% for post in site.posts limit:25 %}
-                        {% assign mod = counter | modulo: 5 %}
-                        {% if mod == col %}
-                            <div class="masonry-item">
-                                <div class="photo-card">
-                                    {% if post.image %}
-                                    <div class="photo-thumb">
-                                        <a href="{{ post.url }}" aria-label="{{ post.title }}">
-                                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" decoding="async">
-                                        </a>
-                                    </div>
-                                    {% endif %}
-                                    <div class="photo-overlay">
-                                        <h3 class="photo-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
-                                        {% if post.description %}<p class="photo-desc">{{ post.description }}</p>{% endif %}
-                                    </div>
-                                </div>
-                            </div>
+            <!-- ========================================== -->
+            <!-- SECTION 1: HERO SPOTLIGHT (post 1-5) -->
+            <!-- ========================================== -->
+            <div class="section-spotlight">
+                {% assign spotlight_posts = site.posts | slice: 0, 5 %}
+                {% if spotlight_posts[0] %}
+                {% assign hero = spotlight_posts[0] %}
+                <div class="hero-card">
+                    {% if hero.image %}
+                    <a href="{{ hero.url }}" class="hero-img">
+                        <img src="{{ hero.image | relative_url }}" alt="{{ hero.title }}" loading="eager">
+                    </a>
+                    {% endif %}
+                    <div class="hero-body">
+                        <h2 class="hero-title"><a href="{{ hero.url }}">{{ hero.title }}</a></h2>
+                        {% if hero.description %}<p class="hero-desc">{{ hero.description }}</p>{% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                <div class="spotlight-grid">
+                    {% for post in spotlight_posts offset:1 %}
+                    <div class="spotlight-item">
+                        {% if post.image %}
+                        <a href="{{ post.url }}" class="spotlight-img">
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        </a>
                         {% endif %}
-                        {% assign counter = counter | plus: 1 %}
+                        <div class="spotlight-label">{{ post.title }}</div>
+                    </div>
                     {% endfor %}
                 </div>
-                {% endfor %}
             </div>
 
-            <!-- LEADERBOARD (Banner 06: 908x270) -->
-            <div class="ad-leaderboard">
-                {% include /ads/banner/06.html %}
-            </div>
-
-            <!-- MASONRY 2 (post 26-50) -->
-            <div class="masonry-grid" id="masonryGrid2">
-                {% for col in (0..4) %}
-                <div class="masonry-column">
-                    {% assign counter = 0 %}
-                    {% for post in site.posts limit:25 offset:25 %}
-                        {% assign mod = counter | modulo: 5 %}
-                        {% if mod == col %}
-                            <div class="masonry-item">
-                                <div class="photo-card">
-                                    {% if post.image %}
-                                    <div class="photo-thumb">
-                                        <a href="{{ post.url }}" aria-label="{{ post.title }}">
-                                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" decoding="async">
-                                        </a>
-                                    </div>
-                                    {% endif %}
-                                    <div class="photo-overlay">
-                                        <h3 class="photo-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
-                                        {% if post.description %}<p class="photo-desc">{{ post.description }}</p>{% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% assign counter = counter | plus: 1 %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- TWIN BANNER (Banner 02 + 03) -->
+            <!-- BANNER 02 + 03 -->
             <div class="ad-twin">
                 <div class="ad-twin-item">{% include /ads/banner/02.html %}</div>
                 <div class="ad-twin-item">{% include /ads/banner/03.html %}</div>
             </div>
 
-            <!-- TRIPLE BANNER (Banner 04 + 08 + 07) -->
-            <div class="ad-triple">
-                <div class="ad-triple-item">{% include /ads/banner/04.html %}</div>
-                <div class="ad-triple-item">{% include /ads/banner/08.html %}</div>
-                <div class="ad-triple-item">{% include /ads/banner/07.html %}</div>
+            <!-- ========================================== -->
+            <!-- SECTION 2: MASONRY (post 6-21 = 16 post) -->
+            <!-- ========================================== -->
+            <div class="section-title">Latest Galleries</div>
+            <div class="masonry-grid" id="masonryGrid">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign counter = 0 %}
+                    {% for post in site.posts limit:16 offset:5 %}
+                        {% assign mod = counter | modulo: 4 %}
+                        {% if mod == col %}
+                            <div class="masonry-item">
+                                <div class="photo-card">
+                                    {% if post.image %}
+                                    <div class="photo-thumb">
+                                        <a href="{{ post.url }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy"></a>
+                                    </div>
+                                    {% endif %}
+                                    <div class="photo-overlay">
+                                        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% assign counter = counter | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
             </div>
+
+            <!-- BANNER 06 (Leaderboard) -->
+            <div class="ad-leaderboard">{% include /ads/banner/06.html %}</div>
+
+            <!-- ========================================== -->
+            <!-- SECTION 3: HORIZONTAL SCROLL (post 22-29 = 8 post) -->
+            <!-- ========================================== -->
+            <div class="section-title">Trending Now</div>
+            <div class="scroll-row" id="scrollRow">
+                {% for post in site.posts limit:8 offset:21 %}
+                <div class="scroll-card">
+                    {% if post.image %}
+                    <a href="{{ post.url }}" class="scroll-img">
+                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    </a>
+                    {% endif %}
+                    <div class="scroll-info">
+                        <a href="{{ post.url }}">{{ post.title }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- BANNER 04 + 08 -->
+            <div class="ad-twin">
+                <div class="ad-twin-item">{% include /ads/banner/04.html %}</div>
+                <div class="ad-twin-item">{% include /ads/banner/08.html %}</div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- SECTION 4: CLASSIC GRID (post 30-50 = 21 post) -->
+            <!-- ========================================== -->
+            <div class="section-title">More to Explore</div>
+            <div class="classic-grid">
+                {% for post in site.posts limit:21 offset:29 %}
+                <div class="classic-item">
+                    <div class="photo-card">
+                        {% if post.image %}
+                        <div class="photo-thumb">
+                            <a href="{{ post.url }}"><img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy"></a>
+                        </div>
+                        {% endif %}
+                        <div class="photo-overlay">
+                            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                            {% if post.description %}<p class="photo-desc">{{ post.description }}</p>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- BANNER 07 -->
+            <div class="ad-footer-single">{% include /ads/banner/07.html %}</div>
 
         </main>
 
-        <!-- ========== SIDEBAR KANAN ========== -->
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">
                 <div class="ad-placeholder">
@@ -211,7 +248,6 @@
 
     </div>
 
-    <!-- ========== FOOTER ========== -->
     {% include /ads/gobloggugel/sosmed.html %}
     {% include footer.html %}
 
@@ -233,58 +269,22 @@
         .header-inner{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
         .site-title{flex:1;font-size:14px;font-weight:600;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .menu-btn{
-            width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0;
-            display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s;
-        }
+        .menu-btn{width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
         .menu-btn:hover{background:rgba(255,255,255,.06)}
-        .menu-btn svg{width:18px;height:18px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round;transition:stroke .2s}
+        .menu-btn svg{width:18px;height:18px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round}
         .menu-btn:hover svg{stroke:#fff}
-        .slide-menu{
-            display:none;position:fixed;top:52px;right:50%;transform:translateX(600px);z-index:999;
-            background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px;
-        }
+        .slide-menu{display:none;position:fixed;top:52px;right:50%;transform:translateX(600px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
         .slide-menu.open{display:block}
         .slide-menu ul{list-style:none;margin:0;padding:0}
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px;transition:all .15s}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        /* ===== BILLBOARD ===== */
-        .ad-billboard{
-            margin-top:52px;padding:18px 0 14px;
-            background:#0d0d0d;border-bottom:1px solid rgba(255,255,255,.03);
-            display:flex;justify-content:center;
-        }
-
-        /* ===== LEADERBOARD ===== */
-        .ad-leaderboard{
-            padding:18px 0;margin:0;background:#0d0d0d;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
-            display:flex;justify-content:center;
-        }
-
-        /* ===== TWIN ===== */
-        .ad-twin{
-            display:flex;gap:12px;padding:18px 12px;max-width:620px;margin:0 auto;
-        }
-        .ad-twin-item{
-            flex:1;background:#111;border-radius:8px;padding:16px;
-            display:flex;align-items:center;justify-content:center;
-            border:1px solid rgba(255,255,255,.03);transition:border-color .3s;
-        }
-        .ad-twin-item:hover{border-color:rgba(255,255,255,.08)}
-
-        /* ===== TRIPLE ===== */
-        .ad-triple{
-            display:flex;gap:10px;padding:18px 12px 28px;
-        }
-        .ad-triple-item{
-            flex:1;background:#111;border-radius:8px;padding:14px 10px;
-            display:flex;align-items:center;justify-content:center;
-            border:1px solid rgba(255,255,255,.03);min-height:100px;transition:border-color .3s;
-        }
-        .ad-triple-item:hover{border-color:rgba(255,255,255,.08)}
+        /* ===== AD SECTIONS ===== */
+        .ad-billboard{margin-top:52px;padding:18px 0 14px;background:#0d0d0d;border-bottom:1px solid rgba(255,255,255,.03);display:flex;justify-content:center}
+        .ad-leaderboard{padding:18px 0;background:#0d0d0d;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03);display:flex;justify-content:center;margin:8px 0}
+        .ad-twin{display:flex;gap:12px;padding:16px 0;max-width:620px;margin:0 auto}
+        .ad-twin-item{flex:1;background:#111;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.03)}
+        .ad-footer-single{padding:18px 0;background:#0d0d0d;border-top:1px solid rgba(255,255,255,.03);display:flex;justify-content:center;margin-top:8px}
 
         /* ===== MAIN LAYOUT ===== */
         .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
@@ -292,10 +292,33 @@
         .sidebar-left{border-right:1px solid rgba(255,255,255,.03)}
         .sidebar-right{border-left:1px solid rgba(255,255,255,.03)}
         .sticky-ad{position:sticky;top:70px;display:flex;flex-direction:column;align-items:center}
-        .content-area{flex:1;min-width:0;padding:0}
+        .content-area{flex:1;min-width:0;padding:8px 0}
+
+        /* ===== SECTION TITLE ===== */
+        .section-title{
+            font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+            color:#888;padding:16px 0 10px 0;margin:0;
+        }
+
+        /* ===== HERO SPOTLIGHT ===== */
+        .section-spotlight{display:flex;gap:8px;margin-bottom:4px}
+        .hero-card{flex:0 0 55%;position:relative;overflow:hidden;border-radius:6px;background:#0a0a0a;line-height:0}
+        .hero-img{display:block;line-height:0}
+        .hero-img img{width:100%;height:420px;object-fit:cover;display:block;transition:transform .5s ease}
+        .hero-card:hover .hero-img img{transform:scale(1.03)}
+        .hero-body{position:absolute;bottom:0;left:0;right:0;padding:30px 20px 18px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,transparent 100%);color:#fff}
+        .hero-title{font-size:22px;font-weight:700;margin:0 0 6px;line-height:1.2}
+        .hero-title a{color:#fff;text-decoration:none}
+        .hero-desc{font-size:12px;opacity:.75;margin:0;line-height:1.4}
+        .spotlight-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px}
+        .spotlight-item{position:relative;overflow:hidden;border-radius:6px;background:#0a0a0a;line-height:0}
+        .spotlight-img{display:block;line-height:0}
+        .spotlight-img img{width:100%;height:206px;object-fit:cover;display:block;transition:transform .5s ease}
+        .spotlight-item:hover .spotlight-img img{transform:scale(1.04)}
+        .spotlight-label{position:absolute;bottom:0;left:0;right:0;padding:12px 10px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
         /* ===== MASONRY ===== */
-        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:0;padding:6px 0}
+        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:0}
         .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:0}
         .masonry-item{width:100%;overflow:hidden}
 
@@ -306,26 +329,29 @@
         .photo-thumb{position:relative;width:100%;overflow:hidden;line-height:0}
         .photo-thumb img{width:100%;height:auto;display:block;transition:transform .5s ease}
         .photo-card:hover .photo-thumb img{transform:scale(1.03)}
-        .photo-overlay{
-            position:absolute;bottom:0;left:0;right:0;padding:20px 10px 8px;
-            background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.3) 70%,transparent 100%);
-            color:#fff;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
-            opacity:0;transition:opacity .3s ease;pointer-events:none;
-        }
+        .photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,transparent 100%);color:#fff;z-index:2;opacity:0;transition:opacity .3s ease;pointer-events:none}
         .photo-card:hover .photo-overlay{opacity:1}
-        .photo-overlay a{pointer-events:auto}
-        .photo-title{font-size:11px;line-height:1.2;margin:0 0 2px;font-weight:600;color:#fff}
-        .photo-title a{color:#fff;text-decoration:none}
-        .photo-title a:hover{text-decoration:underline;text-underline-offset:2px}
-        .photo-desc{font-size:9px;line-height:1.3;margin:0;opacity:.65;color:#ccc;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+        .photo-overlay a{pointer-events:auto;color:#fff;text-decoration:none;font-size:11px;font-weight:600}
+        .photo-desc{font-size:9px;opacity:.65;margin:2px 0 0;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+
+        /* ===== HORIZONTAL SCROLL ===== */
+        .scroll-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+        .scroll-row::-webkit-scrollbar{height:3px}
+        .scroll-row::-webkit-scrollbar-track{background:#111}
+        .scroll-row::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+        .scroll-card{flex:0 0 200px;border-radius:6px;overflow:hidden;background:#0a0a0a}
+        .scroll-img{display:block;line-height:0}
+        .scroll-img img{width:100%;height:260px;object-fit:cover;display:block;transition:transform .5s ease}
+        .scroll-card:hover .scroll-img img{transform:scale(1.04)}
+        .scroll-info{padding:10px 8px}
+        .scroll-info a{color:#fff;text-decoration:none;font-size:11px;font-weight:600;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+        /* ===== CLASSIC GRID ===== */
+        .classic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+        .classic-item{overflow:hidden;border-radius:4px}
 
         /* ===== PLACEHOLDER ===== */
-        .ad-placeholder{
-            background:#111;border-radius:8px;padding:20px 14px;min-height:260px;
-            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-            color:#444;font-size:11px;text-align:center;line-height:1.5;
-            border:1px dashed rgba(255,255,255,.05);
-        }
+        .ad-placeholder{background:#111;border-radius:8px;padding:20px 14px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#444;font-size:11px;text-align:center;border:1px dashed rgba(255,255,255,.05)}
         .available-tag{color:#c0392b;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
     </style>
 
@@ -335,51 +361,31 @@
         var parts = hostname.split(".");
         var fullName = parts[0];
         if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function hashString(str) {
-            var hash = 0;
-            for (var i = 0; i < str.length; i++) { hash = ((hash << 5) - hash) + str.charCodeAt(i); hash |= 0; }
-            return Math.abs(hash);
-        }
+        function hashString(str) {var hash=0;for(var i=0;i<str.length;i++){hash=((hash<<5)-hash)+str.charCodeAt(i);hash|=0;}return Math.abs(hash);}
         var domainHash = hashString(fullName);
-        var clean = fullName.replace(/-/g, " ");
+        var clean = fullName.replace(/-/g," ");
         var words = clean.split(" "), initials = "";
-        for (var w = 0; w < Math.min(words.length, 3); w++) { if (words[w].length > 0) initials += words[w].charAt(0).toUpperCase(); }
-        if (initials.length < 2) initials = fullName.substring(0, 3).toUpperCase();
-        var hue = domainHash % 360;
-        var avatarBg = "hsl(" + hue + ",60%,50%)";
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" aria-hidden=\"true\"><rect width=\"28\" height=\"28\" rx=\"14\" fill=\"" + avatarBg + "\"/><text x=\"14\" y=\"19\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">" + initials + "</text></svg>";
+        for (var w=0;w<Math.min(words.length,3);w++){if(words[w].length>0)initials+=words[w].charAt(0).toUpperCase();}
+        if(initials.length<2)initials=fullName.substring(0,3).toUpperCase();
+        var avatarBg = "hsl("+(domainHash%360)+",60%,50%)";
+        document.getElementById("domainAvatar").innerHTML = "<svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\"><rect width=\"28\" height=\"28\" rx=\"14\" fill=\""+avatarBg+"\"/><text x=\"14\" y=\"19\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">"+initials+"</text></svg>";
         
-        function redistributeMasonry(gridId) {
-            var grid = document.getElementById(gridId);
-            if (!grid) return;
+        function redistributeMasonry() {
+            var grid = document.getElementById('masonryGrid');
+            if(!grid)return;
             var cols = grid.querySelectorAll('.masonry-column');
-            if (!cols.length) return;
+            if(!cols.length)return;
             var allItems = [];
-            cols.forEach(function(col) {
-                var items = col.querySelectorAll('.masonry-item');
-                items.forEach(function(item) { allItems.push(item); });
-            });
-            if (!allItems.length) return;
-            cols.forEach(function(col) { col.innerHTML = ''; });
-            allItems.forEach(function(item) {
-                var shortestCol = cols[0];
-                var shortestHeight = shortestCol.offsetHeight;
-                for (var i = 1; i < cols.length; i++) {
-                    if (cols[i].offsetHeight < shortestHeight) {
-                        shortestHeight = cols[i].offsetHeight;
-                        shortestCol = cols[i];
-                    }
-                }
-                shortestCol.appendChild(item);
+            cols.forEach(function(col){var items=col.querySelectorAll('.masonry-item');items.forEach(function(item){allItems.push(item);});});
+            if(!allItems.length)return;
+            cols.forEach(function(col){col.innerHTML='';});
+            allItems.forEach(function(item){
+                var shortest=cols[0],sh=shortest.offsetHeight;
+                for(var i=1;i<cols.length;i++){if(cols[i].offsetHeight<sh){sh=cols[i].offsetHeight;shortest=cols[i];}}
+                shortest.appendChild(item);
             });
         }
-        
-        window.addEventListener('load', function() {
-            setTimeout(function(){ redistributeMasonry('masonryGrid1'); }, 300);
-            setTimeout(function(){ redistributeMasonry('masonryGrid2'); }, 300);
-            setTimeout(function(){ redistributeMasonry('masonryGrid1'); }, 1000);
-            setTimeout(function(){ redistributeMasonry('masonryGrid2'); }, 1000);
-        });
+        window.addEventListener('load',function(){setTimeout(redistributeMasonry,300);setTimeout(redistributeMasonry,1000);});
     })();
     </script>
 
