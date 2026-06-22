@@ -43,7 +43,6 @@
 </head>
 <body>
 
-    <!-- ========== HEADER ========== -->
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
@@ -96,7 +95,6 @@
     <!-- ========== BILLBOARD ========== -->
     <div class="ad-solo ad-solo-billboard">{% include /ads/banner/01.html %}</div>
 
-    <!-- ========== MAIN LAYOUT ========== -->
     <div class="main-layout">
 
         <aside class="sidebar sidebar-left">
@@ -105,38 +103,79 @@
 
         <main class="content-area">
 
-            <!-- ========================================== -->
-            <!-- 📌 Cara menambah/mengurangi post:
-                 Ubah angka limit: dan offset: di setiap section
-                 Section independen, tidak saling mempengaruhi
-            ========================================== -->
+            {% comment %}
+            ╔══════════════════════════════════════╗
+            ║  UBAH SATU VARIABEL INI SAJA        ║
+            ╚══════════════════════════════════════╝
+            {% endcomment %}
+            {% assign total_posts = 56 %}
+
+            {% comment %}
+            Distribusi baru:
+            - Hero: 3 besar (bukan 5 kecil)
+            - Uniform: 20% total
+            - Wide: 15% total
+            - Masonry: 25% total
+            - Dense: 20% total
+            - Slider: 12% total
+            - Finale: sisa (minimal 2)
+            {% endcomment %}
+
+            {% assign s1 = 3 | at_most: total_posts %}
+            {% assign remaining = total_posts | minus: s1 %}
+            
+            {% assign s2 = remaining | times: 0.20 | floor | at_least: 4 %}
+            {% assign remaining = remaining | minus: s2 %}
+            
+            {% assign s3 = remaining | times: 0.15 | floor | at_least: 3 %}
+            {% assign remaining = remaining | minus: s3 %}
+            
+            {% assign s4 = remaining | times: 0.25 | floor | at_least: 4 %}
+            {% assign remaining = remaining | minus: s4 %}
+            
+            {% assign s5 = remaining | times: 0.22 | floor | at_least: 4 %}
+            {% assign remaining = remaining | minus: s5 %}
+            
+            {% assign s6 = remaining | times: 0.15 | floor | at_least: 3 %}
+            {% assign s7 = remaining | minus: s6 | at_least: 2 %}
+
+            {% assign off1 = 0 %}
+            {% assign off2 = off1 | plus: s1 %}
+            {% assign off3 = off2 | plus: s2 %}
+            {% assign off4 = off3 | plus: s3 %}
+            {% assign off5 = off4 | plus: s4 %}
+            {% assign off6 = off5 | plus: s5 %}
+            {% assign off7 = off6 | plus: s6 %}
 
             <!-- ========================================== -->
-            <!-- HERO STRIP (5 post) -->
+            <!-- HERO STRIP ({{ s1 }} gambar besar) -->
             <!-- ========================================== -->
             <section class="feed-section">
                 <div class="hero-strip">
-                    {% for post in site.posts limit:5 %}
+                    {% for post in site.posts limit:s1 offset:off1 %}
                     <div class="hero-strip-item">
                         <a href="{{ post.url }}">
                             {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}">{% endif %}
-                            <div class="hero-strip-overlay"><h2>{{ post.title }}</h2></div>
+                            <div class="hero-strip-overlay">
+                                <h2>{{ post.title }}</h2>
+                                {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                            </div>
                         </a>
                     </div>
                     {% endfor %}
                 </div>
             </section>
 
-            <!-- ↓ Banner 02 (Solo) ↓ -->
+            <!-- ↓ Banner 02 ↓ -->
             <div class="ad-solo">{% include /ads/banner/02.html %}</div>
 
             <!-- ========================================== -->
-            <!-- UNIFORM GRID 4 KOLOM (12 post, offset:5) -->
+            <!-- UNIFORM GRID ({{ s2 }} post) -->
             <!-- ========================================== -->
             <section class="feed-section">
                 <div class="section-label">Editor's Choice</div>
                 <div class="uniform-grid">
-                    {% for post in site.posts limit:12 offset:5 %}
+                    {% for post in site.posts limit:s2 offset:off2 %}
                     <div class="uniform-card">
                         <a href="{{ post.url }}">
                             {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -150,16 +189,16 @@
                 </div>
             </section>
 
-            <!-- ↓ Banner 03 (Solo) ↓ -->
+            <!-- ↓ Banner 03 ↓ -->
             <div class="ad-solo">{% include /ads/banner/03.html %}</div>
 
             <!-- ========================================== -->
-            <!-- WIDE CARDS (8 post, offset:17) -->
+            <!-- WIDE CARDS ({{ s3 }} post) -->
             <!-- ========================================== -->
             <section class="feed-section">
                 <div class="section-label">Spotlight</div>
                 <div class="wide-list">
-                    {% for post in site.posts limit:8 offset:17 %}
+                    {% for post in site.posts limit:s3 offset:off3 %}
                     <div class="wide-card">
                         <a href="{{ post.url }}" class="wide-card-inner">
                             <div class="wide-img">
@@ -176,11 +215,11 @@
                 </div>
             </section>
 
-            <!-- ↓ Banner 06 Leaderboard (Solo) ↓ -->
+            <!-- ↓ Banner 06 Leaderboard ↓ -->
             <div class="ad-solo ad-solo-leaderboard">{% include /ads/banner/06.html %}</div>
 
             <!-- ========================================== -->
-            <!-- MASONRY MIX (12 post, offset:25) -->
+            <!-- MASONRY MIX ({{ s4 }} post) -->
             <!-- ========================================== -->
             <section class="feed-section">
                 <div class="section-label">Latest Updates</div>
@@ -188,7 +227,7 @@
                     {% for col in (0..3) %}
                     <div class="masonry-column">
                         {% assign counter = 0 %}
-                        {% for post in site.posts limit:12 offset:25 %}
+                        {% for post in site.posts limit:s4 offset:off4 %}
                             {% assign mod = counter | modulo: 4 %}
                             {% if mod == col %}
                                 <div class="masonry-item">
@@ -205,16 +244,16 @@
                 </div>
             </section>
 
-            <!-- ↓ Banner 04 (Solo) ↓ -->
+            <!-- ↓ Banner 04 ↓ -->
             <div class="ad-solo">{% include /ads/banner/04.html %}</div>
 
             <!-- ========================================== -->
-            <!-- DENSE GRID 5 KOLOM (10 post, offset:37) -->
+            <!-- DENSE GRID ({{ s5 }} post) -->
             <!-- ========================================== -->
             <section class="feed-section">
                 <div class="section-label">More to Explore</div>
                 <div class="dense-grid">
-                    {% for post in site.posts limit:10 offset:37 %}
+                    {% for post in site.posts limit:s5 offset:off5 %}
                     <div class="dense-card">
                         <a href="{{ post.url }}">
                             {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -225,16 +264,16 @@
                 </div>
             </section>
 
-            <!-- ↓ Banner 08 (Solo) ↓ -->
+            <!-- ↓ Banner 08 ↓ -->
             <div class="ad-solo">{% include /ads/banner/08.html %}</div>
 
             <!-- ========================================== -->
-            <!-- HORIZONTAL SLIDER (8 post, offset:47) -->
+            <!-- SLIDER ({{ s6 }} post) -->
             <!-- ========================================== -->
             <section class="feed-section">
                 <div class="section-label">Trending Now</div>
                 <div class="slider-row">
-                    {% for post in site.posts limit:8 offset:47 %}
+                    {% for post in site.posts limit:s6 offset:off6 %}
                     <div class="slider-card">
                         <a href="{{ post.url }}">
                             {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -245,26 +284,27 @@
                 </div>
             </section>
 
-            <!-- ↓ Banner 07 (Solo Closing) ↓ -->
+            <!-- ↓ Banner 07 ↓ -->
             <div class="ad-solo">{% include /ads/banner/07.html %}</div>
 
             <!-- ========================================== -->
-            <!-- FINALE (post 56) -->
+            <!-- FINALE ({{ s7 }} post - minimal 2) -->
             <!-- ========================================== -->
-            {% assign finale_post = site.posts[55] %}
-            {% if finale_post %}
             <section class="feed-section">
-                <div class="finale-card">
-                    <a href="{{ finale_post.url }}">
-                        {% if finale_post.image %}<img src="{{ finale_post.image | relative_url }}" alt="{{ finale_post.title }}">{% endif %}
-                        <div class="finale-body">
-                            <h4>{{ finale_post.title }}</h4>
-                            {% if finale_post.description %}<p>{{ finale_post.description }}</p>{% endif %}
-                        </div>
-                    </a>
+                <div class="finale-grid">
+                    {% for post in site.posts limit:s7 offset:off7 %}
+                    <div class="finale-card">
+                        <a href="{{ post.url }}">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                            <div class="finale-body">
+                                <h4>{{ post.title }}</h4>
+                                {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
                 </div>
             </section>
-            {% endif %}
 
         </main>
 
@@ -294,7 +334,6 @@
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;overflow-x:visible;
         }
 
-        /* ===== HEADER ===== */
         .site-header{width:1200px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(6,6,6,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px}
         .header-inner{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
@@ -309,28 +348,18 @@
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        /* ===== AD SOLO (semua banner sendiri) ===== */
+        /* ===== AD SOLO - NO CROP ===== */
         .ad-solo{
             display:flex;justify-content:center;align-items:center;
-            padding:28px 0;margin:0;
-            background:transparent;
-            position:relative;
+            padding:28px 0;margin:0;position:relative;
         }
-        .ad-solo::before{
-            content:'';position:absolute;top:0;left:20%;right:20%;height:1px;
-            background:linear-gradient(to right,transparent,rgba(255,255,255,.04),transparent);
-        }
-        .ad-solo::after{
-            content:'';position:absolute;bottom:0;left:20%;right:20%;height:1px;
-            background:linear-gradient(to right,transparent,rgba(255,255,255,.04),transparent);
-        }
+        .ad-solo::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.04),transparent)}
+        .ad-solo::after{content:'';position:absolute;bottom:0;left:15%;right:15%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.04),transparent)}
         .ad-solo-billboard{margin-top:50px;padding:20px 0 16px;background:#0a0a0a}
         .ad-solo-billboard::before,.ad-solo-billboard::after{display:none}
         .ad-solo-leaderboard{padding:20px 0;background:#0a0a0a}
         .ad-solo-leaderboard::before,.ad-solo-leaderboard::after{display:none}
-        .ad-solo ins,.ad-solo img,.ad-solo iframe{max-width:100%!important;height:auto!important}
 
-        /* ===== LAYOUT ===== */
         .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
         .sidebar{width:180px;flex-shrink:0;padding:14px 8px;position:relative}
         .sidebar-left{border-right:1px solid rgba(255,255,255,.02)}
@@ -338,21 +367,18 @@
         .sticky-ad{position:sticky;top:68px;display:flex;flex-direction:column;align-items:center}
         .content-area{flex:1;min-width:0;padding:0}
 
-        /* ===== SECTION ===== */
         .feed-section{padding:20px 0}
-        .section-label{
-            font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;
-            color:#555;margin:0 0 14px 0;padding:0;
-        }
+        .section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#555;margin:0 0 14px 0}
 
-        /* ===== HERO STRIP ===== */
-        .hero-strip{display:flex;gap:4px}
-        .hero-strip-item{flex:1;overflow:hidden;border-radius:4px;background:#0a0a0a;aspect-ratio:16/9}
+        /* ===== HERO - 3 GAMBAR BESAR ===== */
+        .hero-strip{display:flex;gap:6px}
+        .hero-strip-item{flex:1;overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:4/5}
         .hero-strip-item a{display:block;position:relative;width:100%;height:100%}
         .hero-strip-item img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block;transition:transform .6s ease}
-        .hero-strip-item:hover img{transform:scale(1.05)}
-        .hero-strip-overlay{position:absolute;bottom:0;left:0;right:0;padding:20px 12px 10px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff}
-        .hero-strip-overlay h2{font-size:12px;font-weight:600;margin:0;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .hero-strip-item:hover img{transform:scale(1.04)}
+        .hero-strip-overlay{position:absolute;bottom:0;left:0;right:0;padding:32px 20px 16px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.15) 80%,transparent 100%);color:#fff}
+        .hero-strip-overlay h2{font-size:18px;font-weight:700;margin:0 0 4px;line-height:1.2}
+        .hero-strip-overlay p{font-size:12px;opacity:.75;margin:0;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
         /* ===== UNIFORM GRID ===== */
         .uniform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
@@ -409,8 +435,10 @@
         .slider-body{padding:12px 10px}
         .slider-body strong{display:block;font-size:11px;line-height:1.3;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-        /* ===== FINALE ===== */
-        .finale-card{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:21/9}
+        /* ===== FINALE GRID - MINIMAL 2 ===== */
+        .finale-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+        @media(min-width:1400px){.finale-grid{grid-template-columns:repeat(3,1fr)}}
+        .finale-card{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:16/9}
         .finale-card a{display:block;position:relative;width:100%;height:100%}
         .finale-card img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .6s ease}
         .finale-card:hover img{transform:scale(1.03)}
@@ -418,7 +446,6 @@
         .finale-body h4{font-size:18px;font-weight:700;margin:0 0 4px}
         .finale-body p{font-size:12px;opacity:.7;margin:0}
 
-        /* ===== PLACEHOLDER ===== */
         .ad-placeholder{background:#0d0d0d;border-radius:6px;padding:20px 14px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#444;font-size:10px;text-align:center;border:1px dashed rgba(255,255,255,.04)}
         .available-tag{color:#c0392b;font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
     </style>
