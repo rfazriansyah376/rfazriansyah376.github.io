@@ -230,10 +230,10 @@
 
             <div class="ad-solo">{% include /ads/banner/08.html %}</div>
 
-            <!-- ===== SLIDER ===== -->
+            <!-- ===== SLIDER + BANNER 07 INTEGRATED ===== -->
             <section class="feed-section">
                 <div class="section-label">Trending Now</div>
-                <div class="slider-row">
+                <div class="slider-row" id="sliderRow">
                     {% for post in site.posts limit:s6 offset:o6 %}
                     <div class="slider-card">
                         <a href="{{ post.url }}">
@@ -242,10 +242,14 @@
                         </a>
                     </div>
                     {% endfor %}
+                    <!-- Banner 07 sebagai card terakhir di slider -->
+                    <div class="slider-card slider-ad">
+                        <div class="slider-ad-inner">
+                            {% include /ads/banner/07.html %}
+                        </div>
+                    </div>
                 </div>
             </section>
-
-            <div class="ad-solo">{% include /ads/banner/07.html %}</div>
 
             <!-- ===== FINALE ===== -->
             <section class="feed-section">
@@ -292,7 +296,6 @@
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;overflow-x:visible;
         }
 
-        /* ===== HEADER ===== */
         .site-header{width:1200px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px}
         .header-inner{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
@@ -307,7 +310,7 @@
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        /* ===== AD SOLO ===== */
+        /* ===== AD ===== */
         .ad-solo{display:flex;justify-content:center;align-items:center;padding:20px 0;position:relative}
         .ad-solo::before{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.03),transparent)}
         .ad-solo::after{content:'';position:absolute;bottom:0;left:12%;right:12%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.03),transparent)}
@@ -316,7 +319,6 @@
         .ad-solo-leaderboard{padding:18px 0;background:#080808}
         .ad-solo-leaderboard::before,.ad-solo-leaderboard::after{display:none}
 
-        /* ===== LAYOUT ===== */
         .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
         .sidebar{width:180px;flex-shrink:0;padding:16px 10px;position:relative}
         .sidebar-left{border-right:1px solid rgba(255,255,255,.02)}
@@ -324,7 +326,6 @@
         .sticky-ad{position:sticky;top:68px;display:flex;flex-direction:column;align-items:center}
         .content-area{flex:1;min-width:0;padding:0}
 
-        /* ===== SECTION ===== */
         .feed-section{padding:20px 0}
         .feed-section + .feed-section{border-top:1px solid rgba(255,255,255,.02)}
         .section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:#555;margin:0 0 14px 0;padding:0}
@@ -339,8 +340,8 @@
         .hero-overlay h2{font-size:17px;font-weight:700;margin:0 0 4px;line-height:1.2}
         .hero-overlay p{font-size:11px;opacity:.7;margin:0;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-        /* ===== UNIFORM GRID ===== */
-        .uniform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+        /* ===== UNIFORM GRID - AUTO FILL ===== */
+        .uniform-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));gap:6px}
         .uniform-card{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:3/4}
         .uniform-card a{display:block;position:relative;width:100%;height:100%}
         .uniform-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
@@ -373,8 +374,8 @@
         .masonry-label{position:absolute;bottom:0;left:0;right:0;padding:12px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:10px;font-weight:600;opacity:0;transition:opacity .25s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .masonry-item:hover .masonry-label{opacity:1}
 
-        /* ===== DENSE ===== */
-        .dense-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+        /* ===== DENSE GRID - AUTO FILL ===== */
+        .dense-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));gap:6px}
         .dense-card{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:1/1}
         .dense-card a{display:block;position:relative;width:100%;height:100%}
         .dense-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
@@ -382,20 +383,25 @@
         .dense-label{position:absolute;bottom:0;left:0;right:0;padding:10px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:9px;font-weight:600;opacity:0;transition:opacity .25s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .dense-card:hover .dense-label{opacity:1}
 
-        /* ===== SLIDER ===== */
-        .slider-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+        /* ===== SLIDER + AD ===== */
+        .slider-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;align-items:stretch}
         .slider-row::-webkit-scrollbar{height:2px}
         .slider-row::-webkit-scrollbar-track{background:#0a0a0a}
         .slider-row::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
-        .slider-card{flex:0 0 210px;border-radius:8px;overflow:hidden;background:#0a0a0a}
-        .slider-card a{display:block}
-        .slider-card img{width:100%;height:280px;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+        .slider-card{flex:0 0 210px;border-radius:8px;overflow:hidden;background:#0a0a0a;display:flex;flex-direction:column}
+        .slider-card a{display:flex;flex-direction:column;flex:1}
+        .slider-card img{width:100%;flex:1;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease;min-height:200px}
         .slider-card:hover img{transform:scale(1.04)}
-        .slider-body{padding:12px 10px}
+        .slider-body{padding:12px 10px;flex-shrink:0}
         .slider-body strong{display:block;font-size:11px;line-height:1.3;color:#ddd;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-        /* ===== FINALE ===== */
-        .finale-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+        /* Slider Ad Card - menyatu dengan slider */
+        .slider-ad{flex:0 0 auto;min-width:280px;max-width:320px;display:flex;align-items:center;justify-content:center;background:#0a0a0a}
+        .slider-ad-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:12px}
+        .slider-ad-inner ins,.slider-ad-inner img,.slider-ad-inner iframe{max-width:100%!important;height:auto!important}
+
+        /* ===== FINALE - AUTO FILL ===== */
+        .finale-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));gap:8px}
         .finale-card{overflow:hidden;border-radius:8px;background:#0a0a0a;aspect-ratio:16/9}
         .finale-card a{display:block;position:relative;width:100%;height:100%}
         .finale-card img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .6s ease}
@@ -404,7 +410,6 @@
         .finale-body h4{font-size:16px;font-weight:700;margin:0 0 3px}
         .finale-body p{font-size:11px;opacity:.65;margin:0}
 
-        /* ===== PLACEHOLDER ===== */
         .ad-placeholder{background:#0a0a0a;border-radius:8px;padding:20px 14px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#444;font-size:10px;text-align:center;border:1px dashed rgba(255,255,255,.03)}
         .available-tag{color:#c0392b;font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
     </style>
@@ -438,7 +443,26 @@
                 s.appendChild(i);
             });
         }
-        window.addEventListener('load',function(){setTimeout(rm,200);setTimeout(rm,800);});
+        
+        // Sesuaikan tinggi slider ad card mengikuti card tertinggi
+        function syncSliderHeight() {
+            var row = document.getElementById('sliderRow');
+            if(!row)return;
+            var cards = row.querySelectorAll('.slider-card:not(.slider-ad)');
+            var adCard = row.querySelector('.slider-ad');
+            if(!adCard || !cards.length)return;
+            var maxH = 0;
+            cards.forEach(function(c){var h=c.offsetHeight;if(h>maxH)maxH=h;});
+            if(maxH>0)adCard.style.height = maxH + 'px';
+        }
+        
+        window.addEventListener('load',function(){
+            setTimeout(rm,200);
+            setTimeout(rm,800);
+            setTimeout(syncSliderHeight,500);
+            setTimeout(syncSliderHeight,1500);
+        });
+        window.addEventListener('resize',function(){setTimeout(syncSliderHeight,300);});
     })();
     </script>
 
