@@ -209,8 +209,8 @@
 
         <main class="content-area">
 
-            {% assign total_posts = 56 %}
-            {% assign featured_count = 3 %}
+            {% assign total_posts = 50 %}
+            {% assign featured_count = 10 %}
 
             <!-- Featured Posts -->
             {% if featured_count >= 1 %}
@@ -230,6 +230,9 @@
             </div>
             {% endif %}
 
+<div class="ad-break">{% include /ads/banner/01.html %}</div>
+
+
             <!-- Feed -->
             {% assign sisa = total_posts | minus: featured_count %}
             <div class="masonry-grid" id="masonryAll">
@@ -243,7 +246,7 @@
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
                                 </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                                
                             </div>
                         {% endif %}
                         {% assign c = c | plus: 1 %}
@@ -262,10 +265,7 @@
 
     <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
-    {% include /ads/gobloggugel/sosmed.html %}
-    {% include footer.html %}
-
-
+    
     <script>
     (function() {
         var hostname = window.location.hostname;
@@ -302,6 +302,12 @@
         });
     })();
     </script>
+   
+ {% include /ads/gobloggugel/sosmed.html %}
+    {% include footer.html %}
+
+
+
 </div>
 </body>
 </html>
