@@ -92,54 +92,33 @@
     })();
     </script>
 
-    <!-- Billboard -->
-    <div class="ad-break ad-break-top">{% include /ads/banner/01.html %}</div>
+    <!-- ===== BILLBOARD ATAS - Banner 01 (728x102) ===== -->
+    <div class="ad-horizontal ad-horizontal-top">{% include /ads/banner/01.html %}</div>
 
     <div class="main-layout">
 
-        <!-- Sidebar Kiri - Banner 05 (160x612) -->
+        <!-- ===== SIDEBAR KIRI - Banner 05 (160x612) ===== -->
         <aside class="sidebar sidebar-left">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
-        <!-- Konten -->
+        <!-- ===== KONTEN UTAMA ===== -->
         <main class="content-area">
 
-            {% assign total_posts = 56 %}
-            {% assign break1 = 18 %}
-            {% assign break2 = 44 %}
-
-            <!-- Masonry: semua post dalam 4 kolom, banner break di posisi tertentu -->
-            <div class="masonry-grid" id="masonryAll">
+            <!-- ===== FEED BAGIAN 1 (post 1-28) ===== -->
+            <div class="masonry-grid" id="masonry1">
                 {% for col in (0..3) %}
-                <div class="masonry-column" id="col{{ col }}">
+                <div class="masonry-column">
                     {% assign counter = 0 %}
-                    {% for post in site.posts limit:total_posts %}
+                    {% for post in site.posts limit:28 offset:0 %}
                         {% assign mod = counter | modulo: 4 %}
                         {% if mod == col %}
-                            
-                            <!-- Card -->
-                            <div class="masonry-item masonry-card">
+                            <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
                                     <span class="masonry-label">{{ post.title }}</span>
                                 </a>
                             </div>
-
-                            <!-- Banner 06 di posisi 18 (hanya di kolom 0) -->
-                            {% if counter == break1 and col == 0 %}
-                            <div class="masonry-item masonry-ad-full">
-                                {% include /ads/banner/06.html %}
-                            </div>
-                            {% endif %}
-
-                            <!-- Banner 07 di posisi 44 (hanya di kolom 0) -->
-                            {% if counter == break2 and col == 0 %}
-                            <div class="masonry-item masonry-ad-full">
-                                {% include /ads/banner/07.html %}
-                            </div>
-                            {% endif %}
-
                         {% endif %}
                         {% assign counter = counter | plus: 1 %}
                     {% endfor %}
@@ -147,9 +126,37 @@
                 {% endfor %}
             </div>
 
+            <!-- ===== BANNER TENGAH - Banner 06 (908x270) ===== -->
+            <div class="ad-horizontal">{% include /ads/banner/06.html %}</div>
+
+            <!-- ===== FEED BAGIAN 2 (post 29-56) ===== -->
+            {% assign sisa = 56 | minus: 28 %}
+            <div class="masonry-grid" id="masonry2">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign counter = 0 %}
+                    {% for post in site.posts limit:sisa offset:28 %}
+                        {% assign mod = counter | modulo: 4 %}
+                        {% if mod == col %}
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                    <span class="masonry-label">{{ post.title }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% assign counter = counter | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- ===== BANNER BAWAH - Banner 07 (468x72) ===== -->
+            <div class="ad-horizontal">{% include /ads/banner/07.html %}</div>
+
         </main>
 
-        <!-- Sidebar Kanan - Stack Banner 02,03,04,08 -->
+        <!-- ===== SIDEBAR KANAN - Banner 02,03,04,08 (persegi) ===== -->
         <aside class="sidebar sidebar-right">
             <div class="sidebar-ad-stack">
                 <div class="sidebar-ad-item">{% include /ads/banner/02.html %}</div>
@@ -190,9 +197,14 @@
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        /* ===== AD BREAK ===== */
-        .ad-break{display:flex;justify-content:center;align-items:center;padding:28px 0}
-        .ad-break-top{margin-top:50px;padding:20px 0 16px;background:#080808;border-bottom:1px solid rgba(255,255,255,.03)}
+        /* ===== AD HORIZONTAL ===== */
+        .ad-horizontal{
+            display:flex;justify-content:center;align-items:center;
+            padding:24px 0;background:#080808;
+            border-top:1px solid rgba(255,255,255,.03);
+            border-bottom:1px solid rgba(255,255,255,.03);
+        }
+        .ad-horizontal-top{margin-top:50px;padding:20px 0 16px}
 
         .main-layout{display:flex;gap:0;width:1360px;margin:0 auto}
         .content-area{flex:1;min-width:0;padding:8px 0}
@@ -203,21 +215,29 @@
         .sidebar-right{width:340px;border-left:1px solid rgba(255,255,255,.02)}
         .sticky-ad{position:sticky;top:68px;display:flex;justify-content:center}
 
-        /* ===== SIDEBAR KANAN AD STACK ===== */
+        /* ===== SIDEBAR KANAN STACK ===== */
         .sidebar-ad-stack{
             position:sticky;top:68px;
             display:flex;flex-direction:column;gap:20px;
         }
         .sidebar-ad-item{
-            background:#0a0a0a;border-radius:8px;padding:0;
+            background:#0a0a0a;border-radius:8px;
             display:flex;align-items:center;justify-content:center;
             border:1px solid rgba(255,255,255,.04);
             transition:border-color .3s;
-            overflow:visible;
+            overflow:visible!important;
+            min-height:0!important;
         }
         .sidebar-ad-item:hover{border-color:rgba(255,255,255,.12)}
-        .sidebar-ad-item ins,.sidebar-ad-item img,.sidebar-ad-item iframe{
-            max-width:100%!important;height:auto!important;
+        .sidebar-ad-item center,
+        .sidebar-ad-item > *{
+            max-width:100%!important;
+        }
+        .sidebar-ad-item ins,
+        .sidebar-ad-item img,
+        .sidebar-ad-item iframe{
+            max-width:100%!important;
+            height:auto!important;
         }
 
         /* ===== MASONRY ===== */
@@ -234,14 +254,6 @@
             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
         }
         .masonry-item:hover .masonry-label{opacity:1}
-
-        /* Banner full-width di dalam masonry */
-        .masonry-ad-full{
-            background:#080808;display:flex;align-items:center;justify-content:center;
-            padding:20px 0;border-radius:6px;min-height:100px;
-            border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03);
-        }
-        .masonry-ad-full ins,.masonry-ad-full img,.masonry-ad-full iframe{max-width:100%!important;height:auto!important}
     </style>
 
     <script>
@@ -258,40 +270,26 @@
         if(init.length<2)init=fullName.substring(0,3).toUpperCase();
         document.getElementById("domainAvatar").innerHTML = "<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
         
-        function redistribute() {
-            var grid = document.getElementById('masonryAll');
+        function redistribute(id) {
+            var grid = document.getElementById(id);
             if(!grid)return;
             var cols = grid.querySelectorAll('.masonry-column');
             if(!cols.length)return;
-            
-            // Pisahkan card dan ad
-            var cardItems = [];
-            var adItems = {};
-            cols.forEach(function(col, ci){
-                var items = col.querySelectorAll('.masonry-card');
-                items.forEach(function(i){cardItems.push({el:i, col:ci});});
-                var ads = col.querySelectorAll('.masonry-ad-full');
-                ads.forEach(function(a){adItems[ci]=a;});
-            });
-            
-            if(!cardItems.length)return;
+            var items = [];
+            cols.forEach(function(c){c.querySelectorAll('.masonry-item').forEach(function(i){items.push(i);});});
+            if(!items.length)return;
             cols.forEach(function(c){c.innerHTML='';});
-            
-            // Kembalikan ad items ke kolom asalnya
-            for(var ci in adItems){cols[ci].appendChild(adItems[ci]);}
-            
-            // Distribusi card ke shortest column
-            cardItems.forEach(function(item){
+            items.forEach(function(i){
                 var s=cols[0],sh=s.offsetHeight;
                 for(var j=1;j<cols.length;j++){if(cols[j].offsetHeight<sh){sh=cols[j].offsetHeight;s=cols[j];}}
-                s.appendChild(item.el);
+                s.appendChild(i);
             });
         }
-        
         window.addEventListener('load',function(){
-            setTimeout(redistribute,300);
-            setTimeout(redistribute,1000);
-            setTimeout(redistribute,2500);
+            setTimeout(function(){redistribute('masonry1');},200);
+            setTimeout(function(){redistribute('masonry2');},200);
+            setTimeout(function(){redistribute('masonry1');},800);
+            setTimeout(function(){redistribute('masonry2');},800);
         });
     })();
     </script>
