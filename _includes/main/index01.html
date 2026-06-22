@@ -92,7 +92,7 @@
     })();
     </script>
 
-    <!-- Billboard - Banner 01 (728x102) -->
+    <!-- Billboard -->
     <div class="ad-break ad-break-top">{% include /ads/banner/01.html %}</div>
 
     <div class="main-layout">
@@ -106,69 +106,42 @@
         <main class="content-area">
 
             {% assign total_posts = 56 %}
+            {% assign break1 = 18 %}
+            {% assign break2 = 44 %}
 
-            <!-- Masonry 1: post 1-18 -->
-            <div class="masonry-grid" id="masonry1">
+            <!-- Masonry: semua post dalam 4 kolom, banner break di posisi tertentu -->
+            <div class="masonry-grid" id="masonryAll">
                 {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:18 offset:0 %}
-                        {% if c | modulo: 4 == col %}
-                            <div class="masonry-item">
+                <div class="masonry-column" id="col{{ col }}">
+                    {% assign counter = 0 %}
+                    {% for post in site.posts limit:total_posts %}
+                        {% assign mod = counter | modulo: 4 %}
+                        {% if mod == col %}
+                            
+                            <!-- Card -->
+                            <div class="masonry-item masonry-card">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
                                     <span class="masonry-label">{{ post.title }}</span>
                                 </a>
                             </div>
-                        {% endif %}
-                        {% assign c = c | plus: 1 %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
 
-            <!-- Leaderboard - Banner 06 (908x270) -->
-            <div class="ad-break ad-break-leaderboard">{% include /ads/banner/06.html %}</div>
-
-            <!-- Masonry 2: post 19-44 -->
-            <div class="masonry-grid" id="masonry2">
-                {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:26 offset:18 %}
-                        {% if c | modulo: 4 == col %}
-                            <div class="masonry-item">
-                                <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                    <span class="masonry-label">{{ post.title }}</span>
-                                </a>
+                            <!-- Banner 06 di posisi 18 (hanya di kolom 0) -->
+                            {% if counter == break1 and col == 0 %}
+                            <div class="masonry-item masonry-ad-full">
+                                {% include /ads/banner/06.html %}
                             </div>
-                        {% endif %}
-                        {% assign c = c | plus: 1 %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
+                            {% endif %}
 
-            <!-- Banner 07 (468x72) -->
-            <div class="ad-break">{% include /ads/banner/07.html %}</div>
-
-            <!-- Masonry 3: post 45-56 -->
-            {% assign sisa = total_posts | minus: 44 %}
-            <div class="masonry-grid" id="masonry3">
-                {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:sisa offset:44 %}
-                        {% if c | modulo: 4 == col %}
-                            <div class="masonry-item">
-                                <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                    <span class="masonry-label">{{ post.title }}</span>
-                                </a>
+                            <!-- Banner 07 di posisi 44 (hanya di kolom 0) -->
+                            {% if counter == break2 and col == 0 %}
+                            <div class="masonry-item masonry-ad-full">
+                                {% include /ads/banner/07.html %}
                             </div>
+                            {% endif %}
+
                         {% endif %}
-                        {% assign c = c | plus: 1 %}
+                        {% assign counter = counter | plus: 1 %}
                     {% endfor %}
                 </div>
                 {% endfor %}
@@ -176,7 +149,7 @@
 
         </main>
 
-        <!-- Sidebar Kanan - Banner 02, 03, 04, 08 (persegi) -->
+        <!-- Sidebar Kanan - Stack Banner 02,03,04,08 -->
         <aside class="sidebar sidebar-right">
             <div class="sidebar-ad-stack">
                 <div class="sidebar-ad-item">{% include /ads/banner/02.html %}</div>
@@ -193,59 +166,56 @@
 
     <style>
         *,*::before,*::after{box-sizing:border-box}
-        html{min-width:1200px;overflow-x:auto;background:#050505}
+        html{min-width:1360px;overflow-x:auto;background:#050505}
         body{
-            min-width:1200px;width:1200px;margin:0 auto;padding:0;
+            min-width:1360px;width:1360px;margin:0 auto;padding:0;
             background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;overflow-x:visible;
         }
 
         .site-header{
-            width:1200px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
+            width:1360px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
             background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px;
         }
-        .header-inner{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
+        .header-inner{display:flex;align-items:center;gap:12px;max-width:1320px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
         .site-title{flex:1;font-size:13px;font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
         .menu-btn{width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
         .menu-btn:hover{background:rgba(255,255,255,.04)}
         .menu-btn svg{width:17px;height:17px;stroke:#888;fill:none;stroke-width:2;stroke-linecap:round}
         .menu-btn:hover svg{stroke:#fff}
-        .slide-menu{display:none;position:fixed;top:50px;right:50%;transform:translateX(600px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
+        .slide-menu{display:none;position:fixed;top:50px;right:50%;transform:translateX(680px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
         .slide-menu.open{display:block}
         .slide-menu ul{list-style:none;margin:0;padding:0}
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        /* ===== AD BREAK (banner horizontal) ===== */
-        .ad-break{
-            display:flex;justify-content:center;align-items:center;
-            padding:28px 0;
-        }
+        /* ===== AD BREAK ===== */
+        .ad-break{display:flex;justify-content:center;align-items:center;padding:28px 0}
         .ad-break-top{margin-top:50px;padding:20px 0 16px;background:#080808;border-bottom:1px solid rgba(255,255,255,.03)}
-        .ad-break-leaderboard{padding:24px 0;background:#080808;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03);margin:8px 0}
 
-        .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
+        .main-layout{display:flex;gap:0;width:1360px;margin:0 auto}
         .content-area{flex:1;min-width:0;padding:8px 0}
 
-        /* ===== SIDEBAR KIRI ===== */
+        /* ===== SIDEBAR ===== */
         .sidebar{flex-shrink:0;padding:16px 10px;position:relative}
         .sidebar-left{width:180px;border-right:1px solid rgba(255,255,255,.02)}
-        .sidebar-right{width:200px;border-left:1px solid rgba(255,255,255,.02)}
+        .sidebar-right{width:340px;border-left:1px solid rgba(255,255,255,.02)}
         .sticky-ad{position:sticky;top:68px;display:flex;justify-content:center}
 
-        /* ===== SIDEBAR KANAN - AD STACK ===== */
+        /* ===== SIDEBAR KANAN AD STACK ===== */
         .sidebar-ad-stack{
             position:sticky;top:68px;
-            display:flex;flex-direction:column;gap:16px;
+            display:flex;flex-direction:column;gap:20px;
         }
         .sidebar-ad-item{
-            background:#0a0a0a;border-radius:8px;padding:12px;
+            background:#0a0a0a;border-radius:8px;padding:0;
             display:flex;align-items:center;justify-content:center;
-            border:1px solid rgba(255,255,255,.03);
+            border:1px solid rgba(255,255,255,.04);
             transition:border-color .3s;
+            overflow:visible;
         }
-        .sidebar-ad-item:hover{border-color:rgba(255,255,255,.1)}
+        .sidebar-ad-item:hover{border-color:rgba(255,255,255,.12)}
         .sidebar-ad-item ins,.sidebar-ad-item img,.sidebar-ad-item iframe{
             max-width:100%!important;height:auto!important;
         }
@@ -264,6 +234,14 @@
             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
         }
         .masonry-item:hover .masonry-label{opacity:1}
+
+        /* Banner full-width di dalam masonry */
+        .masonry-ad-full{
+            background:#080808;display:flex;align-items:center;justify-content:center;
+            padding:20px 0;border-radius:6px;min-height:100px;
+            border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03);
+        }
+        .masonry-ad-full ins,.masonry-ad-full img,.masonry-ad-full iframe{max-width:100%!important;height:auto!important}
     </style>
 
     <script>
@@ -280,26 +258,40 @@
         if(init.length<2)init=fullName.substring(0,3).toUpperCase();
         document.getElementById("domainAvatar").innerHTML = "<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
         
-        function redistribute(id) {
-            var grid = document.getElementById(id);
+        function redistribute() {
+            var grid = document.getElementById('masonryAll');
             if(!grid)return;
             var cols = grid.querySelectorAll('.masonry-column');
             if(!cols.length)return;
-            var items = [];
-            cols.forEach(function(c){c.querySelectorAll('.masonry-item').forEach(function(i){items.push(i);});});
-            if(!items.length)return;
+            
+            // Pisahkan card dan ad
+            var cardItems = [];
+            var adItems = {};
+            cols.forEach(function(col, ci){
+                var items = col.querySelectorAll('.masonry-card');
+                items.forEach(function(i){cardItems.push({el:i, col:ci});});
+                var ads = col.querySelectorAll('.masonry-ad-full');
+                ads.forEach(function(a){adItems[ci]=a;});
+            });
+            
+            if(!cardItems.length)return;
             cols.forEach(function(c){c.innerHTML='';});
-            items.forEach(function(i){
+            
+            // Kembalikan ad items ke kolom asalnya
+            for(var ci in adItems){cols[ci].appendChild(adItems[ci]);}
+            
+            // Distribusi card ke shortest column
+            cardItems.forEach(function(item){
                 var s=cols[0],sh=s.offsetHeight;
                 for(var j=1;j<cols.length;j++){if(cols[j].offsetHeight<sh){sh=cols[j].offsetHeight;s=cols[j];}}
-                s.appendChild(i);
+                s.appendChild(item.el);
             });
         }
+        
         window.addEventListener('load',function(){
-            ['masonry1','masonry2','masonry3'].forEach(function(id){
-                setTimeout(function(){redistribute(id);},200);
-                setTimeout(function(){redistribute(id);},800);
-            });
+            setTimeout(redistribute,300);
+            setTimeout(redistribute,1000);
+            setTimeout(redistribute,2500);
         });
     })();
     </script>
