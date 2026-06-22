@@ -92,6 +92,7 @@
     })();
     </script>
 
+    <!-- Billboard - Banner 01 -->
     <div class="ad-break">{% include /ads/banner/01.html %}</div>
 
     <div class="main-layout">
@@ -103,31 +104,18 @@
         <main class="content-area">
 
             {% assign total_posts = 56 %}
-            {% assign per_feed = total_posts | divided_by: 5 | floor %}
-            {% assign sisa = total_posts | modulo: 5 %}
 
-            {% assign all_posts = "" | split: "" %}
-            {% for post in site.posts limit:total_posts %}
-                {% assign all_posts = all_posts | push: post %}
-            {% endfor %}
+            <!-- ===== FEED 1 (post 1 sampai 1/5) ===== -->
+            {% assign f1 = total_posts | divided_by: 5 | floor %}
+            {% if total_posts | modulo: 5 >= 1 %}{% assign f1 = f1 | plus: 1 %}{% endif %}
+            {% assign f1_end = f1 | minus: 1 %}
 
-            {% assign feed1_end = per_feed | minus: 1 %}
-            {% if sisa > 0 %}{% assign feed1_end = feed1_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed2_end = feed1_end | plus: per_feed %}
-            {% if sisa > 0 %}{% assign feed2_end = feed2_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed3_end = feed2_end | plus: per_feed %}
-            {% if sisa > 0 %}{% assign feed3_end = feed3_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed4_end = feed3_end | plus: per_feed %}
-            {% if sisa > 0 %}{% assign feed4_end = feed4_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed5_start = feed4_end | plus: 1 %}
-
-            <!-- FEED 1 -->
             <div class="masonry-grid" id="masonry1">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (0..feed1_end) %}
-                        {% if i | modulo: 4 == col %}
-                            {% assign post = all_posts[i] %}
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:f1 offset:0 %}
+                        {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -135,21 +123,26 @@
                                 </a>
                             </div>
                         {% endif %}
+                        {% assign c = c | plus: 1 %}
                     {% endfor %}
                 </div>
                 {% endfor %}
             </div>
 
+            <!-- Banner 02 -->
             <div class="ad-break">{% include /ads/banner/02.html %}</div>
 
-            <!-- FEED 2 -->
+            <!-- ===== FEED 2 ===== -->
+            {% assign f2 = total_posts | divided_by: 5 | floor %}
+            {% if total_posts | modulo: 5 >= 2 %}{% assign f2 = f2 | plus: 1 %}{% endif %}
+            {% assign f2_start = f1 %}
+
             <div class="masonry-grid" id="masonry2">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed1_end | plus: 1..feed2_end) %}
-                        {% assign mod = i | minus: feed1_end | minus: 1 | modulo: 4 %}
-                        {% if mod == col %}
-                            {% assign post = all_posts[i] %}
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:f2 offset:f2_start %}
+                        {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -157,24 +150,26 @@
                                 </a>
                             </div>
                         {% endif %}
+                        {% assign c = c | plus: 1 %}
                     {% endfor %}
                 </div>
                 {% endfor %}
             </div>
 
-            <div class="ad-break ad-break-double">
-                <div class="ad-break-half">{% include /ads/banner/03.html %}</div>
-                <div class="ad-break-half">{% include /ads/banner/04.html %}</div>
-            </div>
+            <!-- Banner 03 -->
+            <div class="ad-break">{% include /ads/banner/03.html %}</div>
 
-            <!-- FEED 3 -->
+            <!-- ===== FEED 3 ===== -->
+            {% assign f3 = total_posts | divided_by: 5 | floor %}
+            {% if total_posts | modulo: 5 >= 3 %}{% assign f3 = f3 | plus: 1 %}{% endif %}
+            {% assign f3_start = f1 | plus: f2 %}
+
             <div class="masonry-grid" id="masonry3">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed2_end | plus: 1..feed3_end) %}
-                        {% assign mod = i | minus: feed2_end | minus: 1 | modulo: 4 %}
-                        {% if mod == col %}
-                            {% assign post = all_posts[i] %}
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:f3 offset:f3_start %}
+                        {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -182,21 +177,29 @@
                                 </a>
                             </div>
                         {% endif %}
+                        {% assign c = c | plus: 1 %}
                     {% endfor %}
                 </div>
                 {% endfor %}
             </div>
 
-            <div class="ad-break">{% include /ads/banner/06.html %}</div>
+            <!-- Banner 04 + 06 sejajar -->
+            <div class="ad-break ad-break-double">
+                <div class="ad-break-half">{% include /ads/banner/04.html %}</div>
+                <div class="ad-break-half">{% include /ads/banner/06.html %}</div>
+            </div>
 
-            <!-- FEED 4 -->
+            <!-- ===== FEED 4 ===== -->
+            {% assign f4 = total_posts | divided_by: 5 | floor %}
+            {% if total_posts | modulo: 5 >= 4 %}{% assign f4 = f4 | plus: 1 %}{% endif %}
+            {% assign f4_start = f1 | plus: f2 | plus: f3 %}
+
             <div class="masonry-grid" id="masonry4">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed3_end | plus: 1..feed4_end) %}
-                        {% assign mod = i | minus: feed3_end | minus: 1 | modulo: 4 %}
-                        {% if mod == col %}
-                            {% assign post = all_posts[i] %}
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:f4 offset:f4_start %}
+                        {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -204,22 +207,25 @@
                                 </a>
                             </div>
                         {% endif %}
+                        {% assign c = c | plus: 1 %}
                     {% endfor %}
                 </div>
                 {% endfor %}
             </div>
 
+            <!-- Banner 08 -->
             <div class="ad-break">{% include /ads/banner/08.html %}</div>
 
-            <!-- FEED 5 -->
-            {% assign last_index = total_posts | minus: 1 %}
+            <!-- ===== FEED 5 ===== -->
+            {% assign f5 = total_posts | divided_by: 5 | floor %}
+            {% assign f5_start = f1 | plus: f2 | plus: f3 | plus: f4 %}
+
             <div class="masonry-grid" id="masonry5">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed5_start..last_index) %}
-                        {% assign mod = i | minus: feed5_start | modulo: 4 %}
-                        {% if mod == col %}
-                            {% assign post = all_posts[i] %}
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:f5 offset:f5_start %}
+                        {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -227,11 +233,13 @@
                                 </a>
                             </div>
                         {% endif %}
+                        {% assign c = c | plus: 1 %}
                     {% endfor %}
                 </div>
                 {% endfor %}
             </div>
 
+            <!-- Banner 07 -->
             <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
         </main>
@@ -302,16 +310,13 @@
         .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
         .sticky-ad{position:sticky;top:68px;display:flex;justify-content:center}
 
-        /* ===== MASONRY - ASPECT RATIO 9:16 ===== */
         .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
         .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
         .masonry-item{
             overflow:hidden;border-radius:6px;background:#0a0a0a;
             aspect-ratio:9/16;
         }
-        .masonry-link{
-            display:block;position:relative;width:100%;height:100%;
-        }
+        .masonry-link{display:block;position:relative;width:100%;height:100%}
         .masonry-link img{
             width:100%;height:100%;object-fit:cover;object-position:center top;
             display:block;transition:transform .4s ease;
