@@ -102,12 +102,13 @@
 
         <main class="content-area">
 
-            <!-- Satu feed penuh -->
-            <div class="masonry-grid" id="masonryGrid">
+            {% assign total_posts = 15 %}
+
+            <div class="masonry-grid" id="masonryAll">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:56 %}
+                    {% for post in site.posts limit:total_posts %}
                         {% assign mod = c | modulo: 4 %}
                         {% if mod == col %}
                             <div class="masonry-item">
@@ -207,7 +208,7 @@
         document.getElementById("domainAvatar").innerHTML = "<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
         
         function redistribute() {
-            var grid = document.getElementById('masonryGrid');
+            var grid = document.getElementById('masonryAll');
             if(!grid)return;
             var cols = grid.querySelectorAll('.masonry-column');
             if(!cols.length)return;
