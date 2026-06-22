@@ -69,8 +69,7 @@
         var host = window.location.hostname.split(".");
         var sub = host[0];
         if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        document.getElementById("blogMainTitle").textContent = sub.replace(/-/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
     })();
     (function(){
         var btn = document.getElementById("blogMenuToggle");
@@ -96,22 +95,15 @@
 
     <div class="main-layout">
 
-        <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
-        </aside>
+        <aside class="sidebar"><div class="sticky-ad">{% include /ads/banner/05.html %}</div></aside>
 
         <main class="content-area">
-
-            {% assign total_posts = 56 %}
-
-            <!-- Feed atas: post 1-28 -->
-            <div class="masonry-grid" id="masonry1">
+            <div class="masonry-grid">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:28 %}
-                        {% assign mod = c | modulo: 4 %}
-                        {% if mod == col %}
+                    {% for post in site.posts limit:50 %}
+                        {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -124,35 +116,9 @@
                 </div>
                 {% endfor %}
             </div>
-
-            <div class="ad-break">{% include /ads/banner/01.html %}</div>
-
-            <!-- Feed bawah: post 29-56 -->
-            <div class="masonry-grid" id="masonry2">
-                {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:28 offset:28 %}
-                        {% assign mod = c | modulo: 4 %}
-                        {% if mod == col %}
-                            <div class="masonry-item">
-                                <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                            </div>
-                        {% endif %}
-                        {% assign c = c | plus: 1 %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
-
         </main>
 
-        <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
-        </aside>
+        <aside class="sidebar"><div class="sticky-ad">{% include /ads/banner/05.html %}</div></aside>
 
     </div>
 
@@ -164,96 +130,32 @@
     <style>
         *,*::before,*::after{box-sizing:border-box}
         html{min-width:1280px;overflow-x:auto;background:#050505}
-        body{
-            min-width:1280px;width:1280px;margin:0 auto;padding:0;
-            background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;overflow-x:visible;
-        }
-
-        .site-header{
-            width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
-            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px;
-        }
+        body{min-width:1280px;width:1280px;margin:0 auto;padding:0;background:#050505;font-family:Arial,sans-serif;color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased}
+        .site-header{width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px}
         .header-inner{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
         .site-title{flex:1;font-size:13px;font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
         .menu-btn{width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
         .menu-btn:hover{background:rgba(255,255,255,.04)}
         .menu-btn svg{width:17px;height:17px;stroke:#888;fill:none;stroke-width:2;stroke-linecap:round}
-        .menu-btn:hover svg{stroke:#fff}
         .slide-menu{display:none;position:fixed;top:50px;right:50%;transform:translateX(640px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
         .slide-menu.open{display:block}
         .slide-menu ul{list-style:none;margin:0;padding:0}
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
         .slide-menu a:hover{background:#222;color:#fff}
-
-        .ad-break{
-            display:flex;justify-content:center;align-items:center;
-            padding:22px 0;background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
-        }
+        .ad-break{display:flex;justify-content:center;align-items:center;padding:22px 0;background:#080808;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03)}
         .ad-break:first-child{margin-top:50px}
-
         .main-layout{display:flex;gap:0;width:1280px;margin:0 auto}
         .content-area{flex:1;min-width:0;padding:8px 0}
-
-        .sidebar{flex-shrink:0;padding:16px 10px;position:relative}
-        .sidebar-left{width:180px;border-right:1px solid rgba(255,255,255,.02)}
-        .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
+        .sidebar{width:180px;flex-shrink:0;padding:16px 10px}
         .sticky-ad{position:sticky;top:68px;display:flex;justify-content:center}
-
-        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
-        .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-        .masonry-item{
-            overflow:hidden;border-radius:6px;background:#0a0a0a;
-            aspect-ratio:9/16;position:relative;
-        }
-        .masonry-link{display:block;position:relative;width:100%;height:100%}
-        .masonry-link img{
-            width:100%;height:100%;object-fit:cover;object-position:center top;
-            display:block;transition:transform .4s ease;
-        }
+        .masonry-grid{display:flex;align-items:flex-start;gap:6px}
+        .masonry-column{flex:1;display:flex;flex-direction:column;gap:6px}
+        .masonry-item{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:9/16;position:relative}
+        .masonry-link{display:block;width:100%;height:100%}
+        .masonry-link img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .4s ease}
         .masonry-item:hover img{transform:scale(1.03)}
     </style>
-
-    <script>
-    (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-        
-        function redistribute(id) {
-            var grid = document.getElementById(id);
-            if(!grid)return;
-            var cols = grid.querySelectorAll('.masonry-column');
-            if(!cols.length)return;
-            var items = [];
-            cols.forEach(function(c){c.querySelectorAll('.masonry-item').forEach(function(i){items.push(i);});});
-            if(!items.length)return;
-            cols.forEach(function(c){c.innerHTML='';});
-            items.forEach(function(i){
-                var s=cols[0],sh=s.offsetHeight;
-                for(var j=1;j<cols.length;j++){if(cols[j].offsetHeight<sh){sh=cols[j].offsetHeight;s=cols[j];}}
-                s.appendChild(i);
-            });
-        }
-        window.addEventListener('load',function(){
-            setTimeout(function(){redistribute('masonry1');},200);
-            setTimeout(function(){redistribute('masonry2');},200);
-            setTimeout(function(){redistribute('masonry1');},800);
-            setTimeout(function(){redistribute('masonry2');},800);
-        });
-    })();
-    </script>
 
 </body>
 </html>
