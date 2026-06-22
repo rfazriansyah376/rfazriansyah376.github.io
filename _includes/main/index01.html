@@ -92,29 +92,28 @@
     })();
     </script>
 
-    <!-- Billboard - Banner 01 -->
-    <div class="ad-break">{% include /ads/banner/01.html %}</div>
+    <!-- Billboard - Banner 06 (908x270) -->
+    <div class="ad-break">{% include /ads/banner/06.html %}</div>
 
     <div class="main-layout">
 
-        <!-- Sidebar Kiri - Banner 05 -->
         <aside class="sidebar sidebar-left">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
-        <!-- Konten -->
         <main class="content-area">
 
             {% assign total_posts = 56 %}
-            {% assign mid_point = total_posts | divided_by: 2 %}
+            {% assign mid = total_posts | divided_by: 2 %}
 
-            <!-- MASONRY BAGIAN 1 -->
+            <!-- Feed atas -->
             <div class="masonry-grid" id="masonry1">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:mid_point offset:0 %}
-                        {% if c | modulo: 4 == col %}
+                    {% for post in site.posts limit:mid %}
+                        {% assign mod = c | modulo: 4 %}
+                        {% if mod == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -128,17 +127,18 @@
                 {% endfor %}
             </div>
 
-            <!-- Leaderboard - Banner 06 -->
-            <div class="ad-break">{% include /ads/banner/06.html %}</div>
+            <!-- Banner 01 (728x102) di tengah -->
+            <div class="ad-break">{% include /ads/banner/01.html %}</div>
 
-            <!-- MASONRY BAGIAN 2 -->
-            {% assign sisa = total_posts | minus: mid_point %}
+            <!-- Feed bawah -->
+            {% assign sisa = total_posts | minus: mid %}
             <div class="masonry-grid" id="masonry2">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:sisa offset:mid_point %}
-                        {% if c | modulo: 4 == col %}
+                    {% for post in site.posts limit:sisa offset:mid %}
+                        {% assign mod = c | modulo: 4 %}
+                        {% if mod == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -154,7 +154,6 @@
 
         </main>
 
-        <!-- Sidebar Kanan - Ad Space -->
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">
                 <div class="ad-placeholder">
@@ -170,7 +169,7 @@
 
     </div>
 
-    <!-- Banner 07 -->
+    <!-- Banner 07 (468x72) -->
     <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
     {% include /ads/gobloggugel/sosmed.html %}
