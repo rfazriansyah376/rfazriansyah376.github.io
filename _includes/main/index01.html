@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,127 +36,6 @@
     </script>
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-
-{% include head.html %}
-{% include verif.html %}
-
-</head>
-<body>
-
-    <header class="site-header">
-        <div class="header-inner">
-            <div id="domainAvatar" class="site-avatar"></div>
-            <span id="blogMainTitle" class="site-title"></span>
-            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
-            </button>
-        </div>
-    </header>
-
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/tags/">Tags</a></li>
-            <li><a href="/contact/">Contact</a></li>
-            <li><a href="/privacy-policy/">Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
-        </ul>
-    </nav>
-
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var m = btn.querySelector("svg:first-child");
-        var c = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            m.style.display = open ? "none" : "block";
-            c.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                m.style.display = "block";c.style.display = "none";
-            }
-        });
-    })();
-    </script>
-
-    <div class="ad-break">{% include /ads/banner/06.html %}</div>
-
-    <div class="main-layout">
-
-        <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
-        </aside>
-
-        <main class="content-area">
-
-            {% assign total_posts = 56 %}
-            {% assign featured_count = 3 %}
-
-            <!-- Featured Posts -->
-            {% if featured_count >= 1 %}
-            <div class="featured-grid">
-                {% for post in site.posts limit:featured_count %}
-                <div class="featured-card">
-                    <a href="{{ post.url }}" class="featured-link">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
-                        <div class="featured-body">
-                            <h2>{{ post.title }}</h2>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- Feed -->
-            {% assign sisa = total_posts | minus: featured_count %}
-            <div class="masonry-grid" id="masonryAll">
-                {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:sisa offset:featured_count %}
-                        {% assign mod = c | modulo: 4 %}
-                        {% if mod == col %}
-                            <div class="masonry-item">
-                                <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                            </div>
-                        {% endif %}
-                        {% assign c = c | plus: 1 %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
-
-        </main>
-
-        <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
-        </aside>
-
-    </div>
-
-    <div class="ad-break">{% include /ads/banner/07.html %}</div>
-
-    {% include /ads/gobloggugel/sosmed.html %}
-    {% include footer.html %}
 
     <style>
         *,*::before,*::after{box-sizing:border-box}
@@ -267,6 +145,126 @@
             .masonry-item{border-radius:4px}
         }
     </style>
+{% include head.html %}
+{% include verif.html %}
+
+</head>
+<body>
+<div loading="lazy">
+    <header class="site-header">
+        <div class="header-inner">
+            <div id="domainAvatar" class="site-avatar"></div>
+            <span id="blogMainTitle" class="site-title"></span>
+            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <nav id="blogMenuPanel" class="slide-menu">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/privacy-policy/">Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+        </ul>
+    </nav>
+
+    <script>
+    (function(){
+        var host = window.location.hostname.split(".");
+        var sub = host[0];
+        if (sub.toLowerCase() === "www") sub = host[1] || "";
+        var clean = sub.replace(/-/g, " ");
+        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    })();
+    (function(){
+        var btn = document.getElementById("blogMenuToggle");
+        var panel = document.getElementById("blogMenuPanel");
+        var m = btn.querySelector("svg:first-child");
+        var c = btn.querySelector("svg:last-child");
+        btn.addEventListener("click", function(e){
+            e.stopPropagation();
+            var open = panel.classList.toggle("open");
+            m.style.display = open ? "none" : "block";
+            c.style.display = open ? "block" : "none";
+        });
+        document.addEventListener("click", function(e){
+            if(!panel.contains(e.target) && !btn.contains(e.target)){
+                panel.classList.remove("open");
+                m.style.display = "block";c.style.display = "none";
+            }
+        });
+    })();
+    </script>
+
+    <div class="ad-break">{% include /ads/banner/06.html %}</div>
+
+    <div class="main-layout">
+
+        <aside class="sidebar sidebar-left">
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
+        </aside>
+
+        <main class="content-area">
+
+            {% assign total_posts = 56 %}
+            {% assign featured_count = 3 %}
+
+            <!-- Featured Posts -->
+            {% if featured_count >= 1 %}
+            <div class="featured-grid">
+                {% for post in site.posts limit:featured_count %}
+                <div class="featured-card">
+                    <a href="{{ post.url }}" class="featured-link">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
+                        <div class="featured-body">
+                            <h2>{{ post.title }}</h2>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Feed -->
+            {% assign sisa = total_posts | minus: featured_count %}
+            <div class="masonry-grid" id="masonryAll">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:sisa offset:featured_count %}
+                        {% assign mod = c | modulo: 4 %}
+                        {% if mod == col %}
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                </a>
+                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                            </div>
+                        {% endif %}
+                        {% assign c = c | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+        </main>
+
+        <aside class="sidebar sidebar-right">
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
+        </aside>
+
+    </div>
+
+    <div class="ad-break">{% include /ads/banner/07.html %}</div>
+
+    {% include /ads/gobloggugel/sosmed.html %}
+    {% include footer.html %}
+
 
     <script>
     (function() {
@@ -304,6 +302,6 @@
         });
     })();
     </script>
-
+</div>
 </body>
 </html>
