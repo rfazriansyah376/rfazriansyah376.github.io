@@ -3,159 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <script>
     (function() {
-        var hostname = location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        var formatText = function(str) {
-            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        };
-        var displayDomain = formatText(fullName);
-        document.title = displayDomain + " - Beautiful Girls Photo Gallery";
-        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
-        metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world.";
-        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
-        metaAuthor.name = "author";
-        metaAuthor.content = displayDomain;
-        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
-        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
-        canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", location.href);
-        if (!canonical.parentNode) document.head.appendChild(canonical);
-        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful girls photo gallery from around the world","url":location.origin};
-        var schemaScript = document.createElement("script");
-        schemaScript.type = "application/ld+json";
-        schemaScript.textContent = JSON.stringify(schemaData);
-        document.head.appendChild(schemaScript);
+        var h=location.hostname.split("."), f=h[0];
+        if(f.toLowerCase()==="www")f=h[1]||f;
+        var d=f.replace(/[-_]/g," ").replace(/\+/g," ").replace(/\b\w/g,function(c){return c.toUpperCase();});
+        document.title=d+" - Beautiful Girls Photo Gallery";
+        var m=document.querySelector("meta[name=description]")||document.createElement("meta");
+        m.name="description";m.content=d+" - Stunning collection of beautiful girls photography from around the world.";
+        if(!m.parentNode)document.head.appendChild(m);
+        var a=document.querySelector("meta[name=author]")||document.createElement("meta");
+        a.name="author";a.content=d;if(!a.parentNode)document.head.appendChild(a);
+        var l=document.querySelector("link[rel=canonical]")||document.createElement("link");
+        l.rel="canonical";l.href=location.href;if(!l.parentNode)document.head.appendChild(l);
+        var s=document.createElement("script");s.type="application/ld+json";
+        s.textContent='{"@context":"https://schema.org","@type":"WebSite","name":"'+d+'","description":"Beautiful girls photo gallery from around the world","url":"'+location.origin+'"}';
+        document.head.appendChild(s);
     })();
     </script>
-
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-
 {% include head.html %}
 {% include verif.html %}
-
 </head>
 <body>
-
-    <header class="site-header">
-        <div class="header-inner">
-            <div id="domainAvatar" class="site-avatar"></div>
-            <span id="blogMainTitle" class="site-title"></span>
-            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
-            </button>
-        </div>
-    </header>
-
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/tags/">Tags</a></li>
-            <li><a href="/contact/">Contact</a></li>
-            <li><a href="/privacy-policy/">Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
-        </ul>
-    </nav>
-
+    <header class="hdr"><div class="hdr-in"><div id="dAv" class="av"></div><span id="dTi" class="ti"></span><button class="mb" id="mBt" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button></div></header>
+    <nav id="mPn" class="sm"><ul><li><a href="/">Home</a></li><li><a href="/tags/">Tags</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms & Conditions</a></li></ul></nav>
     <script>
     (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        document.getElementById("blogMainTitle").textContent = sub.replace(/-/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        var h=location.hostname.split("."),s=h[0];
+        if(s.toLowerCase()==="www")s=h[1]||"";
+        document.getElementById("dTi").textContent=s.replace(/-/g," ").replace(/\b\w/g,function(c){return c.toUpperCase();});
     })();
     (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var m = btn.querySelector("svg:first-child");
-        var c = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            m.style.display = open ? "none" : "block";
-            c.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                m.style.display = "block";c.style.display = "none";
-            }
-        });
+        var b=document.getElementById("mBt"),p=document.getElementById("mPn");
+        b.addEventListener("click",function(e){e.stopPropagation();p.classList.toggle("op")});
+        document.addEventListener("click",function(e){if(!p.contains(e.target)&&!b.contains(e.target))p.classList.remove("op")});
     })();
     </script>
+    <div class="ab">{% include /ads/banner/06.html %}</div>
+    <div class="ml">
+        <aside class="sb"><div class="sa">{% include /ads/banner/05.html %}</div></aside>
+        <main class="ca">
+            
+            {% assign all_posts = "" | split: "" %}
+            {% for post in site.categories.indo01 %}
+                {% assign all_posts = all_posts | push: post %}
+            {% endfor %}
+            
+            {% assign per_page = 20 %}
+            {% assign total_posts = all_posts | size %}
+            {% assign total_pages = total_posts | divided_by: per_page | ceil %}
+            {% if total_pages < 1 %}{% assign total_pages = 1 %}{% endif %}
 
-    <div class="ad-break">{% include /ads/banner/06.html %}</div>
-
-    <div class="main-layout">
-
-        <aside class="sidebar"><div class="sticky-ad">{% include /ads/banner/05.html %}</div></aside>
-
-        <main class="content-area">
-            <div class="masonry-grid">
-                {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:50 %}
-                        {% if c | modulo: 4 == col %}
-                            <div class="masonry-item">
-                                <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                            </div>
-                        {% endif %}
-                        {% assign c = c | plus: 1 %}
-                    {% endfor %}
+            {% for page_num in (1..total_pages) %}
+                {% assign start = page_num | minus: 1 | times: per_page %}
+                {% assign end = start | plus: per_page | minus: 1 %}
+                {% if end >= total_posts %}{% assign end = total_posts | minus: 1 %}{% endif %}
+                
+                <div class="page-block" id="page{{ page_num }}"{% if page_num > 1 %} style="display:none"{% endif %}>
+                    <div class="mg">
+                        {% for col in (0..3) %}
+                        <div class="mc">
+                            {% assign c = 0 %}
+                            {% for i in (start..end) %}
+                                {% if c | modulo: 4 == col %}
+                                    {% assign post = all_posts[i] %}
+                                    <div class="mi">
+                                        <a href="{{ post.url }}" class="mlk">
+                                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                        </a>
+                                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                                    </div>
+                                {% endif %}
+                                {% assign c = c | plus: 1 %}
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
+            {% endfor %}
+
+            {% if total_pages > 1 %}
+            <div class="pg" id="pagination">
+                {% for page_num in (1..total_pages) %}
+                <button class="pg-btn{% if page_num == 1 %} act{% endif %}" data-page="{{ page_num }}">{{ page_num }}</button>
                 {% endfor %}
             </div>
+            {% endif %}
+
         </main>
-
-        <aside class="sidebar"><div class="sticky-ad">{% include /ads/banner/05.html %}</div></aside>
-
+        <aside class="sb"><div class="sa">{% include /ads/banner/05.html %}</div></aside>
     </div>
-
-    <div class="ad-break">{% include /ads/banner/07.html %}</div>
-
+    <div class="ab">{% include /ads/banner/07.html %}</div>
     {% include /ads/gobloggugel/sosmed.html %}
     {% include footer.html %}
-
     <style>
         *,*::before,*::after{box-sizing:border-box}
         html{min-width:1280px;overflow-x:auto;background:#050505}
-        body{min-width:1280px;width:1280px;margin:0 auto;padding:0;background:#050505;font-family:Arial,sans-serif;color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased}
-        .site-header{width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px}
-        .header-inner{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
-        .site-avatar{flex-shrink:0;line-height:0}
-        .site-title{flex:1;font-size:13px;font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
-        .menu-btn{width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
-        .menu-btn:hover{background:rgba(255,255,255,.04)}
-        .menu-btn svg{width:17px;height:17px;stroke:#888;fill:none;stroke-width:2;stroke-linecap:round}
-        .slide-menu{display:none;position:fixed;top:50px;right:50%;transform:translateX(640px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
-        .slide-menu.open{display:block}
-        .slide-menu ul{list-style:none;margin:0;padding:0}
-        .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
-        .slide-menu a:hover{background:#222;color:#fff}
-        .ad-break{display:flex;justify-content:center;align-items:center;padding:22px 0;background:#080808;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03)}
-        .ad-break:first-child{margin-top:50px}
-        .main-layout{display:flex;gap:0;width:1280px;margin:0 auto}
-        .content-area{flex:1;min-width:0;padding:8px 0}
-        .sidebar{width:180px;flex-shrink:0;padding:16px 10px}
-        .sticky-ad{position:sticky;top:68px;display:flex;justify-content:center}
-        .masonry-grid{display:flex;align-items:flex-start;gap:6px}
-        .masonry-column{flex:1;display:flex;flex-direction:column;gap:6px}
-        .masonry-item{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:9/16;position:relative}
-        .masonry-link{display:block;width:100%;height:100%}
-        .masonry-link img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .4s ease}
-        .masonry-item:hover img{transform:scale(1.03)}
+        body{min-width:1280px;width:1280px;margin:0 auto;padding:0;background:#050505;font-family:Arial,sans-serif;color:#fff;line-height:1.3}
+        .hdr{width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;background:#050505;border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px}
+        .hdr-in{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
+        .av{flex-shrink:0;line-height:0}
+        .ti{flex:1;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
+        .mb{width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
+        .mb:hover{background:rgba(255,255,255,.04)}
+        .mb svg{width:17px;height:17px;stroke:#888;fill:none;stroke-width:2;stroke-linecap:round}
+        .sm{display:none;position:fixed;top:50px;right:50%;transform:translateX(640px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
+        .sm.op{display:block}
+        .sm ul{list-style:none;margin:0;padding:0}
+        .sm a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
+        .sm a:hover{background:#222;color:#fff}
+        .ab{display:flex;justify-content:center;align-items:center;padding:22px 0;background:#080808;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03)}
+        .ab:first-child{margin-top:50px}
+        .ml{display:flex;gap:0;width:1280px;margin:0 auto}
+        .ca{flex:1;padding:8px 0}
+        .sb{width:180px;flex-shrink:0;padding:16px 10px}
+        .sa{position:sticky;top:68px;display:flex;justify-content:center}
+        .mg{display:flex;align-items:flex-start;gap:6px}
+        .mc{flex:1;display:flex;flex-direction:column;gap:6px}
+        .mi{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:9/16;position:relative}
+        .mlk{display:block;width:100%;height:100%}
+        .mlk img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+        .pg{display:flex;justify-content:center;gap:8px;padding:20px 0}
+        .pg-btn{width:36px;height:36px;background:#111;border:1px solid #222;color:#888;border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s}
+        .pg-btn:hover{background:#1a1a1a;color:#fff}
+        .pg-btn.act{background:#c0392b;border-color:#c0392b;color:#fff}
     </style>
-
+    <script>
+    (function() {
+        var h=location.hostname.split("."),f=h[0];
+        if(f.toLowerCase()==="www")f=h[1]||"";
+        function hs(s){var x=0;for(var i=0;i<s.length;i++){x=((x<<5)-x)+s.charCodeAt(i);x|=0;}return Math.abs(x);}
+        var dh=hs(f),cl=f.replace(/-/g," "),w=cl.split(" "),init="";
+        for(var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
+        if(init.length<2)init=f.substring(0,3).toUpperCase();
+        document.getElementById("dAv").innerHTML="<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+        
+        var btns=document.querySelectorAll(".pg-btn");
+        btns.forEach(function(b){
+            b.addEventListener("click",function(){
+                var p=this.dataset.page;
+                document.querySelectorAll(".page-block").forEach(function(pb){pb.style.display="none"});
+                document.getElementById("page"+p).style.display="block";
+                btns.forEach(function(x){x.classList.remove("act")});
+                this.classList.add("act");
+                window.scrollTo({top:0,behavior:"smooth"});
+            });
+        });
+    })();
+    </script>
 </body>
 </html>
