@@ -37,7 +37,10 @@
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
-  <style>
+{% include head.html %}
+{% include verif.html %}
+
+    <style>
         *,*::before,*::after{box-sizing:border-box}
         html{overflow-x:auto;background:#050505}
         body{
@@ -87,28 +90,14 @@
             letter-spacing:2px;color:#555;margin:0 0 12px 0;
         }
 
-        /* ===== FEATURED GRID ===== */
         .featured-grid{
-            display:grid;gap:8px;margin-bottom:20px;
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+            gap:8px;margin-bottom:20px;
         }
-        .featured-large{grid-template-columns:1fr}
-        .featured-large .featured-card{aspect-ratio:21/9}
-        .featured-large .featured-body h2{font-size:22px}
-        .featured-large .featured-body{padding:40px 24px 18px}
-
-        .featured-medium{grid-template-columns:repeat(2,1fr)}
-        .featured-medium .featured-card{aspect-ratio:16/10}
-        .featured-medium .featured-body h2{font-size:17px}
-        .featured-medium .featured-body{padding:30px 18px 14px}
-
-        .featured-small{grid-template-columns:repeat(3,1fr)}
-        .featured-small .featured-card{aspect-ratio:16/9}
-        .featured-small .featured-body h2{font-size:14px}
-        .featured-small .featured-body{padding:24px 14px 10px}
-
         .featured-card{
             position:relative;overflow:hidden;border-radius:8px;
-            background:#0a0a0a;
+            background:#0a0a0a;aspect-ratio:16/10;
         }
         .featured-link{display:block;position:relative;width:100%;height:100%}
         .featured-link img{
@@ -118,13 +107,13 @@
         .featured-card:hover img{transform:scale(1.03)}
         .featured-body{
             position:absolute;bottom:0;left:0;right:0;
+            padding:28px 18px 14px;
             background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.2) 70%,transparent 100%);
             color:#fff;
         }
-        .featured-body h2{font-weight:700;margin:0 0 4px;line-height:1.2}
+        .featured-body h2{font-size:16px;font-weight:700;margin:0 0 4px;line-height:1.2}
         .featured-body p{font-size:11px;opacity:.75;margin:0;line-height:1.4}
 
-        /* ===== MASONRY ===== */
         .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
         .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
         .masonry-item{
@@ -138,7 +127,6 @@
         }
         .masonry-item:hover img{transform:scale(1.03)}
 
-        /* ===== RESPONSIVE ===== */
         @media(max-width:768px){
             body{padding:0 4px}
             .site-header{padding:10px 12px}
@@ -151,30 +139,23 @@
             .ad-break{padding:16px 0}
             .main-layout{padding:0 4px}
             .sidebar{display:none}
-            .featured-large{grid-template-columns:1fr}
-            .featured-medium{grid-template-columns:1fr}
-            .featured-small{grid-template-columns:1fr 1fr}
-            .featured-large .featured-body h2{font-size:18px}
-            .featured-medium .featured-body h2{font-size:16px}
-            .featured-small .featured-body h2{font-size:14px}
+            .featured-grid{grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:6px}
+            .featured-body h2{font-size:15px}
             .masonry-grid{flex-wrap:wrap;gap:4px}
             .masonry-column{flex:0 0 calc(50% - 2px)}
         }
 
         @media(max-width:480px){
             .site-title{font-size:16px}
-            .featured-small{grid-template-columns:1fr}
+            .featured-grid{grid-template-columns:1fr 1fr}
+            .featured-body h2{font-size:14px}
             .masonry-column{flex:0 0 calc(50% - 2px)}
             .masonry-item{border-radius:4px}
         }
     </style>
-    
-{% include head.html %}
-{% include verif.html %}
-
 </head>
 <body>
-<div loading="lazy">
+
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
@@ -189,6 +170,7 @@
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
             <li><a href="/">Home</a></li>
+            <li><a href="/tags/">Tags</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li><a href="/privacy-policy/">Privacy Policy</a></li>
             <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
@@ -235,15 +217,10 @@
 
             {% assign total_posts = 56 %}
 
-            {% comment %}
-            ╔══════════════════════════════════╗
-            ║  ATUR JUMLAH PER SECTION DI SINI ║
-            ╚══════════════════════════════════╝
-            {% endcomment %}
-            {% assign f1 = 1 %}
-            {% assign f2 = 2 %}
-            {% assign f3 = 3 %}
-            {% assign f4 = 2 %}
+            {% assign f1 = 2 %}
+            {% assign f2 = 3 %}
+            {% assign f3 = 2 %}
+            {% assign f4 = 3 %}
             {% assign f5 = 2 %}
 
             {% assign off1 = 0 %}
@@ -252,12 +229,11 @@
             {% assign off4 = off3 | plus: f3 %}
             {% assign off5 = off4 | plus: f4 %}
             {% assign masonry_start = off5 | plus: f5 %}
-            {% assign sisa = total_posts | minus: masonry_start %}
+            {% assign sisa = total_posts | minus: masonry_start | at_least: 0 %}
 
-            <!-- Featured 1 -->
             {% if f1 >= 1 %}
             <div class="section-label">Featured</div>
-            <div class="featured-grid featured-large">
+            <div class="featured-grid">
                 {% for post in site.posts limit:f1 offset:off1 %}
                 <div class="featured-card">
                     <a href="{{ post.url }}" class="featured-link">
@@ -267,16 +243,15 @@
                             {% if post.description %}<p>{{ post.description }}</p>{% endif %}
                         </div>
                     </a>
-                    
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
 
-            <!-- Featured 2 -->
             {% if f2 >= 1 %}
             <div class="section-label">Editor's Picks</div>
-            <div class="featured-grid featured-medium">
+            <div class="featured-grid">
                 {% for post in site.posts limit:f2 offset:off2 %}
                 <div class="featured-card">
                     <a href="{{ post.url }}" class="featured-link">
@@ -286,16 +261,15 @@
                             {% if post.description %}<p>{{ post.description }}</p>{% endif %}
                         </div>
                     </a>
-                    
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
 
-            <!-- Featured 3 -->
             {% if f3 >= 1 %}
             <div class="section-label">Trending</div>
-            <div class="featured-grid featured-small">
+            <div class="featured-grid">
                 {% for post in site.posts limit:f3 offset:off3 %}
                 <div class="featured-card">
                     <a href="{{ post.url }}" class="featured-link">
@@ -305,19 +279,17 @@
                             {% if post.description %}<p>{{ post.description }}</p>{% endif %}
                         </div>
                     </a>
-                    
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
 
-            <!-- Banner 01 di tengah featured -->
             <div class="ad-break">{% include /ads/banner/01.html %}</div>
 
-            <!-- Featured 4 -->
             {% if f4 >= 1 %}
             <div class="section-label">Spotlight</div>
-            <div class="featured-grid featured-medium">
+            <div class="featured-grid">
                 {% for post in site.posts limit:f4 offset:off4 %}
                 <div class="featured-card">
                     <a href="{{ post.url }}" class="featured-link">
@@ -327,16 +299,15 @@
                             {% if post.description %}<p>{{ post.description }}</p>{% endif %}
                         </div>
                     </a>
-                    
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
 
-            <!-- Featured 5 -->
             {% if f5 >= 1 %}
             <div class="section-label">Must See</div>
-            <div class="featured-grid featured-small">
+            <div class="featured-grid">
                 {% for post in site.posts limit:f5 offset:off5 %}
                 <div class="featured-card">
                     <a href="{{ post.url }}" class="featured-link">
@@ -346,13 +317,12 @@
                             {% if post.description %}<p>{{ post.description }}</p>{% endif %}
                         </div>
                     </a>
-                    
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
 
-            <!-- Feed Masonry -->
             {% if sisa >= 1 %}
             <div class="section-label">Latest Updates</div>
             <div class="masonry-grid" id="masonryAll">
@@ -366,7 +336,7 @@
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
                                 </a>
-                                
+                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                             </div>
                         {% endif %}
                         {% assign c = c | plus: 1 %}
@@ -386,10 +356,7 @@
 
     <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
-    {% include /ads/gobloggugel/sosmed.html %}
-    {% include footer.html %}
-
-  
+    
 
     <script>
     (function() {
@@ -428,6 +395,9 @@
     })();
     </script>
 
-</div>
+{% include /ads/gobloggugel/sosmed.html %}
+    {% include footer.html %}
+    
+
 </body>
 </html>
