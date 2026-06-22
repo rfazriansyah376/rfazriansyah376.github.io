@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,17 +104,29 @@
         <main class="content-area">
 
             {% assign total_posts = 56 %}
+            {% assign per_feed = total_posts | divided_by: 5 | floor %}
+            {% assign extra = total_posts | modulo: 5 %}
 
-            <!-- ===== FEED 1 (post 1 sampai 1/5) ===== -->
-            {% assign f1 = total_posts | divided_by: 5 | floor %}
-            {% if total_posts | modulo: 5 >= 1 %}{% assign f1 = f1 | plus: 1 %}{% endif %}
-            {% assign f1_end = f1 | minus: 1 %}
+            {% comment %}Hitung ukuran tiap feed{% endcomment %}
+            {% assign f1 = per_feed %}{% if extra >= 1 %}{% assign f1 = f1 | plus: 1 %}{% endif %}
+            {% assign f2 = per_feed %}{% if extra >= 2 %}{% assign f2 = f2 | plus: 1 %}{% endif %}
+            {% assign f3 = per_feed %}{% if extra >= 3 %}{% assign f3 = f3 | plus: 1 %}{% endif %}
+            {% assign f4 = per_feed %}{% if extra >= 4 %}{% assign f4 = f4 | plus: 1 %}{% endif %}
+            {% assign f5 = per_feed %}
 
+            {% comment %}Offset dihitung manual agar pasti unik{% endcomment %}
+            {% assign off1 = 0 %}
+            {% assign off2 = off1 | plus: f1 %}
+            {% assign off3 = off2 | plus: f2 %}
+            {% assign off4 = off3 | plus: f3 %}
+            {% assign off5 = off4 | plus: f4 %}
+
+            <!-- ===== FEED 1: {{ f1 }} post, offset {{ off1 }} ===== -->
             <div class="masonry-grid" id="masonry1">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:f1 offset:0 %}
+                    {% for post in site.posts limit:f1 offset:off1 %}
                         {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
@@ -130,19 +141,14 @@
                 {% endfor %}
             </div>
 
-            <!-- Banner 02 -->
             <div class="ad-break">{% include /ads/banner/02.html %}</div>
 
-            <!-- ===== FEED 2 ===== -->
-            {% assign f2 = total_posts | divided_by: 5 | floor %}
-            {% if total_posts | modulo: 5 >= 2 %}{% assign f2 = f2 | plus: 1 %}{% endif %}
-            {% assign f2_start = f1 %}
-
+            <!-- ===== FEED 2: {{ f2 }} post, offset {{ off2 }} ===== -->
             <div class="masonry-grid" id="masonry2">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:f2 offset:f2_start %}
+                    {% for post in site.posts limit:f2 offset:off2 %}
                         {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
@@ -157,19 +163,14 @@
                 {% endfor %}
             </div>
 
-            <!-- Banner 03 -->
             <div class="ad-break">{% include /ads/banner/03.html %}</div>
 
-            <!-- ===== FEED 3 ===== -->
-            {% assign f3 = total_posts | divided_by: 5 | floor %}
-            {% if total_posts | modulo: 5 >= 3 %}{% assign f3 = f3 | plus: 1 %}{% endif %}
-            {% assign f3_start = f1 | plus: f2 %}
-
+            <!-- ===== FEED 3: {{ f3 }} post, offset {{ off3 }} ===== -->
             <div class="masonry-grid" id="masonry3">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:f3 offset:f3_start %}
+                    {% for post in site.posts limit:f3 offset:off3 %}
                         {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
@@ -184,22 +185,17 @@
                 {% endfor %}
             </div>
 
-            <!-- Banner 04 + 06 sejajar -->
             <div class="ad-break ad-break-double">
                 <div class="ad-break-half">{% include /ads/banner/04.html %}</div>
                 <div class="ad-break-half">{% include /ads/banner/06.html %}</div>
             </div>
 
-            <!-- ===== FEED 4 ===== -->
-            {% assign f4 = total_posts | divided_by: 5 | floor %}
-            {% if total_posts | modulo: 5 >= 4 %}{% assign f4 = f4 | plus: 1 %}{% endif %}
-            {% assign f4_start = f1 | plus: f2 | plus: f3 %}
-
+            <!-- ===== FEED 4: {{ f4 }} post, offset {{ off4 }} ===== -->
             <div class="masonry-grid" id="masonry4">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:f4 offset:f4_start %}
+                    {% for post in site.posts limit:f4 offset:off4 %}
                         {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
@@ -214,18 +210,14 @@
                 {% endfor %}
             </div>
 
-            <!-- Banner 08 -->
             <div class="ad-break">{% include /ads/banner/08.html %}</div>
 
-            <!-- ===== FEED 5 ===== -->
-            {% assign f5 = total_posts | divided_by: 5 | floor %}
-            {% assign f5_start = f1 | plus: f2 | plus: f3 | plus: f4 %}
-
+            <!-- ===== FEED 5: {{ f5 }} post, offset {{ off5 }} ===== -->
             <div class="masonry-grid" id="masonry5">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:f5 offset:f5_start %}
+                    {% for post in site.posts limit:f5 offset:off5 %}
                         {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
@@ -240,7 +232,6 @@
                 {% endfor %}
             </div>
 
-            <!-- Banner 07 -->
             <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
         </main>
