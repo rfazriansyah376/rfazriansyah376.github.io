@@ -57,6 +57,7 @@
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
             <li><a href="/">Home</a></li>
+            <li><a href="/tags/">Tags</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li><a href="/privacy-policy/">Privacy Policy</a></li>
             <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
@@ -91,7 +92,6 @@
     })();
     </script>
 
-    <!-- Billboard - Banner 06 (908x270) -->
     <div class="ad-break">{% include /ads/banner/06.html %}</div>
 
     <div class="main-layout">
@@ -116,9 +116,8 @@
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                    <span class="masonry-label">{{ post.title }}</span>
                                 </a>
-                                 {% assign before_svg = main_post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                             </div>
                         {% endif %}
                         {% assign c = c | plus: 1 %}
@@ -127,7 +126,6 @@
                 {% endfor %}
             </div>
 
-            <!-- Banner 01 (728x102) di tengah -->
             <div class="ad-break">{% include /ads/banner/01.html %}</div>
 
             <!-- Feed bawah -->
@@ -142,8 +140,8 @@
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                    <span class="masonry-label">{{ post.title }}</span>
                                 </a>
+                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                             </div>
                         {% endif %}
                         {% assign c = c | plus: 1 %}
@@ -155,16 +153,11 @@
         </main>
 
         <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">
-                <div class="ad-placeholder">
-               {% include /ads/banner/05.html %}
-                </div>
-            </div>
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
     </div>
 
-    <!-- Banner 07 (468x72) -->
     <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
     {% include /ads/gobloggugel/sosmed.html %}
@@ -172,25 +165,25 @@
 
     <style>
         *,*::before,*::after{box-sizing:border-box}
-        html{min-width:1200px;overflow-x:auto;background:#050505}
+        html{min-width:1280px;overflow-x:auto;background:#050505}
         body{
-            min-width:1200px;width:1200px;margin:0 auto;padding:0;
+            min-width:1280px;width:1280px;margin:0 auto;padding:0;
             background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;overflow-x:visible;
         }
 
         .site-header{
-            width:1200px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
+            width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
             background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px;
         }
-        .header-inner{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
+        .header-inner{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
         .site-title{flex:1;font-size:13px;font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
         .menu-btn{width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
         .menu-btn:hover{background:rgba(255,255,255,.04)}
         .menu-btn svg{width:17px;height:17px;stroke:#888;fill:none;stroke-width:2;stroke-linecap:round}
         .menu-btn:hover svg{stroke:#fff}
-        .slide-menu{display:none;position:fixed;top:50px;right:50%;transform:translateX(600px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
+        .slide-menu{display:none;position:fixed;top:50px;right:50%;transform:translateX(640px);z-index:999;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:6px;min-width:180px}
         .slide-menu.open{display:block}
         .slide-menu ul{list-style:none;margin:0;padding:0}
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
@@ -204,7 +197,7 @@
         }
         .ad-break:first-child{margin-top:50px}
 
-        .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
+        .main-layout{display:flex;gap:0;width:1280px;margin:0 auto}
         .content-area{flex:1;min-width:0;padding:8px 0}
 
         .sidebar{flex-shrink:0;padding:16px 10px;position:relative}
@@ -216,7 +209,7 @@
         .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
         .masonry-item{
             overflow:hidden;border-radius:6px;background:#0a0a0a;
-            aspect-ratio:9/16;
+            aspect-ratio:9/16;position:relative;
         }
         .masonry-link{display:block;position:relative;width:100%;height:100%}
         .masonry-link img{
@@ -224,20 +217,6 @@
             display:block;transition:transform .4s ease;
         }
         .masonry-item:hover img{transform:scale(1.03)}
-        .masonry-label{
-            position:absolute;bottom:0;left:0;right:0;padding:16px 8px 8px;
-            background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);
-            color:#fff;font-size:10px;font-weight:600;opacity:0;transition:opacity .2s ease;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-        }
-        .masonry-item:hover .masonry-label{opacity:1}
-
-        .ad-placeholder{
-            background:#0a0a0a;border-radius:8px;padding:24px 16px;min-height:300px;
-            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-            color:#444;font-size:11px;text-align:center;border:1px dashed rgba(255,255,255,.04);
-        }
-        .available-tag{color:#c0392b;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
     </style>
 
     <script>
