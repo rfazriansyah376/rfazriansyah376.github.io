@@ -102,35 +102,27 @@
 
         <main class="content-area">
 
-            {% assign total_posts = 56 %}
-            {% assign per_feed = total_posts | divided_by: 5 | floor %}
-            {% assign sisa = total_posts | modulo: 5 %}
+{% assign total = 56 %}
+{% assign p1 = total | divided_by: 5 | floor %}
+{% assign p2 = p1 %}
+{% assign p3 = p1 %}
+{% assign p4 = p1 %}
+{% assign p5 = total | minus: p1 | minus: p2 | minus: p3 | minus: p4 %}
 
-            {% comment %}
-            Kumpulkan semua post dulu, lalu bagi ke 5 array
-            {% endcomment %}
-            {% assign all_posts = "" | split: "" %}
-            {% for post in site.posts limit:total_posts %}
-                {% assign all_posts = all_posts | push: post %}
-            {% endfor %}
+{% assign o1 = 0 %}
+{% assign o2 = p1 %}
+{% assign o3 = o2 | plus: p2 %}
+{% assign o4 = o3 | plus: p3 %}
+{% assign o5 = o4 | plus: p4 %}
 
-            {% assign feed1_end = per_feed | minus: 1 %}
-            {% if sisa > 0 %}{% assign feed1_end = feed1_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed2_end = feed1_end | plus: per_feed %}
-            {% if sisa > 0 %}{% assign feed2_end = feed2_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed3_end = feed2_end | plus: per_feed %}
-            {% if sisa > 0 %}{% assign feed3_end = feed3_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed4_end = feed3_end | plus: per_feed %}
-            {% if sisa > 0 %}{% assign feed4_end = feed4_end | plus: 1 %}{% assign sisa = sisa | minus: 1 %}{% endif %}
-            {% assign feed5_start = feed4_end | plus: 1 %}
-
-            <!-- FEED 1 -->
+            <!-- FEED 1: post {{ o1 | plus: 1 }} - {{ o1 | plus: p1 }} -->
             <div class="masonry-grid" id="masonry1">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (0..feed1_end) %}
-                        {% if i | modulo: 4 == col %}
-                            {% assign post = all_posts[i] %}
+                    {% for post in site.posts limit:p1 offset:o1 %}
+                        {% assign idx = forloop.index0 %}
+                        {% assign mod = idx | modulo: 4 %}
+                        {% if mod == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -145,14 +137,14 @@
 
             <div class="ad-break">{% include /ads/banner/02.html %}</div>
 
-            <!-- FEED 2 -->
+            <!-- FEED 2: post {{ o2 | plus: 1 }} - {{ o2 | plus: p2 }} -->
             <div class="masonry-grid" id="masonry2">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed1_end | plus: 1..feed2_end) %}
-                        {% assign mod = i | minus: feed1_end | minus: 1 | modulo: 4 %}
+                    {% for post in site.posts limit:p2 offset:o2 %}
+                        {% assign idx = forloop.index0 %}
+                        {% assign mod = idx | modulo: 4 %}
                         {% if mod == col %}
-                            {% assign post = all_posts[i] %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -170,14 +162,14 @@
                 <div class="ad-break-half">{% include /ads/banner/04.html %}</div>
             </div>
 
-            <!-- FEED 3 -->
+            <!-- FEED 3: post {{ o3 | plus: 1 }} - {{ o3 | plus: p3 }} -->
             <div class="masonry-grid" id="masonry3">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed2_end | plus: 1..feed3_end) %}
-                        {% assign mod = i | minus: feed2_end | minus: 1 | modulo: 4 %}
+                    {% for post in site.posts limit:p3 offset:o3 %}
+                        {% assign idx = forloop.index0 %}
+                        {% assign mod = idx | modulo: 4 %}
                         {% if mod == col %}
-                            {% assign post = all_posts[i] %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -192,14 +184,14 @@
 
             <div class="ad-break">{% include /ads/banner/06.html %}</div>
 
-            <!-- FEED 4 -->
+            <!-- FEED 4: post {{ o4 | plus: 1 }} - {{ o4 | plus: p4 }} -->
             <div class="masonry-grid" id="masonry4">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed3_end | plus: 1..feed4_end) %}
-                        {% assign mod = i | minus: feed3_end | minus: 1 | modulo: 4 %}
+                    {% for post in site.posts limit:p4 offset:o4 %}
+                        {% assign idx = forloop.index0 %}
+                        {% assign mod = idx | modulo: 4 %}
                         {% if mod == col %}
-                            {% assign post = all_posts[i] %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
@@ -214,15 +206,14 @@
 
             <div class="ad-break">{% include /ads/banner/08.html %}</div>
 
-            <!-- FEED 5 -->
-            {% assign last_index = total_posts | minus: 1 %}
+            <!-- FEED 5: post {{ o5 | plus: 1 }} - {{ o5 | plus: p5 }} -->
             <div class="masonry-grid" id="masonry5">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% for i in (feed5_start..last_index) %}
-                        {% assign mod = i | minus: feed5_start | modulo: 4 %}
+                    {% for post in site.posts limit:p5 offset:o5 %}
+                        {% assign idx = forloop.index0 %}
+                        {% assign mod = idx | modulo: 4 %}
                         {% if mod == col %}
-                            {% assign post = all_posts[i] %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
