@@ -42,7 +42,7 @@
 
 </head>
 <body>
-
+<div loading="lazy">
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
@@ -57,7 +57,6 @@
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/tags/">Tags</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li><a href="/privacy-policy/">Privacy Policy</a></li>
             <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
@@ -102,20 +101,37 @@
 
         <main class="content-area">
 
-            {% assign total_posts = 15 %}
+            {% assign total_posts = 56 %}
 
+            <!-- Featured Post -->
+            {% assign featured = site.posts[0] %}
+            {% if featured %}
+            <div class="featured-card">
+                <a href="{{ featured.url }}" class="featured-link">
+                    {% if featured.image %}<img src="{{ featured.image | relative_url }}" alt="{{ featured.title }}" loading="eager">{% endif %}
+                    <div class="featured-body">
+                        <h2>{{ featured.title }}</h2>
+                        {% if featured.description %}<p>{{ featured.description }}</p>{% endif %}
+                    </div>
+                </a>
+                {% assign before_svg = featured.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+            </div>
+            {% endif %}
+
+            <!-- Feed mulai dari post ke-2 -->
             <div class="masonry-grid" id="masonryAll">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:total_posts %}
+                    {% assign sisa = total_posts | minus: 1 %}
+                    {% for post in site.posts limit:sisa offset:1 %}
                         {% assign mod = c | modulo: 4 %}
                         {% if mod == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
                                 </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                                
                             </div>
                         {% endif %}
                         {% assign c = c | plus: 1 %}
@@ -179,6 +195,28 @@
         .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
         .sticky-ad{position:sticky;top:68px;display:flex;justify-content:center}
 
+        /* ===== FEATURED CARD ===== */
+        .featured-card{
+            position:relative;overflow:hidden;border-radius:8px;
+            background:#0a0a0a;margin-bottom:12px;
+            aspect-ratio:21/9;
+        }
+        .featured-link{display:block;position:relative;width:100%;height:100%}
+        .featured-link img{
+            width:100%;height:100%;object-fit:cover;object-position:center 20%;
+            display:block;transition:transform .6s ease;
+        }
+        .featured-card:hover img{transform:scale(1.03)}
+        .featured-body{
+            position:absolute;bottom:0;left:0;right:0;
+            padding:40px 24px 20px;
+            background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.2) 70%,transparent 100%);
+            color:#fff;
+        }
+        .featured-body h2{font-size:22px;font-weight:700;margin:0 0 6px;line-height:1.2}
+        .featured-body p{font-size:13px;opacity:.75;margin:0;line-height:1.4}
+
+        /* ===== MASONRY ===== */
         .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
         .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
         .masonry-item{
@@ -228,6 +266,6 @@
         });
     })();
     </script>
-
+</div>
 </body>
 </html>
