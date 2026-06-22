@@ -93,7 +93,7 @@
     </script>
 
     <!-- Billboard -->
-    <div class="ad-billboard">{% include /ads/banner/01.html %}</div>
+    <div class="ad-break ad-break-top">{% include /ads/banner/01.html %}</div>
 
     <div class="main-layout">
 
@@ -105,56 +105,116 @@
 
             {% assign total_posts = 56 %}
 
-            <div class="masonry-grid" id="masonryGrid">
+            <!-- ===== MASONRY 1 (post 1-12) + Banner 02 ===== -->
+            <div class="masonry-grid" id="masonry1">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
-                    {% assign counter = 0 %}
-                    {% for post in site.posts limit:total_posts %}
-                        {% assign mod = counter | modulo: 4 %}
-                        {% if mod == col %}
-                            
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:12 offset:0 %}
+                        {% if c | modulo: 4 == col %}
                             <div class="masonry-item">
                                 <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}
-                                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                                    {% endif %}
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
                                     <span class="masonry-label">{{ post.title }}</span>
                                 </a>
                             </div>
-                            
-                            <!-- Banner diselipkan setiap ~7 card -->
-                            {% assign pos = counter | plus: 1 %}
-                            
-                            {% if pos == 7 %}
-                            <div class="masonry-item masonry-ad">{% include /ads/banner/02.html %}</div>
-                            {% endif %}
-                            
-                            {% if pos == 15 %}
-                            <div class="masonry-item masonry-ad">{% include /ads/banner/03.html %}</div>
-                            {% endif %}
-                            
-                            {% if pos == 23 %}
-                            <div class="masonry-item masonry-ad">{% include /ads/banner/04.html %}</div>
-                            {% endif %}
-                            
-                            {% if pos == 31 %}
-                            <div class="masonry-item masonry-ad">{% include /ads/banner/06.html %}</div>
-                            {% endif %}
-                            
-                            {% if pos == 39 %}
-                            <div class="masonry-item masonry-ad">{% include /ads/banner/08.html %}</div>
-                            {% endif %}
-                            
-                            {% if pos == 47 %}
-                            <div class="masonry-item masonry-ad">{% include /ads/banner/07.html %}</div>
-                            {% endif %}
-                            
                         {% endif %}
-                        {% assign counter = counter | plus: 1 %}
+                        {% assign c = c | plus: 1 %}
                     {% endfor %}
                 </div>
                 {% endfor %}
             </div>
+
+            <div class="ad-break">{% include /ads/banner/02.html %}</div>
+
+            <!-- ===== MASONRY 2 (post 13-24) + Banner 03 ===== -->
+            <div class="masonry-grid" id="masonry2">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:12 offset:12 %}
+                        {% if c | modulo: 4 == col %}
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                    <span class="masonry-label">{{ post.title }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% assign c = c | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="ad-break">{% include /ads/banner/03.html %}</div>
+
+            <!-- ===== MASONRY 3 (post 25-36) + Banner 04 ===== -->
+            <div class="masonry-grid" id="masonry3">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:12 offset:24 %}
+                        {% if c | modulo: 4 == col %}
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                    <span class="masonry-label">{{ post.title }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% assign c = c | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="ad-break ad-break-leaderboard">{% include /ads/banner/06.html %}</div>
+
+            <!-- ===== MASONRY 4 (post 37-48) + Banner 08 ===== -->
+            <div class="masonry-grid" id="masonry4">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:12 offset:36 %}
+                        {% if c | modulo: 4 == col %}
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                    <span class="masonry-label">{{ post.title }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% assign c = c | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="ad-break">{% include /ads/banner/08.html %}</div>
+
+            <!-- ===== MASONRY 5 (post 49-56) + Banner 07 ===== -->
+            {% assign sisa = total_posts | minus: 48 %}
+            <div class="masonry-grid" id="masonry5">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:sisa offset:48 %}
+                        {% if c | modulo: 4 == col %}
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                    <span class="masonry-label">{{ post.title }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% assign c = c | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
         </main>
 
@@ -164,8 +224,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2">
                         <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
                     </svg>
-                    <span>Ad Space</span>
-                    <span>300x250</span>
+                    <span>Ad Space</span><span>300x250</span>
                     <span class="available-tag">Available</span>
                 </div>
             </div>
@@ -202,10 +261,24 @@
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        .ad-billboard{
-            margin-top:50px;padding:18px 0 14px;background:#080808;
-            border-bottom:1px solid rgba(255,255,255,.03);display:flex;justify-content:center;
+        /* ===== AD BREAK ===== */
+        .ad-break{
+            display:flex;justify-content:center;align-items:center;
+            padding:28px 0;margin:0;
+            position:relative;
         }
+        .ad-break::before{
+            content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
+            background:linear-gradient(to right,transparent,rgba(255,255,255,.04),transparent);
+        }
+        .ad-break::after{
+            content:'';position:absolute;bottom:0;left:8%;right:8%;height:1px;
+            background:linear-gradient(to right,transparent,rgba(255,255,255,.04),transparent);
+        }
+        .ad-break-top{margin-top:50px;padding:20px 0 16px;background:#080808}
+        .ad-break-top::before,.ad-break-top::after{display:none}
+        .ad-break-leaderboard{padding:24px 0;background:#080808}
+        .ad-break-leaderboard::before,.ad-break-leaderboard::after{display:none}
 
         .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
         .sidebar{width:180px;flex-shrink:0;padding:16px 10px;position:relative}
@@ -229,13 +302,6 @@
         }
         .masonry-item:hover .masonry-label{opacity:1}
 
-        /* ===== AD IN MASONRY ===== */
-        .masonry-ad{
-            background:#0d0d0d;display:flex;align-items:center;justify-content:center;
-            padding:12px;min-height:200px;
-        }
-        .masonry-ad ins,.masonry-ad img,.masonry-ad iframe{max-width:100%!important;height:auto!important}
-
         .ad-placeholder{
             background:#0a0a0a;border-radius:8px;padding:20px 14px;min-height:260px;
             display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
@@ -258,8 +324,8 @@
         if(init.length<2)init=fullName.substring(0,3).toUpperCase();
         document.getElementById("domainAvatar").innerHTML = "<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
         
-        function redistribute() {
-            var grid = document.getElementById('masonryGrid');
+        function redistribute(id) {
+            var grid = document.getElementById(id);
             if(!grid)return;
             var cols = grid.querySelectorAll('.masonry-column');
             if(!cols.length)return;
@@ -273,7 +339,12 @@
                 s.appendChild(i);
             });
         }
-        window.addEventListener('load',function(){setTimeout(redistribute,200);setTimeout(redistribute,800);setTimeout(redistribute,2000);});
+        window.addEventListener('load',function(){
+            for(var i=1;i<=5;i++){
+                setTimeout((function(n){return function(){redistribute('masonry'+n);};})(i),200);
+                setTimeout((function(n){return function(){redistribute('masonry'+n);};})(i),800);
+            }
+        });
     })();
     </script>
 
