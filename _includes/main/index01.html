@@ -26,8 +26,10 @@
 {% include verif.html %}
 </head>
 <body>
+<div loading="lazy">
     <header class="hdr"><div class="hdr-in"><div id="dAv" class="av"></div><span id="dTi" class="ti"></span><button class="mb" id="mBt" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button></div></header>
-    <nav id="mPn" class="sm"><ul><li><a href="/">Home</a></li><li><a href="/tags/">Tags</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms & Conditions</a></li></ul></nav>
+    <nav id="mPn" class="sm"><ul><li><a href="/">Home</a></li>
+<li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms & Conditions</a></li></ul></nav>
     <script>
     (function(){
         var h=location.hostname.split("."),s=h[0];
@@ -107,5 +109,6 @@
         document.getElementById("dAv").innerHTML="<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
     })();
     </script>
+    </div>
 </body>
 </html>
