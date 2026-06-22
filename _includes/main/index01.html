@@ -37,229 +37,6 @@
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
-{% include head.html %}
-{% include verif.html %}
-
-</head>
-<body>
-
-    <header class="site-header">
-        <div class="header-inner">
-            <div id="domainAvatar" class="site-avatar"></div>
-            <span id="blogMainTitle" class="site-title"></span>
-            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
-            </button>
-        </div>
-    </header>
-
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/tags/">Tags</a></li>
-            <li><a href="/contact/">Contact</a></li>
-            <li><a href="/privacy-policy/">Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
-        </ul>
-    </nav>
-
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var m = btn.querySelector("svg:first-child");
-        var c = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            m.style.display = open ? "none" : "block";
-            c.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                m.style.display = "block";c.style.display = "none";
-            }
-        });
-    })();
-    </script>
-
-    <div class="ad-break">{% include /ads/banner/06.html %}</div>
-
-    <div class="main-layout">
-
-        <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
-        </aside>
-
-        <main class="content-area">
-
-            {% assign total_posts = 56 %}
-            {% assign f1 = 2 %}
-            {% assign f2 = 3 %}
-            {% assign f3 = 4 %}
-            {% assign f4 = 2 %}
-            {% assign f5 = 3 %}
-
-            {% assign off1 = 0 %}
-            {% assign off2 = off1 | plus: f1 %}
-            {% assign off3 = off2 | plus: f2 %}
-            {% assign off4 = off3 | plus: f3 %}
-            {% assign off5 = off4 | plus: f4 %}
-            {% assign used = f1 | plus: f2 | plus: f3 | plus: f4 | plus: f5 %}
-            {% assign sisa = total_posts | minus: used %}
-
-            <!-- ===== FEATURED 1: Hero Besar Kiri + 1 Kecil Kanan ===== -->
-            {% if f1 >= 2 %}
-            <div class="section-label">Top Stories</div>
-            <div class="featured-layout-1">
-                {% assign post = site.posts[off1] %}
-                <div class="fl1-hero">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
-                        <div class="fl1-body">
-                            <h2>{{ post.title }}</h2>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                <div class="fl1-side">
-                    {% for post in site.posts limit:f1 offset:off1 %}
-                        {% if forloop.index > 1 %}
-                        <div class="fl1-side-item">
-                            <a href="{{ post.url }}">
-                                {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                <div class="fl1-side-body"><h3>{{ post.title }}</h3></div>
-                            </a>
-                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
-            <!-- ===== FEATURED 2: Horizontal Scroll Cards ===== -->
-            {% if f2 >= 1 %}
-            <div class="section-label">Trending</div>
-            <div class="featured-layout-2">
-                {% for post in site.posts limit:f2 offset:off2 %}
-                <div class="fl2-card">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                        <div class="fl2-body">
-                            <h3>{{ post.title }}</h3>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- ===== FEATURED 3: Grid 2x2 ===== -->
-            {% if f3 >= 1 %}
-            <div class="section-label">Editor's Picks</div>
-            <div class="featured-layout-3">
-                {% for post in site.posts limit:f3 offset:off3 %}
-                <div class="fl3-card">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                        <div class="fl3-body">
-                            <h3>{{ post.title }}</h3>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- ===== FEATURED 4: Wide Horizontal Cards ===== -->
-            {% if f4 >= 1 %}
-            <div class="section-label">Spotlight</div>
-            <div class="featured-layout-4">
-                {% for post in site.posts limit:f4 offset:off4 %}
-                <div class="fl4-card">
-                    <a href="{{ post.url }}" class="fl4-inner">
-                        <div class="fl4-img">
-                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                        </div>
-                        <div class="fl4-body">
-                            <h3>{{ post.title }}</h3>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                            <span class="fl4-cta">View Gallery</span>
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- ===== FEATURED 5: Masonry Kecil ===== -->
-            {% if f5 >= 1 %}
-            <div class="section-label">More Highlights</div>
-            <div class="featured-layout-5">
-                {% for post in site.posts limit:f5 offset:off5 %}
-                <div class="fl5-card">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                        <span class="fl5-label">{{ post.title }}</span>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- ===== MASONRY FEED ===== -->
-            {% if sisa > 0 %}
-            <div class="section-label">Latest Updates</div>
-            <div class="masonry-grid" id="masonryAll">
-                {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:sisa offset:used %}
-                        {% assign mod = c | modulo: 4 %}
-                        {% if mod == col %}
-                            <div class="masonry-item">
-                                <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                            </div>
-                        {% endif %}
-                        {% assign c = c | plus: 1 %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-        </main>
-
-        <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
-        </aside>
-
-    </div>
-
-    <div class="ad-break">{% include /ads/banner/07.html %}</div>
-
-    {% include /ads/gobloggugel/sosmed.html %}
-    {% include footer.html %}
 
     <style>
         *,*::before,*::after{box-sizing:border-box}
@@ -418,6 +195,240 @@
             .masonry-column{flex:0 0 calc(50% - 2px)}
         }
     </style>
+    
+{% include head.html %}
+{% include verif.html %}
+
+</head>
+<body>
+<div loading="lazy">
+    <header class="site-header">
+        <div class="header-inner">
+            <div id="domainAvatar" class="site-avatar"></div>
+            <span id="blogMainTitle" class="site-title"></span>
+            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <nav id="blogMenuPanel" class="slide-menu">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/privacy-policy/">Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+        </ul>
+    </nav>
+
+    <script>
+    (function(){
+        var host = window.location.hostname.split(".");
+        var sub = host[0];
+        if (sub.toLowerCase() === "www") sub = host[1] || "";
+        var clean = sub.replace(/-/g, " ");
+        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    })();
+    (function(){
+        var btn = document.getElementById("blogMenuToggle");
+        var panel = document.getElementById("blogMenuPanel");
+        var m = btn.querySelector("svg:first-child");
+        var c = btn.querySelector("svg:last-child");
+        btn.addEventListener("click", function(e){
+            e.stopPropagation();
+            var open = panel.classList.toggle("open");
+            m.style.display = open ? "none" : "block";
+            c.style.display = open ? "block" : "none";
+        });
+        document.addEventListener("click", function(e){
+            if(!panel.contains(e.target) && !btn.contains(e.target)){
+                panel.classList.remove("open");
+                m.style.display = "block";c.style.display = "none";
+            }
+        });
+    })();
+    </script>
+
+    <div class="ad-break">{% include /ads/banner/06.html %}</div>
+
+    <div class="main-layout">
+
+        <aside class="sidebar sidebar-left">
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
+        </aside>
+
+        <main class="content-area">
+
+            {% assign total_posts = 56 %}
+            {% assign f1 = 4 %}
+            {% assign f2 = 6 %}
+            {% assign f3 = 8 %}
+            {% assign f4 = 4 %}
+            {% assign f5 = 6 %}
+
+            {% assign off1 = 0 %}
+            {% assign off2 = off1 | plus: f1 %}
+            {% assign off3 = off2 | plus: f2 %}
+            {% assign off4 = off3 | plus: f3 %}
+            {% assign off5 = off4 | plus: f4 %}
+            {% assign used = f1 | plus: f2 | plus: f3 | plus: f4 | plus: f5 %}
+            {% assign sisa = total_posts | minus: used %}
+
+            <!-- ===== FEATURED 1: Hero Besar Kiri + 1 Kecil Kanan ===== -->
+            {% if f1 >= 2 %}
+            <div class="section-label">Top Stories</div>
+            <div class="featured-layout-1">
+                {% assign post = site.posts[off1] %}
+                <div class="fl1-hero">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
+                        <div class="fl1-body">
+                            <h2>{{ post.title }}</h2>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                <div class="fl1-side">
+                    {% for post in site.posts limit:f1 offset:off1 %}
+                        {% if forloop.index > 1 %}
+                        <div class="fl1-side-item">
+                            <a href="{{ post.url }}">
+                                {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                <div class="fl1-side-body"><h3>{{ post.title }}</h3></div>
+                            </a>
+                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+<div class="ad-break">{% include /ads/banner/01.html %}</div>
+
+            <!-- ===== FEATURED 2: Horizontal Scroll Cards ===== -->
+            {% if f2 >= 1 %}
+            <div class="section-label">Trending</div>
+            <div class="featured-layout-2">
+                {% for post in site.posts limit:f2 offset:off2 %}
+                <div class="fl2-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <div class="fl2-body">
+                            <h3>{{ post.title }}</h3>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+<div class="ad-break">{% include /ads/banner/01.html %}</div>
+
+            <!-- ===== FEATURED 3: Grid 2x2 ===== -->
+            {% if f3 >= 1 %}
+            <div class="section-label">Editor's Picks</div>
+            <div class="featured-layout-3">
+                {% for post in site.posts limit:f3 offset:off3 %}
+                <div class="fl3-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <div class="fl3-body">
+                            <h3>{{ post.title }}</h3>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+<div class="ad-break">{% include /ads/banner/01.html %}</div>
+
+            <!-- ===== FEATURED 4: Wide Horizontal Cards ===== -->
+            {% if f4 >= 1 %}
+            <div class="section-label">Spotlight</div>
+            <div class="featured-layout-4">
+                {% for post in site.posts limit:f4 offset:off4 %}
+                <div class="fl4-card">
+                    <a href="{{ post.url }}" class="fl4-inner">
+                        <div class="fl4-img">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        </div>
+                        <div class="fl4-body">
+                            <h3>{{ post.title }}</h3>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                            <span class="fl4-cta">View Gallery</span>
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+<div class="ad-break">{% include /ads/banner/01.html %}</div>
+
+            <!-- ===== FEATURED 5: Masonry Kecil ===== -->
+            {% if f5 >= 1 %}
+            <div class="section-label">More Highlights</div>
+            <div class="featured-layout-5">
+                {% for post in site.posts limit:f5 offset:off5 %}
+                <div class="fl5-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <span class="fl5-label">{{ post.title }}</span>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+    <div class="ad-break">{% include /ads/banner/01.html %}</div>
+
+    
+            <!-- ===== MASONRY FEED ===== -->
+            {% if sisa > 0 %}
+            <div class="section-label">Latest Updates</div>
+            <div class="masonry-grid" id="masonryAll">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign c = 0 %}
+                    {% for post in site.posts limit:sisa offset:used %}
+                        {% assign mod = c | modulo: 4 %}
+                        {% if mod == col %}
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                </a>
+                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                            </div>
+                        {% endif %}
+                        {% assign c = c | plus: 1 %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        </main>
+
+        <aside class="sidebar sidebar-right">
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
+        </aside>
+
+    </div>
+
+    <div class="ad-break">{% include /ads/banner/07.html %}</div>
+
+    
+
 
     <script>
     (function() {
@@ -455,6 +466,10 @@
         });
     })();
     </script>
-
+{% include /ads/gobloggugel/sosmed.html %}
+    {% include footer.html %}
+    
+</div>
 </body>
 </html>
+    
