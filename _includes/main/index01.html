@@ -119,6 +119,8 @@
                                     {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
                                     <span class="masonry-label">{{ post.title }}</span>
                                 </a>
+                                {% assign before_svg = main_post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
+           
                             </div>
                         {% endif %}
                         {% assign c = c | plus: 1 %}
