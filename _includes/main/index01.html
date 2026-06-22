@@ -92,7 +92,8 @@
     })();
     </script>
 
-    <div class="ad-solo ad-solo-billboard">{% include /ads/banner/01.html %}</div>
+    <!-- Billboard -->
+    <div class="ad-billboard">{% include /ads/banner/01.html %}</div>
 
     <div class="main-layout">
 
@@ -104,169 +105,56 @@
 
             {% assign total_posts = 56 %}
 
-            {% assign s1 = 3 | at_most: total_posts %}
-            {% assign r = total_posts | minus: s1 %}
-            {% assign s2 = r | times: 0.20 | floor | at_least: 4 %}
-            {% assign r = r | minus: s2 %}
-            {% assign s3 = r | times: 0.15 | floor | at_least: 3 %}
-            {% assign r = r | minus: s3 %}
-            {% assign s4 = r | times: 0.25 | floor | at_least: 4 %}
-            {% assign r = r | minus: s4 %}
-            {% assign s5 = r | times: 0.22 | floor | at_least: 4 %}
-            {% assign r = r | minus: s5 %}
-            {% assign s6 = r | times: 0.15 | floor | at_least: 3 %}
-            {% assign s7 = r | minus: s6 | at_least: 2 %}
-
-            {% assign o1 = 0 %}
-            {% assign o2 = o1 | plus: s1 %}
-            {% assign o3 = o2 | plus: s2 %}
-            {% assign o4 = o3 | plus: s3 %}
-            {% assign o5 = o4 | plus: s4 %}
-            {% assign o6 = o5 | plus: s5 %}
-            {% assign o7 = o6 | plus: s6 %}
-
-            <!-- ===== HERO ===== -->
-            <section class="feed-section">
-                <div class="hero-strip">
-                    {% for post in site.posts limit:s1 offset:o1 %}
-                    <div class="hero-item">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}">{% endif %}
-                            <div class="hero-overlay">
-                                <h2>{{ post.title }}</h2>
-                                {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+            <div class="masonry-grid" id="masonryGrid">
+                {% for col in (0..3) %}
+                <div class="masonry-column">
+                    {% assign counter = 0 %}
+                    {% for post in site.posts limit:total_posts %}
+                        {% assign mod = counter | modulo: 4 %}
+                        {% if mod == col %}
+                            
+                            <div class="masonry-item">
+                                <a href="{{ post.url }}" class="masonry-link">
+                                    {% if post.image %}
+                                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                                    {% endif %}
+                                    <span class="masonry-label">{{ post.title }}</span>
+                                </a>
                             </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <div class="ad-solo">{% include /ads/banner/02.html %}</div>
-
-            <!-- ===== UNIFORM GRID ===== -->
-            <section class="feed-section">
-                <div class="section-label">Editor's Choice</div>
-                <div class="uniform-grid">
-                    {% for post in site.posts limit:s2 offset:o2 %}
-                    <div class="uniform-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                            <div class="card-overlay">
-                                <h4>{{ post.title }}</h4>
-                                {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                            </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <div class="ad-solo">{% include /ads/banner/03.html %}</div>
-
-            <!-- ===== WIDE CARDS ===== -->
-            <section class="feed-section">
-                <div class="section-label">Spotlight</div>
-                <div class="wide-list">
-                    {% for post in site.posts limit:s3 offset:o3 %}
-                    <div class="wide-card">
-                        <a href="{{ post.url }}" class="wide-inner">
-                            <div class="wide-img">
-                                {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                            </div>
-                            <div class="wide-body">
-                                <h4>{{ post.title }}</h4>
-                                {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                                <span class="wide-cta">View Gallery</span>
-                            </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <div class="ad-solo ad-solo-leaderboard">{% include /ads/banner/06.html %}</div>
-
-            <!-- ===== MASONRY ===== -->
-            <section class="feed-section">
-                <div class="section-label">Latest Updates</div>
-                <div class="masonry-grid" id="masonryGrid">
-                    {% for col in (0..3) %}
-                    <div class="masonry-column">
-                        {% assign c = 0 %}
-                        {% for post in site.posts limit:s4 offset:o4 %}
-                            {% assign m = c | modulo: 4 %}
-                            {% if m == col %}
-                                <div class="masonry-item">
-                                    <a href="{{ post.url }}" class="masonry-link">
-                                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                        <span class="masonry-label">{{ post.title }}</span>
-                                    </a>
-                                </div>
+                            
+                            <!-- Banner diselipkan setiap ~7 card -->
+                            {% assign pos = counter | plus: 1 %}
+                            
+                            {% if pos == 7 %}
+                            <div class="masonry-item masonry-ad">{% include /ads/banner/02.html %}</div>
                             {% endif %}
-                            {% assign c = c | plus: 1 %}
-                        {% endfor %}
-                    </div>
+                            
+                            {% if pos == 15 %}
+                            <div class="masonry-item masonry-ad">{% include /ads/banner/03.html %}</div>
+                            {% endif %}
+                            
+                            {% if pos == 23 %}
+                            <div class="masonry-item masonry-ad">{% include /ads/banner/04.html %}</div>
+                            {% endif %}
+                            
+                            {% if pos == 31 %}
+                            <div class="masonry-item masonry-ad">{% include /ads/banner/06.html %}</div>
+                            {% endif %}
+                            
+                            {% if pos == 39 %}
+                            <div class="masonry-item masonry-ad">{% include /ads/banner/08.html %}</div>
+                            {% endif %}
+                            
+                            {% if pos == 47 %}
+                            <div class="masonry-item masonry-ad">{% include /ads/banner/07.html %}</div>
+                            {% endif %}
+                            
+                        {% endif %}
+                        {% assign counter = counter | plus: 1 %}
                     {% endfor %}
                 </div>
-            </section>
-
-            <div class="ad-solo">{% include /ads/banner/04.html %}</div>
-
-            <!-- ===== DENSE GRID ===== -->
-            <section class="feed-section">
-                <div class="section-label">More to Explore</div>
-                <div class="dense-grid">
-                    {% for post in site.posts limit:s5 offset:o5 %}
-                    <div class="dense-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                            <span class="dense-label">{{ post.title }}</span>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <div class="ad-solo">{% include /ads/banner/08.html %}</div>
-
-            <!-- ===== SLIDER + BANNER 07 INTEGRATED ===== -->
-            <section class="feed-section">
-                <div class="section-label">Trending Now</div>
-                <div class="slider-row" id="sliderRow">
-                    {% for post in site.posts limit:s6 offset:o6 %}
-                    <div class="slider-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                            <div class="slider-body"><strong>{{ post.title }}</strong></div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                    <!-- Banner 07 sebagai card terakhir di slider -->
-                    <div class="slider-card slider-ad">
-                        <div class="slider-ad-inner">
-                            {% include /ads/banner/07.html %}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== FINALE ===== -->
-            <section class="feed-section">
-                <div class="finale-grid">
-                    {% for post in site.posts limit:s7 offset:o7 %}
-                    <div class="finale-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                            <div class="finale-body">
-                                <h4>{{ post.title }}</h4>
-                                {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                            </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
+                {% endfor %}
+            </div>
 
         </main>
 
@@ -276,7 +164,8 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2">
                         <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
                     </svg>
-                    <span>Ad Space</span><span>300x250</span>
+                    <span>Ad Space</span>
+                    <span>300x250</span>
                     <span class="available-tag">Available</span>
                 </div>
             </div>
@@ -296,7 +185,10 @@
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;overflow-x:visible;
         }
 
-        .site-header{width:1200px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px}
+        .site-header{
+            width:1200px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
+            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:10px 20px;
+        }
         .header-inner{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
         .site-title{flex:1;font-size:13px;font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
@@ -310,107 +202,45 @@
         .slide-menu a{display:block;padding:8px 14px;color:#aaa;text-decoration:none;font-size:12px;border-radius:6px}
         .slide-menu a:hover{background:#222;color:#fff}
 
-        /* ===== AD ===== */
-        .ad-solo{display:flex;justify-content:center;align-items:center;padding:20px 0;position:relative}
-        .ad-solo::before{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.03),transparent)}
-        .ad-solo::after{content:'';position:absolute;bottom:0;left:12%;right:12%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.03),transparent)}
-        .ad-solo-billboard{margin-top:50px;padding:18px 0 14px;background:#080808}
-        .ad-solo-billboard::before,.ad-solo-billboard::after{display:none}
-        .ad-solo-leaderboard{padding:18px 0;background:#080808}
-        .ad-solo-leaderboard::before,.ad-solo-leaderboard::after{display:none}
+        .ad-billboard{
+            margin-top:50px;padding:18px 0 14px;background:#080808;
+            border-bottom:1px solid rgba(255,255,255,.03);display:flex;justify-content:center;
+        }
 
         .main-layout{display:flex;gap:0;width:1200px;margin:0 auto}
         .sidebar{width:180px;flex-shrink:0;padding:16px 10px;position:relative}
         .sidebar-left{border-right:1px solid rgba(255,255,255,.02)}
         .sidebar-right{border-left:1px solid rgba(255,255,255,.02)}
         .sticky-ad{position:sticky;top:68px;display:flex;flex-direction:column;align-items:center}
-        .content-area{flex:1;min-width:0;padding:0}
-
-        .feed-section{padding:20px 0}
-        .feed-section + .feed-section{border-top:1px solid rgba(255,255,255,.02)}
-        .section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:#555;margin:0 0 14px 0;padding:0}
-
-        /* ===== HERO ===== */
-        .hero-strip{display:flex;gap:6px}
-        .hero-item{flex:1;overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:3/4}
-        .hero-item a{display:block;position:relative;width:100%;height:100%}
-        .hero-item img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block;transition:transform .6s ease}
-        .hero-item:hover img{transform:scale(1.03)}
-        .hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:36px 20px 16px;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.1) 80%,transparent 100%);color:#fff}
-        .hero-overlay h2{font-size:17px;font-weight:700;margin:0 0 4px;line-height:1.2}
-        .hero-overlay p{font-size:11px;opacity:.7;margin:0;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-
-        /* ===== UNIFORM GRID - AUTO FILL ===== */
-        .uniform-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));gap:6px}
-        .uniform-card{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:3/4}
-        .uniform-card a{display:block;position:relative;width:100%;height:100%}
-        .uniform-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
-        .uniform-card:hover img{transform:scale(1.04)}
-        .card-overlay{position:absolute;bottom:0;left:0;right:0;padding:24px 12px 10px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.15) 70%,transparent 100%);color:#fff;opacity:0;transition:opacity .25s ease}
-        .uniform-card:hover .card-overlay{opacity:1}
-        .card-overlay h4{font-size:12px;font-weight:600;margin:0 0 3px;line-height:1.2}
-        .card-overlay p{font-size:10px;opacity:.65;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-
-        /* ===== WIDE ===== */
-        .wide-list{display:flex;flex-direction:column;gap:6px}
-        .wide-card{overflow:hidden;border-radius:8px;background:#0a0a0a;transition:background .3s}
-        .wide-card:hover{background:#0f0f0f}
-        .wide-inner{display:flex;text-decoration:none;color:#fff}
-        .wide-img{flex:0 0 55%;overflow:hidden;aspect-ratio:16/7}
-        .wide-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .5s ease}
-        .wide-card:hover .wide-img img{transform:scale(1.03)}
-        .wide-body{flex:1;padding:24px 22px;display:flex;flex-direction:column;justify-content:center;gap:6px}
-        .wide-body h4{font-size:15px;font-weight:700;margin:0;line-height:1.3}
-        .wide-body p{font-size:11px;color:#888;margin:0;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-        .wide-cta{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#c0392b;font-weight:600;margin-top:4px}
+        .content-area{flex:1;min-width:0;padding:8px 0}
 
         /* ===== MASONRY ===== */
         .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
         .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
         .masonry-item{overflow:hidden;border-radius:6px;background:#0a0a0a}
         .masonry-link{display:block;position:relative;line-height:0}
-        .masonry-link img{width:100%;height:auto;display:block;transition:transform .5s ease}
+        .masonry-link img{width:100%;height:auto;display:block;transition:transform .4s ease}
         .masonry-item:hover img{transform:scale(1.03)}
-        .masonry-label{position:absolute;bottom:0;left:0;right:0;padding:12px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:10px;font-weight:600;opacity:0;transition:opacity .25s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .masonry-label{
+            position:absolute;bottom:0;left:0;right:0;padding:14px 8px 6px;
+            background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);
+            color:#fff;font-size:10px;font-weight:600;opacity:0;transition:opacity .2s ease;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+        }
         .masonry-item:hover .masonry-label{opacity:1}
 
-        /* ===== DENSE GRID - AUTO FILL ===== */
-        .dense-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));gap:6px}
-        .dense-card{overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:1/1}
-        .dense-card a{display:block;position:relative;width:100%;height:100%}
-        .dense-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
-        .dense-card:hover img{transform:scale(1.05)}
-        .dense-label{position:absolute;bottom:0;left:0;right:0;padding:10px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:9px;font-weight:600;opacity:0;transition:opacity .25s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .dense-card:hover .dense-label{opacity:1}
+        /* ===== AD IN MASONRY ===== */
+        .masonry-ad{
+            background:#0d0d0d;display:flex;align-items:center;justify-content:center;
+            padding:12px;min-height:200px;
+        }
+        .masonry-ad ins,.masonry-ad img,.masonry-ad iframe{max-width:100%!important;height:auto!important}
 
-        /* ===== SLIDER + AD ===== */
-        .slider-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;align-items:stretch}
-        .slider-row::-webkit-scrollbar{height:2px}
-        .slider-row::-webkit-scrollbar-track{background:#0a0a0a}
-        .slider-row::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
-        .slider-card{flex:0 0 210px;border-radius:8px;overflow:hidden;background:#0a0a0a;display:flex;flex-direction:column}
-        .slider-card a{display:flex;flex-direction:column;flex:1}
-        .slider-card img{width:100%;flex:1;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease;min-height:200px}
-        .slider-card:hover img{transform:scale(1.04)}
-        .slider-body{padding:12px 10px;flex-shrink:0}
-        .slider-body strong{display:block;font-size:11px;line-height:1.3;color:#ddd;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-
-        /* Slider Ad Card - menyatu dengan slider */
-        .slider-ad{flex:0 0 auto;min-width:280px;max-width:320px;display:flex;align-items:center;justify-content:center;background:#0a0a0a}
-        .slider-ad-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:12px}
-        .slider-ad-inner ins,.slider-ad-inner img,.slider-ad-inner iframe{max-width:100%!important;height:auto!important}
-
-        /* ===== FINALE - AUTO FILL ===== */
-        .finale-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));gap:8px}
-        .finale-card{overflow:hidden;border-radius:8px;background:#0a0a0a;aspect-ratio:16/9}
-        .finale-card a{display:block;position:relative;width:100%;height:100%}
-        .finale-card img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .6s ease}
-        .finale-card:hover img{transform:scale(1.03)}
-        .finale-body{position:absolute;bottom:0;left:0;right:0;padding:28px 20px 16px;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.15) 80%,transparent 100%);color:#fff}
-        .finale-body h4{font-size:16px;font-weight:700;margin:0 0 3px}
-        .finale-body p{font-size:11px;opacity:.65;margin:0}
-
-        .ad-placeholder{background:#0a0a0a;border-radius:8px;padding:20px 14px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#444;font-size:10px;text-align:center;border:1px dashed rgba(255,255,255,.03)}
+        .ad-placeholder{
+            background:#0a0a0a;border-radius:8px;padding:20px 14px;min-height:260px;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+            color:#444;font-size:10px;text-align:center;border:1px dashed rgba(255,255,255,.03);
+        }
         .available-tag{color:#c0392b;font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
     </style>
 
@@ -428,10 +258,10 @@
         if(init.length<2)init=fullName.substring(0,3).toUpperCase();
         document.getElementById("domainAvatar").innerHTML = "<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\"><rect width=\"26\" height=\"26\" rx=\"13\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"18\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
         
-        function rm() {
-            var g = document.getElementById('masonryGrid');
-            if(!g)return;
-            var cols = g.querySelectorAll('.masonry-column');
+        function redistribute() {
+            var grid = document.getElementById('masonryGrid');
+            if(!grid)return;
+            var cols = grid.querySelectorAll('.masonry-column');
             if(!cols.length)return;
             var items = [];
             cols.forEach(function(c){c.querySelectorAll('.masonry-item').forEach(function(i){items.push(i);});});
@@ -443,26 +273,7 @@
                 s.appendChild(i);
             });
         }
-        
-        // Sesuaikan tinggi slider ad card mengikuti card tertinggi
-        function syncSliderHeight() {
-            var row = document.getElementById('sliderRow');
-            if(!row)return;
-            var cards = row.querySelectorAll('.slider-card:not(.slider-ad)');
-            var adCard = row.querySelector('.slider-ad');
-            if(!adCard || !cards.length)return;
-            var maxH = 0;
-            cards.forEach(function(c){var h=c.offsetHeight;if(h>maxH)maxH=h;});
-            if(maxH>0)adCard.style.height = maxH + 'px';
-        }
-        
-        window.addEventListener('load',function(){
-            setTimeout(rm,200);
-            setTimeout(rm,800);
-            setTimeout(syncSliderHeight,500);
-            setTimeout(syncSliderHeight,1500);
-        });
-        window.addEventListener('resize',function(){setTimeout(syncSliderHeight,300);});
+        window.addEventListener('load',function(){setTimeout(redistribute,200);setTimeout(redistribute,800);setTimeout(redistribute,2000);});
     })();
     </script>
 
