@@ -35,129 +35,6 @@
     })();
     </script>
 
-    <style>
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:auto;background:#050505}
-        body{
-            width:100%;min-width:320px;max-width:1280px;margin:0 auto;padding:0;
-            background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;
-        }
-
-        .site-header{
-            width:100%;max-width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
-            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:12px 16px;
-        }
-        .header-inner{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
-        .site-avatar{flex-shrink:0;line-height:0}
-        .site-title{flex:1;font-size:14px;font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
-        .menu-btn{width:36px;height:36px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
-        .menu-btn:hover{background:rgba(255,255,255,.06)}
-        .menu-btn svg{width:20px;height:20px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round}
-        .menu-btn:hover svg{stroke:#fff}
-        .slide-menu{display:none;position:fixed;top:56px;right:16px;z-index:999;background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:8px;min-width:200px}
-        .slide-menu.open{display:block}
-        .slide-menu ul{list-style:none;margin:0;padding:0}
-        .slide-menu a{display:block;padding:10px 16px;color:#ccc;text-decoration:none;font-size:14px;border-radius:8px}
-        .slide-menu a:hover{background:#2a2a2a;color:#fff}
-
-        .ad-break{
-            display:flex;justify-content:center;align-items:center;
-            padding:22px 0;background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
-        }
-        .ad-break:first-child{margin-top:60px}
-
-        .main-layout{
-            display:flex;gap:0;width:100%;max-width:1280px;margin:0 auto;
-            padding:0 8px;
-        }
-        .content-area{flex:1;min-width:0;padding:8px 0}
-
-        .sidebar{flex-shrink:0;padding:16px 8px;position:relative}
-        .sidebar-left{width:180px;border-right:1px solid rgba(255,255,255,.02)}
-        .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
-        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
-
-        /* ===== SECTION LABEL ===== */
-        .section-label{
-            font-size:11px;font-weight:700;text-transform:uppercase;
-            letter-spacing:2px;color:#555;margin:0 0 12px 0;
-        }
-
-        /* ===== FEATURED GRID ===== */
-        .featured-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
-            gap:8px;margin-bottom:16px;
-        }
-        .featured-card{
-            position:relative;overflow:hidden;border-radius:8px;
-            background:#0a0a0a;aspect-ratio:16/10;
-        }
-        .featured-link{display:block;position:relative;width:100%;height:100%}
-        .featured-link img{
-            width:100%;height:100%;object-fit:cover;object-position:center 20%;
-            display:block;transition:transform .6s ease;
-        }
-        .featured-card:hover img{transform:scale(1.03)}
-        .featured-body{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:30px 18px 14px;
-            background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.2) 70%,transparent 100%);
-            color:#fff;
-        }
-        .featured-body h2{font-size:17px;font-weight:700;margin:0 0 4px;line-height:1.2}
-        .featured-body p{font-size:11px;opacity:.75;margin:0;line-height:1.4}
-
-        /* Featured kecil */
-        .featured-grid-small{gap:6px;margin-bottom:16px}
-        .featured-card-small{aspect-ratio:16/9}
-        .featured-card-small .featured-body{padding:24px 14px 10px}
-        .featured-card-small .featured-body h2{font-size:14px}
-
-        /* ===== MASONRY ===== */
-        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
-        .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-        .masonry-item{
-            overflow:hidden;border-radius:6px;background:#0a0a0a;
-            aspect-ratio:9/16;position:relative;
-        }
-        .masonry-link{display:block;position:relative;width:100%;height:100%}
-        .masonry-link img{
-            width:100%;height:100%;object-fit:cover;object-position:center top;
-            display:block;transition:transform .4s ease;
-        }
-        .masonry-item:hover img{transform:scale(1.03)}
-
-        /* ===== RESPONSIVE ===== */
-        @media(max-width:768px){
-            body{padding:0 4px}
-            .site-header{padding:10px 12px}
-            .site-title{font-size:15px}
-            .menu-btn{width:40px;height:40px}
-            .menu-btn svg{width:22px;height:22px}
-            .slide-menu{top:52px;right:8px;min-width:180px}
-            .slide-menu a{font-size:13px;padding:8px 14px}
-            .ad-break:first-child{margin-top:52px}
-            .ad-break{padding:16px 0}
-            .main-layout{padding:0 4px}
-            .sidebar{display:none}
-            .featured-grid{grid-template-columns:1fr;gap:6px}
-            .featured-body h2{font-size:18px}
-            .masonry-grid{flex-wrap:wrap;gap:4px}
-            .masonry-column{flex:0 0 calc(50% - 2px)}
-        }
-
-        @media(max-width:480px){
-            .site-title{font-size:16px}
-            .featured-body h2{font-size:16px}
-            .masonry-column{flex:0 0 calc(50% - 2px)}
-            .masonry-item{border-radius:4px}
-        }
-    </style>
-    
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
 {% include head.html %}
@@ -165,7 +42,7 @@
 
 </head>
 <body>
-<div loading="lazy">
+
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
@@ -225,56 +102,130 @@
 
         <main class="content-area">
 
-            {% assign total_posts = 50 %}
-            {% assign featured1_count = 10 %}
-            {% assign featured2_count = 20 %}
+            {% assign total_posts = 56 %}
+            {% assign f1 = 2 %}
+            {% assign f2 = 3 %}
+            {% assign f3 = 4 %}
+            {% assign f4 = 2 %}
+            {% assign f5 = 3 %}
 
-            <!-- Featured Section 1 -->
-            {% if featured1_count >= 1 %}
-            <div class="section-label">Featured</div>
-            <div class="featured-grid">
-                {% for post in site.posts limit:featured1_count %}
-                <div class="featured-card">
-                    <a href="{{ post.url }}" class="featured-link">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
-                        <div class="featured-body">
-                            <h2>{{ post.title }}</h2>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-            
-{% include /ads/banner/01.html %}
-
-            <!-- Featured Section 2 -->
-            {% assign off2 = featured1_count %}
-            {% if featured2_count >= 1 %}
-            <div class="section-label">Editor's Picks</div>
-            <div class="featured-grid featured-grid-small">
-                {% for post in site.posts limit:featured2_count offset:off2 %}
-                <div class="featured-card featured-card-small">
-                    <a href="{{ post.url }}" class="featured-link">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                        <div class="featured-body">
-                            <h2>{{ post.title }}</h2>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-{% include /ads/banner/01.html %}
-
-            <!-- Feed -->
-            {% assign used = featured1_count | plus: featured2_count %}
+            {% assign off1 = 0 %}
+            {% assign off2 = off1 | plus: f1 %}
+            {% assign off3 = off2 | plus: f2 %}
+            {% assign off4 = off3 | plus: f3 %}
+            {% assign off5 = off4 | plus: f4 %}
+            {% assign used = f1 | plus: f2 | plus: f3 | plus: f4 | plus: f5 %}
             {% assign sisa = total_posts | minus: used %}
+
+            <!-- ===== FEATURED 1: Hero Besar Kiri + 1 Kecil Kanan ===== -->
+            {% if f1 >= 2 %}
+            <div class="section-label">Top Stories</div>
+            <div class="featured-layout-1">
+                {% assign post = site.posts[off1] %}
+                <div class="fl1-hero">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
+                        <div class="fl1-body">
+                            <h2>{{ post.title }}</h2>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                <div class="fl1-side">
+                    {% for post in site.posts limit:f1 offset:off1 %}
+                        {% if forloop.index > 1 %}
+                        <div class="fl1-side-item">
+                            <a href="{{ post.url }}">
+                                {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                                <div class="fl1-side-body"><h3>{{ post.title }}</h3></div>
+                            </a>
+                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ===== FEATURED 2: Horizontal Scroll Cards ===== -->
+            {% if f2 >= 1 %}
+            <div class="section-label">Trending</div>
+            <div class="featured-layout-2">
+                {% for post in site.posts limit:f2 offset:off2 %}
+                <div class="fl2-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <div class="fl2-body">
+                            <h3>{{ post.title }}</h3>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- ===== FEATURED 3: Grid 2x2 ===== -->
+            {% if f3 >= 1 %}
+            <div class="section-label">Editor's Picks</div>
+            <div class="featured-layout-3">
+                {% for post in site.posts limit:f3 offset:off3 %}
+                <div class="fl3-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <div class="fl3-body">
+                            <h3>{{ post.title }}</h3>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- ===== FEATURED 4: Wide Horizontal Cards ===== -->
+            {% if f4 >= 1 %}
+            <div class="section-label">Spotlight</div>
+            <div class="featured-layout-4">
+                {% for post in site.posts limit:f4 offset:off4 %}
+                <div class="fl4-card">
+                    <a href="{{ post.url }}" class="fl4-inner">
+                        <div class="fl4-img">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        </div>
+                        <div class="fl4-body">
+                            <h3>{{ post.title }}</h3>
+                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                            <span class="fl4-cta">View Gallery</span>
+                        </div>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- ===== FEATURED 5: Masonry Kecil ===== -->
+            {% if f5 >= 1 %}
+            <div class="section-label">More Highlights</div>
+            <div class="featured-layout-5">
+                {% for post in site.posts limit:f5 offset:off5 %}
+                <div class="fl5-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <span class="fl5-label">{{ post.title }}</span>
+                    </a>
+                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- ===== MASONRY FEED ===== -->
+            {% if sisa > 0 %}
             <div class="section-label">Latest Updates</div>
             <div class="masonry-grid" id="masonryAll">
                 {% for col in (0..3) %}
@@ -295,6 +246,7 @@
                 </div>
                 {% endfor %}
             </div>
+            {% endif %}
 
         </main>
 
@@ -306,8 +258,166 @@
 
     <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
-    
+    {% include /ads/gobloggugel/sosmed.html %}
+    {% include footer.html %}
 
+    <style>
+        *,*::before,*::after{box-sizing:border-box}
+        html{overflow-x:auto;background:#050505}
+        body{
+            width:100%;min-width:320px;max-width:1280px;margin:0 auto;padding:0;
+            background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;
+        }
+
+        .site-header{
+            width:100%;max-width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
+            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:12px 16px;
+        }
+        .header-inner{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
+        .site-avatar{flex-shrink:0;line-height:0}
+        .site-title{flex:1;font-size:14px;font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
+        .menu-btn{width:36px;height:36px;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%}
+        .menu-btn:hover{background:rgba(255,255,255,.06)}
+        .menu-btn svg{width:20px;height:20px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round}
+        .menu-btn:hover svg{stroke:#fff}
+        .slide-menu{display:none;position:fixed;top:56px;right:16px;z-index:999;background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:8px;min-width:200px}
+        .slide-menu.open{display:block}
+        .slide-menu ul{list-style:none;margin:0;padding:0}
+        .slide-menu a{display:block;padding:10px 16px;color:#ccc;text-decoration:none;font-size:14px;border-radius:8px}
+        .slide-menu a:hover{background:#2a2a2a;color:#fff}
+
+        .ad-break{
+            display:flex;justify-content:center;align-items:center;
+            padding:22px 0;background:#080808;
+            border-top:1px solid rgba(255,255,255,.03);
+            border-bottom:1px solid rgba(255,255,255,.03);
+        }
+        .ad-break:first-child{margin-top:60px}
+
+        .main-layout{display:flex;gap:0;width:100%;max-width:1280px;margin:0 auto;padding:0 8px}
+        .content-area{flex:1;min-width:0;padding:8px 0}
+
+        .sidebar{flex-shrink:0;padding:16px 8px;position:relative}
+        .sidebar-left{width:180px;border-right:1px solid rgba(255,255,255,.02)}
+        .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
+        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
+
+        .section-label{
+            font-size:10px;font-weight:700;text-transform:uppercase;
+            letter-spacing:2.5px;color:#555;margin:0 0 12px 0;
+        }
+
+        /* ===== LAYOUT 1: Hero + Side ===== */
+        .featured-layout-1{display:flex;gap:6px;margin-bottom:16px}
+        .fl1-hero{flex:0 0 60%;overflow:hidden;border-radius:8px;background:#0a0a0a;aspect-ratio:16/9}
+        .fl1-hero a{display:block;position:relative;width:100%;height:100%}
+        .fl1-hero img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .6s ease}
+        .fl1-hero:hover img{transform:scale(1.03)}
+        .fl1-body{position:absolute;bottom:0;left:0;right:0;padding:32px 20px 16px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,transparent 100%);color:#fff}
+        .fl1-body h2{font-size:20px;font-weight:700;margin:0 0 4px;line-height:1.2}
+        .fl1-body p{font-size:12px;opacity:.75;margin:0}
+        .fl1-side{flex:1;display:flex;flex-direction:column;gap:6px}
+        .fl1-side-item{flex:1;overflow:hidden;border-radius:8px;background:#0a0a0a;position:relative}
+        .fl1-side-item a{display:block;position:relative;width:100%;height:100%}
+        .fl1-side-item img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+        .fl1-side-item:hover img{transform:scale(1.04)}
+        .fl1-side-body{position:absolute;bottom:0;left:0;right:0;padding:16px 10px 8px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff}
+        .fl1-side-body h3{font-size:12px;font-weight:600;margin:0;line-height:1.3}
+
+        /* ===== LAYOUT 2: Horizontal Scroll ===== */
+        .featured-layout-2{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px}
+        .featured-layout-2::-webkit-scrollbar{height:2px}
+        .featured-layout-2::-webkit-scrollbar-track{background:#0a0a0a}
+        .featured-layout-2::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
+        .fl2-card{flex:0 0 240px;border-radius:8px;overflow:hidden;background:#0a0a0a}
+        .fl2-card a{display:block}
+        .fl2-card img{width:100%;height:300px;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+        .fl2-card:hover img{transform:scale(1.04)}
+        .fl2-body{padding:14px 10px}
+        .fl2-body h3{font-size:13px;font-weight:600;margin:0 0 4px;line-height:1.3}
+        .fl2-body p{font-size:10px;color:#888;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+        /* ===== LAYOUT 3: Grid 2x2 ===== */
+        .featured-layout-3{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px}
+        .fl3-card{overflow:hidden;border-radius:8px;background:#0a0a0a;aspect-ratio:4/3}
+        .fl3-card a{display:block;position:relative;width:100%;height:100%}
+        .fl3-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+        .fl3-card:hover img{transform:scale(1.04)}
+        .fl3-body{position:absolute;bottom:0;left:0;right:0;padding:24px 14px 10px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff}
+        .fl3-body h3{font-size:14px;font-weight:600;margin:0 0 3px;line-height:1.2}
+        .fl3-body p{font-size:10px;opacity:.7;margin:0}
+
+        /* ===== LAYOUT 4: Wide Horizontal ===== */
+        .featured-layout-4{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+        .fl4-card{overflow:hidden;border-radius:8px;background:#0a0a0a;transition:background .3s}
+        .fl4-card:hover{background:#0f0f0f}
+        .fl4-inner{display:flex;text-decoration:none;color:#fff}
+        .fl4-img{flex:0 0 50%;overflow:hidden;aspect-ratio:16/7}
+        .fl4-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .5s ease}
+        .fl4-card:hover .fl4-img img{transform:scale(1.03)}
+        .fl4-body{flex:1;padding:20px 18px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+        .fl4-body h3{font-size:15px;font-weight:700;margin:0;line-height:1.3}
+        .fl4-body p{font-size:11px;color:#888;margin:0;line-height:1.5}
+        .fl4-cta{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#c0392b;font-weight:600;margin-top:4px}
+
+        /* ===== LAYOUT 5: Small Masonry ===== */
+        .featured-layout-5{display:flex;flex-wrap:nowrap;gap:6px;margin-bottom:16px}
+        .fl5-card{flex:1;min-width:0;overflow:hidden;border-radius:6px;background:#0a0a0a;aspect-ratio:3/4;position:relative}
+        .fl5-card a{display:block;position:relative;width:100%;height:100%}
+        .fl5-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+        .fl5-card:hover img{transform:scale(1.04)}
+        .fl5-label{position:absolute;bottom:0;left:0;right:0;padding:14px 8px 6px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);color:#fff;font-size:10px;font-weight:600;opacity:0;transition:opacity .2s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .fl5-card:hover .fl5-label{opacity:1}
+
+        /* ===== MASONRY ===== */
+        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
+        .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+        .masonry-item{
+            overflow:hidden;border-radius:6px;background:#0a0a0a;
+            aspect-ratio:9/16;position:relative;
+        }
+        .masonry-link{display:block;position:relative;width:100%;height:100%}
+        .masonry-link img{
+            width:100%;height:100%;object-fit:cover;object-position:center top;
+            display:block;transition:transform .4s ease;
+        }
+        .masonry-item:hover img{transform:scale(1.03)}
+
+        @media(max-width:768px){
+            body{padding:0 4px}
+            .site-header{padding:10px 12px}
+            .site-title{font-size:15px}
+            .menu-btn{width:40px;height:40px}
+            .menu-btn svg{width:22px;height:22px}
+            .slide-menu{top:52px;right:8px;min-width:180px}
+            .slide-menu a{font-size:13px;padding:8px 14px}
+            .ad-break:first-child{margin-top:52px}
+            .ad-break{padding:16px 0}
+            .main-layout{padding:0 4px}
+            .sidebar{display:none}
+            .fl1-hero{flex:1;aspect-ratio:16/10}
+            .fl1-side{display:none}
+            .fl2-card{flex:0 0 180px}
+            .fl2-card img{height:240px}
+            .featured-layout-3{grid-template-columns:1fr 1fr}
+            .fl4-img{flex:0 0 45%;aspect-ratio:4/3}
+            .featured-layout-5{flex-wrap:wrap}
+            .fl5-card{flex:0 0 calc(33.333% - 4px)}
+            .masonry-grid{flex-wrap:wrap;gap:4px}
+            .masonry-column{flex:0 0 calc(50% - 2px)}
+        }
+
+        @media(max-width:480px){
+            .site-title{font-size:16px}
+            .fl2-card{flex:0 0 160px}
+            .fl2-card img{height:200px}
+            .fl3-body h3{font-size:12px}
+            .fl4-body h3{font-size:13px}
+            .fl5-card{flex:0 0 calc(50% - 3px)}
+            .masonry-column{flex:0 0 calc(50% - 2px)}
+        }
+    </style>
 
     <script>
     (function() {
@@ -346,9 +456,5 @@
     })();
     </script>
 
-{% include /ads/gobloggugel/sosmed.html %}
-    {% include footer.html %}
-
-</div>
 </body>
 </html>
