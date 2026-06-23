@@ -47,7 +47,7 @@
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER (MOBILE-FRIENDLY) ===== */
         .site-header{
             width:100%;position:fixed;top:0;left:0;z-index:1000;
             background:rgba(5,5,5,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
@@ -86,34 +86,14 @@
         }
         .slide-menu a:active{background:#2a2a2a;color:#fff}
 
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#080808;min-height:50px;
-        }
-        .ad-box ins{max-width:100%}
-        
-        /* Responsive ad visibility */
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-
-        /* ===== AD BREAK (top & bottom) ===== */
+        /* ===== AD BREAK ===== */
         .ad-break{
-            padding:12px 0;background:#080808;
+            display:flex;justify-content:center;align-items:center;
+            padding:16px 0;background:#080808;min-height:60px;
             border-top:1px solid rgba(255,255,255,.04);
             border-bottom:1px solid rgba(255,255,255,.04);
         }
         .ad-break:first-child{margin-top:58px}
-
-        /* ===== AD INLINE (antar section) ===== */
-        .ad-inline{
-            margin:24px 0;padding:12px 0;
-            background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
-        }
 
         /* ===== MAIN LAYOUT ===== */
         .main-layout{
@@ -122,6 +102,7 @@
         }
         .content-area{flex:1;min-width:0;padding:0;width:100%}
 
+        /* Sidebar: hidden default */
         .sidebar{display:none}
         .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
@@ -137,18 +118,23 @@
         .gv2-featured-title h2{font-size:21px;color:#ff6b6b}
         .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
 
-        /* === MOBILE: 1 KOLOM FULLWIDTH === */
-        .gv2-featured{display:grid;grid-template-columns:1fr;gap:4px}
+        /* === MOBILE GRID: 1 KOLOM FULLWIDTH === */
+        .gv2-featured{
+            display:grid;grid-template-columns:1fr;gap:4px;
+        }
         .gv2-latest{display:grid;grid-template-columns:1fr;gap:4px}
         .gv2-stories{display:grid;grid-template-columns:1fr;gap:4px}
         .gv2-tutorials{display:grid;grid-template-columns:1fr;gap:4px}
         .gv2-archive{display:grid;grid-template-columns:1fr;gap:4px}
 
+        /* Semua card sama di mobile */
         .gv2-featured-big,
         .gv2-featured-small{
-            grid-column:auto;grid-row:auto;
+            grid-column:auto;
+            grid-row:auto;
         }
 
+        /* Card */
         .gv2-card{
             position:relative;overflow:hidden;border-radius:0;background:#0a0a0a;
             -webkit-tap-highlight-color:transparent;
@@ -156,30 +142,28 @@
         .gv2-card a{display:block;width:100%;height:100%}
         .gv2-card img{
             width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .3s ease;aspect-ratio:16/9;
+            transition:transform .3s ease;
+            aspect-ratio:16/9;
         }
         .gv2-card:active img{transform:scale(1.02)}
         .gv2-card:active{opacity:.9}
 
+        .gv2-ad{margin:20px 0;text-align:center;padding:0}
         .excerpt{display:none}
 
         /* ============================
            TABLET (min-width:600px)
            ============================ */
         @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-
             .site-header{padding:12px 16px}
             .site-title{font-size:17px}
-            .ad-break{padding:16px 0}
+            .ad-break{padding:20px 0}
             .ad-break:first-child{margin-top:60px}
-            .ad-inline{margin:28px 0;padding:14px 0}
             .gv2-title{padding:0 12px}
             .gv2-title h2{font-size:22px}
             .gv2-grid{padding:0 8px;gap:6px}
 
+            /* Tablet: 2 kolom */
             .gv2-featured{grid-template-columns:1fr 1fr;gap:6px}
             .gv2-featured-big{grid-column:1 / -1}
             .gv2-latest{grid-template-columns:1fr 1fr;gap:6px}
@@ -189,6 +173,7 @@
 
             .gv2-card{border-radius:6px}
             .gv2-card img{aspect-ratio:9/16}
+            .gv2-ad{padding:0 8px}
         }
 
         /* ============================
@@ -207,6 +192,7 @@
 
             .ad-break:first-child{margin-top:62px}
 
+            /* Sidebar muncul */
             .main-layout{flex-direction:row;padding:0 8px}
             .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
             .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
@@ -218,17 +204,24 @@
             .gv2-title h2{font-size:22px}
             .gv2-grid{padding:0 14px;gap:10px}
 
+            /* Featured: layout kustom */
             .gv2-featured{
                 grid-template-columns:2fr 1fr 1fr;
-                grid-template-rows:1fr 1fr;gap:10px;
+                grid-template-rows:1fr 1fr;
+                gap:10px;
             }
             .gv2-featured-big{
-                grid-column:1 / 2;grid-row:1 / 3;
+                grid-column:1 / 2;
+                grid-row:1 / 3;
             }
             .gv2-featured-big img{aspect-ratio:auto;height:100%}
-            .gv2-featured-small{grid-column:auto;grid-row:auto}
+            .gv2-featured-small{
+                grid-column:auto;
+                grid-row:auto;
+            }
             .gv2-featured-small img{aspect-ratio:9/16}
 
+            /* Section lain: full desktop */
             .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
             .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
             .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:10px}
@@ -237,6 +230,9 @@
             .gv2-card{border-radius:12px}
             .gv2-card:hover img{transform:scale(1.05)}
 
+            .gv2-ad{padding:0 14px}
+
+            /* Nav inline di desktop */
             .desktop-nav{
                 display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
             }
@@ -247,6 +243,9 @@
             .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
         }
 
+        /* ============================
+           LARGE DESKTOP (min-width:1100px)
+           ============================ */
         @media(min-width:1100px){
             .sidebar-left{width:180px}
             .sidebar-right{width:180px}
@@ -277,7 +276,7 @@
         </div>
     </header>
 
-    <!-- SLIDE MENU -->
+    <!-- SLIDE MENU (MOBILE ONLY) -->
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
             <li><a href="/">🏠 Home</a></li>
@@ -319,17 +318,8 @@
     })();
     </script>
 
-    <!-- ==================== BANNER 06: TOP ==================== -->
-    <div class="ad-break">
-        <!-- Desktop: 908×270 -->
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/06.html %}
-        </div>
-        <!-- Mobile: 300×262 -->
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
+    <!-- AD BANNER TOP -->
+    <div class="ad-break">{% include /ads/banner/06.html %}</div>
 
     <!-- DESKTOP NAV -->
     <nav class="desktop-nav">
@@ -342,23 +332,22 @@
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
 
-        <!-- LEFT SIDEBAR: Banner 05 -->
+        <!-- LEFT SIDEBAR -->
         <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
         <!-- MAIN CONTENT -->
         <main class="content-area">
 
-            <!-- ========== FEATURED ========== -->
+            <!-- ========== FEATURED SECTION ========== -->
             {% assign featured_posts = site.posts | slice: 0, 5 %}
             {% if featured_posts.size >= 5 %}
             <section class="gv2-section">
                 <div class="gv2-title gv2-featured-title">
                     <h2>🔥 Featured</h2>
                 </div>
+
                 <div class="gv2-grid gv2-featured">
                     <article class="gv2-card gv2-featured-big">
                         <a href="{{ featured_posts[0].url }}">
@@ -366,170 +355,95 @@
                                 <img src="{{ featured_posts[0].image | relative_url }}" alt="{{ featured_posts[0].title }}" loading="lazy">
                             {% endif %}
                         </a>
+                                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                     </article>
+
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[1].url }}">
                             {% if featured_posts[1].image %}
                                 <img src="{{ featured_posts[1].image | relative_url }}" alt="{{ featured_posts[1].title }}" loading="lazy">
                             {% endif %}
                         </a>
+                                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                     </article>
+
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[2].url }}">
                             {% if featured_posts[2].image %}
                                 <img src="{{ featured_posts[2].image | relative_url }}" alt="{{ featured_posts[2].title }}" loading="lazy">
                             {% endif %}
                         </a>
+                                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                     </article>
+
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[3].url }}">
                             {% if featured_posts[3].image %}
                                 <img src="{{ featured_posts[3].image | relative_url }}" alt="{{ featured_posts[3].title }}" loading="lazy">
                             {% endif %}
                         </a>
+                                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                     </article>
+
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[4].url }}">
                             {% if featured_posts[4].image %}
                                 <img src="{{ featured_posts[4].image | relative_url }}" alt="{{ featured_posts[4].title }}" loading="lazy">
                             {% endif %}
                         </a>
+                                        {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                     </article>
                 </div>
             </section>
+
+            <div class="gv2-ad">{% include /ads/banner/01.html %}</div>
             {% endif %}
 
-            <!-- ========== BANNER 01: SETELAH FEATURED ========== -->
-            <div class="ad-inline">
-                <!-- Desktop: 728×102 -->
-                <div class="ad-box ad-desktop">
-                    {% include /ads/banner/01.html %}
-                </div>
-                <!-- Mobile: 300×262 -->
-                <div class="ad-box ad-mobile">
-                    {% include /ads/banner/04.html %}
-                </div>
-            </div>
+            <!-- ========== SECTION LAINNYA ========== -->
+            {% assign gv2_sections = "latest,stories,tutorials,archive" | split: "," %}
+            {% assign gv2_names = "🆕 Latest,📖 Stories,🔥 Popular,📁 Archive" | split: "," %}
+            {% assign gv2_limits = "10,8,15,12" | split: "," %}
+            {% assign gv2_offset = 5 %}
 
-            <!-- ========== LATEST ========== -->
-            {% assign latest_posts = site.posts | slice: 5, 10 %}
-            {% if latest_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🆕 Latest</h2></div>
-                <div class="gv2-grid gv2-latest">
-                    {% for post in latest_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
+            {% for section in gv2_sections %}
+                <section class="gv2-section">
+                    <div class="gv2-title">
+                        <h2>{{ gv2_names[forloop.index0] }}</h2>
+                    </div>
+
+                    <div class="gv2-grid gv2-{{ section }}">
+                        {% assign gv2_limit = gv2_limits[forloop.index0] | plus: 0 %}
+                        {% for post in site.posts limit:gv2_limit offset:gv2_offset %}
+                            <article class="gv2-card">
+                                <a href="{{ post.url }}">
+                                    {% if post.image %}
+                                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                                    {% endif %}
+                                </a>
+                                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                     </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
 
-            <!-- ========== BANNER 02: SETELAH LATEST ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/02.html %}
-                </div>
-            </div>
+                {% assign gv2_offset = gv2_offset | plus: gv2_limit %}
 
-            <!-- ========== STORIES ========== -->
-            {% assign stories_posts = site.posts | slice: 15, 8 %}
-            {% if stories_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📖 Stories</h2></div>
-                <div class="gv2-grid gv2-stories">
-                    {% for post in stories_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 03: SETELAH STORIES ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/03.html %}
-                </div>
-            </div>
-
-            <!-- ========== POPULAR ========== -->
-            {% assign popular_posts = site.posts | slice: 23, 10 %}
-            {% if popular_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🔥 Popular</h2></div>
-                <div class="gv2-grid gv2-tutorials">
-                    {% for post in popular_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 08: SETELAH POPULAR ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/08.html %}
-                </div>
-            </div>
-
-            <!-- ========== ARCHIVE ========== -->
-            {% assign archive_posts = site.posts | slice: 33, 10 %}
-            {% if archive_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📁 Archive</h2></div>
-                <div class="gv2-grid gv2-archive">
-                    {% for post in archive_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
+                {% unless forloop.last %}
+                    <div class="gv2-ad">{% include /ads/banner/01.html %}</div>
+                {% endunless %}
+            {% endfor %}
 
         </main>
 
-        <!-- RIGHT SIDEBAR: Banner 05 -->
+        <!-- RIGHT SIDEBAR -->
         <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
+            <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
     </div>
 
-    <!-- ==================== BANNER 07: BOTTOM ==================== -->
-    <div class="ad-break">
-        <!-- Desktop: 468×72 -->
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/07.html %}
-        </div>
-        <!-- Mobile: 300×262 -->
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
+    <!-- AD BANNER BOTTOM -->
+    <div class="ad-break">{% include /ads/banner/07.html %}</div>
 
     <!-- AVATAR SCRIPT -->
     <script>
