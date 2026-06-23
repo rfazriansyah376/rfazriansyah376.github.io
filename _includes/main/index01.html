@@ -165,6 +165,65 @@
 
         .gv2-ad {margin:35px 0;text-align:center}
         .excerpt {display:none}
+
+        /* ===== RESPONSIVE MOBILE ===== */
+        @media(max-width:768px){
+            /* Sembunyikan sidebar, beri konten lebar penuh */
+            .sidebar{
+                display:none;
+            }
+            .main-layout{
+                padding:0 4px;
+            }
+            .content-area{
+                padding:8px 0;
+            }
+
+            /* Ubah Featured grid agar tetap bekerja */
+            .gv2-featured {
+                grid-template-columns:1fr 1fr;
+                grid-template-rows:auto auto auto;
+            }
+            .gv2-featured-big {
+                grid-row:1 / 2;
+                grid-column:1 / 3; /* Lebar penuh di atas */
+            }
+            .gv2-featured-big img {
+                aspect-ratio:16/9; /* Bentuk landscape lebih pas di mobile */
+            }
+            .gv2-featured-small {
+                /* auto */
+            }
+
+            /* Grid lain tetap 2 kolom */
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive {
+                grid-template-columns:repeat(2,1fr);
+            }
+
+            /* Judul section sedikit lebih kecil */
+            .gv2-title h2 {font-size:20px}
+            .gv2-featured-title h2 {font-size:24px}
+        }
+
+        @media(max-width:480px){
+            .gv2-featured {
+                grid-template-columns:1fr;
+                grid-template-rows:auto;
+            }
+            .gv2-featured-big {
+                grid-column:1 / 2;
+                grid-row:1 / 2;
+            }
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive {
+                grid-template-columns:1fr;
+            }
+        }
     </style>
     
 {% include head.html %}
@@ -246,7 +305,7 @@
                 </div>
 
                 <div class="gv2-grid gv2-featured">
-                    <!-- Card 1: Besar (span 2 row) -->
+                    <!-- Card 1: Besar -->
                     <article class="gv2-card gv2-featured-big">
                         <a href="{{ featured_posts[0].url }}">
                             {% if featured_posts[0].image %}
