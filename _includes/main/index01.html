@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-
+    
     <script>
     (function() {
         var hostname = location.hostname;
@@ -124,11 +124,25 @@
         .gv2-grid {max-width:1400px;margin:auto;padding:0 14px;gap:12px}
 
         /* Grid Variants */
-        .gv2-featured {display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr}
+        .gv2-featured {
+            display:grid;
+            grid-template-columns:2fr 1fr 1fr;
+            grid-template-rows:1fr 1fr;
+            gap:12px;
+        }
         .gv2-latest {display:grid;grid-template-columns:repeat(5,1fr)}
         .gv2-stories {display:grid;grid-template-columns:repeat(4,1fr)}
         .gv2-tutorials {display:grid;grid-template-columns:repeat(3,1fr)}
         .gv2-archive {display:grid;grid-template-columns:repeat(6,1fr)}
+
+        /* Featured Card Positions */
+        .gv2-featured-big {
+            grid-row:1 / 3;
+            grid-column:1 / 2;
+        }
+        .gv2-featured-small {
+            /* auto-fill */
+        }
 
         /* Card */
         .gv2-card {
@@ -138,7 +152,14 @@
             display:block;width:100%;height:100%;
         }
         .gv2-card img {
-            width:100%;aspect-ratio:9/16;object-fit:cover;display:block;transition:.35s ease;
+            width:100%;height:100%;
+            object-fit:cover;display:block;transition:.35s ease;
+        }
+        .gv2-featured-big img {
+            aspect-ratio:auto;
+        }
+        .gv2-featured-small img {
+            aspect-ratio:9/16;
         }
         .gv2-card:hover img {transform:scale(1.05)}
 
@@ -216,15 +237,76 @@
         <!-- MAIN CONTENT -->
         <main class="content-area">
 
-            {% assign gv2_sections = "featured,latest,stories,tutorials,archive" | split: "," %}
-            {% assign gv2_names = "Featured,Latest,Stories,Popular,Archive" | split: "," %}
-            {% assign gv2_limits = "9,12,9,12,9" | split: "," %}
-            {% assign gv2_offset = 0 %}
+            <!-- ========== FEATURED SECTION (KUSTOM) ========== -->
+            {% assign featured_posts = site.posts | slice: 0, 5 %}
+            {% if featured_posts.size >= 5 %}
+            <section class="gv2-section">
+                <div class="gv2-title gv2-featured-title">
+                    <h2>Featured</h2>
+                </div>
+
+                <div class="gv2-grid gv2-featured">
+                    <!-- Card 1: Besar (span 2 row) -->
+                    <article class="gv2-card gv2-featured-big">
+                        <a href="{{ featured_posts[0].url }}">
+                            {% if featured_posts[0].image %}
+                                <img src="{{ featured_posts[0].image | relative_url }}" alt="{{ featured_posts[0].title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="gv2-card gv2-featured-small">
+                        <a href="{{ featured_posts[1].url }}">
+                            {% if featured_posts[1].image %}
+                                <img src="{{ featured_posts[1].image | relative_url }}" alt="{{ featured_posts[1].title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="gv2-card gv2-featured-small">
+                        <a href="{{ featured_posts[2].url }}">
+                            {% if featured_posts[2].image %}
+                                <img src="{{ featured_posts[2].image | relative_url }}" alt="{{ featured_posts[2].title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article class="gv2-card gv2-featured-small">
+                        <a href="{{ featured_posts[3].url }}">
+                            {% if featured_posts[3].image %}
+                                <img src="{{ featured_posts[3].image | relative_url }}" alt="{{ featured_posts[3].title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+
+                    <!-- Card 5 -->
+                    <article class="gv2-card gv2-featured-small">
+                        <a href="{{ featured_posts[4].url }}">
+                            {% if featured_posts[4].image %}
+                                <img src="{{ featured_posts[4].image | relative_url }}" alt="{{ featured_posts[4].title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <!-- AD AFTER FEATURED -->
+            <div class="gv2-ad">{% include /ads/banner/01.html %}</div>
+            {% endif %}
+
+            <!-- ========== SECTION LAINNYA ========== -->
+            {% assign gv2_sections = "latest,stories,tutorials,archive" | split: "," %}
+            {% assign gv2_names = "Latest,Stories,Popular,Archive" | split: "," %}
+            {% assign gv2_limits = "12,9,12,9" | split: "," %}
+            {% assign gv2_offset = 5 %}
 
             {% for section in gv2_sections %}
 
                 <section class="gv2-section">
-                    <div class="gv2-title {% if section=='featured' %}gv2-featured-title{% endif %}">
+                    <div class="gv2-title">
                         <h2>{{ gv2_names[forloop.index0] }}</h2>
                     </div>
 
@@ -237,7 +319,6 @@
                                         <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                                     {% endif %}
                                 </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                             </article>
                         {% endfor %}
                     </div>
