@@ -51,28 +51,24 @@
         .site-header{
             width:100%;max-width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
             background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);
-            /* Mobile-first: padding besar */
             padding:14px 16px;
         }
         .header-inner{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
         .site-title{
             flex:1;
-            /* Mobile-first: font besar */
             font-size:18px;
             font-weight:700;
             letter-spacing:.3px;
             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
         }
         .menu-btn{
-            /* Mobile-first: tombol besar */
             width:44px;height:44px;
             background:none;border:none;cursor:pointer;padding:0;
             display:flex;align-items:center;justify-content:center;border-radius:50%;
         }
         .menu-btn:hover{background:rgba(255,255,255,.06)}
         .menu-btn svg{
-            /* Mobile-first: icon besar */
             width:24px;height:24px;
             stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round;
         }
@@ -81,7 +77,6 @@
         .slide-menu{
             display:none;
             position:fixed;
-            /* Mobile-first: posisi disesuaikan */
             top:62px;right:12px;
             z-index:999;
             background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:8px;
@@ -91,7 +86,6 @@
         .slide-menu ul{list-style:none;margin:0;padding:0}
         .slide-menu a{
             display:block;
-            /* Mobile-first: link besar */
             padding:14px 18px;
             color:#ccc;text-decoration:none;
             font-size:16px;
@@ -108,7 +102,7 @@
         }
         .ad-break:first-child{margin-top:64px}
 
-        /* ===== MAIN LAYOUT (DESKTOP — TIDAK BERUBAH) ===== */
+        /* ===== MAIN LAYOUT ===== */
         .main-layout{
             display:flex;gap:0;width:100%;max-width:1280px;margin:0 auto;
             padding:0 8px;
@@ -121,7 +115,7 @@
         .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
         /* ============================
-           GV2 GALLERY SYSTEM (DESKTOP — TIDAK BERUBAH)
+           GV2 GALLERY SYSTEM
            ============================ */
         .gv2-section {margin:40px 0}
         .gv2-title {max-width:1400px;margin:0 auto 14px;padding:0 14px}
@@ -130,7 +124,7 @@
         .gv2-grid {max-width:1400px;margin:auto;padding:0 14px;gap:12px}
 
         /* Grid Variants */
-        .gv2-featured {display:grid;grid-template-columns:2fr 1fr 1fr}
+        .gv2-featured {display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr}
         .gv2-latest {display:grid;grid-template-columns:repeat(5,1fr)}
         .gv2-stories {display:grid;grid-template-columns:repeat(4,1fr)}
         .gv2-tutorials {display:grid;grid-template-columns:repeat(3,1fr)}
@@ -140,49 +134,16 @@
         .gv2-card {
             position:relative;overflow:hidden;border-radius:12px;background:#000;
         }
+        .gv2-card a {
+            display:block;width:100%;height:100%;
+        }
         .gv2-card img {
             width:100%;aspect-ratio:9/16;object-fit:cover;display:block;transition:.35s ease;
         }
         .gv2-card:hover img {transform:scale(1.05)}
-        .gv2-card:after {
-            content:"";position:absolute;left:0;right:0;bottom:0;height:45%;
-            background:linear-gradient(to top,rgba(0,0,0,.75),transparent);pointer-events:none;
-        }
-
-        /* Title */
-        .gv2-post-title {
-            position:absolute;left:10px;right:10px;bottom:10px;margin:0;z-index:3;
-        }
-        .gv2-post-title a {
-            color:#ffffff !important;text-decoration:none !important;
-            font-size:15px;font-weight:700;line-height:1.25;
-            display:inline-block;padding:6px 12px;border-radius:6px;
-            background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-        }
-        .gv2-post-title a:visited,
-        .gv2-post-title a:hover,
-        .gv2-post-title a:active,
-        .gv2-post-title a:focus {color:#ffffff !important}
 
         .gv2-ad {margin:35px 0;text-align:center}
         .excerpt {display:none}
-
-        /* ============================
-           RESPONSIVE — HANYA HEADER
-           ============================ */
-        /*
-           Di sini TIDAK ADA perubahan untuk:
-           - grid
-           - sidebar
-           - padding body
-           - main-layout
-           - ad-break
-           - card
-           
-           Hanya header yang di-tweak sedikit jika diperlukan.
-           Karena header sudah mobile-first (besar), 
-           sebenarnya tidak perlu media query sama sekali.
-        */
     </style>
     
 {% include head.html %}
@@ -247,7 +208,7 @@
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
 
-        <!-- LEFT SIDEBAR (TETAP ADA DI MOBILE) -->
+        <!-- LEFT SIDEBAR -->
         <aside class="sidebar sidebar-left">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
@@ -275,7 +236,6 @@
                                     {% if post.image %}
                                         <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                                     {% endif %}
-                                    <h3 class="gv2-post-title">{{ post.title }}</h3>
                                 </a>
                                 {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
                             </article>
@@ -295,7 +255,7 @@
 
         </main>
 
-        <!-- RIGHT SIDEBAR (TETAP ADA DI MOBILE) -->
+        <!-- RIGHT SIDEBAR -->
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
