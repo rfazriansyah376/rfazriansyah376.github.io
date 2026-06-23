@@ -211,8 +211,8 @@
         </aside>
 
 
-<main class="content-area">
 
+<main class="content-area">
 
 <style>
 
@@ -224,8 +224,6 @@
     margin: 60px 0;
 }
 
-
-/* Section Title */
 .section-title-box {
     margin-bottom: 25px;
     padding: 16px 20px;
@@ -237,9 +235,8 @@
     font-size: 26px;
 }
 
-
 /* =========================
-   MASONRY SYSTEM
+   GALLERY GRID
 ========================= */
 
 .masonry-grid {
@@ -247,113 +244,6 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
-
-.masonry-column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.masonry-item {
-    padding: 14px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #fff;
-}
-
-.masonry-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
-}
-
-.post-title {
-    font-size: 18px;
-    margin: 12px 0 8px;
-}
-
-.post-title a {
-    text-decoration: none;
-    color: inherit;
-}
-
-
-/* =========================
-   YOUR UNIQUE EXCERPT (SAFE)
-   TIDAK DIUBAH / TIDAK DI OVERRIDE
-========================= */
-
-.excerpt.spo {
-    display: block;
-}
-
-
-/* =========================
-   SECTION STYLES (UNIQUE LOOK)
-========================= */
-
-/* FEATURED */
-.featured-section .section-title-box {
-    background: #111;
-    color: #fff;
-}
-
-.featured-section .masonry-item {
-    border: 1px solid #222;
-}
-
-/* LATEST */
-.latest-section .section-title-box {
-    background: linear-gradient(90deg,#f5f5f5,#eaeaea);
-}
-
-.latest-section .masonry-item {
-    box-shadow: 0 6px 18px rgba(0,0,0,.08);
-}
-
-/* STORIES */
-.stories-section .section-title-box {
-    background: #fef3c7;
-}
-
-.stories-section .masonry-item {
-    background: #fffdf5;
-}
-
-/* TUTORIALS */
-.tutorials-section .section-title-box {
-    background: #dbeafe;
-}
-
-.tutorials-section .masonry-item {
-    border-radius: 10px;
-    border: 1px solid #cfe3ff;
-}
-
-/* ARCHIVE */
-.archive-section .section-title-box {
-    background: #f3f4f6;
-}
-
-.archive-section .masonry-item {
-    opacity: 0.9;
-}
-
-
-/* =========================
-   ADS
-========================= */
-
-.ad-break {
-    margin: 50px 0;
-    text-align: center;
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 900px) {
     .masonry-grid {
@@ -371,8 +261,66 @@
     }
 }
 
-</style>
+.masonry-item {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+}
 
+/* FIX: IMAGE RATIO SERAGAM */
+.image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3; /* ubah ke 1/1 kalau mau square */
+    overflow: hidden;
+    background: transparent;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* TITLE */
+.post-title {
+    font-size: 18px;
+    margin: 12px 12px 8px;
+}
+
+.post-title a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* EXCERPT */
+.excerpt.spo {
+    display: block;
+    padding: 0 12px 12px;
+}
+
+/* =========================
+   SECTION THEMES
+========================= */
+
+.featured-section .section-title-box { background:#111; color:#fff; }
+.latest-section .section-title-box { background:linear-gradient(90deg,#f5f5f5,#eaeaea); }
+.stories-section .section-title-box { background:#fef3c7; }
+.tutorials-section .section-title-box { background:#dbeafe; }
+.archive-section .section-title-box { background:#f3f4f6; }
+
+.featured-section .masonry-item { border:1px solid #222; }
+.latest-section .masonry-item { box-shadow:0 6px 18px rgba(0,0,0,.08); }
+.stories-section .masonry-item { background:#fffdf5; }
+.tutorials-section .masonry-item { border:1px solid #cfe3ff; border-radius:10px; }
+.archive-section .masonry-item { opacity:.9; }
+
+.ad-break {
+    margin: 50px 0;
+    text-align: center;
+}
+
+</style>
 
 
 {% assign sections = "featured,latest,stories,tutorials,archive" | split: "," %}
@@ -380,8 +328,6 @@
 {% assign section_limits = "8,12,10,10,10" | split: "," %}
 
 {% assign offset = 0 %}
-
-
 
 {% for section in sections %}
 
@@ -393,45 +339,32 @@
 
     <div class="masonry-grid">
 
-        {% for col in (0..3) %}
+        {% assign limit = section_limits[forloop.index0] | plus: 0 %}
 
-        <div class="masonry-column">
+        {% for post in site.posts limit:limit offset:offset %}
 
-            {% assign count = 0 %}
-            {% assign limit = section_limits[forloop.index0] | plus: 0 %}
+        <article class="masonry-item">
 
-            {% for post in site.posts limit:limit offset:offset %}
+            <a href="{{ post.url }}">
 
-                {% assign mod = count | modulo:4 %}
+                <div class="image-wrapper">
+                    {% if post.image %}
+                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    {% endif %}
+                </div>
 
-                {% if mod == col %}
+            </a>
 
-                <article class="masonry-item">
+            <h3 class="post-title">
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </h3>
 
-                    <a href="{{ post.url }}" class="masonry-link">
-                        {% if post.image %}
-                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                    </a>
+            {% assign before_svg = post.content | split:'<p>' | first %}
+            <div class="excerpt spo">
+                {{ before_svg }}
+            </div>
 
-                    <h3 class="post-title">
-                        <a href="{{ post.url }}">{{ post.title }}</a>
-                    </h3>
-
-                    {% assign before_svg = post.content | split:'<p>' | first %}
-                    <div class="excerpt spo">
-                        {{ before_svg }}
-                    </div>
-
-                </article>
-
-                {% endif %}
-
-                {% assign count = count | plus: 1 %}
-
-            {% endfor %}
-
-        </div>
+        </article>
 
         {% endfor %}
 
@@ -439,11 +372,7 @@
 
 </section>
 
-
-
 {% assign offset = offset | plus: limit %}
-
-
 
 {% unless forloop.last %}
 <div class="ad-break">
@@ -452,7 +381,6 @@
 {% endunless %}
 
 {% endfor %}
-
 
 </main>
 
