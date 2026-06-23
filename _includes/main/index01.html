@@ -89,7 +89,7 @@
         /* ===== AD BREAK ===== */
         .ad-break{
             display:flex;justify-content:center;align-items:center;
-            padding:16px 8px;background:#080808;min-height:60px;
+            padding:16px 0;background:#080808;min-height:60px;
             border-top:1px solid rgba(255,255,255,.04);
             border-bottom:1px solid rgba(255,255,255,.04);
         }
@@ -102,51 +102,53 @@
         }
         .content-area{flex:1;min-width:0;padding:0;width:100%}
 
-        /* Sidebar: hidden default, muncul di desktop */
+        /* Sidebar: hidden default */
         .sidebar{display:none}
         .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
         /* ============================
            GV2 GALLERY SYSTEM
            ============================ */
-        .gv2-section{margin:24px 0}
-        .gv2-section:first-child{margin-top:8px}
-        .gv2-title{padding:0 12px;margin:0 auto 12px;max-width:1400px}
+        .gv2-section{margin:20px 0}
+        .gv2-section:first-child{margin-top:4px}
+        .gv2-title{padding:0 8px;margin:0 auto 10px;max-width:1400px}
         .gv2-title h2{
-            margin:0;font-size:20px;font-weight:800;color:#fff;letter-spacing:.2px;
+            margin:0;font-size:19px;font-weight:800;color:#fff;letter-spacing:.2px;
         }
-        .gv2-featured-title h2{font-size:22px;color:#ff6b6b}
-        .gv2-grid{max-width:1400px;margin:auto;padding:0 8px;gap:6px}
+        .gv2-featured-title h2{font-size:21px;color:#ff6b6b}
+        .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
 
-        /* === MOBILE GRID (default) === */
-        /* Featured */
+        /* === MOBILE GRID: 1 KOLOM FULLWIDTH === */
         .gv2-featured{
-            display:grid;grid-template-columns:1fr 1fr;gap:6px;
+            display:grid;grid-template-columns:1fr;gap:4px;
         }
-        .gv2-featured-big{grid-column:1 / -1}
-        .gv2-featured-big img{aspect-ratio:16/9}
-        .gv2-featured-small img{aspect-ratio:9/16}
+        .gv2-latest{display:grid;grid-template-columns:1fr;gap:4px}
+        .gv2-stories{display:grid;grid-template-columns:1fr;gap:4px}
+        .gv2-tutorials{display:grid;grid-template-columns:1fr;gap:4px}
+        .gv2-archive{display:grid;grid-template-columns:1fr;gap:4px}
 
-        /* Section lainnya */
-        .gv2-latest{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-        .gv2-stories{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-        .gv2-tutorials{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-        .gv2-archive{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+        /* Semua card sama di mobile */
+        .gv2-featured-big,
+        .gv2-featured-small{
+            grid-column:auto;
+            grid-row:auto;
+        }
 
         /* Card */
         .gv2-card{
-            position:relative;overflow:hidden;border-radius:8px;background:#0a0a0a;
+            position:relative;overflow:hidden;border-radius:0;background:#0a0a0a;
             -webkit-tap-highlight-color:transparent;
         }
         .gv2-card a{display:block;width:100%;height:100%}
         .gv2-card img{
             width:100%;height:100%;object-fit:cover;display:block;
             transition:transform .3s ease;
+            aspect-ratio:16/9;
         }
-        .gv2-card:active img{transform:scale(1.03)}
+        .gv2-card:active img{transform:scale(1.02)}
         .gv2-card:active{opacity:.9}
 
-        .gv2-ad{margin:24px 0;text-align:center;padding:0 8px}
+        .gv2-ad{margin:20px 0;text-align:center;padding:0}
         .excerpt{display:none}
 
         /* ============================
@@ -155,24 +157,23 @@
         @media(min-width:600px){
             .site-header{padding:12px 16px}
             .site-title{font-size:17px}
-            .ad-break{padding:20px 12px}
+            .ad-break{padding:20px 0}
             .ad-break:first-child{margin-top:60px}
-            .gv2-title{padding:0 16px}
+            .gv2-title{padding:0 12px}
             .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 12px;gap:8px}
+            .gv2-grid{padding:0 8px;gap:6px}
 
-            /* Featured: card 1 tetap full width, sisanya 3 kolom */
-            .gv2-featured{grid-template-columns:1fr 1fr 1fr;gap:8px}
+            /* Tablet: 2 kolom */
+            .gv2-featured{grid-template-columns:1fr 1fr;gap:6px}
             .gv2-featured-big{grid-column:1 / -1}
+            .gv2-latest{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-stories{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-tutorials{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-archive{grid-template-columns:1fr 1fr;gap:6px}
 
-            /* Section lain: 3 kolom */
-            .gv2-latest{grid-template-columns:1fr 1fr 1fr;gap:8px}
-            .gv2-stories{grid-template-columns:1fr 1fr 1fr;gap:8px}
-            .gv2-tutorials{grid-template-columns:1fr 1fr 1fr;gap:8px}
-            .gv2-archive{grid-template-columns:1fr 1fr 1fr;gap:8px}
-
-            .gv2-card{border-radius:10px}
-            .gv2-ad{padding:0 12px}
+            .gv2-card{border-radius:6px}
+            .gv2-card img{aspect-ratio:9/16}
+            .gv2-ad{padding:0 8px}
         }
 
         /* ============================
@@ -183,7 +184,7 @@
 
             .site-header{
                 left:50%;transform:translateX(-50%);max-width:1280px;
-                padding:12px 20px;border-radius:0;
+                padding:12px 20px;
             }
             .site-title{font-size:15px;font-weight:600;color:#ccc}
             .menu-btn{display:none}
@@ -197,6 +198,8 @@
             .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
             .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
 
+            .gv2-section{margin:32px 0}
+            .gv2-section:first-child{margin-top:8px}
             .gv2-title{padding:0 14px}
             .gv2-title h2{font-size:22px}
             .gv2-grid{padding:0 14px;gap:10px}
@@ -318,7 +321,7 @@
     <!-- AD BANNER TOP -->
     <div class="ad-break">{% include /ads/banner/06.html %}</div>
 
-    <!-- DESKTOP NAV (hidden di mobile) -->
+    <!-- DESKTOP NAV -->
     <nav class="desktop-nav">
         <a href="/">Home</a>
         <a href="/contact/">Contact</a>
@@ -329,7 +332,7 @@
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
 
-        <!-- LEFT SIDEBAR (desktop only) -->
+        <!-- LEFT SIDEBAR -->
         <aside class="sidebar sidebar-left">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
@@ -426,7 +429,7 @@
 
         </main>
 
-        <!-- RIGHT SIDEBAR (desktop only) -->
+        <!-- RIGHT SIDEBAR -->
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
