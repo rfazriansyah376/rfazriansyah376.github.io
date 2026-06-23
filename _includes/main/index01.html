@@ -167,7 +167,6 @@
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/tags/">Tags</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li><a href="/privacy-policy/">Privacy Policy</a></li>
             <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
@@ -415,21 +414,25 @@ z-index:3;
 
 
 .gv2-post-title a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
 
-color:#000;
-
-text-decoration:none;
-
-font-size:15px;
-
-font-weight:700;
-
-line-height:1.25;
-
-text-shadow:
-0 2px 5px #fff,
-0 0 12px #fff;
-
+/* Tambahan: matikan warna biru default untuk semua link di area ini */
+.gv2-post-title a:visited,
+.gv2-post-title a:hover,
+.gv2-post-title a:active,
+.gv2-post-title a:focus {
+    color: #ffffff !important;
 }
 
 
@@ -454,11 +457,11 @@ text-align:center;
 
 
 
-{% assign gv2_sections="featured,latest,stories,tutorials,archive"|split:"," %}
+{% assign gv2_sections="featured,latest,stories,popular,favorite"|split:"," %}
 
 {% assign gv2_names="Featured,Latest,Stories,Tutorials,Archive"|split:"," %}
 
-{% assign gv2_limits="8,15,12,9,18"|split:"," %}
+{% assign gv2_limits="9,12,9,12,9"|split:"," %}
 
 
 {% assign gv2_offset=0 %}
