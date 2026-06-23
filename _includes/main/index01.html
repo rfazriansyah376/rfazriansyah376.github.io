@@ -164,7 +164,7 @@
         .gv2-card:active img{transform:scale(1.02)}
         .gv2-card:active{opacity:.9}
 
-        .excerpt{display:none}
+        
 
         /* ============================
            TABLET (min-width:600px)
@@ -474,7 +474,7 @@
             </div>
 
             <!-- ========== POPULAR ========== -->
-            {% assign popular_posts = site.posts | slice: 23, 10 %}
+            {% assign popular_posts = site.posts | slice: 23, 15 %}
             {% if popular_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>🔥 Popular</h2></div>
@@ -501,7 +501,7 @@
             </div>
 
             <!-- ========== ARCHIVE ========== -->
-            {% assign archive_posts = site.posts | slice: 33, 10 %}
+            {% assign archive_posts = site.posts | slice: 38, 12 %}
             {% if archive_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>📁 Archive</h2></div>
