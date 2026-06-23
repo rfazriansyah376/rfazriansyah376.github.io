@@ -226,18 +226,24 @@
 .section-title-box {
     margin-bottom:18px;
     padding:12px 16px;
-    border-radius:12px;
+    border-radius:14px;
+    max-width:1500px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .section-title-box h2 {
     margin:0;
     font-size:24px;
+    font-weight:800;
 }
 
 
+
 /* =========================
- GRID SYSTEM
+ GRID VARIATION
 ========================= */
+
 
 .grid {
     max-width:1500px;
@@ -248,6 +254,7 @@
 
 
 /* FEATURED */
+
 .featured-grid {
     display:grid;
     grid-template-columns:2fr 1fr 1fr;
@@ -259,6 +266,7 @@
 
 
 /* LATEST */
+
 .latest-grid {
     display:grid;
     grid-template-columns:repeat(5,1fr);
@@ -266,6 +274,7 @@
 
 
 /* STORIES */
+
 .stories-grid {
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -277,7 +286,8 @@
 }
 
 
-/* TUTORIAL */
+/* TUTORIALS */
+
 .tutorials-grid {
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -289,10 +299,12 @@
 
 
 /* ARCHIVE */
+
 .archive-grid {
     display:grid;
     grid-template-columns:repeat(6,1fr);
 }
+
 
 
 /* =========================
@@ -305,11 +317,12 @@
 .latest-grid,
 .stories-grid,
 .tutorials-grid,
-.archive-grid {
-    grid-template-columns:repeat(3,1fr);
+.archive-grid{
+grid-template-columns:repeat(3,1fr);
 }
 
 }
+
 
 @media(max-width:700px){
 
@@ -317,11 +330,12 @@
 .latest-grid,
 .stories-grid,
 .tutorials-grid,
-.archive-grid {
-    grid-template-columns:repeat(2,1fr);
+.archive-grid{
+grid-template-columns:repeat(2,1fr);
 }
 
 }
+
 
 @media(max-width:450px){
 
@@ -329,8 +343,8 @@
 .latest-grid,
 .stories-grid,
 .tutorials-grid,
-.archive-grid {
-    grid-template-columns:1fr;
+.archive-grid{
+grid-template-columns:1fr;
 }
 
 }
@@ -338,8 +352,9 @@
 
 
 /* =========================
- CARD
+ CARD IMAGE
 ========================= */
+
 
 .masonry-item {
 
@@ -352,16 +367,15 @@ background:#000;
 
 
 
-/* IMAGE PADAT */
-
 .masonry-item img {
 
 width:100%;
-aspect-ratio:9/16;
+aspect-ratio:9 / 16;
+
 object-fit:cover;
 display:block;
 
-transition:.35s;
+transition:.35s ease;
 
 }
 
@@ -374,101 +388,101 @@ transform:scale(1.06);
 
 
 /* =========================
- TEXT READABILITY
+ POST TITLE OVERLAY
 ========================= */
-
-.masonry-item::after {
-
-content:"";
-position:absolute;
-inset:0;
-
-background:
-linear-gradient(
-to top,
-rgba(0,0,0,.88),
-rgba(0,0,0,.25),
-transparent
-);
-
-z-index:1;
-
-}
-
 
 
 .post-title {
 
 position:absolute;
-left:9px;
-right:9px;
-bottom:9px;
+
+left:10px;
+right:10px;
+bottom:10px;
 
 margin:0;
 
-z-index:2;
-
-font-size:15px;
+z-index:5;
 
 }
 
 
-
 .post-title a {
 
-color:white;
+display:inline-block;
+
+color:#fff;
+
 text-decoration:none;
 
+font-size:15px;
 font-weight:700;
 
-line-height:1.25;
+line-height:1.3;
 
 
-/* bikin aman di semua gambar */
+background:rgba(0,0,0,.55);
+
+padding:7px 10px;
+
+border-radius:10px;
+
+
+backdrop-filter:blur(6px);
+-webkit-backdrop-filter:blur(6px);
+
+
 text-shadow:
-0 2px 3px #000,
-0 0 8px #000;
-
-
-background:
-rgba(0,0,0,.25);
-
-padding:4px 6px;
-
-border-radius:6px;
-
-display:inline;
+0 2px 4px rgba(0,0,0,.9);
 
 }
 
 
 /* =========================
- COLORS
+ SECTION TITLE STYLE
 ========================= */
 
-.featured-section .section-title-box{
-background:#111;color:white;
+
+.featured-section .section-title-box {
+
+background:#111;
+color:#fff;
+
 }
 
-.latest-section .section-title-box{
-background:#eee;
+
+.latest-section .section-title-box {
+
+background:rgba(0,0,0,.06);
+
 }
 
-.stories-section .section-title-box{
+
+.stories-section .section-title-box {
+
 background:#fff1bd;
+
 }
 
-.tutorials-section .section-title-box{
+
+.tutorials-section .section-title-box {
+
 background:#dbeafe;
-}
 
-.archive-section .section-title-box{
-background:#f3f4f6;
 }
 
 
+.archive-section .section-title-box {
 
-.ad-break{
+background:#f1f5f9;
+
+}
+
+
+
+/* ADS */
+
+.ad-break {
 margin:40px 0;
 text-align:center;
 }
@@ -477,11 +491,16 @@ text-align:center;
 </style>
 
 
+
 {% assign sections="featured,latest,stories,tutorials,archive"|split:"," %}
+
 {% assign section_names="Featured Posts,Latest Articles,Stories,Tutorials,Archive"|split:"," %}
+
 {% assign section_limits="8,15,12,9,18"|split:"," %}
 
+
 {% assign offset=0 %}
+
 
 
 {% for section in sections %}
@@ -491,8 +510,13 @@ text-align:center;
 
 
 <div class="section-title-box">
-<h2>{{section_names[forloop.index0]}}</h2>
+
+<h2>
+{{section_names[forloop.index0]}}
+</h2>
+
 </div>
+
 
 
 
@@ -502,7 +526,9 @@ text-align:center;
 {% assign limit=section_limits[forloop.index0]|plus:0 %}
 
 
+
 {% for post in site.posts limit:limit offset:offset %}
+
 
 
 <article class="masonry-item">
@@ -513,7 +539,7 @@ text-align:center;
 
 {% if post.image %}
 
-<img 
+<img
 src="{{post.image | relative_url}}"
 alt="{{post.title}}"
 loading="lazy">
@@ -521,8 +547,11 @@ loading="lazy">
 {% endif %}
 
 
+
 <h3 class="post-title">
+
 {{post.title}}
+
 </h3>
 
 
@@ -532,7 +561,9 @@ loading="lazy">
 </article>
 
 
+
 {% endfor %}
+
 
 
 </div>
@@ -549,7 +580,9 @@ loading="lazy">
 {% unless forloop.last %}
 
 <div class="ad-break">
+
 {% include /ads/banner/01.html %}
+
 </div>
 
 {% endunless %}
