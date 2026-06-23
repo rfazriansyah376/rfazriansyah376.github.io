@@ -40,160 +40,218 @@
     <style>
         /* ===== RESET & BASE ===== */
         *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:auto;background:#050505}
+        html{overflow-x:hidden;background:#050505}
         body{
-            width:100%;min-width:320px;max-width:1280px;margin:0 auto;padding:0;
+            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
             background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
             color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;
         }
 
-        /* ===== HEADER (MOBILE-FIRST — BESAR) ===== */
+        /* ===== HEADER (MOBILE-FRIENDLY) ===== */
         .site-header{
-            width:100%;max-width:1280px;margin:0 auto;position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;
-            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);
-            padding:14px 16px;
+            width:100%;position:fixed;top:0;left:0;z-index:1000;
+            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            border-bottom:1px solid rgba(255,255,255,.08);
+            padding:12px 12px;
         }
-        .header-inner{display:flex;align-items:center;gap:12px;max-width:1240px;margin:0 auto}
+        .header-inner{
+            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
+        }
         .site-avatar{flex-shrink:0;line-height:0}
+        .site-avatar svg{width:34px;height:34px}
         .site-title{
-            flex:1;
-            font-size:18px;
-            font-weight:700;
-            letter-spacing:.3px;
+            flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;
             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
         }
         .menu-btn{
-            width:44px;height:44px;
-            background:none;border:none;cursor:pointer;padding:0;
-            display:flex;align-items:center;justify-content:center;border-radius:50%;
+            width:42px;height:42px;flex-shrink:0;
+            background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
+            border-radius:50%;transition:all .2s ease;
         }
-        .menu-btn:hover{background:rgba(255,255,255,.06)}
-        .menu-btn svg{
-            width:24px;height:24px;
-            stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round;
-        }
-        .menu-btn:hover svg{stroke:#fff}
+        .menu-btn:active{background:rgba(255,255,255,.12);transform:scale(.95)}
+        .menu-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
 
         .slide-menu{
-            display:none;
-            position:fixed;
-            top:62px;right:12px;
-            z-index:999;
-            background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:8px;
-            min-width:220px;
+            display:none;position:fixed;top:58px;right:8px;z-index:999;
+            background:#1a1a1a;border:1px solid #333;border-radius:14px;padding:6px;
+            min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.6);
         }
         .slide-menu.open{display:block}
         .slide-menu ul{list-style:none;margin:0;padding:0}
+        .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
         .slide-menu a{
-            display:block;
-            padding:14px 18px;
-            color:#ccc;text-decoration:none;
-            font-size:16px;
-            border-radius:8px;
+            display:block;padding:13px 16px;color:#ccc;text-decoration:none;
+            font-size:15px;font-weight:500;border-radius:10px;transition:all .15s ease;
         }
-        .slide-menu a:hover{background:#2a2a2a;color:#fff}
+        .slide-menu a:active{background:#2a2a2a;color:#fff}
 
         /* ===== AD BREAK ===== */
         .ad-break{
             display:flex;justify-content:center;align-items:center;
-            padding:22px 0;background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
+            padding:16px 8px;background:#080808;min-height:60px;
+            border-top:1px solid rgba(255,255,255,.04);
+            border-bottom:1px solid rgba(255,255,255,.04);
         }
-        .ad-break:first-child{margin-top:64px}
+        .ad-break:first-child{margin-top:58px}
 
         /* ===== MAIN LAYOUT ===== */
         .main-layout{
-            display:flex;gap:0;width:100%;max-width:1280px;margin:0 auto;
-            padding:0 8px;
+            display:flex;flex-direction:column;gap:0;width:100%;max-width:1280px;
+            margin:0 auto;padding:0;
         }
-        .content-area{flex:1;min-width:0;padding:8px 0}
+        .content-area{flex:1;min-width:0;padding:0;width:100%}
 
-        .sidebar{flex-shrink:0;padding:16px 8px;position:relative}
-        .sidebar-left{width:180px;border-right:1px solid rgba(255,255,255,.02)}
-        .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
+        /* Sidebar: hidden default, muncul di desktop */
+        .sidebar{display:none}
         .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
         /* ============================
            GV2 GALLERY SYSTEM
            ============================ */
-        .gv2-section {margin:40px 0}
-        .gv2-title {max-width:1400px;margin:0 auto 14px;padding:0 14px}
-        .gv2-title h2 {margin:0;font-size:22px;font-weight:800;color:#fff}
-        .gv2-featured-title h2 {font-size:28px}
-        .gv2-grid {max-width:1400px;margin:auto;padding:0 14px;gap:12px}
-
-        /* Grid Variants — DEFAULT MOBILE */
-        .gv2-featured {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:8px;
+        .gv2-section{margin:24px 0}
+        .gv2-section:first-child{margin-top:8px}
+        .gv2-title{padding:0 12px;margin:0 auto 12px;max-width:1400px}
+        .gv2-title h2{
+            margin:0;font-size:20px;font-weight:800;color:#fff;letter-spacing:.2px;
         }
-        .gv2-latest {display:grid;grid-template-columns:1fr 1fr;gap:8px}
-        .gv2-stories {display:grid;grid-template-columns:1fr 1fr;gap:8px}
-        .gv2-tutorials {display:grid;grid-template-columns:1fr 1fr;gap:8px}
-        .gv2-archive {display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        .gv2-featured-title h2{font-size:22px;color:#ff6b6b}
+        .gv2-grid{max-width:1400px;margin:auto;padding:0 8px;gap:6px}
 
-        /* Featured: semua card sama di mobile */
-        .gv2-featured-big,
-        .gv2-featured-small {
-            grid-row:auto;
-            grid-column:auto;
+        /* === MOBILE GRID (default) === */
+        /* Featured */
+        .gv2-featured{
+            display:grid;grid-template-columns:1fr 1fr;gap:6px;
         }
+        .gv2-featured-big{grid-column:1 / -1}
+        .gv2-featured-big img{aspect-ratio:16/9}
+        .gv2-featured-small img{aspect-ratio:9/16}
+
+        /* Section lainnya */
+        .gv2-latest{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+        .gv2-stories{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+        .gv2-tutorials{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+        .gv2-archive{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 
         /* Card */
-        .gv2-card {
-            position:relative;overflow:hidden;border-radius:8px;background:#000;
+        .gv2-card{
+            position:relative;overflow:hidden;border-radius:8px;background:#0a0a0a;
+            -webkit-tap-highlight-color:transparent;
         }
-        .gv2-card a {
-            display:block;width:100%;height:100%;
+        .gv2-card a{display:block;width:100%;height:100%}
+        .gv2-card img{
+            width:100%;height:100%;object-fit:cover;display:block;
+            transition:transform .3s ease;
         }
-        .gv2-card img {
-            width:100%;height:100%;
-            aspect-ratio:9/16;
-            object-fit:cover;display:block;transition:.35s ease;
-        }
-        .gv2-card:hover img {transform:scale(1.05)}
+        .gv2-card:active img{transform:scale(1.03)}
+        .gv2-card:active{opacity:.9}
 
-        .gv2-ad {margin:35px 0;text-align:center}
-        .excerpt {display:none}
+        .gv2-ad{margin:24px 0;text-align:center;padding:0 8px}
+        .excerpt{display:none}
 
         /* ============================
-           DESKTOP (min-width:769px)
+           TABLET (min-width:600px)
            ============================ */
-        @media(min-width:769px){
+        @media(min-width:600px){
+            .site-header{padding:12px 16px}
+            .site-title{font-size:17px}
+            .ad-break{padding:20px 12px}
+            .ad-break:first-child{margin-top:60px}
+            .gv2-title{padding:0 16px}
+            .gv2-title h2{font-size:22px}
+            .gv2-grid{padding:0 12px;gap:8px}
+
+            /* Featured: card 1 tetap full width, sisanya 3 kolom */
+            .gv2-featured{grid-template-columns:1fr 1fr 1fr;gap:8px}
+            .gv2-featured-big{grid-column:1 / -1}
+
+            /* Section lain: 3 kolom */
+            .gv2-latest{grid-template-columns:1fr 1fr 1fr;gap:8px}
+            .gv2-stories{grid-template-columns:1fr 1fr 1fr;gap:8px}
+            .gv2-tutorials{grid-template-columns:1fr 1fr 1fr;gap:8px}
+            .gv2-archive{grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+            .gv2-card{border-radius:10px}
+            .gv2-ad{padding:0 12px}
+        }
+
+        /* ============================
+           DESKTOP (min-width:900px)
+           ============================ */
+        @media(min-width:900px){
+            body{max-width:1280px;margin:0 auto}
+
+            .site-header{
+                left:50%;transform:translateX(-50%);max-width:1280px;
+                padding:12px 20px;border-radius:0;
+            }
+            .site-title{font-size:15px;font-weight:600;color:#ccc}
+            .menu-btn{display:none}
+            .slide-menu{display:none!important}
+
+            .ad-break:first-child{margin-top:62px}
+
             /* Sidebar muncul */
-            .sidebar{display:block}
+            .main-layout{flex-direction:row;padding:0 8px}
+            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
+            .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
+            .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
+
+            .gv2-title{padding:0 14px}
+            .gv2-title h2{font-size:22px}
+            .gv2-grid{padding:0 14px;gap:10px}
 
             /* Featured: layout kustom */
-            .gv2-featured {
+            .gv2-featured{
                 grid-template-columns:2fr 1fr 1fr;
                 grid-template-rows:1fr 1fr;
-                gap:12px;
+                gap:10px;
             }
-            .gv2-featured-big {
-                grid-row:1 / 3;
+            .gv2-featured-big{
                 grid-column:1 / 2;
+                grid-row:1 / 3;
             }
-            .gv2-featured-big img {
-                aspect-ratio:auto;
-            }
-            .gv2-featured-small {
-                grid-row:auto;
+            .gv2-featured-big img{aspect-ratio:auto;height:100%}
+            .gv2-featured-small{
                 grid-column:auto;
+                grid-row:auto;
             }
-            .gv2-featured-small img {
-                aspect-ratio:9/16;
+            .gv2-featured-small img{aspect-ratio:9/16}
+
+            /* Section lain: full desktop */
+            .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
+            .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
+            .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:10px}
+            .gv2-archive{grid-template-columns:repeat(6,1fr);gap:10px}
+
+            .gv2-card{border-radius:12px}
+            .gv2-card:hover img{transform:scale(1.05)}
+
+            .gv2-ad{padding:0 14px}
+
+            /* Nav inline di desktop */
+            .desktop-nav{
+                display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
             }
+            .desktop-nav a{
+                padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
+                border-radius:6px;transition:all .15s ease;
+            }
+            .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+        }
 
-            /* Section lain: layout desktop */
-            .gv2-latest {grid-template-columns:repeat(5,1fr);gap:12px}
-            .gv2-stories {grid-template-columns:repeat(4,1fr);gap:12px}
-            .gv2-tutorials {grid-template-columns:repeat(3,1fr);gap:12px}
-            .gv2-archive {grid-template-columns:repeat(6,1fr);gap:12px}
-
-            /* Card radius kembali */
-            .gv2-card {border-radius:12px}
+        /* ============================
+           LARGE DESKTOP (min-width:1100px)
+           ============================ */
+        @media(min-width:1100px){
+            .sidebar-left{width:180px}
+            .sidebar-right{width:180px}
+            .gv2-grid{gap:12px}
+            .gv2-featured{gap:12px}
+            .gv2-latest{gap:12px}
+            .gv2-stories{gap:12px}
+            .gv2-tutorials{gap:12px}
+            .gv2-archive{gap:12px}
         }
     </style>
     
@@ -215,13 +273,13 @@
         </div>
     </header>
 
-    <!-- SLIDE MENU -->
+    <!-- SLIDE MENU (MOBILE ONLY) -->
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/contact/">Contact</a></li>
-            <li><a href="/privacy-policy/">Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+            <li><a href="/">🏠 Home</a></li>
+            <li><a href="/contact/">📩 Contact</a></li>
+            <li><a href="/privacy-policy/">🔒 Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions/">📋 Terms & Conditions</a></li>
         </ul>
     </nav>
 
@@ -236,19 +294,23 @@
     (function(){
         var btn = document.getElementById("blogMenuToggle");
         var panel = document.getElementById("blogMenuPanel");
-        var m = btn.querySelector("svg:first-child");
-        var c = btn.querySelector("svg:last-child");
+        var menuIcon = btn.querySelector("svg:first-child");
+        var closeIcon = btn.querySelector("svg:last-child");
         btn.addEventListener("click", function(e){
             e.stopPropagation();
             var open = panel.classList.toggle("open");
-            m.style.display = open ? "none" : "block";
-            c.style.display = open ? "block" : "none";
+            menuIcon.style.display = open ? "none" : "block";
+            closeIcon.style.display = open ? "block" : "none";
         });
         document.addEventListener("click", function(e){
             if(!panel.contains(e.target) && !btn.contains(e.target)){
                 panel.classList.remove("open");
-                m.style.display = "block";c.style.display = "none";
+                menuIcon.style.display = "block";
+                closeIcon.style.display = "none";
             }
+        });
+        panel.addEventListener("click", function(e){
+            e.stopPropagation();
         });
     })();
     </script>
@@ -256,10 +318,18 @@
     <!-- AD BANNER TOP -->
     <div class="ad-break">{% include /ads/banner/06.html %}</div>
 
+    <!-- DESKTOP NAV (hidden di mobile) -->
+    <nav class="desktop-nav">
+        <a href="/">Home</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms-and-conditions/">Terms & Conditions</a>
+    </nav>
+
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
 
-        <!-- LEFT SIDEBAR -->
+        <!-- LEFT SIDEBAR (desktop only) -->
         <aside class="sidebar sidebar-left">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
@@ -272,11 +342,10 @@
             {% if featured_posts.size >= 5 %}
             <section class="gv2-section">
                 <div class="gv2-title gv2-featured-title">
-                    <h2>Featured</h2>
+                    <h2>🔥 Featured</h2>
                 </div>
 
                 <div class="gv2-grid gv2-featured">
-                    <!-- Card 1: Besar (hanya di desktop) -->
                     <article class="gv2-card gv2-featured-big">
                         <a href="{{ featured_posts[0].url }}">
                             {% if featured_posts[0].image %}
@@ -285,7 +354,6 @@
                         </a>
                     </article>
 
-                    <!-- Card 2 -->
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[1].url }}">
                             {% if featured_posts[1].image %}
@@ -294,7 +362,6 @@
                         </a>
                     </article>
 
-                    <!-- Card 3 -->
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[2].url }}">
                             {% if featured_posts[2].image %}
@@ -303,7 +370,6 @@
                         </a>
                     </article>
 
-                    <!-- Card 4 -->
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[3].url }}">
                             {% if featured_posts[3].image %}
@@ -312,7 +378,6 @@
                         </a>
                     </article>
 
-                    <!-- Card 5 -->
                     <article class="gv2-card gv2-featured-small">
                         <a href="{{ featured_posts[4].url }}">
                             {% if featured_posts[4].image %}
@@ -323,18 +388,16 @@
                 </div>
             </section>
 
-            <!-- AD AFTER FEATURED -->
             <div class="gv2-ad">{% include /ads/banner/01.html %}</div>
             {% endif %}
 
             <!-- ========== SECTION LAINNYA ========== -->
             {% assign gv2_sections = "latest,stories,tutorials,archive" | split: "," %}
-            {% assign gv2_names = "Latest,Stories,Popular,Archive" | split: "," %}
+            {% assign gv2_names = "🆕 Latest,📖 Stories,🔥 Popular,📁 Archive" | split: "," %}
             {% assign gv2_limits = "10,8,10,10" | split: "," %}
             {% assign gv2_offset = 5 %}
 
             {% for section in gv2_sections %}
-
                 <section class="gv2-section">
                     <div class="gv2-title">
                         <h2>{{ gv2_names[forloop.index0] }}</h2>
@@ -357,16 +420,13 @@
                 {% assign gv2_offset = gv2_offset | plus: gv2_limit %}
 
                 {% unless forloop.last %}
-                    <div class="gv2-ad">
-                        {% include /ads/banner/01.html %}
-                    </div>
+                    <div class="gv2-ad">{% include /ads/banner/01.html %}</div>
                 {% endunless %}
-
             {% endfor %}
 
         </main>
 
-        <!-- RIGHT SIDEBAR -->
+        <!-- RIGHT SIDEBAR (desktop only) -->
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
@@ -389,7 +449,7 @@
         var w = clean.split(" "), init = "";
         for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
         if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\"><rect width=\"30\" height=\"30\" rx=\"15\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"15\" y=\"20\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
     })();
     </script>
 
