@@ -103,14 +103,12 @@
         <main class="content-area">
 
             {% assign total_posts = 56 %}
-            {% assign featured1_count = 2 %}
-            {% assign featured2_count = 3 %}
+            {% assign featured_count = 3 %}
 
-            <!-- Featured Section 1 -->
-            {% if featured1_count >= 1 %}
-            <div class="section-label">Featured</div>
+            <!-- Featured Posts -->
+            {% if featured_count >= 1 %}
             <div class="featured-grid">
-                {% for post in site.posts limit:featured1_count %}
+                {% for post in site.posts limit:featured_count %}
                 <div class="featured-card">
                     <a href="{{ post.url }}" class="featured-link">
                         {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
@@ -125,35 +123,13 @@
             </div>
             {% endif %}
 
-            <!-- Featured Section 2 -->
-            {% assign off2 = featured1_count %}
-            {% if featured2_count >= 1 %}
-            <div class="section-label">Editor's Picks</div>
-            <div class="featured-grid featured-grid-small">
-                {% for post in site.posts limit:featured2_count offset:off2 %}
-                <div class="featured-card featured-card-small">
-                    <a href="{{ post.url }}" class="featured-link">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                        <div class="featured-body">
-                            <h2>{{ post.title }}</h2>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
             <!-- Feed -->
-            {% assign used = featured1_count | plus: featured2_count %}
-            {% assign sisa = total_posts | minus: used %}
-            <div class="section-label">Latest Updates</div>
+            {% assign sisa = total_posts | minus: featured_count %}
             <div class="masonry-grid" id="masonryAll">
                 {% for col in (0..3) %}
                 <div class="masonry-column">
                     {% assign c = 0 %}
-                    {% for post in site.posts limit:sisa offset:used %}
+                    {% for post in site.posts limit:sisa offset:featured_count %}
                         {% assign mod = c | modulo: 4 %}
                         {% if mod == col %}
                             <div class="masonry-item">
@@ -227,17 +203,10 @@
         .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
         .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
-        /* ===== SECTION LABEL ===== */
-        .section-label{
-            font-size:11px;font-weight:700;text-transform:uppercase;
-            letter-spacing:2px;color:#555;margin:0 0 12px 0;
-        }
-
-        /* ===== FEATURED GRID ===== */
         .featured-grid{
             display:grid;
             grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
-            gap:8px;margin-bottom:16px;
+            gap:8px;margin-bottom:12px;
         }
         .featured-card{
             position:relative;overflow:hidden;border-radius:8px;
@@ -258,13 +227,6 @@
         .featured-body h2{font-size:17px;font-weight:700;margin:0 0 4px;line-height:1.2}
         .featured-body p{font-size:11px;opacity:.75;margin:0;line-height:1.4}
 
-        /* Featured kecil */
-        .featured-grid-small{gap:6px;margin-bottom:16px}
-        .featured-card-small{aspect-ratio:16/9}
-        .featured-card-small .featured-body{padding:24px 14px 10px}
-        .featured-card-small .featured-body h2{font-size:14px}
-
-        /* ===== MASONRY ===== */
         .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
         .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
         .masonry-item{
@@ -317,7 +279,7 @@
         var w = clean.split(" "), init = "";
         for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
         if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\"><rect width=\"30\" height=\"30\" rx=\"15\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"13\" y=\"20\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+        document.getElementById("domainAvatar").innerHTML = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\"><rect width=\"30\" height=\"30\" rx=\"15\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"15\" y=\"20\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
         
         function redistribute() {
             var grid = document.getElementById('masonryAll');
