@@ -210,54 +210,81 @@
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
-        <main class="content-area">
 
-            {% assign total_posts = 50 %}
-            {% assign featured_count = 10 %}
+<main class="content-area">
 
-            <!-- Featured Posts -->
-            {% if featured_count >= 1 %}
-            <div class="featured-grid">
-                {% for post in site.posts limit:featured_count %}
-                <div class="featured-card">
-                    <a href="{{ post.url }}" class="featured-link">
-                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="eager">{% endif %}
-                        <div class="featured-body">
-                            <h2>{{ post.title }}</h2>
-                            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
-                        </div>
-                    </a>
-                    {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-            
-<div class="ad-break">{% include /ads/banner/01.html %}</div>
+{% assign total_posts = 50 %}
+{% assign sections = 5 %}
+{% assign per_section = total_posts | divided_by: sections %}
 
-            <!-- Feed -->
-            {% assign sisa = total_posts | minus: featured_count %}
-            <div class="masonry-grid" id="masonryAll">
-                {% for col in (0..3) %}
-                <div class="masonry-column">
-                    {% assign c = 0 %}
-                    {% for post in site.posts limit:sisa offset:featured_count %}
-                        {% assign mod = c | modulo: 4 %}
-                        {% if mod == col %}
-                            <div class="masonry-item">
-                                <a href="{{ post.url }}" class="masonry-link">
-                                    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
-                                </a>
-                                {% assign before_svg = post.content | split: '<p>' | first %}<div class="excerpt spo">{{ before_svg }}</div>
-                            </div>
+{% for section in (1..sections) %}
+
+<section class="post-section section-{{ section }}">
+
+    <h2 class="section-title">
+        Section {{ section }}
+    </h2>
+
+    <div class="masonry-grid" id="masonry{{ section }}">
+
+        {% assign offset = section | minus: 1 %}
+        {% assign offset = offset | times: per_section %}
+
+        {% for col in (0..3) %}
+        <div class="masonry-column">
+
+            {% assign c = 0 %}
+
+            {% for post in site.posts limit:per_section offset:offset %}
+
+                {% assign mod = c | modulo: 4 %}
+
+                {% if mod == col %}
+
+                <div class="masonry-item">
+
+                    <a href="{{ post.url }}" class="masonry-link">
+
+                        {% if post.image %}
+                        <img 
+                        src="{{ post.image | relative_url }}" 
+                        alt="{{ post.title }}" 
+                        loading="lazy">
                         {% endif %}
-                        {% assign c = c | plus: 1 %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
 
-        </main>
+                    </a>
+
+                    {% assign before_svg = post.content | split: '<p>' | first %}
+                    <div class="excerpt spo">
+                        {{ before_svg }}
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+                {% assign c = c | plus: 1 %}
+
+            {% endfor %}
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+{% if section == 2 %}
+<div class="ad-break">
+    {% include /ads/banner/01.html %}
+</div>
+{% endif %}
+
+
+{% endfor %}
+
+</main>
 
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
