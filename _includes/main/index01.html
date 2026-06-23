@@ -37,7 +37,6 @@
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
-
     <style>
         *,*::before,*::after{box-sizing:border-box}
         html{overflow-x:auto;background:#050505}
@@ -83,43 +82,6 @@
         .sidebar-right{width:180px;border-left:1px solid rgba(255,255,255,.02)}
         .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
-        .featured-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
-            gap:8px;margin-bottom:12px;
-        }
-        .featured-card{
-            position:relative;overflow:hidden;border-radius:8px;
-            background:#0a0a0a;aspect-ratio:16/10;
-        }
-        .featured-link{display:block;position:relative;width:100%;height:100%}
-        .featured-link img{
-            width:100%;height:100%;object-fit:cover;object-position:center 20%;
-            display:block;transition:transform .6s ease;
-        }
-        .featured-card:hover img{transform:scale(1.03)}
-        .featured-body{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:30px 18px 14px;
-            background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.2) 70%,transparent 100%);
-            color:#fff;
-        }
-        .featured-body h2{font-size:17px;font-weight:700;margin:0 0 4px;line-height:1.2}
-        .featured-body p{font-size:11px;opacity:.75;margin:0;line-height:1.4}
-
-        .masonry-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}
-        .masonry-column{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-        .masonry-item{
-            overflow:hidden;border-radius:6px;background:#0a0a0a;
-            aspect-ratio:9/16;position:relative;
-        }
-        .masonry-link{display:block;position:relative;width:100%;height:100%}
-        .masonry-link img{
-            width:100%;height:100%;object-fit:cover;object-position:center top;
-            display:block;transition:transform .4s ease;
-        }
-        .masonry-item:hover img{transform:scale(1.03)}
-
         /* ===== RESPONSIVE ===== */
         @media(max-width:768px){
             body{padding:0 4px}
@@ -133,18 +95,103 @@
             .ad-break{padding:16px 0}
             .main-layout{padding:0 4px}
             .sidebar{display:none}
-            .featured-grid{grid-template-columns:1fr;gap:6px}
-            .featured-body h2{font-size:18px}
-            .masonry-grid{flex-wrap:wrap;gap:4px}
-            .masonry-column{flex:0 0 calc(50% - 2px)}
         }
 
-        @media(max-width:480px){
-            .site-title{font-size:16px}
-            .featured-body h2{font-size:16px}
-            .masonry-column{flex:0 0 calc(50% - 2px)}
-            .masonry-item{border-radius:4px}
+        /* =========================
+           GV2 BASE
+        ========================= */
+        .gv2-section{margin:40px 0}
+        .gv2-title{max-width:1400px;margin:0 auto 14px;padding:0 14px}
+        .gv2-title h2{margin:0;font-size:22px;font-weight:800}
+
+        /* =========================
+           GRID VARIANTS
+        ========================= */
+        .gv2-grid{max-width:1400px;margin:auto;padding:0 14px;gap:12px}
+
+        /* FEATURED */
+        .gv2-featured{display:grid;grid-template-columns:2fr 1fr 1fr}
+
+        /* LATEST */
+        .gv2-latest{display:grid;grid-template-columns:repeat(5,1fr)}
+
+        /* STORIES */
+        .gv2-stories{display:grid;grid-template-columns:repeat(4,1fr)}
+
+        /* TUTORIAL */
+        .gv2-tutorials{display:grid;grid-template-columns:repeat(3,1fr)}
+
+        /* ARCHIVE */
+        .gv2-archive{display:grid;grid-template-columns:repeat(6,1fr)}
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+        @media(max-width:1100px){
+            .gv2-featured,
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive{grid-template-columns:repeat(3,1fr)}
         }
+
+        @media(max-width:700px){
+            .gv2-featured,
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive{grid-template-columns:repeat(2,1fr)}
+        }
+
+        @media(max-width:450px){
+            .gv2-featured,
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive{grid-template-columns:1fr}
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+        .gv2-card{
+            position:relative;overflow:hidden;
+            border-radius:12px;background:#000;
+        }
+
+        /* IMAGE */
+        .gv2-card img{
+            width:100%;aspect-ratio:9/16;
+            object-fit:cover;display:block;
+            transition:.35s ease;
+        }
+        .gv2-card:hover img{transform:scale(1.05)}
+
+        /* DARK BOTTOM READABILITY */
+        .gv2-card:after{
+            content:"";position:absolute;
+            left:0;right:0;bottom:0;height:45%;
+            background:linear-gradient(to top,rgba(0,0,0,.75),transparent);
+        }
+
+        /* =========================
+           TITLE CLEAN
+        ========================= */
+        .gv2-post-title{
+            position:absolute;left:10px;right:10px;bottom:10px;
+            margin:0;z-index:3;
+        }
+        .gv2-post-title a{
+            color:#000;text-decoration:none;
+            font-size:15px;font-weight:700;line-height:1.25;
+            text-shadow:0 2px 5px #fff,0 0 12px #fff;
+        }
+
+        /* =========================
+           SECTION COLORS MINIMAL
+        ========================= */
+        .gv2-featured-title h2{font-size:28px}
+        .gv2-ad{margin:35px 0;text-align:center}
     </style>
     
 {% include head.html %}
@@ -210,357 +257,51 @@
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
         </aside>
 
-
 <main class="gv2-area">
 
-<style>
-
-/* =========================
-   GV2 BASE
-========================= */
-
-.gv2-section {
-    margin:40px 0;
-}
-
-.gv2-title {
-    max-width:1400px;
-    margin:0 auto 14px;
-    padding:0 14px;
-}
-
-.gv2-title h2 {
-    margin:0;
-    font-size:22px;
-    font-weight:800;
-}
-
-
-/* =========================
-   GRID VARIANTS
-========================= */
-
-.gv2-grid {
-    max-width:1400px;
-    margin:auto;
-    padding:0 14px;
-    gap:12px;
-}
-
-
-/* FEATURED */
-.gv2-featured {
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr;
-}
-
-
-/* LATEST */
-.gv2-latest {
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-}
-
-
-/* STORIES */
-.gv2-stories {
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-}
-
-
-/* TUTORIAL */
-.gv2-tutorials {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-}
-
-
-/* ARCHIVE */
-.gv2-archive {
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-}
-
-
-
-/* =========================
- RESPONSIVE
-========================= */
-
-@media(max-width:1100px){
-
-.gv2-featured,
-.gv2-latest,
-.gv2-stories,
-.gv2-tutorials,
-.gv2-archive {
-grid-template-columns:repeat(3,1fr);
-}
-
-}
-
-
-@media(max-width:700px){
-
-.gv2-featured,
-.gv2-latest,
-.gv2-stories,
-.gv2-tutorials,
-.gv2-archive {
-grid-template-columns:repeat(2,1fr);
-}
-
-}
-
-
-@media(max-width:450px){
-
-.gv2-featured,
-.gv2-latest,
-.gv2-stories,
-.gv2-tutorials,
-.gv2-archive {
-grid-template-columns:1fr;
-}
-
-}
-
-
-
-/* =========================
- CARD
-========================= */
-
-.gv2-card {
-
-position:relative;
-overflow:hidden;
-
-border-radius:12px;
-
-background:#000;
-
-}
-
-
-
-/* IMAGE */
-
-.gv2-card img {
-
-width:100%;
-
-aspect-ratio:9/16;
-
-object-fit:cover;
-
-display:block;
-
-transition:.35s ease;
-
-}
-
-
-.gv2-card:hover img {
-
-transform:scale(1.05);
-
-}
-
-
-
-/* DARK BOTTOM READABILITY */
-
-.gv2-card:after {
-
-content:"";
-
-position:absolute;
-
-left:0;
-right:0;
-bottom:0;
-
-height:45%;
-
-background:
-linear-gradient(
-to top,
-rgba(0,0,0,.75),
-transparent
-);
-
-}
-
-
-
-/* =========================
- TITLE CLEAN
-========================= */
-
-.gv2-post-title {
-
-position:absolute;
-
-left:10px;
-right:10px;
-bottom:10px;
-
-margin:0;
-
-z-index:3;
-
-}
-
-
-.gv2-post-title a {
-
-color:#000;
-
-text-decoration:none;
-
-font-size:15px;
-
-font-weight:700;
-
-line-height:1.25;
-
-text-shadow:
-0 2px 5px #fff,
-0 0 12px #fff;
-
-}
-
-
-
-/* =========================
- SECTION COLORS MINIMAL
-========================= */
-
-.gv2-featured-title h2 {
-font-size:28px;
-}
-
-
-.gv2-ad {
-margin:35px 0;
-text-align:center;
-}
-
-
-
-</style>
-
-
-
 {% assign gv2_sections="featured,latest,stories,tutorials,archive"|split:"," %}
-
 {% assign gv2_names="Featured,Latest,Stories,Tutorials,Archive"|split:"," %}
-
 {% assign gv2_limits="8,15,12,9,18"|split:"," %}
-
-
 {% assign gv2_offset=0 %}
-
-
 
 {% for section in gv2_sections %}
 
-
 <section class="gv2-section">
 
-
 <div class="gv2-title {% if section=='featured' %}gv2-featured-title{% endif %}">
-
-<h2>
-{{gv2_names[forloop.index0]}}
-</h2>
-
+<h2>{{gv2_names[forloop.index0]}}</h2>
 </div>
-
-
 
 <div class="gv2-grid gv2-{{section}}">
 
-
-
 {% assign gv2_limit=gv2_limits[forloop.index0]|plus:0 %}
-
-
 
 {% for post in site.posts limit:gv2_limit offset:gv2_offset %}
 
-
-
 <article class="gv2-card">
-
-
 <a href="{{post.url}}">
-
-
 {% if post.image %}
-
-<img 
-src="{{post.image | relative_url}}"
-alt="{{post.title}}"
-loading="lazy">
-
+<img src="{{post.image | relative_url}}" alt="{{post.title}}" loading="lazy">
 {% endif %}
-
-
-
-<h3 class="gv2-post-title">
-
-{{post.title}}
-
-</h3>
-
-
+<h3 class="gv2-post-title">{{post.title}}</h3>
 </a>
-
-
 </article>
-
-
 
 {% endfor %}
 
-
-
 </div>
-
 
 </section>
 
-
-
-
 {% assign gv2_offset=gv2_offset | plus:gv2_limit %}
 
-
-
-
 {% unless forloop.last %}
-
-<div class="gv2-ad">
-
-{% include /ads/banner/01.html %}
-
-</div>
-
+<div class="gv2-ad">{% include /ads/banner/01.html %}</div>
 {% endunless %}
-
-
 
 {% endfor %}
 
-
-
 </main>
-
-
-
 
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">{% include /ads/banner/05.html %}</div>
@@ -569,9 +310,6 @@ loading="lazy">
     </div>
 
     <div class="ad-break">{% include /ads/banner/07.html %}</div>
-
-    
-
 
     <script>
     (function() {
@@ -586,27 +324,6 @@ loading="lazy">
         for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
         if(init.length<2)init=fullName.substring(0,3).toUpperCase();
         document.getElementById("domainAvatar").innerHTML = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\"><rect width=\"30\" height=\"30\" rx=\"15\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"15\" y=\"20\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-        
-        function redistribute() {
-            var grid = document.getElementById('masonryAll');
-            if(!grid)return;
-            if(window.innerWidth < 769)return;
-            var cols = grid.querySelectorAll('.masonry-column');
-            if(!cols.length)return;
-            var items = [];
-            cols.forEach(function(c){c.querySelectorAll('.masonry-item').forEach(function(i){items.push(i);});});
-            if(!items.length)return;
-            cols.forEach(function(c){c.innerHTML='';});
-            items.forEach(function(i){
-                var s=cols[0],sh=s.offsetHeight;
-                for(var j=1;j<cols.length;j++){if(cols[j].offsetHeight<sh){sh=cols[j].offsetHeight;s=cols[j];}}
-                s.appendChild(i);
-            });
-        }
-        window.addEventListener('load',function(){
-            setTimeout(redistribute,200);
-            setTimeout(redistribute,800);
-        });
     })();
     </script>
 
