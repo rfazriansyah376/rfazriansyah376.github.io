@@ -179,13 +179,21 @@
             overflow:hidden;
         }
         .gv2-card-title-link:active{color:#ff6b6b}
-
-        /* Class spo — TIDAK DISENTUH */
-        .spo{
-            font-size:10px;color:rgba(255,255,255,.65);
+        .gv2-card-desc{
+            margin:0;font-size:10px;color:rgba(255,255,255,.65);
             line-height:1.35;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
             overflow:hidden;
+        }
+        /* Biarkan konten deskripsi apa adanya */
+        .gv2-card-desc img,
+        .gv2-card-desc svg,
+        .gv2-card-desc iframe,
+        .gv2-card-desc script,
+        .gv2-card-desc style{display:none!important}
+        .gv2-card-desc *{
+            font-size:inherit!important;color:inherit!important;
+            margin:0!important;padding:0!important;
+            background:none!important;border:none!important;
         }
 
         .excerpt{display:none}
@@ -218,7 +226,7 @@
             .gv2-card-link img{aspect-ratio:9/16}
             .gv2-card-body{padding:12px 12px 14px}
             .gv2-card-title-link{font-size:14px}
-            .spo{font-size:11px}
+            .gv2-card-desc{font-size:11px}
         }
 
         /* ============================
@@ -402,7 +410,10 @@
                         </a>
                         <div class="gv2-card-body">
                             <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg }}
+                            </div>
                         </div>
                     </article>
                     {% endfor %}
@@ -435,7 +446,10 @@
                         </a>
                         <div class="gv2-card-body">
                             <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg }}
+                            </div>
                         </div>
                     </article>
                     {% endfor %}
@@ -465,7 +479,10 @@
                         </a>
                         <div class="gv2-card-body">
                             <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg }}
+                            </div>
                         </div>
                     </article>
                     {% endfor %}
@@ -495,7 +512,10 @@
                         </a>
                         <div class="gv2-card-body">
                             <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg }}
+                            </div>
                         </div>
                     </article>
                     {% endfor %}
@@ -525,7 +545,10 @@
                         </a>
                         <div class="gv2-card-body">
                             <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg }}
+                            </div>
                         </div>
                     </article>
                     {% endfor %}
