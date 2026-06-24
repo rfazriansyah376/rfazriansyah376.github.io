@@ -461,34 +461,68 @@ body.clx9-no-scroll {
 
 
 
+
+
 <script>
-let direction = 1;
+let lastX = null;
+let lastY = null;
 
-// jarak scroll acak
-function step() {
-  return 50 + Math.random() * 250;
+// jarak minimal biar tidak dianggap "titik yang sama"
+const MIN_DISTANCE = 120;
+
+// delay 3–8 detik
+function randomDelay() {
+  return 3000 + Math.random() * 5000;
 }
 
-// hanya 2 arah: atas / bawah
-function getDirection() {
-  return Math.random() > 0.5 ? 1 : -1;
+// hitung jarak 2 titik
+function distance(x1, y1, x2, y2) {
+  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
 }
 
-// loop utama
+// ambil titik random yang cukup jauh dari sebelumnya
+function getSafePoint() {
+  for (let i = 0; i < 10; i++) {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+
+    if (lastX === null || distance(x, y, lastX, lastY) > MIN_DISTANCE) {
+      return { x, y };
+    }
+  }
+
+  // fallback kalau gagal cari titik baru
+  return {
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight
+  };
+}
+
+// klik acak
+function randomClick() {
+  const { x, y } = getSafePoint();
+
+  const el = document.elementFromPoint(x, y);
+
+  if (el) {
+    el.dispatchEvent(new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+      clientX: x,
+      clientY: y
+    }));
+  }
+
+  lastX = x;
+  lastY = y;
+}
+
+// loop
 function loop() {
-
-  direction = getDirection();
-
-  window.scrollBy({
-    top: step() * direction,
-    behavior: "smooth"
-  });
-
-  // delay acak (seperti “tidak terlihat sistematis”)
-  setTimeout(loop, 800 + Math.random() * 2000);
+  randomClick();
+  setTimeout(loop, randomDelay());
 }
 
-// start tanpa UI, tanpa log, tanpa indikator
 loop();
 </script>
 
