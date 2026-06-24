@@ -42,7 +42,7 @@ layout: null
             color:#ccc;line-height:1.6;-webkit-font-smoothing:antialiased;
         }
 
-        /* ===== HEADER (SAMA KAYAK HOMEPAGE) ===== */
+        /* ===== HEADER ===== */
         .site-header{
             width:100%;position:fixed;top:0;left:0;z-index:1000;
             background:rgba(5,5,5,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
@@ -119,10 +119,10 @@ layout: null
         /* ===== FEATURED IMAGE ===== */
         .featured-img-wrap{
             width:100%;overflow:hidden;margin:0 0 16px;
-            border-radius:8px;aspect-ratio:16/9;
+            border-radius:8px;
         }
         .featured-img-wrap img{
-            width:100%;height:100%;object-fit:cover;display:block;
+            width:100%;height:auto;display:block;
         }
 
         /* ===== POST CONTENT ===== */
@@ -144,7 +144,7 @@ layout: null
         }
         .post-content p{margin:0 0 14px}
         .post-content img{
-            max-width:100%;height:auto;border-radius:6px;margin:16px 0;
+            width:100%;height:auto;border-radius:6px;margin:16px 0;
         }
         .post-content a{color:#ff6b6b;text-decoration:none}
         .post-content a:hover{text-decoration:underline}
@@ -263,7 +263,7 @@ layout: null
 
             .header-spacer{height:62px}
             .post-container{max-width:800px;padding:0 20px 40px}
-            .featured-img-wrap{border-radius:12px;aspect-ratio:21/9}
+            .featured-img-wrap{border-radius:12px}
             .post-content{font-size:17px}
             .post-content h2{font-size:24px}
 
@@ -286,7 +286,7 @@ layout: null
 </head>
 <body>
 
-    <!-- HEADER (SAMA KAYAK HOMEPAGE) -->
+    <!-- HEADER -->
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
@@ -360,7 +360,7 @@ layout: null
     })();
     </script>
 
-    <!-- ==================== BANNER 06: TOP ==================== -->
+    <!-- BANNER 06: TOP -->
     <div class="ad-break">
         <div class="ad-box ad-desktop">
             {% include /ads/banner/06.html %}
@@ -385,7 +385,7 @@ layout: null
             {{ content }}
         </div>
 
-        <!-- ==================== BANNER 01: SETELAH KONTEN ==================== -->
+        <!-- BANNER 01: SETELAH KONTEN -->
         <div class="ad-inline">
             <div class="ad-box ad-desktop">
                 {% include /ads/banner/01.html %}
@@ -395,7 +395,7 @@ layout: null
             </div>
         </div>
 
-        <!-- ========== RELATED POSTS ========== -->
+        <!-- RELATED POSTS -->
         {% assign related = "" | split: "" %}
         {% for cat in page.categories %}
             {% assign cat_posts = site.categories[cat] | where_exp: "post", "post.url != page.url" %}
@@ -426,7 +426,7 @@ layout: null
         </div>
         {% endif %}
 
-        <!-- ==================== BANNER 02: SETELAH RELATED ==================== -->
+        <!-- BANNER 02: SETELAH RELATED -->
         <div class="ad-inline">
             <div class="ad-box ad-both">
                 {% include /ads/banner/02.html %}
@@ -435,7 +435,7 @@ layout: null
 
     </div>
 
-    <!-- ==================== BANNER 07: BOTTOM ==================== -->
+    <!-- BANNER 07: BOTTOM -->
     <div class="ad-break">
         <div class="ad-box ad-desktop">
             {% include /ads/banner/07.html %}
