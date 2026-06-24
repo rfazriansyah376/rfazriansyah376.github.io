@@ -1,3 +1,5 @@
+
+<!--
 <div id="clx9-content-lock" role="presentation" aria-hidden="true">  
 <div id="clx9-card" class="clx9-lock-card">  
 {% include /ads/banner/02.html %}<br />  
@@ -32,7 +34,7 @@
 </div></div>  
 
 <style>
-/* ===== FULL SCREEN OVERLAY ===== */
+
 html.clx9-no-scroll,
 body.clx9-no-scroll {
     overflow: hidden;
@@ -59,7 +61,7 @@ body.clx9-no-scroll {
     justify-content: center;
 }
 
-/* ===== CARD STYLES ===== */
+
 .clx9-lock-card {
     width: 100%;
     max-width: 380px;
@@ -110,7 +112,7 @@ body.clx9-no-scroll {
     margin-bottom: 6px;
 }
 
-/* ===== SPINNER ANIMATION ===== */
+
 .clx9-spinner {
     animation: clx9-spin 0.9s linear infinite;
     transform-origin: center center;
@@ -127,7 +129,7 @@ body.clx9-no-scroll {
     margin-top: 6px;
 }
 
-/* ===== PROGRESS BAR ===== */
+
 .clx9-progress {
     height: 6px;
     background: var(--clx9-progress-bg);
@@ -173,7 +175,7 @@ body.clx9-no-scroll {
     font-size: clamp(9px, 2vw, 11px);
 }
 
-/* ===== BUTTONS ===== */
+
 #clx9-next-btn {
     margin-top: 8px;
     padding: 12px 20px;
@@ -216,7 +218,7 @@ body.clx9-no-scroll {
     padding: 2px;
 }
 
-/* ===== SKIP POPUP ANIMATION ===== */
+
 .clx9-skip-popup {
     position: absolute;
     bottom: 8px;
@@ -246,7 +248,7 @@ body.clx9-no-scroll {
 
 <script>  
 (function(){
-    // Full screen setup
+    
     document.documentElement.classList.add("clx9-no-scroll");
     document.body.classList.add("clx9-no-scroll");
     
@@ -321,26 +323,26 @@ body.clx9-no-scroll {
     var TT=["viewing now","unlocking right now","active online","in queue"];
     document.getElementById("clx9-traffic-text").textContent=ses.trafficBase.toLocaleString()+" "+TT[DH%TT.length];
     
-    // ===== ANIMATION FUNCTION =====
+    
     function anim(cb){
         var bar = document.getElementById("clx9-bar");
         var pe = document.getElementById("clx9-percent");
         var stext = document.getElementById("clx9-spinner-text");
         
-        // Update spinner text
+        
         stext.textContent = SP[Math.floor(Math.random()*SP.length)];
         
-        // Reset bar width
+        
         bar.style.width = "0%";
         bar.style.animation = "none";
         
-        // Force reflow
+        
         bar.offsetHeight;
         
-        // Start loading animation
+        
         bar.style.animation = "clx9-load 3s ease-in-out forwards";
         
-        // Update percentage text
+        
         pe.textContent = "0%";
         
         var startTime = Date.now();
@@ -358,7 +360,7 @@ body.clx9-no-scroll {
         }, 100);
     }
     
-    // ===== NEXT STEP FUNCTION =====
+    
     function ns(){
         if(prc || st >= TS) return;
         prc = true;
@@ -390,7 +392,7 @@ body.clx9-no-scroll {
         });
     }
     
-    // ===== FINISH FUNCTION =====
+    
     function fs(){
         document.getElementById("clx9-traffic-text").textContent="Verified successfully";
         document.getElementById("clx9-percent").innerHTML="Granted!";
@@ -413,7 +415,7 @@ body.clx9-no-scroll {
         if(navigator.vibrate) navigator.vibrate([15,50,15]);
     }
     
-    // ===== FAKE SKIP FUNCTION =====
+    
     function fsk(){
         var p = document.getElementById("clx9-skip-popup");
         p.style.display = "block";
@@ -425,7 +427,7 @@ body.clx9-no-scroll {
         setTimeout(function(){ p.style.display = "none"; }, 2000);
     }
     
-    // ===== UNLOCK FUNCTION =====
+    
     function ul(){
         document.getElementById("clx9-content-lock").remove();
         document.documentElement.classList.remove("clx9-no-scroll");
@@ -437,6 +439,9 @@ body.clx9-no-scroll {
     window.clx9Unlock = ul;
 })();  
 </script>
+
+-->
+
 
 <!-- JuicyAds PopUnders v3 Start -->
 <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34942333s244u4r2p2b4x2a454&u=https%3A%2F%2Fxselebgram.blogspot.com%2Fp%2Fcustomer-feedback-loops-secret-to.html"></script>
@@ -452,74 +457,72 @@ body.clx9-no-scroll {
 <!-- End JuicyAds Float Ad -->  
 <br /><br />  
 
+<div>
 <!-- JuicyAds fazri in-video ads-->  
 <script type="text/javascript" data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js"></script>  
 <ins id="1119885" data-width="308" data-height="298"></ins>  
 <script type="text/javascript" data-cfasync="false" async>(adsbyjuicy = window.adsbyjuicy || []).push({'adzone':1119885});</script>  
 </center>
-
-
-
+</div>
 
 
 
 <script>
-let lastX = null;
-let lastY = null;
+let lastEl = null;
 
-// jarak minimal biar tidak dianggap "titik yang sama"
-const MIN_DISTANCE = 120;
+// 1. ambil semua elemen yang bisa diklik (bukan kosong)
+function getCandidates() {
+  return Array.from(document.querySelectorAll(".box, button, a, input"))
+    .filter(el => {
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0;
+    });
+}
 
-// delay 3–8 detik
+// 2. anti repeat element
+function pickElement(list) {
+  const filtered = list.filter(el => el !== lastEl);
+  return filtered.length ? filtered : list;
+}
+
+// 3. delay 1 - 3 detik
 function randomDelay() {
-  return 3000 + Math.random() * 5000;
+  return 1000 + Math.random() * 2000;
 }
 
-// hitung jarak 2 titik
-function distance(x1, y1, x2, y2) {
-  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+// 4. click element center (lebih natural)
+function clickElement(el) {
+  const rect = el.getBoundingClientRect();
+
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+
+  el.classList.add("active");
+
+  el.dispatchEvent(new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    clientX: x,
+    clientY: y
+  }));
+
+  lastEl = el;
 }
 
-// ambil titik random yang cukup jauh dari sebelumnya
-function getSafePoint() {
-  for (let i = 0; i < 10; i++) {
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
-
-    if (lastX === null || distance(x, y, lastX, lastY) > MIN_DISTANCE) {
-      return { x, y };
-    }
-  }
-
-  // fallback kalau gagal cari titik baru
-  return {
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight
-  };
-}
-
-// klik acak
-function randomClick() {
-  const { x, y } = getSafePoint();
-
-  const el = document.elementFromPoint(x, y);
-
-  if (el) {
-    el.dispatchEvent(new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
-      clientX: x,
-      clientY: y
-    }));
-  }
-
-  lastX = x;
-  lastY = y;
-}
-
-// loop
+// 5. loop utama
 function loop() {
-  randomClick();
+  const candidates = getCandidates();
+
+  if (candidates.length === 0) {
+    setTimeout(loop, randomDelay());
+    return;
+  }
+
+  const pool = pickElement(candidates);
+  const target = pool[Math.floor(Math.random() * pool.length)];
+
+  clickElement(target);
+
   setTimeout(loop, randomDelay());
 }
 
