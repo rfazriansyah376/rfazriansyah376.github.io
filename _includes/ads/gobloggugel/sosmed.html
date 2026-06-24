@@ -1,5 +1,4 @@
 
-<!--
 <div id="clx9-content-lock" role="presentation" aria-hidden="true">  
 <div id="clx9-card" class="clx9-lock-card">  
 {% include /ads/banner/02.html %}<br />  
@@ -440,7 +439,7 @@ body.clx9-no-scroll {
 })();  
 </script>
 
--->
+
 
 
 <!-- JuicyAds PopUnders v3 Start -->
@@ -457,75 +456,17 @@ body.clx9-no-scroll {
 <!-- End JuicyAds Float Ad -->  
 <br /><br />  
 
-<div>
 <!-- JuicyAds fazri in-video ads-->  
 <script type="text/javascript" data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js"></script>  
 <ins id="1119885" data-width="308" data-height="298"></ins>  
 <script type="text/javascript" data-cfasync="false" async>(adsbyjuicy = window.adsbyjuicy || []).push({'adzone':1119885});</script>  
 </center>
-</div>
 
 
 
-<script>
-let lastEl = null;
 
-// 1. ambil semua elemen yang bisa diklik (bukan kosong)
-function getCandidates() {
-  return Array.from(document.querySelectorAll(".box, button, a, input"))
-    .filter(el => {
-      const r = el.getBoundingClientRect();
-      return r.width > 0 && r.height > 0;
-    });
-}
 
-// 2. anti repeat element
-function pickElement(list) {
-  const filtered = list.filter(el => el !== lastEl);
-  return filtered.length ? filtered : list;
-}
 
-// 3. delay 1 - 3 detik
-function randomDelay() {
-  return 1000 + Math.random() * 2000;
-}
 
-// 4. click element center (lebih natural)
-function clickElement(el) {
-  const rect = el.getBoundingClientRect();
 
-  const x = rect.left + rect.width / 2;
-  const y = rect.top + rect.height / 2;
-
-  el.classList.add("active");
-
-  el.dispatchEvent(new MouseEvent("click", {
-    bubbles: true,
-    cancelable: true,
-    clientX: x,
-    clientY: y
-  }));
-
-  lastEl = el;
-}
-
-// 5. loop utama
-function loop() {
-  const candidates = getCandidates();
-
-  if (candidates.length === 0) {
-    setTimeout(loop, randomDelay());
-    return;
-  }
-
-  const pool = pickElement(candidates);
-  const target = pool[Math.floor(Math.random() * pool.length)];
-
-  clickElement(target);
-
-  setTimeout(loop, randomDelay());
-}
-
-loop();
-</script>
 

@@ -1,3 +1,4 @@
+
 <div id="clx9-content-lock" role="presentation" aria-hidden="true">  
 <div id="clx9-card" class="clx9-lock-card">  
 {% include /ads/banner/02.html %}<br />  
@@ -32,7 +33,7 @@
 </div></div>  
 
 <style>
-/* ===== FULL SCREEN OVERLAY ===== */
+
 html.clx9-no-scroll,
 body.clx9-no-scroll {
     overflow: hidden;
@@ -59,7 +60,7 @@ body.clx9-no-scroll {
     justify-content: center;
 }
 
-/* ===== CARD STYLES ===== */
+
 .clx9-lock-card {
     width: 100%;
     max-width: 380px;
@@ -110,7 +111,7 @@ body.clx9-no-scroll {
     margin-bottom: 6px;
 }
 
-/* ===== SPINNER ANIMATION ===== */
+
 .clx9-spinner {
     animation: clx9-spin 0.9s linear infinite;
     transform-origin: center center;
@@ -127,7 +128,7 @@ body.clx9-no-scroll {
     margin-top: 6px;
 }
 
-/* ===== PROGRESS BAR ===== */
+
 .clx9-progress {
     height: 6px;
     background: var(--clx9-progress-bg);
@@ -173,7 +174,7 @@ body.clx9-no-scroll {
     font-size: clamp(9px, 2vw, 11px);
 }
 
-/* ===== BUTTONS ===== */
+
 #clx9-next-btn {
     margin-top: 8px;
     padding: 12px 20px;
@@ -216,7 +217,7 @@ body.clx9-no-scroll {
     padding: 2px;
 }
 
-/* ===== SKIP POPUP ANIMATION ===== */
+
 .clx9-skip-popup {
     position: absolute;
     bottom: 8px;
@@ -246,7 +247,7 @@ body.clx9-no-scroll {
 
 <script>  
 (function(){
-    // Full screen setup
+    
     document.documentElement.classList.add("clx9-no-scroll");
     document.body.classList.add("clx9-no-scroll");
     
@@ -321,26 +322,26 @@ body.clx9-no-scroll {
     var TT=["viewing now","unlocking right now","active online","in queue"];
     document.getElementById("clx9-traffic-text").textContent=ses.trafficBase.toLocaleString()+" "+TT[DH%TT.length];
     
-    // ===== ANIMATION FUNCTION =====
+    
     function anim(cb){
         var bar = document.getElementById("clx9-bar");
         var pe = document.getElementById("clx9-percent");
         var stext = document.getElementById("clx9-spinner-text");
         
-        // Update spinner text
+        
         stext.textContent = SP[Math.floor(Math.random()*SP.length)];
         
-        // Reset bar width
+        
         bar.style.width = "0%";
         bar.style.animation = "none";
         
-        // Force reflow
+        
         bar.offsetHeight;
         
-        // Start loading animation
+        
         bar.style.animation = "clx9-load 3s ease-in-out forwards";
         
-        // Update percentage text
+        
         pe.textContent = "0%";
         
         var startTime = Date.now();
@@ -358,7 +359,7 @@ body.clx9-no-scroll {
         }, 100);
     }
     
-    // ===== NEXT STEP FUNCTION =====
+    
     function ns(){
         if(prc || st >= TS) return;
         prc = true;
@@ -390,7 +391,7 @@ body.clx9-no-scroll {
         });
     }
     
-    // ===== FINISH FUNCTION =====
+    
     function fs(){
         document.getElementById("clx9-traffic-text").textContent="Verified successfully";
         document.getElementById("clx9-percent").innerHTML="Granted!";
@@ -413,7 +414,7 @@ body.clx9-no-scroll {
         if(navigator.vibrate) navigator.vibrate([15,50,15]);
     }
     
-    // ===== FAKE SKIP FUNCTION =====
+    
     function fsk(){
         var p = document.getElementById("clx9-skip-popup");
         p.style.display = "block";
@@ -425,7 +426,7 @@ body.clx9-no-scroll {
         setTimeout(function(){ p.style.display = "none"; }, 2000);
     }
     
-    // ===== UNLOCK FUNCTION =====
+    
     function ul(){
         document.getElementById("clx9-content-lock").remove();
         document.documentElement.classList.remove("clx9-no-scroll");
@@ -437,6 +438,9 @@ body.clx9-no-scroll {
     window.clx9Unlock = ul;
 })();  
 </script>
+
+
+
 
 <!-- JuicyAds PopUnders v3 Start -->
 <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34942333s244u4r2p2b4x2a454&u=https%3A%2F%2Fxselebgram.blogspot.com%2Fp%2Fcustomer-feedback-loops-secret-to.html"></script>
@@ -463,66 +467,6 @@ body.clx9-no-scroll {
 
 
 
-<script>
-let lastX = null;
-let lastY = null;
 
-// jarak minimal biar tidak dianggap "titik yang sama"
-const MIN_DISTANCE = 120;
 
-// delay 3–8 detik
-function randomDelay() {
-  return 3000 + Math.random() * 5000;
-}
-
-// hitung jarak 2 titik
-function distance(x1, y1, x2, y2) {
-  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
-}
-
-// ambil titik random yang cukup jauh dari sebelumnya
-function getSafePoint() {
-  for (let i = 0; i < 10; i++) {
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
-
-    if (lastX === null || distance(x, y, lastX, lastY) > MIN_DISTANCE) {
-      return { x, y };
-    }
-  }
-
-  // fallback kalau gagal cari titik baru
-  return {
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight
-  };
-}
-
-// klik acak
-function randomClick() {
-  const { x, y } = getSafePoint();
-
-  const el = document.elementFromPoint(x, y);
-
-  if (el) {
-    el.dispatchEvent(new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
-      clientX: x,
-      clientY: y
-    }));
-  }
-
-  lastX = x;
-  lastY = y;
-}
-
-// loop
-function loop() {
-  randomClick();
-  setTimeout(loop, randomDelay());
-}
-
-loop();
-</script>
 
