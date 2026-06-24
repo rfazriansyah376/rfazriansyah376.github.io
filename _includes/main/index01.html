@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -152,19 +152,41 @@
             grid-column:auto;grid-row:auto;
         }
 
+        /* Card */
         .gv2-card{
             position:relative;overflow:hidden;border-radius:0;background:#0a0a0a;
             -webkit-tap-highlight-color:transparent;
         }
-        .gv2-card a{display:block;width:100%;height:100%}
-        .gv2-card img{
+        .gv2-card-link{
+            display:block;width:100%;
+        }
+        .gv2-card-link img{
             width:100%;height:100%;object-fit:cover;display:block;
             transition:transform .3s ease;aspect-ratio:16/9;
         }
-        .gv2-card:active img{transform:scale(1.02)}
-        .gv2-card:active{opacity:.9}
+        .gv2-card-link:active img{transform:scale(1.02)}
 
-        
+        /* Card body (di luar link) */
+        .gv2-card-body{
+            padding:10px 10px 12px;
+            background:linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(10,10,10,1) 100%);
+            z-index:2;
+        }
+        .gv2-card-title-link{
+            color:#fff;text-decoration:none;display:block;
+            margin:0 0 3px;font-size:13px;font-weight:700;line-height:1.25;
+            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+            overflow:hidden;
+        }
+        .gv2-card-title-link:active{color:#ff6b6b}
+        .gv2-card-desc{
+            margin:0;font-size:10px;color:rgba(255,255,255,.65);
+            line-height:1.35;
+            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+            overflow:hidden;
+        }
+
+        .excerpt{display:none}
 
         /* ============================
            TABLET (min-width:600px)
@@ -191,7 +213,10 @@
             .gv2-archive{grid-template-columns:1fr 1fr;gap:6px}
 
             .gv2-card{border-radius:6px}
-            .gv2-card img{aspect-ratio:9/16}
+            .gv2-card-link img{aspect-ratio:9/16}
+            .gv2-card-body{padding:12px 12px 14px}
+            .gv2-card-title-link{font-size:14px}
+            .gv2-card-desc{font-size:11px}
         }
 
         /* ============================
@@ -228,9 +253,9 @@
             .gv2-featured-big{
                 grid-column:1 / 2;grid-row:1 / 3;
             }
-            .gv2-featured-big img{aspect-ratio:auto;height:100%}
+            .gv2-featured-big .gv2-card-link img{aspect-ratio:auto;height:100%}
             .gv2-featured-small{grid-column:auto;grid-row:auto}
-            .gv2-featured-small img{aspect-ratio:9/16}
+            .gv2-featured-small .gv2-card-link img{aspect-ratio:9/16}
 
             .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
             .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
@@ -238,7 +263,8 @@
             .gv2-archive{grid-template-columns:repeat(6,1fr);gap:10px}
 
             .gv2-card{border-radius:12px}
-            .gv2-card:hover img{transform:scale(1.05)}
+            .gv2-card:hover .gv2-card-link img{transform:scale(1.05)}
+            .gv2-card-title-link:hover{color:#ff6b6b;text-decoration:underline}
 
             /* Desktop nav: muncul */
             .desktop-nav{
@@ -336,7 +362,7 @@
         </div>
     </div>
 
-    <!-- DESKTOP NAV (hanya muncul ≥900px) -->
+    <!-- DESKTOP NAV -->
     <nav class="desktop-nav">
         <a href="/">Home</a>
         <a href="/contact/">Contact</a>
@@ -365,46 +391,22 @@
                     <h2>🔥 Featured</h2>
                 </div>
                 <div class="gv2-grid gv2-featured">
-                    <article class="gv2-card gv2-featured-big">
-                        <a href="{{ featured_posts[0].url }}">
-                            {% if featured_posts[0].image %}
-                                <img src="{{ featured_posts[0].image | relative_url }}" alt="{{ featured_posts[0].title }}" loading="lazy">
+                    {% for post in featured_posts %}
+                    <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}
+                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                             {% endif %}
                         </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
-                    <article class="gv2-card gv2-featured-small">
-                        <a href="{{ featured_posts[1].url }}">
-                            {% if featured_posts[1].image %}
-                                <img src="{{ featured_posts[1].image | relative_url }}" alt="{{ featured_posts[1].title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
-                    <article class="gv2-card gv2-featured-small">
-                        <a href="{{ featured_posts[2].url }}">
-                            {% if featured_posts[2].image %}
-                                <img src="{{ featured_posts[2].image | relative_url }}" alt="{{ featured_posts[2].title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
-                    <article class="gv2-card gv2-featured-small">
-                        <a href="{{ featured_posts[3].url }}">
-                            {% if featured_posts[3].image %}
-                                <img src="{{ featured_posts[3].image | relative_url }}" alt="{{ featured_posts[3].title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
-                    <article class="gv2-card gv2-featured-small">
-                        <a href="{{ featured_posts[4].url }}">
-                            {% if featured_posts[4].image %}
-                                <img src="{{ featured_posts[4].image | relative_url }}" alt="{{ featured_posts[4].title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg | strip_html | truncate: 60 }}
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
                 </div>
             </section>
             {% endif %}
@@ -427,13 +429,19 @@
                 <div class="gv2-grid gv2-latest">
                     {% for post in latest_posts %}
                     <article class="gv2-card">
-                        <a href="{{ post.url }}">
+                        <a href="{{ post.url }}" class="gv2-card-link">
                             {% if post.image %}
                                 <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                             {% endif %}
                         </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg | strip_html | truncate: 40 }}
+                            </div>
+                        </div>
+                    </article>
                     {% endfor %}
                 </div>
             </section>
@@ -454,13 +462,19 @@
                 <div class="gv2-grid gv2-stories">
                     {% for post in stories_posts %}
                     <article class="gv2-card">
-                        <a href="{{ post.url }}">
+                        <a href="{{ post.url }}" class="gv2-card-link">
                             {% if post.image %}
                                 <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                             {% endif %}
                         </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg | strip_html | truncate: 40 }}
+                            </div>
+                        </div>
+                    </article>
                     {% endfor %}
                 </div>
             </section>
@@ -474,20 +488,26 @@
             </div>
 
             <!-- ========== POPULAR ========== -->
-            {% assign popular_posts = site.posts | slice: 23, 15 %}
+            {% assign popular_posts = site.posts | slice: 23, 10 %}
             {% if popular_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>🔥 Popular</h2></div>
                 <div class="gv2-grid gv2-tutorials">
                     {% for post in popular_posts %}
                     <article class="gv2-card">
-                        <a href="{{ post.url }}">
+                        <a href="{{ post.url }}" class="gv2-card-link">
                             {% if post.image %}
                                 <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                             {% endif %}
                         </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg | strip_html | truncate: 40 }}
+                            </div>
+                        </div>
+                    </article>
                     {% endfor %}
                 </div>
             </section>
@@ -501,20 +521,26 @@
             </div>
 
             <!-- ========== ARCHIVE ========== -->
-            {% assign archive_posts = site.posts | slice: 38, 12 %}
+            {% assign archive_posts = site.posts | slice: 33, 10 %}
             {% if archive_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>📁 Archive</h2></div>
                 <div class="gv2-grid gv2-archive">
                     {% for post in archive_posts %}
                     <article class="gv2-card">
-                        <a href="{{ post.url }}">
+                        <a href="{{ post.url }}" class="gv2-card-link">
                             {% if post.image %}
                                 <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                             {% endif %}
                         </a>
-                                        </article> {% assign before_svg = post.content | split: '<p>' | first %}<div class="spo">{{ before_svg }}</div>
-                    
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">
+                                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg | strip_html | truncate: 40 }}
+                            </div>
+                        </div>
+                    </article>
                     {% endfor %}
                 </div>
             </section>
