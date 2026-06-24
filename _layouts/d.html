@@ -85,6 +85,9 @@ layout: null
         }
         .slide-menu a:active{background:#2a2a2a;color:#fff}
 
+        /* ===== DESKTOP NAV (hidden di mobile) ===== */
+        .desktop-nav{display:none}
+
         /* ===== AD CONTAINER ===== */
         .ad-box{
             display:flex;justify-content:center;align-items:center;
@@ -285,6 +288,16 @@ layout: null
                 transform:translateY(-2px);
                 background:rgba(255,255,255,.06);
             }
+
+            /* Desktop nav: muncul */
+            .desktop-nav{
+                display:flex;gap:4px;padding:0 14px;max-width:1280px;margin:0 auto 8px;
+            }
+            .desktop-nav a{
+                padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
+                border-radius:6px;transition:all .15s ease;
+            }
+            .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
         }
 
         @media(min-width:1100px){
@@ -316,7 +329,7 @@ layout: null
         </div>
     </header>
 
-    <!-- SLIDE MENU -->
+    <!-- SLIDE MENU (MOBILE) -->
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
             <li><a href="/">🏠 Home</a></li>
@@ -384,6 +397,14 @@ layout: null
             {% include /ads/banner/04.html %}
         </div>
     </div>
+
+    <!-- DESKTOP NAV -->
+    <nav class="desktop-nav">
+        <a href="/">Home</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms-and-conditions/">Terms & Conditions</a>
+    </nav>
 
     <!-- MAIN LAYOUT DENGAN SIDEBAR -->
     <div class="main-layout">
