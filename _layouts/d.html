@@ -50,7 +50,7 @@ layout: null
             padding:12px 12px;
         }
         .header-inner{
-            display:flex;align-items:center;gap:10px;max-width:1000px;margin:0 auto;
+            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
         }
         .site-avatar{flex-shrink:0;line-height:0}
         .site-avatar svg{width:34px;height:34px}
@@ -101,6 +101,7 @@ layout: null
             border-top:1px solid rgba(255,255,255,.04);
             border-bottom:1px solid rgba(255,255,255,.04);
         }
+        .ad-break:first-child{margin-top:58px}
         .ad-inline{
             margin:24px 0;padding:12px 0;
             background:#080808;
@@ -108,8 +109,14 @@ layout: null
             border-bottom:1px solid rgba(255,255,255,.03);
         }
 
-        /* ===== SPACER ===== */
-        .header-spacer{height:58px}
+        /* ===== MAIN LAYOUT (dengan sidebar) ===== */
+        .main-layout{
+            display:flex;flex-direction:column;gap:0;width:100%;max-width:1280px;
+            margin:0 auto;padding:0;
+        }
+        .content-area{flex:1;min-width:0;padding:0;width:100%}
+        .sidebar{display:none}
+        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
         /* ===== POST CONTAINER ===== */
         .post-container{
@@ -235,6 +242,7 @@ layout: null
 
             .site-header{padding:12px 16px}
             .post-title-header{font-size:17px}
+            .ad-break:first-child{margin-top:60px}
             .post-container{padding:0 16px 32px}
             .featured-img-wrap{border-radius:10px}
             .post-content{font-size:16px}
@@ -256,13 +264,18 @@ layout: null
                 left:50%;transform:translateX(-50%);max-width:1280px;
                 padding:12px 20px;
             }
-            .header-inner{max-width:1000px}
             .post-title-header{font-size:15px;font-weight:600;color:#ccc}
             .menu-btn{display:none}
             .slide-menu{display:none!important}
+            .ad-break:first-child{margin-top:62px}
 
-            .header-spacer{height:62px}
-            .post-container{max-width:800px;padding:0 20px 40px}
+            /* Sidebar muncul */
+            .main-layout{flex-direction:row;padding:0 8px}
+            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
+            .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
+            .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
+
+            .post-container{max-width:700px;padding:0 14px 40px}
             .featured-img-wrap{border-radius:12px}
             .post-content{font-size:17px}
             .post-content h2{font-size:24px}
@@ -275,7 +288,9 @@ layout: null
         }
 
         @media(min-width:1100px){
-            .post-container{max-width:850px}
+            .sidebar-left{width:180px}
+            .sidebar-right{width:180px}
+            .post-container{max-width:750px}
             .related-grid{grid-template-columns:repeat(4,1fr)}
         }
     </style>
@@ -370,68 +385,89 @@ layout: null
         </div>
     </div>
 
-    <div class="header-spacer"></div>
+    <!-- MAIN LAYOUT DENGAN SIDEBAR -->
+    <div class="main-layout">
 
-    <!-- POST CONTENT -->
-    <div class="post-container">
-
-        {% if page.image %}
-        <div class="featured-img-wrap">
-            <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
-        </div>
-        {% endif %}
-
-        <div class="post-content">
-            {{ content }}
-        </div>
-
-        <!-- BANNER 01: SETELAH KONTEN -->
-        <div class="ad-inline">
-            <div class="ad-box ad-desktop">
-                {% include /ads/banner/01.html %}
+        <!-- LEFT SIDEBAR: Banner 05 -->
+        <aside class="sidebar sidebar-left">
+            <div class="sticky-ad">
+                {% include /ads/banner/05.html %}
             </div>
-            <div class="ad-box ad-mobile">
-                {% include /ads/banner/04.html %}
-            </div>
-        </div>
+        </aside>
 
-        <!-- RELATED POSTS -->
-        {% assign related = "" | split: "" %}
-        {% for cat in page.categories %}
-            {% assign cat_posts = site.categories[cat] | where_exp: "post", "post.url != page.url" %}
-            {% assign related = related | concat: cat_posts %}
-        {% endfor %}
-        {% assign related = related | uniq %}
+        <!-- MAIN CONTENT -->
+        <main class="content-area">
 
-        {% if related.size > 0 %}
-        <div class="related-section">
-            <h3>📖 Related Posts</h3>
-            <div class="related-grid">
-                {% for post in related limit:8 %}
-                <a href="{{ post.url }}" class="related-card">
-                    {% if post.image %}
-                    <div class="related-card-img">
-                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+            <div class="post-container">
+
+                {% if page.image %}
+                <div class="featured-img-wrap">
+                    <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+                </div>
+                {% endif %}
+
+                <div class="post-content">
+                    {{ content }}
+                </div>
+
+                <!-- BANNER 01: SETELAH KONTEN -->
+                <div class="ad-inline">
+                    <div class="ad-box ad-desktop">
+                        {% include /ads/banner/01.html %}
                     </div>
-                    {% endif %}
-                    <div class="related-card-body">
-                        <h4>{{ post.title }}</h4>
-                        {% if post.description %}
-                        <p>{{ post.description | truncate: 60 }}</p>
-                        {% endif %}
+                    <div class="ad-box ad-mobile">
+                        {% include /ads/banner/04.html %}
                     </div>
-                </a>
+                </div>
+
+                <!-- RELATED POSTS -->
+                {% assign related = "" | split: "" %}
+                {% for cat in page.categories %}
+                    {% assign cat_posts = site.categories[cat] | where_exp: "post", "post.url != page.url" %}
+                    {% assign related = related | concat: cat_posts %}
                 {% endfor %}
-            </div>
-        </div>
-        {% endif %}
+                {% assign related = related | uniq %}
 
-        <!-- BANNER 02: SETELAH RELATED -->
-        <div class="ad-inline">
-            <div class="ad-box ad-both">
-                {% include /ads/banner/02.html %}
+                {% if related.size > 0 %}
+                <div class="related-section">
+                    <h3>📖 Related Posts</h3>
+                    <div class="related-grid">
+                        {% for post in related limit:8 %}
+                        <a href="{{ post.url }}" class="related-card">
+                            {% if post.image %}
+                            <div class="related-card-img">
+                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            </div>
+                            {% endif %}
+                            <div class="related-card-body">
+                                <h4>{{ post.title }}</h4>
+                                {% if post.description %}
+                                <p>{{ post.description | truncate: 60 }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- BANNER 02: SETELAH RELATED -->
+                <div class="ad-inline">
+                    <div class="ad-box ad-both">
+                        {% include /ads/banner/02.html %}
+                    </div>
+                </div>
+
             </div>
-        </div>
+
+        </main>
+
+        <!-- RIGHT SIDEBAR: Banner 05 -->
+        <aside class="sidebar sidebar-right">
+            <div class="sticky-ad">
+                {% include /ads/banner/05.html %}
+            </div>
+        </aside>
 
     </div>
 
