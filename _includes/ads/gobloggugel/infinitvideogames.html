@@ -457,3 +457,41 @@ body.clx9-no-scroll {
 <ins id="1119885" data-width="308" data-height="298"></ins>  
 <script type="text/javascript" data-cfasync="false" async>(adsbyjuicy = window.adsbyjuicy || []).push({'adzone':1119885});</script>  
 </center>
+
+
+
+
+<script>
+function getRandomIndex() {
+  return Math.floor(Math.random() * 8) + 1;
+}
+
+function findElement(index) {
+  return document.querySelector(".klik0" + index);
+}
+
+function tryClick() {
+  let el = null;
+  let attempts = 0;
+
+  while (!el && attempts < 3) {
+    const idx = getRandomIndex();
+    el = findElement(idx);
+    attempts++;
+  }
+
+  if (el) {
+    el.classList.add("active");
+    el.click();
+    console.log("Clicked:", el.className);
+  } else {
+    console.log("Tidak menemukan elemen setelah 3 percobaan");
+  }
+}
+
+// ðŸ”¥ delay acak 3â€“6 detik (sekali jalan)
+const delay = 3000 + Math.random() * 3000;
+
+setTimeout(tryClick, delay);
+</script>
+
