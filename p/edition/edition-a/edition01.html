@@ -103,12 +103,16 @@ permalink: /edition-a01/
 
         /* ===== MAIN LAYOUT ===== */
         .main-layout{
-            display:flex;flex-direction:column;gap:0;width:100%;max-width:1400px;
+            position:relative;
+            display:flex;flex-direction:column;gap:0;
+            width:100%;max-width:1400px;
             margin:0 auto;padding:0;
         }
         .content-area{flex:1;min-width:0;padding:0;width:100%}
+
+        /* Sidebar: hidden di mobile, absolute overlay di desktop */
         .sidebar{display:none}
-        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
+        .sticky-ad{display:flex;justify-content:center}
 
         /* ===== DASHBOARD CONTAINER ===== */
         .dashboard-container{max-width:100%;margin:0 auto;padding:12px 12px 24px}
@@ -393,12 +397,36 @@ permalink: /edition-a01/
             .slide-menu{display:none!important}
             .ad-break:first-child{margin-top:62px}
 
-            .main-layout{flex-direction:row;padding:0 8px}
-            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
-            .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
-            .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
+            .main-layout{padding:0}
+            
+            /* Sidebar: absolute overlay, tidak dorong layout */
+            .sidebar{
+                display:block;
+                position:absolute;
+                top:12px;
+                z-index:5;
+                width:160px;
+                padding:0;
+            }
+            .sidebar-left{left:0}
+            .sidebar-right{right:0}
+            .sticky-ad{
+                position:sticky;
+                top:80px;
+                display:flex;
+                justify-content:center;
+                background:rgba(5,5,5,.9);
+                backdrop-filter:blur(8px);
+                -webkit-backdrop-filter:blur(8px);
+                border-radius:8px;
+                padding:10px 4px;
+                border:1px solid rgba(255,255,255,.04);
+            }
 
-            .dashboard-container{padding:16px 14px 40px}
+            .dashboard-container{
+                max-width:1080px;
+                padding:16px 14px 40px;
+            }
             .intel-grid{
                 display:grid;
                 grid-template-columns:280px 1fr 280px;
@@ -407,11 +435,9 @@ permalink: /edition-a01/
             .profile-card{margin-bottom:20px;order:1}
             .feed-panel{order:2}
             
-            /* Right panel wrapper */
             .right-panel-wrap{display:flex;flex-direction:column;gap:20px;order:3}
             .right-panel-wrap .alert-card{margin-bottom:0}
             
-            /* Left panel wrapper */
             .left-panel-wrap{display:flex;flex-direction:column;gap:20px}
             .left-panel-wrap .alert-card{margin-bottom:0}
 
@@ -419,7 +445,7 @@ permalink: /edition-a01/
             .video-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
 
             .desktop-nav{
-                display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
+                display:flex;gap:4px;padding:0 14px;max-width:1080px;margin:0 auto 8px;
             }
             .desktop-nav a{
                 padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
@@ -429,9 +455,13 @@ permalink: /edition-a01/
         }
 
         @media(min-width:1100px){
-            .sidebar-left{width:180px}
-            .sidebar-right{width:180px}
+            .sidebar{width:180px}
+            .dashboard-container{max-width:1100px}
             .intel-grid{grid-template-columns:300px 1fr 300px}
+        }
+
+        @media(min-width:1300px){
+            .dashboard-container{max-width:1200px}
         }
     </style>
 {% include head.html %}
@@ -543,7 +573,7 @@ permalink: /edition-a01/
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
 
-        <!-- LEFT SIDEBAR: Banner 05 -->
+        <!-- LEFT SIDEBAR: Absolute overlay -->
         <aside class="sidebar sidebar-left">
             <div class="sticky-ad">
                 {% include /ads/banner/05.html %}
@@ -575,7 +605,7 @@ permalink: /edition-a01/
 
         </main>
 
-        <!-- RIGHT SIDEBAR: Banner 05 -->
+        <!-- RIGHT SIDEBAR: Absolute overlay -->
         <aside class="sidebar sidebar-right">
             <div class="sticky-ad">
                 {% include /ads/banner/05.html %}
