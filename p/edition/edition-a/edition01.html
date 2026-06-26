@@ -7,921 +7,562 @@ permalink: /edition-a01/
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="referrer" content="always">
     <title id="dynamic-title">Digital Intelligence Dashboard</title>
     <meta id="dynamic-description" name="description" content="Complete digital intelligence and monitoring dashboard. Real-time data aggregation.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a02/">
-    
     <style>
-        /* ===== RESET & BASE ===== */
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:#050505}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:#e1e4e8;line-height:1.5;-webkit-font-smoothing:antialiased;
+        :root {
+            --primary: #ff4444;
+            --primary-rgb: 255, 68, 68;
+            --primary-light: #ff8844;
+            --primary-dark: #cc0000;
         }
-
-        /* ===== CSS VARIABLES ===== */
-        :root{
-            --primary:#ff4444;
-            --primary-rgb:255,68,68;
-            --primary-light:#ff8844;
-            --primary-dark:#cc0000;
-        }
-
-        /* ===== HEADER ===== */
-        .site-header{
-            width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(255,255,255,.08);
-            padding:12px 12px;
-        }
-        .header-inner{
-            display:flex;align-items:center;gap:10px;max-width:1400px;margin:0 auto;
-        }
-        .site-avatar{flex-shrink:0;line-height:0}
-        .site-avatar svg{width:34px;height:34px}
-        .header-text{flex:1;min-width:0}
-        .page-title-header{
-            font-size:16px;font-weight:700;color:#fff;white-space:nowrap;
-            overflow:hidden;text-overflow:ellipsis;line-height:1.2;
-        }
-        .domain-sub{
-            font-size:11px;color:rgba(255,255,255,.5);line-height:1.2;margin-top:1px;
-        }
-        .menu-btn{
-            width:42px;height:42px;flex-shrink:0;
-            background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
-            border-radius:50%;transition:all .2s ease;
-        }
-        .menu-btn:active{background:rgba(255,255,255,.12);transform:scale(.95)}
-        .menu-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
-
-        .slide-menu{
-            display:none;position:fixed;top:58px;right:8px;z-index:999;
-            background:#1a1a1a;border:1px solid #333;border-radius:14px;padding:6px;
-            min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.6);
-        }
-        .slide-menu.open{display:block}
-        .slide-menu ul{list-style:none;margin:0;padding:0}
-        .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
-        .slide-menu a{
-            display:flex;align-items:center;gap:8px;padding:13px 16px;
-            color:#ccc;text-decoration:none;font-size:15px;font-weight:500;
-            border-radius:10px;transition:all .15s ease;
-        }
-        .slide-menu a:active{background:#2a2a2a;color:#fff}
-        .slide-menu a svg{width:16px;height:16px;flex-shrink:0}
-
-        /* ===== DESKTOP NAV ===== */
-        .desktop-nav{display:none}
-
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#080808;min-height:50px;
-        }
-        .ad-box ins{max-width:100%}
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-
-        .ad-break{
-            padding:12px 0;background:#080808;
-            border-top:1px solid rgba(255,255,255,.04);
-            border-bottom:1px solid rgba(255,255,255,.04);
-        }
-        .ad-break:first-child{margin-top:58px}
-        .ad-inline{
-            margin:24px 0;padding:12px 0;max-width:100%;overflow:hidden;
-            background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
-        }
-
-        /* ===== DASHBOARD CONTAINER ===== */
-        .dashboard-container{
-            max-width:1400px;margin:0 auto;padding:12px 8px 24px;
-            width:100%;overflow-x:hidden;
-        }
-
-        /* ===== MONITOR HEADER ===== */
-        .monitor-header{
-            background:#0f1117;border:1px solid #1f2329;border-radius:16px;
-            padding:20px 16px;margin-bottom:24px;
-        }
-        .header-top{
-            display:flex;justify-content:space-between;align-items:center;
-            flex-wrap:wrap;gap:12px;margin-bottom:16px;
-        }
-        .logo-area{display:flex;align-items:center;gap:10px}
-        .logo-icon{
-            width:40px;height:40px;background:var(--primary);border-radius:10px;
-            display:flex;align-items:center;justify-content:center;
-            font-weight:800;font-size:18px;color:#fff;
-        }
-        .logo-text{font-size:1.1rem;font-weight:700;letter-spacing:-0.5px;color:#fff}
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0a0c10;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e1e4e8}
+        
+        .dashboard-container{max-width:1400px;margin:0 auto;padding:20px}
+        
+        .monitor-header{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px 24px;margin-bottom:24px}
+        .header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+        .logo-area{display:flex;align-items:center;gap:12px}
+        .logo-icon{font-size:24px}
+        .logo-text{font-size:1.2rem;font-weight:700;letter-spacing:-0.5px}
         .logo-text span{color:var(--primary)}
-        .status-badge{
-            background:#1a2332;padding:6px 12px;border-radius:30px;
-            font-size:0.65rem;border-left:2px solid #10b981;white-space:nowrap;
-        }
-        .status-badge .dot{
-            display:inline-block;width:8px;height:8px;background:#10b981;
-            border-radius:50%;margin-right:6px;animation:pulse 2s infinite;
-        }
+        .status-badge{background:#1a2332;padding:6px 14px;border-radius:30px;font-size:0.7rem;border-left:2px solid #10b981}
+        .status-badge .dot{display:inline-block;width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
         @keyframes pulse{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}
-
-        .header-stats{
-            display:grid;grid-template-columns:repeat(2,1fr);gap:8px;
-        }
-        .stat-box{
-            background:#1a1f2e;border-radius:10px;padding:10px 12px;
-        }
-        .stat-label{font-size:0.6rem;text-transform:uppercase;color:#8b949e;letter-spacing:1px}
-        .stat-number{font-size:1.1rem;font-weight:700;color:var(--primary);font-family:monospace}
-        .stat-trend{font-size:0.55rem;color:#10b981;margin-top:2px}
-
-        /* ===== MONITOR BAR ===== */
-        .monitor-bar{
-            background:#0f1117;border:1px solid #1f2329;border-radius:12px;
-            padding:12px 16px;margin-bottom:24px;text-align:center;
-        }
-        .monitor-bar h2{
-            font-size:0.75rem;font-weight:500;margin:0;color:#8b949e;
-        }
-
-        /* ===== INTEL GRID ===== */
-        .intel-grid{
-            display:flex;flex-direction:column;gap:20px;
-        }
-
-        /* ===== PROFILE CARD ===== */
-        .profile-card{
-            background:#0f1117;border:1px solid #1f2329;border-radius:16px;
-            padding:16px;margin-bottom:16px;
-        }
-        .profile-header{
-            display:flex;align-items:center;gap:12px;margin-bottom:16px;
-            padding-bottom:12px;border-bottom:1px solid #1f2329;
-        }
-        .profile-avatar{
-            width:56px;height:56px;border-radius:50%;
-            background:linear-gradient(135deg,var(--primary),var(--primary-light));
-            display:flex;align-items:center;justify-content:center;
-            font-size:24px;font-weight:700;color:#fff;flex-shrink:0;
-        }
-        .profile-info h3{font-size:0.9rem;margin:0 0 2px;color:#fff}
-        .profile-info p{font-size:0.6rem;color:#8b949e;margin:0}
-
-        .info-row{
-            display:flex;justify-content:space-between;padding:8px 0;
-            border-bottom:1px solid rgba(31,35,41,.5);font-size:0.65rem;
-        }
+        
+        .header-stats{display:flex;gap:32px;flex-wrap:wrap}
+        .stat-box{background:#1a1f2e;border-radius:12px;padding:12px 20px;min-width:120px}
+        .stat-label{font-size:0.65rem;text-transform:uppercase;color:#8b949e;letter-spacing:1px}
+        .stat-number{font-size:1.3rem;font-weight:700;color:var(--primary);font-family:monospace}
+        .stat-trend{font-size:0.6rem;color:#10b981;margin-top:4px}
+        
+        .monitor-bar{background:#0f1117;border:1px solid #1f2329;border-radius:12px;padding:12px 20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .monitor-label{font-size:0.7rem;color:#8b949e}
+        .monitor-value{font-family:monospace;font-size:0.8rem;color:var(--primary)}
+        .refresh-indicator{font-size:0.65rem;color:#8b949e}
+        
+        .intel-grid{display:grid;grid-template-columns:300px 1fr 300px;gap:20px}
+        
+        .profile-card{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px;margin-bottom:20px}
+        .profile-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #1f2329}
+        .profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;font-size:28px}
+        .profile-info h3{font-size:1rem;margin-bottom:4px}
+        .profile-info p{font-size:0.65rem;color:#8b949e}
+        
+        .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;font-size:0.7rem}
         .info-label{color:#8b949e}
         .info-value{font-weight:500;color:var(--primary)}
-
-        .platform-grid{
-            display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px;
-        }
-        .platform-item{
-            background:#1a1f2e;border-radius:8px;padding:8px 4px;text-align:center;
-        }
-        .platform-icon{
-            width:24px;height:24px;border-radius:50%;display:inline-flex;
-            align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;
-        }
-        .platform-name{font-size:0.55rem;margin-top:4px;color:#8b949e}
-        .platform-status{font-size:0.5rem;margin-top:2px}
+        
+        .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+        .platform-item{background:#1a1f2e;border-radius:8px;padding:8px;text-align:center}
+        .platform-icon{font-size:18px}
+        .platform-name{font-size:0.6rem;margin-top:4px;color:#8b949e}
+        .platform-status{font-size:0.55rem;margin-top:2px}
         .status-positive{color:#10b981}
         .status-warning{color:var(--primary-light)}
-
-        /* ===== FEED PANEL ===== */
-        .feed-panel{
-            background:#0f1117;border:1px solid #1f2329;border-radius:16px;overflow:hidden;
-        }
-        .feed-header{
-            padding:14px 16px;border-bottom:1px solid #1f2329;
-            display:flex;justify-content:space-between;align-items:center;
-            flex-wrap:wrap;gap:8px;
-        }
-        .feed-title{
-            font-size:0.7rem;font-weight:600;text-transform:uppercase;
-            letter-spacing:1px;color:#fff;
-        }
-        .feed-filters{display:flex;gap:6px;flex-wrap:wrap}
-        .filter-pill{
-            background:#1a1f2e;padding:3px 10px;border-radius:20px;
-            font-size:0.6rem;cursor:pointer;white-space:nowrap;
-        }
-        .filter-active{background:var(--primary);color:#fff}
-
-        /* ===== INTEL CARD ===== */
-        .intel-card{
-            border-bottom:1px solid #1f2329;padding:16px;
-            cursor:pointer;transition:background 0.2s;
-        }
+        
+        .feed-panel{background:#0f1117;border:1px solid #1f2329;border-radius:16px;overflow:hidden}
+        .feed-header{padding:16px 20px;border-bottom:1px solid #1f2329;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .feed-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+        .feed-filters{display:flex;gap:12px}
+        .filter-pill{background:#1a1f2e;padding:4px 12px;border-radius:20px;font-size:0.65rem;cursor:pointer}
+        .filter-active{background:var(--primary);color:white}
+        
+        .intel-card{border-bottom:1px solid #1f2329;padding:20px;cursor:pointer;transition:background 0.2s}
         .intel-card:hover{background:#12161f}
-        .card-source{
-            display:flex;align-items:center;gap:8px;margin-bottom:10px;
-        }
-        .source-icon{
-            width:30px;height:30px;border-radius:50%;display:flex;
-            align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;
-        }
+        .card-source{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+        .source-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
         .source-tiktok{background:#000;color:#fff}
         .source-onlyfans{background:#00aff0;color:#fff}
         .source-instagram{background:#d62976;color:#fff}
         .source-twitter{background:#1da1f2;color:#fff}
         .source-telegram{background:#0088cc;color:#fff}
         .source-discord{background:#5865f2;color:#fff}
-        .source-reddit{background:#ff4500;color:#fff}
-        .source-youtube{background:#ff0000;color:#fff}
-        .source-info{flex:1;min-width:0}
-        .source-name{font-size:0.7rem;font-weight:600}
-        .source-time{font-size:0.55rem;color:#8b949e}
-        .source-badge{
-            background:#1a2332;padding:2px 8px;border-radius:12px;
-            font-size:0.5rem;color:var(--primary-light);white-space:nowrap;
-        }
-
-        .card-title{
-            font-size:0.85rem;font-weight:600;margin-bottom:10px;
-            line-height:1.4;color:#fff;
-        }
-        .card-desc{
-            font-size:0.7rem;color:#b4b9c2;line-height:1.5;margin-bottom:10px;
-        }
-
-        .media-preview{
-            background:#1a1f2e;border-radius:10px;margin:10px 0;padding:10px;
-            display:flex;align-items:center;gap:10px;
-        }
-        .media-icon{
-            width:36px;height:36px;background:#2a2f3e;border-radius:8px;
-            display:flex;align-items:center;justify-content:center;
-            font-size:16px;font-weight:700;color:#fff;flex-shrink:0;
-        }
-        .media-info{flex:1;min-width:0}
-        .media-title{font-size:0.65rem;font-weight:600;color:#fff}
-        .media-meta{font-size:0.55rem;color:#8b949e}
-        .media-size{font-size:0.55rem;color:var(--primary);white-space:nowrap}
-
-        .engagement-stats{
-            display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;
-            padding:8px 0;border-top:1px solid #1f2329;border-bottom:1px solid #1f2329;
-        }
-        .eng-item{font-size:0.6rem;color:#8b949e}
-
-        .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
-        .tag{
-            background:#1a2332;padding:2px 8px;border-radius:12px;
-            font-size:0.55rem;color:#8b949e;
-        }
-
-        /* ===== ALERT CARD ===== */
-        .alert-card{
-            background:#0f1117;border:1px solid #1f2329;border-radius:16px;
-            padding:16px;margin-bottom:16px;
-        }
-        .alert-title{
-            font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;
-            margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:6px;
-        }
-        .alert-list{display:flex;flex-direction:column;gap:10px}
-        .alert-item{
-            display:flex;align-items:center;gap:10px;padding:6px 0;
-            border-bottom:1px solid rgba(31,35,41,.5);cursor:pointer;
-        }
-        .alert-icon{
-            width:26px;height:26px;background:rgba(var(--primary-rgb),0.125);
-            border-radius:8px;display:flex;align-items:center;justify-content:center;
-            font-size:13px;font-weight:700;color:var(--primary);flex-shrink:0;
-        }
-        .alert-info{flex:1;min-width:0}
-        .alert-text{font-size:0.65rem;font-weight:500;color:#e1e4e8}
-        .alert-time{font-size:0.5rem;color:#8b949e}
-
-        .trend-item{
-            display:flex;justify-content:space-between;padding:8px 0;
-            border-bottom:1px solid rgba(31,35,41,.5);cursor:pointer;gap:8px;
-        }
-        .trend-name{font-size:0.65rem;color:#e1e4e8}
-        .trend-value{font-size:0.6rem;color:var(--primary);text-align:right}
-
-        .source-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
-        .source-stat{
-            text-align:center;padding:8px;background:#1a1f2e;border-radius:8px;
-        }
-        .source-stat-count{font-size:0.9rem;font-weight:700;color:var(--primary)}
-        .source-stat-label{font-size:0.5rem;color:#8b949e}
-
-        /* ===== VIDEO GALLERY ===== */
-        .video-gallery-section{
-            background:#0f1117;border:1px solid #1f2329;border-radius:16px;
-            padding:16px;margin-top:24px;
-        }
-        .video-gallery-title{
-            font-size:0.75rem;font-weight:600;text-transform:uppercase;
-            letter-spacing:1px;margin-bottom:14px;color:var(--primary);
-        }
-        .video-grid{
-            display:grid;grid-template-columns:1fr;gap:12px;justify-items:center;
-        }
-        .video-item{
-            background:#1a1f2e;border-radius:10px;padding:10px;
-            text-align:center;width:100%;max-width:100%;
-        }
-        .video-item iframe{
-            width:100%;max-width:100%;aspect-ratio:9/16;
-            border:0;display:block;margin:0 auto;border-radius:8px;
-        }
-        .video-label{
-            font-size:0.6rem;color:#8b949e;margin-top:8px;text-align:center;
-        }
-
-        /* ===== FOOTER ===== */
-        .dashboard-footer{
-            margin-top:24px;padding:16px;border-top:1px solid #1f2329;
-            text-align:center;font-size:0.6rem;color:#8b949e;
-        }
-
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
-        @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-
-            .site-header{padding:12px 16px}
-            .page-title-header{font-size:17px}
-            .ad-break:first-child{margin-top:60px}
-            .dashboard-container{padding:16px 12px 32px}
-            .header-stats{grid-template-columns:repeat(4,1fr);gap:12px}
-            .stat-box{padding:12px 16px}
-            .stat-number{font-size:1.3rem}
-            .video-grid{grid-template-columns:repeat(2,1fr)}
-            .platform-grid{grid-template-columns:repeat(4,1fr)}
-        }
-
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
-        @media(min-width:900px){
-            body{max-width:1400px;margin:0 auto}
-            .site-header{
-                left:50%;transform:translateX(-50%);max-width:1400px;
-                padding:12px 20px;
-            }
-            .page-title-header{font-size:15px;font-weight:600;color:#ccc}
-            .menu-btn{display:none}
-            .slide-menu{display:none!important}
-            .ad-break:first-child{margin-top:62px}
-
-            .dashboard-container{padding:20px 16px 40px}
-            .intel-grid{
-                display:grid;grid-template-columns:280px 1fr 280px;gap:20px;
-            }
-            .monitor-header{padding:20px 24px}
-            .header-stats{gap:16px}
-            .stat-box{min-width:120px}
-            .video-grid{grid-template-columns:repeat(4,1fr)}
-            .platform-grid{grid-template-columns:repeat(4,1fr);gap:8px}
-
-            .desktop-nav{
-                display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
-            }
-            .desktop-nav a{
-                padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
-                border-radius:6px;transition:all .15s ease;
-            }
-            .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
-        }
-
-        @media(min-width:1100px){
-            .dashboard-container{padding:20px 24px 40px}
-            .intel-grid{grid-template-columns:300px 1fr 300px;gap:20px}
-            .video-grid{grid-template-columns:repeat(5,1fr)}
-        }
+        .source-info{flex:1}
+        .source-name{font-size:0.75rem;font-weight:600}
+        .source-time{font-size:0.6rem;color:#8b949e}
+        .source-badge{background:#1a2332;padding:2px 8px;border-radius:12px;font-size:0.55rem;color:var(--primary-light)}
+        
+        .card-title{font-size:0.9rem;font-weight:600;margin-bottom:12px;line-height:1.4}
+        .card-desc{font-size:0.75rem;color:#b4b9c2;line-height:1.5;margin-bottom:12px}
+        
+        .media-preview{background:#1a1f2e;border-radius:12px;margin:12px 0;padding:12px;display:flex;align-items:center;gap:12px}
+        .media-icon{width:40px;height:40px;background:#2a2f3e;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+        .media-info{flex:1}
+        .media-title{font-size:0.7rem;font-weight:600}
+        .media-meta{font-size:0.6rem;color:#8b949e}
+        .media-size{font-size:0.6rem;color:var(--primary)}
+        
+        .engagement-stats{display:flex;gap:16px;margin:12px 0;padding:8px 0;border-top:1px solid #1f2329;border-bottom:1px solid #1f2329}
+        .eng-item{font-size:0.65rem;color:#8b949e}
+        
+        .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+        .tag{background:#1a2332;padding:2px 10px;border-radius:14px;font-size:0.6rem;color:#8b949e}
+        
+        .alert-card{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px}
+        .alert-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .alert-list{display:flex;flex-direction:column;gap:12px}
+        .alert-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #1f2329;cursor:pointer}
+        .alert-icon{width:28px;height:28px;background:rgba(var(--primary-rgb), 0.125);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+        .alert-info{flex:1}
+        .alert-text{font-size:0.7rem;font-weight:500}
+        .alert-time{font-size:0.55rem;color:#8b949e}
+        
+        .trend-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;cursor:pointer}
+        .trend-name{font-size:0.7rem}
+        .trend-value{font-size:0.65rem;color:var(--primary)}
+        
+        .source-stats{display:flex;gap:12px;margin-top:12px}
+        .source-stat{flex:1;text-align:center;padding:8px;background:#1a1f2e;border-radius:8px}
+        .source-stat-count{font-size:1rem;font-weight:700;color:var(--primary)}
+        .source-stat-label{font-size:0.55rem;color:#8b949e}
+        
+        .video-gallery-section{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px;margin-top:24px}
+        .video-gallery-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;color:var(--primary)}
+        .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;justify-items:center}
+        .video-item{background:#1a1f2e;border-radius:12px;padding:12px;text-align:center;width:100%}
+        .video-label{font-size:0.65rem;color:#8b949e;margin-top:8px;text-align:center}
+        
+        .dashboard-footer{margin-top:24px;padding:20px;border-top:1px solid #1f2329;text-align:center;font-size:0.65rem;color:#8b949e}
+        
+        @media(max-width:1100px){.intel-grid{grid-template-columns:1fr}.profile-card{order:2}.right-panel{order:3}.feed-panel{order:1}}
+        @media(max-width:600px){.dashboard-container{padding:12px}.header-stats{gap:12px}.stat-box{padding:8px 12px}.video-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
     </style>
 {% include head.html %}
-</head>
-<body>
+  </head>
+<body><div loading="lazy">
+<div class="dashboard-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#8b949e">Loading Intelligence Dashboard...</div></div>
 
-    <!-- HEADER -->
-    <header class="site-header">
-        <div class="header-inner">
-            <div id="domainAvatar" class="site-avatar"></div>
-            <div class="header-text">
-                <div class="page-title-header">IntelCenter Dashboard</div>
-                <div id="domainSub" class="domain-sub"></div>
-            </div>
-            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
-            </button>
-        </div>
-    </header>
+<script>
+(function(){
+    
+    const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter/X','Telegram','Discord','Reddit','YouTube','Snapchat','Facebook','WhatsApp','Signal','Mega','Google Drive','Dropbox'];
+    
+    const PLATFORM_CONFIG = {
+        'TikTok': { icon: 'T', bg: '#000', color: '#fff', class: 'source-tiktok' },
+        'OnlyFans': { icon: 'O', bg: '#00aff0', color: '#fff', class: 'source-onlyfans' },
+        'Instagram': { icon: 'I', bg: '#d62976', color: '#fff', class: 'source-instagram' },
+        'Twitter/X': { icon: 'X', bg: '#1da1f2', color: '#fff', class: 'source-twitter' },
+        'Telegram': { icon: 'T', bg: '#0088cc', color: '#fff', class: 'source-telegram' },
+        'Discord': { icon: 'D', bg: '#5865f2', color: '#fff', class: 'source-discord' },
+        'Reddit': { icon: 'R', bg: '#ff4500', color: '#fff', class: 'source-reddit' },
+        'YouTube': { icon: 'Y', bg: '#ff0000', color: '#fff', class: 'source-youtube' }
+    };
+    
+    const STOP_WORDS = [
+        'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
+        'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord'
+    ];
+    
+    // ========== EKSTRAK QUERY & DOMAIN/SUBDOMAIN ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    const nameUpper = displayName.toUpperCase();
 
-    <!-- SLIDE MENU -->
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li><a href="/">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                Home
-            </a></li>
-            <li><a href="/contact/">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                Contact
-            </a></li>
-            <li><a href="/privacy-policy/">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                Privacy Policy
-            </a></li>
-            <li><a href="/terms-and-conditions/">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                Terms & Conditions
-            </a></li>
-        </ul>
-    </nav>
-
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("domainSub").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var menuIcon = btn.querySelector("svg:first-child");
-        var closeIcon = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            menuIcon.style.display = open ? "none" : "block";
-            closeIcon.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                menuIcon.style.display = "block";
-                closeIcon.style.display = "none";
-            }
-        });
-        panel.addEventListener("click", function(e){e.stopPropagation();});
-    })();
-    </script>
-
-    <!-- AVATAR SCRIPT -->
-    <script>
-    (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-    })();
-    </script>
-
-    <!-- BANNER 06: TOP -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/06.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
-
-    <!-- DESKTOP NAV -->
-    <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/terms-and-conditions/">Terms & Conditions</a>
-    </nav>
-
-    <!-- KW NAV -->
-    <nav>{% include /kw/p/edition-a/edition-a01.html %}</nav>
-
-    <!-- DASHBOARD -->
-    <div class="dashboard-container" id="app">
-        <div style="display:flex;justify-content:center;align-items:center;height:60vh;color:#8b949e">Loading Intelligence Dashboard...</div>
-    </div>
-
-    <!-- BANNER 07: BOTTOM -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/07.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
-
-    <script>
-    (function(){
-        
-        const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter/X','Telegram','Discord','Reddit','YouTube','Snapchat','Facebook','WhatsApp','Signal','Mega','Google Drive','Dropbox'];
-        
-        const PLATFORM_CONFIG = {
-            'TikTok': { icon: 'T', bg: '#000', color: '#fff', class: 'source-tiktok' },
-            'OnlyFans': { icon: 'O', bg: '#00aff0', color: '#fff', class: 'source-onlyfans' },
-            'Instagram': { icon: 'I', bg: '#d62976', color: '#fff', class: 'source-instagram' },
-            'Twitter/X': { icon: 'X', bg: '#1da1f2', color: '#fff', class: 'source-twitter' },
-            'Telegram': { icon: 'T', bg: '#0088cc', color: '#fff', class: 'source-telegram' },
-            'Discord': { icon: 'D', bg: '#5865f2', color: '#fff', class: 'source-discord' },
-            'Reddit': { icon: 'R', bg: '#ff4500', color: '#fff', class: 'source-reddit' },
-            'YouTube': { icon: 'Y', bg: '#ff0000', color: '#fff', class: 'source-youtube' }
-        };
-        
-        const STOP_WORDS = [
-            'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
-            'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord'
-        ];
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        let rawQuery = urlParams.get('q');
-        if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
-        rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
-        
-        let baseTopic = rawQuery.toLowerCase();
-        STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
-        baseTopic = baseTopic.replace(/\s+/g,' ').trim();
-        if(baseTopic.length < 2) baseTopic = rawQuery;
-        
-        const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-        const displayName = formatTopic(baseTopic);
-        const nameLower = displayName.toLowerCase();
-        const nameUpper = displayName.toUpperCase();
-
-        const hostname = window.location.hostname;
-        let domainIdentifier = '';
-        
-        if (hostname.includes('.')) {
-            const parts = hostname.split('.');
-            if (parts.length > 2) {
-                let subParts = parts.slice(0, -2);
-                let subRaw = subParts.join(' ');
-                domainIdentifier = subRaw.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-                domainIdentifier = domainIdentifier + " Sub";
-            } else {
-                let domainRaw = parts[0];
-                domainIdentifier = domainRaw.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-            }
+    const hostname = window.location.hostname;
+    let domainIdentifier = '';
+    
+    if (hostname.includes('.')) {
+        const parts = hostname.split('.');
+        if (parts.length > 2) {
+            let subParts = parts.slice(0, -2);
+            let subRaw = subParts.join(' ');
+            domainIdentifier = subRaw.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            domainIdentifier = domainIdentifier + " Sub";
         } else {
-            domainIdentifier = "This Site";
+            let domainRaw = parts[0];
+            domainIdentifier = domainRaw.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
         }
-        
-        const PLATFORM_STATS = {
-            'TikTok': 'Active', 'OnlyFans': 'Active', 'Instagram': 'Active', 
-            'Twitter/X': 'Active', 'Telegram': 'Active', 'Discord': 'Active',
-            'Reddit': 'Active', 'YouTube': 'Active', 'Snapchat': 'Monitored',
-            'Facebook': 'Monitored', 'WhatsApp': 'Monitored', 'Signal': 'Monitored'
-        };
+    } else {
+        domainIdentifier = "This Site";
+    }
+    
+    // ========== DATA STATIS EVERGREEN ==========
+    const PLATFORM_STATS = {
+        'TikTok': 'Active', 'OnlyFans': 'Active', 'Instagram': 'Active', 
+        'Twitter/X': 'Active', 'Telegram': 'Active', 'Discord': 'Active',
+        'Reddit': 'Active', 'YouTube': 'Active', 'Snapchat': 'Monitored',
+        'Facebook': 'Monitored', 'WhatsApp': 'Monitored', 'Signal': 'Monitored'
+    };
 
-        const INTEL_CARDS = [
-            {platform:'TikTok',headline:'Exclusive Content Collection Available',desc:'A comprehensive collection of digital content spanning multiple platforms. This archive contains verified media assets and documented online presence materials.',tags:['tiktok','exclusive','verified','collection'],format:'MP4'},
-            {platform:'OnlyFans',headline:'Premium Content Archive Discovered',desc:'Digital forensic analysis confirms the authenticity of this material. Each file has been verified against known sources and timestamps.',tags:['onlyfans','premium','archived','verified'],format:'JPG'},
-            {platform:'Instagram',headline:'Complete Media Gallery Documented',desc:'The material has been preserved from multiple sources. This archive represents a complete documentation of publicly available content.',tags:['instagram','gallery','documented','media'],format:'PNG'},
-            {platform:'Twitter/X',headline:'Social Media Footprint Cataloged',desc:'A thorough cataloging of social media activity and associated media. All content has been indexed and verified for authenticity.',tags:['twitter','footprint','cataloged','social'],format:'MP4'},
-            {platform:'Telegram',headline:'Channel Content Inventory Complete',desc:'Complete inventory of channel content and shared media. The collection has been organized and preserved for reference purposes.',tags:['telegram','channel','inventory','organized'],format:'ZIP'},
-            {platform:'Discord',headline:'Server Media Archive Compiled',desc:'A compiled archive of server media and shared content. All files have been categorized and stored for long-term preservation.',tags:['discord','server','compiled','preserved'],format:'MOV'},
-            {platform:'Reddit',headline:'Community Content Aggregated',desc:'Aggregated content from community discussions and shared media. This collection provides a comprehensive overview of online presence.',tags:['reddit','community','aggregated','overview'],format:'JPG'},
-            {platform:'YouTube',headline:'Video Content Library Archived',desc:'An archived library of video content and associated metadata. All materials have been preserved in their original quality.',tags:['youtube','video','library','archived'],format:'MP4'},
-            {platform:'Snapchat',headline:'Story Content Documentation',desc:'Documentation of story content and ephemeral media. Captured and preserved before expiration for reference purposes.',tags:['snapchat','story','documented','ephemeral'],format:'MP4'},
-            {platform:'Facebook',headline:'Profile Media Archive Secured',desc:'A secured archive of profile media and shared content. The collection has been organized by date and content type.',tags:['facebook','profile','secured','organized'],format:'JPG'}
+    const INTEL_CARDS = [
+        {
+            platform: 'TikTok',
+            headline: 'Exclusive Content Collection Available',
+            desc: 'A comprehensive collection of digital content spanning multiple platforms. This archive contains verified media assets and documented online presence materials.',
+            tags: ['tiktok', 'exclusive', 'verified', 'collection'],
+            format: 'MP4'
+        },
+        {
+            platform: 'OnlyFans',
+            headline: 'Premium Content Archive Discovered',
+            desc: 'Digital forensic analysis confirms the authenticity of this material. Each file has been verified against known sources and timestamps.',
+            tags: ['onlyfans', 'premium', 'archived', 'verified'],
+            format: 'JPG'
+        },
+        {
+            platform: 'Instagram',
+            headline: 'Complete Media Gallery Documented',
+            desc: 'The material has been preserved from multiple sources. This archive represents a complete documentation of publicly available content.',
+            tags: ['instagram', 'gallery', 'documented', 'media'],
+            format: 'PNG'
+        },
+        {
+            platform: 'Twitter/X',
+            headline: 'Social Media Footprint Cataloged',
+            desc: 'A thorough cataloging of social media activity and associated media. All content has been indexed and verified for authenticity.',
+            tags: ['twitter', 'footprint', 'cataloged', 'social'],
+            format: 'MP4'
+        },
+        {
+            platform: 'Telegram',
+            headline: 'Channel Content Inventory Complete',
+            desc: 'Complete inventory of channel content and shared media. The collection has been organized and preserved for reference purposes.',
+            tags: ['telegram', 'channel', 'inventory', 'organized'],
+            format: 'ZIP'
+        },
+        {
+            platform: 'Discord',
+            headline: 'Server Media Archive Compiled',
+            desc: 'A compiled archive of server media and shared content. All files have been categorized and stored for long-term preservation.',
+            tags: ['discord', 'server', 'compiled', 'preserved'],
+            format: 'MOV'
+        },
+        {
+            platform: 'Reddit',
+            headline: 'Community Content Aggregated',
+            desc: 'Aggregated content from community discussions and shared media. This collection provides a comprehensive overview of online presence.',
+            tags: ['reddit', 'community', 'aggregated', 'overview'],
+            format: 'JPG'
+        },
+        {
+            platform: 'YouTube',
+            headline: 'Video Content Library Archived',
+            desc: 'An archived library of video content and associated metadata. All materials have been preserved in their original quality.',
+            tags: ['youtube', 'video', 'library', 'archived'],
+            format: 'MP4'
+        },
+        {
+            platform: 'Snapchat',
+            headline: 'Story Content Documentation',
+            desc: 'Documentation of story content and ephemeral media. Captured and preserved before expiration for reference purposes.',
+            tags: ['snapchat', 'story', 'documented', 'ephemeral'],
+            format: 'MP4'
+        },
+        {
+            platform: 'Facebook',
+            headline: 'Profile Media Archive Secured',
+            desc: 'A secured archive of profile media and shared content. The collection has been organized by date and content type.',
+            tags: ['facebook', 'profile', 'secured', 'organized'],
+            format: 'JPG'
+        }
+    ];
+
+    const ALERT_ITEMS = [
+        { text: 'Content monitoring active across all platforms', time: 'Ongoing' },
+        { text: 'Digital footprint analysis in progress', time: 'Active' },
+        { text: 'Archive verification system operational', time: 'Running' },
+        { text: 'Multi-platform tracking enabled', time: 'Continuous' },
+        { text: 'Content preservation system online', time: 'Active' }
+    ];
+
+    const TRENDING_PLATFORMS = [
+        { name: 'TikTok', value: 'High activity detected' },
+        { name: 'OnlyFans', value: 'Content updates tracked' },
+        { name: 'Instagram', value: 'Media posts monitored' },
+        { name: 'Telegram', value: 'Channel activity noted' },
+        { name: 'Discord', value: 'Server content indexed' },
+        { name: 'YouTube', value: 'Video uploads tracked' }
+    ];
+
+    const SOURCE_DISTRIBUTION = [
+        { name: 'TikTok', count: 'Primary' },
+        { name: 'Instagram', count: 'Primary' },
+        { name: 'Telegram', count: 'Secondary' },
+        { name: 'Discord', count: 'Secondary' }
+    ];
+
+    const RELATED_INTEL = [
+        { name: 'Content Archives', value: 'Available' },
+        { name: 'Media Libraries', value: 'Indexed' },
+        { name: 'Digital Footprints', value: 'Documented' },
+        { name: 'Platform Profiles', value: 'Tracked' }
+    ];
+    
+    // ========== GENERATE LINK ==========
+    const genLink = (platform) => {
+        let newQ = `${nameLower} content ${platform.toLowerCase()}`;
+        return `/edition-a02/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== RENDER FUNCTIONS ==========
+    const renderIntelCard = (card, idx) => {
+        let platformConfig = PLATFORM_CONFIG[card.platform] || { icon: 'P', bg: '#1f2329', color: '#fff', class: '' };
+        
+        return `
+            <div class="intel-card" data-url="${genLink(card.platform)}">
+                <div class="card-source">
+                    <div class="source-icon ${platformConfig.class}" style="background:${platformConfig.bg};color:${platformConfig.color}">${platformConfig.icon}</div>
+                    <div class="source-info">
+                        <div class="source-name">IntelSource · ${card.platform}</div>
+                        <div class="source-time">Verified · via ${card.platform}</div>
+                    </div>
+                    <div class="source-badge">VERIFIED</div>
+                </div>
+                
+                <div class="card-title">${card.headline}</div>
+                <div class="card-desc">${card.desc}</div>
+                
+                <div class="media-preview">
+                    <div class="media-icon">${platformConfig.icon}</div>
+                    <div class="media-info">
+                        <div class="media-title">${card.platform.toUpperCase()} CONTENT · Multiple files</div>
+                        <div class="media-meta">Collection · Format: ${card.format}</div>
+                    </div>
+                    <div class="media-size">Available</div>
+                </div>
+                
+                <div class="engagement-stats">
+                    <span class="eng-item">Views: Documented</span>
+                    <span class="eng-item">Likes: Tracked</span>
+                    <span class="eng-item">Comments: Indexed</span>
+                    <span class="eng-item">Shares: Monitored</span>
+                </div>
+                
+                <div class="tags">
+                    ${card.tags.map(t => `<span class="tag">#${t.toLowerCase()}</span>`).join('')}
+                </div>
+            </div>
+        `;
+    };
+    
+    const renderAlerts = () => {
+        return ALERT_ITEMS.map(alert => `
+            <div class="alert-item" data-url="${genLink('Telegram')}">
+                <div class="alert-icon">!</div>
+                <div class="alert-info">
+                    <div class="alert-text">${alert.text}</div>
+                    <div class="alert-time">${alert.time}</div>
+                </div>
+            </div>
+        `).join('');
+    };
+    
+    const renderTrending = () => {
+        return TRENDING_PLATFORMS.map(trend => `
+            <div class="trend-item" data-url="${genLink(trend.name)}">
+                <div class="trend-name">${trend.name}</div>
+                <div class="trend-value">${trend.value}</div>
+            </div>
+        `).join('');
+    };
+    
+    const renderSourceStats = () => {
+        return SOURCE_DISTRIBUTION.map(src => `
+            <div class="source-stat"><div class="source-stat-count">${src.count}</div><div class="source-stat-label">${src.name}</div></div>
+        `).join('');
+    };
+    
+    const renderPlatformGrid = () => {
+        let platforms = PLATFORMS.slice(0,8);
+        return platforms.map(p => `
+            <div class="platform-item">
+                <div class="platform-icon">${PLATFORM_CONFIG[p]?.icon || 'P'}</div>
+                <div class="platform-name">${p}</div>
+                <div class="platform-status ${PLATFORM_STATS[p] === 'Active' ? 'status-positive' : 'status-warning'}">${PLATFORM_STATS[p]}</div>
+            </div>
+        `).join('');
+    };
+
+    const renderRelatedIntel = () => {
+        return RELATED_INTEL.map(item => `
+            <div class="trend-item" data-url="${genLink('Telegram')}">
+                <div class="trend-name">${item.name}</div>
+                <div class="trend-value">${item.value}</div>
+            </div>
+        `).join('');
+    };
+
+    const renderVideoGallery = () => {
+        const videos = [
+            { id: 'o7xIPTBVnpU', label: `${displayName} Exclusive Content` },
+            { id: 'S0gUXzS1_hk', label: `${displayName} Behind The Scenes` },
+            { id: 'ysnaXmz8NZo', label: `${displayName} Viral Moments` },
+            { id: 'hhkOMA_sDRw', label: `${displayName} Private Collection` },
+            { id: 'FO3JJOZjJQ8', label: `${displayName} Unreleased Footage` }
         ];
-
-        const ALERT_ITEMS = [
-            { text: 'Content monitoring active across all platforms', time: 'Ongoing' },
-            { text: 'Digital footprint analysis in progress', time: 'Active' },
-            { text: 'Archive verification system operational', time: 'Running' },
-            { text: 'Multi-platform tracking enabled', time: 'Continuous' },
-            { text: 'Content preservation system online', time: 'Active' }
-        ];
-
-        const TRENDING_PLATFORMS = [
-            { name: 'TikTok', value: 'High activity detected' },
-            { name: 'OnlyFans', value: 'Content updates tracked' },
-            { name: 'Instagram', value: 'Media posts monitored' },
-            { name: 'Telegram', value: 'Channel activity noted' },
-            { name: 'Discord', value: 'Server content indexed' },
-            { name: 'YouTube', value: 'Video uploads tracked' }
-        ];
-
-        const SOURCE_DISTRIBUTION = [
-            { name: 'TikTok', count: 'Primary' },
-            { name: 'Instagram', count: 'Primary' },
-            { name: 'Telegram', count: 'Secondary' },
-            { name: 'Discord', count: 'Secondary' }
-        ];
-
-        const RELATED_INTEL = [
-            { name: 'Content Archives', value: 'Available' },
-            { name: 'Media Libraries', value: 'Indexed' },
-            { name: 'Digital Footprints', value: 'Documented' },
-            { name: 'Platform Profiles', value: 'Tracked' }
-        ];
         
-        const genLink = (platform) => {
-            let newQ = `${nameLower} content ${platform.toLowerCase()}`;
-            return `/edition-a02/?q=${encodeURIComponent(newQ)}`;
-        };
-        
-        const renderIntelCard = (card, idx) => {
-            let platformConfig = PLATFORM_CONFIG[card.platform] || { icon: 'P', bg: '#1f2329', color: '#fff', class: '' };
-            
-            return `
-                <div class="intel-card" data-url="${genLink(card.platform)}">
-                    <div class="card-source">
-                        <div class="source-icon ${platformConfig.class}" style="background:${platformConfig.bg};color:${platformConfig.color}">${platformConfig.icon}</div>
-                        <div class="source-info">
-                            <div class="source-name">IntelSource &middot; ${card.platform}</div>
-                            <div class="source-time">Verified &middot; via ${card.platform}</div>
+        return `
+            <div class="video-gallery-section">
+                <h2 class="video-gallery-title">Video Intelligence: ${displayName} on ${domainIdentifier}</h2>
+                <div class="video-grid">
+                    ${videos.map(v => `
+                        <div class="video-item">
+                            <iframe
+                              src="https://www.youtube.com/embed/${v.id}"
+                              loading="lazy"
+                              allowfullscreen
+                              style="width:100%;max-width:420px;aspect-ratio:9/16;border:0;display:block;margin:0 auto;border-radius:8px;">
+                            </iframe>
+                            <div class="video-label">${v.label} via ${domainIdentifier}</div>
                         </div>
-                        <div class="source-badge">VERIFIED</div>
-                    </div>
-                    
-                    <div class="card-title">${card.headline}</div>
-                    <div class="card-desc">${card.desc}</div>
-                    
-                    <div class="media-preview">
-                        <div class="media-icon">${platformConfig.icon}</div>
-                        <div class="media-info">
-                            <div class="media-title">${card.platform.toUpperCase()} CONTENT &middot; Multiple files</div>
-                            <div class="media-meta">Collection &middot; Format: ${card.format}</div>
-                        </div>
-                        <div class="media-size">Available</div>
-                    </div>
-                    
-                    <div class="engagement-stats">
-                        <span class="eng-item">Views: Documented</span>
-                        <span class="eng-item">Likes: Tracked</span>
-                        <span class="eng-item">Comments: Indexed</span>
-                        <span class="eng-item">Shares: Monitored</span>
-                    </div>
-                    
-                    <div class="tags">
-                        ${card.tags.map(t => `<span class="tag">#${t.toLowerCase()}</span>`).join('')}
-                    </div>
+                    `).join('')}
                 </div>
-            `;
-        };
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        const mainTitle = `${displayName} on ${domainIdentifier}`;
+        const subTitle1 = `${displayName} Intelligence Center`;
+        const subTitle2 = `Monitoring ${displayName} on ${domainIdentifier}`;
         
-        const renderAlerts = () => {
-            return ALERT_ITEMS.map(alert => `
-                <div class="alert-item" data-url="${genLink('Telegram')}">
-                    <div class="alert-icon">!</div>
-                    <div class="alert-info">
-                        <div class="alert-text">${alert.text}</div>
-                        <div class="alert-time">${alert.time}</div>
-                    </div>
-                </div>
-            `).join('');
-        };
+        document.title = mainTitle;
         
-        const renderTrending = () => {
-            return TRENDING_PLATFORMS.map(trend => `
-                <div class="trend-item" data-url="${genLink(trend.name)}">
-                    <div class="trend-name">${trend.name}</div>
-                    <div class="trend-value">${trend.value}</div>
-                </div>
-            `).join('');
-        };
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', `Complete digital intelligence dashboard for ${displayName} on ${domainIdentifier}. Multi-platform monitoring and content documentation.`);
         
-        const renderSourceStats = () => {
-            return SOURCE_DISTRIBUTION.map(src => `
-                <div class="source-stat"><div class="source-stat-count">${src.count}</div><div class="source-stat-label">${src.name}</div></div>
-            `).join('');
-        };
-        
-        const renderPlatformGrid = () => {
-            let platforms = PLATFORMS.slice(0,8);
-            let colors = ['#000','#00aff0','#d62976','#1da1f2','#0088cc','#5865f2','#ff4500','#ff0000'];
-            return platforms.map((p,i) => `
-                <div class="platform-item">
-                    <div class="platform-icon" style="background:${colors[i] || '#1f2329'}">${PLATFORM_CONFIG[p]?.icon || 'P'}</div>
-                    <div class="platform-name">${p}</div>
-                    <div class="platform-status ${PLATFORM_STATS[p] === 'Active' ? 'status-positive' : 'status-warning'}">${PLATFORM_STATS[p]}</div>
-                </div>
-            `).join('');
-        };
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
 
-        const renderRelatedIntel = () => {
-            return RELATED_INTEL.map(item => `
-                <div class="trend-item" data-url="${genLink('Telegram')}">
-                    <div class="trend-name">${item.name}</div>
-                    <div class="trend-value">${item.value}</div>
+        return { mainTitle, subTitle1, subTitle2 };
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        const seoData = updateSEO();
+        const totalPlatforms = PLATFORMS.length;
+        const activePlatforms = Object.values(PLATFORM_STATS).filter(v => v === 'Active').length;
+        
+        document.getElementById('app').innerHTML = `
+            <div class="monitor-header">
+                <div class="header-top">
+                    <div class="logo-area">
+                        <div class="logo-icon">[O]</div>
+                        <div class="logo-text">Intel<span>Center</span></div>
+                    </div>
+                    <div class="status-badge"><span class="dot"></span>Monitoring Active · Multi-platform</div>
                 </div>
-            `).join('');
-        };
-
-        const renderVideoGallery = () => {
-            const videos = [
-                { id: 'o7xIPTBVnpU', label: `${displayName} Exclusive Content` },
-                { id: 'S0gUXzS1_hk', label: `${displayName} Behind The Scenes` },
-                { id: 'ysnaXmz8NZo', label: `${displayName} Viral Moments` },
-                { id: 'hhkOMA_sDRw', label: `${displayName} Private Collection` },
-                { id: 'FO3JJOZjJQ8', label: `${displayName} Unreleased Footage` }
-            ];
+                <h1 style="font-size:1.4rem; font-weight:700; margin:0 0 16px 0; color:#e1e4e8; letter-spacing:-0.5px;">${seoData.mainTitle}</h1>
+                <div class="header-stats">
+                    <div class="stat-box"><div class="stat-label">PLATFORMS MONITORED</div><div class="stat-number">${totalPlatforms}</div><div class="stat-trend">Comprehensive coverage</div></div>
+                    <div class="stat-box"><div class="stat-label">ACTIVE SOURCES</div><div class="stat-number">${activePlatforms}</div><div class="stat-trend">Real-time tracking</div></div>
+                    <div class="stat-box"><div class="stat-label">CONTENT STATUS</div><div class="stat-number">Indexed</div><div class="stat-trend">Verified &amp; archived</div></div>
+                    <div class="stat-box"><div class="stat-label">MONITORING</div><div class="stat-number">Active</div><div class="stat-trend">Continuous</div></div>
+                </div>
+            </div>
             
-            return `
-                <div class="video-gallery-section">
-                    <h2 class="video-gallery-title">Video Intelligence: ${displayName} on ${domainIdentifier}</h2>
-                    <div class="video-grid">
-                        ${videos.map(v => `
-                            <div class="video-item">
-                                <iframe
-                                  src="https://www.youtube.com/embed/${v.id}"
-                                  loading="lazy"
-                                  allowfullscreen
-                                  style="width:100%;max-width:100%;aspect-ratio:9/16;border:0;display:block;margin:0 auto;border-radius:8px;">
-                                </iframe>
-                                <div class="video-label">${v.label} via ${domainIdentifier}</div>
+            <div class="monitor-bar">
+                <h2 style="font-size:0.8rem; font-weight:500; margin:0; color:#8b949e; width:100%; text-align:center;">${seoData.subTitle2} · Multi-Platform Intelligence</h2>
+            </div>
+            
+            <div class="intel-grid">
+                <!-- Left Panel: Profile Intel -->
+                <div>
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">[P]</div>
+                            <div class="profile-info">
+                                <h3>${seoData.subTitle1}</h3>
+                                <p>Subject Reference · Status: Active Monitoring</p>
                             </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        };
-        
-        const updateSEO = () => {
-            const mainTitle = `${displayName} on ${domainIdentifier}`;
-            document.title = mainTitle;
-            
-            let md = document.getElementById('dynamic-description'); 
-            if(md) md.setAttribute('content', `Complete digital intelligence dashboard for ${displayName} on ${domainIdentifier}. Multi-platform monitoring and content documentation.`);
-            
-            let can = document.getElementById('dynamic-canonical'); 
-            if(can) can.setAttribute('href', window.location.href);
-        };
-        
-        const renderPage = () => {
-            updateSEO();
-            const totalPlatforms = PLATFORMS.length;
-            const activePlatforms = Object.values(PLATFORM_STATS).filter(v => v === 'Active').length;
-            
-            document.getElementById('app').innerHTML = `
-                <div class="monitor-header">
-                    <div class="header-top">
-                        <div class="logo-area">
-                            <div class="logo-icon">I</div>
-                            <div class="logo-text">Intel<span>Center</span></div>
                         </div>
-                        <div class="status-badge"><span class="dot"></span>Monitoring Active &middot; Multi-platform</div>
+                        <div class="info-row"><span class="info-label">Digital Footprint</span><span class="info-value">Documented</span></div>
+                        <div class="info-row"><span class="info-label">Content Archive</span><span class="info-value">Verified Collection</span></div>
+                        <div class="info-row"><span class="info-label">Platform Presence</span><span class="info-value">${activePlatforms} Platforms</span></div>
+                        <div class="info-row"><span class="info-label">Status</span><span class="info-value">Active Monitoring</span></div>
+                        <div class="platform-grid">${renderPlatformGrid()}</div>
                     </div>
-                    <h1 style="font-size:1.2rem;font-weight:700;margin:0 0 14px 0;color:#e1e4e8;letter-spacing:-0.5px;">${displayName} on ${domainIdentifier}</h1>
-                    <div class="header-stats">
-                        <div class="stat-box"><div class="stat-label">PLATFORMS MONITORED</div><div class="stat-number">${totalPlatforms}</div><div class="stat-trend">Comprehensive coverage</div></div>
-                        <div class="stat-box"><div class="stat-label">ACTIVE SOURCES</div><div class="stat-number">${activePlatforms}</div><div class="stat-trend">Real-time tracking</div></div>
-                        <div class="stat-box"><div class="stat-label">CONTENT STATUS</div><div class="stat-number">Indexed</div><div class="stat-trend">Verified &amp; archived</div></div>
-                        <div class="stat-box"><div class="stat-label">MONITORING</div><div class="stat-number">Active</div><div class="stat-trend">Continuous</div></div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">REAL-TIME ALERTS</div>
+                        <div class="alert-list">${renderAlerts()}</div>
                     </div>
                 </div>
                 
-                <div class="monitor-bar">
-                    <h2>Monitoring ${displayName} on ${domainIdentifier} &middot; Multi-Platform Intelligence</h2>
-                </div>
-                
-                <!-- BANNER 01: SEBELUM INTEL GRID -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-desktop">
-                        {% include /ads/banner/01.html %}
-                    </div>
-                    <div class="ad-box ad-mobile">
-                        {% include /ads/banner/04.html %}
-                    </div>
-                </div>
-                
-                <div class="intel-grid">
-                    <!-- Left Panel -->
-                    <div>
-                        <div class="profile-card">
-                            <div class="profile-header">
-                                <div class="profile-avatar">P</div>
-                                <div class="profile-info">
-                                    <h3>${displayName} Intelligence Center</h3>
-                                    <p>Subject Reference &middot; Status: Active Monitoring</p>
-                                </div>
-                            </div>
-                            <div class="info-row"><span class="info-label">Digital Footprint</span><span class="info-value">Documented</span></div>
-                            <div class="info-row"><span class="info-label">Content Archive</span><span class="info-value">Verified Collection</span></div>
-                            <div class="info-row"><span class="info-label">Platform Presence</span><span class="info-value">${activePlatforms} Platforms</span></div>
-                            <div class="info-row"><span class="info-label">Status</span><span class="info-value">Active Monitoring</span></div>
-                            <div class="platform-grid">${renderPlatformGrid()}</div>
+                <!-- Center Panel: Intel Feed -->
+                <div class="feed-panel">
+                    <div class="feed-header">
+                        <h2 style="font-size:0.8rem; font-weight:600; margin:0; text-transform:uppercase; letter-spacing:1px;">INTELLIGENCE FEED: ${nameUpper}</h2>
+                        <div class="feed-filters">
+                            <span class="filter-pill filter-active">All</span>
+                            <span class="filter-pill">Verified</span>
+                            <span class="filter-pill">Archived</span>
+                            <span class="filter-pill">Documented</span>
                         </div>
-                        
-                        <div class="alert-card">
-                            <div class="alert-title">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                                REAL-TIME ALERTS
-                            </div>
-                            <div class="alert-list">${renderAlerts()}</div>
+                    </div>
+                    <div id="feedContainer">
+                        ${INTEL_CARDS.map((card, i) => renderIntelCard(card, i)).join('')}
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Metrics -->
+                <div>
+                    <div class="alert-card">
+                        <div class="alert-title">TRENDING PLATFORMS</div>
+                        <div>${renderTrending()}</div>
+                    </div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">SOURCE DISTRIBUTION</div>
+                        <div class="source-stats">${renderSourceStats()}</div>
+                        <div style="margin-top:16px">
+                            <div class="info-row"><span>Coverage</span><span>Comprehensive</span></div>
+                            <div class="info-row"><span>Verification</span><span>Complete</span></div>
+                            <div class="info-row"><span>Archive Status</span><span>Preserved</span></div>
                         </div>
                     </div>
                     
-                    <!-- Center Panel -->
-                    <div class="feed-panel">
-                        <div class="feed-header">
-                            <h2 class="feed-title">INTELLIGENCE FEED: ${nameUpper}</h2>
-                            <div class="feed-filters">
-                                <span class="filter-pill filter-active">All</span>
-                                <span class="filter-pill">Verified</span>
-                                <span class="filter-pill">Archived</span>
-                                <span class="filter-pill">Documented</span>
-                            </div>
-                        </div>
-                        <div id="feedContainer">
-                            ${INTEL_CARDS.map((card, i) => renderIntelCard(card, i)).join('')}
-                        </div>
-                    </div>
-                    
-                    <!-- Right Panel -->
-                    <div>
-                        <div class="alert-card">
-                            <div class="alert-title">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                                TRENDING PLATFORMS
-                            </div>
-                            <div>${renderTrending()}</div>
-                        </div>
-                        
-                        <div class="alert-card">
-                            <div class="alert-title">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-                                SOURCE DISTRIBUTION
-                            </div>
-                            <div class="source-stats">${renderSourceStats()}</div>
-                            <div style="margin-top:12px">
-                                <div class="info-row"><span>Coverage</span><span>Comprehensive</span></div>
-                                <div class="info-row"><span>Verification</span><span>Complete</span></div>
-                                <div class="info-row"><span>Archive Status</span><span>Preserved</span></div>
-                            </div>
-                        </div>
-                        
-                        <div class="alert-card">
-                            <div class="alert-title">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                                RELATED INTEL
-                            </div>
-                            <div>${renderRelatedIntel()}</div>
+                    <div class="alert-card">
+                        <div class="alert-title">RELATED INTEL</div>
+                        <div class="trend-list">
+                            ${renderRelatedIntel()}
                         </div>
                     </div>
                 </div>
-                
-                <!-- BANNER 02: SETELAH INTEL GRID -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-both">
-                        {% include /ads/banner/02.html %}
-                    </div>
-                </div>
-                
-                ${renderVideoGallery()}
-                
-                <!-- BANNER 08: SEBELUM FOOTER -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-both">
-                        {% include /ads/banner/08.html %}
-                    </div>
-                </div>
-                
-                <div class="dashboard-footer">
-                    IntelCenter &middot; ${displayName} Digital Monitoring on ${domainIdentifier} &middot; Multi-Platform Intelligence &middot; Evergreen Archive
-                </div>
-            `;
+            </div>
             
-            document.querySelectorAll('[data-url]').forEach(el => {
-                el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
-            });
-            document.querySelectorAll('.intel-card, .alert-item, .trend-item').forEach(card => {
-                card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
-            });
-        };
+            ${renderVideoGallery()}
+            
+            <div class="dashboard-footer">
+                IntelCenter · ${displayName} Digital Monitoring on ${domainIdentifier} · Multi-Platform Intelligence · Evergreen Archive
+            </div>
+        `;
         
-        renderPage();
-    })();
-    </script>
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.intel-card, .alert-item, .trend-item').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    renderPage();
+})();
+</script>
 
-    <br>
-    {% include footer.html %}
-    {% include /ads/gobloggugel/sosmed.html %}
-
-</body>
+{% include /kw/p/edition-a/edition-a01.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
 </html>
