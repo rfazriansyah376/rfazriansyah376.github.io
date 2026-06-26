@@ -7,651 +7,562 @@ permalink: /edition-a01/
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="referrer" content="always">
     <title id="dynamic-title">Digital Intelligence Dashboard</title>
     <meta id="dynamic-description" name="description" content="Complete digital intelligence and monitoring dashboard. Real-time data aggregation.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-b01/">
-    
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/edition-a02/">
     <style>
-        /* ===== RESET & BASE ===== */
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:#030508}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:#030508;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:#dde1e8;line-height:1.5;-webkit-font-smoothing:antialiased;
+        :root {
+            --primary: #ff4444;
+            --primary-rgb: 255, 68, 68;
+            --primary-light: #ff8844;
+            --primary-dark: #cc0000;
         }
-
-        :root{
-            --accent:#00d4aa;
-            --accent-rgb:0,212,170;
-            --accent-glow:rgba(0,212,170,0.3);
-            --surface:#0a0f15;
-            --surface2:#111820;
-            --border:rgba(255,255,255,0.06);
-            --text-muted:#6b7380;
-        }
-
-        /* ===== TOP BAR ===== */
-        .topbar{
-            width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:rgba(3,5,8,.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-            border-bottom:1px solid var(--border);padding:10px 16px;
-            display:flex;align-items:center;gap:12px;
-        }
-        .topbar-avatar{flex-shrink:0;line-height:0}
-        .topbar-avatar svg{width:32px;height:32px}
-        .topbar-info{flex:1;min-width:0}
-        .topbar-title{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .topbar-sub{font-size:10px;color:var(--text-muted)}
-        .topbar-actions{display:flex;gap:8px;flex-shrink:0}
-        .topbar-btn{
-            width:38px;height:38px;border-radius:50%;border:1px solid var(--border);
-            background:rgba(255,255,255,0.03);cursor:pointer;display:flex;
-            align-items:center;justify-content:center;transition:all .2s;
-        }
-        .topbar-btn:active{background:rgba(255,255,255,0.08);transform:scale(.94)}
-        .topbar-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
-
-        /* ===== SLIDE PANEL (desktop) ===== */
-        .slide-panel{
-            display:none;position:fixed;top:56px;right:12px;z-index:999;
-            background:var(--surface2);border:1px solid var(--border);border-radius:16px;
-            padding:8px;min-width:210px;box-shadow:0 16px 48px rgba(0,0,0,.7);
-        }
-        .slide-panel.open{display:block}
-        .slide-panel a{
-            display:flex;align-items:center;gap:10px;padding:12px 14px;
-            color:#bbb;text-decoration:none;font-size:14px;border-radius:10px;
-            transition:all .15s;
-        }
-        .slide-panel a:active{background:rgba(255,255,255,0.04);color:#fff}
-        .slide-panel a svg{width:16px;height:16px;flex-shrink:0}
-
-        /* ===== DESKTOP NAV INLINE ===== */
-        .desktop-nav{display:none}
-
-        /* ===== BOTTOM SHEET (mobile) ===== */
-        .bottom-sheet{
-            position:fixed;bottom:0;left:0;right:0;z-index:998;
-            background:rgba(10,15,21,.97);backdrop-filter:blur(20px);
-            border-top:1px solid var(--border);padding:8px 12px 12px;
-            display:flex;justify-content:space-around;align-items:center;
-        }
-        .bottom-sheet a{
-            display:flex;flex-direction:column;align-items:center;gap:3px;
-            color:var(--text-muted);text-decoration:none;font-size:10px;
-            padding:6px 10px;border-radius:10px;transition:all .15s;
-        }
-        .bottom-sheet a.active{color:var(--accent)}
-        .bottom-sheet a svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#060a10;min-height:50px;
-        }
-        .ad-box ins{max-width:100%}
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-        .ad-break{padding:12px 0;background:#060a10;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-        .ad-break:first-child{margin-top:52px}
-        .ad-inline{margin:20px 0;padding:12px 0;max-width:100%;overflow:hidden;background:#060a10;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-
-        /* ===== MAIN CONTAINER ===== */
-        .main-wrap{
-            display:flex;flex-direction:column;max-width:1200px;margin:0 auto;padding:0 12px 80px;
-        }
-
-        /* ===== HERO STRIP ===== */
-        .hero-strip{
-            background:linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
-            border:1px solid var(--border);border-radius:20px;padding:20px 16px;margin:16px 0;
-            position:relative;overflow:hidden;
-        }
-        .hero-strip::before{
-            content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;
-            background:var(--accent-glow);border-radius:50%;filter:blur(60px);opacity:.4;
-        }
-        .hero-strip h1{font-size:1.3rem;font-weight:800;margin:0 0 6px;color:#fff;position:relative}
-        .hero-strip .hero-sub{font-size:0.7rem;color:var(--text-muted);position:relative}
-        .hero-stats{
-            display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px;position:relative;
-        }
-        .hero-stat{
-            background:rgba(255,255,255,0.03);border-radius:12px;padding:12px;
-            display:flex;align-items:center;gap:10px;
-        }
-        .hero-stat-icon{
-            width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
-            justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;
-        }
-        .hero-stat-icon.accent{background:var(--accent);color:#000}
-        .hero-stat-icon.muted{background:rgba(255,255,255,0.08);color:#fff}
-        .hero-stat-val{font-size:1.1rem;font-weight:700;color:#fff}
-        .hero-stat-lbl{font-size:0.55rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px}
-
-        /* ===== CONTENT GRID ===== */
-        .content-grid{
-            display:flex;flex-direction:column;gap:20px;
-        }
-
-        /* ===== CARD HORIZONTAL ===== */
-        .card-h{
-            background:var(--surface);border:1px solid var(--border);border-radius:16px;
-            padding:16px;display:flex;gap:14px;cursor:pointer;transition:all .2s;
-            align-items:flex-start;
-        }
-        .card-h:active{background:var(--surface2);transform:scale(.99)}
-        .card-h-left{
-            width:44px;height:44px;border-radius:12px;display:flex;align-items:center;
-            justify-content:center;font-weight:800;font-size:18px;flex-shrink:0;
-        }
-        .card-h-body{flex:1;min-width:0}
-        .card-h-source{font-size:0.65rem;color:var(--accent);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-        .card-h-title{font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3}
-        .card-h-desc{font-size:0.7rem;color:#99a0ab;line-height:1.5;margin-bottom:8px}
-        .card-h-meta{display:flex;gap:12px;flex-wrap:wrap}
-        .card-h-tag{font-size:0.55rem;padding:3px 8px;border-radius:10px;background:rgba(255,255,255,0.04);color:var(--text-muted)}
-        .card-h-badge{font-size:0.6rem;color:var(--accent);font-weight:600}
-
-        /* ===== SECTION HEADER ===== */
-        .section-head{
-            display:flex;align-items:center;gap:10px;margin:20px 0 12px;
-        }
-        .section-head svg{width:20px;height:20px;stroke:var(--accent);flex-shrink:0}
-        .section-head h2{font-size:0.9rem;font-weight:700;color:#fff;margin:0;text-transform:uppercase;letter-spacing:1px}
-
-        /* ===== STAT ROW ===== */
-        .stat-row{
-            display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;
-        }
-        .stat-pill{
-            background:var(--surface2);border:1px solid var(--border);border-radius:12px;
-            padding:12px;text-align:center;
-        }
-        .stat-pill-val{font-size:1rem;font-weight:700;color:var(--accent)}
-        .stat-pill-lbl{font-size:0.55rem;color:var(--text-muted);text-transform:uppercase;margin-top:2px}
-
-        /* ===== PLATFORM CHIPS ===== */
-        .chip-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-        .chip{
-            background:rgba(255,255,255,0.03);border:1px solid var(--border);
-            padding:6px 10px;border-radius:20px;font-size:0.6rem;color:#ccc;
-            display:flex;align-items:center;gap:5px;
-        }
-        .chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .chip-dot.live{background:#10b981;animation:pulse 2s infinite}
-        @keyframes pulse{0%{opacity:1}50%{opacity:.3}100%{opacity:1}}
-
-        /* ===== ALERT ROW ===== */
-        .alert-row{
-            display:flex;align-items:center;gap:10px;padding:10px 0;
-            border-bottom:1px solid var(--border);cursor:pointer;
-        }
-        .alert-row-icon{
-            width:28px;height:28px;border-radius:8px;background:rgba(var(--accent-rgb),0.12);
-            display:flex;align-items:center;justify-content:center;flex-shrink:0;
-        }
-        .alert-row-text{font-size:0.7rem;color:#ccc;flex:1}
-        .alert-row-time{font-size:0.55rem;color:var(--text-muted)}
-
-        /* ===== VIDEO STRIP ===== */
-        .video-strip{
-            background:var(--surface);border:1px solid var(--border);border-radius:20px;
-            padding:16px;margin-top:16px;
-        }
-        .video-strip h2{font-size:0.8rem;font-weight:700;color:var(--accent);margin:0 0 12px;text-transform:uppercase}
-        .video-scroll{
-            display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;
-            -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
-        }
-        .video-scroll::-webkit-scrollbar{height:3px}
-        .video-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
-        .video-card{
-            flex:0 0 85vw;max-width:320px;scroll-snap-align:start;
-            background:var(--surface2);border-radius:12px;padding:8px;text-align:center;
-        }
-        .video-card iframe{
-            width:100%;aspect-ratio:9/16;border:0;border-radius:8px;display:block;
-        }
-        .video-card-label{font-size:0.6rem;color:var(--text-muted);margin-top:8px}
-
-        /* ===== FOOTER ===== */
-        .dash-footer{
-            text-align:center;padding:20px;margin-top:20px;
-            border-top:1px solid var(--border);font-size:0.6rem;color:var(--text-muted);
-        }
-
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
-        @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-            .ad-break:first-child{margin-top:54px}
-            .main-wrap{padding:0 16px 24px}
-            .hero-stats{grid-template-columns:repeat(4,1fr)}
-            .stat-row{grid-template-columns:repeat(4,1fr)}
-            .video-card{flex:0 0 45vw;max-width:280px}
-            .content-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-            .card-h{flex-direction:column;align-items:center;text-align:center}
-            .card-h-left{width:56px;height:56px;font-size:22px}
-            .bottom-sheet{display:none}
-        }
-
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
-        @media(min-width:900px){
-            body{max-width:100%}
-            .topbar{left:50%;transform:translateX(-50%);max-width:1200px;border-radius:0 0 16px 16px}
-            .ad-break:first-child{margin-top:56px}
-            .main-wrap{flex-direction:row;gap:24px;padding:0 20px 40px}
-            .content-grid{flex:1;display:flex;flex-direction:column;gap:16px}
-            .card-h{flex-direction:row;text-align:left;align-items:center}
-            .card-h-left{width:48px;height:48px;font-size:20px}
-            .sticky-col{
-                width:300px;flex-shrink:0;position:sticky;top:70px;
-                align-self:flex-start;display:flex;flex-direction:column;gap:16px;
-            }
-            .hero-strip{padding:24px 20px}
-            .hero-strip h1{font-size:1.5rem}
-            .video-card{flex:0 0 280px}
-            .bottom-sheet{display:none}
-            .slide-panel{display:none!important}
-            .topbar-btn.menu-trigger{display:none}
-
-            .desktop-nav{
-                display:flex;gap:4px;padding:0 0 8px;margin:0;
-            }
-            .desktop-nav a{
-                padding:6px 12px;color:#999;text-decoration:none;font-size:12px;
-                border-radius:6px;transition:all .15s;
-            }
-            .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,0.04)}
-        }
-
-        @media(min-width:1100px){
-            .sticky-col{width:340px}
-            .video-card{flex:0 0 300px}
-        }
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0a0c10;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e1e4e8}
+        
+        .dashboard-container{max-width:1400px;margin:0 auto;padding:20px}
+        
+        .monitor-header{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px 24px;margin-bottom:24px}
+        .header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+        .logo-area{display:flex;align-items:center;gap:12px}
+        .logo-icon{font-size:24px}
+        .logo-text{font-size:1.2rem;font-weight:700;letter-spacing:-0.5px}
+        .logo-text span{color:var(--primary)}
+        .status-badge{background:#1a2332;padding:6px 14px;border-radius:30px;font-size:0.7rem;border-left:2px solid #10b981}
+        .status-badge .dot{display:inline-block;width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+        @keyframes pulse{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}
+        
+        .header-stats{display:flex;gap:32px;flex-wrap:wrap}
+        .stat-box{background:#1a1f2e;border-radius:12px;padding:12px 20px;min-width:120px}
+        .stat-label{font-size:0.65rem;text-transform:uppercase;color:#8b949e;letter-spacing:1px}
+        .stat-number{font-size:1.3rem;font-weight:700;color:var(--primary);font-family:monospace}
+        .stat-trend{font-size:0.6rem;color:#10b981;margin-top:4px}
+        
+        .monitor-bar{background:#0f1117;border:1px solid #1f2329;border-radius:12px;padding:12px 20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .monitor-label{font-size:0.7rem;color:#8b949e}
+        .monitor-value{font-family:monospace;font-size:0.8rem;color:var(--primary)}
+        .refresh-indicator{font-size:0.65rem;color:#8b949e}
+        
+        .intel-grid{display:grid;grid-template-columns:300px 1fr 300px;gap:20px}
+        
+        .profile-card{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px;margin-bottom:20px}
+        .profile-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #1f2329}
+        .profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;font-size:28px}
+        .profile-info h3{font-size:1rem;margin-bottom:4px}
+        .profile-info p{font-size:0.65rem;color:#8b949e}
+        
+        .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;font-size:0.7rem}
+        .info-label{color:#8b949e}
+        .info-value{font-weight:500;color:var(--primary)}
+        
+        .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+        .platform-item{background:#1a1f2e;border-radius:8px;padding:8px;text-align:center}
+        .platform-icon{font-size:18px}
+        .platform-name{font-size:0.6rem;margin-top:4px;color:#8b949e}
+        .platform-status{font-size:0.55rem;margin-top:2px}
+        .status-positive{color:#10b981}
+        .status-warning{color:var(--primary-light)}
+        
+        .feed-panel{background:#0f1117;border:1px solid #1f2329;border-radius:16px;overflow:hidden}
+        .feed-header{padding:16px 20px;border-bottom:1px solid #1f2329;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .feed-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+        .feed-filters{display:flex;gap:12px}
+        .filter-pill{background:#1a1f2e;padding:4px 12px;border-radius:20px;font-size:0.65rem;cursor:pointer}
+        .filter-active{background:var(--primary);color:white}
+        
+        .intel-card{border-bottom:1px solid #1f2329;padding:20px;cursor:pointer;transition:background 0.2s}
+        .intel-card:hover{background:#12161f}
+        .card-source{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+        .source-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+        .source-tiktok{background:#000;color:#fff}
+        .source-onlyfans{background:#00aff0;color:#fff}
+        .source-instagram{background:#d62976;color:#fff}
+        .source-twitter{background:#1da1f2;color:#fff}
+        .source-telegram{background:#0088cc;color:#fff}
+        .source-discord{background:#5865f2;color:#fff}
+        .source-info{flex:1}
+        .source-name{font-size:0.75rem;font-weight:600}
+        .source-time{font-size:0.6rem;color:#8b949e}
+        .source-badge{background:#1a2332;padding:2px 8px;border-radius:12px;font-size:0.55rem;color:var(--primary-light)}
+        
+        .card-title{font-size:0.9rem;font-weight:600;margin-bottom:12px;line-height:1.4}
+        .card-desc{font-size:0.75rem;color:#b4b9c2;line-height:1.5;margin-bottom:12px}
+        
+        .media-preview{background:#1a1f2e;border-radius:12px;margin:12px 0;padding:12px;display:flex;align-items:center;gap:12px}
+        .media-icon{width:40px;height:40px;background:#2a2f3e;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+        .media-info{flex:1}
+        .media-title{font-size:0.7rem;font-weight:600}
+        .media-meta{font-size:0.6rem;color:#8b949e}
+        .media-size{font-size:0.6rem;color:var(--primary)}
+        
+        .engagement-stats{display:flex;gap:16px;margin:12px 0;padding:8px 0;border-top:1px solid #1f2329;border-bottom:1px solid #1f2329}
+        .eng-item{font-size:0.65rem;color:#8b949e}
+        
+        .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+        .tag{background:#1a2332;padding:2px 10px;border-radius:14px;font-size:0.6rem;color:#8b949e}
+        
+        .alert-card{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px}
+        .alert-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .alert-list{display:flex;flex-direction:column;gap:12px}
+        .alert-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #1f2329;cursor:pointer}
+        .alert-icon{width:28px;height:28px;background:rgba(var(--primary-rgb), 0.125);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+        .alert-info{flex:1}
+        .alert-text{font-size:0.7rem;font-weight:500}
+        .alert-time{font-size:0.55rem;color:#8b949e}
+        
+        .trend-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1f2329;cursor:pointer}
+        .trend-name{font-size:0.7rem}
+        .trend-value{font-size:0.65rem;color:var(--primary)}
+        
+        .source-stats{display:flex;gap:12px;margin-top:12px}
+        .source-stat{flex:1;text-align:center;padding:8px;background:#1a1f2e;border-radius:8px}
+        .source-stat-count{font-size:1rem;font-weight:700;color:var(--primary)}
+        .source-stat-label{font-size:0.55rem;color:#8b949e}
+        
+        .video-gallery-section{background:#0f1117;border:1px solid #1f2329;border-radius:16px;padding:20px;margin-top:24px}
+        .video-gallery-title{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;color:var(--primary)}
+        .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;justify-items:center}
+        .video-item{background:#1a1f2e;border-radius:12px;padding:12px;text-align:center;width:100%}
+        .video-label{font-size:0.65rem;color:#8b949e;margin-top:8px;text-align:center}
+        
+        .dashboard-footer{margin-top:24px;padding:20px;border-top:1px solid #1f2329;text-align:center;font-size:0.65rem;color:#8b949e}
+        
+        @media(max-width:1100px){.intel-grid{grid-template-columns:1fr}.profile-card{order:2}.right-panel{order:3}.feed-panel{order:1}}
+        @media(max-width:600px){.dashboard-container{padding:12px}.header-stats{gap:12px}.stat-box{padding:8px 12px}.video-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
     </style>
 {% include head.html %}
-</head>
-<body>
+  </head>
+<body><div loading="lazy">
+<div class="dashboard-container" id="app"><div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#8b949e">Loading Intelligence Dashboard...</div></div>
 
-    <!-- TOP BAR -->
-    <header class="topbar">
-        <div id="topAvatar" class="topbar-avatar"></div>
-        <div class="topbar-info">
-            <div class="topbar-title">IntelCenter</div>
-            <div id="topSub" class="topbar-sub"></div>
-        </div>
-        <div class="topbar-actions">
-            <button class="topbar-btn menu-trigger" id="menuToggle" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-            </button>
-        </div>
-    </header>
+<script>
+(function(){
+    
+    const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter/X','Telegram','Discord','Reddit','YouTube','Snapchat','Facebook','WhatsApp','Signal','Mega','Google Drive','Dropbox'];
+    
+    const PLATFORM_CONFIG = {
+        'TikTok': { icon: 'T', bg: '#000', color: '#fff', class: 'source-tiktok' },
+        'OnlyFans': { icon: 'O', bg: '#00aff0', color: '#fff', class: 'source-onlyfans' },
+        'Instagram': { icon: 'I', bg: '#d62976', color: '#fff', class: 'source-instagram' },
+        'Twitter/X': { icon: 'X', bg: '#1da1f2', color: '#fff', class: 'source-twitter' },
+        'Telegram': { icon: 'T', bg: '#0088cc', color: '#fff', class: 'source-telegram' },
+        'Discord': { icon: 'D', bg: '#5865f2', color: '#fff', class: 'source-discord' },
+        'Reddit': { icon: 'R', bg: '#ff4500', color: '#fff', class: 'source-reddit' },
+        'YouTube': { icon: 'Y', bg: '#ff0000', color: '#fff', class: 'source-youtube' }
+    };
+    
+    const STOP_WORDS = [
+        'leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo',
+        'exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord'
+    ];
+    
+    // ========== EKSTRAK QUERY & DOMAIN/SUBDOMAIN ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    let rawQuery = urlParams.get('q');
+    if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
+    rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
+    
+    let baseTopic = rawQuery.toLowerCase();
+    STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
+    baseTopic = baseTopic.replace(/\s+/g,' ').trim();
+    if(baseTopic.length < 2) baseTopic = rawQuery;
+    
+    const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    const displayName = formatTopic(baseTopic);
+    const nameLower = displayName.toLowerCase();
+    const nameUpper = displayName.toUpperCase();
 
-    <!-- SLIDE PANEL -->
-    <nav id="menuPanel" class="slide-panel">
-        <a href="/">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            Home
-        </a>
-        <a href="/contact/">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Contact
-        </a>
-        <a href="/privacy-policy/">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Privacy Policy
-        </a>
-        <a href="/terms-and-conditions/">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Terms & Conditions
-        </a>
-    </nav>
+    const hostname = window.location.hostname;
+    let domainIdentifier = '';
+    
+    if (hostname.includes('.')) {
+        const parts = hostname.split('.');
+        if (parts.length > 2) {
+            let subParts = parts.slice(0, -2);
+            let subRaw = subParts.join(' ');
+            domainIdentifier = subRaw.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            domainIdentifier = domainIdentifier + " Sub";
+        } else {
+            let domainRaw = parts[0];
+            domainIdentifier = domainRaw.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+    } else {
+        domainIdentifier = "This Site";
+    }
+    
+    // ========== DATA STATIS EVERGREEN ==========
+    const PLATFORM_STATS = {
+        'TikTok': 'Active', 'OnlyFans': 'Active', 'Instagram': 'Active', 
+        'Twitter/X': 'Active', 'Telegram': 'Active', 'Discord': 'Active',
+        'Reddit': 'Active', 'YouTube': 'Active', 'Snapchat': 'Monitored',
+        'Facebook': 'Monitored', 'WhatsApp': 'Monitored', 'Signal': 'Monitored'
+    };
 
-    <!-- BOTTOM SHEET (mobile) -->
-    <nav class="bottom-sheet" id="bottomNav">
-        <a href="/" class="active">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            Home
-        </a>
-        <a href="/tags/">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            Search
-        </a>
-        <a href="/categories/">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-            Categories
-        </a>
-        <a href="/contact/">
-            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Contact
-        </a>
-    </nav>
+    const INTEL_CARDS = [
+        {
+            platform: 'TikTok',
+            headline: 'Exclusive Content Collection Available',
+            desc: 'A comprehensive collection of digital content spanning multiple platforms. This archive contains verified media assets and documented online presence materials.',
+            tags: ['tiktok', 'exclusive', 'verified', 'collection'],
+            format: 'MP4'
+        },
+        {
+            platform: 'OnlyFans',
+            headline: 'Premium Content Archive Discovered',
+            desc: 'Digital forensic analysis confirms the authenticity of this material. Each file has been verified against known sources and timestamps.',
+            tags: ['onlyfans', 'premium', 'archived', 'verified'],
+            format: 'JPG'
+        },
+        {
+            platform: 'Instagram',
+            headline: 'Complete Media Gallery Documented',
+            desc: 'The material has been preserved from multiple sources. This archive represents a complete documentation of publicly available content.',
+            tags: ['instagram', 'gallery', 'documented', 'media'],
+            format: 'PNG'
+        },
+        {
+            platform: 'Twitter/X',
+            headline: 'Social Media Footprint Cataloged',
+            desc: 'A thorough cataloging of social media activity and associated media. All content has been indexed and verified for authenticity.',
+            tags: ['twitter', 'footprint', 'cataloged', 'social'],
+            format: 'MP4'
+        },
+        {
+            platform: 'Telegram',
+            headline: 'Channel Content Inventory Complete',
+            desc: 'Complete inventory of channel content and shared media. The collection has been organized and preserved for reference purposes.',
+            tags: ['telegram', 'channel', 'inventory', 'organized'],
+            format: 'ZIP'
+        },
+        {
+            platform: 'Discord',
+            headline: 'Server Media Archive Compiled',
+            desc: 'A compiled archive of server media and shared content. All files have been categorized and stored for long-term preservation.',
+            tags: ['discord', 'server', 'compiled', 'preserved'],
+            format: 'MOV'
+        },
+        {
+            platform: 'Reddit',
+            headline: 'Community Content Aggregated',
+            desc: 'Aggregated content from community discussions and shared media. This collection provides a comprehensive overview of online presence.',
+            tags: ['reddit', 'community', 'aggregated', 'overview'],
+            format: 'JPG'
+        },
+        {
+            platform: 'YouTube',
+            headline: 'Video Content Library Archived',
+            desc: 'An archived library of video content and associated metadata. All materials have been preserved in their original quality.',
+            tags: ['youtube', 'video', 'library', 'archived'],
+            format: 'MP4'
+        },
+        {
+            platform: 'Snapchat',
+            headline: 'Story Content Documentation',
+            desc: 'Documentation of story content and ephemeral media. Captured and preserved before expiration for reference purposes.',
+            tags: ['snapchat', 'story', 'documented', 'ephemeral'],
+            format: 'MP4'
+        },
+        {
+            platform: 'Facebook',
+            headline: 'Profile Media Archive Secured',
+            desc: 'A secured archive of profile media and shared content. The collection has been organized by date and content type.',
+            tags: ['facebook', 'profile', 'secured', 'organized'],
+            format: 'JPG'
+        }
+    ];
 
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("topSub").textContent = clean.replace(/\b\w/g, function(c){return c.toUpperCase();});
-    })();
-    (function(){
-        var btn = document.getElementById("menuToggle");
-        var panel = document.getElementById("menuPanel");
-        if(!btn || !panel) return;
-        btn.addEventListener("click", function(e){e.stopPropagation();panel.classList.toggle("open");});
-        document.addEventListener("click", function(e){if(!panel.contains(e.target)&&!btn.contains(e.target))panel.classList.remove("open");});
-        panel.addEventListener("click", function(e){e.stopPropagation();});
-    })();
-    (function(){
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if(fullName.toLowerCase()==="www") fullName = parts[1] || fullName;
-        function h(s){var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName), clean = fullName.replace(/-/g," "), w = clean.split(" "), init = "";
-        for(var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("topAvatar").innerHTML = "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"16\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"16\" y=\"22\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-    })();
-    </script>
+    const ALERT_ITEMS = [
+        { text: 'Content monitoring active across all platforms', time: 'Ongoing' },
+        { text: 'Digital footprint analysis in progress', time: 'Active' },
+        { text: 'Archive verification system operational', time: 'Running' },
+        { text: 'Multi-platform tracking enabled', time: 'Continuous' },
+        { text: 'Content preservation system online', time: 'Active' }
+    ];
 
-    <!-- BANNER 06: TOP -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">{% include /ads/banner/06.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-    </div>
+    const TRENDING_PLATFORMS = [
+        { name: 'TikTok', value: 'High activity detected' },
+        { name: 'OnlyFans', value: 'Content updates tracked' },
+        { name: 'Instagram', value: 'Media posts monitored' },
+        { name: 'Telegram', value: 'Channel activity noted' },
+        { name: 'Discord', value: 'Server content indexed' },
+        { name: 'YouTube', value: 'Video uploads tracked' }
+    ];
 
-    <!-- DESKTOP NAV -->
-    <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/terms-and-conditions/">Terms & Conditions</a>
-    </nav>
+    const SOURCE_DISTRIBUTION = [
+        { name: 'TikTok', count: 'Primary' },
+        { name: 'Instagram', count: 'Primary' },
+        { name: 'Telegram', count: 'Secondary' },
+        { name: 'Discord', count: 'Secondary' }
+    ];
 
-    <nav>{% include /kw/p/edition-a/edition-a01.html %}</nav>
-
-    <!-- MAIN -->
-    <div class="main-wrap">
-        <div class="content-grid" id="app">
-            <div style="padding:40px;text-align:center;color:var(--text-muted)">Loading Intelligence Dashboard...</div>
-        </div>
-        <aside class="sticky-col" id="stickyCol"></aside>
-    </div>
-
-    <!-- BANNER 07: BOTTOM -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">{% include /ads/banner/07.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-    </div>
-
-    <script>
-    (function(){
+    const RELATED_INTEL = [
+        { name: 'Content Archives', value: 'Available' },
+        { name: 'Media Libraries', value: 'Indexed' },
+        { name: 'Digital Footprints', value: 'Documented' },
+        { name: 'Platform Profiles', value: 'Tracked' }
+    ];
+    
+    // ========== GENERATE LINK ==========
+    const genLink = (platform) => {
+        let newQ = `${nameLower} content ${platform.toLowerCase()}`;
+        return `/edition-a02/?q=${encodeURIComponent(newQ)}`;
+    };
+    
+    // ========== RENDER FUNCTIONS ==========
+    const renderIntelCard = (card, idx) => {
+        let platformConfig = PLATFORM_CONFIG[card.platform] || { icon: 'P', bg: '#1f2329', color: '#fff', class: '' };
         
-        const PLATFORMS = ['TikTok','OnlyFans','Instagram','Twitter/X','Telegram','Discord','Reddit','YouTube','Snapchat','Facebook','WhatsApp','Signal','Mega','Google Drive','Dropbox'];
-        
-        const PLATFORM_CONFIG = {
-            'TikTok': { icon: 'T', bg: '#000', color: '#fff' },
-            'OnlyFans': { icon: 'O', bg: '#00aff0', color: '#fff' },
-            'Instagram': { icon: 'I', bg: '#d62976', color: '#fff' },
-            'Twitter/X': { icon: 'X', bg: '#1da1f2', color: '#fff' },
-            'Telegram': { icon: 'T', bg: '#0088cc', color: '#fff' },
-            'Discord': { icon: 'D', bg: '#5865f2', color: '#fff' },
-            'Reddit': { icon: 'R', bg: '#ff4500', color: '#fff' },
-            'YouTube': { icon: 'Y', bg: '#ff0000', color: '#fff' }
-        };
-        
-        const STOP_WORDS = ['leaked','leak','leaks','archive','collection','dump','vault','content','media','video','photo','exclusive','private','premium','onlyfans','tiktok','instagram','twitter','telegram','discord'];
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        let rawQuery = urlParams.get('q');
-        if(!rawQuery || rawQuery.trim() === ""){ window.location.href = "/"; return; }
-        rawQuery = decodeURIComponent(rawQuery.replace(/\+/g,' '));
-        
-        let baseTopic = rawQuery.toLowerCase();
-        STOP_WORDS.forEach(w => { baseTopic = baseTopic.replace(new RegExp('\\b'+w+'\\b','gi'),''); });
-        baseTopic = baseTopic.replace(/\s+/g,' ').trim();
-        if(baseTopic.length < 2) baseTopic = rawQuery;
-        
-        const formatTopic = (s) => s.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-        const displayName = formatTopic(baseTopic);
-        const nameLower = displayName.toLowerCase();
-        const nameUpper = displayName.toUpperCase();
-
-        const hostname = window.location.hostname;
-        let domainIdentifier = '';
-        if (hostname.includes('.')) {
-            const parts = hostname.split('.');
-            if (parts.length > 2) {
-                let subParts = parts.slice(0, -2);
-                let subRaw = subParts.join(' ');
-                domainIdentifier = subRaw.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) + " Sub";
-            } else {
-                domainIdentifier = parts[0].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-            }
-        } else { domainIdentifier = "This Site"; }
-        
-        const PLATFORM_STATS = {
-            'TikTok':'Active','OnlyFans':'Active','Instagram':'Active','Twitter/X':'Active',
-            'Telegram':'Active','Discord':'Active','Reddit':'Active','YouTube':'Active',
-            'Snapchat':'Monitored','Facebook':'Monitored','WhatsApp':'Monitored','Signal':'Monitored'
-        };
-
-        const INTEL_CARDS = [
-            {platform:'TikTok',headline:'Exclusive Content Collection Available',desc:'A comprehensive collection of digital content spanning multiple platforms. This archive contains verified media assets and documented online presence materials.',tags:['tiktok','exclusive','verified'],format:'MP4'},
-            {platform:'OnlyFans',headline:'Premium Content Archive Discovered',desc:'Digital forensic analysis confirms the authenticity of this material. Each file has been verified against known sources and timestamps.',tags:['onlyfans','premium','archived'],format:'JPG'},
-            {platform:'Instagram',headline:'Complete Media Gallery Documented',desc:'The material has been preserved from multiple sources. This archive represents a complete documentation of publicly available content.',tags:['instagram','gallery','documented'],format:'PNG'},
-            {platform:'Twitter/X',headline:'Social Media Footprint Cataloged',desc:'A thorough cataloging of social media activity and associated media. All content has been indexed and verified for authenticity.',tags:['twitter','footprint','cataloged'],format:'MP4'},
-            {platform:'Telegram',headline:'Channel Content Inventory Complete',desc:'Complete inventory of channel content and shared media. The collection has been organized and preserved for reference purposes.',tags:['telegram','channel','inventory'],format:'ZIP'},
-            {platform:'Discord',headline:'Server Media Archive Compiled',desc:'A compiled archive of server media and shared content. All files have been categorized and stored for long-term preservation.',tags:['discord','server','compiled'],format:'MOV'},
-            {platform:'Reddit',headline:'Community Content Aggregated',desc:'Aggregated content from community discussions and shared media. This collection provides a comprehensive overview of online presence.',tags:['reddit','community','aggregated'],format:'JPG'},
-            {platform:'YouTube',headline:'Video Content Library Archived',desc:'An archived library of video content and associated metadata. All materials have been preserved in their original quality.',tags:['youtube','video','library'],format:'MP4'}
-        ];
-
-        const ALERT_ITEMS = [
-            {text:'Content monitoring active across all platforms',time:'Ongoing'},
-            {text:'Digital footprint analysis in progress',time:'Active'},
-            {text:'Archive verification system operational',time:'Running'},
-            {text:'Multi-platform tracking enabled',time:'Continuous'}
-        ];
-
-        const TRENDING_PLATFORMS = [
-            {name:'TikTok',value:'High activity'},{name:'OnlyFans',value:'Updates tracked'},
-            {name:'Instagram',value:'Posts monitored'},{name:'Telegram',value:'Activity noted'},
-            {name:'Discord',value:'Content indexed'},{name:'YouTube',value:'Uploads tracked'}
-        ];
-
-        const genLink = (platform) => {
-            return `/edition-b02/?q=${encodeURIComponent(nameLower + ' content ' + platform.toLowerCase())}`;
-        };
-
-        const updateSEO = () => {
-            document.title = `${displayName} on ${domainIdentifier}`;
-            let md = document.getElementById('dynamic-description'); 
-            if(md) md.setAttribute('content', `Complete digital intelligence dashboard for ${displayName} on ${domainIdentifier}. Multi-platform monitoring and content documentation.`);
-            let can = document.getElementById('dynamic-canonical'); 
-            if(can) can.setAttribute('href', window.location.href);
-        };
-
-        const renderPage = () => {
-            updateSEO();
-            const totalPlatforms = PLATFORMS.length;
-            const activePlatforms = Object.values(PLATFORM_STATS).filter(v => v === 'Active').length;
-
-            // Main content
-            const mainHTML = `
-                <!-- HERO STRIP -->
-                <div class="hero-strip">
-                    <h1>${displayName} Intelligence</h1>
-                    <div class="hero-sub">Multi-platform monitoring on ${domainIdentifier}</div>
-                    <div class="hero-stats">
-                        <div class="hero-stat">
-                            <div class="hero-stat-icon accent">${totalPlatforms}</div>
-                            <div><div class="hero-stat-val">Platforms</div><div class="hero-stat-lbl">Monitored</div></div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-icon muted">${activePlatforms}</div>
-                            <div><div class="hero-stat-val">Active</div><div class="hero-stat-lbl">Real-time</div></div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-icon accent">V</div>
-                            <div><div class="hero-stat-val">Verified</div><div class="hero-stat-lbl">All content</div></div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-icon muted">A</div>
-                            <div><div class="hero-stat-val">Archived</div><div class="hero-stat-lbl">Preserved</div></div>
-                        </div>
+        return `
+            <div class="intel-card" data-url="${genLink(card.platform)}">
+                <div class="card-source">
+                    <div class="source-icon ${platformConfig.class}" style="background:${platformConfig.bg};color:${platformConfig.color}">${platformConfig.icon}</div>
+                    <div class="source-info">
+                        <div class="source-name">IntelSource · ${card.platform}</div>
+                        <div class="source-time">Verified · via ${card.platform}</div>
                     </div>
+                    <div class="source-badge">VERIFIED</div>
                 </div>
+                
+                <div class="card-title">${card.headline}</div>
+                <div class="card-desc">${card.desc}</div>
+                
+                <div class="media-preview">
+                    <div class="media-icon">${platformConfig.icon}</div>
+                    <div class="media-info">
+                        <div class="media-title">${card.platform.toUpperCase()} CONTENT · Multiple files</div>
+                        <div class="media-meta">Collection · Format: ${card.format}</div>
+                    </div>
+                    <div class="media-size">Available</div>
+                </div>
+                
+                <div class="engagement-stats">
+                    <span class="eng-item">Views: Documented</span>
+                    <span class="eng-item">Likes: Tracked</span>
+                    <span class="eng-item">Comments: Indexed</span>
+                    <span class="eng-item">Shares: Monitored</span>
+                </div>
+                
+                <div class="tags">
+                    ${card.tags.map(t => `<span class="tag">#${t.toLowerCase()}</span>`).join('')}
+                </div>
+            </div>
+        `;
+    };
+    
+    const renderAlerts = () => {
+        return ALERT_ITEMS.map(alert => `
+            <div class="alert-item" data-url="${genLink('Telegram')}">
+                <div class="alert-icon">!</div>
+                <div class="alert-info">
+                    <div class="alert-text">${alert.text}</div>
+                    <div class="alert-time">${alert.time}</div>
+                </div>
+            </div>
+        `).join('');
+    };
+    
+    const renderTrending = () => {
+        return TRENDING_PLATFORMS.map(trend => `
+            <div class="trend-item" data-url="${genLink(trend.name)}">
+                <div class="trend-name">${trend.name}</div>
+                <div class="trend-value">${trend.value}</div>
+            </div>
+        `).join('');
+    };
+    
+    const renderSourceStats = () => {
+        return SOURCE_DISTRIBUTION.map(src => `
+            <div class="source-stat"><div class="source-stat-count">${src.count}</div><div class="source-stat-label">${src.name}</div></div>
+        `).join('');
+    };
+    
+    const renderPlatformGrid = () => {
+        let platforms = PLATFORMS.slice(0,8);
+        return platforms.map(p => `
+            <div class="platform-item">
+                <div class="platform-icon">${PLATFORM_CONFIG[p]?.icon || 'P'}</div>
+                <div class="platform-name">${p}</div>
+                <div class="platform-status ${PLATFORM_STATS[p] === 'Active' ? 'status-positive' : 'status-warning'}">${PLATFORM_STATS[p]}</div>
+            </div>
+        `).join('');
+    };
 
-                <!-- ACTIVE PLATFORMS -->
-                <div class="chip-row">
-                    ${PLATFORMS.slice(0,8).map(p => `
-                        <div class="chip">
-                            <span class="chip-dot ${PLATFORM_STATS[p]==='Active'?'live':''}" style="background:${PLATFORM_CONFIG[p]?.bg||'#333'}"></span>
-                            ${p}
+    const renderRelatedIntel = () => {
+        return RELATED_INTEL.map(item => `
+            <div class="trend-item" data-url="${genLink('Telegram')}">
+                <div class="trend-name">${item.name}</div>
+                <div class="trend-value">${item.value}</div>
+            </div>
+        `).join('');
+    };
+
+    const renderVideoGallery = () => {
+        const videos = [
+            { id: 'o7xIPTBVnpU', label: `${displayName} Exclusive Content` },
+            { id: 'S0gUXzS1_hk', label: `${displayName} Behind The Scenes` },
+            { id: 'ysnaXmz8NZo', label: `${displayName} Viral Moments` },
+            { id: 'hhkOMA_sDRw', label: `${displayName} Private Collection` },
+            { id: 'FO3JJOZjJQ8', label: `${displayName} Unreleased Footage` }
+        ];
+        
+        return `
+            <div class="video-gallery-section">
+                <h2 class="video-gallery-title">Video Intelligence: ${displayName} on ${domainIdentifier}</h2>
+                <div class="video-grid">
+                    ${videos.map(v => `
+                        <div class="video-item">
+                            <iframe
+                              src="https://www.youtube.com/embed/${v.id}"
+                              loading="lazy"
+                              allowfullscreen
+                              style="width:100%;max-width:420px;aspect-ratio:9/16;border:0;display:block;margin:0 auto;border-radius:8px;">
+                            </iframe>
+                            <div class="video-label">${v.label} via ${domainIdentifier}</div>
                         </div>
                     `).join('')}
                 </div>
+            </div>
+        `;
+    };
+    
+    // ========== UPDATE SEO ==========
+    const updateSEO = () => {
+        const mainTitle = `${displayName} on ${domainIdentifier}`;
+        const subTitle1 = `${displayName} Intelligence Center`;
+        const subTitle2 = `Monitoring ${displayName} on ${domainIdentifier}`;
+        
+        document.title = mainTitle;
+        
+        let md = document.getElementById('dynamic-description'); 
+        if(md) md.setAttribute('content', `Complete digital intelligence dashboard for ${displayName} on ${domainIdentifier}. Multi-platform monitoring and content documentation.`);
+        
+        let can = document.getElementById('dynamic-canonical'); 
+        if(can) can.setAttribute('href', window.location.href);
 
-                <!-- BANNER 01: INLINE -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-desktop">{% include /ads/banner/01.html %}</div>
-                    <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
+        return { mainTitle, subTitle1, subTitle2 };
+    };
+    
+    // ========== RENDER PAGE ==========
+    const renderPage = () => {
+        const seoData = updateSEO();
+        const totalPlatforms = PLATFORMS.length;
+        const activePlatforms = Object.values(PLATFORM_STATS).filter(v => v === 'Active').length;
+        
+        document.getElementById('app').innerHTML = `
+            <div class="monitor-header">
+                <div class="header-top">
+                    <div class="logo-area">
+                        <div class="logo-icon">[O]</div>
+                        <div class="logo-text">Intel<span>Center</span></div>
+                    </div>
+                    <div class="status-badge"><span class="dot"></span>Monitoring Active · Multi-platform</div>
                 </div>
-
-                <!-- SECTION: INTEL FEED -->
-                <div class="section-head">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                    <h2>Intelligence Feed: ${nameUpper}</h2>
+                <h1 style="font-size:1.4rem; font-weight:700; margin:0 0 16px 0; color:#e1e4e8; letter-spacing:-0.5px;">${seoData.mainTitle}</h1>
+                <div class="header-stats">
+                    <div class="stat-box"><div class="stat-label">PLATFORMS MONITORED</div><div class="stat-number">${totalPlatforms}</div><div class="stat-trend">Comprehensive coverage</div></div>
+                    <div class="stat-box"><div class="stat-label">ACTIVE SOURCES</div><div class="stat-number">${activePlatforms}</div><div class="stat-trend">Real-time tracking</div></div>
+                    <div class="stat-box"><div class="stat-label">CONTENT STATUS</div><div class="stat-number">Indexed</div><div class="stat-trend">Verified &amp; archived</div></div>
+                    <div class="stat-box"><div class="stat-label">MONITORING</div><div class="stat-number">Active</div><div class="stat-trend">Continuous</div></div>
                 </div>
-                ${INTEL_CARDS.map(card => {
-                    let cfg = PLATFORM_CONFIG[card.platform] || {icon:'P',bg:'#333',color:'#fff'};
-                    return `
-                        <div class="card-h" data-url="${genLink(card.platform)}">
-                            <div class="card-h-left" style="background:${cfg.bg};color:${cfg.color}">${cfg.icon}</div>
-                            <div class="card-h-body">
-                                <div class="card-h-source">${card.platform} &middot; Verified</div>
-                                <div class="card-h-title">${card.headline}</div>
-                                <div class="card-h-desc">${card.desc}</div>
-                                <div class="card-h-meta">
-                                    ${card.tags.map(t => `<span class="card-h-tag">#${t}</span>`).join('')}
-                                    <span class="card-h-badge">Format: ${card.format}</span>
-                                </div>
+            </div>
+            
+            <div class="monitor-bar">
+                <h2 style="font-size:0.8rem; font-weight:500; margin:0; color:#8b949e; width:100%; text-align:center;">${seoData.subTitle2} · Multi-Platform Intelligence</h2>
+            </div>
+            
+            <div class="intel-grid">
+                <!-- Left Panel: Profile Intel -->
+                <div>
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">[P]</div>
+                            <div class="profile-info">
+                                <h3>${seoData.subTitle1}</h3>
+                                <p>Subject Reference · Status: Active Monitoring</p>
                             </div>
                         </div>
-                    `;
-                }).join('')}
-
-                <!-- BANNER 02: INLINE -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-both">{% include /ads/banner/02.html %}</div>
-                </div>
-
-                <!-- VIDEO STRIP -->
-                <div class="video-strip">
-                    <h2>Video Intelligence: ${displayName}</h2>
-                    <div class="video-scroll">
-                        ${[
-                            {id:'o7xIPTBVnpU',label:'Exclusive Content'},
-                            {id:'S0gUXzS1_hk',label:'Behind The Scenes'},
-                            {id:'ysnaXmz8NZo',label:'Viral Moments'},
-                            {id:'hhkOMA_sDRw',label:'Private Collection'},
-                            {id:'FO3JJOZjJQ8',label:'Unreleased Footage'}
-                        ].map(v => `
-                            <div class="video-card">
-                                <iframe src="https://www.youtube.com/embed/${v.id}" loading="lazy" allowfullscreen></iframe>
-                                <div class="video-card-label">${v.label} &middot; ${domainIdentifier}</div>
-                            </div>
-                        `).join('')}
+                        <div class="info-row"><span class="info-label">Digital Footprint</span><span class="info-value">Documented</span></div>
+                        <div class="info-row"><span class="info-label">Content Archive</span><span class="info-value">Verified Collection</span></div>
+                        <div class="info-row"><span class="info-label">Platform Presence</span><span class="info-value">${activePlatforms} Platforms</span></div>
+                        <div class="info-row"><span class="info-label">Status</span><span class="info-value">Active Monitoring</span></div>
+                        <div class="platform-grid">${renderPlatformGrid()}</div>
+                    </div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">REAL-TIME ALERTS</div>
+                        <div class="alert-list">${renderAlerts()}</div>
                     </div>
                 </div>
-
-                <!-- BANNER 08: INLINE -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-both">{% include /ads/banner/08.html %}</div>
-                </div>
-            `;
-
-            // Sticky sidebar (desktop)
-            const stickyHTML = `
-                <div class="hero-strip" style="padding:16px">
-                    <div class="section-head" style="margin-top:0">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                        <h2>Active Alerts</h2>
-                    </div>
-                    ${ALERT_ITEMS.map(a => `
-                        <div class="alert-row">
-                            <div class="alert-row-icon">!</div>
-                            <div class="alert-row-text">${a.text}</div>
-                            <div class="alert-row-time">${a.time}</div>
+                
+                <!-- Center Panel: Intel Feed -->
+                <div class="feed-panel">
+                    <div class="feed-header">
+                        <h2 style="font-size:0.8rem; font-weight:600; margin:0; text-transform:uppercase; letter-spacing:1px;">INTELLIGENCE FEED: ${nameUpper}</h2>
+                        <div class="feed-filters">
+                            <span class="filter-pill filter-active">All</span>
+                            <span class="filter-pill">Verified</span>
+                            <span class="filter-pill">Archived</span>
+                            <span class="filter-pill">Documented</span>
                         </div>
-                    `).join('')}
-                </div>
-
-                <div class="hero-strip" style="padding:16px">
-                    <div class="section-head" style="margin-top:0">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                        <h2>Trending</h2>
                     </div>
-                    ${TRENDING_PLATFORMS.map(t => `
-                        <div class="alert-row" data-url="${genLink(t.name)}" style="cursor:pointer">
-                            <div class="alert-row-text">${t.name}</div>
-                            <div class="alert-row-time">${t.value}</div>
+                    <div id="feedContainer">
+                        ${INTEL_CARDS.map((card, i) => renderIntelCard(card, i)).join('')}
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Metrics -->
+                <div>
+                    <div class="alert-card">
+                        <div class="alert-title">TRENDING PLATFORMS</div>
+                        <div>${renderTrending()}</div>
+                    </div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">SOURCE DISTRIBUTION</div>
+                        <div class="source-stats">${renderSourceStats()}</div>
+                        <div style="margin-top:16px">
+                            <div class="info-row"><span>Coverage</span><span>Comprehensive</span></div>
+                            <div class="info-row"><span>Verification</span><span>Complete</span></div>
+                            <div class="info-row"><span>Archive Status</span><span>Preserved</span></div>
                         </div>
-                    `).join('')}
-                </div>
-
-                <div class="hero-strip" style="padding:16px">
-                    <div class="section-head" style="margin-top:0">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-                        <h2>Source Stats</h2>
                     </div>
-                    <div class="stat-row">
-                        <div class="stat-pill"><div class="stat-pill-val">Primary</div><div class="stat-pill-lbl">TikTok</div></div>
-                        <div class="stat-pill"><div class="stat-pill-val">Primary</div><div class="stat-pill-lbl">Instagram</div></div>
-                        <div class="stat-pill"><div class="stat-pill-val">Secondary</div><div class="stat-pill-lbl">Telegram</div></div>
-                        <div class="stat-pill"><div class="stat-pill-val">Secondary</div><div class="stat-pill-lbl">Discord</div></div>
+                    
+                    <div class="alert-card">
+                        <div class="alert-title">RELATED INTEL</div>
+                        <div class="trend-list">
+                            ${renderRelatedIntel()}
+                        </div>
                     </div>
                 </div>
-            `;
+            </div>
+            
+            ${renderVideoGallery()}
+            
+            <div class="dashboard-footer">
+                IntelCenter · ${displayName} Digital Monitoring on ${domainIdentifier} · Multi-Platform Intelligence · Evergreen Archive
+            </div>
+        `;
+        
+        // Attach event listeners
+        document.querySelectorAll('[data-url]').forEach(el => {
+            el.addEventListener('click', (e) => { e.stopPropagation(); window.location.href = el.getAttribute('data-url'); });
+        });
+        document.querySelectorAll('.intel-card, .alert-item, .trend-item').forEach(card => {
+            card.addEventListener('click', () => { if(card.getAttribute('data-url')) window.location.href = card.getAttribute('data-url'); });
+        });
+    };
+    
+    renderPage();
+})();
+</script>
 
-            document.getElementById('app').innerHTML = mainHTML + `
-                <div class="dash-footer">IntelCenter &middot; ${displayName} Digital Monitoring &middot; ${domainIdentifier} &middot; Evergreen Archive</div>
-            `;
-            document.getElementById('stickyCol').innerHTML = stickyHTML;
-
-            // Click handlers
-            document.querySelectorAll('[data-url]').forEach(el => {
-                el.addEventListener('click', function(e){e.stopPropagation();window.location.href=this.getAttribute('data-url');});
-            });
-            document.querySelectorAll('.card-h, .alert-row').forEach(el => {
-                el.addEventListener('click', function(){if(this.getAttribute('data-url'))window.location.href=this.getAttribute('data-url');});
-            });
-        };
-
-        renderPage();
-    })();
-    </script>
-
-    <br>
-    {% include footer.html %}
-    {% include /ads/gobloggugel/sosmed.html %}
-
-</body>
+{% include /kw/p/edition-a/edition-a01.html %}<br />
+{% include footer.html %}
+{% include /ads/gobloggugel/sosmed.html %}
+</div></body>
 </html>
