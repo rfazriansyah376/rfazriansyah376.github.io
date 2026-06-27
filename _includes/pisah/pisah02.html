@@ -390,430 +390,173 @@
             </div>
         </aside>
 
-
-<!-- MAIN CONTENT -->
-<main class="content-area">
-
-
-    <!-- ========== CATEGORY indo02 ========== -->
-    {% assign category_posts = site.categories.indo02 %}
-
-    {% if category_posts.size > 0 %}
-
-
-    <!-- ========== FEATURED ========== -->
-    {% assign featured_posts = category_posts | slice: 0, 5 %}
-
-    {% if featured_posts.size >= 5 %}
-    <section class="gv2-section">
-
-        <div class="gv2-title gv2-featured-title">
-            <h2>🔥 Featured</h2>
-        </div>
-
-        <div class="gv2-grid gv2-featured">
-
-            {% for post in featured_posts %}
-
-            <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
-
-                <a href="{{ post.url }}" class="gv2-card-link">
-
-                    {% if post.image %}
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                    {% endif %}
-
-                </a>
-
-
-                <div class="gv2-card-body">
-
-                    <a href="{{ post.url }}" class="gv2-card-title-link">
-                        {{ post.title }}
-                    </a>
-
-
-                    <div class="gv2-card-desc">
-
-                        {% assign before_svg = post.content | split: '<p>' | first %}
-                        {{ before_svg }}
-
-                    </div>
-
-                </div>
-
-            </article>
-
-            {% endfor %}
-
-        </div>
-
-    </section>
-    {% endif %}
-
-
-
-
-    <!-- ========== BANNER 01 ========== -->
-    <div class="ad-inline">
-
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/01.html %}
-        </div>
-
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-
-    </div>
-
-
-
-
-    <!-- ========== LATEST ========== -->
-    {% assign latest_posts = category_posts | slice: 5, 10 %}
-
-    {% if latest_posts.size > 0 %}
-
-    <section class="gv2-section">
-
-        <div class="gv2-title">
-            <h2>🆕 Latest</h2>
-        </div>
-
-
-        <div class="gv2-grid gv2-latest">
-
-            {% for post in latest_posts %}
-
-
-            <article class="gv2-card">
-
-                <a href="{{ post.url }}" class="gv2-card-link">
-
-                    {% if post.image %}
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                    {% endif %}
-
-                </a>
-
-
-                <div class="gv2-card-body">
-
-
-                    <a href="{{ post.url }}" class="gv2-card-title-link">
-                        {{ post.title }}
-                    </a>
-
-
-                    <div class="gv2-card-desc">
-
-                        {% assign before_svg = post.content | split: '<p>' | first %}
-                        {{ before_svg }}
-
-                    </div>
-
-
-                </div>
-
-            </article>
-
-
-            {% endfor %}
-
-        </div>
-
-
-    </section>
-
-    {% endif %}
-
-
-
-
-
-
-    <!-- ========== BANNER 02 ========== -->
-    <div class="ad-inline">
-
-        <div class="ad-box ad-both">
-            {% include /ads/banner/02.html %}
-        </div>
-
-    </div>
-
-
-
-
-
-
-    <!-- ========== STORIES ========== -->
-    {% assign stories_posts = category_posts | slice: 15, 8 %}
-
-
-    {% if stories_posts.size > 0 %}
-
-    <section class="gv2-section">
-
-
-        <div class="gv2-title">
-            <h2>📖 Stories</h2>
-        </div>
-
-
-        <div class="gv2-grid gv2-stories">
-
-
-            {% for post in stories_posts %}
-
-
-            <article class="gv2-card">
-
-
-                <a href="{{ post.url }}" class="gv2-card-link">
-
-                    {% if post.image %}
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                    {% endif %}
-
-                </a>
-
-
-
-                <div class="gv2-card-body">
-
-
-                    <a href="{{ post.url }}" class="gv2-card-title-link">
-                        {{ post.title }}
-                    </a>
-
-
-
-                    <div class="gv2-card-desc">
-
-                        {% assign before_svg = post.content | split: '<p>' | first %}
-                        {{ before_svg }}
-
-                    </div>
-
-
-                </div>
-
-
-            </article>
-
-
-            {% endfor %}
-
-
-        </div>
-
-
-    </section>
-
-    {% endif %}
-
-
-
-
-
-
-
-    <!-- ========== BANNER 03 ========== -->
-    <div class="ad-inline">
-
-        <div class="ad-box ad-both">
-            {% include /ads/banner/03.html %}
-        </div>
-
-    </div>
-
-
-
-
-
-
-    <!-- ========== POPULAR ========== -->
-    {% assign popular_posts = category_posts | slice: 23, 15 %}
-
-
-    {% if popular_posts.size > 0 %}
-
-
-    <section class="gv2-section">
-
-
-        <div class="gv2-title">
-            <h2>🔥 Popular</h2>
-        </div>
-
-
-        <div class="gv2-grid gv2-tutorials">
-
-
-            {% for post in popular_posts %}
-
-
-            <article class="gv2-card">
-
-
-                <a href="{{ post.url }}" class="gv2-card-link">
-
-
-                    {% if post.image %}
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                    {% endif %}
-
-
-                </a>
-
-
-
-
-                <div class="gv2-card-body">
-
-
-
-                    <a href="{{ post.url }}" class="gv2-card-title-link">
-                        {{ post.title }}
-                    </a>
-
-
-
-                    <div class="gv2-card-desc">
-
-
-                        {% assign before_svg = post.content | split: '<p>' | first %}
-                        {{ before_svg }}
-
-
-                    </div>
-
-
-
-                </div>
-
-
-            </article>
-
-
-            {% endfor %}
-
-
-        </div>
-
-
-    </section>
-
-
-    {% endif %}
-
-
-
-
-
-
-
-    <!-- ========== BANNER 08 ========== -->
-    <div class="ad-inline">
-
-        <div class="ad-box ad-both">
-            {% include /ads/banner/08.html %}
-        </div>
-
-    </div>
-
-
-
-
-
-
-
-    <!-- ========== ARCHIVE ========== -->
-    {% assign archive_posts = category_posts | slice: 38, 12 %}
-
-
-
-    {% if archive_posts.size > 0 %}
-
-
-    <section class="gv2-section">
-
-
-        <div class="gv2-title">
-            <h2>📁 Archive</h2>
-        </div>
-
-
-
-        <div class="gv2-grid gv2-archive">
-
-
-
-            {% for post in archive_posts %}
-
-
-
-            <article class="gv2-card">
-
-
-
-                <a href="{{ post.url }}" class="gv2-card-link">
-
-
-                    {% if post.image %}
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                    {% endif %}
-
-
-                </a>
-
-
-
-
-                <div class="gv2-card-body">
-
-
-                    <a href="{{ post.url }}" class="gv2-card-title-link">
-                        {{ post.title }}
-                    </a>
-
-
-
-                    <div class="gv2-card-desc">
-
-
-                        {% assign before_svg = post.content | split: '<p>' | first %}
-                        {{ before_svg }}
-
-
-                    </div>
-
-
-                </div>
-
-
-            </article>
-
-
-
-            {% endfor %}
-
-
-        </div>
-
-
-    </section>
-
-
-    {% endif %}
-
-
-
-    {% endif %}
-
-
-</main>
+<!-- MAIN CONTENT -->  
+    <main class="content-area">  
+
+        <!-- ========== FEATURED ========== -->  
+        {% assign featured_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 0, 5 %}  
+        {% if featured_posts.size >= 5 %}  
+        <section class="gv2-section">  
+            <div class="gv2-title gv2-featured-title">  
+                <h2>🔥 Featured</h2>  
+            </div>  
+            <div class="gv2-grid gv2-featured">  
+                {% for post in featured_posts %}  
+                <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">  
+                    <a href="{{ post.url }}" class="gv2-card-link">  
+                        {% if post.image %}  
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">  
+                        {% endif %}  
+                    </a>  
+                    <div class="gv2-card-body">  
+                        <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>  
+                        <div class="gv2-card-desc">  
+                            {% assign before_svg = post.content | split: '<p>' | first %}  
+                            {{ before_svg }}  
+                        </div>  
+                    </div>  
+                </article>  
+                {% endfor %}  
+            </div>  
+        </section>  
+        {% endif %}  
+
+        <!-- ========== BANNER 01: SETELAH FEATURED ========== -->  
+        <div class="ad-inline">  
+            <div class="ad-box ad-desktop">  
+                {% include /ads/banner/01.html %}  
+            </div>  
+            <div class="ad-box ad-mobile">  
+                {% include /ads/banner/04.html %}  
+            </div>  
+        </div>  
+
+        <!-- ========== LATEST ========== -->  
+        {% assign latest_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 5, 10 %}  
+        {% if latest_posts.size > 0 %}  
+        <section class="gv2-section">  
+            <div class="gv2-title"><h2>🆕 Latest</h2></div>  
+            <div class="gv2-grid gv2-latest">  
+                {% for post in latest_posts %}  
+                <article class="gv2-card">  
+                    <a href="{{ post.url }}" class="gv2-card-link">  
+                        {% if post.image %}  
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">  
+                        {% endif %}  
+                    </a>  
+                    <div class="gv2-card-body">  
+                        <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>  
+                        <div class="gv2-card-desc">  
+                            {% assign before_svg = post.content | split: '<p>' | first %}  
+                            {{ before_svg }}  
+                        </div>  
+                    </div>  
+                </article>  
+                {% endfor %}  
+            </div>  
+        </section>  
+        {% endif %}  
+
+        <!-- ========== BANNER 02: SETELAH LATEST ========== -->  
+        <div class="ad-inline">  
+            <div class="ad-box ad-both">  
+                {% include /ads/banner/02.html %}  
+            </div>  
+        </div>  
+
+        <!-- ========== STORIES ========== -->  
+        {% assign stories_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 15, 8 %}  
+        {% if stories_posts.size > 0 %}  
+        <section class="gv2-section">  
+            <div class="gv2-title"><h2>📖 Stories</h2></div>  
+            <div class="gv2-grid gv2-stories">  
+                {% for post in stories_posts %}  
+                <article class="gv2-card">  
+                    <a href="{{ post.url }}" class="gv2-card-link">  
+                        {% if post.image %}  
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">  
+                        {% endif %}  
+                    </a>  
+                    <div class="gv2-card-body">  
+                        <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>  
+                        <div class="gv2-card-desc">  
+                            {% assign before_svg = post.content | split: '<p>' | first %}  
+                            {{ before_svg }}  
+                        </div>  
+                    </div>  
+                </article>  
+                {% endfor %}  
+            </div>  
+        </section>  
+        {% endif %}  
+
+        <!-- ========== BANNER 03: SETELAH STORIES ========== -->  
+        <div class="ad-inline">  
+            <div class="ad-box ad-both">  
+                {% include /ads/banner/03.html %}  
+            </div>  
+        </div>  
+
+        <!-- ========== POPULAR ========== -->  
+        {% assign popular_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 23, 15 %}  
+        {% if popular_posts.size > 0 %}  
+        <section class="gv2-section">  
+            <div class="gv2-title"><h2>🔥 Popular</h2></div>  
+            <div class="gv2-grid gv2-tutorials">  
+                {% for post in popular_posts %}  
+                <article class="gv2-card">  
+                    <a href="{{ post.url }}" class="gv2-card-link">  
+                        {% if post.image %}  
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">  
+                        {% endif %}  
+                    </a>  
+                    <div class="gv2-card-body">  
+                        <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>  
+                        <div class="gv2-card-desc">  
+                            {% assign before_svg = post.content | split: '<p>' | first %}  
+                            {{ before_svg }}  
+                        </div>  
+                    </div>  
+                </article>  
+                {% endfor %}  
+            </div>  
+        </section>  
+        {% endif %}  
+
+        <!-- ========== BANNER 08: SETELAH POPULAR ========== -->  
+        <div class="ad-inline">  
+            <div class="ad-box ad-both">  
+                {% include /ads/banner/08.html %}  
+            </div>  
+        </div>  
+
+        <!-- ========== ARCHIVE ========== -->  
+        {% assign archive_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 38, 12 %}  
+        {% if archive_posts.size > 0 %}  
+        <section class="gv2-section">  
+            <div class="gv2-title"><h2>📁 Archive</h2></div>  
+            <div class="gv2-grid gv2-archive">  
+                {% for post in archive_posts %}  
+                <article class="gv2-card">  
+                    <a href="{{ post.url }}" class="gv2-card-link">  
+                        {% if post.image %}  
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">  
+                        {% endif %}  
+                    </a>  
+                    <div class="gv2-card-body">  
+                        <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>  
+                        <div class="gv2-card-desc">  
+                            {% assign before_svg = post.content | split: '<p>' | first %}  
+                            {{ before_svg }}  
+                        </div>  
+                    </div>  
+                </article>  
+                {% endfor %}  
+            </div>  
+        </section>  
+        {% endif %}  
+
+    </main>
 
         <!-- RIGHT SIDEBAR: Banner 05 -->
         <aside class="sidebar sidebar-right">
