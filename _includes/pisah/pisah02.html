@@ -394,7 +394,8 @@
     <main class="content-area">  
 
         <!-- ========== FEATURED ========== -->  
-        {% assign featured_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 0, 5 %}  
+        {% assign filtered_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" %}  
+        {% assign featured_posts = filtered_posts | slice: 0, 5 %}  
         {% if featured_posts.size >= 5 %}  
         <section class="gv2-section">  
             <div class="gv2-title gv2-featured-title">  
@@ -432,7 +433,7 @@
         </div>  
 
         <!-- ========== LATEST ========== -->  
-        {% assign latest_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 5, 10 %}  
+        {% assign latest_posts = filtered_posts | slice: 5, 10 %}  
         {% if latest_posts.size > 0 %}  
         <section class="gv2-section">  
             <div class="gv2-title"><h2>🆕 Latest</h2></div>  
@@ -465,7 +466,7 @@
         </div>  
 
         <!-- ========== STORIES ========== -->  
-        {% assign stories_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 15, 8 %}  
+        {% assign stories_posts = filtered_posts | slice: 15, 8 %}  
         {% if stories_posts.size > 0 %}  
         <section class="gv2-section">  
             <div class="gv2-title"><h2>📖 Stories</h2></div>  
@@ -498,7 +499,7 @@
         </div>  
 
         <!-- ========== POPULAR ========== -->  
-        {% assign popular_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 23, 15 %}  
+        {% assign popular_posts = filtered_posts | slice: 23, 15 %}  
         {% if popular_posts.size > 0 %}  
         <section class="gv2-section">  
             <div class="gv2-title"><h2>🔥 Popular</h2></div>  
@@ -531,7 +532,7 @@
         </div>  
 
         <!-- ========== ARCHIVE ========== -->  
-        {% assign archive_posts = site.posts | where_exp: "post", "post.categories contains 'indo02'" | slice: 38, 12 %}  
+        {% assign archive_posts = filtered_posts | slice: 38, 12 %}  
         {% if archive_posts.size > 0 %}  
         <section class="gv2-section">  
             <div class="gv2-title"><h2>📁 Archive</h2></div>  
