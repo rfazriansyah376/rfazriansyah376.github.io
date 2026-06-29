@@ -432,7 +432,7 @@
             </div>
 
             <!-- ========== LATEST ========== -->
-            {% assign latest_posts = site.posts | slice: 5, 8 %}
+            {% assign latest_posts = site.posts | slice: 5, 5 %}
             {% if latest_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>🆕 Latest</h2></div>
@@ -465,7 +465,7 @@
             </div>
 
             <!-- ========== STORIES ========== -->
-            {% assign stories_posts = site.posts | slice: 13, 6 %}
+            {% assign stories_posts = site.posts | slice: 10, 4 %}
             {% if stories_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>📖 Stories</h2></div>
@@ -498,7 +498,7 @@
             </div>
 
             <!-- ========== POPULAR ========== -->
-            {% assign popular_posts = site.posts | slice: 19, 6 %}
+            {% assign popular_posts = site.posts | slice: 14, 6 %}
             {% if popular_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>🔥 Popular</h2></div>
@@ -531,7 +531,7 @@
             </div>
 
             <!-- ========== ARCHIVE ========== -->
-            {% assign archive_posts = site.posts | slice: 25, 6 %}
+            {% assign archive_posts = site.posts | slice: 20, 5 %}
             {% if archive_posts.size > 0 %}
             <section class="gv2-section">
                 <div class="gv2-title"><h2>📁 Archive</h2></div>
