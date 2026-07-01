@@ -556,6 +556,39 @@ body.clx9-no-scroll {
 
 
 
+<!--popunder direklink adsterra-->
+<script>
+(function EffectivePopunderUnique_2026(){
+
+  const effectivePopKey = "effectivePopLastShown";
+  const now = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  const lastShown = localStorage.getItem(effectivePopKey);
+
+  if (lastShown && (now - parseInt(lastShown)) < oneDay) {
+    return;
+  }
+
+  document.addEventListener("click", function effectivePopClickHandler(){
+
+    const effectivePopWindow = window.open(
+      "https://www.effectivecpmnetwork.com/n8aut0jn3?key=f8d037b0fb99f382b547914bd4f0eada",
+      "_blank"
+    );
+
+    if (effectivePopWindow) {
+      localStorage.setItem(effectivePopKey, Date.now());
+
+      effectivePopWindow.blur();
+      window.focus();
+    }
+
+  }, { once: true });
+
+})();
+</script>
+
 
 <!-- random klik start -->
 <script>
