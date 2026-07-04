@@ -1,3 +1,4 @@
+<details><summary>Buka</summary>
 <ul>
   <li>sosmed.html --> di banyak /p/</li>
 <li>relaxingrobin.html --> dibeberapa layout</li>
@@ -41,7 +42,7 @@
 
 
 </ul>
-
+</details>
 
 
 
