@@ -1,6 +1,6 @@
 <details><summary>Buka</summary>
 <ul>
-  <li>sosmed.html --> di banyak /p/</li>
+  <l>sosmed - ninggrai@gmail.com - marisabeloficial1.github.io</li>
 <li>relaxingrobin.html --> dibeberapa layout</li>
 <li>nanouturfs.html --> dibeberapa /p/ </li>
 <li>default: indriindra597@gmail.com --> nengmaya homepage</li>
