@@ -14,6 +14,7 @@
 
 <hr />
 <li>p/01 - edition - nyolspa1@gmail.com - fantastic-enigma.pages.dev</li>
+<li>p/02 - nyolspa1@gmail.com - potential-lampu.pages.dev</li>
 
 
 
