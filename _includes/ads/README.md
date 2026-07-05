@@ -1,6 +1,6 @@
 <details><summary>Buka</summary>
 <ul>
-  <l>sosmed - ninggrai@gmail.com - marisabeloficial1.github.io</li>
+  <li>sosmed - ninggrai@gmail.com - marisabeloficial1.github.io</li>
 <li>relaxingrobin.html --> dibeberapa layout</li>
 <li>nanouturfs.html --> dibeberapa /p/ </li>
 <li>default: indriindra597@gmail.com --> nengmaya homepage</li>
@@ -13,7 +13,7 @@
 <li>pisah04 - simerah9250@gmail.com - expert-octo-doodle.pages.dev </li>
 
 <hr />
-<li>p / 01 - nyolspa1@gmail.com - fantastic-enigma.pages.dev</li>
+<li>p/01 - edition - nyolspa1@gmail.com - fantastic-enigma.pages.dev</li>
 
 
 
