@@ -36,6 +36,39 @@
 
 
 
+<!--popunder direklink monetag-->
+<script>
+(function OmgPopunderUnique_2026(){
+
+  const omgPopKey = "omgPopLastShown";
+  const now = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  const lastShown = localStorage.getItem(omgPopKey);
+
+  if (lastShown && (now - parseInt(lastShown)) < oneDay) {
+    return;
+  }
+
+  document.addEventListener("click", function omgPopClickHandler(){
+
+    const omgPopWindow = window.open(
+      "https://omg10.com/4/11245808",
+      "_blank"
+    );
+
+    if (omgPopWindow) {
+      localStorage.setItem(omgPopKey, Date.now());
+
+      omgPopWindow.blur();
+      window.focus();
+    }
+
+  }, { once: true });
+
+})();
+</script>
+
 
 
 
