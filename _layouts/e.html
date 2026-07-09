@@ -466,7 +466,7 @@ layout: null
         <div class="sidebar-header">
             <div class="sidebar-header-title">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-                Destinations by Country
+        <!--        Destinations by Country -->
             </div>
             <button class="sidebar-close" id="sidebarClose">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -475,6 +475,12 @@ layout: null
         <div class="sidebar-content">
             <div class="shared-sidebar-content">
                 <!-- ========== ISI MANUAL ========== -->
+                <ul>
+<li><a href="/">Home</a></li>
+<li><a href="/contact/">Contact</a></li>
+<li><a href="/privacy-policy/">Privacy</a></li>
+<li><a href="/terms-and-conditions/">Terms</a></li>
+</ul>
             </div>
         </div>
     </aside>
@@ -556,13 +562,13 @@ layout: null
             {% assign related = related | uniq %}
 
             {% if related.size > 0 %}
-            <div class="related-section">
+            <div loading="lazy" class="related-section">
                 <h3>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                     Related Posts
                 </h3>
                 <div class="related-grid">
-                    {% for post in related limit: 4 %}
+                    {% for post in related limit: 60 %}
                     <a href="{{ post.url }}" class="related-card">
                         {% if post.image %}
                         <div class="related-card-img">
@@ -584,7 +590,7 @@ layout: null
 </main>
     </div>
 
-    <!-- STATIC BOTTOM NAVIGATION -->
+    <!-- STATIC BOTTOM NAVIGATION --
     <nav class="bottom-nav">
         <div class="bottom-nav-inner">
             <a href="/">
@@ -605,6 +611,7 @@ layout: null
             </a>
         </div>
     </nav>
+-->
 
     <script>
     (function() {
