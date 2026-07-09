@@ -1,8 +1,5 @@
-
-
-
-
-<!--popunder direklink 03 -->
+<!--popunder direklink url tco dari ad-maven
+tanggal 09-07 -->
 <script>
 (function AcidicPopunderUnique_2026(){
 
@@ -16,16 +13,22 @@
     return;
   }
 
+  const acidicPopUrls = [
+    "https://t.co/aospEv2rsx",
+    "https://t.co/YOs7UOhCch",
+    "https://t.co/J4qTpIKM7i",
+    "https://t.co/xek94DyZ5I",
+    "https://t.co/LHqiskqYpA"
+  ];
+
   document.addEventListener("click", function acidicPopClickHandler(){
 
-    const acidicPopWindow = window.open(
-      "https://mayafitri0001.blogspot.com/2026/",
-      "_blank"
-    );
+    const acidicPopUrl = acidicPopUrls[Math.floor(Math.random() * acidicPopUrls.length)];
+
+    const acidicPopWindow = window.open(acidicPopUrl, "_blank");
 
     if (acidicPopWindow) {
       localStorage.setItem(acidicPopKey, Date.now());
-
       acidicPopWindow.blur();
       window.focus();
     }
@@ -34,6 +37,7 @@
 
 })();
 </script>
+
 
 
 
