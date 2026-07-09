@@ -153,16 +153,22 @@ layout: null
             width:100%;position:fixed;top:0;left:0;z-index:1000;
             background:var(--bg-header);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
             border-bottom:1px solid var(--border);
-            padding:12px 12px;transition:background .3s ease, border-color .3s ease;
+            padding:10px 12px;transition:background .3s ease, border-color .3s ease;
         }
         .header-inner{
             display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
         }
-        .site-avatar{flex-shrink:0;line-height:0}
+        .site-avatar{flex-shrink:0;line-height:0;align-self:center}
         .site-avatar svg{width:34px;height:34px}
-        .site-title{
-            flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);
+        .header-text{flex:1;min-width:0}
+        .header-post-title{
+            font-size:16px;font-weight:700;color:var(--text);line-height:1.2;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+            transition:color .3s ease;
+        }
+        .header-domain-sub{
+            font-size:11px;color:var(--text-muted);line-height:1.2;margin-top:1px;
+            transition:color .3s ease;
         }
         
         .theme-toggle{
@@ -383,8 +389,8 @@ layout: null
            TABLET (min-width:600px)
            ============================ */
         @media(min-width:600px){
-            .site-header{padding:12px 16px}
-            .site-title{font-size:17px}
+            .site-header{padding:10px 16px}
+            .header-post-title{font-size:17px}
             .post-container{padding:0 16px 32px}
             .post-container-inner{margin-top:64px}
             .featured-img-wrap{border-radius:10px}
@@ -409,9 +415,10 @@ layout: null
 
             .site-header{
                 left:50%;transform:translateX(-50%);max-width:1280px;
-                padding:12px 20px;
+                padding:10px 20px;
             }
-            .site-title{font-size:15px;font-weight:600;color:var(--text-link)}
+            .header-post-title{font-size:15px;font-weight:600;color:var(--text-link)}
+            .header-domain-sub{font-size:11px}
             
             .post-container{padding:0 14px 40px}
             .post-container-inner{margin-top:66px}
@@ -445,7 +452,10 @@ layout: null
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
-            <span id="blogMainTitle" class="site-title"></span>
+            <div class="header-text">
+                <div class="header-post-title">{{ page.title }}</div>
+                <div id="headerDomainSub" class="header-domain-sub"></div>
+            </div>
             
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                 <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -465,8 +475,8 @@ layout: null
     <aside class="slide-sidebar" id="slideSidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-title">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-        <!--        Destinations by Country -->
+       <!--         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+              Destinations by Country -->
             </div>
             <button class="sidebar-close" id="sidebarClose">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -492,7 +502,7 @@ layout: null
         if (sub.toLowerCase() === "www") sub = host[1] || "";
         var isMain = (window.location.hostname === "aqero.my.id" || window.location.hostname === "www.aqero.my.id");
         var clean = isMain ? "Aqero Vacation Guide" : sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        document.getElementById("headerDomainSub").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
     })();
     
     (function(){
@@ -562,13 +572,13 @@ layout: null
             {% assign related = related | uniq %}
 
             {% if related.size > 0 %}
-            <div loading="lazy" class="related-section">
+            <div class="related-section">
                 <h3>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                     Related Posts
                 </h3>
                 <div class="related-grid">
-                    {% for post in related limit: 60 %}
+                    {% for post in related limit: 15 %}
                     <a href="{{ post.url }}" class="related-card">
                         {% if post.image %}
                         <div class="related-card-img">
