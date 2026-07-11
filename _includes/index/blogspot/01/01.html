@@ -1,0 +1,295 @@
+---
+layout: null
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+{% include head.html %}
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:0;font-family:Arial,sans-serif;background:#f5f5f5}
+
+.post-list{
+    display:grid;
+    gap:10px;
+    padding:10px;
+    max-width:100%;
+    margin:auto;
+}
+
+.post-card{
+    position:relative;
+    background:#fff;
+    overflow:hidden;
+    box-shadow:0 1px 2px rgba(0,0,0,.06);
+    border-radius:6px;
+    transition:box-shadow 0.2s;
+    display:flex;
+    flex-direction:column;
+}
+
+.post-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)}
+
+.post-link{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:2;
+}
+
+.post-info{
+    position:relative;
+    z-index:1;
+    padding:10px 12px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    pointer-events:none;
+}
+
+.post-info h2{
+    font-size:14px;
+    margin:0 0 4px 0;
+    line-height:1.3;
+    color:#222;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+.post-meta{
+    font-size:11px;
+    color:#888;
+    margin-bottom:5px;
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+
+.post-meta svg{
+    width:12px;
+    height:12px;
+    flex-shrink:0;
+}
+
+.post-summary{
+    font-size:12px;
+    line-height:1.4;
+    color:#555;
+    flex:1;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+.pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    padding:15px 10px;
+    flex-wrap:wrap;
+}
+
+.pagination button{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 14px;
+    border:0;
+    background:#007bff;
+    color:#fff;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:13px;
+    line-height:1;
+    transition:background 0.2s;
+}
+
+.pagination button svg{
+    width:14px;
+    height:14px;
+    flex-shrink:0;
+}
+
+.pagination button:hover:not(:disabled){background:#0056b3}
+.pagination button:disabled{background:#ccc;cursor:not-allowed}
+
+#page-info{font-size:13px;color:#555}
+#loading,#error{text-align:center;padding:30px;font-size:14px}
+#error{display:none;color:red}
+
+/* Mobile: 2 kolom */
+.post-list{grid-template-columns:repeat(2,1fr)}
+
+/* Tablet: 3 kolom */
+@media screen and (min-width:768px){
+    .post-list{
+        grid-template-columns:repeat(3,1fr);
+        gap:12px;
+        padding:12px;
+        max-width:900px;
+    }
+    .post-info{padding:12px 14px}
+    .post-info h2{font-size:15px}
+    .post-summary{font-size:12px}
+}
+
+/* Desktop: 4 kolom */
+@media screen and (min-width:1024px){
+    .post-list{
+        grid-template-columns:repeat(4,1fr);
+        gap:14px;
+        max-width:1200px;
+    }
+    .post-info{padding:14px 16px}
+    .post-info h2{font-size:15px}
+    .post-summary{font-size:13px}
+}
+</style>
+</head>
+<body>
+<div loading="lazy">
+<main id="post-container" class="post-list">
+    <div id="loading">Loading posts...</div>
+</main>
+
+<div id="error"></div>
+
+<nav class="pagination" id="pagination" style="display:none">
+    <button id="btn-prev" onclick="goToPrev()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Previous
+    </button>
+    <span id="page-info"></span>
+    <button id="btn-next" onclick="goToNext()">
+        Next
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+</nav>
+
+<script>
+var BLOG_ID='1400031344750959946',
+    MAX_RESULTS=12,
+    currentIndex=1,
+    totalResults=0;
+
+function fetchFeed(startIndex){
+    var container=document.getElementById('post-container'),
+        error=document.getElementById('error'),
+        pagination=document.getElementById('pagination');
+
+    container.innerHTML='<div id="loading">Loading posts...</div>';
+    error.style.display='none';
+    pagination.style.display='none';
+
+    var old=document.getElementById('feed-script');
+    if(old) old.remove();
+
+    window.handleFeed=function(data){
+        if(!data.feed || !data.feed.entry){
+            container.innerHTML='';
+            error.style.display='block';
+            error.textContent='No posts found.';
+            return;
+        }
+
+        totalResults=parseInt(data.feed.openSearch$totalResults.$t)||0;
+        currentIndex=startIndex;
+
+        renderPosts(data.feed.entry);
+        updatePagination();
+    };
+
+    var s=document.createElement('script');
+    s.id='feed-script';
+    s.src='https://www.blogger.com/feeds/'+BLOG_ID+
+          '/posts/default?alt=json-in-script&callback=handleFeed'+
+          '&max-results='+MAX_RESULTS+
+          '&start-index='+startIndex;
+
+    document.body.appendChild(s);
+}
+
+function renderPosts(posts){
+    var html='';
+
+    for(var i=0;i<posts.length;i++){
+
+        var p=posts[i],
+            title=p.title.$t,
+            date=p.published.$t.substr(0,10),
+            link='';
+
+        for(var j=0;j<p.link.length;j++){
+            if(p.link[j].rel==='alternate'){
+                link=p.link[j].href;
+                break;
+            }
+        }
+
+        var summary='';
+        if(p.content){
+            var div=document.createElement('div');
+            div.innerHTML=p.content.$t;
+            var firstP=div.querySelector('p');
+            if(firstP){
+                summary=firstP.textContent.substr(0,100)+'...';
+            } else {
+                summary=div.textContent.substr(0,100)+'...';
+            }
+        }
+
+        html+='<article class="post-card">';
+        html+='<a class="post-link" href="'+link+'" aria-label="'+title+'"></a>';
+        html+='<div class="post-info">';
+        html+='<h2>'+title+'</h2>';
+        html+='<div class="post-meta">';
+        html+='<svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+        html+=date;
+        html+='</div>';
+        html+='<div class="post-summary">'+summary+'</div>';
+        html+='</div></article>';
+    }
+
+    document.getElementById('post-container').innerHTML=html;
+    window.scrollTo(0,0);
+}
+
+function updatePagination(){
+    var currentPage=Math.ceil(currentIndex/MAX_RESULTS),
+        totalPages=Math.ceil(totalResults/MAX_RESULTS);
+
+    document.getElementById('pagination').style.display='flex';
+    document.getElementById('page-info').textContent=
+        currentPage+' / '+totalPages;
+
+    document.getElementById('btn-prev').disabled=currentIndex<=1;
+    document.getElementById('btn-next').disabled=
+        currentIndex+MAX_RESULTS>totalResults;
+}
+
+function goToPrev(){
+    fetchFeed(Math.max(1,currentIndex-MAX_RESULTS));
+}
+
+function goToNext(){
+    fetchFeed(currentIndex+MAX_RESULTS);
+}
+
+fetchFeed(1);
+</script>
+
+{% include /ads/newage/01.html %}
+{% include footer.html %}
+</div>
+</body>
+</html>
