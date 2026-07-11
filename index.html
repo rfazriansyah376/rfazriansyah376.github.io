@@ -2,15 +2,11 @@
 layout: null
 ---
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-  
-  <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="945695" data-siteid="401419" async data-cfasync="false"></script>
     
     <script>
     (function() {
@@ -57,6 +53,7 @@ layout: null
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     
+
 {% include head.html %}
 {% include verif.html %}
 </head>
@@ -886,293 +883,164 @@ layout: null
     <div class="homepage-container" loading="lazy">
         <p id="welcomePara" class="section-order"></p>
 
-        <div style="padding:2%;">
+        <div loading="lazy">
 <style>
-.masonryGallery2-container {
-  column-count: 2;
-  column-gap: 10px;
-}
-
-@media (min-width: 600px) {
-  .masonryGallery2-container {
-    column-count: 3;
-    column-gap: 15px;
-  }
-}
-@media (min-width: 1000px) {
-  .masonryGallery2-container {
-    column-count: 4;
-    column-gap: 20px;
-  }
-}
-
-.masonryGallery2-container .masonry-item {
-  break-inside: avoid;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  background: white;
-}
-
-.masonryGallery2-container a {
-  display: block;
-  width: 100%;
-  text-decoration: none;
-  color: inherit;
-}
-
-.masonryGallery2-container img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.5s ease;
-  background: #f0f0f0;
-}
-
-.masonryGallery2-container img:hover {
-  transform: scale(1.03);
-}
-
-.post-labels {
-  padding: 8px 15px 0 15px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.post-label {
-  display: inline-block;
-  background: linear-gradient(135deg, #ff5000, #ff7300);
-  color: white !important;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
-  text-decoration: none !important;
-  transition: all 0.3s ease;
-}
-
-.post-label:hover {
-  background: linear-gradient(135deg, #e64400, #ff5000);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 80, 0, 0.4);
-}
-
-.post-title {
-  padding: 8px 15px 12px 15px;
-  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-.masonry-item:hover .post-title {
-  color: #ff5000;
-}
-
-.post-title span {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#reloadBtn {
-  background: linear-gradient(135deg, #ff5000, #ff7300);
-  color: white;
-  border: none;
-  padding: 14px 32px;
-  font-size: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-family: 'Segoe UI', sans-serif;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(255, 80, 0, 0.3);
-  margin: 40px auto;
-  display: block;
-}
-
-#reloadBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(255, 80, 0, 0.4);
-}
-
-.loading {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-  font-style: italic;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
+.post-list{max-width:100%;margin:auto}
+.post-card{background:#fff;margin-bottom:20px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.post-thumb{width:100%;display:block}
+.post-info{padding:15px}
+.post-info h2{font-size:20px;margin-bottom:10px}
+.post-info a{text-decoration:none;color:#222}
+.post-info a:hover{color:#007bff}
+.post-meta{font-size:13px;color:#777;margin-bottom:10px}
+.post-summary{font-size:15px;line-height:1.6;color:#444}
+.label-container{margin-top:10px}
+.label-tag{display:inline-block;background:#007bff;color:#fff;padding:4px 10px;border-radius:20px;font-size:12px;margin:0 5px 5px 0}
+.pagination{display:flex;justify-content:center;align-items:center;gap:10px;padding:20px;flex-wrap:wrap}
+.pagination button{padding:8px 16px;border:0;background:#007bff;color:#fff;border-radius:4px;cursor:pointer}
+.pagination button:disabled{background:#ccc;cursor:not-allowed}
+#loading,#error{text-align:center;padding:40px}
+#error{display:none;color:red}
 </style>
 
-<div id="loading" class="loading" style="display: none;">🔄 Loading gallery...</div>
-<div class="masonryGallery2-container" id="masonryGallery2-feed"></div>
+<main id="post-container" class="post-list">
+    <div id="loading">Loading posts...</div>
+</main>
 
-<div style="text-align: center; padding:5%; margin-top: 40px;">
-  <button id="reloadBtn" onclick="reloadGallery()">Load More</button>
-</div>
+<div id="error"></div>
+
+<nav class="pagination" id="pagination" style="display:none">
+    <button id="btn-prev" onclick="goToPrev()">← Previous</button>
+    <span id="page-info"></span>
+    <button id="btn-next" onclick="goToNext()">Next →</button>
+</nav>
 
 <script>
-var blogUrl = 'https://iskarais.blogspot.com';
-var cachedEntries = [];
-var currentBatch = 0;
-var batchSize = 20;
+var BLOG_ID='3849070220815751744',
+    MAX_RESULTS=6,
+    currentIndex=1,
+    totalResults=0;
 
-function handleJSONP(data) {
-  var entries = data.feed.entry || [];
-  cachedEntries = shuffleArray(entries).slice(0, 50);
-  
-  document.getElementById("masonryGallery2-feed").innerHTML = '';
-  currentBatch = 0;
-  renderBatch();
-}
+function fetchFeed(startIndex){
+    var container=document.getElementById('post-container'),
+        error=document.getElementById('error'),
+        pagination=document.getElementById('pagination');
 
-function shuffleArray(arr) {
-  var shuffled = arr.slice();
-  for (var i = shuffled.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = shuffled[i];
-    shuffled[i] = shuffled[j];
-    shuffled[j] = temp;
-  }
-  return shuffled;
-}
+    container.innerHTML='<div id="loading">Loading posts...</div>';
+    error.style.display='none';
+    pagination.style.display='none';
 
-function reloadGallery() {
-  var container = document.getElementById("masonryGallery2-feed");
-  var btn = document.getElementById("reloadBtn");
-  var loading = document.getElementById("loading");
-  
-  cachedEntries = [];
-  currentBatch = 0;
-  
-  loading.style.display = "block";
-  container.style.opacity = "0.5";
-  container.innerHTML = '';
-  btn.disabled = true;
-  btn.innerHTML = "🔄 Reloading...";
-  
-  var oldScript = document.getElementById('jsonp-script');
-  if (oldScript) oldScript.remove();
-  
-  var script = document.createElement('script');
-  script.id = 'jsonp-script';
-  script.src = blogUrl + '/feeds/posts/default/?alt=json-in-script&start-index=1&max-results=50&callback=handleJSONP';
-  
-  script.onerror = function() {
-    container.innerHTML = '<p style="text-align:center;padding:40px;color:red;">❌ Gagal memuat.</p>';
-    loading.style.display = "none";
-    btn.disabled = false;
-    btn.innerHTML = "🔄 Try Again";
-    container.style.opacity = "1";
-  };
-  
-  document.body.appendChild(script);
-}
+    var old=document.getElementById('feed-script');
+    if(old) old.remove();
 
-function renderBatch() {
-  var container = document.getElementById("masonryGallery2-feed");
-  var loading = document.getElementById("loading");
-  var btn = document.getElementById("reloadBtn");
-  
-  var start = currentBatch * batchSize;
-  var end = Math.min(start + batchSize, cachedEntries.length);
-  var batch = cachedEntries.slice(start, end);
-  
-  if (batch.length === 0) {
-    container.style.opacity = "1";
-    loading.style.display = "none";
-    btn.disabled = false;
-    btn.innerHTML = "Load More";
-    return;
-  }
-  
-  var fragment = document.createDocumentFragment();
-  
-  for (var i = 0; i < batch.length; i++) {
-    var entry = batch[i];
-    
-    // JUDUL
-    var title = entry.title ? entry.title.$t.replace(/<[^>]*>/g, '') : 'Untitled';
-    
-    // URL POSTINGAN
-    var url = '#';
-    if (entry.link) {
-      for (var k = 0; k < entry.link.length; k++) {
-        if (entry.link[k].rel === 'alternate') { url = entry.link[k].href; break; }
-      }
-      if (url === '#' && entry.link[0]) url = entry.link[0].href;
-    }
-    
-    // GAMBAR
-    var img = '';
-    if (entry.media$thumbnail && entry.media$thumbnail.url) {
-      img = entry.media$thumbnail.url.replace(/\/s[0-9]+(-c)?\//, '/s400/');
-    }
-    if (!img) {
-      var content = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : '');
-      var match = content.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/i);
-      if (match) {
-        img = match[1];
-        if (img.indexOf('//') === 0) img = 'https:' + img;
-      }
-    }
-    if (!img) img = 'https://via.placeholder.com/400x300/ff5000/ffffff?text=No+Image';
-    
-    // LABEL
-    var labels = [];
-    if (entry.category) {
-      var cats = Array.isArray(entry.category) ? entry.category : [entry.category];
-      for (var c = 0; c < cats.length; c++) {
-        if (cats[c].term && cats[c].term.indexOf('http') !== 0) {
-          labels.push(cats[c].term);
+    window.handleFeed=function(data){
+        if(!data.feed || !data.feed.entry){
+            container.innerHTML='';
+            error.style.display='block';
+            error.textContent='No posts found.';
+            return;
         }
-      }
-    }
-    
-    var labelsHtml = '';
-    if (labels.length > 0) {
-      labelsHtml = '<div class="spo">';
-      for (var l = 0; l < labels.length; l++) {
-        var labelUrl = blogUrl + '/search/label/' + encodeURIComponent(labels[l]);
-        labelsHtml += '<a href="' + labelUrl + '" class="post-label">' + labels[l] + '</a>';
-      }
-      labelsHtml += '</div>';
-    }
-    
-    // BUILD ITEM
-    var item = document.createElement('div');
-    item.className = 'masonry-item';
-    item.innerHTML = 
-      '<a href="' + url + '">' +
-        '<img src="' + img + '" alt="' + title + '" loading="lazy">' +
-      '</a>' +
-      labelsHtml +
-      '<a href="' + url + '">' +
-        '<div class="post-title"><span>' + title + '</span></div>' +
-      '</a>';
-    
-    fragment.appendChild(item);
-  }
-  
-  container.appendChild(fragment);
-  currentBatch++;
-  
-  if (end < cachedEntries.length) {
-    setTimeout(renderBatch, 100);
-  } else {
-    container.style.opacity = "1";
-    loading.style.display = "none";
-    btn.disabled = false;
-    btn.innerHTML = "Load More";
-  }
+
+        totalResults=parseInt(data.feed.openSearch$totalResults.$t)||0;
+        currentIndex=startIndex;
+
+        renderPosts(data.feed.entry);
+        updatePagination();
+    };
+
+    var s=document.createElement('script');
+    s.id='feed-script';
+    s.src='https://www.blogger.com/feeds/'+BLOG_ID+
+          '/posts/default?alt=json-in-script&callback=handleFeed'+
+          '&max-results='+MAX_RESULTS+
+          '&start-index='+startIndex;
+
+    document.body.appendChild(s);
 }
 
-// Start
-reloadGallery();
+function renderPosts(posts){
+    var html='';
+
+    for(var i=0;i<posts.length;i++){
+
+        var p=posts[i],
+            title=p.title.$t,
+            author=p.author[0].name.$t,
+            date=p.published.$t.substr(0,10),
+            link='';
+
+        for(var j=0;j<p.link.length;j++){
+            if(p.link[j].rel==='alternate'){
+                link=p.link[j].href;
+                break;
+            }
+        }
+
+        var summary='';
+        if(p.summary){
+            summary=p.summary.$t
+                .replace(/<[^>]+>/g,'')
+                .substr(0,180)+'...';
+        }
+
+        var thumb='';
+        if(p.media$thumbnail){
+            thumb=p.media$thumbnail.url.replace('/s72-c','/s720');
+        }
+
+        var labels='';
+        if(p.category){
+            for(var k=0;k<p.category.length;k++){
+                labels+='<span class="label-tag">'+p.category[k].term+'</span>';
+            }
+        }
+
+        html+='<article class="post-card">';
+
+        if(thumb){
+            html+='<img class="post-thumb" src="'+thumb+'" alt="'+title+'" loading="lazy">';
+        }
+
+        html+='<div class="post-info">';
+        html+='<h2><a href="'+link+'">'+title+'</a></h2>';
+        html+='<div class="post-meta">'+author+' • '+date+'</div>';
+        html+='<div class="post-summary">'+summary+'</div>';
+
+        if(labels){
+            html+='<div class="label-container">'+labels+'</div>';
+        }
+
+        html+='</div></article>';
+    }
+
+    document.getElementById('post-container').innerHTML=html;
+    window.scrollTo(0,0);
+}
+
+function updatePagination(){
+    var currentPage=Math.ceil(currentIndex/MAX_RESULTS),
+        totalPages=Math.ceil(totalResults/MAX_RESULTS);
+
+    document.getElementById('pagination').style.display='flex';
+    document.getElementById('page-info').textContent=
+        currentPage+' / '+totalPages;
+
+    document.getElementById('btn-prev').disabled=currentIndex<=1;
+    document.getElementById('btn-next').disabled=
+        currentIndex+MAX_RESULTS>totalResults;
+}
+
+function goToPrev(){
+    fetchFeed(Math.max(1,currentIndex-MAX_RESULTS));
+}
+
+function goToNext(){
+    fetchFeed(currentIndex+MAX_RESULTS);
+}
+
+fetchFeed(1);
 </script>
 </div>
 
