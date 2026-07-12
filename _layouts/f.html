@@ -550,6 +550,20 @@ layout: null
                         {% include /ads/banner/04.html %}
                     </div>
                 </div>
+                
+                <div class="post-content">
+                    {% include disqus.html %}
+                </div>
+                
+                <!-- BANNER 01: SETELAH KONTEN -->
+                <div class="ad-inline">
+                    <div class="ad-box ad-desktop">
+                        {% include /ads/banner/01.html %}
+                    </div>
+                    <div class="ad-box ad-mobile">
+                        {% include /ads/banner/04.html %}
+                    </div>
+                </div>
 
                 <!-- RELATED POSTS -->
                 {% assign related = "" | split: "" %}
