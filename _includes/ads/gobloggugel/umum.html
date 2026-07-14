@@ -37,20 +37,41 @@ loop();
 
 <!-- Popunder Rotator v2026 -->
 <script>
-(function CrimsonRotator_2026(){
+(function maulinator_2026(){
 
-  const CR_SEQ_KEY="crimsonRotatorSeq";
+  const CR_SEQ_KEY="maulinatorSeq";
   const CR_DAY=24*60*60*1000;
 
   const CR_GROUPS=[
 
-    // ===== adsterra =====
+    // ===== ngaloco =====
     [
-    "https://adtrailscope.blogspot.com/",
-"https://adnestflick.blogspot.com/",
-"https://advancedunitconverter.blogspot.com/",
-"https://beatleakedflow.blogspot.com/",
-"https://castlooploom.blogspot.com/"
+    "https://t.co/TPWGBQNsVF",
+"https://t.co/s7wSU8ovOU",
+"https://t.co/mAaAYVOfpt",
+"https://t.co/1Rgqe4qqko",
+"https://t.co/dVT6BumgNC",
+"https://t.co/WqRNXhGZRE",
+"https://t.co/V5Tz5WAX1O",
+"https://t.co/tJSYAn2E22",
+"https://t.co/UcJSHuwF0x",
+"https://t.co/gMApBMx0Ct",
+"https://t.co/zOrUr7WBqm",
+"https://t.co/Cw5R9uGZr5",
+"https://t.co/YDAUfOQdTl",
+"https://t.co/wMas2ozEZp",
+"https://t.co/j4Y5Hl17La",
+"https://t.co/1N1UMHpPxe",
+"https://t.co/rg7Mp46e2y",
+"https://t.co/UWFxpcjLCN",
+"https://t.co/nPb3zIXUou",
+"https://t.co/noCXbPKbGj",
+"https://t.co/7DDO2W56du",
+"https://t.co/sy6iaqipJO",
+"https://t.co/RhPRTqkHW1",
+"https://t.co/guBrk9vGTU",
+"https://t.co/qYCLHDjbHc",
+"https://t.co/TQfSpNHcV6"
     ],
     
     // ===== ad-maven =====
@@ -111,7 +132,7 @@ loop();
     for(let i=0;i<CR_GROUPS.length;i++){
 
       const index=(seq+i)%CR_GROUPS.length;
-      const lastKey="crimsonRotatorLast_"+index;
+      const lastKey="maulinatorLast_"+index;
       const last=parseInt(localStorage.getItem(lastKey)||"0",10);
 
       if(!last || (now-last)>=CR_DAY){
@@ -138,4 +159,3 @@ loop();
 
 })();
 </script>
-
