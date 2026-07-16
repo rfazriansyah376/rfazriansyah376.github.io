@@ -95,3 +95,49 @@ function initSpo() {
 initSpo();
 setTimeout(initSpo, 200);
 </script>
+
+
+<!-- ubah semua link dibuka di tab baru -->
+<script>
+(function () {
+  function forceBlank(root) {
+    (root.querySelectorAll ? root.querySelectorAll("a[href]") : []).forEach(function(a) {
+      if (a.target !== "_blank") a.target = "_blank";
+      a.rel = "noopener noreferrer";
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    forceBlank(document);
+
+    new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        if (m.type === "childList") {
+          m.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              if (node.matches && node.matches("a[href]")) {
+                node.target = "_blank";
+                node.rel = "noopener noreferrer";
+              }
+              forceBlank(node);
+            }
+          });
+        }
+
+        if (m.type === "attributes" &&
+            m.target.tagName === "A" &&
+            m.attributeName === "target") {
+          m.target.target = "_blank";
+          m.target.rel = "noopener noreferrer";
+        }
+      });
+    }).observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["target"]
+    });
+  });
+})();
+</script>
+
