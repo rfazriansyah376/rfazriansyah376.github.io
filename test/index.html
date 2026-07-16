@@ -8,34 +8,117 @@ layout: null
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <meta name="juicyads-site-verification" content="b8200452826fa3c7ca84937d26bdf691">
+    
+    {% assign category_name = "wulan guritno" %}
+    {% assign category_posts = site.posts | where_exp: "post", "post.categories contains category_name" %}
+    {% assign total_posts = category_posts | size %}
+    {% assign category_title = category_name | capitalize %}
+    
     <script>
     (function() {
         var hostname = location.hostname;
         var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        var formatText = function(str) {
+        var subdomain = parts[0];
+        if (subdomain.toLowerCase() === "www") subdomain = parts[1] || subdomain;
+        
+        function formatText(str) {
             return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        }
+        
+        function normalizeText(str) {
+            return str.toLowerCase().replace(/[^a-z0-9]/g, "");
+        }
+        
+        var subdomainFormatted = formatText(subdomain);
+        var categoryName = "{{ category_title }}";
+        
+        // Cek apakah subdomain dan kategori sama
+        var isSame = normalizeText(subdomainFormatted) === normalizeText(categoryName);
+        
+        // Buat title dinamis
+        var fullTitle, fullDesc, headerTitle, heroTitle, sectionPrefix;
+        
+        if (isSame) {
+            // Jika sama, hindari pengulangan
+            fullTitle = categoryName + " Photo Gallery";
+            fullDesc = "Complete collection of " + categoryName + " photos, videos, and latest updates. Browse all " + categoryName + " posts.";
+            headerTitle = categoryName + " Gallery";
+            heroTitle = categoryName + " Gallery";
+            sectionPrefix = ""; // Tidak perlu prefix kategori karena sudah jelas
+        } else {
+            // Jika berbeda, gabungkan
+            fullTitle = subdomainFormatted + " - " + categoryName + " Photo Gallery";
+            fullDesc = subdomainFormatted + " - Complete collection of " + categoryName + " photos, videos, and latest updates. Browse all " + categoryName + " posts on " + subdomainFormatted + ".";
+            headerTitle = subdomainFormatted + " " + categoryName;
+            heroTitle = subdomainFormatted + " - " + categoryName + " Gallery";
+            sectionPrefix = categoryName + " ";
+        }
+        
+        document.title = fullTitle;
+        
+        var metaDesc = document.querySelector("meta[name='description']");
+        if (metaDesc) metaDesc.content = fullDesc;
+        
+        var metaAuthor = document.querySelector("meta[name='author']");
+        if (metaAuthor) metaAuthor.content = isSame ? categoryName : subdomainFormatted;
+        
+        var canonical = document.querySelector("link[rel='canonical']");
+        if (canonical) canonical.href = location.href;
+        
+        // Update Schema
+        var schemaData = {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": fullTitle,
+            "description": fullDesc,
+            "url": location.href,
+            "publisher": {
+                "@type": "Organization",
+                "name": isSame ? categoryName : subdomainFormatted
+            }
         };
-        var displayDomain = formatText(fullName);
-        document.title = displayDomain + " - Beautiful Girls Photo Gallery";
-        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
-        metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world.";
-        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
-        metaAuthor.name = "author";
-        metaAuthor.content = displayDomain;
-        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
-        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
-        canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", location.href);
-        if (!canonical.parentNode) document.head.appendChild(canonical);
-        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful girls photo gallery from around the world","url":location.origin};
+        
         var schemaScript = document.createElement("script");
         schemaScript.type = "application/ld+json";
         schemaScript.textContent = JSON.stringify(schemaData);
         document.head.appendChild(schemaScript);
+        
+        // Set semua elemen dinamis saat DOM loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            // Header title
+            var headerTitleEl = document.getElementById("blogMainTitle");
+            if (headerTitleEl) headerTitleEl.textContent = headerTitle;
+            
+            // Hero section
+            var heroTitleEl = document.getElementById("heroTitle");
+            if (heroTitleEl) heroTitleEl.textContent = heroTitle;
+            
+            var heroDescEl = document.getElementById("heroDesc");
+            if (heroDescEl) heroDescEl.textContent = fullDesc;
+            
+            // Update category title di semua tempat
+            document.querySelectorAll('[data-dynamic="category-title"]').forEach(function(el) {
+                el.textContent = categoryName;
+            });
+            
+            // Update section prefix
+            document.querySelectorAll('[data-dynamic="section-prefix"]').forEach(function(el) {
+                el.textContent = sectionPrefix;
+            });
+            
+            // Sembunyikan/tampilkan elemen berdasarkan kondisi
+            if (isSame) {
+                // Sembunyikan elemen yang tidak diperlukan jika sama
+                document.querySelectorAll('[data-hide="same"]').forEach(function(el) {
+                    el.style.display = 'none';
+                });
+            } else {
+                // Sembunyikan elemen yang tidak diperlukan jika berbeda
+                document.querySelectorAll('[data-hide="different"]').forEach(function(el) {
+                    el.style.display = 'none';
+                });
+            }
+        });
     })();
     </script>
 
@@ -93,7 +176,6 @@ layout: null
         .slide-menu a svg{width:18px;height:18px;stroke:#999;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
         .slide-menu a:active svg{stroke:#fff}
 
-        /* ===== DESKTOP NAV ===== */
         .desktop-nav{display:none}
 
         /* ===== AD CONTAINER ===== */
@@ -103,12 +185,10 @@ layout: null
             background:#080808;min-height:50px;
         }
         .ad-box ins{max-width:100%}
-        
         .ad-desktop{display:none}
         .ad-mobile{display:flex}
         .ad-both{display:flex}
 
-        /* ===== AD BREAK ===== */
         .ad-break{
             padding:12px 0;background:#080808;
             border-top:1px solid rgba(255,255,255,.04);
@@ -116,7 +196,6 @@ layout: null
         }
         .ad-break:first-child{margin-top:58px}
 
-        /* ===== AD INLINE ===== */
         .ad-inline{
             margin:24px 0;padding:12px 0;
             background:#080808;
@@ -127,6 +206,32 @@ layout: null
         /* ===== MAIN CONTENT ===== */
         .content-area{
             width:100%;max-width:1400px;margin:0 auto;padding:0;
+        }
+
+        /* ===== CATEGORY HERO ===== */
+        .category-hero{
+            padding:24px 12px 8px;
+            max-width:1400px;margin:0 auto;
+        }
+        .category-hero h1{
+            margin:0;font-size:24px;font-weight:800;color:#fff;letter-spacing:.3px;
+            display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+        }
+        .category-hero h1 .hero-icon svg{
+            width:28px;height:28px;fill:#ff6b6b;stroke:none;
+        }
+        .category-hero .hero-badge{
+            display:inline-block;padding:4px 12px;background:rgba(255,107,107,.15);
+            border:1px solid rgba(255,107,107,.3);
+            border-radius:20px;font-size:12px;font-weight:600;color:#ff6b6b;
+            letter-spacing:.5px;text-transform:uppercase;
+        }
+        .category-hero .hero-desc{
+            margin:8px 0 0;font-size:13px;color:rgba(255,255,255,.6);
+            line-height:1.5;max-width:600px;
+        }
+        .category-hero .hero-count{
+            margin:8px 0 0;font-size:12px;color:rgba(255,255,255,.4);
         }
 
         /* ===== SECTION TITLE ===== */
@@ -153,7 +258,6 @@ layout: null
         }
         .gv2-featured-title h2{font-size:20px;color:#ff6b6b}
 
-        /* Grid dinamis */
         .gv2-grid-all{display:grid;grid-template-columns:1fr;gap:4px;max-width:1400px;margin:auto;padding:0}
 
         /* Mobile grid */
@@ -203,6 +307,13 @@ layout: null
         }
         .excerpt{display:none}
 
+        /* ===== EMPTY STATE ===== */
+        .empty-state{
+            text-align:center;padding:60px 20px;
+        }
+        .empty-state svg{width:64px;height:64px;stroke:#555;fill:none;stroke-width:1.5;margin-bottom:16px}
+        .empty-state p{color:#777;font-size:16px;margin:0}
+
         /* ===== TABLET ===== */
         @media(min-width:600px){
             .ad-desktop{display:flex}
@@ -214,6 +325,13 @@ layout: null
             .ad-break{padding:16px 0}
             .ad-break:first-child{margin-top:60px}
             .ad-inline{margin:28px 0;padding:14px 0}
+            
+            .category-hero{padding:28px 16px 12px}
+            .category-hero h1{font-size:28px}
+            .category-hero .hero-icon svg{width:32px;height:32px}
+            .category-hero .hero-desc{font-size:14px}
+            .category-hero .hero-count{font-size:13px}
+            
             .gv2-title{padding:0 12px}
             .gv2-title h2{font-size:20px}
             .gv2-grid-all{padding:0 8px;gap:6px}
@@ -245,6 +363,11 @@ layout: null
             .slide-menu{display:none!important}
 
             .ad-break:first-child{margin-top:62px}
+            
+            .category-hero{padding:32px 20px 16px}
+            .category-hero h1{font-size:32px}
+            .category-hero .hero-icon svg{width:36px;height:36px}
+            
             .gv2-section{margin:32px 0}
             .gv2-section:first-child{margin-top:8px}
             .gv2-title{padding:0 14px}
@@ -276,7 +399,6 @@ layout: null
             .desktop-nav a:hover svg{stroke:#fff}
         }
 
-        /* ===== LARGE DESKTOP ===== */
         @media(min-width:1100px){
             .gv2-grid-all{gap:12px}
         }
@@ -292,7 +414,7 @@ layout: null
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
-            <span id="blogMainTitle" class="site-title"></span>
+            <span id="blogMainTitle" class="site-title">Loading...</span>
             <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
                 <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
                 <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
@@ -311,13 +433,6 @@ layout: null
     </nav>
 
     <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
     (function(){
         var btn = document.getElementById("blogMenuToggle");
         var panel = document.getElementById("blogMenuPanel");
@@ -342,14 +457,27 @@ layout: null
     })();
     </script>
 
+    <!-- AVATAR SCRIPT -->
+    <script>
+    (function() {
+        var hostname = window.location.hostname;
+        var parts = hostname.split(".");
+        var fullName = parts[0];
+        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
+        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
+        var dh = h(fullName);
+        var clean = fullName.replace(/-/g," ");
+        var w = clean.split(" "), init = "";
+        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
+        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
+        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+    })();
+    </script>
+
     <!-- BANNER TOP -->
     <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/06.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
+        <div class="ad-box ad-desktop">{% include /ads/banner/06.html %}</div>
+        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
     </div>
 
     <!-- DESKTOP NAV -->
@@ -363,43 +491,84 @@ layout: null
     <!-- MAIN CONTENT -->
     <main class="content-area">
 
-        {% assign category_name = "wulan guritno" %}
-        {% assign category_posts = site.posts | where_exp: "post", "post.categories contains category_name" %}
-        {% assign total_posts = category_posts | size %}
+        <!-- CATEGORY HERO -->
+        <section class="category-hero">
+            <h1>
+                <span class="hero-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </span>
+                <span id="heroTitle">...</span>
+                <span class="hero-badge">{{ category_name }}</span>
+            </h1>
+            <p class="hero-desc" id="heroDesc">...</p>
+            <p class="hero-count">{{ total_posts }} posts in this category</p>
+        </section>
 
+        <!-- ========== 0 POSTS: EMPTY STATE ========== -->
         {% if total_posts == 0 %}
         <section class="gv2-section">
-            <div class="gv2-title">
-                <h2>
-                    <span class="section-title-svg archive">
-                        <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-                    </span>
-                    No posts found in {{ category_name | capitalize }}
-                </h2>
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                <p>No posts found in <strong>{{ category_title }}</strong></p>
             </div>
         </section>
+
         {% else %}
 
-        <!-- SECTION 1: FEATURED -->
-        {% if total_posts >= 3 %}
-        {% assign section1_posts = category_posts | slice: 0, 5 %}
-        {% assign section1_count = section1_posts | size %}
+        <!-- ========== SEDIKIT POSTS (1-5): SATU SECTION SAJA ========== -->
+        {% if total_posts <= 5 %}
         <section class="gv2-section">
             <div class="gv2-title gv2-featured-title">
                 <h2>
                     <span class="section-title-svg featured">
                         <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </span>
-                    {{ category_name | capitalize }} Featured Highlights
+                    <span data-dynamic="section-prefix">...</span>Collection
                     <span class="category-badge">{{ category_name }}</span>
                 </h2>
             </div>
-            <div class="gv2-grid-all items-{{ section1_count }}">
+            <div class="gv2-grid-all items-{{ total_posts }}">
+                {% for post in category_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% else %}
+
+        <!-- ========== BANYAK POSTS (>5): MULTI SECTION ========== -->
+        
+        <!-- SECTION 1: Featured Highlights -->
+        {% assign section1_posts = category_posts | slice: 0, 5 %}
+        <section class="gv2-section">
+            <div class="gv2-title gv2-featured-title">
+                <h2>
+                    <span class="section-title-svg featured">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </span>
+                    <span data-dynamic="section-prefix">...</span>Featured Highlights
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-5">
                 {% for post in section1_posts %}
                 <article class="gv2-card">
                     <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
                         {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
                         {% endif %}
                     </a>
                     <div class="gv2-card-body">
@@ -418,10 +587,8 @@ layout: null
             <div class="ad-box ad-desktop">{% include /ads/banner/01.html %}</div>
             <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
         </div>
-        {% endif %}
 
-        <!-- SECTION 2: LATEST -->
-        {% if total_posts > 5 %}
+        <!-- SECTION 2: Latest Updates -->
         {% assign section2_posts = category_posts | slice: 5, 6 %}
         {% assign section2_count = section2_posts | size %}
         {% if section2_count > 0 %}
@@ -431,7 +598,7 @@ layout: null
                     <span class="section-title-svg latest">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     </span>
-                    {{ category_name | capitalize }} Latest Updates
+                    <span data-dynamic="section-prefix">...</span>Latest Updates
                     <span class="category-badge">{{ category_name }}</span>
                 </h2>
             </div>
@@ -440,7 +607,7 @@ layout: null
                 <article class="gv2-card">
                     <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
                         {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
                         {% endif %}
                     </a>
                     <div class="gv2-card-body">
@@ -459,10 +626,8 @@ layout: null
             <div class="ad-box ad-both">{% include /ads/banner/02.html %}</div>
         </div>
         {% endif %}
-        {% endif %}
 
-        <!-- SECTION 3: STORIES -->
-        {% if total_posts > 11 %}
+        <!-- SECTION 3: Stories Collection -->
         {% assign section3_posts = category_posts | slice: 11, 4 %}
         {% assign section3_count = section3_posts | size %}
         {% if section3_count > 0 %}
@@ -472,7 +637,7 @@ layout: null
                     <span class="section-title-svg stories">
                         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                     </span>
-                    {{ category_name | capitalize }} Stories Collection
+                    <span data-dynamic="section-prefix">...</span>Stories Collection
                     <span class="category-badge">{{ category_name }}</span>
                 </h2>
             </div>
@@ -481,7 +646,7 @@ layout: null
                 <article class="gv2-card">
                     <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
                         {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
                         {% endif %}
                     </a>
                     <div class="gv2-card-body">
@@ -500,10 +665,8 @@ layout: null
             <div class="ad-box ad-both">{% include /ads/banner/03.html %}</div>
         </div>
         {% endif %}
-        {% endif %}
 
-        <!-- SECTION 4: MORE -->
-        {% if total_posts > 15 %}
+        <!-- SECTION 4: More to Explore -->
         {% assign section4_posts = category_posts | slice: 15, 6 %}
         {% assign section4_count = section4_posts | size %}
         {% if section4_count > 0 %}
@@ -513,7 +676,7 @@ layout: null
                     <span class="section-title-svg popular">
                         <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </span>
-                    More {{ category_name | capitalize }} to Explore
+                    More <span data-dynamic="section-prefix">...</span>to Explore
                     <span class="category-badge">{{ category_name }}</span>
                 </h2>
             </div>
@@ -522,7 +685,7 @@ layout: null
                 <article class="gv2-card">
                     <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
                         {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
                         {% endif %}
                     </a>
                     <div class="gv2-card-body">
@@ -541,10 +704,8 @@ layout: null
             <div class="ad-box ad-both">{% include /ads/banner/08.html %}</div>
         </div>
         {% endif %}
-        {% endif %}
 
-        <!-- SECTION 5: ARCHIVE -->
-        {% if total_posts > 21 %}
+        <!-- SECTION 5: Complete Archive -->
         {% assign section5_posts = category_posts | slice: 21, 6 %}
         {% assign section5_count = section5_posts | size %}
         {% if section5_count > 0 %}
@@ -554,7 +715,7 @@ layout: null
                     <span class="section-title-svg archive">
                         <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
                     </span>
-                    {{ category_name | capitalize }} Complete Archive
+                    <span data-dynamic="section-prefix">...</span>Complete Archive
                     <span class="category-badge">{{ category_name }}</span>
                 </h2>
             </div>
@@ -563,41 +724,7 @@ layout: null
                 <article class="gv2-card">
                     <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
                         {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                    </a>
-                    <div class="gv2-card-body">
-                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                        <div class="gv2-card-desc">
-                            {% assign before_svg = post.content | split: '<p>' | first %}
-                            {{ before_svg }}
-                        </div>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-        {% endif %}
-
-        <!-- FALLBACK: 1-2 posts -->
-        {% if total_posts > 0 and total_posts < 3 %}
-        <section class="gv2-section">
-            <div class="gv2-title gv2-featured-title">
-                <h2>
-                    <span class="section-title-svg featured">
-                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    </span>
-                    {{ category_name | capitalize }} Collection
-                    <span class="category-badge">{{ category_name }}</span>
-                </h2>
-            </div>
-            <div class="gv2-grid-all items-{{ total_posts }}">
-                {% for post in category_posts %}
-                <article class="gv2-card">
-                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
                         {% endif %}
                     </a>
                     <div class="gv2-card-body">
@@ -613,76 +740,19 @@ layout: null
         </section>
         {% endif %}
 
-        <!-- FALLBACK: 3-5 posts -->
-        {% if total_posts >= 3 and total_posts <= 5 %}
-        {% assign section1_posts = category_posts | slice: 0, 5 %}
-        {% assign section1_count = section1_posts | size %}
-        <section class="gv2-section">
-            <div class="gv2-title gv2-featured-title">
-                <h2>
-                    <span class="section-title-svg featured">
-                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    </span>
-                    {{ category_name | capitalize }} Collection
-                    <span class="category-badge">{{ category_name }}</span>
-                </h2>
-            </div>
-            <div class="gv2-grid-all items-{{ section1_count }}">
-                {% for post in section1_posts %}
-                <article class="gv2-card">
-                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                    </a>
-                    <div class="gv2-card-body">
-                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                        <div class="gv2-card-desc">
-                            {% assign before_svg = post.content | split: '<p>' | first %}
-                            {{ before_svg }}
-                        </div>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
         {% endif %}
-
         {% endif %}
 
     </main>
 
     <!-- BANNER BOTTOM -->
     <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/07.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
+        <div class="ad-box ad-desktop">{% include /ads/banner/07.html %}</div>
+        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
     </div>
 
-    <!-- AVATAR SCRIPT -->
-    <script>
-    (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-    })();
-    </script>
-
-    
     {% include /ads/gobloggugel/default.html %}
     {% include footer.html %}
 
-    
 </body>
 </html>
