@@ -103,7 +103,7 @@ setTimeout(initSpo, 200);
   function forceBlank(root) {
     (root.querySelectorAll ? root.querySelectorAll("a[href]") : []).forEach(function(a) {
       if (a.target !== "_blank") a.target = "_blank";
-      a.rel = "noopener noreferrer";
+      a.rel = "noopener";
     });
   }
 
@@ -117,7 +117,7 @@ setTimeout(initSpo, 200);
             if (node.nodeType === 1) {
               if (node.matches && node.matches("a[href]")) {
                 node.target = "_blank";
-                node.rel = "noopener noreferrer";
+                node.rel = "noopener";
               }
               forceBlank(node);
             }
@@ -128,7 +128,7 @@ setTimeout(initSpo, 200);
             m.target.tagName === "A" &&
             m.attributeName === "target") {
           m.target.target = "_blank";
-          m.target.rel = "noopener noreferrer";
+          m.target.rel = "noopener";
         }
       });
     }).observe(document.documentElement, {
@@ -140,4 +140,3 @@ setTimeout(initSpo, 200);
   });
 })();
 </script>
-
