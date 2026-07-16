@@ -59,7 +59,7 @@ layout: null
             padding:12px 12px;
         }
         .header-inner{
-            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
+            display:flex;align-items:center;gap:10px;max-width:1400px;margin:0 auto;
         }
         .site-avatar{flex-shrink:0;line-height:0}
         .site-avatar svg{width:34px;height:34px}
@@ -85,12 +85,15 @@ layout: null
         .slide-menu ul{list-style:none;margin:0;padding:0}
         .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
         .slide-menu a{
-            display:block;padding:13px 16px;color:#ccc;text-decoration:none;
+            display:flex;align-items:center;gap:10px;
+            padding:13px 16px;color:#ccc;text-decoration:none;
             font-size:15px;font-weight:500;border-radius:10px;transition:all .15s ease;
         }
         .slide-menu a:active{background:#2a2a2a;color:#fff}
+        .slide-menu a svg{width:18px;height:18px;stroke:#999;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .slide-menu a:active svg{stroke:#fff}
 
-        /* ===== DESKTOP NAV (hidden di mobile) ===== */
+        /* ===== DESKTOP NAV ===== */
         .desktop-nav{display:none}
 
         /* ===== AD CONTAINER ===== */
@@ -101,12 +104,11 @@ layout: null
         }
         .ad-box ins{max-width:100%}
         
-        /* Responsive ad visibility */
         .ad-desktop{display:none}
         .ad-mobile{display:flex}
         .ad-both{display:flex}
 
-        /* ===== AD BREAK (top & bottom) ===== */
+        /* ===== AD BREAK ===== */
         .ad-break{
             padding:12px 0;background:#080808;
             border-top:1px solid rgba(255,255,255,.04);
@@ -114,7 +116,7 @@ layout: null
         }
         .ad-break:first-child{margin-top:58px}
 
-        /* ===== AD INLINE (antar section) ===== */
+        /* ===== AD INLINE ===== */
         .ad-inline{
             margin:24px 0;padding:12px 0;
             background:#080808;
@@ -122,55 +124,57 @@ layout: null
             border-bottom:1px solid rgba(255,255,255,.03);
         }
 
-        /* ===== MAIN LAYOUT ===== */
-        .main-layout{
-            display:flex;flex-direction:column;gap:0;width:100%;max-width:1280px;
-            margin:0 auto;padding:0;
+        /* ===== MAIN CONTENT ===== */
+        .content-area{
+            width:100%;max-width:1400px;margin:0 auto;padding:0;
         }
-        .content-area{flex:1;min-width:0;padding:0;width:100%}
 
-        .sidebar{display:none}
-        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
+        /* ===== SECTION TITLE ===== */
+        .section-title-svg{display:flex;align-items:center;gap:8px}
+        .section-title-svg svg{width:20px;height:20px;flex-shrink:0}
+        .section-title-svg.featured svg{fill:#ff6b6b;stroke:none}
+        .section-title-svg.latest svg{stroke:#4ecdc4;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+        .section-title-svg.stories svg{stroke:#ffe66d;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+        .section-title-svg.popular svg{fill:#ff6b6b;stroke:none}
+        .section-title-svg.archive svg{stroke:#a29bfe;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-        /* ============================
-           GV2 GALLERY SYSTEM
-           ============================ */
+        /* ===== GALLERY SYSTEM ===== */
         .gv2-section{margin:20px 0}
         .gv2-section:first-child{margin-top:4px}
         .gv2-title{padding:0 8px;margin:0 auto 10px;max-width:1400px}
         .gv2-title h2{
-            margin:0;font-size:19px;font-weight:800;color:#fff;letter-spacing:.2px;
+            margin:0;font-size:17px;font-weight:800;color:#fff;letter-spacing:.2px;
+            display:flex;align-items:center;gap:8px;flex-wrap:wrap;
         }
-        .gv2-featured-title h2{font-size:21px;color:#ff6b6b}
-        .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
-
-        /* === MOBILE: 1 KOLOM FULLWIDTH === */
-        .gv2-featured{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-latest{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-stories{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-tutorials{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-archive{display:grid;grid-template-columns:1fr;gap:4px}
-
-        .gv2-featured-big,
-        .gv2-featured-small{
-            grid-column:auto;grid-row:auto;
+        .gv2-title .category-badge{
+            display:inline-block;padding:3px 10px;background:rgba(255,255,255,.08);
+            border-radius:20px;font-size:12px;font-weight:600;color:#ccc;
+            letter-spacing:.5px;text-transform:uppercase;
         }
+        .gv2-featured-title h2{font-size:20px;color:#ff6b6b}
+
+        /* Grid dinamis */
+        .gv2-grid-all{display:grid;grid-template-columns:1fr;gap:4px;max-width:1400px;margin:auto;padding:0}
+
+        /* Mobile grid */
+        .gv2-grid-all.items-1{grid-template-columns:1fr}
+        .gv2-grid-all.items-2{grid-template-columns:1fr 1fr}
+        .gv2-grid-all.items-3{grid-template-columns:1fr 1fr}
+        .gv2-grid-all.items-4{grid-template-columns:1fr 1fr}
+        .gv2-grid-all.items-5{grid-template-columns:1fr 1fr}
+        .gv2-grid-all.items-6{grid-template-columns:1fr 1fr}
 
         /* Card */
         .gv2-card{
             position:relative;overflow:hidden;border-radius:0;background:#0a0a0a;
             -webkit-tap-highlight-color:transparent;
         }
-        .gv2-card-link{
-            display:block;width:100%;
-        }
+        .gv2-card-link{display:block;width:100%}
         .gv2-card-link img{
             width:100%;height:100%;object-fit:cover;display:block;
             transition:transform .3s ease;aspect-ratio:16/9;
         }
         .gv2-card-link:active img{transform:scale(1.02)}
-
-        /* Card body (di luar link) */
         .gv2-card-body{
             padding:10px 10px 12px;
             background:linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(10,10,10,1) 100%);
@@ -185,10 +189,8 @@ layout: null
         .gv2-card-title-link:active{color:#ff6b6b}
         .gv2-card-desc{
             margin:0;font-size:10px;color:rgba(255,255,255,.65);
-            line-height:1.35;
-            overflow:hidden;
+            line-height:1.35;overflow:hidden;
         }
-        /* Biarkan konten deskripsi apa adanya */
         .gv2-card-desc img,
         .gv2-card-desc svg,
         .gv2-card-desc iframe,
@@ -199,12 +201,9 @@ layout: null
             margin:0!important;padding:0!important;
             background:none!important;border:none!important;
         }
-
         .excerpt{display:none}
 
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
+        /* ===== TABLET ===== */
         @media(min-width:600px){
             .ad-desktop{display:flex}
             .ad-mobile{display:none}
@@ -216,15 +215,15 @@ layout: null
             .ad-break:first-child{margin-top:60px}
             .ad-inline{margin:28px 0;padding:14px 0}
             .gv2-title{padding:0 12px}
-            .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 8px;gap:6px}
+            .gv2-title h2{font-size:20px}
+            .gv2-grid-all{padding:0 8px;gap:6px}
 
-            .gv2-featured{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-featured-big{grid-column:1 / -1}
-            .gv2-latest{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-stories{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-tutorials{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-archive{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-grid-all.items-1{grid-template-columns:1fr}
+            .gv2-grid-all.items-2{grid-template-columns:1fr 1fr}
+            .gv2-grid-all.items-3{grid-template-columns:1fr 1fr 1fr}
+            .gv2-grid-all.items-4{grid-template-columns:1fr 1fr}
+            .gv2-grid-all.items-5{grid-template-columns:1fr 1fr 1fr}
+            .gv2-grid-all.items-6{grid-template-columns:1fr 1fr 1fr}
 
             .gv2-card{border-radius:6px}
             .gv2-card-link img{aspect-ratio:9/16}
@@ -233,14 +232,12 @@ layout: null
             .gv2-card-desc{font-size:11px}
         }
 
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
+        /* ===== DESKTOP ===== */
         @media(min-width:900px){
-            body{max-width:1280px;margin:0 auto}
+            body{max-width:1400px;margin:0 auto}
 
             .site-header{
-                left:50%;transform:translateX(-50%);max-width:1280px;
+                left:50%;transform:translateX(-50%);max-width:1400px;
                 padding:12px 20px;
             }
             .site-title{font-size:15px;font-weight:600;color:#ccc}
@@ -248,61 +245,40 @@ layout: null
             .slide-menu{display:none!important}
 
             .ad-break:first-child{margin-top:62px}
-
-            .main-layout{flex-direction:row;padding:0 8px}
-            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
-            .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
-            .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
-
             .gv2-section{margin:32px 0}
             .gv2-section:first-child{margin-top:8px}
             .gv2-title{padding:0 14px}
             .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 14px;gap:10px}
+            .gv2-grid-all{padding:0 14px;gap:10px}
 
-            .gv2-featured{
-                grid-template-columns:2fr 1fr 1fr;
-                grid-template-rows:1fr 1fr;gap:10px;
-            }
-            .gv2-featured-big{
-                grid-column:1 / 2;grid-row:1 / 3;
-            }
-            .gv2-featured-big .gv2-card-link img{aspect-ratio:auto;height:100%}
-            .gv2-featured-small{grid-column:auto;grid-row:auto}
-            .gv2-featured-small .gv2-card-link img{aspect-ratio:9/16}
-
-            .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
-            .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
-            .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:10px}
-            .gv2-archive{grid-template-columns:repeat(6,1fr);gap:10px}
+            .gv2-grid-all.items-1{grid-template-columns:1fr}
+            .gv2-grid-all.items-2{grid-template-columns:1fr 1fr}
+            .gv2-grid-all.items-3{grid-template-columns:1fr 1fr 1fr}
+            .gv2-grid-all.items-4{grid-template-columns:1fr 1fr 1fr 1fr}
+            .gv2-grid-all.items-5{grid-template-columns:repeat(5,1fr)}
+            .gv2-grid-all.items-6{grid-template-columns:repeat(6,1fr)}
 
             .gv2-card{border-radius:12px}
             .gv2-card:hover .gv2-card-link img{transform:scale(1.05)}
             .gv2-card-title-link:hover{color:#ff6b6b;text-decoration:underline}
 
-            /* Desktop nav: muncul */
             .desktop-nav{
                 display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
+                align-items:center;
             }
             .desktop-nav a{
+                display:flex;align-items:center;gap:6px;
                 padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
                 border-radius:6px;transition:all .15s ease;
             }
             .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+            .desktop-nav a svg{width:16px;height:16px;stroke:#999;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+            .desktop-nav a:hover svg{stroke:#fff}
         }
 
-        /* ============================
-           LARGE DESKTOP (min-width:1100px)
-           ============================ */
+        /* ===== LARGE DESKTOP ===== */
         @media(min-width:1100px){
-            .sidebar-left{width:180px}
-            .sidebar-right{width:180px}
-            .gv2-grid{gap:12px}
-            .gv2-featured{gap:12px}
-            .gv2-latest{gap:12px}
-            .gv2-stories{gap:12px}
-            .gv2-tutorials{gap:12px}
-            .gv2-archive{gap:12px}
+            .gv2-grid-all{gap:12px}
         }
     </style>
     
@@ -327,10 +303,10 @@ layout: null
     <!-- SLIDE MENU -->
     <nav id="blogMenuPanel" class="slide-menu">
         <ul>
-            <li><a href="/">🏠 Home</a></li>
-            <li><a href="/contact/">📩 Contact</a></li>
-            <li><a href="/privacy-policy/">🔒 Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions/">📋 Terms & Conditions</a></li>
+            <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a></li>
+            <li><a href="/contact/"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a></li>
+            <li><a href="/privacy-policy/"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions/"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Terms & Conditions</a></li>
         </ul>
     </nav>
 
@@ -366,7 +342,7 @@ layout: null
     })();
     </script>
 
-    <!-- ==================== BANNER 06: TOP ==================== -->
+    <!-- BANNER TOP -->
     <div class="ad-break">
         <div class="ad-box ad-desktop">
             {% include /ads/banner/06.html %}
@@ -378,200 +354,305 @@ layout: null
 
     <!-- DESKTOP NAV -->
     <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/terms-and-conditions/">Terms & Conditions</a>
+        <a href="/"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+        <a href="/contact/"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a>
+        <a href="/privacy-policy/"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Privacy Policy</a>
+        <a href="/terms-and-conditions/"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Terms & Conditions</a>
     </nav>
 
-    <!-- MAIN LAYOUT -->
-    <div class="main-layout">
+    <!-- MAIN CONTENT -->
+    <main class="content-area">
 
-        <!-- LEFT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
+        {% assign category_name = "wulan guritno" %}
+        {% assign category_posts = site.posts | where_exp: "post", "post.categories contains category_name" %}
+        {% assign total_posts = category_posts | size %}
+
+        {% if total_posts == 0 %}
+        <section class="gv2-section">
+            <div class="gv2-title">
+                <h2>
+                    <span class="section-title-svg archive">
+                        <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                    </span>
+                    No posts found in {{ category_name | capitalize }}
+                </h2>
             </div>
-        </aside>
+        </section>
+        {% else %}
 
-        <!-- MAIN CONTENT -->
-        <main class="content-area">
-
-            <!-- ========== FEATURED ========== -->
-            {% assign featured_posts = site.posts | slice: 0, 5 %}
-            {% if featured_posts.size >= 5 %}
-            <section class="gv2-section">
-                <div class="gv2-title gv2-featured-title">
-                    <h2>🔥 Featured</h2>
-                </div>
-                <div class="gv2-grid gv2-featured">
-                    {% for post in featured_posts %}
-                    <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
-                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
+        <!-- SECTION 1: FEATURED -->
+        {% if total_posts >= 3 %}
+        {% assign section1_posts = category_posts | slice: 0, 5 %}
+        {% assign section1_count = section1_posts | size %}
+        <section class="gv2-section">
+            <div class="gv2-title gv2-featured-title">
+                <h2>
+                    <span class="section-title-svg featured">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </span>
+                    {{ category_name | capitalize }} Featured Highlights
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-{{ section1_count }}">
+                {% for post in section1_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
                         </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 01: SETELAH FEATURED ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-desktop">
-                    {% include /ads/banner/01.html %}
-                </div>
-                <div class="ad-box ad-mobile">
-                    {% include /ads/banner/04.html %}
-                </div>
+                    </div>
+                </article>
+                {% endfor %}
             </div>
+        </section>
 
-            <!-- ========== LATEST ========== -->
-            {% assign latest_posts = site.posts | slice: 5, 5 %}
-            {% if latest_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🆕 Latest</h2></div>
-                <div class="gv2-grid gv2-latest">
-                    {% for post in latest_posts %}
-                    <article class="gv2-card">
-                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
+        <div class="ad-inline">
+            <div class="ad-box ad-desktop">{% include /ads/banner/01.html %}</div>
+            <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
+        </div>
+        {% endif %}
+
+        <!-- SECTION 2: LATEST -->
+        {% if total_posts > 5 %}
+        {% assign section2_posts = category_posts | slice: 5, 6 %}
+        {% assign section2_count = section2_posts | size %}
+        {% if section2_count > 0 %}
+        <section class="gv2-section">
+            <div class="gv2-title">
+                <h2>
+                    <span class="section-title-svg latest">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </span>
+                    {{ category_name | capitalize }} Latest Updates
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-{{ section2_count }}">
+                {% for post in section2_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
                         </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 02: SETELAH LATEST ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/02.html %}
-                </div>
+                    </div>
+                </article>
+                {% endfor %}
             </div>
+        </section>
 
-            <!-- ========== STORIES ========== -->
-            {% assign stories_posts = site.posts | slice: 10, 4 %}
-            {% if stories_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📖 Stories</h2></div>
-                <div class="gv2-grid gv2-stories">
-                    {% for post in stories_posts %}
-                    <article class="gv2-card">
-                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
+        <div class="ad-inline">
+            <div class="ad-box ad-both">{% include /ads/banner/02.html %}</div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <!-- SECTION 3: STORIES -->
+        {% if total_posts > 11 %}
+        {% assign section3_posts = category_posts | slice: 11, 4 %}
+        {% assign section3_count = section3_posts | size %}
+        {% if section3_count > 0 %}
+        <section class="gv2-section">
+            <div class="gv2-title">
+                <h2>
+                    <span class="section-title-svg stories">
+                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </span>
+                    {{ category_name | capitalize }} Stories Collection
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-{{ section3_count }}">
+                {% for post in section3_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
                         </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 03: SETELAH STORIES ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/03.html %}
-                </div>
+                    </div>
+                </article>
+                {% endfor %}
             </div>
+        </section>
 
-            <!-- ========== POPULAR ========== -->
-            {% assign popular_posts = site.posts | slice: 14, 6 %}
-            {% if popular_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🔥 Popular</h2></div>
-                <div class="gv2-grid gv2-tutorials">
-                    {% for post in popular_posts %}
-                    <article class="gv2-card">
-                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
+        <div class="ad-inline">
+            <div class="ad-box ad-both">{% include /ads/banner/03.html %}</div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <!-- SECTION 4: MORE -->
+        {% if total_posts > 15 %}
+        {% assign section4_posts = category_posts | slice: 15, 6 %}
+        {% assign section4_count = section4_posts | size %}
+        {% if section4_count > 0 %}
+        <section class="gv2-section">
+            <div class="gv2-title">
+                <h2>
+                    <span class="section-title-svg popular">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </span>
+                    More {{ category_name | capitalize }} to Explore
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-{{ section4_count }}">
+                {% for post in section4_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
                         </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 08: SETELAH POPULAR ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/08.html %}
-                </div>
+                    </div>
+                </article>
+                {% endfor %}
             </div>
+        </section>
 
-            <!-- ========== ARCHIVE ========== -->
-            {% assign archive_posts = site.posts | slice: 20, 5 %}
-            {% if archive_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📁 Archive</h2></div>
-                <div class="gv2-grid gv2-archive">
-                    {% for post in archive_posts %}
-                    <article class="gv2-card">
-                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
+        <div class="ad-inline">
+            <div class="ad-box ad-both">{% include /ads/banner/08.html %}</div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <!-- SECTION 5: ARCHIVE -->
+        {% if total_posts > 21 %}
+        {% assign section5_posts = category_posts | slice: 21, 6 %}
+        {% assign section5_count = section5_posts | size %}
+        {% if section5_count > 0 %}
+        <section class="gv2-section">
+            <div class="gv2-title">
+                <h2>
+                    <span class="section-title-svg archive">
+                        <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                    </span>
+                    {{ category_name | capitalize }} Complete Archive
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-{{ section5_count }}">
+                {% for post in section5_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
                         </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-        </main>
-
-        <!-- RIGHT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
+                    </div>
+                </article>
+                {% endfor %}
             </div>
-        </aside>
+        </section>
+        {% endif %}
+        {% endif %}
 
-    </div>
+        <!-- FALLBACK: 1-2 posts -->
+        {% if total_posts > 0 and total_posts < 3 %}
+        <section class="gv2-section">
+            <div class="gv2-title gv2-featured-title">
+                <h2>
+                    <span class="section-title-svg featured">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </span>
+                    {{ category_name | capitalize }} Collection
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-{{ total_posts }}">
+                {% for post in category_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
-    <!-- ==================== BANNER 07: BOTTOM ==================== -->
+        <!-- FALLBACK: 3-5 posts -->
+        {% if total_posts >= 3 and total_posts <= 5 %}
+        {% assign section1_posts = category_posts | slice: 0, 5 %}
+        {% assign section1_count = section1_posts | size %}
+        <section class="gv2-section">
+            <div class="gv2-title gv2-featured-title">
+                <h2>
+                    <span class="section-title-svg featured">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </span>
+                    {{ category_name | capitalize }} Collection
+                    <span class="category-badge">{{ category_name }}</span>
+                </h2>
+            </div>
+            <div class="gv2-grid-all items-{{ section1_count }}">
+                {% for post in section1_posts %}
+                <article class="gv2-card">
+                    <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-link">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                    </a>
+                    <div class="gv2-card-body">
+                        <a href="https://www.ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                        <div class="gv2-card-desc">
+                            {% assign before_svg = post.content | split: '<p>' | first %}
+                            {{ before_svg }}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% endif %}
+
+    </main>
+
+    <!-- BANNER BOTTOM -->
     <div class="ad-break">
         <div class="ad-box ad-desktop">
             {% include /ads/banner/07.html %}
