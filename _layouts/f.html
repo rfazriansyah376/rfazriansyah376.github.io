@@ -25,7 +25,7 @@ layout: null
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
         var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
         canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", "{{ page.url | absolute_url }}");
+        canonical.setAttribute("href", window.location.href);
         if (!canonical.parentNode) document.head.appendChild(canonical);
     })();
     </script>
@@ -190,7 +190,7 @@ layout: null
 
         /* ===== POST CONTAINER ===== */
         .post-container{
-            max-width:750px;margin:0 auto;padding:0 12px 24px;
+            max-width:750px;margin:0 auto;padding:62px 12px 24px;
         }
 
         /* ===== POST CONTENT ===== */
@@ -255,6 +255,11 @@ layout: null
         .post-content details[open] > summary svg{transform:rotate(90deg)}
         .details-content{padding:12px 14px 16px}
 
+        /* ===== DISQUS WRAPPER ===== */
+        .disqus-wrapper{
+            margin:24px 0;
+        }
+
         /* ===== RELATED POSTS ===== */
         .related-section{
             margin-top:24px;padding:16px;
@@ -304,7 +309,7 @@ layout: null
             .site-header{padding:12px 16px}
             .post-title-header{font-size:17px}
             .ad-break:first-child{margin-top:60px}
-            .post-container{padding:0 16px 32px}
+            .post-container{padding:64px 16px 32px}
             .post-content{font-size:16px}
             .post-content h2{font-size:22px}
             .post-content h3{font-size:18px}
@@ -332,7 +337,7 @@ layout: null
             .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
             .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
 
-            .post-container{max-width:700px;padding:0 14px 40px}
+            .post-container{max-width:700px;padding:66px 14px 40px}
             .post-content{font-size:17px}
             .post-content h2{font-size:24px}
 
@@ -551,14 +556,15 @@ layout: null
                     </div>
                 </div>
                 
-                <div class="post-content">
+                <!-- DISQUS -->
+                <div class="disqus-wrapper">
                     {% include disqus.html %}
                 </div>
                 
-                <!-- BANNER 01: SETELAH KONTEN -->
+                <!-- BANNER 03: SETELAH DISQUS -->
                 <div class="ad-inline">
                     <div class="ad-box ad-desktop">
-                        {% include /ads/banner/01.html %}
+                        {% include /ads/banner/03.html %}
                     </div>
                     <div class="ad-box ad-mobile">
                         {% include /ads/banner/04.html %}
@@ -587,10 +593,9 @@ layout: null
                                 <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                             </div>
                             {% endif %}
-                           <!-- <div class="related-card-body">
+                            <div class="related-card-body">
                                 <h4>{{ post.title }}</h4>
-                                
-                            </div>-->
+                            </div>
                         </a>
                         {% endfor %}
                     </div>
@@ -627,7 +632,7 @@ layout: null
         </div>
     </div>
 
-    {% include /ads/layout/d.html %}
+    {% include /ads/gobloggugel/default.html %}
     {% include footer.html %}
 
 </body>

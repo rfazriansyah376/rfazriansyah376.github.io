@@ -48,7 +48,7 @@ layout: null
         
         var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
         canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", "{{ page.url | absolute_url }}");
+        canonical.setAttribute("href", window.location.href);
         if (!canonical.parentNode) document.head.appendChild(canonical);
     })();
     </script>
@@ -447,7 +447,7 @@ layout: null
 
 </head>
 <body>
-<div loading="lazy">
+
     <!-- HEADER -->
     <header class="site-header">
         <div class="header-inner">
@@ -475,8 +475,6 @@ layout: null
     <aside class="slide-sidebar" id="slideSidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-title">
-       <!--         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-              Destinations by Country -->
             </div>
             <button class="sidebar-close" id="sidebarClose">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -548,59 +546,61 @@ layout: null
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
 
-<main class="content-area">
+        <main class="content-area">
 
-    <div class="post-container">
-        <div class="post-container-inner">
+            <div class="post-container">
+                <div class="post-container-inner">
 
-            {% if page.image %}
-            <div class="featured-img-wrap">
-                <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
-            </div>
-            {% endif %}
+                    {% if page.image %}
+                    <div class="featured-img-wrap">
+                        <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+                    </div>
+                    {% endif %}
 
-            <div class="post-content">
-                {{ content }}
-            </div>
+                    <div class="post-content">
+                        {{ content }}
+                    </div>
 
-            <!-- RELATED POSTS -->
-            {% assign related = "" | split: "" %}
-            {% for cat in page.categories %}
-                {% assign cat_posts = site.categories[cat] | where_exp: "post", "post.url != page.url" %}
-                {% assign related = related | concat: cat_posts %}
-            {% endfor %}
-            {% assign related = related | uniq %}
-
-            {% if related.size > 0 %}
-            <div loading="lazy" class="related-section">
-                <h3>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                    Related Posts
-                </h3>
-                <div class="related-grid">
-                    {% for post in related limit: 15 %}
-                    <a href="{{ post.url }}" class="related-card">
-                        {% if post.image %}
-                        <div class="related-card-img">
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        </div>
-                        {% endif %}
-                        <div class="related-card-body">
-                            <h4>{{ post.title }}</h4>
-                        </div>
-                    </a>
+                    <!-- RELATED POSTS -->
+                    {% assign related = "" | split: "" %}
+                    {% for cat in page.categories %}
+                        {% assign cat_posts = site.categories[cat] | where_exp: "post", "post.url != page.url" %}
+                        {% assign related = related | concat: cat_posts %}
                     {% endfor %}
+                    {% assign related = related | uniq %}
+
+                    {% if related.size > 0 %}
+                    <div class="related-section">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            Related Posts
+                        </h3>
+                        <div class="related-grid">
+                            {% for post in related limit: 15 %}
+                            <a href="{{ post.url }}" class="related-card">
+                                {% if post.image %}
+                                <div class="related-card-img">
+                                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                                </div>
+                                {% endif %}
+                                <div class="related-card-body">
+                                    <h4>{{ post.title }}</h4>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
                 </div>
             </div>
-            {% endif %}
 
-        </div>
+        </main>
+
     </div>
 
-</main>
-    </div>
-
-    <!-- STATIC BOTTOM NAVIGATION --
+    <!-- STATIC BOTTOM NAVIGATION -->
+    <!--
     <nav class="bottom-nav">
         <div class="bottom-nav-inner">
             <a href="/">
@@ -621,7 +621,7 @@ layout: null
             </a>
         </div>
     </nav>
--->
+    -->
 
     <script>
     (function() {
@@ -643,8 +643,9 @@ layout: null
     })();
     </script>
 
+
+{% include /ads/gobloggugel/default.html %}
     {% include footer.html %}
 
-</div>
 </body>
 </html>
