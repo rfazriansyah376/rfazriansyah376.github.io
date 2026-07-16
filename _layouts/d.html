@@ -26,7 +26,7 @@ layout: null
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
         var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
         canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", "{{ page.url | absolute_url }}");
+        canonical.setAttribute("href", window.location.href);
         if (!canonical.parentNode) document.head.appendChild(canonical);
     })();
     </script>
@@ -454,7 +454,7 @@ layout: null
                 <div class="related-section">
                     <h3>📖 Related Posts</h3>
                     <div class="related-grid">
-                        {% for post in related %}
+                        {% for post in related limit: 9 %}
                         <a href="{{ post.url }}" class="related-card">
                             {% if post.image %}
                             <div class="related-card-img">
@@ -506,18 +506,3 @@ layout: null
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
