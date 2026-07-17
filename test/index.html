@@ -9,7 +9,6 @@ categories: [wulan guritno]
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <meta name="juicyads-site-verification" content="b8200452826fa3c7ca84937d26bdf691">
     
     {% assign category_name = page.categories | first %}
     {% assign category_posts = site.posts | where_exp: "post", "post.categories contains category_name" %}
