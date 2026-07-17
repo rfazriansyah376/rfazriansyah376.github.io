@@ -1,1 +1,13 @@
 {% include /ads/verif.html %}
+
+<script>
+(function () {
+  document.querySelectorAll('link[rel="canonical"]').forEach(el => el.remove());
+
+  const canonical = document.createElement("link");
+  canonical.rel = "canonical";
+  canonical.href = location.href;
+
+  document.head.appendChild(canonical);
+})();
+</script>
