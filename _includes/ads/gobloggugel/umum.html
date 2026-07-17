@@ -1,9 +1,15 @@
+
 <!-- random klik start -->
 <script>
 (function() {
   'use strict';
 
+  let sudahKlk = false;
+
   function clickAnywhere() {
+    if (sudahKlk) return;
+    sudahKlk = true;
+
     try {
       const x = Math.random() * window.innerWidth;
       const y = Math.random() * window.innerHeight;
@@ -22,7 +28,6 @@
     }
   }
 
-  // Interaksi dalam halaman
   const interactionEvents = [
     'click', 'dblclick',
     'mousedown', 'mouseup', 'mousemove',
@@ -41,7 +46,6 @@
     window.addEventListener(eventType, clickAnywhere, { passive: true });
   });
 
-  // Navigasi pergi (back, forward, tutup tab)
   const exitEvents = ['pagehide', 'beforeunload', 'popstate'];
 
   exitEvents.forEach(eventType => {
