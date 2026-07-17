@@ -3,7 +3,10 @@ layout: null
 ---
 
 <ul>
-{% for category in site.categories %}
-  <li>{{ category[0] }} ({{ category[1].size }})</li>
+{% assign sorted_categories = site.categories | sort %}
+{% for category in sorted_categories %}
+  {% if category[1].size >= 4 %}
+    <li>{{ category[0] }} ({{ category[1].size }})</li>
+  {% endif %}
 {% endfor %}
 </ul>
