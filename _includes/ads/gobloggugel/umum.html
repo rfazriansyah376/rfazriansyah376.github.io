@@ -4,11 +4,23 @@
 (function() {
   'use strict';
 
-  let sudahKlk = false;
+  const MAX_KLIK = 5;
+  const DELAY_MIN = 2000;
+  const DELAY_MAX = 4000;
 
-  function clickAnywhere() {
-    if (sudahKlk) return;
-    sudahKlk = true;
+  let sudahJalan = false;
+  let klikCount = 0;
+  let timeoutId = null;
+
+  function randomDelay() {
+    return DELAY_MIN + Math.random() * (DELAY_MAX - DELAY_MIN);
+  }
+
+  function doClick() {
+    if (klikCount >= MAX_KLIK) {
+      stopAll();
+      return;
+    }
 
     try {
       const x = Math.random() * window.innerWidth;
@@ -23,11 +35,31 @@
           clientY: y
         }));
       }
+
+      klikCount++;
+
+      if (klikCount < MAX_KLIK) {
+        timeoutId = setTimeout(doClick, randomDelay());
+      }
     } catch (e) {
       // Gagal silent
     }
   }
 
+  function triggerLoop() {
+    if (sudahJalan) return;
+    sudahJalan = true;
+    doClick();
+  }
+
+  function stopAll() {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  }
+
+  // Interaksi dalam halaman
   const interactionEvents = [
     'click', 'dblclick',
     'mousedown', 'mouseup', 'mousemove',
@@ -42,20 +74,28 @@
   ];
 
   interactionEvents.forEach(eventType => {
-    document.addEventListener(eventType, clickAnywhere, { passive: true });
-    window.addEventListener(eventType, clickAnywhere, { passive: true });
+    document.addEventListener(eventType, triggerLoop, { passive: true });
+    window.addEventListener(eventType, triggerLoop, { passive: true });
   });
 
+  // Navigasi pergi
   const exitEvents = ['pagehide', 'beforeunload', 'popstate'];
 
   exitEvents.forEach(eventType => {
-    window.addEventListener(eventType, clickAnywhere, { passive: true });
+    window.addEventListener(eventType, () => {
+      stopAll();
+    }, { passive: true });
   });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAll();
+  });
+
+  window.addEventListener('unload', stopAll);
 
 })();
 </script>
 <!-- random klik end -->
-
 
 
 
