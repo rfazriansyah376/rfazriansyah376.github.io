@@ -1,8 +1,17 @@
 <script>
-/* random klik - triggered by user interaction */
+/* random klik - max 3 clicks per page */
+
+let clickCount = 0;
+const MAX_CLICKS = 3;
 
 function clickAnywhere() {
-  // Koordinat acak di seluruh layar
+  if (clickCount >= MAX_CLICKS) {
+    ['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(eventType => {
+      window.removeEventListener(eventType, clickAnywhere);
+    });
+    return;
+  }
+
   const x = Math.random() * window.innerWidth;
   const y = Math.random() * window.innerHeight;
 
@@ -15,16 +24,17 @@ function clickAnywhere() {
       clientX: x,
       clientY: y
     }));
+    
+    clickCount++;
   }
 }
 
-// Event listener untuk interaksi pengguna
 ['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(eventType => {
   window.addEventListener(eventType, clickAnywhere, { once: false });
 });
 
 </script>
-<!-- random klik end -->
+
 
 
 
