@@ -95,13 +95,18 @@ setTimeout(initSpo, 200);
 </script>
 
 
+
 <!-- ubah semua link dibuka di tab baru -->
 <script>
 (function () {
   function forceBlank(root) {
     (root.querySelectorAll ? root.querySelectorAll("a[href]") : []).forEach(function(a) {
       if (a.target !== "_blank") a.target = "_blank";
-      a.rel = "noopener";
+      
+      // Hapus noopener dari rel jika ada
+      if (a.rel) {
+        a.rel = a.rel.split(/\s+/).filter(function(r) { return r !== "noopener"; }).join(" ");
+      }
     });
   }
 
@@ -115,7 +120,9 @@ setTimeout(initSpo, 200);
             if (node.nodeType === 1) {
               if (node.matches && node.matches("a[href]")) {
                 node.target = "_blank";
-                node.rel = "noopener";
+                if (node.rel) {
+                  node.rel = node.rel.split(/\s+/).filter(function(r) { return r !== "noopener"; }).join(" ");
+                }
               }
               forceBlank(node);
             }
@@ -126,7 +133,6 @@ setTimeout(initSpo, 200);
             m.target.tagName === "A" &&
             m.attributeName === "target") {
           m.target.target = "_blank";
-          m.target.rel = "noopener";
         }
       });
     }).observe(document.documentElement, {
@@ -138,22 +144,3 @@ setTimeout(initSpo, 200);
   });
 })();
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
