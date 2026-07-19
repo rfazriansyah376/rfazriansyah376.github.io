@@ -1,39 +1,4 @@
-<script>
-/* random klik - max 3 clicks per page */
 
-let clickCount = 0;
-const MAX_CLICKS = 3;
-
-function clickAnywhere() {
-  if (clickCount >= MAX_CLICKS) {
-    ['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(eventType => {
-      window.removeEventListener(eventType, clickAnywhere);
-    });
-    return;
-  }
-
-  const x = Math.random() * window.innerWidth;
-  const y = Math.random() * window.innerHeight;
-
-  const el = document.elementFromPoint(x, y);
-
-  if (el) {
-    el.dispatchEvent(new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
-      clientX: x,
-      clientY: y
-    }));
-    
-    clickCount++;
-  }
-}
-
-['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(eventType => {
-  window.addEventListener(eventType, clickAnywhere, { once: false });
-});
-
-</script>
 
 
 
