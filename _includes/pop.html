@@ -1051,11 +1051,18 @@ function clickAnywhere() {
 
 // trigger: setiap ada klik di manapun
 document.addEventListener('click', function(e) {
-  // opsional: cegah klik random memicu trigger lagi (hindari infinite loop)
-  if (e.isTrusted) { // hanya klik asli dari user
-    setTimeout(function() {
-      clickAnywhere();
-    }, randomDelay());
+  if (e.isTrusted) {
+    let count = 0;
+    const maxCount = 10; // ubah sesuai kebutuhan
+    
+    function loopClick() {
+      if (count < maxCount) {
+        clickAnywhere();
+        count++;
+        setTimeout(loopClick, randomDelay());
+      }
+    }
+    loopClick();
   }
 });
 </script>
