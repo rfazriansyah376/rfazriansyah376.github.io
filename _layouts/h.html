@@ -2,8 +2,6 @@
 layout: null
 ---
 
-<!-- smartlink ad-maven adoperaror monetag newage0000001@gmail.com -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,30 +122,25 @@ layout: null
             
             .ad-top { min-height: 90px }
             
-            /* Show desktop, hide mobile */
             .ad-desktop-only { display: flex }
             .ad-mobile-only { display: none }
             
-            /* Container flex untuk desktop */
             .desktop-flex {
                 display: flex;
                 gap: 12px;
                 align-items: flex-start;
             }
             
-            /* Sidebar kiri */
             .sidebar-left {
                 width: 160px;
                 flex-shrink: 0;
             }
             
-            /* Main content */
             .main-content {
                 flex: 1;
                 min-width: 0;
             }
             
-            /* Sidebar kanan */
             .sidebar-right {
                 width: 160px;
                 flex-shrink: 0;
@@ -170,7 +163,6 @@ layout: null
             .ad-sidebar-short { min-height: 250px }
             .ad-sidebar-tall { min-height: 600px }
             
-            /* Grid 6 kolom - folder lebih kecil */
             .grid {
                 grid-template-columns: repeat(6, 1fr);
                 gap: 8px;
@@ -224,11 +216,11 @@ layout: null
             {{ content }}
             
                 <div class="grid">
-                    {% assign folder_links = "https://www.ngaloco.my.id/categories/?q=yuyuy_1102","https://www.ngaloco.my.id/categories/?q=fanyuting2024","https://www.ngaloco.my.id/categories/?q=tingen_156","https://www.ngaloco.my.id/categories/?q=cce5677","https://www.ngaloco.my.id/categories/?q=qqq.qqpp77 leak","https://www.ngaloco.my.id/categories/?q=dearann211","https://www.ngaloco.my.id/categories/?q=ztc_713","https://www.ngaloco.my.id/categories/?q=_01as._","https://www.ngaloco.my.id/categories/?q=yujun318","https://www.ngaloco.my.id/categories/?q=jimmmmy_futures","https://www.ngaloco.my.id/categories/?q=ina__4194","https://www.ngaloco.my.id/categories/?q=gina99nana","https://www.ngaloco.my.id/categories/?q=annann12032025","https://www.ngaloco.my.id/categories/?q=coco_wong_chinyui","https://www.ngaloco.my.id/categories/?q=ss.lna_","https://www.ngaloco.my.id/categories/?q=_lizisai","https://www.ngaloco.my.id/categories/?q=sandyi_1205","https://www.ngaloco.my.id/categories/?q=yezai7777777","https://www.ngaloco.my.id/categories/?q=idumbo2305","https://www.ngaloco.my.id/categories/?q=alithefinali","https://www.ngaloco.my.id/categories/?q=bianbianbian333","https://www.ngaloco.my.id/categories/?q=reneeeee.h","https://www.ngaloco.my.id/categories/?q=viviiiii_cat","https://www.ngaloco.my.id/categories/?q=melvin_m0719" | split: "," %}
+                    {% assign folder_links = "https://ngaloco.my.id/categories/?q=yuyuy_1102,https://ngaloco.my.id/categories/?q=fanyuting2024,https://ngaloco.my.id/categories/?q=tingen_156,https://ngaloco.my.id/categories/?q=cce5677,https://ngaloco.my.id/categories/?q=qqq.qqpp77 leak,https://ngaloco.my.id/categories/?q=dearann211,https://ngaloco.my.id/categories/?q=ztc_713,https://ngaloco.my.id/categories/?q=_01as._,https://ngaloco.my.id/categories/?q=yujun318,https://ngaloco.my.id/categories/?q=jimmmmy_futures,https://ngaloco.my.id/categories/?q=ina__4194,https://ngaloco.my.id/categories/?q=gina99nana,https://ngaloco.my.id/categories/?q=annann12032025,https://ngaloco.my.id/categories/?q=coco_wong_chinyui,https://ngaloco.my.id/categories/?q=ss.lna_,https://ngaloco.my.id/categories/?q=_lizisai,https://ngaloco.my.id/categories/?q=sandyi_1205,https://ngaloco.my.id/categories/?q=yezai7777777,https://ngaloco.my.id/categories/?q=idumbo2305,https://ngaloco.my.id/categories/?q=alithefinali,https://ngaloco.my.id/categories/?q=bianbianbian333,https://ngaloco.my.id/categories/?q=reneeeee.h,https://ngaloco.my.id/categories/?q=viviiiii_cat,https://ngaloco.my.id/categories/?q=melvin_m0719" | split: "," %}
                     
                     {% for link in folder_links %}
                     {% assign folder_num = forloop.index | prepend: '00' | slice: -2, 2 %}
-                    <a href="{{ link }}" class="grid-item" target="_blank" rel="nofollow noopener noreferrer" aria-label="Leaked Folder {{ folder_num }}">
+                    <a href="{{ link }}" class="grid-item" target="_blank" aria-label="Leaked Folder {{ folder_num }}">
                         <svg viewBox="0 0 80 70">
                             <defs>
                                 <linearGradient id="b{{ forloop.index }}" x1="0" y1="0" x2="0" y2="1">
@@ -266,7 +258,6 @@ layout: null
                         <span class="num">{{ folder_num }}</span>
                     </a>
                     
-                    <!-- Mobile ad after folder 9 -->
                     {% if forloop.index == 9 %}
                     <div class="ad-wrapper ad-middle ad-full-row ad-mobile-only">
                         {% include ads/banner/02.html %}
@@ -293,7 +284,7 @@ layout: null
     <script>
         var hostname = window.location.hostname;
         var parts = hostname.split('.');
-        var subdomain = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+        var subdomain = parts.length >= 2 ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : 'Site';
         var title = subdomain + ' - Leaked Files';
         document.title = title;
         document.getElementById('pageTitle').textContent = title;
