@@ -454,7 +454,7 @@ layout: null
                 <div class="related-section">
                     <h3>📖 Related Posts</h3>
                     <div class="related-grid">
-                        {% for post in related limit: 99 %}
+                        {% for post in related limit: 3 %}
                         <a href="{{ post.url }}" class="related-card">
                             {% if post.image %}
                             <div class="related-card-img">
