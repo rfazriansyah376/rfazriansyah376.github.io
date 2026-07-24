@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    
+    <script>
+    (function() {
+        var saved = localStorage.getItem("aqero-theme");
+        if (saved === "light") {
+            document.documentElement.setAttribute("data-theme", "light");
+        } else if (saved === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    })();
+    </script>
+
+    <script>
+    (function() {
+        var hostname = location.hostname;
+        var parts = hostname.split(".");
+        
+        var isMainDomain = (parts.length <= 2) || (parts[0] === "www" && parts.length <= 3);
+        var subdomain = "";
+        
+        if (isMainDomain) {
+            subdomain = "Home";
+        } else {
+            var candidate = parts[0].toLowerCase();
+            if (candidate === "www" && parts.length > 2) {
+                candidate = parts[1];
+            }
+            subdomain = candidate.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        }
+        
+        var pageTitle = "";
+        if (isMainDomain) {
+            pageTitle = "Gallery - Beautiful & Sexy Artistes Photos";
+        } else {
+            pageTitle = subdomain + " - Hot Celeb & Model Photos Gallery";
+        }
+        document.title = pageTitle;
+        
+        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
+        metaDesc.name = "description";
+        if (isMainDomain) {
+            metaDesc.content = "Browse stunning photo galleries of beautiful actresses, sexy models, Instagram celebrities, and TikTok stars. Updated daily with exclusive hot photos.";
+        } else {
+            metaDesc.content = "Exclusive " + subdomain + " photo gallery - browse stunning photos of beautiful actresses, sexy celebrities, Instagram models, and TikTok stars.";
+        }
+        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
+        
+        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
+        metaAuthor.name = "author";
+        metaAuthor.content = "Celeb Photo Gallery";
+        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
+        
+        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
+        canonical.setAttribute("rel", "canonical");
+        canonical.setAttribute("href", location.href);
+        if (!canonical.parentNode) document.head.appendChild(canonical);
+        
+        var schemaData = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": isMainDomain ? "Beautiful & Sexy Artistes Photo Gallery" : subdomain + " - Celeb Photo Gallery",
+            "description": isMainDomain ? "Browse stunning photo galleries of beautiful actresses, sexy models, Instagram celebrities, and TikTok stars" : "Exclusive " + subdomain + " photo gallery - beautiful actresses, sexy celebrities, and hot models",
+            "url": location.origin
+        };
+        var schemaScript = document.createElement("script");
+        schemaScript.type = "application/ld+json";
+        schemaScript.textContent = JSON.stringify(schemaData);
+        document.head.appendChild(schemaScript);
+    })();
+    </script>
+
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    <style>
+        /* ===== DARK/LIGHT VARIABLES ===== */
+        :root,
+        [data-theme="dark"] {
+            --bg: #050505;
+            --bg-alt: #080808;
+            --bg-card: #0a0a0a;
+            --bg-sidebar: #0d0d0d;
+            --bg-header: rgba(5,5,5,.97);
+            --bg-nav: #0a0a0a;
+            --text: #fff;
+            --text-secondary: rgba(255,255,255,.65);
+            --text-muted: rgba(255,255,255,.5);
+            --text-dim: rgba(255,255,255,.45);
+            --text-link: #999;
+            --text-link-hover: #fff;
+            --accent: #ff6b6b;
+            --border: rgba(255,255,255,.08);
+            --border-light: rgba(255,255,255,.04);
+            --border-subtle: rgba(255,255,255,.03);
+            --btn-bg: rgba(255,255,255,.05);
+            --btn-border: rgba(255,255,255,.1);
+            --btn-hover: rgba(255,255,255,.12);
+            --nav-bg-hover: rgba(255,255,255,.06);
+            --overlay: rgba(0,0,0,.7);
+            --shadow: rgba(0,0,0,.5);
+            --card-gradient: linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(10,10,10,1) 100%);
+            --scrollbar-thumb: rgba(255,255,255,0.15);
+            --scrollbar-thumb-hover: rgba(255,255,255,0.25);
+        }
+
+        [data-theme="light"] {
+            --bg: #f5f5f5;
+            --bg-alt: #fafafa;
+            --bg-card: #fff;
+            --bg-sidebar: #fff;
+            --bg-header: rgba(255,255,255,.95);
+            --bg-nav: #f0f0f0;
+            --text: #1a1a1a;
+            --text-secondary: rgba(0,0,0,.6);
+            --text-muted: rgba(0,0,0,.5);
+            --text-dim: rgba(0,0,0,.4);
+            --text-link: #666;
+            --text-link-hover: #1a1a1a;
+            --accent: #e05555;
+            --border: rgba(0,0,0,.1);
+            --border-light: rgba(0,0,0,.06);
+            --border-subtle: rgba(0,0,0,.04);
+            --btn-bg: rgba(0,0,0,.05);
+            --btn-border: rgba(0,0,0,.1);
+            --btn-hover: rgba(0,0,0,.1);
+            --nav-bg-hover: rgba(0,0,0,.06);
+            --overlay: rgba(0,0,0,.4);
+            --shadow: rgba(0,0,0,.15);
+            --card-gradient: linear-gradient(to top, rgba(250,250,250,.98) 0%, rgba(255,255,255,1) 100%);
+            --scrollbar-thumb: rgba(0,0,0,0.15);
+            --scrollbar-thumb-hover: rgba(0,0,0,0.25);
+        }
+
+        /* ===== RESET & BASE ===== */
+        *,*::before,*::after{box-sizing:border-box}
+        html{overflow-x:hidden;background:var(--bg)}
+        body{
+            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
+            background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            color:var(--text);line-height:1.3;-webkit-font-smoothing:antialiased;
+            transition:background .3s ease, color .3s ease;
+        }
+
+        /* ===== HEADER ===== */
+        .site-header{
+            width:100%;position:fixed;top:0;left:0;z-index:1000;
+            background:var(--bg-header);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            border-bottom:1px solid var(--border);
+            padding:12px 12px;transition:background .3s ease, border-color .3s ease;
+        }
+        .header-inner{
+            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
+        }
+        .site-avatar{flex-shrink:0;line-height:0}
+        .site-avatar svg{width:34px;height:34px}
+        .site-title{
+            flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);
+        }
+        
+        .theme-toggle{
+            width:42px;height:42px;flex-shrink:0;
+            background:var(--btn-bg);border:1px solid var(--btn-border);
+            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
+            border-radius:50%;transition:all .2s ease;color:var(--text);
+        }
+        .theme-toggle:active{background:var(--btn-hover);transform:scale(.95)}
+        .theme-toggle svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+        .theme-toggle .icon-sun{display:none}
+        .theme-toggle .icon-moon{display:block}
+        [data-theme="light"] .theme-toggle .icon-sun{display:block}
+        [data-theme="light"] .theme-toggle .icon-moon{display:none}
+        
+        .menu-btn{
+            width:42px;height:42px;flex-shrink:0;
+            background:var(--btn-bg);border:1px solid var(--btn-border);
+            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
+            border-radius:50%;transition:all .2s ease;
+        }
+        .menu-btn:active{background:var(--btn-hover);transform:scale(.95)}
+        .menu-btn svg{width:22px;height:22px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round}
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-layout{width:100%;max-width:1280px;margin:0 auto;padding:0}
+        .content-area{width:100%;padding:0}
+
+        /* ===== STATIC BOTTOM NAV ===== */
+        .bottom-nav{
+            margin-top:32px;
+            background:var(--bg-nav);
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
+            transition:background .3s ease, border-color .3s ease;
+        }
+        .bottom-nav-inner{
+            display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+            max-width:1280px;margin:0 auto;padding:16px 12px;gap:4px;
+        }
+        .bottom-nav a{
+            display:flex;align-items:center;gap:6px;
+            padding:8px 14px;color:var(--text-link);text-decoration:none;font-size:12px;font-weight:500;
+            border-radius:8px;transition:all .15s ease;
+        }
+        .bottom-nav a:hover{color:var(--text-link-hover);background:var(--nav-bg-hover)}
+        .bottom-nav a:active{color:var(--accent)}
+        .bottom-nav a .nav-icon-svg{width:16px;height:16px;flex-shrink:0}
+
+        /* ===== SIDEBAR OVERLAY ===== */
+        .sidebar-overlay{
+            display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+            background:var(--overlay);z-index:1001;
+            opacity:0;transition:opacity .3s ease;
+        }
+        .sidebar-overlay.open{display:block;opacity:1}
+
+        /* ===== SLIDE SIDEBAR ===== */
+        .slide-sidebar{
+            position:fixed;top:0;right:0;z-index:1002;
+            width:350px;max-width:90vw;height:100vh;
+            background:var(--bg-sidebar);border-left:1px solid var(--border);
+            transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1), background .3s ease;
+            display:flex;flex-direction:column;
+            box-shadow:-8px 0 32px var(--shadow);
+        }
+        .slide-sidebar.open{transform:translateX(0)}
+        
+        .sidebar-header{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:16px 20px;border-bottom:1px solid var(--border);
+            flex-shrink:0;transition:border-color .3s ease;
+        }
+        .sidebar-header-title{
+            display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700;color:var(--text);
+        }
+        .sidebar-close{
+            width:36px;height:36px;flex-shrink:0;
+            background:var(--btn-bg);border:1px solid var(--btn-border);
+            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
+            border-radius:50%;transition:all .2s ease;color:var(--text);
+        }
+        .sidebar-close:active{background:var(--btn-hover)}
+        
+        .sidebar-content{
+            flex:1;overflow-y:auto;padding:16px 20px;
+            scrollbar-width:thin;scrollbar-color:var(--scrollbar-thumb) transparent;
+        }
+        .sidebar-content::-webkit-scrollbar{width:4px}
+        .sidebar-content::-webkit-scrollbar-track{background:transparent}
+        .sidebar-content::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:4px}
+        .sidebar-content::-webkit-scrollbar-thumb:hover{background:var(--scrollbar-thumb-hover)}
+
+        .shared-sidebar-content > *{margin-bottom:16px}
+        .shared-sidebar-content > *:last-child{margin-bottom:0}
+
+        /* ============================
+           GV2 GALLERY SYSTEM
+           ============================ */
+        .gv2-section{margin:24px 0}
+        .gv2-section:first-child{margin-top:62px}
+        .gv2-title{
+            padding:0 8px;margin:0 auto 12px;max-width:1400px;
+            display:flex;align-items:center;gap:8px;
+        }
+        .gv2-title h2{
+            margin:0;font-size:19px;font-weight:800;color:var(--text);letter-spacing:.2px;
+            transition:color .3s ease;
+        }
+        .gv2-title svg{flex-shrink:0}
+        .gv2-featured-title h2{font-size:21px;color:var(--accent)}
+        .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
+
+        /* Dynamic grids - will be set by JS */
+        .gv2-featured,
+        .gv2-latest,
+        .gv2-stories,
+        .gv2-tutorials,
+        .gv2-archive{display:grid;gap:4px}
+
+        .gv2-featured-big,
+        .gv2-featured-small{grid-column:auto;grid-row:auto}
+
+        .gv2-card{
+            position:relative;overflow:hidden;border-radius:0;background:var(--bg-card);
+            -webkit-tap-highlight-color:transparent;
+            transition:background .3s ease;
+        }
+        .gv2-card-link{display:block;width:100%}
+        .gv2-card-link img{
+            width:100%;height:100%;object-fit:cover;display:block;
+            transition:transform .3s ease;aspect-ratio:16/9;
+        }
+        .gv2-card-link:active img{transform:scale(1.02)}
+
+        .gv2-card-body{
+            padding:10px 10px 12px;
+            background:var(--card-gradient);
+            z-index:2;transition:background .3s ease;
+        }
+        .gv2-card-title-link{
+            color:var(--text);text-decoration:none;display:block;
+            margin:0 0 3px;font-size:13px;font-weight:700;line-height:1.25;
+            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+            overflow:hidden;transition:color .3s ease;
+        }
+        .gv2-card-title-link:active{color:var(--accent)}
+        
+        /* ===== SPECIAL ===== */
+        .gv2-card-desc{
+            margin:0;font-size:10px;color:var(--text-secondary);
+            line-height:1.35;overflow:hidden;transition:color .3s ease;
+        }
+        .gv2-card-desc img,
+        .gv2-card-desc svg,
+        .gv2-card-desc iframe,
+        .gv2-card-desc script,
+        .gv2-card-desc style{display:none!important}
+        .gv2-card-desc *{
+            font-size:inherit!important;color:inherit!important;
+            margin:0!important;padding:0!important;
+            background:none!important;border:none!important;
+        }
+
+        .excerpt{display:none}
+
+        /* ============================
+           TABLET (min-width:600px)
+           ============================ */
+        @media(min-width:600px){
+            .site-header{padding:12px 16px}
+            .site-title{font-size:17px}
+            .gv2-section:first-child{margin-top:64px}
+            .gv2-title{padding:0 12px}
+            .gv2-title h2{font-size:22px}
+            .gv2-grid{padding:0 8px;gap:6px}
+
+            .gv2-featured,
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive{gap:6px}
+
+            .gv2-card{border-radius:6px}
+            .gv2-card-link img{aspect-ratio:16/9}
+            .gv2-card-body{padding:12px 12px 14px}
+            .gv2-card-title-link{font-size:14px}
+            .gv2-card-desc{font-size:11px}
+            
+            .slide-sidebar{width:380px}
+            .bottom-nav-inner{padding:20px 16px;gap:8px}
+        }
+
+        /* ============================
+           DESKTOP (min-width:900px)
+           ============================ */
+        @media(min-width:900px){
+            body{max-width:1280px;margin:0 auto}
+
+            .site-header{
+                left:50%;transform:translateX(-50%);max-width:1280px;
+                padding:12px 20px;
+            }
+            .site-title{font-size:15px;font-weight:600;color:var(--text-link)}
+            
+            .gv2-section{margin:32px 0}
+            .gv2-section:first-child{margin-top:66px}
+            .gv2-title{padding:0 14px}
+            .gv2-title h2{font-size:22px}
+            .gv2-grid{padding:0 14px;gap:10px}
+
+            .gv2-featured,
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive{gap:10px}
+
+            .gv2-card{border-radius:12px}
+            .gv2-card:hover .gv2-card-link img{transform:scale(1.05)}
+            .gv2-card-title-link:hover{color:var(--accent);text-decoration:underline}
+            
+            .slide-sidebar{width:400px}
+            .bottom-nav-inner{gap:16px}
+        }
+
+        @media(min-width:1100px){
+            .gv2-grid{gap:12px}
+            .gv2-featured,
+            .gv2-latest,
+            .gv2-stories,
+            .gv2-tutorials,
+            .gv2-archive{gap:12px}
+        }
+    </style>
+    
+{% include head.html %}
+
+</head>
+<body>
+
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div id="domainAvatar" class="site-avatar"></div>
+            <span id="blogMainTitle" class="site-title"></span>
+            
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            
+            <button class="menu-btn" id="sidebarToggle" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- SLIDE SIDEBAR -->
+    <aside class="slide-sidebar" id="slideSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-header-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+            </div>
+            <button class="sidebar-close" id="sidebarClose">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        
+        <div class="sidebar-content">
+            <div class="shared-sidebar-content">
+                <div class="bottom-nav-inner">
+                {% include /sidebar/ngaloco.html %}
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+    (function(){
+        var host = window.location.hostname.split(".");
+        var sub = host[0];
+        if (sub.toLowerCase() === "www") sub = host[1] || "";
+        var isMain = (host.length <= 2) || (host[0] === "www" && host.length <= 3);
+        var clean = isMain ? "Hot Celebs Photo Gallery" : sub.replace(/-/g, " ");
+        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    })();
+    
+    (function(){
+        var toggle = document.getElementById("themeToggle");
+        var html = document.documentElement;
+        toggle.addEventListener("click", function(){
+            var current = html.getAttribute("data-theme");
+            var next = current === "light" ? "dark" : "light";
+            html.setAttribute("data-theme", next);
+            localStorage.setItem("aqero-theme", next);
+        });
+    })();
+    
+    (function(){
+        var btn = document.getElementById("sidebarToggle");
+        var sidebar = document.getElementById("slideSidebar");
+        var overlay = document.getElementById("sidebarOverlay");
+        var closeBtn = document.getElementById("sidebarClose");
+        
+        function openSidebar(){
+            sidebar.classList.add("open");
+            overlay.classList.add("open");
+            document.body.style.overflow = "hidden";
+        }
+        function closeSidebar(){
+            sidebar.classList.remove("open");
+            overlay.classList.remove("open");
+            document.body.style.overflow = "";
+        }
+        
+        btn.addEventListener("click", function(e){
+            e.stopPropagation();
+            sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
+        });
+        closeBtn.addEventListener("click", closeSidebar);
+        overlay.addEventListener("click", closeSidebar);
+        document.addEventListener("keydown", function(e){
+            if(e.key === "Escape") closeSidebar();
+        });
+    })();
+
+    // ===== DYNAMIC GRID SYSTEM =====
+    (function() {
+        function getGridColumns(total, sectionType) {
+            var mq = window.matchMedia("(min-width: 900px)");
+            var tablet = window.matchMedia("(min-width: 600px)");
+            
+            if (mq.matches) {
+                // Desktop
+                if (sectionType === 'featured') {
+                    return total <= 3 ? Math.min(total, 3) : 3;
+                } else if (sectionType === 'latest') {
+                    return total <= 3 ? total : (total <= 5 ? total : 5);
+                } else if (sectionType === 'stories') {
+                    return total <= 3 ? total : 4;
+                } else if (sectionType === 'popular') {
+                    return total <= 3 ? total : 3;
+                } else if (sectionType === 'archive') {
+                    return total <= 3 ? total : (total <= 6 ? total : 6);
+                }
+            } else if (tablet.matches) {
+                // Tablet
+                return total <= 2 ? total : 2;
+            } else {
+                // Mobile
+                return 1;
+            }
+        }
+
+        function applyDynamicGrid(sectionClass, totalPosts, sectionType) {
+            var sections = document.querySelectorAll(sectionClass);
+            sections.forEach(function(section) {
+                var columns = getGridColumns(totalPosts, sectionType);
+                section.style.gridTemplateColumns = 'repeat(' + columns + ', 1fr)';
+            });
+        }
+
+        // Apply dynamic grids after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes.length > 0) {
+                        applyAllDynamicGrids();
+                    }
+                });
+            });
+
+            var contentArea = document.querySelector('.content-area');
+            if (contentArea) {
+                observer.observe(contentArea, { childList: true, subtree: true });
+            }
+
+            applyAllDynamicGrids();
+        });
+
+        function applyAllDynamicGrids() {
+            var featuredGrid = document.querySelector('.gv2-featured');
+            if (featuredGrid) {
+                var featuredPosts = featuredGrid.querySelectorAll('.gv2-card').length;
+                applyDynamicGrid('.gv2-featured', featuredPosts, 'featured');
+                
+                var mq = window.matchMedia("(min-width: 900px)");
+                if (mq.matches && featuredPosts >= 3) {
+                    var bigCard = featuredGrid.querySelector('.gv2-featured-big');
+                    if (bigCard) {
+                        featuredGrid.style.gridTemplateColumns = '2fr 1fr 1fr';
+                        featuredGrid.style.gridTemplateRows = '1fr 1fr';
+                        bigCard.style.gridColumn = '1 / 2';
+                        bigCard.style.gridRow = '1 / 3';
+                    }
+                }
+            }
+
+            var latestGrid = document.querySelector('.gv2-latest');
+            if (latestGrid) {
+                var latestPosts = latestGrid.querySelectorAll('.gv2-card').length;
+                applyDynamicGrid('.gv2-latest', latestPosts, 'latest');
+            }
+
+            var storiesGrid = document.querySelector('.gv2-stories');
+            if (storiesGrid) {
+                var storiesPosts = storiesGrid.querySelectorAll('.gv2-card').length;
+                applyDynamicGrid('.gv2-stories', storiesPosts, 'stories');
+            }
+
+            var popularGrid = document.querySelector('.gv2-tutorials');
+            if (popularGrid) {
+                var popularPosts = popularGrid.querySelectorAll('.gv2-card').length;
+                applyDynamicGrid('.gv2-tutorials', popularPosts, 'popular');
+            }
+
+            var archiveGrid = document.querySelector('.gv2-archive');
+            if (archiveGrid) {
+                var archivePosts = archiveGrid.querySelectorAll('.gv2-card').length;
+                applyDynamicGrid('.gv2-archive', archivePosts, 'archive');
+            }
+        }
+
+        window.addEventListener('resize', function() {
+            applyAllDynamicGrids();
+        });
+    })();
+    </script>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-layout">
+
+        <main class="content-area">
+
+            <!-- ========== CATEGORY pisah01 ========== -->
+            {% assign category_posts = site.categories.indo01 %}
+
+            {% if category_posts.size > 0 %}
+            {% assign total_posts = category_posts.size %}
+
+            <!-- ========== PERHITUNGAN PROPORSIONAL DINAMIS ========== -->
+            {% if total_posts <= 5 %}
+                {% assign featured_count = total_posts %}
+                {% assign latest_count = 0 %}
+                {% assign trending_count = 0 %}
+                {% assign popular_count = 0 %}
+                {% assign archive_count = 0 %}
+            {% elsif total_posts <= 10 %}
+                {% assign featured_count = 5 %}
+                {% assign latest_count = total_posts | minus: 5 %}
+                {% assign trending_count = 0 %}
+                {% assign popular_count = 0 %}
+                {% assign archive_count = 0 %}
+            {% elsif total_posts <= 17 %}
+                {% assign featured_count = 5 %}
+                {% assign latest_count = 5 %}
+                {% assign trending_count = total_posts | minus: 10 %}
+                {% assign popular_count = 0 %}
+                {% assign archive_count = 0 %}
+            {% elsif total_posts <= 20 %}
+                {% assign featured_count = 5 %}
+                {% assign latest_count = 5 %}
+                {% assign trending_count = 4 %}
+                {% assign popular_count = total_posts | minus: 14 %}
+                {% assign archive_count = 0 %}
+            {% else %}
+                {% assign featured_count = 5 %}
+                {% assign latest_count = 5 %}
+                {% assign trending_count = 4 %}
+                {% assign popular_count = 3 %}
+                {% assign archive_count = total_posts | minus: 17 %}
+            {% endif %}
+
+            <!-- ========== TOP PICKS - Featured Gallery ========== -->
+            {% assign featured_posts = category_posts | slice: 0, featured_count %}
+            
+            <section class="gv2-section">
+                <div class="gv2-title gv2-featured-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <h2>Top Picks Gallery</h2>
+                </div>
+                <div class="gv2-grid gv2-featured">
+                    {% for post in featured_posts %}
+                    <article class="gv2-card {% if forloop.first and featured_posts.size >= 3 %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        </a>
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">{% assign before_svg = post.content | split: '<p>' | first %}{{ before_svg }}</div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- ========== LATEST PHOTOS ========== -->
+            {% if latest_count > 0 %}
+            {% assign latest_start = featured_count %}
+            {% assign latest_posts = category_posts | slice: latest_start, latest_count %}
+            
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <h2>Latest Photos</h2>
+                </div>
+                <div class="gv2-grid gv2-latest">
+                    {% for post in latest_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        </a>
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">{% assign before_svg = post.content | split: '<p>' | first %}{{ before_svg }}</div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- ========== TRENDING NOW ========== -->
+            {% if trending_count > 0 %}
+            {% assign trending_start = featured_count | plus: latest_count %}
+            {% assign trending_posts = category_posts | slice: trending_start, trending_count %}
+            
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <h2>Trending Now</h2>
+                </div>
+                <div class="gv2-grid gv2-stories">
+                    {% for post in trending_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        </a>
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">{% assign before_svg = post.content | split: '<p>' | first %}{{ before_svg }}</div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- ========== MOST VIEWED ========== -->
+            {% if popular_count > 0 %}
+            {% assign popular_start = featured_count | plus: latest_count | plus: trending_count %}
+            {% assign popular_posts = category_posts | slice: popular_start, popular_count %}
+            
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <h2>Most Viewed</h2>
+                </div>
+                <div class="gv2-grid gv2-tutorials">
+                    {% for post in popular_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        </a>
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">{% assign before_svg = post.content | split: '<p>' | first %}{{ before_svg }}</div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- ========== EXPLORE MORE ========== -->
+            {% if archive_count > 0 %}
+            {% assign archive_start = featured_count | plus: latest_count | plus: trending_count | plus: popular_count %}
+            {% assign archive_posts = category_posts | slice: archive_start, archive_count %}
+            
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                    <h2>Explore More</h2>
+                </div>
+                <div class="gv2-grid gv2-archive">
+                    {% for post in archive_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        </a>
+                        <div class="gv2-card-body">
+                            <a href="{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
+                            <div class="gv2-card-desc">{% assign before_svg = post.content | split: '<p>' | first %}{{ before_svg }}</div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% endif %}
+
+        </main>
+
+    </div>
+
+    <!-- STATIC BOTTOM NAVIGATION -->
+    <!--
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <a href="/">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Home
+            </a>
+            <a href="/contact/">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Contact
+            </a>
+            <a href="/privacy-policy/">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Privacy
+            </a>
+            <a href="/terms-and-conditions/">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Terms
+            </a>
+        </div>
+    </nav>
+    -->
+
+    <script>
+    (function() {
+        var hostname = window.location.hostname;
+        var parts = hostname.split(".");
+        var fullName = parts[0];
+        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
+        function h(s) {var h=0;for (var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
+        var dh = h(fullName);
+        var isMain = (hostname.split(".").length <= 2) || (hostname.startsWith("www.") && hostname.split(".").length <= 3);
+        var init = isMain ? "GP" : "";
+        if (!isMain) {
+            var clean = fullName.replace(/-/g," ");
+            var w = clean.split(" ");
+            for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
+            if(init.length<2)init=fullName.substring(0,3).toUpperCase();
+        }
+        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+    })();
+    </script>
+
+    {% include /ads/gobloggugel/default.html %}
+    {% include footer.html %}
+
+</body>
+</html>
