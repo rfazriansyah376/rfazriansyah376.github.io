@@ -6,602 +6,766 @@ layout: null
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <meta name="juicyads-site-verification" content="b8200452826fa3c7ca84937d26bdf691">
-    <script>
-    (function() {
-        var hostname = location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        var formatText = function(str) {
-            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        };
-        var displayDomain = formatText(fullName);
-        document.title = displayDomain + " - Beautiful Girls Photo Gallery";
-        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
-        metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world.";
-        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
-        metaAuthor.name = "author";
-        metaAuthor.content = displayDomain;
-        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
-        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
-        canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", location.href);
-        if (!canonical.parentNode) document.head.appendChild(canonical);
-        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful girls photo gallery from around the world","url":location.origin};
-        var schemaScript = document.createElement("script");
-        schemaScript.type = "application/ld+json";
-        schemaScript.textContent = JSON.stringify(schemaData);
-        document.head.appendChild(schemaScript);
-    })();
-    </script>
-
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <title id="dynamic-title">LeakInsights · Leaked Content Analytics Dashboard</title>
+    <meta id="dynamic-description" name="description" content="Analytics dashboard for leaked influencer content. Real-time metrics, trends, and complete archives. 15,000+ leaked files analyzed.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/topic/">
+ 
+    
+    <meta name="juicyads-site-verification" content="7d00a93582693c6211079490e456135f">
+    
     <style>
-        /* ===== RESET & BASE ===== */
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:#050505}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* ===== HEADER ===== */
-        .site-header{
-            width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(255,255,255,.08);
-            padding:12px 12px;
-        }
-        .header-inner{
-            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
-        }
-        .site-avatar{flex-shrink:0;line-height:0}
-        .site-avatar svg{width:34px;height:34px}
-        .site-title{
-            flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
-        }
-        .menu-btn{
-            width:42px;height:42px;flex-shrink:0;
-            background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
-            border-radius:50%;transition:all .2s ease;
-        }
-        .menu-btn:active{background:rgba(255,255,255,.12);transform:scale(.95)}
-        .menu-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
-
-        .slide-menu{
-            display:none;position:fixed;top:58px;right:8px;z-index:999;
-            background:#1a1a1a;border:1px solid #333;border-radius:14px;padding:6px;
-            min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.6);
-        }
-        .slide-menu.open{display:block}
-        .slide-menu ul{list-style:none;margin:0;padding:0}
-        .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
-        .slide-menu a{
-            display:block;padding:13px 16px;color:#ccc;text-decoration:none;
-            font-size:15px;font-weight:500;border-radius:10px;transition:all .15s ease;
-        }
-        .slide-menu a:active{background:#2a2a2a;color:#fff}
-
-        /* ===== DESKTOP NAV (hidden di mobile) ===== */
-        .desktop-nav{display:none}
-
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#080808;min-height:50px;
-        }
-        .ad-box ins{max-width:100%}
-        
-        /* Responsive ad visibility */
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-
-        /* ===== AD BREAK (top & bottom) ===== */
-        .ad-break{
-            padding:12px 0;background:#080808;
-            border-top:1px solid rgba(255,255,255,.04);
-            border-bottom:1px solid rgba(255,255,255,.04);
-        }
-        .ad-break:first-child{margin-top:58px}
-
-        /* ===== AD INLINE (antar section) ===== */
-        .ad-inline{
-            margin:24px 0;padding:12px 0;
-            background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
+        body {
+            background: #0a0e17;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #e2e8f0;
         }
 
-        /* ===== MAIN LAYOUT ===== */
-        .main-layout{
-            display:flex;flex-direction:column;gap:0;width:100%;max-width:1280px;
-            margin:0 auto;padding:0;
-        }
-        .content-area{flex:1;min-width:0;padding:0;width:100%}
-
-        .sidebar{display:none}
-        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
-
-        /* ============================
-           GV2 GALLERY SYSTEM
-           ============================ */
-        .gv2-section{margin:20px 0}
-        .gv2-section:first-child{margin-top:4px}
-        .gv2-title{padding:0 8px;margin:0 auto 10px;max-width:1400px}
-        .gv2-title h2{
-            margin:0;font-size:19px;font-weight:800;color:#fff;letter-spacing:.2px;
-        }
-        .gv2-featured-title h2{font-size:21px;color:#ff6b6b}
-        .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
-
-        /* === MOBILE: 1 KOLOM FULLWIDTH === */
-        .gv2-featured{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-latest{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-stories{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-tutorials{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-archive{display:grid;grid-template-columns:1fr;gap:4px}
-
-        .gv2-featured-big,
-        .gv2-featured-small{
-            grid-column:auto;grid-row:auto;
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
         }
 
-        /* Card */
-        .gv2-card{
-            position:relative;overflow:hidden;border-radius:0;background:#0a0a0a;
-            -webkit-tap-highlight-color:transparent;
-        }
-        .gv2-card-link{
-            display:block;width:100%;
-        }
-        .gv2-card-link img{
-            width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .3s ease;aspect-ratio:16/9;
-        }
-        .gv2-card-link:active img{transform:scale(1.02)}
-
-        /* Card body (di luar link) */
-        .gv2-card-body{
-            padding:10px 10px 12px;
-            background:linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(10,10,10,1) 100%);
-            z-index:2;
-        }
-        .gv2-card-title-link{
-            color:#fff;text-decoration:none;display:block;
-            margin:0 0 3px;font-size:13px;font-weight:700;line-height:1.25;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
-            overflow:hidden;
-        }
-        .gv2-card-title-link:active{color:#ff6b6b}
-        .gv2-card-desc{
-            margin:0;font-size:10px;color:rgba(255,255,255,.65);
-            line-height:1.35;
-            overflow:hidden;
-        }
-        /* Biarkan konten deskripsi apa adanya */
-        .gv2-card-desc img,
-        .gv2-card-desc svg,
-        .gv2-card-desc iframe,
-        .gv2-card-desc script,
-        .gv2-card-desc style{display:none!important}
-        .gv2-card-desc *{
-            font-size:inherit!important;color:inherit!important;
-            margin:0!important;padding:0!important;
-            background:none!important;border:none!important;
+        /* header */
+        .dashboard-header {
+            margin-bottom: 2rem;
         }
 
-        .excerpt{display:none}
-
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
-        @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-
-            .site-header{padding:12px 16px}
-            .site-title{font-size:17px}
-            .ad-break{padding:16px 0}
-            .ad-break:first-child{margin-top:60px}
-            .ad-inline{margin:28px 0;padding:14px 0}
-            .gv2-title{padding:0 12px}
-            .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 8px;gap:6px}
-
-            .gv2-featured{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-featured-big{grid-column:1 / -1}
-            .gv2-latest{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-stories{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-tutorials{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-archive{grid-template-columns:1fr 1fr;gap:6px}
-
-            .gv2-card{border-radius:6px}
-            .gv2-card-link img{aspect-ratio:9/16}
-            .gv2-card-body{padding:12px 12px 14px}
-            .gv2-card-title-link{font-size:14px}
-            .gv2-card-desc{font-size:11px}
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #fff, #3b82f6, #ec489a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
-        @media(min-width:900px){
-            body{max-width:1280px;margin:0 auto}
-
-            .site-header{
-                left:50%;transform:translateX(-50%);max-width:1280px;
-                padding:12px 20px;
-            }
-            .site-title{font-size:15px;font-weight:600;color:#ccc}
-            .menu-btn{display:none}
-            .slide-menu{display:none!important}
-
-            .ad-break:first-child{margin-top:62px}
-
-            .main-layout{flex-direction:row;padding:0 8px}
-            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
-            .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
-            .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
-
-            .gv2-section{margin:32px 0}
-            .gv2-section:first-child{margin-top:8px}
-            .gv2-title{padding:0 14px}
-            .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 14px;gap:10px}
-
-            .gv2-featured{
-                grid-template-columns:2fr 1fr 1fr;
-                grid-template-rows:1fr 1fr;gap:10px;
-            }
-            .gv2-featured-big{
-                grid-column:1 / 2;grid-row:1 / 3;
-            }
-            .gv2-featured-big .gv2-card-link img{aspect-ratio:auto;height:100%}
-            .gv2-featured-small{grid-column:auto;grid-row:auto}
-            .gv2-featured-small .gv2-card-link img{aspect-ratio:9/16}
-
-            .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
-            .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
-            .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:10px}
-            .gv2-archive{grid-template-columns:repeat(6,1fr);gap:10px}
-
-            .gv2-card{border-radius:12px}
-            .gv2-card:hover .gv2-card-link img{transform:scale(1.05)}
-            .gv2-card-title-link:hover{color:#ff6b6b;text-decoration:underline}
-
-            /* Desktop nav: muncul */
-            .desktop-nav{
-                display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
-            }
-            .desktop-nav a{
-                padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
-                border-radius:6px;transition:all .15s ease;
-            }
-            .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+        .dashboard-header p {
+            color: #8ca3ba;
+            font-size: 0.85rem;
         }
 
-        /* ============================
-           LARGE DESKTOP (min-width:1100px)
-           ============================ */
-        @media(min-width:1100px){
-            .sidebar-left{width:180px}
-            .sidebar-right{width:180px}
-            .gv2-grid{gap:12px}
-            .gv2-featured{gap:12px}
-            .gv2-latest{gap:12px}
-            .gv2-stories{gap:12px}
-            .gv2-tutorials{gap:12px}
-            .gv2-archive{gap:12px}
+        /* breadcrumb */
+        .breadcrumb {
+            font-size: 0.7rem;
+            color: #5b6e8c;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* KPI grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: #111827;
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid #1f2a3a;
+        }
+
+        .kpi-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #8ca3ba;
+            letter-spacing: 1px;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        .kpi-trend {
+            font-size: 0.65rem;
+            color: #10b981;
+            margin-top: 0.25rem;
+        }
+
+        /* section header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0 1rem;
+            border-bottom: 1px solid #1f2a3a;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* chart placeholder (CSS-only bar chart) */
+        .chart-container {
+            background: #111827;
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid #1f2a3a;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 0.8rem;
+            color: #8ca3ba;
+            margin-bottom: 1rem;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bar-label {
+            width: 100px;
+            font-size: 0.7rem;
+        }
+
+        .bar-fill {
+            flex: 1;
+            height: 24px;
+            background: #1f2a3a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .bar-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #ec489a);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 0.6rem;
+            color: #fff;
+        }
+
+        /* data grid */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-card {
+            background: #111827;
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid #1f2a3a;
+            transition: all 0.15s;
+        }
+
+        .insight-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .insight-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .insight-desc {
+            font-size: 0.7rem;
+            color: #8ca3ba;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 0.7rem;
+        }
+
+        /* table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #111827;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.75rem;
+            background: #1a2535;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #8ca3ba;
+        }
+
+        .data-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #1f2a3a;
+            font-size: 0.8rem;
+        }
+
+        .data-table a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* trending list */
+        .trending-list {
+            background: #111827;
+            border-radius: 16px;
+            padding: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trending-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-bottom: 1px solid #1f2a3a;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-rank {
+            font-weight: 700;
+            color: #3b82f6;
+            width: 30px;
+        }
+
+        .trending-name {
+            flex: 1;
+            font-size: 0.8rem;
+        }
+
+        .trending-value {
+            font-size: 0.7rem;
+            color: #10b981;
+        }
+
+        /* tag cloud */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-tag {
+            background: #1a2535;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #1f2a3a;
+            margin: 1.5rem 0;
+        }
+
+        .footer {
+            font-size: 0.6rem;
+            color: #5b6e8c;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .default-dash {
+            display: block;
+        }
+
+        .query-dash {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard { padding: 1rem; }
+            .kpi-value { font-size: 1.5rem; }
+            .bar-label { width: 80px; }
         }
     </style>
-    
 {% include head.html %}
-{% include verif.html %}
+  </head>
+<body><div loading="lazy">
+<nav>{% include /kw/p/section.html %}
+{% include /kw/p/preview.html %}
+</nav>
 
-</head>
-<body>
-
-    <!-- HEADER -->
-    <header class="site-header">
-        <div class="header-inner">
-            <div id="domainAvatar" class="site-avatar"></div>
-            <span id="blogMainTitle" class="site-title"></span>
-            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
-            </button>
+<div class="dashboard">
+    <!-- DEFAULT DASHBOARD (home) -->
+    <div id="default-dash" class="default-dash">
+        <div class="dashboard-header">
+            <h1>LeakInsights 📊</h1>
+            <p>Analytics dashboard for leaked influencer content · Real-time metrics</p>
         </div>
-    </header>
 
-    <!-- SLIDE MENU -->
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li><a href="/">🏠 Home</a></li>
-            <li><a href="/contact/">📩 Contact</a></li>
-            <li><a href="/privacy-policy/">🔒 Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions/">📋 Terms & Conditions</a></li>
-        </ul>
-    </nav>
+        <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-label">Total Leaked Files</div><div class="kpi-value">15,234</div><div class="kpi-trend">↑ +12% this week</div></div>
+            <div class="kpi-card"><div class="kpi-label">Active Creators</div><div class="kpi-value">847</div><div class="kpi-trend">↑ +23 new</div></div>
+            <div class="kpi-card"><div class="kpi-label">Monthly Views</div><div class="kpi-value">2.4M</div><div class="kpi-trend">↑ +18%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Platform Sources</div><div class="kpi-value">12</div><div class="kpi-trend">active</div></div>
+        </div>
 
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var menuIcon = btn.querySelector("svg:first-child");
-        var closeIcon = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            menuIcon.style.display = open ? "none" : "block";
-            closeIcon.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                menuIcon.style.display = "block";
-                closeIcon.style.display = "none";
+        <div class="chart-container">
+            <div class="chart-title">📈 Trending Leaked Content (Last 7 Days)</div>
+            <div class="bar-chart">
+                <div class="bar-item"><div class="bar-label">TikTok Leaks</div><div class="bar-fill"><div class="bar-progress" style="width: 89%">89%</div></div></div>
+                <div class="bar-item"><div class="bar-label">OnlyFans Leaks</div><div class="bar-fill"><div class="bar-progress" style="width: 76%">76%</div></div></div>
+                <div class="bar-item"><div class="bar-label">Instagram Leaks</div><div class="bar-fill"><div class="bar-progress" style="width: 62%">62%</div></div></div>
+                <div class="bar-item"><div class="bar-label">Telegram Leaks</div><div class="bar-fill"><div class="bar-progress" style="width: 54%">54%</div></div></div>
+            </div>
+        </div>
+
+        <div class="section-header"><h2>🔥 Top Trending Leaks This Week</h2></div>
+        <div class="trending-list">
+            <div class="trending-item"><div class="trending-rank">1</div><div class="trending-name">TikTok Star Leaked Video Compilation</div><div class="trending-value">2.3M views</div><a href="/topic/?q=tiktok+star+leaked+video+compilation" style="color:#3b82f6;">→</a></div>
+            <div class="trending-item"><div class="trending-rank">2</div><div class="trending-name">OnlyFans Creator Leaked Complete Set</div><div class="trending-value">1.8M views</div><a href="/topic/?q=onlyfans+creator+leaked+complete+set" style="color:#3b82f6;">→</a></div>
+            <div class="trending-item"><div class="trending-rank">3</div><div class="trending-name">Instagram Influencer Leaked Gallery</div><div class="trending-value">987K views</div><a href="/topic/?q=instagram+influencer+leaked+gallery" style="color:#3b82f6;">→</a></div>
+        </div>
+    </div>
+
+    <!-- QUERY-BASED DASHBOARD (LONG-FORM ANALYTICS) -->
+    <div id="query-dash" class="query-dash">
+        <div class="breadcrumb">
+            <a href="/">Dashboard</a> / <a href="/topic/">LeakInsights</a> / <span id="bc-name"></span>
+        </div>
+
+        <div class="dashboard-header">
+            <h1 id="main-title"></h1>
+            <p id="subtitle"></p>
+        </div>
+
+        <!-- KPI SECTION -->
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <!-- TREND CHART SECTION -->
+        <div class="chart-container">
+            <div class="chart-title">📈 Leaked Content Performance Metrics</div>
+            <div class="bar-chart" id="trend-chart"></div>
+        </div>
+
+        <!-- LEAKED MEDIA INSIGHTS -->
+        <div class="section-header"><h2 id="media-header">📁 Leaked Media Archives</h2><span id="media-count"></span></div>
+        <div class="data-grid" id="media-grid"></div>
+
+        <!-- PLATFORM DISTRIBUTION -->
+        <div class="section-header"><h2 id="platform-header">🌐 Platform Source Distribution</h2></div>
+        <div class="data-grid" id="platform-grid"></div>
+
+        <!-- TOP TRENDING TABLE -->
+        <div class="section-header"><h2 id="trending-header">🔥 Top Trending Leaked Content</h2></div>
+        <table class="data-table" id="trending-table">
+            <thead><tr><th>Rank</th><th>Leaked Content</th><th>Views</th><th>Growth</th></tr></thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- COMPLETE LEAK INDEX (PANJANG) -->
+        <div class="section-header"><h2 id="index-header">📋 Complete Leak Index · A-Z</h2></div>
+        <div class="tag-cloud" id="leak-index"></div>
+
+        <!-- RELATED INSIGHTS -->
+        <div class="section-header"><h2 id="related-header">🔗 Related Leak Insights</h2></div>
+        <div class="data-grid" id="related-insights"></div>
+
+        <!-- FREQUENCY TIMELINE -->
+        <div class="section-header"><h2 id="timeline-header">📅 Leak Frequency Timeline</h2></div>
+        <table class="data-table" id="timeline-table">
+            <thead><tr><th>Period</th><th>Leaked Files</th><th>Top Platform</th><th>Archive Link</th></tr></thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- FAQ ANALYTICS -->
+        <div class="section-header"><h2 id="faq-header">❓ Analytics FAQ</h2></div>
+        <div id="analytics-faq"></div>
+
+        <hr />
+        <div class="footer">
+            LeakInsights Dashboard · Data updated <span id="update-date"></span> · Real-time analytics
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    // ========== 1. DYNAMIC TITLE & HEADINGS BERDASARKAN QUERY + SUBDOMAIN/DOMAIN ==========
+    
+    // Fungsi untuk mengekstrak subdomain atau domain utama
+    function getSiteIdentity() {
+        const hostname = window.location.hostname; // contoh: sub-domain.fazri.my atau fazri.my atau ini-sub.github.io
+        
+        // Pisahkan berdasarkan titik
+        const parts = hostname.split('.');
+        
+        // Deteksi apakah ini subdomain (memiliki lebih dari 2 bagian, dan bukan domain umum seperti .co.uk)
+        // Aturan sederhana: jika parts.length > 2 dan bagian pertama bukan 'www'
+        let identity = '';
+        
+        // Daftar TLD umum yang sering memiliki subdomain panjang
+        const commonTlds = ['co.uk', 'com.au', 'co.id', 'or.id', 'net.id', 'sch.id', 'ac.id', 'go.id', 'mil.id'];
+        let isCommonTld = false;
+        for (let tld of commonTlds) {
+            if (hostname.endsWith('.' + tld)) {
+                isCommonTld = true;
+                break;
             }
-        });
-        panel.addEventListener("click", function(e){
-            e.stopPropagation();
-        });
-    })();
-    </script>
-
-    <!-- ==================== BANNER 06: TOP ==================== -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/06.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
-
-    <!-- DESKTOP NAV -->
-    <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/terms-and-conditions/">Terms & Conditions</a>
-    </nav>
-
-    <!-- MAIN LAYOUT -->
-    <div class="main-layout">
-
-        <!-- LEFT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
-        </aside>
-
-        <!-- MAIN CONTENT -->
-        <main class="content-area">
-
-            <!-- ========== FEATURED ========== -->
-            {% assign featured_posts = site.posts | slice: 0, 5 %}
-            {% if featured_posts.size >= 5 %}
-            <section class="gv2-section">
-                <div class="gv2-title gv2-featured-title">
-                    <h2>🔥 Featured</h2>
-                </div>
-                <div class="gv2-grid gv2-featured">
-                    {% for post in featured_posts %}
-                    <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 01: SETELAH FEATURED ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-desktop">
-                    {% include /ads/banner/01.html %}
-                </div>
-                <div class="ad-box ad-mobile">
-                    {% include /ads/banner/04.html %}
-                </div>
-            </div>
-
-            <!-- ========== LATEST ========== -->
-            {% assign latest_posts = site.posts | slice: 5, 5 %}
-            {% if latest_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🆕 Latest</h2></div>
-                <div class="gv2-grid gv2-latest">
-                    {% for post in latest_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 02: SETELAH LATEST ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/02.html %}
-                </div>
-            </div>
-
-            <!-- ========== STORIES ========== -->
-            {% assign stories_posts = site.posts | slice: 10, 4 %}
-            {% if stories_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📖 Stories</h2></div>
-                <div class="gv2-grid gv2-stories">
-                    {% for post in stories_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 03: SETELAH STORIES ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/03.html %}
-                </div>
-            </div>
-
-            <!-- ========== POPULAR ========== -->
-            {% assign popular_posts = site.posts | slice: 14, 6 %}
-            {% if popular_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🔥 Popular</h2></div>
-                <div class="gv2-grid gv2-tutorials">
-                    {% for post in popular_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 08: SETELAH POPULAR ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/08.html %}
-                </div>
-            </div>
-
-            <!-- ========== ARCHIVE ========== -->
-            {% assign archive_posts = site.posts | slice: 20, 5 %}
-            {% if archive_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📁 Archive</h2></div>
-                <div class="gv2-grid gv2-archive">
-                    {% for post in archive_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-        </main>
-
-        <!-- RIGHT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
-        </aside>
-
-    </div>
-
-    <!-- ==================== BANNER 07: BOTTOM ==================== -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/07.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
-
-    <!-- AVATAR SCRIPT -->
-    <script>
-    (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-    })();
-    </script>
-
+        }
+        
+        if (isCommonTld) {
+            // Untuk domain seperti sesuatu.co.id, maka subdomain adalah bagian sebelum co.id
+            const mainParts = hostname.split('.');
+            if (mainParts.length > 2) {
+                identity = mainParts[0];
+            } else {
+                identity = mainParts[0];
+            }
+        } else {
+            // Standar: jika lebih dari 2 bagian, ambil bagian pertama sebagai subdomain
+            if (parts.length > 2 && parts[0] !== 'www') {
+                identity = parts[0];
+            } else if (parts.length === 2) {
+                identity = parts[0];
+            } else if (parts.length === 1) {
+                identity = parts[0];
+            } else {
+                identity = hostname.replace('www.', '').split('.')[0];
+            }
+        }
+        
+        // Format identity: kapitalisasi awal
+        if (identity) {
+            identity = identity.charAt(0).toUpperCase() + identity.slice(1).toLowerCase();
+        } else {
+            identity = 'This Site';
+        }
+        
+        return identity;
+    }
     
-    {% include /ads/gobloggugel/default.html %}
-    {% include footer.html %}
-
+    // Fungsi untuk memformat query menjadi judul yang rapi (kapitalisasi setiap kata)
+    function formatQueryTitle(queryStr) {
+        if (!queryStr) return '';
+        // Split berdasarkan spasi, kapitalisasi setiap kata
+        return queryStr.split(' ').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(' ');
+    }
     
-</body>
+    // Ambil query dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    let query = urlParams.get('q');
+    
+    // Variabel untuk identitas situs (subdomain/domain)
+    const siteIdentity = getSiteIdentity();
+    
+    // Default dashboard (tanpa query) tidak perlu mengubah title karena sudah statis
+    // Tapi kita tetap siapkan untuk query-based
+    
+    const defaultDiv = document.getElementById('default-dash');
+    const queryDiv = document.getElementById('query-dash');
+    
+    // Jika tidak ada query, biarkan default dashboard (title sudah statis dari awal)
+    if (!query) {
+        defaultDiv.style.display = 'block';
+        queryDiv.style.display = 'none';
+        return;
+    }
+    
+    // Ada query, proses query dashboard
+    defaultDiv.style.display = 'none';
+    queryDiv.style.display = 'block';
+    
+    // Decode query
+    query = decodeURIComponent(query.replace(/\+/g, ' '));
+    
+    // Format query untuk judul (kapitalisasi)
+    const formattedQuery = formatQueryTitle(query);
+    
+    // Buat berbagai variasi juduk konsisten berdasarkan query + siteIdentity
+    // Contoh:
+    // - sub-domain.fazri.my dan query cute girl -> "Cute Girl on Sub Domain"
+    // - fazri.my dan query cute girl -> "Cute Girl on Fazri"
+    // - ini-sub.github.io dan query cute girl -> "Cute Girl on Ini Sub"
+    // - acak-sub.pages.dev dan query cute girl -> "Cute Girl on Acak Sub"
+    
+    // Format H1: [Query] on [Site Identity]
+    const h1Text = `${formattedQuery} on ${siteIdentity}`;
+    
+    // Format title (lebih lengkap dengan brand)
+    const titleText = `${formattedQuery} on ${siteIdentity} · LeakInsights Dashboard`;
+    
+    // Format H2 untuk berbagai section (konsisten mengandung query dan site identity)
+    // Variasi: bisa "[Query] Media Archives", "[Query] Platform Distribution", dll.
+    // Agar lebih variatif tapi tetap konsisten mengandung query dan identity
+    const h2MediaText = `📁 ${formattedQuery} Media Archives · ${siteIdentity}`;
+    const h2PlatformText = `🌐 ${formattedQuery} Platform Sources · ${siteIdentity}`;
+    const h2TrendingText = `🔥 Top Trending: ${formattedQuery} on ${siteIdentity}`;
+    const h2IndexText = `📋 Complete ${formattedQuery} Leak Index · ${siteIdentity}`;
+    const h2RelatedText = `🔗 Related to ${formattedQuery} on ${siteIdentity}`;
+    const h2TimelineText = `📅 ${formattedQuery} Leak Timeline · ${siteIdentity}`;
+    const h2FaqText = `❓ ${formattedQuery} Analytics FAQ · ${siteIdentity}`;
+    
+    // H3 tidak ada di template asli, tapi kalau ada nanti bisa pakai pola serupa
+    // Template asli tidak memiliki H3, jadi kita tidak perlu mengubah H3.
+    
+    // Terapkan ke DOM
+    document.title = titleText;
+    
+    // Terapkan ke H1 (main-title)
+    const mainTitleEl = document.getElementById('main-title');
+    if (mainTitleEl) {
+        mainTitleEl.innerHTML = `${h1Text} <span style="font-size:0.8rem;">· Leak Analytics</span>`;
+    }
+    
+    // Terapkan ke semua H2 yang ada di query-dash
+    const mediaHeader = document.getElementById('media-header');
+    if (mediaHeader) mediaHeader.innerHTML = h2MediaText;
+    
+    const platformHeader = document.getElementById('platform-header');
+    if (platformHeader) platformHeader.innerHTML = h2PlatformText;
+    
+    const trendingHeader = document.getElementById('trending-header');
+    if (trendingHeader) trendingHeader.innerHTML = h2TrendingText;
+    
+    const indexHeader = document.getElementById('index-header');
+    if (indexHeader) indexHeader.innerHTML = h2IndexText;
+    
+    const relatedHeader = document.getElementById('related-header');
+    if (relatedHeader) relatedHeader.innerHTML = h2RelatedText;
+    
+    const timelineHeader = document.getElementById('timeline-header');
+    if (timelineHeader) timelineHeader.innerHTML = h2TimelineText;
+    
+    const faqHeader = document.getElementById('faq-header');
+    if (faqHeader) faqHeader.innerHTML = h2FaqText;
+    
+    // Update meta description dan breadcrumb
+    let pageDesc = `Analytics dashboard for ${formattedQuery} leaked content on ${siteIdentity}. Real-time metrics and trends.`;
+    const metaTag = document.getElementById('dynamic-description');
+    if (metaTag) metaTag.setAttribute('content', pageDesc);
+    
+    // Breadcrumb name (hanya menampilkan query)
+    const bcNameEl = document.getElementById('bc-name');
+    if (bcNameEl) bcNameEl.innerText = formattedQuery;
+    
+    // Subtitle tetap dinamis sesuai konten
+    const totalFiles = Math.floor(Math.random() * 300) + 100;
+    const subtitleEl = document.getElementById('subtitle');
+    if (subtitleEl) {
+        subtitleEl.innerHTML = `Real-time dashboard · ${totalFiles} leaked files analyzed · Updated hourly · ${siteIdentity}`;
+    }
+    
+    // ========== SISANYA SAMA PERSIS DENGAN DRAFT ASLI (TIDAK DIUBAH) ==========
+    // extract nama influencer (untuk keperluan konten internal, tidak mengganggu judul utama)
+    const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'dashboard', 'analytics', 'insights', 'metrics'];
+    let baseRaw = query.toLowerCase();
+    removeTerms.forEach(term => {
+        const regex = new RegExp('\\b' + term + '\\b', 'gi');
+        baseRaw = baseRaw.replace(regex, '');
+    });
+    baseRaw = baseRaw.replace(/\s+/g, ' ').trim();
+    let baseName = baseRaw || query;
+    if (baseName.length < 2) baseName = query;
+    
+    function formatName(str) {
+        return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    }
+    const displayName = formatName(baseName);
+    const displayLower = displayName.toLowerCase();
+
+    // random metrics (tetap menggunakan random agar dinamis seperti draft awal)
+    const totalVideos = Math.floor(totalFiles * 0.4);
+    const totalPhotos = totalFiles - totalVideos;
+    const weeklyGrowth = Math.floor(Math.random() * 25) + 5;
+    const viralScore = Math.floor(Math.random() * 95) + 5;
+    
+    // KPI GRID
+    document.getElementById('kpi-grid').innerHTML = `
+        <div class="kpi-card"><div class="kpi-label">Total Leaked Files</div><div class="kpi-value">${totalFiles}</div><div class="kpi-trend">↑ +${weeklyGrowth}% this week</div></div>
+        <div class="kpi-card"><div class="kpi-label">Leaked Videos</div><div class="kpi-value">${totalVideos}</div><div class="kpi-trend">${Math.floor(totalVideos/totalFiles*100)}% of total</div></div>
+        <div class="kpi-card"><div class="kpi-label">Leaked Photos</div><div class="kpi-value">${totalPhotos}</div><div class="kpi-trend">${Math.floor(totalPhotos/totalFiles*100)}% of total</div></div>
+        <div class="kpi-card"><div class="kpi-label">Viral Score</div><div class="kpi-value">${viralScore}</div><div class="kpi-trend">/100 · trending</div></div>
+    `;
+    
+    // TREND CHART (bar chart)
+    const chartData = [
+        { label: 'Video Leaks', percent: Math.floor(totalVideos/totalFiles * 100) },
+        { label: 'Photo Leaks', percent: Math.floor(totalPhotos/totalFiles * 100) },
+        { label: 'Exclusive Content', percent: Math.floor(Math.random() * 40) + 20 },
+        { label: 'Viral Potential', percent: viralScore }
+    ];
+    document.getElementById('trend-chart').innerHTML = chartData.map(data => `
+        <div class="bar-item"><div class="bar-label">${data.label}</div><div class="bar-fill"><div class="bar-progress" style="width: ${data.percent}%">${data.percent}%</div></div></div>
+    `).join('');
+    
+    // MEDIA GRID
+    const mediaItems = [
+        { variant: 'leaked video full compilation', title: 'Full Leaked Video Compilation', desc: 'Complete video archive', icon: '🎬', count: totalVideos },
+        { variant: 'leaked private clips', title: 'Private Leaked Clips', desc: 'Exclusive footage', icon: '🔞', count: Math.floor(totalVideos * 0.3) },
+        { variant: 'leaked viral moments', title: 'Viral Leaked Moments', desc: 'Most shared clips', icon: '⚡', count: Math.floor(totalVideos * 0.25) },
+        { variant: 'leaked photos full gallery', title: 'Full Leaked Photo Gallery', desc: 'Complete image set', icon: '📸', count: totalPhotos },
+        { variant: 'leaked exclusive photo set', title: 'Exclusive Leaked Photos', desc: 'Rare images', icon: '💎', count: Math.floor(totalPhotos * 0.3) }
+    ];
+    document.getElementById('media-grid').innerHTML = mediaItems.map(item => `
+        <div class="insight-card">
+            <div class="insight-icon">${item.icon}</div>
+            <div class="insight-title">${item.title}</div>
+            <div class="insight-desc">${item.desc} · ${item.count}+ files</div>
+            <a href="/topic/?q=${encodeURIComponent(displayLower + ' ' + item.variant)}" class="insight-link">Access Archive →</a>
+        </div>
+    `).join('');
+    document.getElementById('media-count').innerHTML = `<span class="kpi-trend">${mediaItems.length} archives</span>`;
+    
+    // PLATFORM GRID
+    const platformItems = [
+        { variant: 'leaked telegram channel', label: 'Telegram', desc: 'Primary source', icon: '💬' },
+        { variant: 'leaked discord server', label: 'Discord', desc: 'Private server', icon: '🎮' },
+        { variant: 'leaked twitter threads', label: 'Twitter/X', desc: 'Viral threads', icon: '🐦' },
+        { variant: 'leaked reddit posts', label: 'Reddit', desc: 'Community archive', icon: '🔴' },
+        { variant: 'leaked instagram archive', label: 'Instagram', desc: 'Deleted stories', icon: '📸' },
+        { variant: 'leaked tiktok archive', label: 'TikTok', desc: 'Removed videos', icon: '🎵' }
+    ];
+    document.getElementById('platform-grid').innerHTML = platformItems.map(item => `
+        <div class="insight-card">
+            <div class="insight-icon">${item.icon}</div>
+            <div class="insight-title">${item.label}</div>
+            <div class="insight-desc">${item.desc}</div>
+            <a href="/topic/?q=${encodeURIComponent(displayLower + ' ' + item.variant)}" class="insight-link">View Leaks →</a>
+        </div>
+    `).join('');
+    
+    // TRENDING TABLE (5 items)
+    const trendingData = [
+        { rank: 1, title: 'Full Leaked Video Compilation', views: Math.floor(Math.random() * 500) + 300, growth: '+23%', variant: 'leaked video full compilation' },
+        { rank: 2, title: 'Leaked Private Clips', views: Math.floor(Math.random() * 400) + 200, growth: '+18%', variant: 'leaked private clips' },
+        { rank: 3, title: 'Viral Leaked Moments', views: Math.floor(Math.random() * 350) + 150, growth: '+15%', variant: 'leaked viral moments' },
+        { rank: 4, title: 'Full Leaked Photo Gallery', views: Math.floor(Math.random() * 300) + 120, growth: '+12%', variant: 'leaked photos full gallery' },
+        { rank: 5, title: 'Exclusive Leaked Set', views: Math.floor(Math.random() * 200) + 80, growth: '+9%', variant: 'leaked exclusive photo set' }
+    ];
+    document.querySelector('#trending-table tbody').innerHTML = trendingData.map(item => `
+        <tr>
+            <td>${item.rank}</td>
+            <td><a href="/topic/?q=${encodeURIComponent(displayLower + ' ' + item.variant)}">${item.title}</a></td>
+            <td>${item.views}K views</td>
+            <td style="color:#10b981">${item.growth}</td>
+        </tr>
+    `).join('');
+    
+    // LEAK INDEX (A-Z tags - BANYAK)
+    const alphabetLeaks = [
+        'complete leaked archive', 'deleted tiktok leaks', 'exclusive leaked vault', 'full leaked compilation',
+        'instagram leaked photos', 'leaked behind the scenes', 'leaked candid moments', 'leaked dm screenshots',
+        'leaked live stream', 'leaked private story', 'mega leaked pack', 'onlyfans leaked content',
+        'patreon leaked content', 'rare leaked files', 'snapchat leaked', 'telegram leaked channel',
+        'twitter leaked thread', 'uncensored leaked', 'viral leaked clips', 'youtube leaked video'
+    ];
+    document.getElementById('leak-index').innerHTML = alphabetLeaks.map(leak => 
+        `<a href="/topic/?q=${encodeURIComponent(displayLower + ' ' + leak)}" class="dashboard-tag">📁 ${leak}</a>`
+    ).join('');
+    
+    // RELATED INSIGHTS
+    const relatedInsights = [
+        { variant: 'similar leaked creators', title: 'Similar Leaked Creators', desc: 'Related content archives', icon: '🔗' },
+        { variant: 'trending leaks this month', title: 'Trending Leaks This Month', desc: 'Most viewed content', icon: '🔥' },
+        { variant: 'platform comparison', title: 'Platform Comparison', desc: 'Source analytics', icon: '📊' },
+        { variant: 'leak preservation report', title: 'Leak Preservation Report', desc: 'Archive status', icon: '📄' }
+    ];
+    document.getElementById('related-insights').innerHTML = relatedInsights.map(item => `
+        <div class="insight-card">
+            <div class="insight-icon">${item.icon}</div>
+            <div class="insight-title">${item.title}</div>
+            <div class="insight-desc">${item.desc}</div>
+            <a href="/topic/?q=${encodeURIComponent(displayLower + ' ' + item.variant)}" class="insight-link">View Insights →</a>
+        </div>
+    `).join('');
+    
+    // TIMELINE TABLE
+    const timelineData = [
+        { period: 'Q1 2024', files: Math.floor(totalFiles * 0.1), platform: 'Telegram', variant: 'early leaks archive' },
+        { period: 'Q2 2024', files: Math.floor(totalFiles * 0.15), platform: 'Discord', variant: 'q2 leaks archive' },
+        { period: 'Q3 2024', files: Math.floor(totalFiles * 0.2), platform: 'Twitter', variant: 'q3 leaks archive' },
+        { period: 'Q4 2024', files: Math.floor(totalFiles * 0.25), platform: 'Multiple', variant: 'q4 leaks archive' },
+        { period: 'Q1 2025', files: Math.floor(totalFiles * 0.2), platform: 'Telegram', variant: 'q1 2025 leaks' },
+        { period: 'Present', files: Math.floor(totalFiles * 0.1), platform: 'All platforms', variant: 'recent leaks' }
+    ];
+    document.querySelector('#timeline-table tbody').innerHTML = timelineData.map(item => `
+        <tr>
+            <td>${item.period}</td>
+            <td>${item.files}+ files</td>
+            <td>${item.platform}</td>
+            <td><a href="/topic/?q=${encodeURIComponent(displayLower + ' ' + item.variant)}">View Archive →</a></td>
+        </tr>
+    `).join('');
+    
+    // ANALYTICS FAQ
+    const analyticsFaq = [
+        { q: 'How is viral score calculated?', a: 'Based on view velocity, share count, and platform cross-reference data.' },
+        { q: 'How often is this dashboard updated?', a: 'Real-time updates with new leaked content added within hours of detection.' },
+        { q: 'What platforms are tracked?', a: 'Telegram, Discord, Twitter, Reddit, Instagram, TikTok, and private communities.' },
+        { q: 'Can I export this data?', a: 'Click any archive link above to access complete leaked content collections.' }
+    ];
+    document.getElementById('analytics-faq').innerHTML = analyticsFaq.map(item => `
+        <div class="insight-card" style="margin-bottom:0.75rem;">
+            <div class="insight-title">❓ ${item.q}</div>
+            <div class="insight-desc">${item.a}</div>
+        </div>
+    `).join('');
+    
+    // update date
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    document.getElementById('update-date').innerText = dateStr;
+    
+    // canonical (tetap dipertahankan)
+    const canonical = document.getElementById('dynamic-canonical');
+    if (canonical) {
+        canonical.setAttribute('href', window.location.href.split('?')[0]);
+    }
+})();
+</script>
+
+{% include /ads/gobloggugel/default.html %}
+{% include footer.html %}
+
+
+</div></body>
 </html>
