@@ -1,13 +1,13 @@
 // Popunder + Tabunder Rottor v2026 (merged, single URL list, all random)
 (function maulinator_2026(){
 
-  // ========nakap.web.id=========== DAFTAR URL (dipakai popunder & tabunder) ====================
+  // =========kaula.biz.id========== DAFTAR URL (dipakai popunder & tabunder) ====================
   const DAFTAR_URL = [
-"https://t.co/2lEhmRFLkw",
-"https://t.co/wHjfvEDhUQ",
-"https://t.co/EuXYqPXhFS",
-"https://t.co/AQTezs1Ua5",
-"https://t.co/w2NvQ6vbVK"
+"https://t.co/wCAcYFmwjx",
+"https://t.co/RGKLJhKIxw",
+"https://t.co/j1dnNY3DRW",
+"https://t.co/iJWIH98Sym",
+"https://t.co/aJbX8FvApP"
   ];
 
   // ==================== RANDOM HELPER ====================
